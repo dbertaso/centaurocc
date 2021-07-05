@@ -1,0 +1,27 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 300px" <%= sort_class_helper('region.nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.region'), 'region.nombre', 'list' %>
+ 			</th>
+			<th style="width: 300px" <%= sort_class_helper('estado.nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'estado.nombre', 'list' %>
+ 			</th>
+ 			<th style="width: 300px" <%= sort_class_helper('(select nombre from pais where id=region.pais_id)') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.pais'), '(select nombre from pais where id=region.pais_id)', 'list' %>
+ 			</th>
+ 			<th style="width: 70px">
+             <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for estado in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :estado => estado, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

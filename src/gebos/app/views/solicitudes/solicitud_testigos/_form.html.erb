@@ -1,0 +1,30 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+    <tr>
+        <td style="width: 150px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+        </td>
+        <td style="width: 580px">
+           
+           <%= text_field 'solicitud_testigos', 'nombre_testigo', :class=>'text', :style=>'width: 500px', :maxlength=>'50'  -%>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 110px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></label>
+        </td>
+        <td style="width: 120px">
+
+          <select name="tipo" id="tipo" class =" select">
+            <option value="V ">V</option>
+            <option value="E ">E</option>
+          </select>
+
+            <%= text_field 'solicitud_testigos', 'cedula_testigo', :class=>'text', :style=>'width: 100px', :maxlength=>'8', :onkeypress=>'return NumberKey(event);'  -%>
+        </td>
+    </tr>
+ 
+    <tr>
+        <td colspan="2" style="text-align: left">
+                <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

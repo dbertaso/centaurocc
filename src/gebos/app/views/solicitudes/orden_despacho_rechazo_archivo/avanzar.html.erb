@@ -1,0 +1,94 @@
+<div class="marco-titulo"><div><div>
+  <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.proceso_culminado')%> 
+</div></div></div>
+<%= render :partial=>'solicitudes/orden_despacho_rechazo_archivo/common/tabs' %>
+<div class="marco-contenido">
+
+<center>
+  <div id="mensaje"><%= @mensaje %></div>
+  <div id="errores"><%= @feedback %></div>
+  <%= message %>
+</center>
+
+<div>
+
+<table><tr><td>
+  <%#= form_remote_tag(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :confirm => "¿Está usted seguro que desea avanzar las solicitudes seleccionadas?",
+      :url => { :action => :avanzar_solicitud } ) -%>
+    <%#= image_submit_tag(I18n.t('Sistema.Body.Imagenes.avanzar')) -%>
+    <input id="cuenta_id" type="hidden" name="cuenta_id"/>
+  <%#= end_form_tag %>
+</td><td>
+<!--  <%#= form_remote_tag(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :confirm => "¿Está usted seguro que desea reversar las solicitudes seleccionadas?",
+      :url => { :action => :reversar } ) -%>
+    <%= image_submit_tag('boton_reversar.gif') -%>
+-->
+        <input id="cuenta_id1" type="hidden" name="cuenta_id1"/>
+    <input id="cuenta_id2" type="hidden" name="cuenta_id2"/>
+
+  <% #end %>
+</td></tr></table>
+</div>
+<br>
+<form>
+<%if !@list.nil?%>
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 30px">
+      <%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%>
+    </th>
+    <th style="width: 30px">
+      <%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.factura')%>
+    </th>
+
+    <th style="width: 100px">
+      <%=I18n.t('Sistema.Body.Vistas.General.nombre')%> <%=I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title')%>
+    </th>
+    <th style="width: 30px">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%>
+    </th>
+    <th style="width: 300px">
+      <%=I18n.t('Sistema.Body.Vistas.General.banco')%>
+    </th>
+    <th style="width: 100px">
+      <%=I18n.t('Sistema.Body.Vistas.General.cuenta')%>
+    </th>
+    <th style="width: 30px">
+      <%=I18n.t('Sistema.Body.Vistas.ConsultaCuentaProyectado.Etiquetas.monto_total')%> <%=I18n.t('Sistema.Body.Vistas.General.factura')%>
+    </th>
+    <th style="width: 30px">
+      <%=I18n.t('Sistema.Body.Vistas.Form.estatus')%>
+    </th>
+
+    <th style="width: 100px">
+      <%=I18n.t('Sistema.Body.Vistas.General.descripcion')%> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.Vistas.Form.estatus')%>
+    </th>
+
+    <th style="width: 30px">
+      <%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_liquidacion') %>
+    </th>
+    <!-- <th>Acciones
+    </th> -->
+  </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for view_fecha_liquidacion in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :view_fecha_liquidacion => view_fecha_liquidacion, :even_odd => even_odd } -%>
+<% end %>
+
+</tbody>
+</table>
+</form>
+<%= form_pagination %>
+</div>
+<%end%>

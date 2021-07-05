@@ -1,0 +1,34 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%=I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.lista_convenio_silo')%>  <span class="titulo_modificar"></span>
+    </div>
+  </div>
+</div>
+
+<%= render :partial=>'basico/silo/common/tabs' %>
+
+<div class="marco-contenido2">
+  
+  <% if @silo.convenio == false %>
+  </br></br>
+  <%else%>
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.agregar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.agregar')),
+      :action => 'new', :silo_id=>@silo.id, :popup=>params[:popup] ) if vlink 'edit' %>
+  </div>
+  <%end%>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial=>"list" %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+    { :controller=> 'silo', :action => :index, :silo_id=>@silo.id },
+    { :id=>'button_close' } ) -%>
+</div>

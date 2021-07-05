@@ -1,0 +1,319 @@
+<script type="text/javascript">
+	
+  onload = function()
+  {
+<% if @persona_direccion.tipo %>
+      showTipo('<%= @persona_direccion.tipo %>');
+<% end %>
+<% if @persona_direccion.comunidad_indigena_id %>
+      comunidad("I");
+<% end %>
+  }
+	
+  function showTipo(value)
+  {
+    if (value == 'H' ){
+      document.getElementById("tipo").style.display="";
+    }else{
+      document.getElementById("tipo").style.display="none";
+      document.getElementById("persona_direccion_tenencia_p").checked = false;
+      document.getElementById("persona_direccion_tenencia_a").checked = false;
+      document.getElementById("persona_direccion_tenencia_c").checked = false;
+      document.getElementById("persona_direccion_tenencia_h").checked = false;
+      document.getElementById("persona_direccion_tenencia_f").checked = false;
+    }
+  }
+
+  function comunidad(value){
+    if (value == 'I'){
+      document.getElementById("comunidad").style.display="";
+    }else{
+      document.getElementById("comunidad").style.display = "none";
+      document.getElementById("persona_direccion_comunidad_indigena_id").value="";
+    }
+  }
+	
+</script>
+
+<table style="width: 100%">
+
+  <tr>
+    <td style="width: 35%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.vivienda')}" %> </label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <table style="width: 70%" border="1" bordercolor="#d7d7d7">
+        <tr><td style="width: 33%">
+            <%= radio_button 'persona_direccion', 'tipo', 'C',
+              :class=>'text', :onclick=>'inputChange();showTipo("C")'  -%><%= I18n.t('Sistema.Body.Vistas.General.casa') %>
+          </td><td>
+            <%= radio_button 'persona_direccion', 'tipo', 'A',
+              :class=>'text', :onclick=>'inputChange();showTipo("A")'  -%><%= I18n.t('Sistema.Body.Vistas.General.apartamento') %>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 33%">
+            <%= radio_button 'persona_direccion', 'tipo', 'R',
+              :class=>'text', :onclick=>'inputChange();showTipo("R")'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.vivienda')} #{I18n.t('Sistema.Body.Vistas.General.rustica')}" %>
+          </td>
+          <td style="width: 33%">
+            <%= radio_button 'persona_direccion', 'tipo', 'I',
+              :class=>'text', :onclick=>'inputChange();showTipo("I")'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.vivienda')} #{I18n.t('Sistema.Body.Vistas.General.indigena')}" %>
+          </td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<div id="tipo" style="display: none">
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 35%">
+        <label>Tenencia de la Vivienda</label>
+      </td>
+      <td>
+        <table style="width: 70%" border="1" bordercolor="#d7d7d7">
+          <tr><td style="width: 33%">
+              <%= radio_button 'persona_direccion', 'tenencia', 'P',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.propia') %>
+            </td><td>
+              <%= radio_button 'persona_direccion', 'tenencia', 'A',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.alquilada') %>
+            </td>
+            <td style="width: 33%">
+              <%= radio_button 'persona_direccion', 'tenencia', 'C',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.comodato') %>
+            </td></tr>
+          <tr><td>
+              <%= radio_button 'persona_direccion', 'tenencia', 'H',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.hipoteca') %>
+            </td><td colspan="2">
+              <%= radio_button 'persona_direccion', 'tenencia', 'F',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.con_familiar') %>
+            </td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<table style="width: 100%"  >
+  <tr>
+    <td style="width: 35%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.ubicacion')} #{I18n.t('Sistema.Body.Vistas.General.geografica')}" %></label>
+    </td>
+    <td style="width: 80%">
+      <table style="width: 70%" border="1" bordercolor="#d7d7d7">
+        <tr><td style="width: 33%">
+            <%= radio_button 'persona_direccion', 'ubicacion_geografica', 'R',
+              :class=>'text',  :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.rural') %>
+          </td><td>
+            <%= radio_button 'persona_direccion', 'ubicacion_geografica', 'U',
+              :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.urbana') %>
+          </td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 35%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.comunidad')}" %></label>
+    </td>
+    <td style="width: 80%">
+      <table style="width: 70%" border="1" bordercolor="#d7d7d7">
+        <tr><td style="width: 33%">
+            <%= radio_button 'persona_direccion', 'tipo_comunidad', 'I',
+              :class=>'text',  :onclick=>'inputChange();comunidad("I");'  -%><%= I18n.t('Sistema.Body.Vistas.General.indigena') %>
+          </td><td>
+            <%= radio_button 'persona_direccion', 'tipo_comunidad', 'A',
+              :class=>'text', :onclick=>'inputChange();comunidad("O");'  -%><%= I18n.t('Sistema.Body.Vistas.General.afrodescendiente') %>
+          </td><td>
+            <%= radio_button 'persona_direccion', 'tipo_comunidad', 'O',
+              :class=>'text', :onclick=>'inputChange();comunidad("O");'  -%><%= I18n.t('Sistema.Body.Vistas.General.otro') %>
+          </td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<div id="comunidad" style="display: none">
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 35%">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.comunidad')} #{I18n.t('Sistema.Body.Vistas.General.indigena')}" %></label>
+      </td>
+      <td>
+        <%= select(
+          'persona_direccion', 'comunidad_indigena_id',
+          @comunidad_indigena_list.map{|e| [e.comunidad_indigena, e.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<table style="width: 100%">
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.localidad') %></label>
+    </td>
+    <td style="width: 80%">
+      <table style="width: 70%" border="1" bordercolor="#d7d7d7">
+        <tr><td style="width: 33%">
+            <%= radio_button 'persona_direccion', 'localidad', 'U',
+              :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.urbanizacion') %>
+          </td><td>
+            <%= radio_button 'persona_direccion', 'localidad', 'B',
+              :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.barrio') %>
+          </td>
+          <td style="width: 33%">
+            <%= radio_button 'persona_direccion', 'localidad', 'C',
+              :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.comunidad') %>
+          </td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.urbanizacion_barrio_sector') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'persona_direccion', 'zona',
+        :class=>'text', :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.avenida_calle_callejon') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona_direccion', 'avenida',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.casa_edificio_otro') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'persona_direccion', 'edificio',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.piso') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona_direccion', 'piso',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.numero_apto_casa') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona_direccion', 'numero',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.punto')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.referencia')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'persona_direccion', 'referencia',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 35%"><label><%= I18n.t('Sistema.Body.Vistas.General.region') %></label> <label style="color: red">*</label></td>
+    <td>
+      <%= select(
+        'persona_direccion', 'region_id',
+        @region_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'cliente_persona_direccion',
+          :action=>:region_change },
+          :with=>"'region_id='+ this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 35%"><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label> <label style="color: red">*</label></td>
+    <td>
+      <span id="estado-select">
+        <%= render :partial => 'estado_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%"><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label> <label style="color: red">*</label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%"><label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label> <label style="color: red">*</label></td>
+    <td>
+      <span id="parroquia-select">
+        <%= render :partial => 'parroquia_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%"><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label> <label style="color: red">*</label></td>
+    <td>
+      <span id="ciudad-select">
+        <%= render :partial => 'ciudad_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 35%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.direccion_aplica_envio') %></label>
+    </td>
+    <td>
+      <%= check_box 'persona_direccion', 'correspondencia',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onclick=>'inputChange();'-%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'persona_direccion', 'activo',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onclick=>'inputChange();'-%>
+    </td>
+  </tr>
+</table>

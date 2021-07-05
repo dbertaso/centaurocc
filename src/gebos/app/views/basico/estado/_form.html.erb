@@ -1,0 +1,53 @@
+<table>
+	
+	<tr>
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.pais')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+			<% region_onchange = remote_function(
+             :loading =>'image_load()',
+	         :loaded => 'image_unload()',
+            :method=> :get,
+            :url=>{:controller=>'estado',
+            :action=>:region_search },
+            :with=>"'id='+value") %>
+
+			<%= select(
+		  'estado', 'pais_id',
+		  @pais.map{|c| [c.nombre, c.id]},
+		  { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+		  { :class=>'select', :onchange=>region_onchange+';inputChange();' } ) %>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.region')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+			<span id="region-search">
+            <%= render :partial => 'region_search' %>
+        </span>
+
+			<%#= select(
+		  'estado', 'region_id',
+		  @region_list.map{|c| [c.nombre, c.id]},
+		  { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+		  { :class=>'select', :onchange=>'inputChange();' } ) %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_field 'estado', 'nombre', :class=>'text', :style=>'width: 240px', 
+				:maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+	
+</table>

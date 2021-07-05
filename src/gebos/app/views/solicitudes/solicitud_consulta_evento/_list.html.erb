@@ -1,0 +1,39 @@
+<h2><%= "#{I18n.t('Sistema.Body.Vistas.General.eventos')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></h2>
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 10px" <%= sort_class_helper('fecha_evento') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.fecha'), 'fecha_evento', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('fecha_evento') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.hora'), 'fecha_evento', 'list' %>
+      </th>
+      <th style="width: 20px" <%= sort_class_helper('estatus_origen') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.instancia')} #{I18n.t('Sistema.Body.Vistas.General.origen')}", 'estatus_origen', 'list' %>
+      </th>
+      <th style="width: 20px" <%= sort_class_helper('estatus_destino') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.instancia')} #{I18n.t('Sistema.Body.Vistas.Form.destino')}", 'estatus_destino', 'list' %>
+      </th>
+      <th style="width: 20px" <%= sort_class_helper('accion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.accion'), 'accion', 'list' %>
+      </th>
+      <th style="width: 120px" <%= sort_class_helper('observacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.comentario'), 'observacion', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('usuario') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.usuario'), 'usuario', 'list' %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%  
+    even_odd = 1
+    for solicitud in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

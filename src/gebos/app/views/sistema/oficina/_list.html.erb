@@ -1,0 +1,29 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="text-align: left; width: 230px" <%= sort_class_helper('oficina.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'oficina.nombre', 'list' %>
+      </th>
+      <th style="text-align: left; width: 200px" <%= sort_class_helper('municipio.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.municipio'), 'municipio.nombre', 'list' %>
+      </th>
+      <th style="text-align: left; width: 200px" <%= sort_class_helper('ciudad.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.ciudad'), 'ciudad.nombre', 'list' %>
+      </th>
+      <th style="width: 68px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for oficina in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :oficina => oficina, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

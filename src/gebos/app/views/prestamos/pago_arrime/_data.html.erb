@@ -1,0 +1,57 @@
+<% pago_arrime = @pago_arrime if pago_arrime.nil? %>
+
+<td checked=false, align="center">
+  <%= check_box_tag 'boleta_id', pago_arrime.boleta_arrime_id,
+      checked=false, :onClick=>'checkOne(this,form.todos); muestro();' %></td>
+
+<td>
+  <%= pago_arrime.solicitud_numero unless pago_arrime.solicitud_numero.nil?  %>
+</td>
+<td>
+  <%= pago_arrime.prestamo_numero unless pago_arrime.prestamo_numero.nil? %>
+</td>
+<td>
+  <% prestamo = Prestamo.find_by_numero(pago_arrime.prestamo_numero) unless pago_arrime.prestamo_numero.nil? %>
+  <%= prestamo.estatus_w unless prestamo.nil? %>
+</td>
+<td>
+  <%= pago_arrime.documento_beneficiario unless pago_arrime.documento_beneficiario.nil?  %>
+</td>
+<td>
+  <%= pago_arrime.nombre_beneficiario unless pago_arrime.nombre_beneficiario.nil?  %>
+</td>
+
+<td>
+  <%= pago_arrime.rubro_nombre unless pago_arrime.rubro_nombre.nil? %>
+</td>
+
+<td>
+  <%= pago_arrime.sub_rubro_nombre unless pago_arrime.sub_rubro_nombre.nil? %>
+</td>
+
+<td>
+  <%= pago_arrime.actividad_nombre unless pago_arrime.actividad_nombre.nil? %>
+</td>
+
+<td>
+  <%= pago_arrime.silo_nombre unless pago_arrime.silo_nombre.nil? %>
+</td>
+
+<td>
+  <%= pago_arrime.fiscal_cosecha unless pago_arrime.fiscal_cosecha.nil? %>
+</td>
+
+<td style="text-align: right">
+  <%= pago_arrime.fecha_arrime_f unless pago_arrime.fecha_arrime.nil? %>
+</td>
+<td style="text-align: right">
+  <%= pago_arrime.fecha_confirmacion_f unless pago_arrime.fecha_confirmacion.nil? %>
+</td>
+<td style="text-align: center">
+  <%= pago_arrime.guia_movilizacion unless pago_arrime.guia_movilizacion.nil?%>
+
+</td>
+<td style="text-align: right">
+  <%= pago_arrime.monto_arrime_fm unless pago_arrime.monto_arrime.nil? %>
+</td>
+

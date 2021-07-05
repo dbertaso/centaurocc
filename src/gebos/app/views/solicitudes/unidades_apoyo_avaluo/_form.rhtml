@@ -1,0 +1,93 @@
+<% if @solicitud.avaluo_obra_civil %>
+<br></br>
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :solicitud_id => @solicitud.id } ) -%>
+<table>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Fecha:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_obra_civil', 'fecha_f',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      <%= calendar 'solicitud_obra_civil_fecha_f', 'calendar_fecha' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Nombre de la Obra:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_obra_civil', 'nombre_obra',
+          :class=>'text', :style=>'width: 400px',
+          :maxlength=>'100', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Monto del Presupuesto:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_obra_civil', 'monto_presupuesto_f',
+          :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+          :onkeypress=>'montosolicitud(); inputChange();',
+          :onchange=>'inputChange();',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_obra_civil_monto_presupuesto'); "  -%>
+      <%= display_number @solicitud_obra_civil.monto_presupuesto, 'solicitud_obra_civil_monto_presupuesto' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Ubicación de la Obra:</label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_obra_civil', 'ubicacion_obra',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,1000)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Nombre de la Empresa y/o Profesional a Cargo de la Obra:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_obra_civil', 'empresa_profesional',
+          :class=>'text', :style=>'width: 400px',
+          :maxlength=>'100', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Revisor:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_obra_civil', 'revisior',
+          :class=>'text', :style=>'width: 400px',
+          :maxlength=>'100', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+</table>
+<div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit %>
+</div>
+<%= end_form_tag -%>
+<br></br>
+<% end %>

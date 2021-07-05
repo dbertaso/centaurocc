@@ -1,0 +1,20 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	if controller_name=='transaccion_contable'
+%>
+		<li id="actual"><div><a href="#">Datos Básicos</a></div></li>
+<% 
+	else 
+%>
+		<li><div>
+            <%= link_to('Datos Básicos', :controller => 'transaccion_contable', :action => :edit, :id => @transaccion_contable.id) if action_name == 'index' %>
+            <%= link_to('Datos Básicos', :controller => 'transaccion_contable', :action => :view, :id => @transaccion_contable.id) if action_name == 'view' %>
+		</div></li>
+<% 
+		end 
+%>
+	</ul>
+</div>

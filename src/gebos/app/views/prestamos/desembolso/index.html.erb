@@ -1,0 +1,546 @@
+<script type="text/javascript">
+  
+  var total1="234434";
+  function total_registros()
+  {      
+    var condicion="nro_tramite > 0";
+    var estado = document.getElementById("estado_id_").value;
+    var oficina = document.getElementById("oficina_id_").value;
+    var sector = document.getElementById("sector_id_").value;
+    var subsector = document.getElementById("sub_sector_id_").value;
+    var rubro = document.getElementById("rubro_id_").value;
+    var subrubro = document.getElementById("sub_rubro_id_").value;
+    var actividad = document.getElementById("actividad_id_").value;
+
+    var numero_desembolso= document.getElementById("numero_desembolso").value;
+
+    if ((document.getElementById("tipo").value=="<%=I18n.t('Sistema.Body.General.TipoDocumento.venezolano')%> ") || (document.getElementById("tipo").value=="<%=I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%> "))
+    {
+      var tipo= document.getElementById("tipo").value;
+    }
+    else
+    {
+      var tipo= document.getElementById("tipo").value;
+    }
+
+    var cedula_rif =document.getElementById("cedula_rif").value;
+    var entidad_financiera_id = document.getElementById("entidad_financiera_id_").value;
+    var nro_tramite = document.getElementById("nro_tramite").value;
+
+    if (estado!='')
+    {
+      condicion+=" and estado_id="+estado;
+    }
+
+    if (oficina!='')
+    {
+      condicion+=" and oficina_id="+oficina;
+    }
+
+    if ((sector!='')&& (sector!='0'))
+    {
+      condicion+=" and sector_id="+sector;
+    }
+
+    if ((subsector!='')&& (subsector!='0'))
+    {
+      condicion+=" and sub_sector_id="+subsector;
+    }
+
+    if ((rubro!='') && (rubro!='-1'))
+    {
+      condicion+=" and rubro_id="+rubro;
+    }
+
+    if ((subrubro!='') && (subrubro!='-1'))
+    {
+      condicion+=" and sub_rubro_id="+subrubro;
+    }
+    if ((actividad!='')&& (actividad!='0'))
+    {
+      condicion+=" and actividad_id="+actividad;
+    }
+
+    if (numero_desembolso!='')
+    {
+      condicion+=" and numero_desembolso=" + numero_desembolso;
+    }
+
+    if (cedula_rif!='')
+    {
+      condicion+=" and cedula_rif='"+tipo+cedula_rif + "'";
+    }
+
+    if (entidad_financiera_id!='')
+    {
+      condicion+=" and entidad_financiera_id="+entidad_financiera_id;
+    }
+
+    if (nro_tramite!='')
+    {
+      condicion+=" and nro_tramite="+nro_tramite;
+    }
+
+    document.getElementById("escon").value=condicion;  
+    document.getElementById("parametros_div").value = condicion;
+    document.getElementById("total_registros").innerHTML="  ";
+
+    return condicion;
+  }  
+
+  function validar_fecha_valor()
+  {
+    var bol=true;
+
+    var fecha_valor=document.getElementById("fecha_valor_f").value.split("/");
+
+    var fechaPuesta=new Date(fecha_valor[2],(fecha_valor[1]-1),fecha_valor[0]);
+    var fechaActual=new Date();
+    return bol;
+  }
+
+  function validacion()
+  { 
+    var mensaje="<%=I18n.t('Sistema.Body.Modelos.Desembolso.Errores.posee_errores_en_los_siguientes_campos')%>: \n\n";
+    var errores=true;
+
+    if (document.getElementById("id_entidad_financiera_").value=='')
+    {
+      errores=false;
+      mensaje+="<%=I18n.t('Sistema.Body.Modelos.Desembolso.Errores.no_ha_seleecionado_entidad_financiera')%> \n";
+    }
+
+    if (document.getElementById("cuenta_bcv_fondas_sel_").value=='')
+    {
+      errores=false;
+      mensaje+="<%=I18n.t('Sistema.Body.Modelos.Desembolso.Errores.no_ha_seleecionado_cuenta_fondas')%> \n";
+    }
+
+    if (document.getElementById("fecha_valor_f").value=='')
+    {
+      errores=false;
+      mensaje+="<%=I18n.t('Sistema.Body.Modelos.Desembolso.Errores.no_ha_seleecionado_fecha_valor')%> \n";
+    }
+
+    if (!errores)
+    {
+      alert(mensaje);
+    }
+    else
+    {
+          
+      document.getElementById('segundo_form').submit();
+      /*if (validar_fecha_valor())
+            {
+              document.getElementById('segundo_form').submit();
+            }
+          else
+            {
+              errores=false;
+            }*/
+    }
+
+    return errores;
+  }
+
+
+  function muestro()
+  {
+
+    var seleccionados=0,contador=0;
+    var arreglo=(document.getElementById('cuenta_id1').value).split(',');
+
+    while(seleccionados<arreglo.length)
+    {
+      if (arreglo[seleccionados]!='')
+      {
+        contador=contador+1;
+      }
+
+      seleccionados=seleccionados+1;
+    }
+
+    if (contador!=0)
+    {
+      document.getElementById('boton_seleccion').style.visibility="visible";
+      document.getElementById('boton_liquidar').style.visibility="visible";
+    }
+    else
+    {
+      document.getElementById('boton_seleccion').style.visibility="hidden";
+      document.getElementById('boton_liquidar').style.visibility="hidden";
+      document.getElementById('cuenta_id').value='';
+      document.getElementById('cuenta_id1').value='';
+    }
+
+    document.getElementById("segun_seleccionado").innerHTML=contador;
+
+  }   
+
+</script>
+<%= render :partial=>'prestamos/desembolso/common/tabs' %>
+
+<div class="marco-contenido">
+
+  <%= form_title_search %>
+  <%= message %>
+  <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>
+  <table width="100%">
+    <tr>
+      <td>
+
+        <div style="width: 43%; float:left" >
+
+          <%= form_remote_tag(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method => :get,
+            :url => { :action => :list } ) do -%>
+
+            <table>
+              <tr>
+                <td style="width: 150px">
+                  <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+                </td>
+                <td>
+
+                  <% oficina_onchange = remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,    
+                    :url=>{:controller=>'desembolso',
+                      :action=>:oficina_form_change },
+                    :with=>"'estado_id='+value" ) %>
+
+                  <%= select(
+                    'estado_id','',
+                    @estado.map{|i| [i.nombre, i.id]},
+                    { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                    { :class=>'select',:onchange=>oficina_onchange + ';inputChange();' } ) %>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td style="width: 150px">
+                  <label><%=I18n.t('Sistema.Body.Vistas.General.oficina')%></label>
+                </td>
+
+                <%= hidden_field_tag 'escon','', :value => "***gggg***" %>
+
+                <td>
+                  <div id="oficina-select">
+
+                    <%= select(
+                      'oficina_id','',
+                      @oficina.map{|i| [i.nombre, i.id]},
+                      { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                      { :class=>'select' } ) %>
+
+                  </div>      
+                </td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td style="width: 30%">
+                  <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+                </td>
+                <td style="width: 70%">
+                  <% sector_onchange = remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,    
+                    :url=>{:controller=>'/solicitudes/solicitud_consultoria_juridica',
+                      :action=>:sector_form_change },
+                    :with=>"'sector_id='+value" ) %>
+                  <%= select(
+                    'sector_id', '',
+                    @sector.map{|i| [i.nombre, i.id]},
+                    {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+                    { :class=>'select',:onchange=>sector_onchange + ';inputChange();'}) %>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 30%">
+                  <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+                </td>
+                <td style="width: 70%">
+                  <% sub_sector_onchange = remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,    
+                    :url=>{:controller=>'solicitudes/solicitud_consultoria_juridica',
+                      :action=>:sub_sector_form_change },
+                    :with=>"'sub_sector_id='+value" ) %>
+                  <div id="sub-sector-select">
+                    <%= select(
+                      'sub_sector_id', '',
+                      @sub_sector_list.map{|i| [i.nombre, i.id]},
+                      {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+                      { :class=>'select',:onchange=>sub_sector_onchange + ';inputChange();'}) %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+                </td>
+                <td>
+                  <% rubro_onchange = remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,    
+                    :url=>{:controller=>'solicitudes/solicitud_consultoria_juridica',
+                      :action=>:rubro_form_change },
+                    :with=>"'rubro_id='+value" ) %>
+                  <div id="rubro-select">
+                    <%= select(
+                      'rubro_id', '',
+                      @rubro_list.map{|i| [i.nombre, i.id]},
+                      { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                      { :class=>'select',:onchange=>rubro_onchange + ';inputChange();'} ) %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 30%">
+                  <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+                </td>
+                <td style="width: 70%">
+                  <% sub_rubro_onchange = remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,    
+                    :url=>{:controller=>'solicitudes/solicitud_consultoria_juridica',
+                      :action=>:sub_rubro_form_change },
+                    :with=>"'sub_rubro_id='+value" ) %>
+                  <div id="sub-rubro-select">
+                    <%= select(
+                      'sub_rubro_id', '',
+                      @sub_rubro_list.map{|i| [i.nombre, i.id]},
+                      {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+                      { :class=>'select',:onchange=>sub_rubro_onchange + ';inputChange();'}) %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+                </td>
+                <td>
+                  <div id="actividad-select">
+                    <%= select(
+                      'actividad_id', '',
+                      @actividad_list.map{|i| [i.nombre, i.id]},
+                      { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                      { :class=>'select',:onchange=>'inputChange();'} ) %>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 150px">
+                  <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_desembolso')%></label>
+                </td>
+                <td>
+                  <%= text_field_tag 'numero_desembolso', '', :class=>'text', :maxlength=>'20', :style=>'width: 100px' ,:onkeypress=>' return NumberKey(event);' %>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td style="width: 150px">
+                  <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label>
+                </td>
+                <td>
+                  <select name="tipo" id="tipo" class="select">
+                    <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.venezolano')%> "><%=I18n.t('Sistema.Body.General.TipoDocumento.venezolano')%></option>
+                    <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%> "><%=I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%></option>
+                    <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.juridico')%>-"><%=I18n.t('Sistema.Body.General.TipoDocumento.juridico')%></option>
+                    <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.gobierno')%>-"><%=I18n.t('Sistema.Body.General.TipoDocumento.gobierno')%></option>
+                  </select>
+                  <%= text_field_tag 'cedula_rif', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td style="width: 150px">
+                  <label><%=I18n.t('Sistema.Body.Vistas.General.banco')%></label>
+                </td>
+                <td>
+                  <%= select(
+                    'entidad_financiera_id','',
+                    @entidad_financiera_select.map{|i| [i.nombre, i.id]},
+                    { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                    { :class=>'select' ,:style=>'width:240px'} ) %>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td style="width: 150px">
+                  <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+                </td>
+                <td>
+                  <% total_filter = remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,
+                    :url=>{:controller=>'desembolso',
+                      :action=>:total_filtro },
+                    :with=>"'consulta='+escon.value") %>
+                  
+                  <%= text_field_tag 'nro_tramite', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px',:onkeypress=>' return NumberKey(event);'  %>
+               </td>
+              </tr>
+              <tr>
+                <td>
+                  <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>:</label>
+                </td>
+                <td><%= select(
+                    'moneda_id', '',
+                    options_from_collection_for_select(@moneda_list, 'id', 'nombre'),
+                    {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+                    {:class=>'select', :onchange=>'inputChange();'} ) %>
+                  
+                &emsp;&emsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'), :onclick=> "document.getElementById('segun_seleccionado').innerHTML='';document.getElementById('boton_filtro_mayor').style.visibility='visible';total_registros();"+total_filter)   -%>
+                </td>
+                <td></td>
+              </tr>
+            </table>
+          <% end %>
+        </div>
+
+
+
+        <!-- SEGUNDO DIV -->
+
+        <div  id="generar_archivo" style="width: 55%; float:right">
+          <div>
+
+
+            <%= form_remote_tag(
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :html => {:id => 'segundo_form' },          
+              :url => { :action => :preparar_trasnferencia } ) do -%>
+              <table>
+
+                <%= hidden_field_tag 'parametros_div',''%>
+                <tr>
+                  <td style="width: 200px">
+                    <label><%="#{I18n.t('Sistema.Body.Vistas.General.seleccione')} #{I18n.t('Sistema.Body.Vistas.General.banco')}"%></label>
+                  </td>
+                  <td>
+                    <% entidad_financiera_onchange = remote_function(
+                      :loading =>'image_load()',
+                      :loaded => 'image_unload()',
+                      :method=>:get,    
+                      :url=>{:controller=>'desembolso',
+                        :action=>:entidad_financiera_change },
+                      :with=>"'id='+value") %>
+
+
+                    <%= select(
+                      'id_entidad_financiera','',
+                      @entidad_financiera_select.map{|i| [i.nombre, i.id]},
+                      { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                      { :class=>'select',:onchange=>entidad_financiera_onchange + ';inputChange();',:style=>'width:240px'} ) %>                            
+
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <label><%="#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.General.fondas')}"%></label>
+                  </td>
+                  <td>
+
+                    <div id="cuenta_bcv-select">
+                      <%= render :partial => 'cuenta_bcv_select' %>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.valor')}"%></label>
+                  </td>
+                  <td>              
+
+                    <%= calendar_date_select_tag "fecha_valor_f", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date > (new Date()).stripTime()-1" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label><%="#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.archivo')}"%></label>
+                  </td>
+                  <td>
+                    <input type="radio" name="txt" value="txt" checked="checked"><%=I18n.t('Sistema.Body.Vistas.General.generar')%> .TXT
+                    <input type="radio" name="txt" value="excel"> <%=I18n.t('Sistema.Body.Vistas.General.generar')%> Excel (.CSV)
+                  </td>
+
+                </tr>
+                <tr>
+                  <td>
+                    <label><%=I18n.t('Sistema.Body.Modelos.Desembolso.Estatus.total_registro_segun_filtros')%></label>
+                  </td>
+                  <td>
+                    <div id="desembolso_cantidad_total_filtro">
+                      <%= render :partial => 'cantidad_total_filtro' %>
+                    </div>
+
+                    <div id="total_registros"></div>
+                    <input id="cuenta_id" name="items_id" type="hidden" value="" />
+                    <input id="cuenta_id1" name="items_id1" type="hidden" value="" />
+
+
+                  </td>
+                </tr>
+                <tr>
+                  <td >
+                    <label><%=I18n.t('Sistema.Body.Modelos.Desembolso.Estatus.total_registro_segun_seleccion')%></label>
+                  </td>
+                  <td> <div id="segun_seleccionado"></div> </td>
+                </tr>
+                <tr>
+                  <td align="center" id="boton_filtro_mayor" style="visibility:hidden">
+
+                    <!-- <samp id="segun_filtro"> -->
+                    <%= image_tag(I18n.t('Sistema.Body.Imagenes.boton_generar_filtro'),:onclick=>'javascript:if (validacion()){total_registros();}') %>
+                    <!-- </samp> -->
+                  </td>
+
+                  <td align="center" id="boton_seleccion" style="visibility:hidden">
+                    <%= image_tag(I18n.t('Sistema.Body.Imagenes.boton_generar_seleccion'),:onclick=>'javascript:if (validacion()){total_registros();}') %>&nbsp;
+
+                    <% liquidar_con_cheque_onclick = remote_function(
+                      :loading =>'image_load()',
+                      :loaded => 'image_unload()',
+                      :method=>:get,    
+                      :url=>{:controller=>'desembolso',
+                        :action=>:liquidar_cheque },
+                      :with=>"'items_id='+document.getElementById('cuenta_id').value") %>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" colspan="2" id="boton_liquidar" style="visibility:hidden">   
+                    <%= image_tag(I18n.t('Sistema.Body.Imagenes.boton_liquidar_cheque'),:onclick=>liquidar_con_cheque_onclick) %>
+                  </td>
+
+
+                </tr>
+              </table>
+            <% end %>
+
+          </div>
+        </div>
+
+        <br/>
+        <%= error %>
+
+        <br/>
+      </td></tr></table>
+  <br/>
+  <br/>
+  <div style="width:100%">
+    <div id="list"></div>
+  </div>

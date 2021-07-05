@@ -1,0 +1,4 @@
+<%= check_box_tag 'accion_check', 
+  opcion_accion.accion.id, 
+  checked=opcion_accion.accion.id, 
+  { :name => "acciones[]", :id => "acciones_#{opcion_accion.accion.id}" }  %>

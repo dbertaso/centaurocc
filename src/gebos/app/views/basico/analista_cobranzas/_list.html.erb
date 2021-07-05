@@ -1,0 +1,42 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 100px" <%= sort_class_helper('analista_cobranzas.primer_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'analista_cobranzas.primer_nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('analista_cobranzas.primer_apellido') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.apellido'), 'analista_cobranzas.primer_apellido', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('analista_cobranzas.cedula') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cedula'), 'analista_cobranzas.cedula', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('analista_cobranzas.sector_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sector'), 'analista_cobranzas.sector_id', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('analista_cobranzas.sub_sector_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sub_sector'), 'analista_cobranzas.sub_sector_id', 'list' %>
+      </th>
+      <!--
+      <th style="width: 50px" <%#= sort_class_helper('analista_cobranzas.carga_trabajo') %>>
+        <%#= sort_link_helper I18n.t('Sistema.Body.Vistas.AnalistaCobranzas.Etiquetas.numero_creditos_asignados'), 'analista_cobranzas.carga_trabajo', 'list' %>
+      </th>
+      -->
+      <th>
+        <%= I18n.t('Sistema.Body.Vistas.AnalistaCobranzas.Etiquetas.supervisor') %>
+      </th>
+      <th style="width: 70px" >
+         <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for analista_cobranza in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :analista_cobranza =>analista_cobranza, :even_odd => even_odd } -%>
+
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

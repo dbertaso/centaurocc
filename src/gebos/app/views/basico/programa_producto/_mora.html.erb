@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <td style="width: 30%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.base_cobro_mora')%></label>
+    </td>
+    <td style="width: 70%">
+      <%= radio_button 'producto', 'base_cobro_mora', "C", :class=>'text', :onclick=>'inputChange();'  -%>
+      <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.capital_cuota')%>
+      <br />
+
+      <%= radio_button 'producto', 'base_cobro_mora', "V", :class=>'text', :onclick=>'inputChange();'  -%>
+      <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.valor_cuota')%>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,35 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+
+    <th style="width: 100px" <%= sort_class_helper('numero_prestamo') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}", 'numero_prestamo', 'list' %>
+    </th>
+    <th style="width: 120px" <%= sort_class_helper('identificacion') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.cedula')}/#{I18n.t('Sistema.Body.Vistas.General.rif')}", 'identificacion', 'list' %>
+    </th>
+    <th style="width: 220px" <%= sort_class_helper('nombre_cliente') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'nombre_cliente', 'list' %>
+    </th>
+
+    <th style="width: 120px" <%= sort_class_helper('moneda_nombre') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda'), 'moneda_nombre', 'list' %>
+    </th>
+
+    <th style="width: 30px">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+    </th>
+
+  </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for prestamo in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :prestamo => prestamo, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

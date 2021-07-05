@@ -1,0 +1,15 @@
+ 
+ <tr>
+ <!--
+   	<td>
+  	 <%= link_to ('Refrescar Fechas'), 
+    					{  :action=>'refrescar'} %>
+  	</td>
+  	-->
+  	
+    <td>
+            <%= link_to ( image_tag('imprimir.gif'), { :action => 'ejecutar', :fecha_inicio => @fecha_inicio, :fecha_fin => @fecha_fin, :fecha => @fecha},
+  	             :popup => ["Reporte ", 'height=500,width=700'] ) %>&nbsp;
+  	</td>
+  	
+ </tr>

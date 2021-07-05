@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="DesembolsosRealizadosExcel"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="1077"
+		 pageHeight="842"
+		 columnWidth="1017"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<queryString><![CDATA[SELECT
+     empresa."nombre" AS empresa_nombre,
+     prestamo."numero" AS prestamo_numero,
+     desembolso."fecha_evento_especial" AS desembolso_fecha_evento_especial,
+     desembolso."fecha_deposito" AS desembolso_fecha_deposito,
+     desembolso_pago."fecha" AS desembolso_pago_fecha,
+     desembolso_pago."monto" AS desembolso_pago_monto,
+     desembolso_pago."numero_referencia" AS desembolso_pago_numero_referencia,
+     solicitud."codigo_presupuesto_d3" AS codigo_presupuesto_d3,
+     solicitud."codigo_presupuesto_d3"||' - '||solicitud."descripcion_presupuesto_d3" AS descripcion_presupuesto_d3,
+     entidad_financiera."nombre" AS entidad_financiera_nombre,
+     partida."nombre" as partida_nombre
+FROM
+     "public"."desembolso" desembolso INNER JOIN "public"."desembolso_pago" desembolso_pago ON desembolso."id" = desembolso_pago."desembolso_id"
+     INNER JOIN "public"."prestamo" prestamo ON desembolso."prestamo_id" = prestamo."id"
+     INNER JOIN "public"."solicitud" solicitud ON prestamo."solicitud_id" = solicitud."id"
+     INNER JOIN "public"."cliente" cliente ON prestamo."cliente_id" = cliente."id"
+     AND cliente."id" = solicitud."cliente_id"
+     INNER JOIN "public"."empresa" empresa ON cliente."empresa_id" = empresa."id"
+     INNER JOIN "public"."partida" partida ON partida."id" = prestamo."partida_id"
+     INNER JOIN "public"."entidad_financiera" entidad_financiera ON entidad_financiera."id" = desembolso_pago."entidad_financiera_id"
+WHERE
+     desembolso."realizado" = true
+ORDER BY
+     desembolso_pago."fecha"]]></queryString>
+
+	<field name="empresa_nombre" class="java.lang.String"/>
+	<field name="prestamo_numero" class="java.lang.Long"/>
+	<field name="desembolso_fecha_evento_especial" class="java.sql.Date"/>
+	<field name="desembolso_fecha_deposito" class="java.sql.Date"/>
+	<field name="desembolso_pago_fecha" class="java.sql.Date"/>
+	<field name="desembolso_pago_monto" class="java.lang.Double"/>
+	<field name="desembolso_pago_numero_referencia" class="java.lang.String"/>
+	<field name="codigo_presupuesto_d3" class="java.lang.String"/>
+	<field name="descripcion_presupuesto_d3" class="java.lang.String"/>
+	<field name="entidad_financiera_nombre" class="java.lang.String"/>
+	<field name="partida_nombre" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="9"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="235"
+						y="0"
+						width="231"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-9"
+						isPrintInFirstWholeBand="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{descripcion_presupuesto_d3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="3"
+						y="0"
+						width="230"
+						height="9"
+						forecolor="#0E0707"
+						backcolor="#FFFFFF"
+						key="textField-1"
+						isRemoveLineWhenBlank="true"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font pdfFontName="Helvetica-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="467"
+						y="0"
+						width="56"
+						height="9"
+						forecolor="#000000"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$F{prestamo_numero}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Auto" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="778"
+						y="0"
+						width="60"
+						height="9"
+						forecolor="#000000"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{desembolso_pago_numero_referencia}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="711"
+						y="0"
+						width="66"
+						height="9"
+						forecolor="#000000"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="7" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{desembolso_pago_monto}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Auto" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="840"
+						y="0"
+						width="170"
+						height="9"
+						forecolor="#000000"
+						key="textField-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{entidad_financiera_nombre}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="654"
+						y="0"
+						width="56"
+						height="9"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{desembolso_pago_fecha}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="527"
+						y="0"
+						width="125"
+						height="9"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font size="7"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{partida_nombre}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

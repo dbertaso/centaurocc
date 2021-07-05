@@ -1,0 +1,66 @@
+<%= form_title_edit @convenio_silo.numero_memorandum %>
+<%= render :partial=>'basico/silo/common/tabs' %>
+<div class="marco-contenido">
+  <%= render :partial=>'basico/convenio_silo/common/tabs' %>
+  <div class="marco-contenido2">
+    </br>
+    <table>
+      <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.fecha_memorandum')%> </label>
+        </td>
+        <td>
+          <%= @convenio_silo.fecha_memorandum_f unless @convenio_silo.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.numero_memorandum')%> </label>
+        </td>
+        <td>
+          <%= @convenio_silo.numero_memorandum.to_s unless @convenio_silo.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.ciclo_productivo')%></label>
+        </td>
+        <td>
+          <%= @convenio_silo.ciclo_productivo.nombre.to_s unless @convenio_silo.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label>
+        </td>
+        <td>
+          <%= @convenio_silo.observacion.to_s unless @convenio_silo.nil? %>
+        </td>
+      </tr>
+            <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.fecha_cierre')%></label>
+        </td>
+        <td>
+          <%= @convenio_silo.fecha_cierre_f unless @convenio_silo.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.status')%></label>
+        </td>
+        <td>
+          <% unless @convenio_silo.nil? %>
+            <% if @convenio_silo.status == true %>
+              <%=I18n.t('Sistema.Body.Vistas.General.vigente')%>
+            <%else%>
+              <%=I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.cerrada')%>
+            <%end%>
+          <%end%>
+        </td>
+      </tr>
+    </table>
+    </br>
+       <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),  { :action => 'index',:silo_id=>@silo.id }, { :id=>'button_close' } ) -%>
+  </div>
+</div>

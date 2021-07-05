@@ -1,0 +1,210 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='visita_inicial'
+    %>
+      <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.visita') %></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.visita'), :controller => '/visitas/visita_inicial', :action => 'index', :id => @solicitud.id, :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+          <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.visita'), :controller => '/visitas/visita_inicial', :action => 'view', :id => @solicitud.id, :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+        </div></li>
+    <%
+    end
+    if SeguimientoVisita.visita_solicitud(@solicitud.id) > 0
+      if @solicitud.sub_sector.nemonico == 'VE' || @solicitud.sub_sector.nemonico == 'AN' || @solicitud.sub_sector.nemonico == 'AC' || @solicitud.sub_sector.nemonico == 'MA'
+        if controller_name=='solicitud_pre_evaluacion_visita'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.up') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.up'), :controller => '/solicitudes/solicitud_pre_evaluacion_visita', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.up'), :controller => '/solicitudes/solicitud_pre_evaluacion_visita', :action => 'view_detail', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name=='view_detail' || action_name=='view')  %>
+            </div></li>
+
+        <%
+        end
+
+        if controller_name=='solicitud_pre_evaluacion_servicios'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.servicios') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.servicios'), :controller => '/solicitudes/solicitud_pre_evaluacion_servicios', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.servicios'), :controller => '/solicitudes/solicitud_pre_evaluacion_servicios', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+            </div></li>
+        <%
+        end
+
+
+        unless @solicitud.sub_sector.nemonico == 'AC'
+          if controller_name=='solicitud_pre_evaluacion_caracterizacion'
+          %>
+            <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.caracterizacion') %></a></div></li>
+          <%
+          else
+          %>
+            <li><div>
+                <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.caracterizacion'), :controller => '/solicitudes/solicitud_pre_evaluacion_caracterizacion', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+                <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.caracterizacion'), :controller => '/solicitudes/solicitud_pre_evaluacion_caracterizacion', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+              </div></li>
+          <%
+          end
+        end
+
+        if @solicitud.sector.nombre.downcase == 'acuicola'
+
+        end
+        if controller_name=='solicitud_pre_evaluacion_infraestructura'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.infraestructura') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.infraestructura'), :controller => '/solicitudes/solicitud_pre_evaluacion_infraestructura', :action => 'index', :solicitud_id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.infraestructura'), :controller => '/solicitudes/solicitud_pre_evaluacion_infraestructura', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+            </div></li>
+        <%
+        end
+        if controller_name=='solicitud_pre_evaluacion_maquinaria'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.maquinaria') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.maquinaria'), :controller => '/solicitudes/solicitud_pre_evaluacion_maquinaria', :action => 'index', :solicitud_id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.maquinaria'), :controller => '/solicitudes/solicitud_pre_evaluacion_maquinaria', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+            </div></li>
+        <%
+        end
+        if controller_name=='solicitud_pre_evaluacion_colocacion'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.colocacion') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.colocacion'), :controller => '/solicitudes/solicitud_pre_evaluacion_colocacion', :action => 'index', :solicitud_id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+              <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.colocacion'), :controller => '/solicitudes/solicitud_pre_evaluacion_colocacion', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+            </div></li>
+        <%
+        end
+        if controller_name=='encuesta'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.cuestionario') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.cuestionario'), :controller => '/visitas/encuesta', :action => 'index', :solicitud_id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+              <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.cuestionario'), :controller => '/visitas/encuesta', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+            </div></li>
+        <%
+        end
+        if @solicitud.sub_sector.nemonico == 'AC'
+          if controller_name=='solicitud_pre_evaluacion_condicion_acuicultura'
+          %>
+            <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %></a></div></li>
+          <%
+          else
+          %>
+            <li><div>
+                <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones'), :controller => '/solicitudes/solicitud_pre_evaluacion_condicion_acuicultura', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+                <%= link_to(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones'), :controller => '/solicitudes/solicitud_pre_evaluacion_condicion_acuicultura', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+              </div></li>
+          <%
+          end
+        end
+        if @solicitud.sub_sector.nemonico == 'AN'
+          if controller_name=='solicitud_pre_evaluacion_animales'
+          %>
+            <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.inventario') %></a></div></li>
+          <%
+          else
+          %>
+            <li><div>
+                <%= link_to(I18n.t('Sistema.Body.Vistas.General.inventario'), :controller => '/solicitudes/solicitud_pre_evaluacion_animales', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+                <%= link_to(I18n.t('Sistema.Body.Vistas.General.inventario'), :controller => '/solicitudes/solicitud_pre_evaluacion_animales', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+              </div></li>
+          <%
+          end
+        end
+      end
+      if @solicitud.sub_sector.nemonico == 'PE'
+        if controller_name=='embarcacion'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.embarcacion') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.embarcacion'), :controller => '/basico/embarcacion', :action => 'index', :id=>SeguimientoVisita.mostar_id(@solicitud.id),:popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.embarcacion'), :controller => '/basico/embarcacion', :action => 'view', :id=>SeguimientoVisita.mostar_id(@solicitud.id),:popup=>params[:popup]) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+            </div></li>
+
+        <%
+        end
+        if controller_name=='motores'
+
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.motores') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.motores'), :controller => '/basico/motores', :action => 'index', :id=>SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.motores'), :controller => '/basico/motores', :action => 'view', :id=>SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+            </div></li>
+        <%
+        end
+        if controller_name=='arte_pesca'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.artes') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.artes'), :controller => '/basico/arte_pesca', :action => 'index', :id=>SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.artes'), :controller => '/basico/arte_pesca', :action => 'view', :id=>SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+            </div></li>
+        <%
+        end
+        if controller_name=='equipo_seguridad'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.equipos') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.equipos'), :controller => '/basico/equipo_seguridad', :action => 'index', :id=>SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.equipos'), :controller => '/basico/equipo_seguridad', :action => 'view', :id=>SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+            </div></li>
+        <%
+        end
+        if controller_name=='faenas_pesca'
+        %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.faenas') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.faenas'), :controller => '/basico/faenas_pesca', :action => 'index', :id=>SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.faenas'), :controller => '/basico/faenas_pesca', :action => 'view', :id=>SeguimientoVisita.mostar_id(@solicitud.id), :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+            </div></li>
+        <%
+        end
+      end
+    end
+  %>
+  </ul>
+</div>

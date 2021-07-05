@@ -1,0 +1,101 @@
+<%
+@bue=params[:transacciones]
+arreglo_buenos =[]    
+    arreglo_buenos = TransaccionAccion.find_by_sql("SELECT tra_acc.transaccion_id,ba.numero_factura,ba.fecha_factura,count(ba.numero_factura) as cantidad_items, sum(ba.monto_factura) as suma_monto_factura,sum(ba.cantidad_factura) as suma_cantidad_factura,ba.observacion FROM tr_factura_orden_despacho ba JOIN transaccion_accion tra_acc ON tra_acc.id = ba.tr_transaccion_accion_id and ba.tr_momento = 'D' and ba.cantidad_factura > 0 JOIN transaccion transa on transa.id=tra_acc.transaccion_id and transa.reversada=false WHERE (tra_acc.transaccion_id in (#{@bue}) and tra_acc.tipo='M' and tra_acc.tabla='factura_orden_despacho')  group by tra_acc.transaccion_id,ba.numero_factura,ba.fecha_factura,ba.observacion order by tra_acc.transaccion_id") unless params[:transacciones].nil?  
+%>
+
+<% unless arreglo_buenos.empty?%>
+<br>
+
+<table width="1150" border="1">
+             <thead> 
+              <tr>
+                <th colspan="6" align="center" style="background-image: url(/assets/titulo_fondo_2.gif);" ><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.facturas_agregadas') %></th>
+              </tr>
+              <tr >
+<td colspan="4">
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>      
+      <th style="width: 8%" >
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.numero_factura') %>
+      </th>
+      <th style="width: 8%" >
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_factura') %>
+      </th>
+      <th style="width: 8%" >
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_items_procesados') %> 
+      </th>
+      <th style="width: 8%" >
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_total_facturada') %>
+      </th>
+      <th style="width: 8%" >
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_total_facturado') %>
+      </th>      
+      <th style="width: 8%" >
+        <%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>
+      </th>      
+      
+      <th style="width: 6%" >
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>      
+    </tr>
+  </thead>  
+  
+  <tbody id="list-body">
+    <%  
+    even_odd = 1
+    arreglo_buenos.each{|buenos|
+    even_odd = 1 - even_odd 
+    
+    %>
+    <tr class="lista<%= even_odd %>" id="row_<%= buenos.transaccion_id %>">
+		
+		<td align ="center">
+		<%= buenos.numero_factura unless buenos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= format_fecha(buenos.fecha_factura.to_date) unless buenos.nil? %>
+		</td>    
+        <td align ="center">
+		<%= buenos.cantidad_items unless buenos.nil? %>
+		</td>    
+        <td align ="center">
+		<%= format_fm(buenos.suma_cantidad_factura) unless buenos.nil? %>
+		</td>    
+		<td align ="center">
+        <%= format_fm(buenos.suma_monto_factura) unless buenos.nil? %>
+		</td>    
+        <td align ="center">
+		<%= buenos.observacion unless buenos.nil? %>
+		</td>    		
+		<td align ="center">
+		<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+            :url => {:controller => 'orden_despacho_detalle', :action => :eliminar_transaccion_multiple_parcial, :transaccion_id => buenos.transaccion_id, :parciales_id=>params[:parciales_id], :accion=>params[:accion],:casa_proveedora_id=>params[:casa_proveedora_id],:oid=>params[:oid],:transacciones => params[:transacciones]})  -%>        
+		</td>        
+    </tr>
+    <%
+    }    
+     %>
+  </tbody>
+</table>
+</td></tr>
+<tr><td colspan="4" align="center">
+
+<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.aplicar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Mensajes.pulse_si_desea_confirmar_todas_facturas')),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,            
+            :url => {:controller => 'orden_despacho_detalle', :action =>:reactualizacion_emitidas,:oid=>params[:oid],:parciales_id=>params[:parciales_id]})  -%>        
+
+
+<%#= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.aplicar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Mensajes.pulse_si_desea_confirmar_todas_facturas')),
+               { :controller => 'orden_despacho_detalle', :action =>:reactualizacion_emitidas,:oid=>params[:oid],:parciales_id=>params[:parciales_id],:method=>:get },
+               { :id=>'buton_aplicar' } ) -%></td></tr>
+</table>
+<%end%>
+<br>

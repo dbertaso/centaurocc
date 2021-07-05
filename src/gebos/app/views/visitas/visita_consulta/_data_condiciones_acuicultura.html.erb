@@ -1,0 +1,115 @@
+<% condiciones_acuicultura = @condiciones_acuicultura if condiciones_acuicultura.nil? %>
+<td colspan="2">
+<table>
+  <tr>
+    <td colspan="2" align="center">
+      <label style="color: red"> *** ***
+    <td>  
+  </tr>
+
+    <tr>
+          <td style="width: 300px">
+             <label>Espejo de Agua Aprobado </label>
+          </td>
+          <td style="width: 650px">
+
+            <%= condiciones_acuicultura.espejo_agua %>
+
+
+          </td>
+	</tr>
+
+    <tr>
+          <td>
+             <label>Espejo de Agua Totales en la UP </label>
+          </td>
+          <td>
+
+            <%= condiciones_acuicultura.espejo_agua_up %>
+
+
+          </td>
+	</tr>
+
+    <tr>
+          <td>
+             <label>Espejo de Agua Totales en Producción o Efectivo </label>
+          </td>
+          <td>
+
+            <%= condiciones_acuicultura.espejo_agua_produccion %>
+
+
+          </td>
+	</tr>
+
+
+    <tr>
+        <td>
+            <label>Duración del Ciclo de Cultivo </label>
+        </td>
+        <td>
+
+              <%= condiciones_acuicultura.duracion_ciclo %>
+        </td>
+    </tr>
+
+
+<tr>
+          <td>
+             <label>Número de Lagunas Efectivas </label>
+          </td>
+          <td>
+
+            <%= condiciones_acuicultura.lagunas_efectivas %>
+
+          </td>
+	</tr>
+
+<tr>
+          <td>
+             <label>Número de Lagunas Totales </label>
+          </td>
+          <td>
+
+            <%= condiciones_acuicultura.lagunas_totales %>
+
+          </td>
+	</tr>
+
+
+    <tr>
+          <td>
+             <label>Peso Promedio de Cosechas (Kgs) </label>
+          </td>
+          <td>
+
+            <%= condiciones_acuicultura.peso_cosecha %>
+
+          </td>
+	</tr>
+
+  <tr>
+          <td>
+             <label>Densidad de Siembra (Peces / m2) </label>
+          </td>
+          <td>
+
+            <%= condiciones_acuicultura.densidad_siembra %>
+
+          </td>
+	</tr>
+
+
+    <tr>
+          <td>
+             <label>Especie Cultivada </label>
+          </td>
+          <td>
+            <% @TipoEspecie=TipoEspecieAcuicultura.find(condiciones_acuicultura.tipo_especie_id) %>
+            <%= @TipoEspecie.nombre %>
+
+          </td>
+	</tr>
+ </table>
+</td>

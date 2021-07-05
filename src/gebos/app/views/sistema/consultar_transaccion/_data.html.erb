@@ -1,0 +1,39 @@
+<% transaccion = @transaccion if transaccion.nil? %>
+
+<td style="text-align: center">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.img_expandir')), :title=>I18n.t('Sistema.Body.Vistas.General.expandir')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:action => :expand, :transaccion_id => transaccion.id}) -%>
+</td>
+<td>
+  <%= transaccion.id if !transaccion.reversada %>
+</td>
+<td>
+  <%= transaccion.meta_transaccion.nombre if !transaccion.reversada %>
+</td>
+<td>
+  <%= transaccion.usuario.nombre_usuario unless transaccion.usuario.nil? %>
+</td>
+<td>
+  <%= if !transaccion.fecha_f.nil? then transaccion.fecha_f else Time.now.strftime("#{I18n.t('time.formats.gebos_large')}") end %>
+</td>
+<td>
+  <%= transaccion.prestamo.numero unless transaccion.prestamo.nil?  if !transaccion.reversada %>
+</td>
+<td>
+  <%= transaccion.prestamo.cliente.class.to_s=='ClienteEmpresa' ?
+    transaccion.prestamo.cliente.empresa.alias : transaccion.prestamo.cliente.persona.nombre_corto unless transaccion.prestamo.nil?%>
+</td>
+<td>
+  <%= transaccion.descripcion  %>
+</td>
+<td>
+  <%= transaccion.monto_transaccion_fm  if !transaccion.reversada%>
+</td>
+
+<td id="reversar_<%= transaccion.id %>">
+  <%= alink('sistema/consultar_transaccion',
+    'reversar', transaccion.id, transaccion.descripcion, 
+    {:action => :reversar, :transaccion_id => transaccion.id}).html_safe if !transaccion.reversada %>
+</td>

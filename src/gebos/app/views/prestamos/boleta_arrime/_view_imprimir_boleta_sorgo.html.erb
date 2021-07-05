@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+<title>Documento sin t&iacute;tulo</title>
+</head>
+
+<body>
+<table width="950" border="1">
+  <tr>
+    <td colspan="8"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_de_laboratorio')%> </label></div></td>
+  </tr>
+  <tr>
+    <td width="128"><div align="center"><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.parentesis_sorgo')%></label></div></td>
+    <td width="84"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+    <td width="103"><div align="center"></div></td>
+    <td width="153"><div align="center"></div></td>
+    <td width="84"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+    <td width="109"><div align="center"></div></td>
+    <td width="150"><div align="center"></div></td>
+    <td width="88"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+  </tr>
+  <tr>
+    <td><div align="left"><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad')%> </div></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.humedad)%>
+    <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_germinados_danados')%> </td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.germinados_danados)%>
+    <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_cristalizados')%></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.cristalizados)%>
+    <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td><div align="left"><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza')%></div></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.impureza)%>
+    <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_danados_insectos')%> </td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.danados_insectos)%>
+    <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_amilaceos')%></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.amilaceos)%>
+    <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td><div align="left"><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.mezcla_color')%></div></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.mezcla_color)%>
+    <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_quemados')%></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.quemados )%>
+    <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_infectados')%></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.infectados )%>
+         <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td><div align="left"><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.luv')%></div></td>
+    <td>
+      <%unless @laboratorio_sorgo.nil? %>
+        <% if @laboratorio_sorgo.luv == 'A'%>
+          <%=I18n.t('Sistema.Body.General.no_aplica')%>
+        <%elsif @laboratorio_sorgo.luv == 'P'%>
+          <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.positivo')%>
+        <%elsif @laboratorio_sorgo.luv == 'N'%>
+          <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.negativo')%>
+        <%end%>
+      <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_microorganismos')%></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%=format_fm(@laboratorio_sorgo.danados_microorganismos )%>
+    <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_total')%></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.danados_total)%>
+    <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td><div align="center"></div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_partidos')%></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.partidos)%>
+    <%end%>
+    </td>
+    <td>&nbsp;</td>
+    <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.semillas_objetables')%></td>
+    <td><%unless @laboratorio_sorgo.nil?%>
+         <%= format_fm(@laboratorio_sorgo.semillas_objetables)%>
+    <%end%>
+    </td>
+  </tr>
+
+</table>
+</body>
+</html>

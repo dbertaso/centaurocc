@@ -1,0 +1,179 @@
+<%# encoding: utf-8%>
+<%= stylesheet_link_tag    "menu", "main","calendar_date_select", :media => "all" %>
+
+<%
+  require 'htmlentities'
+  
+
+  comite=Comite.find params[:comite_id]
+  punto_cuenta=PuntoCuenta.find comite.punto_cuenta_id
+  str_dia = comite.fecha_apertura.day
+  str_mes = comite.fecha_apertura.month
+  str_ano = comite.fecha_apertura.year
+  sql_estado="
+    select e.nombre
+    from   ciudad c, estado e
+    where  c.estado_id=e.id
+    and    c.id=#{Oficina.find(session[:oficina]).ciudad_id.to_s}"
+  estado_nombre=Estado.find_by_sql(sql_estado)[0]  
+  coordinador_oficina=Oficina.find(session[:oficina]).primer_nombre_supervisor << " " << Oficina.find(session[:oficina]).primer_apellido_supervisor
+  def cadena(cad)
+    coder = HTMLEntities.new
+    cad   = cad.gsub(/[']/, '’').gsub("&Sigma;","∑")
+    cad   = coder.encode(cad,:named)
+    cad   = cad.gsub("\n","<br/>")
+    return cad
+  end
+
+%>
+
+<table width="100%">
+  <tr>
+    <td><%#=image_tag("logo_fondas_2.png")%><!--<img src="assets/logo_fondas_2.png"/>--></td>
+    <td>
+      <table> 
+        <tr  align="center">
+          <td><font size="2px"><b><%= ((I18n.t('Sistema.Body.Vistas.General.acta') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.aprobacion') << " " << I18n.t('Sistema.Body.Vistas.General.del')).upcase).gsub('á','&Aacute;').gsub('é','&Eacute;').gsub('í','&Iacute;').gsub('ó','&Oacute;').gsub('ú','&Uacute;').html_safe %></b></font></td>
+        </tr>
+        <tr align="center">
+          <td><font size="2px"><b><%=(I18n.t('Sistema.Body.Vistas.General.comite')).upcase.gsub('á','&Aacute;').gsub('é','&Eacute;').gsub('í','&Iacute;').gsub('ó','&Oacute;').gsub('ú','&Uacute;').html_safe %> <%=params[:tipo_comite]=='e' ? (I18n.t('Sistema.Body.Vistas.General.estadal')).upcase : (I18n.t('Sistema.Body.Vistas.General.nacional')).upcase %> <%=(I18n.t('Sistema.Body.Vistas.General.de')).upcase << " " << (I18n.t('Sistema.Body.Vistas.General.financiamiento')).upcase %></b></font></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<br/>
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr>
+      <td width="85%"></td>
+      <td width="5%" bgcolor="#dcdcdc" align="center">
+        <font size="0.1px"><%=(I18n.t('Sistema.Body.Vistas.General.dia')).upcase%></font>
+      </td>
+      <td width="5%" bgcolor="#dcdcdc" align="center">
+        <font size="0.1px"><%=(I18n.t('Sistema.Body.Vistas.General.mes')).upcase%></font>
+      </td>
+      <td width="5%" bgcolor="#dcdcdc" align="center">
+        <font size="0.1px"><%=((I18n.t('Sistema.Body.Vistas.General.año')).upcase.gsub('ñ','&Ntilde;')).html_safe %></font>
+      </td>
+  </tr>
+</table>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr>
+    <td width="85%">
+      <font align="center" size="1px"><b>&nbsp;&nbsp;&nbsp;<%= ("#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.sesion')}".gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %>:</b></font>&nbsp;&nbsp;&nbsp;
+      <font align="center" size="2px"><b><i><%=comite.numero%> </i></b></font>
+    </td>
+    <td width="5%" align="center">
+      <font align="center" size="0.3px"><i><%=str_dia%></i></font>
+    </td>
+    <td width="5%" align="center">
+      <font align="center" size="0.3px"><i><%=str_mes%></i></font>
+    </td>
+    <td width="5%" align="center">
+      <font align="center" size="0.3px"><i><%=str_ano%></i></font>
+    </td>
+  </tr>
+</table>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr height="20px">
+    <td width="30%" align="left">
+      <font  size="1px">
+        &nbsp;&nbsp;&nbsp;<b><%=I18n.t('Sistema.Body.Vistas.General.estado')%>:</b>&nbsp;
+      </font>
+      <font size="1px">
+        <%=estado_nombre[:nombre]%>
+      </font>
+    </td>
+    <td width="30%" align="left">
+      <font size="1px">&nbsp;&nbsp;&nbsp;<b><%=I18n.t('Sistema.Body.Vistas.General.oficina')%>:</b></font>
+      <font size="1px">
+        <%=Oficina.find(session[:oficina]).nombre%>
+      </font>
+    </td>
+    <td width="40%" align="left">
+      <font size="1px">&nbsp;&nbsp;&nbsp;<b><%=I18n.t('Sistema.Body.Vistas.General.coordinador')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.General.oficina')%>:</b></font>
+      <font size="1px">
+        <%=coordinador_oficina%>
+      </font>
+    </td>
+  </tr>
+</table>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr height="20px">
+    <td align="left">
+      <font size="1px">&nbsp;&nbsp;&nbsp;<b><%=I18n.t('Sistema.Body.Vistas.General.asunto')%>:</b></font><br/>
+      <font size="1.5px">
+        <%=cadena(punto_cuenta[:asunto])%><br/><br/>
+      </font>
+    </td>
+  </tr>
+</table>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr height="20px">
+    <td align="left">
+      <font size="1px">&nbsp;&nbsp;&nbsp;<b><%=I18n.t('Sistema.Body.Vistas.General.resumen') << " " << I18n.t('Sistema.Body.Vistas.General.ejecutivo')%>:</b></font><br/>
+      <font size="1.5px">
+        <%=cadena(punto_cuenta[:resumen_ejecutivo])%>
+        <br/><br/>
+      </font>
+    </td>
+  </tr>
+</table>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr height="20px">
+    <td align="left">
+      <font size="1px">&nbsp;&nbsp;&nbsp;<b><%=I18n.t('Sistema.Body.Vistas.General.recomendaciones')%>:</b></font><br/>
+      <font size="1.5px">
+        <%=cadena(punto_cuenta[:recomendaciones])%><br/><br/>
+      </font>
+    </td>
+  </tr>
+</table>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr height="20px">
+    <td align="left">
+      <font size="1px">&nbsp;&nbsp;&nbsp;<b><%=I18n.t('Sistema.Body.Vistas.General.anexos')%>:</b></font><br/>
+      <font size="1.5px">
+        <%#=Iconv.iconv("ISO-8859-1", "utf-8", punto_cuenta[:anexo].gsub("\n","<br />")) if !punto_cuenta[:anexo].nil? %>
+        <%=cadena(punto_cuenta[:anexo]) if !punto_cuenta[:anexo].nil?%><br/><br/>
+      </font>
+    </td>
+  </tr>
+</table>
+
+<!-- NEED 10 -->
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr>
+    <td width="50%" colspan="3" valign="top" bgcolor="#dcdcdc"><font size="0.5px">&nbsp;&nbsp;&nbsp;<b>VB <%= (I18n.t('Sistema.Body.Modelos.Prestamo.Estatus.consultoria_juridica').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %></b></font></td>
+    <td width="50%" colspan="3" align="center" bgcolor="#dcdcdc"><font size="0.5px"><b><%= (I18n.t('Sistema.Body.Vistas.ComiteResumen.Mensajes.se_somete').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %><br/><%= (I18n.t('Sistema.Body.Vistas.ComiteResumen.Mensajes.comite_nacional').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %></b></font></td>
+  </tr>
+  <tr>
+    <td colspan="3" height="100px" valign="top"><font size="0.2px">&nbsp;&nbsp;&nbsp;<b><%=I18n.t('Sistema.Body.Vistas.General.firma')%> <%=I18n.t('Sistema.Body.Vistas.General.y')%> <%=I18n.t('Sistema.Body.Vistas.General.sello')%></b></font></td>
+  </tr>
+  <tr>
+    <td width="50%" colspan="3" valign="top" align="center"><font size="0.5px"><b><%= (I18n.t('Sistema.Body.Vistas.ComiteResumen.Mensajes.gerente_financiamiento').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %></b></font></td>
+    <td width="50%" colspan="3" align="center" align="center"><font size="0.5px"><b><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.presidente') %></b></font></td>
+  </tr>
+</table>
+
+<table border="0" align="right" width="100%">
+  <tr>
+    <td width="40%">&nbsp;</td>
+    <td width="30%" align="right" valign="buttom">
+      <font size="1.5px"><b><%=I18n.t('Sistema.Body.Controladores.Usuario.FormTitles.form_title_record')%>:</b></font>
+      <font size="1.5px"><%=@usuario.primer_nombre << @usuario.primer_apellido%></font>
+    </td>
+    <td width="30%" align="right" valign="buttom">
+      <font size="1.5px"><b><%= I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.fecha_impresion') %>:</b></font>
+      <% time=Time.now %>
+      <font size="1.5px"><%=format_fecha(Time.now).to_s << ":" << time.hour.to_s << "hr " %> </font>
+    </td>
+  </tr>
+</table>

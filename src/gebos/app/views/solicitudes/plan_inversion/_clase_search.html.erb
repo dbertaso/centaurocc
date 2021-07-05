@@ -1,0 +1,6 @@
+<%=select(
+  'solicitud_maquinaria','clase_id',
+  @clase.map{|e| [e.nombre, e.id]},
+  { :prompt=>'Seleccione...'},
+  { :class=>'select' })
+%>

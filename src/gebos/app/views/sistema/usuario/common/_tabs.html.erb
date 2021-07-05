@@ -1,0 +1,48 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='usuario' && action_name!='change_clave'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+    <% 
+    else 
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'usuario', :action => :edit, :id => @usuario.id) if action_name == 'index' || action_name == 'change_clave' %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'usuario', :action => :view, :id => @usuario.id) if action_name == 'view' %>
+        </div></li>
+    <% 
+    end
+
+    if @usuario.id
+
+      if controller_name=='usuario_rol' %>
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.roles') %></a></div></li>
+      <% 
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.roles'), :controller => 'usuario_rol', :action => :index, :usuario_id => @usuario.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'change_clave') %>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.roles'), :controller => 'usuario_rol', :action => :view, :usuario_id => @usuario.id) if (action_name == 'view' ) %>
+          </div></li>
+      <%
+      end
+    end
+
+    if @usuario.id
+      if controller_name=='cambiar_clave' %>
+        <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.clave')%></a></div></li>
+      <% 
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.clave'), :controller => 'cambiar_clave', :action => :index, :usuario_id => @usuario.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'save_edit') %>
+          </div></li>  
+      <%
+      end
+    end
+  %>
+  </ul>
+</div>

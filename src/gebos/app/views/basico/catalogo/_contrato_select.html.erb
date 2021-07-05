@@ -1,0 +1,53 @@
+<table style="width: 100%" border="0">
+<tr>
+  <td style="width: 20%">
+    <label>País de origen:</label> <span style="color:red">*</span>
+  </td>
+  <td style="width: 80%">
+    <%= select(
+      'catalogo','pais_id',
+      @pais.map{|e| [e.nombre, e.id]},
+      { :prompt=>'Seleccione...' },
+      { :class=>'select', :onchange=>'inputChange();'})
+    %>
+  </td>
+</tr>
+
+<tr>
+  <td width="200px">
+     <label>Fecha de llegada:</label> <span style="color:red">*</span>
+ </td>
+ <td>
+    <%= text_field 'catalogo', 'fecha_llegada_f', :class=>'text', :style=>'width:90px',
+      :maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();'-%>
+    <%=calendar 'catalogo_fecha_llegada_f', 'calendar_fecha_llegada'-%>(dd/mm/aaaa)
+ </td>
+</tr>
+
+<tr>
+  <td>
+    <label>Puerto de llegada:</label> <span style="color:red">*</span>
+  </td>
+  <td>
+    <%= text_field 'catalogo', 'puerto_llegada', :class=>'text', :style=>'width: 230px', :maxlength=>'200'  -%>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <label>Movilizado a:</label>
+  </td>
+  <td>
+    <%= text_field 'catalogo', 'movilizado', :class=>'text', :style=>'width: 230px', :maxlength=>'250'  -%>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <label>Nombre del buque:</label> <span style="color:red">*</span>
+  </td>
+  <td>
+    <%= text_field 'catalogo', 'nombre_buque', :class=>'text', :style=>'width: 230px', :maxlength=>'200'  -%>
+  </td>
+</tr>
+</table>

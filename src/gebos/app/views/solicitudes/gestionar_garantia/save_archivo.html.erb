@@ -1,0 +1,12 @@
+<script type="text/javascript">
+  //alert(<%= @sol_id%>);
+  //alert(<%= @solicitud_tg_id%>);
+  onload = function()
+  {
+   window.location = '<%= "http://#{request.host.to_s}:#{request.port.to_s}/solicitudes/gestionar_garantia/edit_informe?id=#{@solicitud_tg_id}&solicitud_id=#{@sol_id}" %>';
+  }
+
+</script>
+
+<p style="text-align: center">Cargando... <%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cargando')),:title=>I18n.t('Sistema.Body.Vistas.General.cargando')) %></p>
+

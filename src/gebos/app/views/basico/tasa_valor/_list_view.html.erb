@@ -1,0 +1,49 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+      <th style="width: 130px" <%= sort_class_helper('tasa_valor.fecha_resolucion_desde') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.resolucion')} #{I18n.t('Sistema.Body.Vistas.Form.desde')}", 'tasa_valor.fecha_resolucion_desde', 'tasa_valor_list' %>
+      </th>
+      <th style="width: 130px" <%= sort_class_helper('tasa_valor.fecha_resolucion_hasta') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.resolucion')} #{I18n.t('Sistema.Body.Vistas.Form.hasta')}", 'tasa_valor.fecha_resolucion_hasta', 'tasa_valor_list' %>
+      </th>
+    <th style="width: 130px" <%= sort_class_helper('tasa_valor.fecha_actualizacion') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.actualizacion')}", 'tasa_valor.fecha_actualizacion', 'tasa_valor_list' %>
+      </th>
+      <th style="width: 130px" <%= sort_class_helper('tasa_valor.resolucion') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.resolucion'), 'tasa_valor.resolucion', 'tasa_valor_list' %>
+      </th>
+    <th style="width: 130px" <%= sort_class_helper('tasa_valor.valor') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.valor'), 'tasa_valor.valor', 'tasa_valor_list' %>
+    </th>
+  </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+      even_odd = 1
+      for tasa_valor in @list
+        even_odd = 1 - even_odd %>
+
+      <% tasa_valor = @tasa_valor if tasa_valor.nil? %>
+      <tr class="lista<%= even_odd %>" id="row_<%= tasa_valor.id %>">
+        <td>
+          <%= tasa_valor.fecha_resolucion_desde_f  %>
+        </td>
+        <td>
+          <%= tasa_valor.fecha_resolucion_hasta_f %>
+        </td>
+        <td>
+          <%= tasa_valor.fecha_actualizacion_f  %>
+        </td>
+        <td>
+          <%= tasa_valor.resolucion  %>
+        </td>
+        <td style="text-align: right">
+          <%= format_float tasa_valor.valor_f %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

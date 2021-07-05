@@ -1,0 +1,24 @@
+<% condiciones_acuicultura = @condiciones_acuicultura if condiciones_acuicultura.nil? %>
+<td align="right">
+  <%= condiciones_acuicultura.espejo_agua_fm %>
+</td>
+<td align="center">
+  <%= condiciones_acuicultura.duracion_ciclo %>
+</td>
+<td align="right">
+  <%= condiciones_acuicultura.peso_cosecha_fm %>
+</td>
+<td align="right">
+  <%= condiciones_acuicultura.densidad_siembra_fm %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+    :url => {:controller => 'condiciones_acuicultura', :action => :edit, :id => @visitas.id, :id_condiciones_acuicultura=> condiciones_acuicultura.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+    :url => {:controller => 'condiciones_acuicultura', :action => :view, :id => @visitas.id, :id_condiciones_acuicultura => condiciones_acuicultura.id}) -%>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()', :loaded => 'image_unload()', :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'condiciones_acuicultura', :action => :delete, :id => @visitas.id, :id_condiciones_acuicultura => condiciones_acuicultura.id}) if vlink 'delete' -%>
+</td>

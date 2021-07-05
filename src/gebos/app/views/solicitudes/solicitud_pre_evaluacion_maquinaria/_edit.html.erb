@@ -1,0 +1,25 @@
+<tr id="row_<%= @unidad_produccion_maquinaria.id %>_edit">
+
+  <td class="lista-form" colspan="9">
+    <%= form_title_edit @unidad_produccion_maquinaria.descripcion_item %>
+
+    <%= error "row_#{@unidad_produccion_maquinaria.id}" %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id=>@unidad_produccion_maquinaria.id, :seguimiento_visita_id => @unidad_produccion_maquinaria.seguimiento_visita_id } ) do -%>
+    <%= render :partial => 'form' %>
+    <%= link_to_remote(
+      image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method =>:get,
+      :url => { :action => :cancel_edit, :id=>@unidad_produccion_maquinaria.id}) -%>
+  </td>
+</tr>
+</table>
+<% end -%>
+</td>
+
+</tr>

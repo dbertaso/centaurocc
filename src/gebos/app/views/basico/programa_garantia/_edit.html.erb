@@ -1,0 +1,27 @@
+<tr id="row_<%= @programa_tipo_garantia.id %>_edit">
+
+<script language="JavaScript">
+  varEnviado= false;
+</script>
+
+<td class="lista-form" colspan="5">
+  <%=I18n.t('Sistema.Body.Vistas.ProgramaGarantia.Header.modificando')%> <span class="titulo_modificar">'<%= @programa_tipo_garantia.nombre_garantia %>'</span>
+
+  <%= error "row_#{@programa_tipo_garantia.id}" %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()', :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id=>@programa_tipo_garantia.id,  :programa_id => @programa.id } ) do -%>
+    </br>
+    <%= render 'form' %>
+
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar'))),
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => :cancel_edit, :id=>@programa_tipo_garantia.id,  :programa_id => @programa.id}) -%>
+  <% end -%>
+
+</td>
+</tr>
+</table>
+
+</div>

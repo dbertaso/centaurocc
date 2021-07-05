@@ -1,0 +1,86 @@
+<script LANGUAGE="JavaScript">
+
+  <!--
+  function confirmar_envio (mensaje,fecha_inicio,fecha_fin)
+  {
+
+    var agree=confirm(mensaje);
+
+    if (agree) {
+      $('confirmacion').value = 'true';
+      // $('form_envio').submit();
+      new Ajax.Request('/contabilidad/envio_asiento_contable/enviados?fecha_inicio=' + fecha_inicio + '&fecha_fin='+ fecha_fin, {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}, parameters:Form.serialize(document.forms[0])}); return false;
+      // new Ajax.Request("/prestamos/pago/ejecutar_pago?cliente_id=""&amp;prestamo_id="+prestamoid+", {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}, parameters:Form.serialize(document.forms[0])}); return false;
+
+    } else
+      $('confirmacion').value = '0';
+      return false ;
+    }
+</script>
+
+<div class="marco-titulo">
+  <div>
+    <div>
+	   <%= @form_title_records %>
+    </div>
+  </div>
+</div>
+<%= render :partial=>'contabilidad/envio_asiento_contable/common/tabs' %>
+<%= errores %>
+<%= message %>
+<br>
+<br>
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :enviados},
+  :html=>{:name=>'form_envio'} ) do -%>
+<%#= form_tag :method => :get, :action => 'enviados' do -%>
+
+  <%= hidden_field_tag 'confirmacion', '0', :id=>'confirmacion' -%>
+
+  <table style="width: 100%">
+  	
+    <tr>
+      <td style="width: 15%">
+        <label><%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.desde')}" %>:</label>
+      </td>
+      <td style="width: 65%">
+
+        <%= calendar_date_select '', 'fecha_desde',
+              :year_range => 110.years.ago..-1.years.ago,
+              :class=>'text',
+              :style=>'width:80px',
+              :maxlength=>'10',
+              :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();' %> &nbsp; 
+              <%= I18n.t('Sistema.Body.General.formato_fecha')%>        
+
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 15%">
+        <label><%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.hasta')}" %>:</label>
+      </td>
+      <td style="width: 65%">
+      
+        <%= calendar_date_select '', 'fecha_hasta',
+              :year_range => 110.years.ago..-1.years.ago,
+              :class=>'text',
+              :style=>'width:80px',
+              :maxlength=>'10',
+              :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();' %> &nbsp; 
+              <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+    	  
+      </td>
+    </tr>
+  	<tr>
+  		<td colspan="2" align="center">
+  			<%= submit_tag I18n.t('Sistema.Body.Controladores.Accion.enviar') %>
+  		</td>
+  	</tr>
+  </table>
+          
+<% end %>

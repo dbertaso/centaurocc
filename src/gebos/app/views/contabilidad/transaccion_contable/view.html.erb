@@ -1,0 +1,39 @@
+<%= form_title_view @transaccion_contable.nombre %>
+
+<%= render :partial=>'contabilidad/transaccion_contable/common/tabs' %>
+<div class="marco-contenido2">
+
+	<table>
+    	<tr>
+    		<td>
+    			<label><%= t('Sistema.Body.Vistas.TransaccionContable.Etiquetas.nombre_transaccion_contable')%></label>
+    		</td>
+    		<td>
+        		<%= @transaccion_contable.nombre -%>
+    		</td>
+    	</tr>
+      <tr>
+      </tr>
+    	<tr>
+    		<td>
+    			<label><%= t('Sistema.Body.Vistas.Form.descripcion')%></label>
+    		</td>
+    		<td>
+        		<%= @transaccion_contable.descripcion -%>
+    		</td>
+    	</tr>
+	</table>
+  
+  </br>
+  
+	<%= link_to(image_tag(image_path(t('Sistema.Body.Imagenes.boton_modificar'))),
+		:action => :edit,
+		:id => @transaccion_contable.id,
+		:html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+		
+	<%= link_to( image_tag(image_path(t('Sistema.Body.Imagenes.cerrar'))),
+		{ :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+</div>

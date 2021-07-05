@@ -1,0 +1,164 @@
+<center>	
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>	
+<div id="el_mensaje"></div>
+
+</center>
+
+<br/>
+
+<table width="35%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+       <span><%=I18n.t('Sistema.Body.Modelos.TransaccionFideicomiso.Mensajes.resumen_fideicomiso')%></span>
+       <br/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.programa')%>:
+    </td>
+    <td align="right">
+      <b><%= @programa_fideicomiso.nombre unless @programa_fideicomiso.nil?%></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.apertura')}"%>: 
+    </td>
+    <td align="right">
+      <b>
+        <%= format_fecha(@fideicomiso.fecha_creacion) unless @fideicomiso.nil?%>
+      </b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.porcentaje')%>:
+    </td>
+    <td align="right">
+      <b>
+         <%= format_fm(@fideicomiso.porcentaje) << " %" unless @fideicomiso.nil?%> 
+      </b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.saldo') << " " << I18n.t('Sistema.Body.Vistas.General.disponible')%>: 
+    </td>
+    <td align="right">
+      <b>
+        <%= format_fm(@fideicomiso.monto_disponible) unless @fideicomiso.nil?%>
+      </b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.sub_cuenta')%> <%=I18n.t('Sistema.Body.Vistas.General.banco')%>: 
+    </td>
+    <td align="right">
+      <b>
+        <%= format_fm(@fideicomiso.subcuenta_banco) unless @fideicomiso.nil?%>
+      </b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.sub_cuenta')%> <%= I18n.t('Sistema.Body.Vistas.General.insumos')%>: 
+    </td>
+    <td align="right">
+      <b>
+        <%= format_fm(@fideicomiso.subcuenta_insumos) unless @fideicomiso.nil?%>
+      </b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.sub_cuenta')%> <%= I18n.t('Sistema.Body.Vistas.General.gastos')%>: 
+    </td>
+    <td align="right">
+      <b>
+        <%= format_fm(@fideicomiso.subcuenta_gastos) unless @fideicomiso.nil?%>
+      </b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.sub_cuenta')%> <%=I18n.t('Sistema.Body.Vistas.General.sras')%>: 
+    </td>
+    <td align="right">
+      <b>
+        <%= format_fm(@fideicomiso.subcuenta_sras) unless @fideicomiso.nil?%>
+      </b>
+    </td>
+  </tr>
+
+</table>
+<br/>
+<br/>
+<br/>
+<%#= form_tag %>
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr  style ="font-size: 10px">
+		<th style="width: 100px" <%= sort_class_helper('fecha_movimiento') %>>
+			<%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.movimiento')}", 'fecha_movimiento', 'list' %>
+		</th>
+		<th style="width: 60px" <%= sort_class_helper('referencia') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.referencia'), 'referencia', 'list' %>
+		</th>
+		<th style="width:200px" <%= sort_class_helper('justificacion') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.justificacion'), 'justificacion', 'list' %>
+		</th>
+		<th style="width:80px" <%= sort_class_helper('usuario') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.usuario'), 'usuario', 'list' %>
+		</th>
+		<th style="width:80px" <%= sort_class_helper('nro_lote') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_lote'), 'nro_lote', 'list' %>
+		</th>
+		<th style="width:150px" <%= sort_class_helper('tipo_movimiento') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.movimiento'), 'tipo_movimiento', 'list' %>
+		</th>
+		<th style="width:40px" <%= sort_class_helper('modo_nota') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.modo'), 'modo_nota', 'list' %>
+		</th>
+		<th style="width: 60px" <%= sort_class_helper('monto_operacion') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.operacion'), 'monto_operacion', 'list' %>
+		</th>
+		<th style="width: 60px" <%= sort_class_helper('saldo_disponible_antes') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.saldo') << " " << I18n.t('Sistema.Body.Vistas.General.disponible') << " " << I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.antes'), 'saldo_disponible_antes', 'list' %>
+		</th>
+		<th style="width: 60px" <%= sort_class_helper('monto_banco') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.banco'), 'monto_banco', 'list' %>
+		</th>
+		<th style="width: 60px" <%= sort_class_helper('monto_insumos') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.insumos'), 'monto_insumos', 'list' %>
+		</th>
+		<th style="width: 60px" <%= sort_class_helper('monto_gastos') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.gastos'), 'monto_gastos', 'list' %>
+		</th>
+		<th style="width: 60px" <%= sort_class_helper('monto_sras') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sras'), 'monto_sras', 'list' %>
+		</th>
+		<th style="width: 50px" <%= sort_class_helper('comision') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.comision'), 'comision', 'list' %>
+		</th>
+		<th style="width: 60px" <%= sort_class_helper('saldo_disponible_despues') %>>			
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.saldo') << " " << I18n.t('Sistema.Body.Vistas.General.disponible') << " " << I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.despues'), 'saldo_disponible_despues', 'list' %>
+		</th>
+		<th style="width: 30px">
+			<%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+		</th>
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for fideicomiso_movimientos in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :fideicomiso_movimientos => fideicomiso_movimientos, :even_odd => even_odd } -%>
+<% end %>
+<input type="hidden" id = "movimiento_id" name = "movimiento_id" value=""/>
+</tbody>
+</table>
+<%= form_pagination %>
+<%#= end_form_tag %>

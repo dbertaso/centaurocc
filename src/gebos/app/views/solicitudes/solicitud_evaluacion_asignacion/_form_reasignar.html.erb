@@ -1,0 +1,37 @@
+<table style="width: 100%">
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tecnico')} #{I18n.t('Sistema.Body.Vistas.General.asignado')}" %>:</label></td>
+    </td>
+    <td>
+      <b><%= @usuario.primer_nombre + ' ' + @usuario.primer_apellido %></b>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tecnico')} #{I18n.t('Sistema.Body.Vistas.General.a')} #{I18n.t('Sistema.Body.Vistas.General.asignar')}" %>:</label></td>
+    <td>
+      <%= select(
+          'control_asignacion', 'usuario_id',
+          @usuario_select.map{|e| [e.primer_nombre + ' ' + e.primer_apellido, e.id]},
+          { :prompt=> "Seleccionar" },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label>
+    </td>
+    <td>
+      <%= text_area 'control_asignacion', 'observacion',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+
+</table>
+<br></br>

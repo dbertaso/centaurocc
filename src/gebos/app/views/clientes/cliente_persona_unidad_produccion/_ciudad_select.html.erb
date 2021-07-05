@@ -1,0 +1,5 @@
+<%= select(
+  'unidad_produccion', 'ciudad_id',
+  @ciudad_list.map{|c| [c.nombre, c.id]},
+  {:prompt=>'Seleccione una Ciudad'},
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

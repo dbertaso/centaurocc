@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sub_direccion" pageWidth="250" pageHeight="30" orientation="Landscape" columnWidth="250" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_id_cliente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select	case when ciudad.nombre isnull then ciudad_p.nombre else ciudad.nombre end as ciudad,
+	case when municipio.nombre isnull then municipio_p.nombre else municipio.nombre end as municipio,
+	case when parroquia.nombre isnull then parroquia_p.nombre else parroquia.nombre end as parroquia,
+	case when empresa_direccion.avenida isnull then persona_direccion.avenida else empresa_direccion.avenida end as avenida,
+	case when empresa_direccion.edificio isnull then persona_direccion.edificio else empresa_direccion.edificio end  as edificio,
+	case when empresa_direccion.zona isnull then persona_direccion.zona else empresa_direccion.zona end as zona,
+	case when empresa_direccion.referencia isnull then persona_direccion.referencia else empresa_direccion.referencia end  as referencia,
+	case when empresa_direccion.codigo_postal isnull then persona_direccion.codigo_postal else empresa_direccion.codigo_postal end as codigo_postal,
+	empresa.id as id_empresa,
+        persona.id as id_persona
+
+from	cliente
+                left join empresa          		on (empresa.id = cliente.empresa_id)
+                left join persona           		on (persona.id = cliente.persona_id)
+                left join persona_direccion 		on (persona_direccion.persona_id = persona.id)
+		left join empresa_direccion 		on (empresa_direccion.empresa_id = empresa.id)
+		left join ciudad            		on (empresa_direccion.ciudad_id = ciudad.id)
+		left join municipio         		on (empresa_direccion.municipio_id = municipio.id)
+		left join parroquia	    		on (empresa_direccion.parroquia_id = parroquia.id)
+		left join ciudad as ciudad_p		on (persona_direccion.ciudad_id = ciudad_p.id)
+		left join municipio as municipio_p	on (persona_direccion.municipio_id = municipio_p.id)
+		left join parroquia as parroquia_p	on (persona_direccion.parroquia_id = parroquia_p.id)
+
+where	cliente.id = $P{p_id_cliente}
+limit 1]]>
+	</queryString>
+	<field name="ciudad" class="java.lang.String"/>
+	<field name="municipio" class="java.lang.String"/>
+	<field name="parroquia" class="java.lang.String"/>
+	<field name="avenida" class="java.lang.String"/>
+	<field name="edificio" class="java.lang.String"/>
+	<field name="zona" class="java.lang.String"/>
+	<field name="referencia" class="java.lang.String"/>
+	<field name="codigo_postal" class="java.lang.String"/>
+	<field name="id_empresa" class="java.lang.Integer"/>
+	<field name="id_persona" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-3" x="0" y="0" width="50" height="10"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="50" y="0" width="200" height="10"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{municipio} + " " + $F{parroquia} + " " +
+$F{ciudad}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-1" x="0" y="10" width="250" height="20"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isItalic="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{zona} + " " + $F{avenida} + " " + $F{edificio} + " " + $F{referencia} + " " + $F{codigo_postal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

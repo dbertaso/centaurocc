@@ -1,0 +1,5 @@
+<%  unless @referencia.nil? %>
+<font color="red"><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.referencia_gaceta')%> </font>
+  <%precio = sprintf('%01.2f', @referencia.valor ).sub('.', ',')%>
+  <%=precio.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+<%end%>

@@ -1,0 +1,4 @@
+<% comunidad_indigena = @comunidad_indigena if comunidad_indigena.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= comunidad_indigena.id %>">
+	<%= render :partial => 'data', :locals => { :comunidad_indigena => comunidad_indigena, :even_odd => even_odd } -%>
+</tr>

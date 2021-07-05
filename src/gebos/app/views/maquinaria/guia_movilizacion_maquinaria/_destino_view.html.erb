@@ -1,0 +1,58 @@
+<%unless @guia_movilizacion_maquinaria.destino.nil?%>
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 160px">
+        <label><% if @guia_movilizacion_maquinaria.destino == 'F' %><%=I18n.t('Sistema.Body.Vistas.General.oficina')%>
+          <% elsif  @guia_movilizacion_maquinaria.destino == 'U' %><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.unidad_produccion')%>
+          <% elsif @guia_movilizacion_maquinaria.destino == 'O' %><%=I18n.t('Sistema.Body.Vistas.Form.evento')%> 
+          <%end%></label>
+      </td>
+      <% if @guia_movilizacion_maquinaria.destino == 'F' %>
+        <td style="width: 620px"><%= @view_envio_maquinaria.oficina.nombre.to_s unless @view_envio_maquinaria.oficina.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 160px">
+          <label><%=I18n.t('Sistema.Body.General.direccion')%> </label>
+        </td>
+        <td style="width: 620px"><%=I18n.t('Sistema.Body.Vistas.General.estado')%> <%= @view_envio_maquinaria.oficina.municipio.estado.nombre.to_s unless @view_envio_maquinaria.oficina.municipio.estado.nil? %>, Municipio <%= @view_envio_maquinaria.oficina.municipio.nombre.to_s unless @view_envio_maquinaria.oficina.municipio.nil? %>, Ciudad <%= @view_envio_maquinaria.oficina.ciudad.nombre.to_s unless @view_envio_maquinaria.oficina.ciudad.nil? %></td>
+      </tr>
+    <% elsif @guia_movilizacion_maquinaria.destino == 'U' %>
+      <td style="width: 620px"><%= @view_envio_maquinaria.unidad_produccion.to_s %> 
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 160px">
+        <label><%=I18n.t('Sistema.Body.General.direccion')%> </label>
+      </td>
+      <td style="width: 620px"><%= @view_envio_maquinaria.unidad_produccion_direccion.to_s%></td>
+    </tr>
+    <tr>
+      <td style="width: 160px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> </label>
+      </td>
+      <td style="width: 620px"><%= @view_envio_maquinaria.telefono.to_s%></td>
+    </tr>
+  <% elsif @guia_movilizacion_maquinaria.destino == 'O' %>
+    <td style="width: 620px">
+      <%= @guia_movilizacion_maquinaria.evento.to_s unless @guia_movilizacion_maquinaria.evento.nil? %> </td>
+    </tr>
+    <tr>
+      <td style="width: 160px">
+        <label><%=I18n.t('Sistema.Body.General.direccion')%> </label>
+      </td>
+      <td style="width: 620px">
+<%= @guia_movilizacion_maquinaria.direccion_destino.to_s unless @guia_movilizacion_maquinaria.direccion_destino.nil? %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 160px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> </label>
+      </td>
+      <td style="width: 620px">
+<%= @guia_movilizacion_maquinaria.telefono_destino.to_s unless @guia_movilizacion_maquinaria.telefono_destino.nil? %>
+      </td>
+    </tr>
+  <%end%>  
+  </table>
+<%end%>

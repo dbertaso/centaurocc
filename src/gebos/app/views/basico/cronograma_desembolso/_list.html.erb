@@ -1,0 +1,27 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 100px" <%= sort_class_helper('numero_desembolso') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')}  #{I18n.t('Sistema.Body.Vistas.General.desembolso')}", 'numero_desembolso', 'list' %>
+      </th>
+      <th style="width: 400px" <%= sort_class_helper('dias') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.tiempo')} #{I18n.t('Sistema.Body.Vistas.General.para')}  #{I18n.t('Sistema.Body.General.el')}  #{I18n.t('Sistema.Body.Vistas.General.desembolso')}", 'dias', 'list' %>
+      </th>
+      </th>
+
+      <th style="width: 100px">
+      </th>
+
+    </tr>
+    </thead>
+  <tbody id="list_body">
+    <%
+      even_odd = 1
+      for cronograma_desembolso in @list
+        even_odd = 1 - even_odd %>
+        <%= render :partial => 'row', :locals => { :cronograma_desembolso => cronograma_desembolso, :even_odd => even_odd } -%>
+      <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,99 @@
+<% motores = @motores if motores.nil? %>
+<td colspan="2" align="right">
+  <table width="96%">
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+
+      <span>Modelo del Motor:  <label style="color: red"><%= motores.modelo_motor unless motores.modelo_motor.nil? %></label></span>
+    </td>
+</tr>
+
+    <tr>
+          <td style="width: 300px">
+             <label>Es propio:</label>
+          </td>
+          <td style="width: 650px">
+             <%=format_bool motores.es_propio unless motores.es_propio.nil? %>
+          </td>
+  </tr>
+
+  <tr>
+        <td>
+              <label>Cantidad a Solicitar:</label>
+        </td>
+        <td>
+            <%=  motores.cantidad_motores unless motores.cantidad_motores.nil? %>
+        </td>
+  </tr>
+
+
+  <tr>
+        <td>
+                <label>Tipo de Motor:</label>
+        </td>
+        <td>
+            <%  tipo_motor = TipoMotor.find(motores.tipo_motor_id) %>
+            <%=  tipo_motor.tipo unless motores.tipo_motor_id.nil? %>
+        </td>
+  </tr>
+
+  <tr>
+        <td>
+            <label>Serial:</label>
+        </td>
+        <td>
+            <%=  motores.numero_serial unless motores.numero_serial.nil? %>
+        </td>
+</tr>
+<tr>
+        <td>
+                <label>Año:</label>
+        </td>
+        <td>
+            <%=  motores.ano unless motores.ano.nil? %>
+        </td>
+</tr>
+<tr>
+        <td>
+                <label>Potencia:</label>
+        </td>
+        <td>
+            <%=  motores.potencia_f unless motores.potencia.nil? %>  (Caballos de fuerza)
+        </td>
+</tr>
+
+<tr>
+        <td>
+                <label>Proveedor Marino</label>
+        </td>
+        <td>
+            <%  proveedor = ProveedorMarino.find(motores.proveedor_marino_id) %>
+            <%=  proveedor.nombre unless motores.proveedor_marino_id.nil? %>
+
+        </td>
+</tr>
+  <tr>
+      <td colspan="2">
+        <label style="color: red">Nuevas Especificaciones:</label>
+      </td>
+  </tr>
+  <tr>
+      <td>
+              <label>Condiciones del Motor</label>
+      </td>
+      <td>
+           <%=  motores.condicion unless motores.condicion.nil? %>
+      </td>
+  </tr>
+
+  <tr>
+      <td>
+              <label>Observaciones</label>
+      </td>
+      <td>
+           <%=  motores.observacion unless motores.observacion.nil? %>
+
+      </td>
+  </tr>
+</table>
+</td>

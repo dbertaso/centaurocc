@@ -1,0 +1,814 @@
+<%  @pastizales_potreros = PastizalesPotreros.find(:all,:conditions=>"seguimiento_visita_id=#{@seguimiento_visita.id}")%>
+<%  @manejo_instalaciones = ManejoInstalaciones.find_by_seguimiento_visita_id(@seguimiento_visita.id)%>
+<%  @sanidad_animal = SanidadAnimal.find_by_seguimiento_visita_id(@seguimiento_visita.id)%>
+<%  if @sanidad_animal %>
+    <%  @vacunas = Vacunacion.find(:all, :conditions=>"sanidad_animal_id=#{@sanidad_animal.id}")%>
+<%  end %>
+<%  @semovientes = Semovientes.find_by_seguimiento_visita_id(@seguimiento_visita.id)%>
+<%  @produccion_leche_carne = ProduccionLecheCarne.find_by_seguimiento_visita_id(@seguimiento_visita.id) %>
+
+<% if !@pastizales_potreros[0].nil? %>
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Evaluación de Pastizales y Potreros</span>
+    </td>
+</tr>
+
+  <tbody id="list_body">
+    <%  for pastizales_potreros in @pastizales_potreros %>
+      <%= render :partial => 'row_pastizales_potreros', :locals => { :pastizales_potreros => pastizales_potreros } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+<% if @manejo_instalaciones %>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Manejo e Instalaciones</span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>El Productor adopta Tecnologías del Convenio Cuba - Venezuela? </label>
+    </td>
+    <td>
+      <% if !@manejo_instalaciones.tecnologia_convenio -%> No <% end %>
+      <% if @manejo_instalaciones.tecnologia_convenio -%> Si <% end %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>El Plan de Vacunación está Vigente</label>
+    </td>
+    <td>
+      <% if !@manejo_instalaciones.plan_vacunacion -%> No <% end %>
+      <% if @manejo_instalaciones.plan_vacunacion -%> Si <% end %>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Utiliza Inseminación Artificial </label>
+    </td>
+    <td>
+      <% if !@manejo_instalaciones.inseminacion_artificial -%> No <% end %>
+      <% if @manejo_instalaciones.inseminacion_artificial -%> Si <% end %>
+
+    </td>
+  </tr>
+  <tr>
+  <tr>
+    <td valign="top">
+      <label>Descripción de Pajuelas Utilizadas</label>
+    </td>
+
+    <td>
+      <%= @manejo_instalaciones.descripcion_pajuela unless @manejo_instalaciones.descripcion_pajuela.nil? %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Dispone de Sala de Ordeño?</label>
+    </td>
+    <td>
+      <% if !@manejo_instalaciones.sala_ordenio -%> No <% end %>
+      <% if @manejo_instalaciones.sala_ordenio -%> Si <% end %>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+      <label>Tipo de Ordeño</label>
+    </td>
+    <td>
+      <% if @manejo_instalaciones.tipo_ordenio == 'MA' -%> Ordeño Manual <% end %>
+      <% if @manejo_instalaciones.tipo_ordenio == 'ME' -%> Ordeño Mécanico <% end %>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+      <label>Calidad del Ordeño</label>
+    </td>
+    <td>
+      <% if @manejo_instalaciones.calidad_ordenio == 'E' -%> Excelente <% end %>
+      <% if @manejo_instalaciones.calidad_ordenio == 'B' -%> Bueno <% end %>
+      <% if @manejo_instalaciones.calidad_ordenio == 'R' -%> Regular <% end %>
+      <% if @manejo_instalaciones.calidad_ordenio == 'M' -%> Malo <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Dispone de Refrescadero para Leche?</label>
+    </td>
+    <td>
+      <% if !@manejo_instalaciones.refrescadero_leche -%> No <% end %>
+      <% if @manejo_instalaciones.refrescadero_leche -%> Si <% end %>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+      <label>Calidad del Refrescadero</label>
+    </td>
+    <td>
+      <% if @manejo_instalaciones.calidad_refrescadero == 'E' -%> Excelente <% end %>
+      <% if @manejo_instalaciones.calidad_refrescadero == 'B' -%> Bueno <% end %>
+      <% if @manejo_instalaciones.calidad_refrescadero == 'R' -%> Regular <% end %>
+      <% if @manejo_instalaciones.calidad_refrescadero == 'M' -%> Malo <% end %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>El Productor dispone de Registros?</label>
+    </td>
+    <td>
+      <% if !@manejo_instalaciones.registro -%> No <% end %>
+      <% if @manejo_instalaciones.registro -%> Si <% end %>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+      <label>Calidad del Registro</label>
+    </td>
+    <td>
+      <% if @manejo_instalaciones.calidad_registro == 'E' -%> Excelente <% end %>
+      <% if @manejo_instalaciones.calidad_registro == 'B' -%> Bueno <% end %>
+      <% if @manejo_instalaciones.calidad_registro == 'R' -%> Regular <% end %>
+      <% if @manejo_instalaciones.calidad_registro == 'M' -%> Malo <% end %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Provee Alimentos Concentrados?</label>
+    </td>
+    <td>
+      <% if !@manejo_instalaciones.alimento_concentrado -%> No <% end %>
+      <% if @manejo_instalaciones.alimento_concentrado -%> Si <% end %>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+      <label>Calidad del Alimento Concentrado</label>
+    </td>
+    <td>
+      <% if @manejo_instalaciones.calidad_alimento_concentrado == 'E' -%> Excelente <% end %>
+      <% if @manejo_instalaciones.calidad_alimento_concentrado == 'B' -%> Bueno <% end %>
+      <% if @manejo_instalaciones.calidad_alimento_concentrado == 'R' -%> Regular <% end %>
+      <% if @manejo_instalaciones.calidad_alimento_concentrado == 'M' -%> Malo <% end %>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>El Productor provee otro tipo de Suplementación?</label>
+    </td>
+    <td>
+      <% if !@manejo_instalaciones.otro_tipo_suplementacion -%> No <% end %>
+      <% if @manejo_instalaciones.otro_tipo_suplementacion -%> Si <% end %>
+
+    </td>
+
+  </tr>
+
+  <tr>
+    <td>
+      <label>Especifique </label>
+    </td>
+    <td>
+      <%= @manejo_instalaciones.especificar_suplementacion unless @manejo_instalaciones.especificar_suplementacion.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Calidad de la Suplementación Alimenticia</label>
+    </td>
+    <td>
+      <% if @manejo_instalaciones.calidad_suplementacion == 'E' -%> Excelente <% end %>
+      <% if @manejo_instalaciones.calidad_suplementacion == 'B' -%> Bueno <% end %>
+      <% if @manejo_instalaciones.calidad_suplementacion == 'R' -%> Regular <% end %>
+      <% if @manejo_instalaciones.calidad_suplementacion == 'M' -%> Malo <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label>Descripción de lo Observado</label>
+    </td>
+
+    <td>
+      <%= @manejo_instalaciones.descripcion_observado unless @manejo_instalaciones.descripcion_observado.nil? -%>
+    </td>
+  </tr>
+<% end  %>
+<% if @vacunas %>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Sanidad Animal - Vacunación</span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      	<table class="lista" style="width: 90%">
+          <thead>
+          <tr>
+            <th style="width: 50%">Tipo de Vacuna</th>
+            <th style="width: 50%">Fecha de la Última Vacunación</th>
+          </tr>
+          </thead>
+          <tbody id="list_body">
+            <%  even_odd = 1
+            for vacunas in @vacunas %>
+              <%= render :partial => 'row_vacunas', :locals => { :vacunas => vacunas, :even_odd => even_odd } -%>
+            <% end %>
+          </tbody>
+        </table>
+    </td>
+  </tr>
+  <% end %>
+  <% if @sanidad_animal %>
+  <tr>
+    <td>
+      <label>El Productor ha realizado Exámenes de Laboratorio?</label>
+    </td>
+    <td>
+
+      <% if !@sanidad_animal.examenes_laboratorio -%> No <% end %>
+      <% if @sanidad_animal.examenes_laboratorio -%> Si <% end %>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+      <label>Tipo de Exámen </label>
+    </td>
+    <td>
+      <%= @sanidad_animal.tipo_examen unless  @sanidad_animal.tipo_examen.nil?-%>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label>Resultados</label>
+    </td>
+
+    <td>
+      <%= @sanidad_animal.resultados unless  @sanidad_animal.resultados.nil?-%>
+    </td>
+  </tr>
+<% end %>
+<% if @semovientes %>
+    <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Semovientes</span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <table class="lista" style="width: 90%">
+          <thead>
+          <tr>
+            <th style="width: 155px">Grupo Etáreo</th>
+            <th style="width: 155px">Cantidad</th>
+            <th style="width: 155px">Condición Corporal</th>
+            <th style="width: 155px">Peso Promedio Kg</th>
+            <th style="width: 5px"></th>
+            <th style="width: 155px">Otras Especies</th>
+            <th style="width: 155px">Cantidad</th>
+         </tr>
+        </thead>
+        <tr class="lista0">
+          <td>
+            <label>Becerra</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_becerra unless  @semovientes.cantidad_becerra.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.condicion_corporal_becerra unless  @semovientes.condicion_corporal_becerra.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_becerra_f unless  @semovientes.peso_promedio_becerra.nil?-%>
+          </td>
+          <td></td>
+          <td>
+            <label>Porcinos</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_porcinos unless  @semovientes.cantidad_porcinos.nil?-%>
+          </td>
+        </tr>
+        <tr class="lista1">
+          <td>
+            <label>Becerro</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_becerro unless  @semovientes.cantidad_becerro.nil?-%>
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_becerro unless  @semovientes.condicion_corporal_becerro.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_becerro_f unless  @semovientes.peso_promedio_becerro.nil?-%>
+          </td>
+           <td></td>
+          <td>
+            <label>Conejos</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_conejos unless  @semovientes.cantidad_conejos.nil?-%>
+          </td>
+
+        </tr>
+
+        <tr class="lista0">
+          <td>
+            <label>Maute</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_maute unless  @semovientes.cantidad_maute.nil?-%>
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_maute unless  @semovientes.condicion_corporal_maute.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_maute_f unless  @semovientes.peso_promedio_maute.nil?-%>
+          </td>
+           <td></td>
+          <td>
+            <label>Caballos</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_caballos unless  @semovientes.cantidad_caballos.nil?-%>
+          </td>
+
+        </tr>
+
+        </tr>
+        <tr class="lista1">
+          <td>
+            <label>Mauta</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_mauta unless  @semovientes.cantidad_mauta.nil?-%>
+
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_mauta unless  @semovientes.condicion_corporal_mauta.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_mauta_f unless  @semovientes.peso_promedio_mauta.nil?-%>
+          </td>
+           <td></td>
+          <td>
+            <label>Aves</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_aves unless  @semovientes.cantidad_aves.nil?-%>
+
+          </td>
+
+        </tr>
+        <tr class="lista0">
+          <td>
+            <label>Novillo</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_novillo unless  @semovientes.cantidad_novillo.nil?-%>
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_novillo unless  @semovientes.condicion_corporal_novillo.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_novillo_f unless  @semovientes.peso_promedio_novillo.nil?-%>
+
+          </td>
+           <td></td>
+          <td>
+            <label>Burro</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_burro unless  @semovientes.cantidad_burro.nil?-%>
+
+          </td>
+
+        </tr>
+        <tr class="lista1">
+          <td>
+            <label>Novilla</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_novilla unless  @semovientes.cantidad_novilla.nil?-%>
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_novilla unless  @semovientes.condicion_corporal_novilla.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_novilla_f unless  @semovientes.peso_promedio_novilla.nil?-%>
+          </td>
+           <td></td>
+          <td>
+            <label>Mula</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_mula unless  @semovientes.cantidad_mula.nil?-%>
+
+          </td>
+
+        </tr>
+        <tr class="lista0">
+          <td>
+            <label>Retajo ó Recelador</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_retajo unless  @semovientes.cantidad_retajo.nil?-%>
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_retajo unless  @semovientes.condicion_corporal_retajo.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_retajo_f unless  @semovientes.peso_promedio_retajo.nil?-%>
+
+          </td>
+           <td></td>
+          <td>
+            <label>Ovino</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_ovino unless  @semovientes.cantidad_ovino.nil?-%>
+          </td>
+
+        </tr>
+        <tr class="lista1">
+          <td>
+            <label>Toro</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_toro unless  @semovientes.cantidad_toro.nil?-%>
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_toro unless  @semovientes.condicion_corporal_toro.nil?-%>
+
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_toro_f unless  @semovientes.peso_promedio_toro.nil?-%>
+          </td>
+           <td></td>
+          <td>
+            <label>Caprino</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_caprino unless  @semovientes.cantidad_caprino.nil?-%>
+
+          </td>
+
+        </tr>
+        <tr class="lista0">
+          <td>
+            <label>Vaca Seca</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_vaca_seca unless  @semovientes.cantidad_vaca_seca.nil?-%>
+
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_vaca_seca unless  @semovientes.condicion_corporal_vaca_seca.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_vaca_seca_f unless  @semovientes.peso_promedio_vaca_seca.nil?-%>
+          </td>
+           <td></td>
+          <td>
+            <label>Caninos</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_caninos unless  @semovientes.cantidad_caninos.nil?-%>
+
+          </td>
+
+        </tr>
+        <tr class="lista1">
+          <td>
+            <label>Vaca Ordeño</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_vaca_ordenio unless  @semovientes.cantidad_vaca_ordenio.nil?-%>
+          </td>
+
+          <td>
+            <%= @semovientes.condicion_corporal_vaca_ordenio unless  @semovientes.condicion_corporal_vaca_ordenio.nil?-%>
+          </td>
+          <td>
+            <%= @semovientes.peso_promedio_vaca_ordenio_f unless  @semovientes.peso_promedio_vaca_ordenio.nil?-%>
+          </td>
+           <td></td>
+          <td>
+            <label>Felinos</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_felinos unless  @semovientes.cantidad_felinos.nil?-%>
+          </td>
+
+        </tr>
+        <tr class="lista0">
+          <td></td> <td></td><td></td>
+          <td></td><td></td>
+          <td>
+            <label>Otros</label>
+          </td>
+          <td>
+            <%= @semovientes.cantidad_otra_especie unless  @semovientes.cantidad_otra_especie.nil?-%>
+          </td>
+
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+       <label>Total Vacas</label>
+    </td>
+    <td>
+      <%  @total_vacas = @semovientes.cantidad_vaca_seca.to_i + @semovientes.cantidad_vaca_ordenio.to_i %>
+      <%= @total_vacas-%>
+
+    </td>
+  </tr>
+  <tr>
+    <td >
+       <label>Porcentaje de Hembras en Ordeño </label>
+    </td>
+    <td >
+      <% total_vacas_ordenio = (@semovientes.cantidad_vaca_ordenio.to_f/(@semovientes.cantidad_vaca_seca.to_f + @semovientes.cantidad_vaca_ordenio.to_f)*100)
+         unless total_vacas_ordenio.nan?
+          @total_vacas_ordenio = sprintf('%01.2f',total_vacas_ordenio).sub('.', ',')
+         else
+          @total_vacas_ordenio = "0,00"
+          end
+      %>
+      <%= @total_vacas_ordenio-%>
+    </td>
+  </tr>
+  <tr>
+     <td >
+       <label>Porcentaje de Preñez</label>
+    </td>
+    <td >
+      <%= @semovientes.porcentaje_preniez_f unless  @semovientes.porcentaje_preniez.nil?-%> (%)
+    </td>
+  </tr>
+  </tr>
+     <td>
+       <label>Intervalo entre Partos</label>
+    </td>
+    <td>
+      <%= @semovientes.dias_intervalo_partos unless  @semovientes.dias_intervalo_partos.nil?-%> (días)
+    </td>
+      </tr>
+  <tr>
+      <td>
+          <label>Animales Adquiridos</label>
+      </td>
+      <td>
+        <% @total_hembras = (@semovientes.cantidad_vaca_ordenio.to_i + @semovientes.cantidad_vaca_seca.to_i + @semovientes.cantidad_novilla.to_i + @semovientes.cantidad_mauta.to_i + @semovientes.cantidad_becerra.to_i)
+           @total_machos = (@semovientes.cantidad_toro.to_i + @semovientes.cantidad_retajo.to_i + @semovientes.cantidad_novillo.to_i + @semovientes.cantidad_maute.to_i + @semovientes.cantidad_becerro.to_i)
+           @total_inventario = (@total_hembras.to_i + @total_machos.to_i)
+ 
+        %>
+        <%=  @total_inventario %>
+
+      </td>
+  <tr>
+      <td>
+          <label>Total Hembras</label>
+      </td>
+      <td>
+          <%=  @total_hembras %>
+      </td>
+  </tr>
+  <tr>
+      <td>
+          <label>Total Machos</label>
+      </td>
+      <td>
+          <%=  @total_machos %>
+      </td>
+  </tr>
+  <tr>
+      <td>
+          <label>Fecha de Adquisición de Semovientes</label>
+      </td>
+      <td>
+        <%= @semovientes.fecha_adquisicion_semovientes_f unless  @semovientes.fecha_adquisicion_semovientes.nil?-%>
+      </td>
+  </tr>
+  <tr>
+     <td>
+       <label>Animales Marcados con Hierro Fondas</label>
+    </td>
+    <td>
+      <%= @semovientes.cant_animales_marcados_hierro_fondas unless  @semovientes.cant_animales_marcados_hierro_fondas.nil?-%>
+
+    </td>
+      </tr>
+  <tr>
+  <td valign="top">
+       <label>Anamnesis, Diagnóstico, Tratamiento y Recomendaciones Emitido por el Médico
+       Veterinario. Indique Nombre del Médico</label>
+    </td>
+
+    <td>
+      <%= @semovientes.anamnesis_diagnostico unless  @semovientes.anamnesis_diagnostico.nil?-%>
+    </td>
+
+   </tr>
+<%  end %>
+<%  if @produccion_leche_carne %>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Producci&oacute;n de Leche</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Prod.diaria destinada a plantas de estado: </label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.prod_diaria_leche_plantas_estado unless  @produccion_leche_carne.prod_diaria_leche_plantas_estado.nil?-%> (L)
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Prod.diaria destinada a terceros: </label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.prod_diaria_leche_vendida_terceros unless  @produccion_leche_carne.prod_diaria_leche_vendida_terceros.nil?-%> (L)
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Prod.diaria para uso interno de la finca:</label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.prod_diaria_leche_finca unless  @produccion_leche_carne.prod_diaria_leche_finca.nil?-%> (L)
+    </td>
+  </tr>
+
+  <tr><td colspan=2>&nbsp;</td></tr>
+
+  <tr>
+    <td>
+      <label>L/Vaca en orde&ntilde;o/D&iacute;a</label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.total_litros_dia_leche unless  @produccion_leche_carne.total_litros_dia_leche.nil?-%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>L/Vaca Total/D&iacute;a</label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.l_vaca_total_dia unless  @produccion_leche_carne.l_vaca_total_dia.nil?-%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Total de Litros/D&iacute;a</label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.total_l_dia unless  @produccion_leche_carne.total_l_dia.nil?-%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Calidad e higiene de las labores de orde&ntilde;o</label>
+    </td>
+    <td>
+      <% if @produccion_leche_carne.calidad_ordenio == 'E' -%> Excelente <% end %>
+      <% if @produccion_leche_carne.calidad_ordenio == 'B' -%> Bueno <% end %>
+      <% if @produccion_leche_carne.calidad_ordenio == 'R' -%> Regular <% end %>
+      <% if @produccion_leche_carne.calidad_ordenio == 'M' -%> Malo <% end %>
+    </td>
+  </tr>
+
+	<tr><td colspan=2>&nbsp;</td></tr>
+
+  <tr>
+    <td colspan=2>
+      <label>Observaciones con respecto a la producci&oacute;n de leche y pr&aacute;cticas de orde&ntilde;o</label>
+	<br>
+        <%= @produccion_leche_carne.observaciones_ordenio unless  @produccion_leche_carne.observaciones_ordenio.nil?-%>
+
+    </td>
+  </tr>
+
+  <tr><td colspan=2 heigth=10>&nbsp;</td></tr>
+
+   <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Producci&oacute;n de Carne</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Destinado a plantas del estado: </label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.carne_plantas_estado unless  @produccion_leche_carne.carne_plantas_estado.nil?-%> (Kg/A&ntilde;o)
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Prod.diaria destinada a terceros: (Kg/A&ntilde;o)</label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.carne_anual_terceros unless  @produccion_leche_carne.carne_anual_terceros.nil?-%> (Kg/A&ntilde;o)
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Prod.diaria para uso interno de la finca: </label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.carne_anual_finca unless  @produccion_leche_carne.carne_anual_finca.nil?-%> (Kg/A&ntilde;o)
+
+    </td>
+  </tr>
+
+  <tr><td colspan=2>&nbsp;</td></tr>
+
+  <tr>
+    <td>
+      <label>Promedio de ganancia de peso: (Kg/D&iacute;a)</label>
+    </td>
+    <td>
+          <%= @produccion_leche_carne.carne_peso_diario_promedio_ganancia unless  @produccion_leche_carne.carne_peso_diario_promedio_ganancia.nil?-%> (Kg/D&iacute;a)
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Peso promedio a matadero:</label>
+    </td>
+    <td>
+          <%= @produccion_leche_carne.carne_peso_promedio_matadero unless  @produccion_leche_carne.carne_peso_promedio_matadero.nil?-%> (Kg)
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Total arrime de carne: </label>
+    </td>
+    <td>
+      <%= @produccion_leche_carne.carne_total_arrime_anual unless  @produccion_leche_carne.carne_total_arrime_anual.nil?-%> (Kg/A&ntilde;o)
+
+    </td>
+  </tr>
+
+	<tr><td colspan=2>&nbsp;</td></tr>
+
+  <tr>
+    <td colspan=2>
+      <label>Observaciones con respecto a la producci&oacute;n de carne</label>
+	<br>
+      <%= @produccion_leche_carne.observaciones_prod_carne unless  @produccion_leche_carne.observaciones_prod_carne.nil?-%>
+
+    </td>
+  </tr>
+<% end %>

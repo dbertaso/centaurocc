@@ -1,0 +1,24 @@
+<script type="text/javascript">varEnviado = false;</script>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 50px"><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></th>
+      <th style="width: 150px"><%=I18n.t('Sistema.Body.Vistas.General.nombre') << " " << I18n.t('Sistema.Body.Vistas.General.y') << " " << I18n.t('Sistema.Body.Vistas.General.apellido')%></th>     
+      <th style="width: 60px"><%=I18n.t('Sistema.Body.Controladores.UsuarioRol.FormTitles.form_title_record') %></th>
+      <th style="width: 20px"><%=I18n.t('Sistema.Body.Vistas.General.firma')%></th>
+      <th style="width: 2px"><%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+    </tr>
+  </thead>
+  
+  <tbody id="list-body">
+    <% unless @list_miembro.nil?     
+        even_odd = 1
+        for miembro in @list_miembro
+            even_odd = 1 - even_odd %>
+            <%= render :partial => 'row_miembro', :locals => { :miembro => miembro, :even_odd => even_odd } -%>
+    <%  end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br/>

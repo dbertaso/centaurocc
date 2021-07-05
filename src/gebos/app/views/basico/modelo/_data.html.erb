@@ -1,0 +1,25 @@
+<% modelo = @modelo if modelo.nil? %>
+<td>
+  <%= modelo.id %>
+</td>
+<td>
+  <%= modelo.nombre unless modelo.nombre.nil? %>
+</td> 
+<td>
+  <%= modelo.descripcion unless modelo.descripcion.nil? %>
+</td> 
+<td style="text-align: center">
+  <%= format_bool(modelo.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'modelo', :action => :edit, :id => modelo.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro') ,
+    :url => {:controller => 'modelo', :action => :delete, :id => modelo.id}) if vlink 'delete' -%>
+</td>
+

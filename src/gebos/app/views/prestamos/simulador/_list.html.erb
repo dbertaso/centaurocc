@@ -1,0 +1,151 @@
+<!---
+<table style="width: 100%;">
+    <tr>
+    <td colspan="6" style="text-align: center">
+      <a style="color: gray; font-weight: bold; text-decoration: none" id="button_condiciones"
+        href="javascript: $('condiciones').toggle();
+          $('button_condiciones').update(Element.visible('condiciones')?'Ocultar Condiciones':'Cambiar Condiciones');">
+        Cambiar Condiciones
+      </a>
+    </td>
+  </tr>
+</table>
+-->
+<table style="width: 100%; background-color: #e4ffd6">
+  <tr>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.metodo_amortizacion') %></label></td>
+    <td style="width: 16%; text-align: left"><%= Formula.find(@calculadora.metodo).nombre %></td>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.plazo_meses') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.plazo %></td>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.tasa_interes') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.tasa_f %></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_liquidacion') %></label></td>
+    <td style="text-align: left"><%= @calculadora.fecha_f %></td>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.periodicidad_pago') %></label></td>
+    <td style="text-align: left"><%= @calculadora.periodo_w %></td>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.monto_financiar') %></label></td>
+    <td style="text-align: left"><%= @calculadora.monto_fm %></td>
+  </tr>
+</table>
+<% if @calculadora.periodo_gracia.to_i==1 %>
+<table style="width: 100%; background-color: #fffad3">
+  <tr>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.plazo_gracia') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.gracia_plazo %></td>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.tasa_interes_gracia') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.gracia_tasa_f %></td>
+    <td style="width: 16%; text-align: right"></td>
+    <td style="width: 16%; text-align: left"></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.periodicidad_pago') %></label></td>
+    <td style="text-align: left"><%= @calculadora.gracia_periodo_w %></td>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.intereses_diferidos') %></label></td>
+    <td style="text-align: left"><%= @calculadora.diferir_intereses == 1 ? t('Sistema.Body.General.afirmacion') : t('Sistema.Body.General.negacion') %></td>
+    <td style="text-align: right"></td>
+    <td style="text-align: left"></td>
+  </tr>
+</table>
+<% end %>
+<% if @calculadora.periodo_muerto.to_i==1 %>
+<table style="width: 100%; background-color: #e4e4f9">
+  <tr>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.meses_muertos') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.muerto_plazo %></td>
+    <td style="width: 16%; text-align: right"></td>
+    <td style="width: 16%; text-align: left"></td>
+    <td style="width: 16%; text-align: right"></td>
+    <td style="width: 16%; text-align: left"></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"></td>
+    <td style="text-align: left"></td>
+    <td style="text-align: right"></td>
+    <td style="text-align: left"></td>
+    <td style="text-align: right"></td>
+    <td style="text-align: left"></td>
+  </tr>
+</table>
+<% end %>
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <%= render :partial=>'encabezado' %>
+  </thead>
+  <% if @calculadora.periodo_muerto.to_i==1 %>
+  <tbody>
+    <tr style="background-color: #e4e4f9">
+      <td>
+        <a href="javascript: click_sector('muerto');">
+          <%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.img_colapsar')), :id=>'button_muerto') %>
+        </a>
+      </td>
+      <td colspan="9">
+        <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_muerto') %></label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_muerto">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :cuotas=>@calculadora.muerto_cuotas, :clear=>'e4e4f9', :dark=>'c2c2f9' } %>
+  </tbody>
+  <% end %>
+  <% if @calculadora.periodo_gracia.to_i==1 %>
+  <tbody>
+    <tr style="background-color: #fffad3">
+      <td>
+        <a href="javascript: click_sector('gracia');">
+          <%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.img_colapsar')), :id=>'button_gracia') %>
+        </a>
+      </td>
+      <td colspan="9">
+        <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_gracia') %></label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_gracia">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :cuotas=>@calculadora.gracia_cuotas, :clear=>'fffad3', :dark=>'fff495' } %>
+  </tbody>
+  <% end %>
+  <tbody>
+    <tr style="background-color: #e4ffd6">
+      <td>
+        <a href="javascript: click_sector('cuotas');">
+          <%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.img_colapsar')), :id=>'button_cuotas') %>
+        </a>
+      </td>
+      <td colspan="9">
+        <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_amortizacion') %></label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_cuotas">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :cuotas=>@calculadora.cuotas, :clear=>'e4ffd6', :dark=>'b2e19a' } %>
+  </tbody>
+  <tr>
+  <td align="center" colspan="10">
+   <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir')),
+    { :controller=>'/prestamos/simulador', :action=>'imprimir',
+      :periodo_gracia=>@params_calculadora[:periodo_gracia],
+      :metodo=>@params_calculadora[:metodo],
+      :periodo_muerto=>@params_calculadora[:periodo_muerto],
+      :monto_f=>@params_calculadora[:monto_f],
+      :fecha_f=>@params_calculadora[:fecha_f],
+      :gracia_plazo=>@params_calculadora[:gracia_plazo],
+      :muerto_plazo=>@params_calculadora[:muerto_plazo],
+      :tasa_f=>@params_calculadora[:tasa_f],
+      :gracia_tasa_f=>@params_calculadora[:gracia_tasa_f],
+      :periodo=>@params_calculadora[:periodo],
+      :_365=>@params_calculadora[:_365],
+      :plazo=>@params_calculadora[:plazo],
+      :gracia_periodo=>@params_calculadora[:gracia_periodo],
+      :diferir_intereses=>@params_calculadora[:diferir_intereses],
+      :popup=>true },
+      :popup => ['solicitud', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>&nbsp;
+  </td>
+    </tr>
+</table>

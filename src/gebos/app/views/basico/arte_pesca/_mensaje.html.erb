@@ -1,0 +1,5 @@
+<%= select(
+        "arte_pesca","tipo_arte_pesca_id",
+        @tipo_arte_pesca.map{|i| [i.tipo, i.id]},
+        {:prompt=>"Seleccione un tipo de arte de pesca... "},
+        { :class=>"select", :onchange=>"inputChange();"} ) -%>

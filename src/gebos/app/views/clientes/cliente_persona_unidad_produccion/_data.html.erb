@@ -1,0 +1,25 @@
+<td align="center">
+  <%= unidad_produccion.id %>
+</td>
+<td>
+  <%= unidad_produccion.nombre %>
+</td>
+<% if @persona.cliente_persona.es_pescador == false %>
+<td>
+  <%= sprintf('%01.3f',unidad_produccion.total_hectareas).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless unidad_produccion.total_hectareas.nil? %>
+</td>
+<% end %>
+<td>
+  <%= unidad_produccion.municipio.estado.nombre %>
+</td>
+<td>
+  <%= unidad_produccion.municipio.nombre %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title =>'Modificar'), :action => 'edit', :method =>:get, :popup=>params[:popup], :id => unidad_produccion.id ) if vlink 'edit' %>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title =>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :persona_id => @persona.id, :id => unidad_produccion.id}) -%>
+</td>

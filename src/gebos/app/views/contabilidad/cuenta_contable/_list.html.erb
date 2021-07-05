@@ -1,0 +1,25 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 20%" <%= sort_class_helper('codigo') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.CuentaContable.Etiquetas.codigo'), 'codigo', 'list' %>
+ 			</th>
+ 			<th style="width: 70%" <%= sort_class_helper('nombre') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.CuentaContable.Etiquetas.nombre'), 'nombre', 'list' %>
+ 			</th>
+ 			<th style="width: 10%">
+ 			 <%= t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for cuenta_contable in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :cuenta_contable => cuenta_contable, :even_odd => even_odd } -%>
+<% end %>
+    </tbody>
+  </table>
+
+<%= form_pagination %>

@@ -1,0 +1,70 @@
+<%=error-%>
+<%= render :partial=>'basico/instancia_comite_nacional/common/tabs' -%>
+
+<div class="marco-contenido2">  
+    <%=form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method=>:get,
+      :url => { :action => :save_comite,:id=>@comite.id }) do %>
+    <input type="hidden" id="comite_id" name="id" value="<%=@comite.id-%>" />    
+    <div id="form_datos_basicos" <%if @tab=="punto_cuenta" %> style="display:none;"  <%end%>>
+      <%= render :partial=>'form_datos_basicos' -%>
+    </div>
+    <div id="form_punto_cuenta" <%if @tab=="datos_basicos" %> style="display:none;"  <%end%>>
+      <%= render :partial=>'form_punto_cuenta' -%>
+    </div>
+    <span style="display:none;" id="buttons_edit">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :id=>'button_save' ) -%>&nbsp;
+    </span>
+    
+    <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index },
+    { :id=>'button_cerrrar' } ) -%>     
+    
+    
+    
+    <input type="hidden" id="tab_actual" name="tab_actual" value="<%=@tab%>" />
+  <% end -%>  
+</div>
+
+<script type="text/javascript">  
+  function show_content_tabs(_this){
+    $("form_punto_cuenta","form_datos_basicos").invoke("toggle");
+    $$('#tabs li').each(function(item) {item.id = (item.id=="actual") ? "" : "actual";});
+    $("tab_actual").value=_this.id;   
+  }  
+  Event.observe(window, 'load', function() {
+    $("button_new").hide();
+    var_div=$$('div[class~="marco-titulo"]');
+    $A(var_div).each(function(div){
+      div.update("<div><div><%=I18n.t('Sistema.Body.Vistas.General.creando') << " " << I18n.t('Sistema.Body.Vistas.General.sesion') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.aprobacion')%></div></div>");
+    });
+  });  
+</script>
+<script type="text/javascript">
+  function cambio(){
+
+    vari='id='+$('comite_id').value+'&miembro_comite_id='+$('comite_miembro_miembro_comite_id').value+'&rol_comite_id='+$('rol_comite_id').value+'&firma='+$('comite_miembro_firma').checked+ "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+
+    if (confirm("<%=I18n.t('Sistema.Body.Vistas.ComiteNacional.Mensajes.esta_seguro_agregar_miembro')%>")){
+
+    var resp=new Ajax.Request('/basico/instancia_comite_estadal/agregar_miembro?'+vari, {
+          asynchronous:true,
+          evalScripts:true,
+          method:'get',
+          onSuccess: function(transport){
+            var data=transport.responseText;            
+          },
+          onLoaded:function(request){image_unload()},
+          onLoading:function(request){image_load()}
+      });
+      return false;
+
+    }
+
+      
+
+  }
+
+</script>

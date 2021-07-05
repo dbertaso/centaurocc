@@ -1,0 +1,28 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 200px" <%= sort_class_helper('sitio_colocacion.sitio') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.SitioColocacion.Etiquetas.sitio'), 'sitio_colocacion.nombre', 'list' %>
+      </th> 			
+      <th style="width: 200px" <%= sort_class_helper('sitio_colocacion.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.SitioColocacion.Etiquetas.sitio_colocacion'), 'sitio_colocacion.nombre', 'list' %>
+      </th> 	
+      <th style="width: 15px" <%= sort_class_helper('sitio_colocacion.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'sitio_colocacion.activo', 'list' %>
+      </th> 			 			
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for sitio_colocacion in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :sitio_colocacion => sitio_colocacion, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,40 @@
+<%= form_title_edit " Del trámite # " << @plan_inversion[0].solicitud.numero.to_s << " del Beneficiario " <<  @plan_inversion[0].solicitud.cliente.nombre%>
+
+<div>
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :actualiza_plan, :id=>@plan.solicitud_id } ) do -%>
+  <%= render :partial => 'form' %>
+
+  <div>
+    <%= image_submit_tag I18n.t('Sistema.Body.Imagenes.guardar'),
+      :onclick=>"this.disabled=true;if (varEnviado) { return false; } else {varEnviado = true;}",
+      :id=>'button_save' -%>
+
+    <%
+    if !params[:controlador].nil?
+      params = {:action => :index, :controller => params[:controlador],
+        :id=>'button_cancel'}.merge(params)
+    else
+      params = {:action => :index,
+        :id=>'button_cancel'}.merge(params)
+    end
+  %>
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+      params ) -%>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+  <% end -%>
+</div>
+
+
+
+

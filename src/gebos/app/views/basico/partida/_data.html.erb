@@ -1,0 +1,40 @@
+<% partida = @partida if partida.nil? %>
+<% @sub_sector = SubSector.find(partida.actividad.sub_rubro.rubro.sub_sector_id) %>
+
+<td>
+  <%= @sub_sector.sector.codigo unless partida.actividad.sub_rubro.rubro.nil?%>
+</td>
+<td>
+  <%= @sub_sector.sector.nombre unless partida.actividad.sub_rubro.rubro.nil?%>
+</td>
+<td>
+  <%= @sub_sector.codigo unless partida.actividad.sub_rubro.rubro.nil?%>
+</td>
+<td>
+  <%= @sub_sector.nombre unless partida.actividad.sub_rubro.rubro.nil?%>
+</td>
+<td>
+  <%= partida.actividad.sub_rubro.rubro.codigo unless partida.actividad.sub_rubro.rubro.nil?%>
+</td>
+<td>
+  <%= partida.actividad.sub_rubro.rubro.nombre unless partida.actividad.sub_rubro.rubro.nil?%>
+</td>
+<td>
+  <%= partida.codigo  unless partida.nil?%>
+</td>
+<td>
+  <%= partida.nombre  unless partida.nil?%>
+</td>
+<td>
+  <%= partida.descripcion unless partida.nil? %>
+</td>
+
+<td style="text-align: right">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>'Editar'),
+    :action => 'edit',  :id => partida.id, :actividad_id => @actividad.id, :popup=>params[:popup]) %>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'partida', :action => :delete, :id => partida.id, :actividad_id => @actividad.id}) if vlink 'delete' -%>
+</td>

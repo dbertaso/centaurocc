@@ -1,0 +1,133 @@
+
+<table>
+  <tr>
+    <td style="width: 400px">
+      <label><%="#{I18n.t('Sistema.Body.Controladores.TipoPastoForraje.FormTitles.form_title_record')} #{I18n.t('Sistema.Body.Vistas.General.forraje')}"%></label>
+    </td>
+    <td style="width: 300px">
+      <%= @pastizales_potreros.tipo_pasto_forraje.descripcion %>
+    </td>
+  </tr>	
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.superficie')%> </label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.superficie %> <%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.especie_variedad_pasto')%> </label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.especie_variedad_pasto.descripcion %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.fecha_siembra')%></label>
+    </td>
+    <td style="width: 500px">
+      <%= @pastizales_potreros.fecha_siembra_f  %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.fecha_corte')%></label>
+    </td>
+    <td style="width: 500px">
+      <%= @pastizales_potreros.fecha_corte_f  %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condiciones_pasto')%></label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.condicion_pasto_w %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.nro_potrero_cerca_electrica')%></label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.nro_potrero_cerca_electrica -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.nro_potrero_cerca_tradicional')%></label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.nro_potrero_cerca_tradicional -%>
+    </td>
+  </tr>
+  <tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.cantidad_potreros_asociados')%></label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.cantidad_potreros -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.cuantos_potreros_cerca_electrica_posee_sistema_riego')%></label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.nro_potrero_cerca_electrica_sist_riego -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.cuantos_potreros_cerca_electrica_tradicional_posee_sistema_riego')%></label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.nro_potrero_cerca_tradicional_sist_riego -%>
+    </td>
+  </tr>
+  <tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.total_potreros_sistema_riego')%></label>
+    </td>
+    <td>
+      <%= (@pastizales_potreros.nro_potrero_cerca_electrica_sist_riego.to_i + @pastizales_potreros.nro_potrero_cerca_tradicional_sist_riego.to_i) -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.productor_realiza_fertilizacion')%></label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.fertilizacion_w %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.tipo_fertilizacion')%></label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.tipo_fertilizacion_w %>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.descripcion_fertilizacion')%></label>
+    </td>
+    <td>
+      <%= @pastizales_potreros.descripcion_fertilizacion -%>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.descripcion_observado')%></label>
+    </td>
+    <td>
+      <%=  @pastizales_potreros.descripcion_observado -%>
+    </td>
+  </tr>
+  </table>

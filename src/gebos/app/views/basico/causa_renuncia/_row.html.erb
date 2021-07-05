@@ -1,0 +1,4 @@
+<% causa_renuncia = @causa_renuncia if causa_renuncia.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= causa_renuncia.id %>">
+	<%= render :partial => 'data', :locals => { :causa_renuncia => causa_renuncia, :even_odd => even_odd } -%>
+</tr>

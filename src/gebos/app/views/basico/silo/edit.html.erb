@@ -1,0 +1,21 @@
+<%= form_title_edit @silo.nombre %>
+<%= render :partial=>'basico/silo/common/tabs' %>
+<div class="marco-contenido2">
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id=>@silo.id} ) do -%>
+  <%= render 'form' %>
+
+  <div id="buttons_edit" style="display: none">
+    <%= form_buttons_edit %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :action => :index }, { :id=>'button_close' } ) -%>
+
+  <% end %>
+</div>

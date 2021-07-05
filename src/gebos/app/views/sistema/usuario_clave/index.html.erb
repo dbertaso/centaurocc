@@ -1,0 +1,72 @@
+<div class="marco-titulo">
+	<div>
+		<div>
+			<%= I18n.t('Sistema.Body.Vistas.UsuarioClave.Titulos.modificar_clave') %>
+			<span style="color: #FF0000">'<%= @usuario.nombre_usuario %>'</span>
+		</div>
+	</div>
+</div>
+
+<div class="marco-contenido2">
+
+	<%= error %>
+	<%= message %>
+
+	<%= form_remote_tag(
+		:loading =>'image_load()',
+		:loaded => 'image_unload()',
+	  :url => { :action => :save_edit } ) do -%>
+
+		<table>
+			<tr>
+				<td>
+					<label>
+						<%= I18n.t('Sistema.Body.Vistas.UsuarioClave.Etiquetas.clave_anterior') %>
+					</label>
+				</td>
+				<td>
+					<%= password_field 'usuario', 'clave_anterior', :class=>'text', 
+					   :style=>'width: 180px', :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>
+						<%= I18n.t('Sistema.Body.Vistas.UsuarioClave.Etiquetas.nueva_clave') %>
+					</label>
+				</td>
+				<td>
+					<%= password_field 'usuario', 'clave', :class=>'text', :style=>'width: 180px', 
+					   :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>
+						<%= I18n.t('Sistema.Body.Vistas.UsuarioClave.Etiquetas.confirmar_clave') %>
+					</label>
+				</td>
+				<td>
+					<%= password_field 'usuario', 'clave_confirmation', :class=>'text', :style=>'width: 180px', 
+					   :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td class="lista0" style="text-align: right"
+        	<div id="buttons_edit" style="display: none">
+          	<%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :id=>'button_save' )-%>
+                        
+            <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar'))),
+                '/' ) -%>
+          </div>
+            
+            <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))), '/',
+            		{ :id=>'button_close' } ) -%>
+				</td>
+		  </tr>
+		</table>
+		
+	<% end %>
+</div>

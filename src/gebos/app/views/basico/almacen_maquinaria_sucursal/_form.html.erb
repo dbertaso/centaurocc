@@ -1,0 +1,90 @@
+<table>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label><label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'almacen_maquinaria_sucursal', 'nombre',
+        :class=>'text',
+        :style=>'width: 250px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 135px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.estado') %> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= select('almacen_maquinaria_sucursal', 'estado_id',
+        @estado_select.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'almacen_maquinaria_sucursal',
+          :action=>:estado_change },
+          :with=>"'id='+ this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 135px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %> </label><label style="color: red">*</label>
+    </td>
+    <td>
+      <span id="ciudad-select">
+        <%= render :partial => 'ciudad_select' %>
+      </span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 135px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %> </label><label style="color: red">*</label>
+    </td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.General.direccion') %> </label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_area 'almacen_maquinaria_sucursal', 'direccion',
+        :class=>'text',
+        :style=>'width: 600px; height: 100px',
+        :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.persona') + ' ' + I18n.t('Sistema.Body.Vistas.General.contacto')%></label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'almacen_maquinaria_sucursal', 'persona_contacto', :class=>'text', :style=>'width: 150px', :maxlength=>'100',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.numero') + ' ' + I18n.t('Sistema.Body.Vistas.General.telefono')%></label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'almacen_maquinaria_sucursal', 'telefono',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

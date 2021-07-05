@@ -1,0 +1,28 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 130px" <%= sort_class_helper('imputaciones_maquinaria.fecha_registro') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'imputaciones_maquinaria.fecha_registro', 'list' %>
+      </th> 			
+      <th style="width: 200px" <%= sort_class_helper('imputaciones_maquinaria.seguro_nacional') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.seguro_nacional'), 'imputaciones_maquinaria.seguro_nacional', 'list' %>
+      </th> 	
+      <th style="width: 180px" <%= sort_class_helper('imputaciones_maquinaria.flete_nacional') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.flete_nacional'), 'imputaciones_maquinaria.flete_nacional', 'list' %>
+      </th>	
+      <th style="width: 30px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for imputaciones_maquinaria in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :imputaciones_maquinaria => imputaciones_maquinaria, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

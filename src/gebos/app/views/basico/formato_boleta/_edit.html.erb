@@ -1,0 +1,24 @@
+<tr id="row_<%= @formato_boleta.id %>_edit">
+  <td class="lista-form" colspan="8">
+
+    <%= form_title_edit @formato_boleta.formato_operacion %>
+
+    <%= error "row_#{@formato_boleta.id}" %>
+
+    <%= form_remote_tag(:loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id => @formato_boleta.id }) do -%>
+
+    <%= render :partial => 'form' %>
+    
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => :cancel_edit, :id => @formato_boleta.id}) -%>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+</table>
+<% end %>
+</td>
+</tr>

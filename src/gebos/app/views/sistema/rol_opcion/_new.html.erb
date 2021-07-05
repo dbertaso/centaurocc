@@ -1,0 +1,53 @@
+<%= form_title_new %>
+
+<%= error 'form_new' %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :save_new, :rol_id => @rol.id } ) do %>
+
+
+  <table>
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.grupo')%></label></td>
+      <td>
+        <%= select(
+          'opcion', 'opcion_grupo_id',
+          @opcion_grupo_select.map{|e| [e.nombre, e.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+          { :class=>'select', :onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method=>:get,
+            :url=>{:action=>:opcion_grupo_change },
+            :with=>"'opcion_grupo_id='+value")}; inputChange();" } ) %>
+      </td>
+    </tr>
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Controladores.RolOpcion.FormTitles.form_title_record')%></label></td>
+      <td>
+        <span id="opcion-select">
+          <%= render :partial => 'opcion_select' %>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">
+        <label><%= I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.acciones') %></label>
+      </td>
+      <td id="accion-list">
+        <%= render :partial => 'accion_list', :locals=>{:edit=>false} %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="lista0" style="text-align: right">
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+        <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get, :url => { :action => :cancel_new}) -%>
+      </td>
+    </tr>
+  </table>
+<% end %>

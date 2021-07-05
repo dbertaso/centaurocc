@@ -1,0 +1,61 @@
+<div class="marco-titulo"><div><div>
+	LISTADO DE MAQUINARIAS PROCESADAS
+</div></div></div>
+	
+<center>	
+	<div id="mensaje"><%= @mensaje %></div>
+	<div id="errores"><%= @feedback %></div>
+	<%= message %>
+</center>
+<br/>
+<form>
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 15px">
+          <%= I18n.t('Sistema.Body.Vistas.Form.convenio') %>
+        </th>
+        
+        <th style="width: 15px">
+          <%= I18n.t('Sistema.Body.Vistas.General.rubro') %>
+        </th>
+        
+        <th style="width: 10px">
+          <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+        </th>
+        
+        <th style="width: 15%" style="text-align: center">
+          <%= I18n.t('Sistema.Body.Vistas.General.marca') %>
+        </th>
+
+        <th style="width: 15%" style="text-align: center">
+          <%= I18n.t('Sistema.Body.Vistas.General.modelo') %>
+        </th>
+
+        <th style="width: 10%" style="text-align: center">
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %>
+        </th>
+
+        <th style="width: 10%" style="text-align: center">
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %>
+        </th>
+
+        <th style="width: 10%" style="text-align: center">
+          <%= I18n.t('Sistema.Body.Vistas.General.monto') %>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="list-body">
+      <%  
+      even_odd = 1
+      for item in @list
+        even_odd = 1 - even_odd %>
+        <%= render :partial => 'row', :locals => { :item => item, :even_odd => even_odd } -%>
+      <% end %>
+
+    </tbody>
+  </table>
+</form>
+<%= form_pagination %>
+<br/>
+<%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')), :controller=> 'carga_masiva', :action => 'index', :popup=>params[:popup] ) %>

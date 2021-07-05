@@ -1,0 +1,52 @@
+<div align="center" id="telefonos" style="width: 100%">
+
+    <table>
+      <tr style="width: 100%" >
+        <td class="separador" valign="bottom" colspan="3">
+          <span>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.telefonos')}" %>
+          </span>
+        </td>
+      </tr>    
+    </table>
+    <br>
+    <table  class="lista" style="width: 75%" >
+
+      <thead>
+
+        <tr>
+
+          <th style="width: 120px">
+            <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+          </th>
+
+           <th style="width: 120px">
+            <%= I18n.t('Sistema.Body.Vistas.General.numero') %>
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <% unless @telefonos.nil? %>
+        <% even_odd = 1
+            for telefono in @telefonos
+            even_odd = 1 - even_odd %>
+
+          <tr class="lista<%= even_odd %>" id="row_<%= telefono.id %>">
+
+           <td>
+            <%= telefono.tipo_nombre %>
+           </td>
+
+           <td style="text-align: center">
+            <%= telefono.codigo + "-" + telefono.numero %>
+           </td>
+
+          </tr>
+
+        <% end %>
+      <% end %>
+    </table>
+
+</div>

@@ -1,0 +1,251 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+        Consulta de Inventario
+      </div></div></div>
+
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 20%">
+        <label>Contrato:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.contrato_maquinaria_equipo.nombre %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label>Rubro:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.clase.tipo_maquinaria.descripcion %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label>Tipo:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.clase.nombre %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label>Marca:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.MarcaMaquinaria.nombre unless @catalogo.MarcaMaquinaria.nil? %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label>Modelo:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.Modelo.nombre unless @catalogo.Modelo.nil? %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label>Serial:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.serial %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label>Chasis:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.chasis %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label>Descripción:</label>
+      </td>
+      <td style="width: 80%; text-align: justify">
+        <%= @catalogo.descripcion %>
+      </td>
+    </tr>
+    
+    <% if @catalogo.contrato_maquinaria_equipo.naturaleza == 'I' %>
+      <tr>
+        <td style="width: 20%">
+          <label>País de origen:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.pais.nombre %>
+        </td>
+      </tr> 
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Fecha de llegada:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.fecha_llegada_f %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Puerto de llegada:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.puerto_llegada %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Movilizado a:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.movilizado %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Nombre del buque:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.nombre_buque %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Número de Factura:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.numero_factura %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span>Imputaciones</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label>Monto en Dolares:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.monto_dolares).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto_dolares.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Monto en Bs.:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.monto_real).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto_real.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Gastos Administrativo:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.gastos_administrativos).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.gastos_administrativos.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Monto del Seguro:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.seguro).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.seguro.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Monto del Flete:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.flete).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.flete.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Nacionalización e Impuestos:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.impuesto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.impuesto.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Almacenamiento:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.almacenamiento).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.almacenamiento.nil? %>
+        </td>
+      </tr>
+    <% else %>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span>Imputaciones</span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Costo:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.monto_real).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto_real.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Monto del Seguro:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.seguro).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.seguro.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label>Monto del Flete:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.flete).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.flete.nil? %>
+        </td>
+      </tr>
+    <% end %>
+      
+    <tr>
+      <td style="width: 20%">
+        <label>Costo Total</label>
+      </td>
+      <td style="width: 80%">
+        <%= sprintf('%01.2f',@catalogo.monto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto.nil? %>
+      </td>
+    </tr>
+    
+  </table><br/>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index } ) -%>		
+</div>

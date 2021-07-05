@@ -1,0 +1,167 @@
+<script type="text/javascript">
+
+  
+   
+  function formatCurrency2(num) {
+   
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    //alert(numero);
+    //$(name + '_display').innerHTML = numero;
+    return numero;
+}
+
+
+
+  
+function formatCurrency(num, name) {
+
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    $(name + '_display').innerHTML = numero;
+    
+}
+
+    function formula(comision)
+    {
+        var afecta_disponible = document.getElementById('afecta_d').value;
+        var afecta_comision = document.getElementById('afecta_c').value;
+        var formulaf = document.getElementById('formulaf').value;
+        var banco= document.getElementById('movimiento_fideicomiso_monto_banco').value;
+        var insumos =document.getElementById('movimiento_fideicomiso_monto_insumos').value;
+        var gastos = document.getElementById('movimiento_fideicomiso_monto_gastos').value;
+        var sras = document.getElementById('movimiento_fideicomiso_monto_sras').value;
+        banco= parseFloat((banco==''? '0' : banco));
+        insumos= parseFloat((insumos==''? '0' : insumos));
+        gastos= parseFloat((gastos==''? '0' : gastos));
+        sras= parseFloat((sras==''? '0' : sras));
+        formulaf = formulaf.replace("B",banco);
+        formulaf = formulaf.replace("I",insumos);
+        formulaf = formulaf.replace("G",gastos);
+        formulaf = formulaf.replace("S",sras);
+        var total=0;
+        try
+        {
+          total = eval(formulaf); 
+        } catch(e) {}
+        var mcomision=0;
+        if (afecta_comision == 1 && comision > 0)
+        {
+           document.getElementById('movimiento_fideicomiso_comision').value = (document.getElementById('movimiento_fideicomiso_monto_operacion').value * (comision/100)).toFixed(2);
+           formatCurrency(parseFloat(document.getElementById('movimiento_fideicomiso_comision').value), 'movimiento_fideicomiso_comision');
+           mcomision=parseFloat(document.getElementById('movimiento_fideicomiso_comision').value);
+        }
+        else
+        {
+          document.getElementById('movimiento_fideicomiso_comision').value = '0';
+        }
+
+        var monto_oper=parseFloat(document.getElementById('movimiento_fideicomiso_monto_operacion').value);
+        var monto_antes=parseFloat(document.getElementById('movimiento_fideicomiso_saldo_disponible_antes').value);
+        var tipo_mov = document.getElementById('movimiento_fideicomiso_tipo_movimiento_id');
+       if (afecta_disponible==1) 
+        {
+              if(tipo_mov.options[tipo_mov.selectedIndex].text.substring(0,3) === 'NCR')
+             {
+                  if(monto_oper<0) monto_oper *= -1;
+             }
+             else
+             {
+                  if(monto_oper>0) monto_oper *= -1;
+             }
+            //alert("Antes " + monto_antes + " .. Monto Oper " + monto_oper + " .. Comision " + mcomision);
+            //alert("DESPUES ... " + ((monto_antes + monto_oper) - mcomision).toFixed(2));
+            document.getElementById('movimiento_fideicomiso_saldo_disponible_despues').value = ((monto_antes + monto_oper) - mcomision).toFixed(2);
+            formatCurrency(document.getElementById('movimiento_fideicomiso_saldo_disponible_despues').value, 'movimiento_fideicomiso_saldo_disponible_despues');
+        }
+        else
+        {
+            //alert("Antes " + monto_antes + " .. Comision " + mcomision);
+            //alert("DESPUES ... " + (monto_antes - mcomision).toFixed(2));
+             document.getElementById('movimiento_fideicomiso_saldo_disponible_despues').value = (monto_antes - mcomision).toFixed(2);
+            formatCurrency(document.getElementById('movimiento_fideicomiso_saldo_disponible_despues').value, 'movimiento_fideicomiso_saldo_disponible_despues');
+        }
+    }
+  
+</script>
+
+<%= message %>
+
+<%= form_title_search %>
+
+<div class="marco-contenido">
+  
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :nro_fideicomiso_change } ) do-%>
+      <table>
+        <tr>
+         <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+           <td style="width: 30%">
+             <label><%=I18n.t('Sistema.Body.Vistas.General.banco')%></label>
+           </td>
+           <td style="width: 70%">
+               <% entidad_onchange = remote_function(
+                       :loading =>'image_load()',
+                       :loaded => 'image_unload()',
+                       :method=>:get,
+                       :url=>{:controller=>'actualizacion_fideicomiso',
+                       :action=>:entidad_form_change },
+                       :with=>"'entidad_financiera_id='+value" ) %>
+              <%= select(
+                  'entidad_financiera_id', '',
+                   @entidad_financiera_list.map{|i| [i.nombre, i.id]},
+                  {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+                  { :class=>'select',:onchange=>entidad_onchange + ';inputChange();'}) %>
+           </td>
+         </tr>
+          <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.General.numero')%> <%=I18n.t('Sistema.Body.Vistas.General.fideicomiso')%></label>
+          </td>
+          <td>
+            <div id="nro-fideicomiso-select">
+               <%= render :partial => 'nro_fideicomiso_form_select' -%>               
+          </td>
+        </tr>
+     </table>
+     <% end %>
+     <br/> 
+
+<div id="list"></div>

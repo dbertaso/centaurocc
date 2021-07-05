@@ -1,0 +1,11 @@
+<% municipio_onchange = remote_function(
+	:loading =>'Element.show("loading")',
+	:loaded => 'Element.hide("loading")',
+	:url=>{:controller=>'solicitud',
+	:action=>:municipio_change },
+	:with=>"'municipio_id='+value") %>
+<%= select(
+  'solicitud', 'municipio_id',
+  @municipio_select.map{|e| [e.nombre, e.id]},
+  { },
+  { :class=>'select', :onchange=>municipio_onchange + ';inputChange();' } ) %>

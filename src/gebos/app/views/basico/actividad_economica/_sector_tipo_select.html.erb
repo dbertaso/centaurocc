@@ -1,0 +1,14 @@
+<% unless @sector_tipo_list.nil? %>
+   <%= select(
+      'actividad_economica', 'sector_tipo_id',
+      @sector_tipo_list.map{|c| [c.nombre, c.id]},
+      { :include_blank => true},
+      { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% else %>
+
+	<%= select(
+	  'actividad_economica', 'sector_tipo_id',
+	  [],
+	  { :include_blank => true },
+	  { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% end %>

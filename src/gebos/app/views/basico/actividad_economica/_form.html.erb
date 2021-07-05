@@ -1,0 +1,68 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+
+  <tr>
+    <td style="width: 60px">
+      <label>
+        I18n.t('Sistema.Body.Vistas.ActividadEconomica.Etiquetas.sector_economico'):
+      </label>
+    </td>
+    
+    <td style="width: 620px">
+      <% sector_onchange = remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>'actividad_economica',
+          :action=>:sector_economico_change },
+          :with=>"'sector_economico_id='+value") %>
+          
+      <%= select(
+      'actividad_economica', 'sector_economico_id',
+      @sector_economico_list.map{|e| [e.descripcion, e.id]},
+      { },
+      { :class=>'select', :onchange=>sector_onchange + ';inputChange();' } ) %>
+    </td>
+    
+  </tr>
+
+    <tr>
+      <td>
+        <label>
+          I18n.t('Sistema.Body.Vistas.General.tipo'):
+        </label>
+      </td>
+      <td>
+        <span id="sector-tipo-select">
+          <%= render :partial => 'sector_tipo_select' %>
+        </span>
+      </td>
+  </tr>
+        
+  <tr>
+    <td>
+      <label>
+        I18n.t('Sistema.Body.Vistas.ActividadEconomica.Etiquetas.codigo_ciiu'):
+      </label>
+    </td>
+    <td>
+      <%= text_field 'actividad_economica', 'ciiu', :class=>'text', :style=>'width: 240px', 
+        :maxlength=>'4', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label>
+        I18n.t('Sistema.Body.Vistas.Form.descripcion'):
+      </label>
+    </td>
+    <td>
+      <%= text_area 'actividad_economica', 'descripcion', 
+        :class=>'text', 
+        :style=>'width: 580px; height: 80px' -%>
+    </td>
+  </tr> 
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag('assets/boton_guardar.gif', :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;

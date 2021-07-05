@@ -1,0 +1,83 @@
+<div class="marco-boton-out" id="button_new">
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :check_new, :popup=>params[:popup] } ) do -%>
+    <span>
+      <table align="right" class="tabla-boton-out">
+        <tr>
+          <td>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')}" "#{I18n.t('Sistema.Body.Vistas.General.rif')}" %></label>
+          </td>
+          <td>
+            <%= select('rif_1','',
+              [['',''],['J','J'],['G','G'],['V','V'],['E','E'],['P','P']], { },
+              { :class=>'select', :onchange=>';inputChange();' } ) %> -
+            <%= text_field_tag 'rif_2', '',
+              :class=>'text', :style=>'width: 60px',
+              :maxlength=>'8'
+          %> -
+            <%= text_field_tag 'rif_3', '',
+              :class=>'text', :style=>'width: 10px',
+              :maxlength=>'1'
+          %>
+          </td>
+          <td>
+            <%= image_submit_tag I18n.t('Sistema.Body.Imagenes.agregar'),
+              :id=>'button_add' -%>
+          </td>
+        </tr>
+      </table>
+    </span>
+  <% end %>
+</div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list, :popup=>params[:popup] } ) do -%>
+    <table>
+      <tr>
+        <td style="width: 150px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.rif')}" %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'rif', '', :class=>'text', :maxlength=>'15', :style=>'width: 90px'  %> Ej: J-12345678-9
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 150px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.nombre')} #{I18n.t('Sistema.Body.Vistas.General.abreviado')}" %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'alias', '', :class=>'text', :maxlength=>'150', :style=>'width: 300px'  %>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 150px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'255', :style=>'width: 560px'  %>
+        </td>
+        <td>
+          <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+  <%= error %>
+  <%= message %>
+
+  <div id="list">
+  </div>
+</div>

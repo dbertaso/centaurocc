@@ -1,0 +1,32 @@
+<div id="tabs">
+  <ul>
+    <%action_name = controller.action_name
+      controller_name = controller.controller_name
+      if controller_name=='rubro'%>
+
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Controladores.Rubro.FormTitles.form_title_records')%></a></div></li>
+      <%else%>
+        <li>
+          <div>
+            <%= link_to(I18n.t('Sistema.Body.Controladores.Rubro.FormTitles.form_title_records'), :controller => 'rubro', :action => 'index', :id => @rubro.id,:sub_sector_id=>@rubro.sub_sector_id,  :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+          </div>
+        </li>
+
+      <% end
+        unless @rubro.nil?
+          unless @rubro.id.nil?
+            if @rubro.activo == true
+              if controller_name=='/basico/cronograma_desembolso' %>
+                <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.CronogramaDesembolso.Header.form_title')%></a></div></li>
+              <% else %>
+                <li>
+                  <div>
+                    <%= link_to(I18n.t('Sistema.Body.Vistas.CronogramaDesembolso.Header.form_title'), :controller => '/basico/cronograma_desembolso', :action => 'index', :id => @rubro.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+                  </div>
+                </li>
+        <%    end
+            end
+          end
+        end %>
+  </ul>
+  </div>

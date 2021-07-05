@@ -1,0 +1,120 @@
+<div class="marco" style="width: 2800px">
+
+  <div class="marco-contenido" style="width 100%">
+    <script>
+      function click_sector(name_sector) {
+        $('list_'+name_sector).toggle();
+        $('button_'+name_sector).src=Element.visible('list_'+name_sector) ? <%= I18n.t('Sistema.Body.Imagenes.img_colapsar') %> : <%= I18n.t('Sistema.Body.Imagenes.img_expandir') %> ;
+      }
+
+      cuota_activa='0';
+      function click_cuota(cuota) {
+        if ($('cuota_encabezado_'+cuota_activa) && (cuota_activa!='0' || cuota_activa==cuota)) {
+          $('cuota_encabezado_'+cuota_activa).remove();
+        }
+
+        if (cuota_activa!=cuota || (!$('cuota_encabezado_'+cuota_activa) && cuota_activa==cuota)) {
+
+          _columnas = '<th style="width: 2.5%"></th><th style="width: 1%">#</th><th style="width: 6%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.estado_cuota') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.vencimiento')}" %>' + '</th><th style="width: 2%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.dias_cuota') %>' +  '</th><th style="width: 3.95%">'
+          _columnas += '<%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.Form.cuota')}" %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.General.intereses') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.intereses_acumulados') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.intereses_diferidos') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.capital') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.capital_acumulado') %>' + '</th><th style="width: 3.85%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.cuota_extra') %>' + '</th><th style="width: 3.85%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.pago_total_cliente') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.General.saldo_deudor') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '%' + '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.tasa_periodo') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '%' + '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.tasa_nominal') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.interes_devengado') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.aumento_capital') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.abono_extraordinario') %>' + '</th><th style="width: 2%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.dias_mora') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.intereses_mora') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.fecha_calculo_mora') %>' + '</th><th style="width: 3.95%">'
+          _columnas += '<%= "#{I18n.t('Sistema.Body.Vistas.Form.pago')} #{I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.interes_diferido')}" %>'
+          _columnas += '</th><th style="width: 3.95%">' + '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.pago_cuota_extra') %>'
+          _columnas += '</th><th style="width: 3.95%">' + '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.pago_interes_mora') %>'
+          _columnas += '</th><th style="width: 3.95%">' + '<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.pago_interes') %>'
+          _columnas += '</th><th style="width: 3.95%">' + '<%= "#{I18n.t('Sistema.Body.Vistas.Form.pago')} #{I18n.t('Sistema.Body.Vistas.General.capital')}" %>'
+          _columnas += '</th></tr>'
+
+          _html = '<tr id="cuota_encabezado_' + cuota +'" onclick="$(\'cuota_encabezado_'+ cuota +'\').remove()">' + _columnas
+
+
+
+          new Insertion.Before('cuota_'+cuota, _html);
+        }
+        cuota_activa=cuota;
+      }
+    </script>
+
+    <div class="marco-titulo">
+      <div>
+        <div>
+          <%= I18n.t('Sistema.Body.Vistas.General.prestamo')%>
+          <span class="titulo_modificar">'
+            <%= @prestamo.numero %> <%= " - #{I18n.t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+          </span> <%= "#{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>
+          <span class="titulo_modificar">'
+            <%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @prestamo.cliente.empresa.nombre : @prestamo.cliente.persona.nombre_corto  %>'
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <%= render 'prestamos/consulta_prestamo/common/tabs' %>
+    <div class="marco-contenido2">
+
+      <%= error %>
+
+        <table style="width: 100%; background-color: #fff">
+          <tr valign="top">
+            <td style="width: 5%">
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.historico_tablas') %>
+              </label>
+            </td>
+            <td style="width: 15%">
+              <%= select_tag( 'plan_pago_id',
+                options_for_select(@plan_pago_select.map{|i| [i.fecha_evento_f + ' (' + i.motivo_evento_w + ') ' + (i.activo ? I18n.t('Sistema.Body.General.actual') : ''), i.id]}),
+                { :class=>'select', :onchange=>"#{remote_function(
+                                              :loading =>'image_load()',
+                                              :loaded => 'image_unload()',
+                                              :url=>{:controller=>'consulta_prestamo_plan_pago',
+                                              :action=>:plan_pago_change },
+                                              :with=>"'plan_pago_id='+value")}" })  %>
+
+            </td>
+
+            <td style="width: 80%" colspan="3">
+              <font color="red" size="2">
+                <label>
+                  <%#= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.mensaje') %>
+                </label>
+              </font>
+              <br><br>
+            </td>
+
+          </tr>
+        </table>
+        <br>
+
+        <div id="list">
+          <%= render 'list' %>
+        </div>
+<br>
+
+
+      <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+        { :controller => 'consulta_prestamo', :action => :index },
+        { :id=>'button_close' } ) -%>
+
+    </div>
+  </div>
+</div>
+

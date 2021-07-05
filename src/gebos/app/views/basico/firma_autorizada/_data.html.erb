@@ -1,0 +1,19 @@
+<% firma_autorizada = @firma_autorizada if firma_autorizada.nil? %>
+<td>
+  <%= firma_autorizada.cargo.descripcion  %>
+</td>
+<td>
+  <%= firma_autorizada.nombre  %>
+</td>
+<td style="text-align: right">
+  <%= firma_autorizada.cedula  %>
+</td>
+<td style="text-align: center">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))), :action => 'edit', :id => firma_autorizada.id) if vlink 'edit' %>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'firma_autorizada', :action => :delete, :id => firma_autorizada.id}) if vlink 'delete' -%>
+</td>

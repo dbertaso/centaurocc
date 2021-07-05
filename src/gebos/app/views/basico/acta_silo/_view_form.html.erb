@@ -1,0 +1,73 @@
+<table width="100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2" >
+      <span><%=  I18n.t('Sistema.Body.Vistas.ActaSilo.Separador.titulo_01') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%=  I18n.t('Sistema.Body.Vistas.Silo.Etiquetas.nombre_silo') %></label>
+    </td>
+    <td >
+        <% unless @acta_silo.id.nil? || @acta_silo.to_s.empty? %>
+          <%= @acta_silo.silo.nombre %>
+        <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label> <%=  I18n.t('Sistema.Body.Vistas.General.actividad') %></label></td>
+    <td>
+      <% unless @acta_silo.id.nil? || @acta_silo.to_s.empty? %>
+          <%= @acta_silo.actividad.nombre %>
+        <%end%>
+    </td>
+  </tr>
+    <tr>
+    <td style="width: 200px">
+      <label> <%=  I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.ciclo_productivo') %></label></td>
+    <td>
+      <% unless @acta_silo.id.nil? || @acta_silo.to_s.empty? %>
+          <%= @acta_silo.ciclo_productivo.nombre %>
+        <%end%>
+    </td>
+  </tr>
+<tr>
+    <td style="width: 200px">
+      <label><%=  I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.numero_acta') %></label>
+    </td>
+    <td >
+          <%= @acta_silo.nro_acta unless @acta_silo.nil?%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%=  I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.fecha_inicio') %></label>
+    </td>
+    <td>
+      <%= @acta_silo.fecha_inicio_f unless @acta_silo.nil?%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%=  I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.fecha_cierre') %></label>
+    </td>
+    <td>
+      <%= @acta_silo.fecha_fin_f unless @acta_silo.nil?%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%=  I18n.t('Sistema.Body.Vistas.Form.estatus') %></label>
+    </td>
+    <td>
+      <% unless @acta_silo.id.nil?%>
+          <%if (@acta_silo.status == true || @acta_silo.status.to_s.empty? )%>
+            <label style="color: green"><%=  I18n.t('Sistema.Body.Vistas.Form.abierto') %></label>
+            <%else%>
+            <label style="color: red"><%=  I18n.t('Sistema.Body.Vistas.Form.cerrado') %></label>
+          <%end%>
+      <%end%>
+    </td>
+  </tr>
+</table>

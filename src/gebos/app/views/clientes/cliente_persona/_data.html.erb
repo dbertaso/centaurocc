@@ -1,0 +1,16 @@
+<td align="center">
+  <%= persona.id %>
+</td>
+<td>
+  <%= persona.cedula_nacionalidad.to_s << " " << persona.cedula.to_s %>
+</td>
+<td>
+  <%= persona.primer_nombre %>
+</td>
+<td>
+  <%= persona.primer_apellido %>
+</td>
+<td style="text-align: right">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title =>'Consultar'), :action => 'view',  :popup=>params[:popup], :id => persona.id %>&nbsp;
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title =>'Editar'), :action => 'edit', :popup=>params[:popup], :id => persona.id ) if vlink 'edit' %>&nbsp;
+</td>

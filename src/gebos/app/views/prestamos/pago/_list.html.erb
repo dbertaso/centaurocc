@@ -1,0 +1,46 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 10%" <%= sort_class_helper('numero_solicitud') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.numero_tramite'), 'numero_solicitud', 'list' %>
+    </th>
+    <th style="width: 10%" <%= sort_class_helper('numero') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.numero_financiamiento'), 'numero', 'list' %>
+    </th>
+    <th style="width: 10%" <%= sort_class_helper('identificacion')%>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.cedula')}/#{I18n.t('Sistema.Body.Vistas.General.rif')}", 'identificacion', 'list' %>
+    </th>
+    <th style="width: 30%" <%= sort_class_helper('nombre_cliente')%>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'nombre_cliente', 'list' %>
+    </th>
+    <th style="width: 20%" <%= sort_class_helper('rubro_nombre')%>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro_nombre', 'list' %>
+    </th>
+    <th style="width: 5%" <%=sort_class_helper('estatus_p') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'estatus_p', 'list' %>
+    </th>
+    <th style="width: 20%" <%= sort_class_helper('exigible')%>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible')}", 'exigible', 'list' %> 
+    </th>
+    <th style="width: 25%" <%= sort_class_helper('saldo_insoluto')%>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_capital'), 'saldo_insoluto', 'list' %> 
+    </th>
+    <th style="width: 20%" <%= sort_class_helper('moneda_nombre')  %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.moneda'), 'moneda_nombre', 'list' %>
+    </th>    
+    <th style="width: 5%">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+    </th>
+  </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for prestamo in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :prestamo => prestamo, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

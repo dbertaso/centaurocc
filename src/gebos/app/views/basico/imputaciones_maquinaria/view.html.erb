@@ -1,0 +1,55 @@
+<%= render :partial=>'basico/imputaciones_maquinaria/common/tabs' %>
+<br/>
+<%= form_title_view @imputaciones_maquinaria.fecha_registro_f %>
+<br/>
+<div class="marco-contenido">
+  <table style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span>Maquinaria Nacional </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Seguro Nacional</label>
+      </td>
+      <td>
+        <%segNac = sprintf('%01.2f', @imputaciones_maquinaria.seguro_nacional).sub('.', ',')%> <%=segNac.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Flete Nacional</label>
+      </td>
+      <td>
+        <%fletNac = sprintf('%01.2f', @imputaciones_maquinaria.flete_nacional).sub('.', ',')%> <%=fletNac.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"> &MediumSpace;
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Observaci&oacute;n</label>
+      </td>
+      <td>
+        <%= text_area 'imputaciones_maquinaria', 'observacion', :class=>'text', :style=>'width: 320px; height: 60px', 
+          :readonly=>'true' -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Fecha Reg&iacute;stro</label>
+      </td>
+      <td>
+        <%= @imputaciones_maquinaria.fecha_registro_f unless @imputaciones_maquinaria.fecha_registro_f.nil? -%>
+      </td>
+    </tr>
+  </table>
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => 'index' },
+    { :id=>'button_close' } ) -%>
+
+</div>

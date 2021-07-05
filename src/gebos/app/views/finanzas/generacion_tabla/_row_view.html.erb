@@ -1,0 +1,9 @@
+<% view_liquidacion = @view_liquidacion if view_liquidacion.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= view_liquidacion.prestamo_id %>">
+	<%= render :partial => 'data_view', :locals => { :view_liquidacion => view_liquidacion, :even_odd => even_odd } -%>
+</tr>
+<tr>
+	<td colspan="14" style="margin: 0px; padding: 0px">
+		<div id="diferir_<%= view_liquidacion.prestamo_id %>"></div>
+	</td>
+</tr>

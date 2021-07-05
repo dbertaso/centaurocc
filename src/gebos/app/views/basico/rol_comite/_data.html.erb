@@ -1,0 +1,24 @@
+<% item = @rol_comite if item.nil? %>
+<td>
+  <%= item.nombre %>
+</td>
+<td>
+  <%= item.descripcion %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(item.activo)  %>
+</td>
+<td style="text-align: center">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'rol_comite', :action => :edit, :id => item.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'rol_comite', :action => :delete, :id => item.id}) if vlink 'delete' -%>
+</td>

@@ -1,0 +1,41 @@
+<% tipo_movimiento_fideicomiso = @tipo_movimiento_fideicomiso if tipo_movimiento_fideicomiso.nil? %>
+<td align="center">
+	<%= tipo_movimiento_fideicomiso.tipo_nota_text  %>
+</td>	
+<td align="center">
+	<%= tipo_movimiento_fideicomiso.modo_nota_text  %>
+</td>	
+<td align="center">
+	<%= tipo_movimiento_fideicomiso.motivo %>
+</td >	
+<td style="text-align: center">
+	<%= format_bool(tipo_movimiento_fideicomiso.sub_cuenta_banco)  %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(tipo_movimiento_fideicomiso.sub_cuenta_insumos)  %>
+</td>
+<td style="text-align: center">
+	<%= format_bool(tipo_movimiento_fideicomiso.sub_cuenta_gastos)  %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(tipo_movimiento_fideicomiso.sub_cuenta_sras)  %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(tipo_movimiento_fideicomiso.comision)  %>
+</td>	
+
+<td style="text-align: center">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=>:get,
+		:url => {:controller => 'tipo_movimiento_fideicomiso', :action => :edit, :id => tipo_movimiento_fideicomiso.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=>:get,
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'tipo_movimiento_fideicomiso', :action => :delete, :id => tipo_movimiento_fideicomiso.id}) if vlink 'delete' -%>
+</td>

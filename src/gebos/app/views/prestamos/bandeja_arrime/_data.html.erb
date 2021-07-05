@@ -1,0 +1,67 @@
+<% boleta_arrime = @boleta_arrime if boleta_arrime.nil? %>
+
+<td align ="center">
+  <%= boleta_arrime.numero_tramite %>
+</td>
+
+<td>
+  <%=boleta_arrime.nombre_beneficiario%>
+</td>
+
+<td>
+  <%=boleta_arrime.nombre_silo%>
+</td>
+
+<td>
+  <%= boleta_arrime.numero_ticket  %>
+</td>
+<td>
+  <%= boleta_arrime.guia_movilizacion %>
+</td>
+<td align ="center">
+  <% if boleta_arrime.confirmacion==true && boleta_arrime.resultado == "A" %>
+    Confirmado
+  <% elsif boleta_arrime.confirmacion==false && boleta_arrime.resultado == "A"%>
+    Inicial
+  <% elsif boleta_arrime.confirmacion==false && boleta_arrime.resultado == "R"%>
+    Rechazado
+  <%end%>
+</td>
+<td>
+  <%= boleta_arrime.sector %>
+</td>
+
+<td>
+  <%= boleta_arrime.sub_sector %>
+</td>
+
+<td>
+  <%= boleta_arrime.rubro %>
+</td>
+
+<td>
+  <%= boleta_arrime.sub_rubro unless boleta_arrime.sub_rubro.nil? %>
+</td>
+
+<td>
+  <%= boleta_arrime.actividad unless boleta_arrime.actividad.nil? %>
+</td>
+
+<td align ="right">
+  <%= format_fm(boleta_arrime.valor_arrime) %>
+</td>
+
+<td align ="center">
+  <% if boleta_arrime.arrime_conjunto? %>
+    <%= image_tag('activo.gif') %>
+  <% else %>
+    <%= image_tag('inactivo.gif')%>
+  <% end %>
+</td>
+
+<td style="text-align: center">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'), :title=>'Confirmar'),
+    :method=>:get,  :loading =>'image_load()', :loaded => 'image_unload()',
+    :confirm => "¿Está usted seguro que desea Confirmar esta boleta?",
+    :url => {:controller => 'bandeja_arrime', :action => :confirmar, :id => boleta_arrime.id}) if vlink 'confirmar' -%>
+</td>

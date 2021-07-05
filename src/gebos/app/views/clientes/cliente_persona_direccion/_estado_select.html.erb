@@ -1,0 +1,11 @@
+<%= select(
+  'persona_direccion', 'estado_id',
+  @estado_select.map{|e| [e.nombre, e.id]},
+  {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+  { :class=>'select', :onchange=>"#{remote_function(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :method =>:get,
+    :url=>{:controller=>'cliente_persona_direccion',
+    :action=>:estado_change },
+    :with=>"'estado_id='+ this.value")};inputChange();" } ) %>

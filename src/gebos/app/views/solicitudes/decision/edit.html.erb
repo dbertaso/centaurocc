@@ -1,0 +1,26 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span></div>
+  </div></div>
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+  <div class="marco-titulo"><div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.agregando')} #{I18n.t('Sistema.Body.Vistas.General.decision')}" %>
+      </div></div></div>
+
+  <%= error %>
+  <%= message %>
+  <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+  </div>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :solicitud_id => @solicitud.id } ) do -%>
+    <div id="list">
+      <%= render :partial=>"form" %>
+    </div>
+
+  <% end -%>
+
+</div>

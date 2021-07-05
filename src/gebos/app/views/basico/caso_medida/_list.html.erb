@@ -1,0 +1,28 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 170px" <%= sort_class_helper('caso_medida.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'caso_medida.nombre', 'list' %>
+      </th>
+      <th style="width: 480px" <%= sort_class_helper('caso_medida.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'caso_medida.descripcion', 'list' %>
+      </th>
+      <th style="width: 80px">
+        <%= I18n.t('Sistema.Body.Vistas.General.activo')%>
+      </th>
+      <th style="width: 100px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for caso_medida in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :caso_medida => caso_medida, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

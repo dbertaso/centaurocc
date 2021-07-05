@@ -1,0 +1,5 @@
+<%= select(
+      'solicitud', 'rubro_id',
+      @rubro_list.map{|i| [i.nombre, i.id]},
+      { :include_blank => false },
+      { :class=>'select',:onchange=>'inputChange();' } ) %>

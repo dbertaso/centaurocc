@@ -1,0 +1,291 @@
+<script>
+  var a = <%= @mostrar %>
+  a = a * 1;
+  if (a != 0){
+    if (a == 1){
+      alert('<%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_desde')} #{I18n.t('Sistema.Body.Modelos.Errores.es_requerida')}" %>');
+      window.close();
+    }else{
+      if (a == 2){
+        alert('<%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_desde')} #{I18n.t('Sistema.Body.Modelos.Errores.fecha_invalida')}" %>');
+        window.close();
+      }else{
+        if (a == 3){
+          alert("<%= I18n.t('Sistema.Body.Vistas.General.no_hay_registro') %>");
+          window.close();
+        }else{
+          if (a == 4){
+            alert('<%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_hasta')} #{I18n.t('Sistema.Body.Modelos.Errores.es_requerida')}" %>');
+            window.close();
+          }else{
+            if (a == 5){
+              alert('<%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_hasta')} #{I18n.t('Sistema.Body.Modelos.Errores.fecha_invalida')}" %>');
+              window.close();
+            }else{
+              if (a == 6){
+                alert("<%= I18n.t('Sistema.Body.Modelos.General.fecha_hasta_mayor_desde') %>");
+                window.close();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+</script>
+<script language="JavaScript">
+<!-- Begin
+function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+}
+</script>
+<% if @mostrar == 0 %>
+<table align="center" width="1120px" border="1">
+  <tr>
+    <td style="width: 100%">
+      <table width="100%" border="0">
+        <tr>
+          <td style="width: 20%; text-align: left">
+            <%= image_tag('logo_reporte.gif') %>
+          </td>
+          <td align="center">
+            <label style="font-size: 16px"> <%= I18n.t('Sistema.Body.Vistas.General.reporte_indicadores_analista').upcase.gsub('ó', 'Ó') %></br><%= "#{I18n.t('Sistema.Body.Vistas.General.fecha')} #{I18n.t('Sistema.Body.Vistas.General.desde')} #{@fecha_desde} #{I18n.t('Sistema.Body.Vistas.General.hasta')} #{@fecha_hasta}" %>
+            </label>
+          </td>
+          <td style="width: 25%; text-align: right" valign="top">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.fecha') %> <%= I18n.t('Sistema.Body.Vistas.General.de') %> <%= I18n.t('Sistema.Body.Vistas.General.impresion') %>:</label> <%= Time.now.strftime('%d/%m/%Y') %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<% @analistas.each {|reporte| 
+    cobranza = PerformanceAnalistaCobranza.listado(reporte.id, @fdesde, @fhasta)
+    if cobranza.length > 0
+  %>
+  </br>
+  <table align="center" width="1120px" border="1">
+    <tr>
+      <th style= "text-align: left" colspan = "10">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.analista').upcase %>: <%= "#{reporte.primer_nombre} #{reporte.primer_apellido}" %></label>
+      </th>
+    </tr>
+
+    <tr>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.fecha') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_intentos') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_contactos') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_contactos_exitosos') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_promesas_pago') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_contactos') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_contactos_exitosos') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_pago') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_avisos_cobro') %></label>
+      </th>
+      <th width = "10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_mensajes_texto') %></label>
+      </th>
+    </tr>
+
+    <% cobranza.each {|c| %>
+      <tr>
+        <td style = "text-align: center">
+          <%= c.fecha_f %>
+        </td>
+        <td style = "text-align: right">
+          <%= c.cantidad_intentos %>
+        </td>
+        <td style = "text-align: right">
+          <%= c.cantidad_contactos %>
+        </td>
+        <td style = "text-align: right">
+          <%= c.cantidad_contactos_exitosos %>
+        </td>
+        <td style = "text-align: right">
+          <%= c.cantidad_promesas_pago %>
+        </td>
+        <td style = "text-align: right">
+          <%= c.porcentaje_contactos_f %> %
+        </td>
+        <td style = "text-align: right">
+          <%= c.porcentaje_contactos_exitosos_f %> %
+        </td>
+        <td style = "text-align: right">
+          <%= c.porcentaje_promesas_pago_f %> %
+        </td>
+        <td style = "text-align: right">
+          <%= c.cantidad_email_enviados %>
+        </td>
+        <td style = "text-align: right">
+          <%= c.cantidad_sms_enviados %>
+        </td>
+      </tr>
+    <% } %>
+  </table>
+  <% totales = PerformanceAnalistaCobranza.totales(reporte.id, @fdesde, @fhasta) %>
+  <table align="center" width="1120px" border="1">
+  <tr>
+    <td width = "10%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.totales').upcase %></label>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <b><%= totales[0].tcantidad_intentos.to_i %></b>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <b><%= totales[0].tcantidad_contactos.to_i %></b>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <b><%= totales[0].tcantidad_contactos_exitosos.to_i %></b>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <b><%= totales[0].tcantidad_promesas_pago.to_i %></b>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <% if totales[0].tcantidad_contactos.to_f > 0 %>
+        <b><%= format_f((totales[0].tcantidad_contactos.to_f / totales[0].tcantidad_intentos.to_f) * 100) %> %</b>
+      <% else %>
+        <b>0,00 %</b>
+      <% end %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <% if totales[0].tcantidad_contactos_exitosos.to_f > 0 %>
+        <b><%= format_f((totales[0].tcantidad_contactos_exitosos.to_f / totales[0].tcantidad_contactos.to_f) * 100) %> %</b>
+      <% else %>
+        <b>0,00 %</b>
+      <% end %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <% if totales[0].tcantidad_promesas_pago.to_i > 0 %>
+        <b><%= format_f((totales[0].tcantidad_promesas_pago.to_f / totales[0].tcantidad_contactos_exitosos.to_f) * 100) %> % </b>
+      <% else %>
+        <b>0,00 %</b>
+      <% end %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <b><%= totales[0].tcantidad_email_enviados.to_i %></b>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <b><%= totales[0].tcantidad_sms_enviados.to_i %></b>
+    </td>
+  </tr>
+</table>
+
+  <% porcentajes = PerformanceAnalistaCobranza.porcentajes(reporte.id) %>
+
+  <table align="center" width="1120px" border="0">
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.historico_eficiencia') %></label></br>
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_cumplidas') %>:</label> <%= porcentajes[0] %> %</br>
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_parcialmente_cumplidas') %>:</label> <%= porcentajes[1] %> %</br>
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_incumplidas') %>:</label> <%= porcentajes[2] %> % </br>
+        <label>Monto Comprometido</label> <%= porcentajes[3] %> </br>
+        <label>Monto Recuperado</label> <%= porcentajes[4] %> </br>
+        <label>Porcentaje de Recuperación</label> <%= porcentajes[5] %> %
+      </td>
+    </tr>
+  </table>
+
+<% end
+  } %>
+</br>
+<table align="center" width="1120px" border="1">
+  <tr>
+    <td width = "10%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.totales').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.fecha').upcase}" %></label>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <%= @totales[0].tcantidad_intentos.to_i %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <%= @totales[0].tcantidad_contactos.to_i %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <%= @totales[0].tcantidad_contactos_exitosos.to_i %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <%= @totales[0].tcantidad_promesas_pago.to_i %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <% if @totales[0].tcantidad_contactos.to_f > 0 %>
+        <%= format_f((@totales[0].tcantidad_contactos.to_f / @totales[0].tcantidad_intentos.to_f) * 100) %> %
+      <% else %>
+        0,00 %
+      <% end %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <% if @totales[0].tcantidad_contactos_exitosos.to_f > 0 %>
+        <%= format_f((@totales[0].tcantidad_contactos_exitosos.to_f / @totales[0].tcantidad_contactos.to_f) * 100) %> %
+      <% else %>
+        0,00 %
+      <% end %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <% if @totales[0].tcantidad_promesas_pago.to_i > 0 %>
+        <%= format_f((@totales[0].tcantidad_promesas_pago.to_f / @totales[0].tcantidad_contactos_exitosos.to_f) * 100) %> %
+      <% else %>
+        0,00 %
+      <% end %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <%= @totales[0].tcantidad_email_enviados.to_i %>
+    </td>
+    <td width = "10%" style = "text-align: right">
+      <%= @totales[0].tcantidad_sms_enviados.to_i %>
+    </td>
+  </tr>
+</table>
+
+<% porcentajes = PerformanceAnalistaCobranza.porcentajes(nil) %>
+
+<table align="center" width="1120px" border="0">
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.totales') %> <%= I18n.t('Sistema.Body.Vistas.General.historico_eficiencia') %></label></br>
+      <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_cumplidas') %>:</label> <%= porcentajes[0] %> %</br>
+      <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_parcialmente_cumplidas') %>:</label> <%= porcentajes[1] %> %</br>
+      <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_incumplidas') %>:</label> <%= porcentajes[2] %> % </br>
+      <label>Monto Comprometido</label> <%= porcentajes[3] %> </br>
+      <label>Monto Recuperado</label> <%= porcentajes[4] %> </br>
+      <label>Porcentaje de Recuperación</label> <%= porcentajes[5] %> %
+    </td>
+  </tr>
+</table>
+
+<table align="center" width="1120px" >
+  <tr>
+    <td colspan="4">
+      <div style="padding: 6px" align="center">
+        <form>
+          <div id = boton>
+            <input name="print" type="button" value="Imprimir" onclick="varitext()" />
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>
+<% end %>

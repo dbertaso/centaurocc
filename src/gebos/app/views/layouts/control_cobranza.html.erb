@@ -1,0 +1,14 @@
+<html>
+<head>
+	<meta http-equiv="REFRESH" content="960" />
+  <title><%=I18n.t('Sistema.Body.Vistas.Form.control')%> <%=I18n.t('Sistema.Body.Vistas.Form.cobranza')%>: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+</head>
+<body>
+
+<p style="color: green"><%= flash[:notice] %></p>
+
+<%= yield  %>
+
+</body>
+</html>

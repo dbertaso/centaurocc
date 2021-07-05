@@ -1,0 +1,40 @@
+<table>
+  <tr>
+    <td style="width: 140px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.resolucion')}"%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+    </td>
+    <td style="width: 560px">
+      <% if controller.action_name == 'edit' %>
+        <%= @tasa_valor.fecha_resolucion_desde_f %>
+      <% else %>
+        <%= calendar_date_select 'tasa_valor', 'fecha_resolucion_desde_f', :year_range => 110.years.ago..-1.years.ago,
+        :class=>'text',:style=>'width:80px',:maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();' %> <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.resolucion')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+    </td>
+    <td>
+      <% if controller.action_name == 'edit' %>
+        <%= @tasa_valor.resolucion %>
+      <% else %>
+        <%= text_field 'tasa_valor', 'resolucion', :class=>'text', :style=>'width: 120px', :maxlength=>'15'  -%>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.valor')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_field 'tasa_valor', 'valor_f', :class=>'text', :style=>'width: 60px', :maxlength=>'5'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

@@ -1,0 +1,4 @@
+<% envio_maquinaria = @envio_maquinaria if envio_maquinaria.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= envio_maquinaria.id %>">
+	<%= render :partial => 'data', :locals => { :envio_maquinaria => envio_maquinaria, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,400 @@
+<script type="text/javascript">
+
+  onload = function()
+  {
+<% if @solicitud_avaluo_inmobiliario.clasificacion %>
+      showTipo('<%= @solicitud_avaluo_inmobiliario.clasificacion %>');
+<% end %>
+  }
+
+  function showTipo(value)
+  {
+    if (value == 'C' ){
+      document.getElementById("div_construccion").style.display="";
+    }else{
+      document.getElementById("div_construccion").style.display="none";
+    }
+  }
+
+</script>
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.avaluo_institucion')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluo.Errores.nombre_perito')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'nombre_perito',
+        :class=>'text',
+        :style=>'width: 400px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.fecha_avaluo_mobiliario')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "solicitud_avaluo_inmobiliario[fecha_avaluo_inmobiliario_f]", @solicitud_avaluo_inmobiliario.fecha_avaluo_inmobiliario_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text', :style=>'width: 80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_sudeban')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'numero_sudeban_inmobiliario',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'20', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.valor_avaluo')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'valor_avaluo_inmobiliario_f',
+        :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+        :onkeypress=>'inputChange(); return NumberDoubleKey(event); montosolicitud();',
+        :onchange=>'inputChange();',
+        :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_inmobiliario_valor_avaluo_inmobiliario'); "  -%>
+      <%= display_number @solicitud_avaluo_inmobiliario.valor_avaluo_inmobiliario, 'solicitud_avaluo_inmobiliario_valor_avaluo_inmobiliario' %> &emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.inmobiliaria')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoInmobiliario.Errores.clasificacion')%></label>
+    </td>
+    <td>
+      <%= radio_button 'solicitud_avaluo_inmobiliario', 'clasificacion', 'T',
+        :class=>'text', :onclick=>'inputChange();showTipo("T")'  -%><%=I18n.t('Sistema.Body.Vistas.General.terreno')%><br/>
+      <%= radio_button 'solicitud_avaluo_inmobiliario', 'clasificacion', 'C',
+        :class=>'text', :onclick=>'inputChange();showTipo("C")'  -%><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.terreno_construccion')%><br/>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.terreno')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.espacio')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'espacio_f',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'10',
+        :onkeypress=>'inputChange(); return NumberDoubleKey(event);',
+        :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_inmobiliario_espacio'); "  -%>
+      <%= display_number @solicitud_avaluo_inmobiliario.espacio, 'solicitud_avaluo_inmobiliario_espacio' %> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.parentesis_metros_cuadrados')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.ubicacion')%></label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_avaluo_inmobiliario', 'ubicacion',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,500)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.descripcion_del_bien')%></label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_avaluo_inmobiliario', 'descripcion',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,500)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label><%=I18n.t('Sistema.Body.Vistas.General.linderos')%></label></td>
+    <td>
+      <table border="0" style="width: 100%">
+        <tr>
+          <td style="width: 10%">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.norte')%></label>
+          </td>
+          <td style="width: 90%">
+            <%= text_field 'solicitud_avaluo_inmobiliario', 'lindero_norte',
+              :class=>'text',
+              :style=>'width: 320px',
+              :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.General.sur')%></label>
+          </td>
+          <td>
+            <%= text_field 'solicitud_avaluo_inmobiliario', 'lindero_sur',
+              :class=>'text',
+              :style=>'width: 320px',
+              :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.General.este')%></label>
+          </td>
+          <td>
+            <%= text_field 'solicitud_avaluo_inmobiliario', 'lindero_este',
+              :class=>'text',
+              :style=>'width: 320px',
+              :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.General.oeste')%></label>
+          </td>
+          <td>
+            <%= text_field 'solicitud_avaluo_inmobiliario', 'lindero_oeste',
+              :class=>'text',
+              :style=>'width: 320px',
+              :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="bottom" colspan="2">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.registro_protocolizacion_bien')%></label>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.registro')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'nombre_registro',
+        :class=>'text',
+        :style=>'width: 400px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'solicitud_avaluo_inmobiliario', 'estado_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.fecha')%></label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "solicitud_avaluo_inmobiliario[fecha_registro_f]", @solicitud_avaluo_inmobiliario.fecha_registro_f, 
+        :year_range => 110.years.ago..-1.years.ago, :class=>'text', :style=>'width: 80px', :maxlength=>'10', 
+        :onkeypress=>'inputChange();', :valid_date_check => "date-1 < (new Date()).stripTime()", :onchange=>'inputChange();' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_de_registro')%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'numero_registro',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.tomo')%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'tomo_registro',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.protocolo')%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'protocolo_registro',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+</table>
+
+<div id="div_construccion">
+  <table style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%=I18n.t('Sistema.Body.Vistas.General.construccion')%></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.tipo_de_construccion')%></label>
+      </td>
+      <td>
+        <%= text_area 'solicitud_avaluo_inmobiliario', 'tipo_construccion',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,500)' -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.espacio')%></label> <label style="color: red"> (*)</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'espacio_construccion',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'10', :onkeypress=>'inputChange(); return NumberDoubleKey(event);',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_inmobiliario_espacio_'); "  -%>
+        <%= display_number @solicitud_avaluo_inmobiliario.espacio, 'solicitud_avaluo_inmobiliario_espacio_' %> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.parentesis_metros_cuadrados')%>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.ubicacion')%></label>
+      </td>
+      <td>
+        <%= text_area 'solicitud_avaluo_inmobiliario', 'ubicacion_construccion',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,500)' -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="bottom" colspan="2">
+        <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.registro_protocolizacion_bien')%></label>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.registro')%></label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'nombre_registro_constrccion',
+          :class=>'text',
+          :style=>'width: 400px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top" style="width: 20%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+      </td>
+      <td style="width: 80%">
+        <%= select(
+          'solicitud_avaluo_inmobiliario', 'estado_constrccion_id',
+          @estado_select.map{|e| [e.nombre, e.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%></label>
+      </td>
+      <td>
+        <%= calendar_date_select_tag "solicitud_avaluo_inmobiliario[fecha_registro_constrccion_f]", @solicitud_avaluo_inmobiliario.fecha_registro_constrccion_f, 
+        :year_range => 110.years.ago..-1.years.ago, :class=>'text', :style=>'width: 80px', :maxlength=>'10', 
+        :onkeypress=>'inputChange();', :valid_date_check => "date-1 < (new Date()).stripTime()", :onchange=>'inputChange();' %> (dd/mm/aaaa)
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_de_registro')%></label></td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'numero_registro_constrccion',
+          :class=>'text',
+          :style=>'width: 200px',
+          :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.tomo')%></label></td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'tomo_registro_constrccion',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.protocolo')%></label></td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'protocolo_registro_constrccion',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.sistema_constructivo')%></label><br/>
+        <%= text_area 'solicitud_avaluo_inmobiliario', 'sistema_construtivo',
+          :class=>'text',
+          :style=>'width: 850px; height: 60px',
+          :onkeypress=>'inputChange();' -%>
+      </td>
+    </tr>
+  </table>
+</div>

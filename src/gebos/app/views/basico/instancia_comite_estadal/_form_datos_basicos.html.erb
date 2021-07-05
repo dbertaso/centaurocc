@@ -1,0 +1,76 @@
+<table>
+  <tr>
+    <td style="width: 100px"><label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.sesion')%></label></td>
+    <td style="width: 620px">
+      <div id='nro_comite'><b><%= @comite.numero -%></b></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.fecha')%></label><span style="color:red;">&nbsp;*</span></td>
+    <td>      
+      <%= calendar_date_select_tag "comite[fecha_apertura]", @comite.fecha_apertura_f, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>    
+    </td>
+  </tr>
+  
+  
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.hora')%></label><span style="color:red;">&nbsp;*</span></td>
+    <td>
+      <%= text_field 'comite', 'hora_apertura', :class=>'text', :style=>'width: 20px', :maxlength=>'2' ,:onkeypress=>'inputChange();return NumberKey(event);' -%>:
+      <%= text_field 'comite', 'minuto_apertura', :class=>'text', :style=>'width: 20px', :maxlength=>'2',:onkeypress=>'inputChange();return NumberKey(event);' -%>
+      <%=select('comite', 'meridiano_apertura',
+      @meridiano.map{|e| [e, e]},
+      { :include_blank => false },
+      {:class=>'select', :onchange=>'inputChange();' } )%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label><%=I18n.t('Sistema.Body.Vistas.General.lugar')%></label><span style="color:red;">&nbsp;*</span></td>
+    <td>
+      <%= text_area 'comite', 'lugar',
+        :class=>'text',
+        :style=>'width: 350px; height: 40px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,250)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label><%=I18n.t('Sistema.Body.General.direccion')%></label><span style="color:red;">&nbsp;*</span></td>
+    <td>
+      <%= text_area 'comite', 'direccion',
+        :class=>'text',
+        :style=>'width: 350px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+
+</table>
+
+      <span id="miembros-select">
+      <%= render :partial => 'miembros_select' -%>
+      </span>    
+<br/>
+
+<div id="list-miembro">
+  <%= render :partial => 'list_miembro' -%>
+</div>
+
+<script type="text/javascript">
+  function eliminarMiembro(id){
+      var resp=new Ajax.Request('/basico/instancia_comite_estadal/delete_miembro/'+id, {
+          asynchronous:true,
+          evalScripts:true,
+          onSuccess: function(transport){
+            var data=transport.responseText;
+            if (data=="1") alert("<%=I18n.t('Sistema.Body.Modelos.Errores.no_puede_eliminar_miembro_del_comite')%>");
+          },
+          onLoaded:function(request){image_unload()},
+          onLoading:function(request){image_load()}
+      });
+      return false;
+  }
+</script>

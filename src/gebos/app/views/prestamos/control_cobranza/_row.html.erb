@@ -1,0 +1,4 @@
+<% control_cobranza = @control_cobranza if control_cobranza.nil?%>
+<tr class="lista<%= even_odd %>" id="row_<%= control_cobranza.id %>">
+	<%= render :partial => 'data', :locals => { :control_cobranza => control_cobranza, :even_odd => even_odd } -%>
+</tr>

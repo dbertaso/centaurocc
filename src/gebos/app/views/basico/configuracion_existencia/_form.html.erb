@@ -1,0 +1,84 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'stock_maquinaria','tipo_maquinaria_id',
+        @tipo_maquinaria.map{|e| [e.nombre, e.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method => :get,
+          :url=>{:controller=>'configuracion_existencia',
+          :action=>:clase_search },
+          :with=>"'id='+ this.value + '&div=clase-search_#{@stock_maquinaria.id}'")};inputChange();"})
+    %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+    </td>
+    <td>
+      <div id="clase-search_<%= @stock_maquinaria.id %>">
+        <%= select(
+          'stock_maquinaria','clase_id',
+          @clase.map{|e| [e.nombre, e.id]},
+          { :prompt=>'Seleccione...'},
+          { :class=>'select', :onchange=>'inputChange();'}) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Controladores.Marca.FormTitles.form_title_record') %>:</label>
+    </td>
+    <td>
+      <%=select(
+        'stock_maquinaria','marca_maquinaria_id',
+        @marca.map{|e| [e.nombre, e.id]},
+        { :prompt=>'Seleccione...'},
+        { :class=>'select', :onchange=>'inputChange();'}) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %>:</label>
+    </td>
+    <td>
+      <%=select(
+        'stock_maquinaria','modelo_id',
+        @modelo.map{|e| [e.nombre, e.id]},
+        { :prompt=>'Seleccione...'},
+        { :class=>'select', :onchange=>'inputChange();'}) %>
+    </td>
+
+  <tr>
+    <td style="width: 110px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.existencia') %> <%= I18n.t('Sistema.Body.Vistas.General.minima') %>:</label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'stock_maquinaria', 'minimo', :class=>'text', :style=>'width: 200px', :maxlength=>'10'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 110px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.existencia') %> <%= I18n.t('Sistema.Body.Vistas.General.maxima') %>:</label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'stock_maquinaria', 'maximo', :class=>'text', :style=>'width: 200px', :maxlength=>'10'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

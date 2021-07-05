@@ -1,0 +1,28 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.Item.Header.form_title')%> 
+      <span class="titulo_modificar"></span>
+    </div>
+  </div>
+</div>
+<%= render :partial=>'basico/sector/common/tabs' %>
+<div class="marco-contenido2">
+
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.agregar')),
+      :action => 'new', :partida_id =>@partida.id, :popup=>params[:popup] ) if vlink 'edit' %>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render "list" %>
+  </div>
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller => 'sector', :action => :index, :popup=>params[:popup] },
+    { :id=>'button_close' } ) -%>
+</div>

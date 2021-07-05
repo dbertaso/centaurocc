@@ -1,0 +1,288 @@
+<div class="marco-contenido">
+  <div class="marco-titulo">
+    <div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.modificando_tramite')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.General.beneficiario') %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+      </div></div>
+  </div>
+
+  <%= render :partial=>'solicitudes/gestionar_garantia/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <table style="width: 100%">
+
+      <tr>
+        <td class="separador" colspan="2" style="width: 100%">
+          <span><%=I18n.t('Sistema.Body.Separadores.datos_basicos')%></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top" style="width: 25%">
+          <label><%=I18n.t('Sistema.Body.General.concepto')%></label>
+        </td>
+        <td valign="top" style="width: 75%">
+          <%=@solicitud_constitucion_garantia.concepto%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.General.monto_solicitado')%></label>
+        </td>
+        <td>
+          <%= format_fm(@solicitud.monto_solicitado) %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.indice_garantia')%></label>
+        </td>
+        <td>
+          <%= format_fm(@solicitud_tipo_garantia.relacion_garantia) %>:1
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.monto_garantia')%></label>
+        </td>
+        <td>
+          <%= format_fm(@indice) %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.constitucion')%></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.validacion_constitucion_futuro')%></label></td>
+        <td >
+          <%= format_bool(@solicitud_constitucion_garantia.validacion_futura)%>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%></label>
+        </td>
+        <td style="width: 80%">
+          <%=@solicitud_constitucion_garantia.fecha_futura_f%>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.autenticacion')%></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%></label>
+        </td>
+        <td style="width: 80%">
+          <%=@solicitud_constitucion_garantia.fecha_auteticacion_f%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.notaria')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.notaria%>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.direccion_notaria')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.direccion_notaria%>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.estado.nombre%>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label></td>
+        <td>
+          <span id="municipio-select">
+            <%=@solicitud_constitucion_garantia.municipio.nombre%>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.numero')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.numero_autenticacion%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.folio')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.folio_autenticacion%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.tomo')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.tomo_autenticacion%>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.observacion_autenticacion%>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.protocolizacion')%></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%></label>
+        </td>
+        <td style="width: 80%">
+          <%=@solicitud_constitucion_garantia.fecha_protocolizacion_f%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.registro')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.registro%>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%="#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.registro')}"%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.direccion_registro%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.numero')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.numero%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <span id="etiqueta_folio">
+            <%=@solicitud_constitucion_garantia.etiqueta_folio%>
+          </span>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.folio%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <span id="etiqueta_tomo">
+            <%=@solicitud_constitucion_garantia.etiqueta_tomo%>
+          </span>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.tomo%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <span id="etiqueta_protocolo">
+            <%=@solicitud_constitucion_garantia.etiqueta_protocolo%>
+          </span>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.protocolo%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.trimestre')%></label>
+        </td>
+        <td>
+
+          <% if @solicitud_constitucion_garantia.trimestre == 1 %><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.primero')%>
+          <% elsif @solicitud_constitucion_garantia.trimestre == 2 %><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.segundo')%>
+          <% elsif @solicitud_constitucion_garantia.trimestre == 3 %><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.tercero')%>
+          <% elsif @solicitud_constitucion_garantia.trimestre == 4 %><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.cuarto')%>
+          <%end%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.observacion%>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.estado_y_comentario')%></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+        <td>
+          <span style="color: blue"><b><%= @solicitud_tipo_garantia.estatus_w %></b></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.General.comentarios')%></label>
+        </td>
+        <td>
+          <%=@solicitud_constitucion_garantia.comentarios%>
+        </td>
+      </tr>
+
+    </table>
+  </div>

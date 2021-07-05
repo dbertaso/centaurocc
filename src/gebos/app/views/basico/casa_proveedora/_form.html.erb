@@ -1,0 +1,295 @@
+<script type="text/javascript">
+  varEnviado= false;
+</script>
+<%= error %>
+<%= message %>
+<table border="0" width="100%">
+  <tr>
+    <td style="width: 130px"><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label> <label style="color:red"> <%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label></td>
+    <td style="width: 230px">
+      <% estado_onchange = remote_function(
+          :loading =>'image_load()',
+		  :loaded => 'image_unload()',
+		  :method=> :get, 
+          :url=>{:controller=>'casa_proveedora',
+          :action=>:ciudad_search },
+          :with=>"'id='+value")
+      %>
+      
+      <%= select(
+        'casa_proveedora','estado_id',
+        @estado.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>estado_onchange+';inputChange();' } )
+      %>
+    </td>
+    <td style="width: 110px"></td>
+    <td style="width: 310px"></td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.ciudad')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <span id="ciudad-search">
+        <%= render 'ciudad_search' -%>
+      </span>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <span id="municipio-search">
+        <%= render 'municipio_search' -%>
+      </span>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <span id="parroquia-search">
+        <%= render 'parroquia_search' -%>
+      </span>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_field 'casa_proveedora', 'nombre', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.rif')%>:</label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label></td>
+    <td>
+      <%= text_field 'casa_proveedora', 'rif', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'12', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.Form.convenio')%></label>
+      <label style="color:red"></label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "casa_proveedora[fecha_convenio]", @casa_proveedora.fecha_convenio_f, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Form.site')%></label></td>
+    <td>
+      <%= text_field 'casa_proveedora', 'enlace_internet', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.persona') << " " << I18n.t('Sistema.Body.Vistas.General.contacto')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_field 'casa_proveedora', 'persona_contacto', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.email')<< " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.contacto')%>:</label></td>
+    <td>
+       <%= text_field 'casa_proveedora', 'email_contacto', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> <%=I18n.t('Sistema.Body.Vistas.General.oficina')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_field 'casa_proveedora', 'telefono_oficina', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.fax')%>:</label></td>
+    <td>
+      <%= text_field 'casa_proveedora', 'telefono_fax', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.telefono') << " " << I18n.t('Sistema.Body.Vistas.General.celular')%></label>
+    </td>
+    <td>
+      <%= text_field 'casa_proveedora', 'telefono_celular', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.codigo') << " " << I18n.t('Sistema.Body.Vistas.General.postal')%>:</label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label></td>
+    <td>
+      <%= text_field 'casa_proveedora', 'codigo_postal', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'5', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.avenida')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_field 'casa_proveedora', 'avenida', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'300', :onkeypress=>'inputChange();'  -%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.edificio')%></label></td>
+    <td>
+      <%= text_field 'casa_proveedora', 'edificio', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.piso')%></label>
+    </td>
+    <td>
+      <%= text_field 'casa_proveedora', 'piso', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.numero')%></label></td>
+    <td>
+      <%= text_field 'casa_proveedora', 'numero', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label></td>
+    <td colspan="4">
+      <%= text_area 'casa_proveedora', 'descripcion', :class=>'text', :style=>'width: 560px',"rows" => '2',
+        :maxlength=>'300', :onkeypress=>'inputChange();'  -%>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  
+<!-- esto se va a usar para el segundo release, por eso no se eliminara por completo
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.anticipo')%></label></td>
+    <td >
+      <%= text_field 'casa_proveedora', 'anticipo', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+
+-->
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'casa_proveedora', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();'
+      -%>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.forma') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.pago')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= 
+        select("casa_proveedora", "tipo_pago",
+        { I18n.t('Sistema.Body.Vistas.General.transferencia') << " " << I18n.t('Sistema.Body.Vistas.General.electronica') => "1", I18n.t('Sistema.Body.Vistas.General.cheque') => "2"},
+        { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'ShowHideElement("forma_pago",this);inputChange();'})
+      %>
+    </td>
+    <td></td>
+    <td></td>
+  </tr> 
+
+  <tr>
+    <td></td>
+    <td colspan="3">
+      <div id="forma_pago" <% if controller.action_name=='new' || @casa_proveedora.tipo_pago=='2'  %> style="display:none;" <% end %> > 
+        <table width="100%">
+          <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.General.cuenta')%></label>
+              <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+            </td>
+            <td colspan="4">
+              <table>
+                <tr>
+                  <td><%=I18n.t('Sistema.Body.Vistas.General.ahorro')%>:</td>
+                  <td>
+                    <%=
+                    radio_button('casa_proveedora','tipo_cuenta', "a", {:onChange=>'inputChange();'})
+                    -%>
+                  </td>
+                  <td><%=I18n.t('Sistema.Body.Vistas.General.corriente')%>:</td>
+                  <td>
+                    <%=
+                    radio_button('casa_proveedora','tipo_cuenta', "c", {:onclick=>'inputChange();'})
+                    -%>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            </tr>
+            <tr>
+              <td>
+                <label><%=I18n.t('Sistema.Body.Vistas.General.banco')%>:</label>
+                <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+              </td>
+              <td  colspan="4">
+                <%= select(
+                  'casa_proveedora', 'entidad_financiera_id',
+                  @entidad_financiera.map{|e| [e.nombre, e.id]},{:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                  { :class=>'select', :onchange=>'inputChange();' } )
+              %>
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.cuenta')%></label>
+                <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+              </td>
+              <td colspan="4">
+                <%= text_field 'casa_proveedora', 'numero_cuenta', :class=>'text', :style=>'width: 200px',
+                  :maxlength=>'20', :onkeypress=>'inputChange();return NumberKey(event);'
+                -%>
+              </td>
+            </tr>
+        </table>
+      </div>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>						
+</table>

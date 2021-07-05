@@ -1,0 +1,32 @@
+<table>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label style="color: red">*</label> <label><%= I18n.t('Sistema.Body.Vistas.SitioColocacion.Etiquetas.sitio') %></label> 
+    </td>
+    <td>
+      <%= select(
+        'unidad_produccion_colocacion', 'sitio_colocacion_id',
+        @sitio_colocacion_list.map{|i| ["#{i.sitio} - #{i.nombre}", i.id]},
+        { :include_blank => true },
+        { :class=>'select',:onchange=>'checkValor(this);inputChange(); ' } ) %>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan=2>
+      <label style="color: red">*</label>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.ubicada')} #{I18n.t('Sistema.Body.Vistas.General.a')}" %>&nbsp;
+        <%= text_field 'unidad_produccion_colocacion', 'ubicacion', 
+          :class=>'numeric', 
+          :style=>'width: 50px', 
+          :maxlength=>'5'  -%>&nbsp;
+        Km. <%= "#{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')}" %>
+      </label> 
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

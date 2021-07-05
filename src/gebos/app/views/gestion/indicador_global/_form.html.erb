@@ -1,0 +1,73 @@
+  <table style="width: 50%">
+  	<tr>
+  		<td class="separador" colspan="2">
+  			<span><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.indicadores') %></span>
+  		</td>
+  	</tr>
+  	<tr>
+ 
+  	     <td>
+           <label><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.porcentaje_creditos_vencidos') %></label>
+         </td>
+         <td>
+            <%= format_fm @icvencidos %> %
+  	    </td>
+  	</tr>
+  	<tr>
+ 
+  	     <td>
+           <label><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.porcentaje_creditos_vigentes') %></label>
+         </td>
+         <td>
+            <%= format_fm @icvigentes %> %
+  	    </td>
+  	</tr>
+  	<tr>
+  	     <td>
+           <label><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.indice_morosidad') %></label>
+         </td>
+         <td>
+            <%= format_fm @im  %> %
+  	    </td>
+  	</tr>
+  	<tr>
+  	     <td>
+           <label><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.cartera_vencida') %></label>
+         </td>
+         <td>
+            <%= format_fm @cv  %> %
+  	    </td>
+  	</tr>
+  	<tr>
+  	     <td>
+           <label><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.cartera_vigente') %></label>
+         </td>
+         <td>
+            <%= format_fm @iv  %> %
+  	    </td>
+  	</tr>
+  	<tr>
+  	     <td>
+           <label><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.cartera_litigio') %></label>
+         </td>
+         <td>
+            <%= format_fm @cl  %> %
+  	    </td>
+  	</tr>
+  	<tr>
+  	     <td>
+           <label><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.cartera_reestructurada') %></label>
+         </td>
+         <td>
+            <%= format_fm @rf  %> %
+  	    </td>
+  	</tr>
+  	<tr>
+  	     <td>
+           <label><%= t('Sistema.Body.Vistas.IndicadorGlobal.Etiquetas.cartera_reestructurada_adm') %></label>
+         </td>
+         <td>
+            <%= format_fm @ra  %> %
+  	    </td>
+  	</tr>
+  </table>

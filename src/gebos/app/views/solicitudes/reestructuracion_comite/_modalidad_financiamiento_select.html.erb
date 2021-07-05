@@ -1,0 +1,7 @@
+<%= select(
+  'solicitud', 'modalidad_financiamiento_id',
+  @modalidad_financiamiento_select.map{|e| ["#{e.nombre} - #{e.descripcion}", e.id]},
+  {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+  { :class=>'select', :onchange=>'inputChange();',:style=>'width:400px' } ) %>
+
+

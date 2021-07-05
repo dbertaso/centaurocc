@@ -1,0 +1,50 @@
+<td>
+  <%= solicitud.numero %>
+</td>
+
+<td>
+  <%= solicitud.cedula_rif %>
+</td>
+
+<td>
+  <%= solicitud.nombre %>
+</td>
+
+<td>
+	<span style="color: #FF0000"><b><%= solicitud.estatus %> - Inspección y Avalúos</b></span>
+</td>
+<td>
+	 
+	<%= sprintf('%01.2f',solicitud.monto_solicitado).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+</td>
+
+<td>
+        <%= solicitud.programa %>
+</td>
+
+<td>
+        <%= solicitud.estado %>
+</td>
+
+<td align="center">
+   
+	<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'), 
+		{:controller => 'solicitud', :action => :view,
+		:id => solicitud.solicitud_id,
+        :controlador => 'unidades_apoyo_avaluo'} %>
+
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Editar'),
+		{:action => :edit,
+		:id => solicitud.solicitud_id,
+        :controlador => 'solicitud'} %>
+
+        <% if SolicitudAvaluo.validar_avaluo(solicitud.solicitud_id) == true %>
+          <%= link_to_remote(image_tag('enviar.gif',:title=>'Avanzar'),
+		:loading =>'image_load()',
+  		:loaded => 'image_unload()',
+  		:confirm => "¿Está usted seguro que desea avanzar la Solicitud número #{solicitud.numero}?",
+  		:id=>"button_enviar",
+  		:onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+		:url => {:action => :avanzar, :id => solicitud.solicitud_id})  if (vlink 'avanzar') -%>
+       <% end %>
+</td>

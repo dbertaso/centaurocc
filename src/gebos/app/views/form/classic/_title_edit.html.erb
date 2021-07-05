@@ -1,0 +1,4 @@
+<% identity = identity && !identity.to_s.empty? ? "'#{identity}'" : '' %>
+<div class="marco-titulo"><div><div>
+	<%=I18n.t('Sistema.Body.Vistas.General.modificando')%>  <%= @form_title_record %> <span style="color: #FF0000"><%= identity %></span>
+</div></div></div>

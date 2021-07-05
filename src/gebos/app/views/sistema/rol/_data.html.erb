@@ -1,0 +1,21 @@
+<td align="center">
+  <%= rol.id %>
+</td>
+<td>
+  <%= rol.nombre  %>
+</td>	
+<td>
+  <%= rol.descripcion  %>
+</td>	
+<td style="text-align: right">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), :action => 'view', :method=>:get, :id => rol.id %>&nbsp;
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')), :action => 'edit', :method=>:get, :id => rol.id) if vlink 'edit' %>&nbsp;
+  <% link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'rol', :action => :delete, :id => rol.id}) if vlink 'delete' -%>
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'), :title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir')),
+    { :action=>'imprimir', :method=>:get, :id=>rol.id, :popup=>true },
+    :popup => ['unidad_apoyo_resguardo', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+</td>

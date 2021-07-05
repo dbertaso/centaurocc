@@ -1,0 +1,269 @@
+
+<div class="marco-contenido2">
+
+  <table style="width: 100%">
+
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 30%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.General.sector')%>:
+          </label>
+        </td>
+        <td style="width: 60%">
+          <b> <%= @producto.sector.nombre %> </b>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 30%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.General.sub_sector')%>:
+          </label>
+        </td>
+        <td style="width: 60%">
+          <b> <%= @producto.sub_sector.nombre %> </b>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.monto_minimo')%>:
+          </label>
+        </td>
+        <td>
+          <%= number_to_currency(@producto.monto_minimo) %>&nbsp;&nbsp;
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.monto_maximo')%>:
+          </label>
+        </td>
+        <td>
+          <%= number_to_currency(@producto.monto_maximo) %>&nbsp;&nbsp;
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Modelos.Producto.Columnas.plazo_minimo')} #{I18n.t('Sistema.Body.Modelos.General.expresado_meses')}" %>:
+          </label>
+        </td>
+        <td>
+          <%= @producto.plazo_minimo %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Modelos.Producto.Columnas.plazo_maximo')} #{I18n.t('Sistema.Body.Modelos.General.expresado_meses')}" %>:
+          </label>
+        </td>
+        <td>
+          <%= @producto.plazo_maximo %>
+        </td>
+      </tr>
+
+    </table>
+
+    <table style="width: 100%">
+
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Modelos.ProgramaProducto.Separadores.intereses')%></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.tasa')}"%>:
+            </label>
+        </td>
+        <td colspan="2">
+          <%= radio_button 'producto', 'tasa_fija', 'true', options = {:disabled => "true", :class=>'text'}  -%>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.fija')}"
+          <br />
+
+          <%= radio_button 'producto', 'tasa_fija', 'false', options = {:disabled => "true", :class=>'text'}  -%>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.variable')}"
+        </td>
+
+      </tr>
+
+      <tr>
+        <td style="width: 40%">
+          <label><%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.meses_fijos_sin_cambio_tasa')%></label>
+        </td>
+        <td style="width: 60%">
+          <%= @producto.meses_fijos_sin_cambio_tasa %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.forma_calculo_intereses') %></label>
+        </td>
+        <td>
+          <%= radio_button 'producto', 'forma_calculo_intereses', "V", options = {:disabled => "true", :class=>'text'}  -%>
+          <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.al_vencimiento')%>
+          <br />
+
+          <%= radio_button 'producto', 'forma_calculo_intereses', "A", options = {:disabled => "true", :class=>'text'} -%>
+          <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.por_anticipado')%>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.base_calculo')%></label>
+        </td>
+        <td style="width: 70%">
+          <%= radio_button 'producto', 'base_calculo_intereses', "360", options = {:disabled => "true", :class=>'text'}  -%>
+          <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.360')%>
+          <br />
+
+          <%= radio_button 'producto', 'base_calculo_intereses', "365", options = {:disabled => "true", :class=>'text'}  -%>
+          <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.365')%>
+        </td>
+      </tr>
+
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.abonos_extraordinarios')%></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+
+          <%= check_box 'producto', 'permitir_abonos',
+               options = {:disabled => "true"},
+                          :checked_value=>"1",
+                          :unchecked_value=>"0" -%>
+          <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.permitir_abonos')%></label>
+         </td
+      </tr>
+
+      <table style="width: 100%">
+
+          <table style="width: 100%">
+
+            <tr>
+              <td colspan="2">
+                <div id="abonos">
+                  <%= render( :partial=>'abonos_view' ) if @producto.permitir_abonos  %>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <table style="width: 100%">
+            <tr>
+              <td class="separador" colspan="2">
+                <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.mora')%></span>
+              </td>
+            </tr>
+
+
+            <tr>
+              <td style="width: 30%" valign="top">
+                <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.base_cobro_mora')%></label>
+              </td>
+              <td style="width: 70%">
+                <%= radio_button 'producto', 'base_cobro_mora', "C",  options = {:disabled => "true", :class=>'text'}  -%>
+                <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.capital_cuota')%>
+              <br />
+
+                <%= radio_button 'producto', 'base_cobro_mora', "V",  options = {:disabled => "true", :class=>'text'}  -%>
+                <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.valor_cuota')%>
+              </td>
+            </tr>
+
+          </table>
+
+          <table style="width: 100%">
+
+            <tr>
+              <td class="separador" colspan="2">
+                <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_gracia')%></span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+
+                <%= check_box 'producto', 'meses_gracia_si',
+                         options = {:disabled => "true"},
+                                    :checked_value=>"1",
+                                    :unchecked_value=>"0" -%>
+                <label>
+                  <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_gracia')%>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div id="gracia">
+                  <%= render( :partial=>'gracia_view' ) if @producto.meses_gracia_si  %>
+                </div>
+              </td>
+            </tr>
+
+            <table style="width: 100%">
+              <tr>
+                <td class="separador" colspan="2">
+                  <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_muerto')%></span>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+
+                  <%= check_box 'producto', 'meses_muertos_si',
+                           options = {:disabled => "true"},
+                                      :checked_value=>"1",
+                                      :unchecked_value=>"0" -%>
+                  <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_muerto')%></label>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2">
+                  <div id="muertos">
+                    <%= render( :partial=>'muertos_view' ) if @producto.meses_muertos_si  %>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <table style="width: 100%">
+              <tr>
+                <td class="separador" colspan="2">
+                  <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.requisitos')%></span>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2">
+                  <%= check_box 'producto', 'fiador_si',
+                           options = {:disabled => "true"},
+                                      :checked_value=>"1",
+                                      :unchecked_value=>"0" -%>
+                  <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.exigir_fiador')%></label>
+                </td>
+              </tr>
+            </table>
+          </table>
+      </table>
+    </table>
+  </table>
+
+
+</div>

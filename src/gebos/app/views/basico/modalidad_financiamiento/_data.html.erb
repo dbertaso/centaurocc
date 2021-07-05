@@ -1,0 +1,23 @@
+<% modalidad_financiamiento = @modalidad_financiamiento if modalidad_financiamiento.nil?  %>
+<td>
+  <%= modalidad_financiamiento.nombre  %>
+</td> 
+<td>
+  <%= modalidad_financiamiento.descripcion  %>
+</td> 
+<td style="text-align: center">
+  <%= format_bool(modalidad_financiamiento.activo)  %>
+</td> 
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'modalidad_financiamiento', :action => :edit, :id => modalidad_financiamiento.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'modalidad_financiamiento', :action => :delete, :id => modalidad_financiamiento.id}) if vlink 'delete' -%>
+</td>

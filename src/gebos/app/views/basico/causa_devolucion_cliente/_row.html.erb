@@ -1,0 +1,4 @@
+<% causa_devolucion_cliente = @causa_devolucion_cliente if causa_devolucion_cliente.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= causa_devolucion_cliente.id %>">
+	<%= render :partial => 'data', :locals => { :causa_devolucion_cliente => causa_devolucion_cliente, :even_odd => even_odd } -%>
+</tr>

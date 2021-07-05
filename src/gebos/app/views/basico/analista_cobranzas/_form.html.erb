@@ -1,0 +1,124 @@
+
+
+<%= error %>
+<%= message %>
+<table border="0" width="100%">
+  <tr>
+    <%= hidden_field 'analista_cobranzas', 'usuario_id',
+     :value => @analista_cobranzas.usuario_id %>
+
+    <td class="separador" valign="bottom" colspan="4">
+      <span><%= I18n.t('Sistema.Body.Vistas.EmpleadosSilo.Etiquetas.datos_personales') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.AnalistaCobranzas.Etiquetas.cantidad_cobranzas') %></label></td>
+    <td>
+      <% if @analista_cobranzas.cantidad_cobranzas.nil?  %>
+        0
+      <% else  %>
+        <%= @analista_cobranzas.cantidad_cobranzas %>
+      <%  end %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td style="width: 50%">
+      <%= text_field  'analista_cobranzas','letra_cedula',
+        :class=>'text', :style=>'width: 10px',
+        :maxlength=>'12', :onkeypress=>'inputChange();', :readonly=>'readonly'  -%>-
+      <%= text_field  'analista_cobranzas','cedula',
+        :class=>'text', :style=>'width: 80px',
+        :maxlength=>'12', :onkeypress=>'inputChange();', :readonly=>'readonly'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'analista_cobranzas', 'primer_nombre', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label></td>
+    <td>
+      <%= text_field 'analista_cobranzas', 'segundo_nombre', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+
+    </td>
+    <td>
+      <%= text_field 'analista_cobranzas', 'primer_apellido', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label></td>
+    <td>
+      <%= text_field 'analista_cobranzas', 'segundo_apellido', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 25%">
+      <label>
+        <%=I18n.t('Sistema.Body.Vistas.Form.sector') %>
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td style="width: 75%">
+        <span id="sector-select">
+          <%= render :partial => 'sector_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.sub_sector') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="sub-sector-select">
+          <%= render :partial => 'sub_sector_select' %>
+      </span>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=  I18n.t('Sistema.Body.Vistas.Form.estatus')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+        <td>
+          <%= select('analista_cobranzas', 'estatus',
+                                ([[t('Sistema.Body.Modelos.AnalistaCobranzas.Estatus.activo'), 'A'],
+                                  [t('Sistema.Body.Modelos.AnalistaCobranzas.Estatus.baja'), 'B'],
+                                  [t('Sistema.Body.Modelos.AnalistaCobranzas.Estatus.inactivo'), 'I']
+                                  ]),
+                    {:prompt=>t('Sistema.Body.Vistas.AnalistaCobranzas.Etiquetas.seleccione_estatus')},
+                    { :class=>'select' }) %>
+  </tr>
+  <tr>
+    <td>
+      <label><%=  I18n.t('Sistema.Body.Vistas.AnalistaCobranzas.Etiquetas.es_supervisor')%></label>
+    </td>
+    <td>
+      <%= check_box 'analista_cobranzas', 'senal_supervisor',
+        { :onchange=>'inputChange();' }, 'true', 'false' %>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+

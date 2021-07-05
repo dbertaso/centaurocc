@@ -1,0 +1,204 @@
+<script type="text/javascript">
+
+  function bloquear()
+  {
+    document.getElementById("button_save").disabled = true;
+  }
+</script>
+<table>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.informacion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.visita')}" %></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 150px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.codigo') %> </label>
+    </td>
+    <td style="width: 500px">
+      <%= @seguimiento_visita.codigo_visita %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 150px">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.fecha') %> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 500px">
+      <%= calendar_date_select_tag "seguimiento_visita[fecha_visita_f]", @seguimiento_visita.fecha_visita_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.hora') %> </label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= text_field 'seguimiento_visita', 'hora_visita_f',
+        :class=>'text',
+        :style=>'width: 80px',
+        :maxlength=>'8' -%> 
+      <%= select('seguimiento_visita', 'hora_visita_ampm', { 'am' => 'am', 'pm' => 'pm'}) %> (hh:mm:ss ampm)
+
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Controladores.MotivoVisita.FormTitles.form_title') %></label>
+    </td>
+    <td>
+      <%= @motivo_visita_list[0].nombre %> -  <%= @motivo_visita_list[0].descripcion %>
+
+      <%= select(
+        'seguimiento_visita', 'motivo_visita_id',
+        @motivo_visita_list.map{|i| ["#{i.nombre} - #{i.descripcion}", i.id]},
+        { :class=>'select',:onchange=>';inputChange();' }, :style=>"display:none" ) %>
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.persona_atendio')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Controladores.TecnicoCampo.FormTitles.form_title_record')}" %></span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %></label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select('seguimiento_visita', 'cedula_nacionalidad_persona_atencion', { 'V' => 'V', 'E' => 'E'}) %> -
+
+      <%= text_field 'seguimiento_visita','cedula_persona_atencion',
+        :class=>'text',
+        :style=>'width: 148px',
+        :maxlength=>'10', :onkeypress=>'inputChange(); return NumberKey(event);'-%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= text_field 'seguimiento_visita', 'nombre_persona_atencion',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'30' -%>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.apellido') %></label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= text_field 'seguimiento_visita', 'apellido_persona_atencion',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'30' -%>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.vinculo')} #{I18n.t('Sistema.Body.Vistas.General.con')} #{I18n.t('Sistema.Body.Vistas.General.el')} #{I18n.t('Sistema.Body.Vistas.General.solicitante')}" %> </label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= text_field 'seguimiento_visita', 'vinculo_persona_atencion',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'30' -%>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.telefonos') %></label>
+    </td>
+    <td>
+
+      <%= text_field 'seguimiento_visita', 'telf1_persona_atencion',
+        :class=>'text', :onkeypress => ' return NumberKey(event);',
+        :style=>'width: 200px',
+        :maxlength=>'12' -%>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <%= text_field 'seguimiento_visita', 'telf2_persona_atencion',
+        :class=>'text', :onkeypress => ' return NumberKey(event);',
+        :style=>'width: 200px',
+        :maxlength=>'12' -%>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <%= text_field 'seguimiento_visita', 'telf3_persona_atencion',
+        :class=>'text', :onkeypress => ' return NumberKey(event);',
+        :style=>'width: 200px',
+        :maxlength=>'12' -%>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label>¿<%= "#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.practica')} #{I18n.t('Sistema.Body.Vistas.General.correcta')} #{I18n.t('Sistema.Body.Vistas.General.correcta')}" %>?</label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= radio_button 'seguimiento_visita', 'direccion_correcta', 'false',
+        :class=>'text', :onclick=>'document.getElementById("unidad_produccion_referencia").readOnly = "true";inputChange();'  -%>Si<br />
+      <%= radio_button 'seguimiento_visita', 'direccion_correcta', 'true',
+        :class=>'text', :onclick=>'document.getElementById("unidad_produccion_referencia").readOnly = "";inputChange();'  -%>No<br />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.corrija')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.practica')}" %></label>
+    </td>
+
+    <td>
+      <%= text_area 'unidad_produccion', 'referencia',
+        :class=>'text',
+        :style=>'width: 500px; height: 120px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,5000)',
+        :readonly=>'true'-%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label>
+    </td>
+
+    <td>
+      <%= text_area 'seguimiento_visita', 'observaciones',
+        :class=>'text',
+        :style=>'width: 500px; height: 120px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"bloquear();", :id=>'button_save') -%>&nbsp;

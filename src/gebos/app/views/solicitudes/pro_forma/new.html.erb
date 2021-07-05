@@ -1,0 +1,37 @@
+<div class="marco-contenido">
+  <%= form_title_new %>
+
+  <%= error %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_new, :solicitud_id => @solicitud.id } ) do -%>
+  <%= render :partial => 'form' %>
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= form_buttons_edit :solicitud_id => @solicitud.id, :popup=>true %>
+    </td>
+  </tr>
+</table> 
+<input type="hidden" id="ids" value="" name="ids"/>
+<% end -%>
+</div>
+
+<script language="javascript">
+  function Chequear(field){
+  var valor = document.getElementById("ids").value
+  if (field.checked == false){
+                valor = ',' + valor;
+    valor= valor.replace(',' + field.value + ',' , ",");
+  }
+  else {
+    valor = valor.replace(',' + field.value + ',' , ",")
+    valor = valor + field.value + ',';
+  }
+        if (valor.charAt(0) == ','){
+            valor = valor.substring(1, valor.length)
+        }
+  document.getElementById("ids").value = valor;
+}
+</script>

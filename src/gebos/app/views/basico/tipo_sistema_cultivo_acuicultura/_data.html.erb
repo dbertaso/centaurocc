@@ -1,0 +1,27 @@
+<% tipo_sistema_acuicultura = @tipo_sistema_acuicultura if tipo_sistema_acuicultura.nil? %>
+<td>
+	<%= tipo_sistema_acuicultura.nombre  %>
+</td>	
+<td>
+	<%= tipo_sistema_acuicultura.descripcion  %>
+</td>	
+
+	
+<td style="text-align: center">
+	<%= format_bool(tipo_sistema_acuicultura.activo)  %>
+</td>
+<td style="text-align: right">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=>:get,
+		:url => {:controller => 'tipo_sistema_cultivo_acuicultura', :action => :edit, :id => tipo_sistema_acuicultura.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'tipo_sistema_cultivo_acuicultura', :action => :delete, :id => tipo_sistema_acuicultura.id}) if vlink 'delete' -%>
+</td>
+

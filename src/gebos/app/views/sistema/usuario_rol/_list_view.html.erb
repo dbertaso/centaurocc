@@ -1,0 +1,31 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 300px" <%= sort_class_helper('rol.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'rol.nombre', 'list' %>
+      </th>
+      <th style="width: 300px" <%= sort_class_helper('rol.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'rol.descripcion', 'list' %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for rol in @list
+      even_odd = 1 - even_odd %>
+
+      <% rol = @rol if rol.nil? %>
+      <tr class="lista<%= even_odd %>" id="row_<%= rol.id %>">
+        <td>
+          <%= rol.nombre  %>
+        </td>
+        <td>
+          <%= rol.descripcion %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

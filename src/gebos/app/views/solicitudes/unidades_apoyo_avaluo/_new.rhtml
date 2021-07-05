@@ -1,0 +1,38 @@
+<div class="lista-form">
+  <div class="form-titulo" style="text-align: left">Agregando Garantía</div>
+
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_new_informe, :solicitud_id => @solicitud.id } ) -%>
+
+<table style="width: 60%">
+  <tr>
+    <td style="width: 20%" align="left">
+      <label>Tipo de Garantía</label>
+    </td>
+    <td style="width: 80%" align="left">
+      <%= select(
+          'solicitud_tipo_garantia', 'tipo_garantia_id',
+          @tipo_garantia_list.map{|e| [e.nombre, e.id]},
+          { },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="left" colspan="2">
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;
+        <%= link_to_remote(
+            image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :url => { :action => :cancel, :id=> @solicitud.id }) -%>
+    </td>
+  </tr>
+</table>
+<%= end_form_tag -%>
+  <br></br>
+</div>

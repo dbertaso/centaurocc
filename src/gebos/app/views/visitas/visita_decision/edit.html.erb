@@ -1,0 +1,64 @@
+<script type="text/javascript">
+
+  function actualizar_form(ide,sini)
+  {
+    $("formulario_edit").setAttribute("onsubmit", "new Ajax.Request(/visitas/visita_decision/save_edit/"+ide+sini+", {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}, parameters:Form.serialize(this)}); return false;");
+    $("formulario_edit").setAttribute("action", "/visitas/visita_decision/save_edit/"+ide+sini);
+  }
+
+  function actualizar_hidden(val)
+  {
+    if (val){
+      $("siniestro_checked").value="1";
+    }else{
+      $("siniestro_checked").value="0";
+    }
+  }
+      varEnviado = false;
+</script>
+
+<%= form_title_edit @full_info %>
+<div id="contenedor_principal">
+
+
+  <% @seguimiento_cultivo = SeguimientoCultivo.find_by_seguimiento_visita_id(@visitas.id)%>
+  <% if @visitas.solicitud.sub_sector.nemonico=="AN" %>
+    <%= render :partial=>'visitas/visita_pastizales_potreros/common/tabs' %>
+  <% elsif @visitas.solicitud.sub_sector.nemonico=="VE" %>
+    <%= render :partial=>'visitas/visita_seguimiento_cultivo/common/tabs' %>
+  <% elsif @visitas.solicitud.sub_sector.nemonico=="AC" %>
+    <%= render :partial=>'visitas/condiciones_acuicultura/common/tabs' %>
+  <% elsif @visitas.solicitud.sub_sector.nemonico=="PE" %>
+    <%= render :partial=>'visitas/control_visitas_pesca/embarcacion/common/tabs' %>
+  <% elsif @visitas.solicitud.sub_sector.nemonico=="MA" %>
+    <%= render :partial=>'visitas/visita_maquinaria/common/tabs' %>
+  <% end %>
+  <div class="marco-contenido2">
+    <%= error  %>
+    <%= message  %>
+
+    <table width="100%">
+      <tr><td>
+          <div class="msg-notice" id="messages" style="display: none; text-align: center;"></div>
+        </td></tr>
+    </table>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :popup=>params[:popup], :id => @visitas.id }, :html => { :id=>'formulario_edit' } ) do -%>
+
+      <input type="hidden" id="siniestro_checked" name="siniestro_checked" value="<%=params[:siniestro_checked]%>"/>
+
+      <%= render :partial => 'form' %>
+
+      <div id="buttons_edit" style="display: none">
+        <%= form_buttons_edit :action => :index, :controller => 'visita_seguimiento', :popup=>params[:popup], :id => @visitas.solicitud.id %>
+      </div>
+
+      <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+        { :action => :index, :controller => 'visita_seguimiento', :popup=>params[:popup], :id => @visitas.solicitud.id },
+        { :id=>'button_close', } ) -%>
+
+    <% end-%>
+  </div>
+</div>

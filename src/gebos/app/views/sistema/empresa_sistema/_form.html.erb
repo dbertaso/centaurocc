@@ -1,0 +1,96 @@
+<table>
+  <tr>
+    <td>
+      <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.rif')}"%>
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= select(
+        'empresa_sistema', 'rif_1',
+        [['J','J'],['G','G'],['V','V'],['E','E'],['P','P']],
+        { :prompt => "" },
+        { :class=>'select', :onchange=>';inputChange();' } ) %> -
+      <%= text_field 'empresa_sistema', 'rif_2',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8'
+    %> -
+      <%= text_field 'empresa_sistema', 'rif_3',
+        :class=>'text', :style=>'width: 10px',
+        :maxlength=>'1'
+    %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.abreviado')}" %> 
+      </label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'empresa_sistema', 'nombre_corto',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'50', :onKeyUp=>'textCounter(this,60)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= I18n.t('Sistema.Body.Vistas.General.nombre') %> 
+      </label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'empresa_sistema', 'nombre',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'100', :onKeyUp=>'textCounter(this,60)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.General.direccion') %> </label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_area 'empresa_sistema', 'direccion',
+        :class=>'text',
+        :style=>'width: 600px; height: 100px',
+        :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.telefono')%> </label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_sistema', 'telefono',
+        :class=>'text', :style=>'width: 100px;',
+        :maxlength=>'11', :onKeyUp=>'textCounter(this,11)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.representante_legal') %></label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_sistema', 'representante_legal', :class=>'text', :style=>'width: 150px', :maxlength=>'100',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo')%> </label>
+    </td>
+    <td>
+      <%= check_box 'empresa_sistema', 'activo',
+        :checked_value=>"true",
+        :unchecked_value=>"false", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"", :id=>'button_save') -%>&nbsp;

@@ -1,0 +1,54 @@
+<td>
+  <%= catalogo.contrato_maquinaria_equipo.nombre %>
+</td>
+
+<td>
+  <%= catalogo.clase.tipo_maquinaria.descripcion %>
+</td>
+
+<td>
+  <%= catalogo.clase.nombre %>
+</td>
+
+<td>
+  <%= catalogo.marca_maquinaria.nombre unless catalogo.marca_maquinaria.nil? %>
+</td>
+
+<td>
+  <%= catalogo.modelo.nombre unless catalogo.modelo.nil? %>
+</td>
+
+<td>
+  <%= catalogo.serial %>
+</td>
+
+<td>
+  <%= catalogo.chasis %>
+</td>
+
+<td style="text-align: center">
+  <%= sprintf('%01.2f',catalogo.monto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless catalogo.monto.nil? %> <%= catalogo.moneda_f %>
+</td>
+
+<td>
+  <%= catalogo.getstatus %>
+</td>
+
+<td width="8%" align="center">
+  <% if catalogo.estatus == 'L' %>
+    <%= link_to_remote(
+      image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :url => {:controller => 'catalogo', :action => :edit, :id => catalogo.id}) if vlink 'edit'
+    -%>
+    <%= link_to_remote(
+      image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+      :url => {:controller => 'catalogo', :action => :delete, :id => catalogo.id}) if vlink 'delete'
+    -%>
+  <% end %>
+</td>

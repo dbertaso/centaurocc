@@ -1,0 +1,42 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 140px" <%= sort_class_helper('desvio_silo.actividad_id') %>>
+        <%= sort_link_helper 'Actividad', 'desvio_silo.actividad_id', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('devio_silo.silo_origen_id') %>>
+        <%= sort_link_helper 'Estado', 'desvio_silo.silo_origen_id', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('desvio_silo.silo_origen_id') %>>
+        <%= sort_link_helper 'Silo Actual', 'desvio_silo.silo_origen_id', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('desvio_silo.silo_destino_id') %>>
+        <%= sort_link_helper 'Estado Desvio', 'desvio_silo.silo_destino_id', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('desvio_silo.silo_destino_id') %>>
+        <%= sort_link_helper 'Silo destino', 'desvio_silo.silo_destino_id', 'list' %>
+      </th>
+      <th style="width: 120px" <%= sort_class_helper('desvio_silo.numero_acta_desvio') %>>
+        <%= sort_link_helper 'Nro. Acta', 'desvio_silo.numero_acta_desvio', 'list' %>
+      </th>
+      <th style="width: 200px" <%= sort_class_helper('desvio_silo.nombre_conductor') %>>
+        <%= sort_link_helper 'Nombre Conductor', 'desvio_silo.nombre_conductor', 'list' %>
+      </th> 	
+      <th style="width: 160px" <%= sort_class_helper('desvio_silo.guia_movilizacion') %>>
+        <%= sort_link_helper 'Nro. Guía', 'desvio_silo.guia_movilizacion', 'list' %>
+      </th> 			 			
+      <th style="width: 15px">
+        Acción
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for desvio_silo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :desvio_silo => desvio_silo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

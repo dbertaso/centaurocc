@@ -1,0 +1,239 @@
+<script language="javascript">
+
+  function sumar(id_monto,id_cantidad,id_total){
+    monto = document.getElementById(id_monto);
+    cantidad = document.getElementById(id_cantidad);
+    total = document.getElementById(id_total);
+    total.value = cantidad.value * monto.value;
+
+
+    var num = new NumberFormat(total.value);
+    num.setPlaces(2);
+    num.setSeparators(true,'.',',');
+    num = num.toFormatted();
+    total.value = num;
+  }
+</script>
+<br/>
+<br/>
+
+<div id="encabezado">
+ <table>
+
+   <tr style="font-family:verdana;color:blue;font-size:24px;">
+      <td> <%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:   <td>
+      <td> <%= @plan.rubro_nombre %> </td>
+   </tr>
+ </table>
+</div>
+
+<table class="lista">
+
+ <tr>
+    <th style="width: 0px"></th>
+    <th style="width:300px"><%= I18n.t('Sistema.Body.Vistas.Form.item') %></th>
+    <th style="width:70px"><%= I18n.t('Sistema.Body.Vistas.General.moneda') %></th>
+    <th style="width:70px"><%= I18n.t('Sistema.Body.Vistas.General.unidad') %></th>
+    <th style="width:120px"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></th>
+    <th style="width:200px"><%= "#{I18n.t('Sistema.Body.Vistas.General.costo')} #{I18n.t('Sistema.Body.Vistas.General.unitario')}" %></th>
+    <th style="width:140px"><%= I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total') %></th>
+    <th style="width:20px"><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.Form.desembolso')}" %></th>
+    <th style="width:20px"><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.Form.item')}" %></th>
+ </tr>
+ </thead>
+<tbody id="list_body">
+
+<% even_odd = 1
+   partida = ""
+   rubro = ""
+   monto_partida = 0.00
+   monto_rubro = 0.00
+   monto_banco = 0.00
+   monto_insumos = 0.00
+   @cantidad = 0.00
+   @monto = 0.00
+   monto_partida = monto_partida.to_d
+   monto_rubro = monto_rubro.to_d
+   monto_banco = monto_banco.to_d
+   monto_insumos = monto_insumos.to_d
+   logger.debug "PLAN INVERSION EN VISTA ANIMAL  ========> " << @plan_inversion.inspect
+   @plan_inversion.each do |plan|
+   even_odd = 1 - even_odd
+%>
+
+  <% if partida != plan.partida_nombre %>
+
+    <% if monto_partida > 0%>
+      <tr class="lista<%= 1 - even_odd %>">
+        <td style="width: 0px"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{partida}"%></b></td>
+        <td style="text-align: right">
+          <b>  <%=  format_fm(monto_partida) %>
+          </b>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <%end%>
+
+    <% partida = plan.partida_nombre
+       monto_partida = 0.00 %>
+
+    <tr class="lista<%= 1 - even_odd %>">
+          <td style="width: 0px"></td>
+          <td><b><%=plan.partida_nombre %></b></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+  </tr>
+
+
+   <% end %>
+
+    <% if rubro.empty?
+       rubro = plan.rubro_nombre
+     end
+    %>
+
+    <tr class="lista<%= even_odd %>">
+      <td align="left" style="width: 0px">
+        <%= hidden_field_tag "id_#{plan.id}", plan.id %>
+      </td>
+
+      <td align="left">
+        <%= plan.item_nombre %>
+      </td>
+
+      <td align="left">
+        <%= plan.moneda %>
+      </td>
+
+      <td align="center">
+        <%= plan.unidad_medida.nombre %>
+      </td>
+
+      <td align="right">
+        <%= text_field_tag "cantidad_#{plan.id}", @cantidad,
+            :class=>'text', :maxlength=>'14', :style=>'width: 100px, align: left',
+            :value=>"#{plan.cantidad > 0 ? plan.cantidad : format_f('0')}",
+            :onkeyup=>"ValidarNumero('@cantidad'); formatCurrency1(this.value, 'cantidad_#{plan.id}'); 'inputChange();'",
+            :onkeypress=>'inputChange();',
+            :onblur=>"sumar('monto_#{plan.id}', 'cantidad_#{plan.id}','total_#{plan.id}' )" -%>
+      </td>
+
+       <td align="right">
+        <%= text_field_tag "monto_#{plan.id}", @monto,
+            :class=>'text', :maxlength=>'14', :style=>'width: 100px, align: left',
+            :value=>"#{plan.costo_real > 0 ? plan.costo_real : format_f('0')}",
+            :onkeyup=>"ValidarNumero('@monto'); formatCurrency(this.value, 'monto_#{plan.id}');",
+            :onkeypress=>'inputChange();',
+            :onblur=>"sumar('monto_#{plan.id}', 'cantidad_#{plan.id}','total_#{plan.id}' )" -%>
+      </td>
+
+      <td align="right">
+          <input type="text" id="total_<%= plan.id %>" readonly="readonly"
+                 value="<%= plan.monto_financiamiento_fm  unless plan.monto_financiamiento.nil? %>"
+                 style="text-align: right"/>
+      </td>
+
+      <td align="center">
+        <%= plan.numero_desembolso  unless plan.numero_desembolso.nil? %>
+
+      </td>
+
+      <td>
+        <% if plan.tipo_item == 'B' %>
+          '<%= I18n.t('Sistema.Body.Vistas.General.banco') %>'
+        <% else %>
+          '<%= I18n.t('Sistema.Body.Vistas.General.insumo') %>'
+        <% end %>
+      </td>
+
+
+  </tr>
+
+  <% monto_partida += plan.monto_financiamiento
+    monto_rubro += plan.monto_financiamiento
+
+    if plan.tipo_item == 'B'
+       monto_banco += plan.monto_financiamiento
+    end
+
+    if plan.tipo_item == 'I'
+      monto_insumos += plan.monto_financiamiento
+    end%>
+
+ <%end%>
+
+  <tr class="lista<%= 1 - even_odd %>">
+    <td style="width:0px"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{partida}" %></b></td>
+    <td style="text-align: right">
+      <b>  <%= format_fm(monto_partida)%>
+      </b>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+ <tr class="lista<%= 1 - even_odd %>">
+  <td style="width:0px"></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.banco')}" %></b></td>
+  <td style="text-align: right">
+    <b>
+      <%=format_fm(monto_banco) %>
+    </b>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+
+ <tr class="lista<%= 1 - even_odd %>">
+  <td style="width:0px"></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.insumo')}" %></b></td>
+  <td style="text-align: right">
+    <b>
+      <%=format_fm(monto_insumos) %>
+    </b>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+
+ <tr class="lista<%= 1 - even_odd %>">
+  <td style="width:0px"></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.plan_inversion')}" %></b></td>
+  <td style="text-align: right">
+    <b>
+      <%=format_fm(monto_rubro) %>
+    </b>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ </tbody>
+</table>

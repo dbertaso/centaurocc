@@ -1,0 +1,28 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo">
+    <div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.modificando_tramite')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.General.beneficiario') %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+      </div></div>
+  </div>
+<script type="text/javascript">
+  varEnviado= false;
+</script>
+  <% if @usuario.super_usuario == true || Usuario.count(:conditions=>["id = ? and id in (select usuario_id from usuario_rol where rol_id = 105)", @usuario.id]) > 0 %>
+    <div class="marco-boton-in" id="boton_new">
+      <%= render :partial => 'boton_agregar' %>
+      <br></br>
+    </div>
+  <% end %>
+
+  <%= error %>
+  <%= message %>
+
+  <div id="list">
+    <%= render :partial => 'list_garantia' %>
+    <br></br>
+  </div>
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar')), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+    { :action => :index }, { } ) -%>
+
+</div>

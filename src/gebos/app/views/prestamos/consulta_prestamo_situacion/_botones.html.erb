@@ -1,0 +1,21 @@
+  <div style="position: relative; width: 100%; height: 30px">
+    <table style="width: 15%;" align = "left">
+      <tr>
+
+      <td>
+        <%= link_to( image_tag(image_path(t('Sistema.Body.Imagenes.cerrar'))),
+            { :controller => 'consulta_prestamo', :action => :index },
+            { :id=>'button_close' } ) -%>
+      </td>
+
+
+      <td>
+        <%= link_to "Prueba Estado Cuenta", {:action => 'generar', :id=>@prestamo.id, :format=>"pdf"} %>
+        <%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')),:title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir')), 
+            {:action => 'generar', :prestamo_id =>@prestamo.id, :popup=>true, :format=>"pdf"}, :onclick=>"window.open(this.href,'" + "#{I18n.t('Sistema.Body.Vistas.General.financiamiento')} #{@prestamo.id} " + "','height=600,width=900,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+
+      </td>
+
+      </tr>
+    </table>
+  </div>

@@ -1,0 +1,85 @@
+
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list } ) do -%>
+
+      <table>
+      <tr>
+        <td style="width: 180px">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}" %>
+          </label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'10', :style=>'width: 120px'  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 180px">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Form.numero_tramite') %>
+          </label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero_solicitud', '', :class=>'text', :maxlength=>'8', :style=>'width: 120px'  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 180px">
+          <label>
+            <%="#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.cedula')} / #{I18n.t('Sistema.Body.Vistas.General.rif')}" %>
+          </label>
+        </td>
+        <td>
+
+        <select name="tipo" id="tipo" class="select">
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.venezolano') %> "><%= I18n.t('Sistema.Body.General.TipoDocumento.venezolano') %></option>
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%> "><%= I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%></option>
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.juridico')%>-"><%= I18n.t('Sistema.Body.General.TipoDocumento.juridico')%></option>
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.gobierno')%>-"><%= I18n.t('Sistema.Body.General.TipoDocumento.gobierno')%></option>
+          </select>
+
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 120px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+        </td>
+      <tr>
+        <td style="width: 180px">
+          <label>
+            <%= I18n.t('Sistema.Body.General.apellido_empresa')%>
+          <label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'150', :style=>'width: 400px'  %>
+        </td>
+      <tr>
+          <td style="width: 180px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.moneda')%></label>
+          </td>
+          <td>          
+              <%= select(
+                'moneda_id', '',
+                @moneda_list.map{|i| [i.nombre << " - " << i.abreviatura, i.id]},
+                {  },
+                { :class=>'select',:onchange=>'inputChange();' } ) %>          
+          </td>
+          <td>
+            <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+          </td>
+        </tr>    
+    </table>
+    
+  <%end%>
+
+  <%= error %>
+  <%= message %>
+  <br/>
+  <br/>
+
+  <div id="list">
+  </div>
+</div>

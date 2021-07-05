@@ -1,0 +1,53 @@
+<% factura = @factura if factura.nil? %>
+
+<%contador_facturas=FacturaOrdenDespacho.count(:all,:conditions=>"orden_despacho_detalle_id=#{factura.orden_despacho_detalle_id}")%>
+
+
+<td valign="top" style="text-align: center">
+	<%= factura.numero_factura.to_s %>
+</td>
+
+<td align="center">
+	<%= factura.item_nombre.to_s.strip.upcase unless factura.nil? %>
+</td>	
+
+<td align="center">
+	<%= factura.casa_proveedora.nombre.strip.upcase unless factura.casa_proveedora.nil? unless factura.nil?%>
+</td>	
+<td align="center">
+	<%= factura.sucursal_casa_proveedora.nombre.strip.upcase unless factura.sucursal_casa_proveedora.nil? unless factura.nil?%>
+</td>
+<td align="center">
+
+<% valor = format_fm(factura.cantidad_factura) %>
+
+	<%= valor %>
+</td>
+<td align="center">
+	<%= format_fecha(factura.fecha_factura)  %>
+</td>
+<td align="center">
+	<%=format_bool factura.emitida %>
+</td>
+<td align="center">
+	<%=format_bool factura.confirmada %>
+</td>
+
+<td align="center">
+
+<%#if factura.secuencia.strip.to_s.length > 1%>
+
+
+<%if contador_facturas > 1 %>
+
+<%= link_to_remote(
+        image_tag(I18n.t('Sistema.Body.Imagenes.img_expandir'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.ver_detalle_facturas')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url => {:action => :expand_detalle, :factura_id => factura.id}) -%>
+
+
+<%end%>
+
+</td>

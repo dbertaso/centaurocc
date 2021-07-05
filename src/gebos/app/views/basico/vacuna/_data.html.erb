@@ -1,0 +1,21 @@
+<% vacuna= @vacuna if vacuna.nil? %>
+
+<td>
+	<%= vacuna.descripcion  %>
+</td>
+
+<td style="text-align: right">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=>:get,
+		:url => {:controller => 'vacuna', :action => :edit, :id => vacuna.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'vacuna', :action => :delete, :id => vacuna.id}) if vlink 'delete' -%>
+</td>
+

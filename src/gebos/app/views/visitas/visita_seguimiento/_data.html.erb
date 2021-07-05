@@ -1,0 +1,91 @@
+<% seguimiento_visita = @seguimiento_visita if seguimiento_visita.nil? %>
+
+<input type="hidden" id="escondido_pesca_acuicultura" value="<%= seguimiento_visita.solicitud.sector.nombre.strip.upcase  %>"/>
+
+<%
+if seguimiento_visita.motivo_visita.nombre.strip.downcase == "visita inicial" 
+
+  estilo_inicio="border-bottom-color:#FF0000;border-bottom-width:3px;border-bottom-style:solid;border-top-color:#FF0000;border-top-style:solid;border-top-width:3px; border-left-color:#FF0000; border-left-width:3px;border-left-style:solid;"
+
+  estilo_medio="text-align: center;border-bottom-color:#FF0000;border-bottom-width:3px;border-bottom-style:solid;border-top-color:#FF0000;border-top-style:solid;border-top-width:3px;"
+
+  estilo_final="text-align: right;border-bottom-color:#FF0000;border-bottom-width:3px;border-bottom-style:solid;border-top-color:#FF0000;border-top-style:solid;border-top-width:3px; border-right-color:#FF0000; border-right-width:3px;border-right-style:solid;"
+else
+  estilo_inicio="border-bottom-color:#000000;border-bottom-width:3px;border-bottom-style:solid;border-top-color:#000000;border-top-style:solid;border-top-width:3px; border-left-color:#000000; border-left-width:3px;border-left-style:solid;"
+
+  estilo_medio="text-align: center;border-bottom-color:#000000;border-bottom-width:3px;border-bottom-style:solid;border-top-color:#000000;border-top-style:solid;border-top-width:3px;"
+
+  estilo_final="text-align: right;border-bottom-color:#000000;border-bottom-width:3px;border-bottom-style:solid;border-top-color:#000000;border-top-style:solid;border-top-width:3px; border-right-color:#000000; border-right-width:3px;border-right-style:solid;"
+end
+%>
+
+<td style="<%=estilo_inicio%>">
+  <b><label style="color: red"><%= seguimiento_visita.codigo_visita  %></b></label>
+</td>	
+<td style="<%=estilo_medio%>">
+  <%= seguimiento_visita.fecha_visita_f  %>
+</td>	
+<td style="<%=estilo_medio%>">
+  <%= seguimiento_visita.motivo_visita.nombre  %>
+</td>
+<td style="<%=estilo_medio%>">
+  <%= seguimiento_visita.solicitud.sector.nombre  %>
+</td>
+<td  style="<%=estilo_final%>">
+
+  <!-- Por alguna razon las propiedades de la pagina en imprimir no se conservan, razon por la cual llamaremos a esta funcion imprimir_sector en el controlador de basico/embarcacion-->
+
+  <% if seguimiento_visita.motivo_visita_id == 1 %>
+    <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')),:title=>"#{I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Messages.imprimir_reporte')} #{seguimiento_visita.solicitud.sector.nombre}"),
+      { :controller=>'/solicitudes/consulta_evaluacion_credito', :action=>'printer',
+      :popup=>true, :solicitud_id=>seguimiento_visita.solicitud.id },
+    :onclick=> "window.open(this.href,'consulta_evaluacion_credito','height=600,width=1030, scrollbars=yes, resizable=false');return false;" %>
+  <%  else %>
+
+    <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')),:title=>"#{I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Messages.imprimir_reporte')} #{seguimiento_visita.solicitud.sector.nombre}"),
+      { :controller=>'/basico/embarcacion', :action=>'imprimir_sector', :method=>:get,
+      :popup=>true, :id=>seguimiento_visita.id,:tipo=>seguimiento_visita.solicitud.sub_sector.nemonico.strip.upcase },
+      :onclick=> "window.open(this.href,'embarcacion','height=600,width=1030, scrollbars=yes, resizable=false');return false;" %>
+
+  <%  end %>
+  
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), :controller=>'/visitas/visita_consulta', :action => 'view', :method=>:get, :id => seguimiento_visita.id) %>
+
+  <%  unless seguimiento_visita.confirmada %>
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')),:title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+      :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+      :url => {:controller => 'visita_seguimiento', :action => :edit, :id => seguimiento_visita.id}) unless seguimiento_visita.confirmada -%>
+
+
+    <% if seguimiento_visita.solicitud.sub_sector.nemonico=="AN" %>
+      <%= link_to(image_tag(I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.datos_sector'), :title=>I18n.t('Sistema.Body.Controladores.VisitaDecision.FormTitles.form_title')),
+        {:action => :index, :controller => '/visitas/visita_pastizales_potreros',
+        :id => seguimiento_visita.id}) unless seguimiento_visita.confirmada %>
+    <% elsif seguimiento_visita.solicitud.sub_sector.nemonico=="VE" %>
+      <%= link_to(image_tag(I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.datos_sector'), :title=>I18n.t('Sistema.Body.Controladores.VisitaDecision.FormTitles.form_title')),
+        {:action => :edit, :controller => '/visitas/visita_seguimiento_cultivo',
+        :id => seguimiento_visita.id}) unless seguimiento_visita.confirmada %>
+    <% elsif seguimiento_visita.solicitud.sub_sector.nemonico=="AC" %>
+      <%= link_to(image_tag(I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.datos_sector'), :title=>I18n.t('Sistema.Body.Controladores.VisitaDecision.FormTitles.form_title')),
+        {:action => :index, :controller => '/visitas/condiciones_acuicultura',
+        :id => seguimiento_visita.id}) unless seguimiento_visita.confirmada %>
+    <% elsif seguimiento_visita.solicitud.sub_sector.nemonico=="PE" %>
+      <%= link_to(image_tag(I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.datos_sector'), :title=>I18n.t('Sistema.Body.Controladores.VisitaDecision.FormTitles.form_title')),
+        {:action => :replicar, :controller => '/visitas/control_visitas_pesca/embarcacion',
+        :id => seguimiento_visita.id}) unless seguimiento_visita.confirmada %>
+    <% elsif seguimiento_visita.solicitud.sub_sector.nemonico=="MA" %>
+      <%= link_to(image_tag(I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.datos_sector'), :title=>I18n.t('Sistema.Body.Controladores.VisitaDecision.FormTitles.form_title')),
+        {:action => :index, :controller => '/visitas/visita_maquinaria',
+        :id => seguimiento_visita.id}) unless seguimiento_visita.confirmada %>
+    <% end %>
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+      :url => {:controller => 'visita_seguimiento', :action => :delete, :id => seguimiento_visita.id}) unless seguimiento_visita.confirmada -%>
+
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.confirmar')), :title=>I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.confirmar_visita')),
+      :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+      :confirm => I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Messages.confirmar'),
+      :url => {:controller => 'visita_seguimiento', :action => :confirmar, :id => seguimiento_visita.id}) unless seguimiento_visita.confirmada -%>
+  <% end %>
+</td>

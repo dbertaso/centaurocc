@@ -1,0 +1,161 @@
+<script type="text/javascript">
+
+  function cargar_arrime()
+  {
+    var pars = "arrime_conjunto[letra_cedula]=" + document.getElementById("boleta_arrime_conjunto_letra_cedula").value;
+    pars += "&arrime_conjunto[cedula]=" + document.getElementById("boleta_arrime_conjunto_cedula").value;
+    pars += "&arrime_conjunto[primer_nombre]=" + document.getElementById("boleta_arrime_conjunto_primer_nombre").value;
+    pars += "&arrime_conjunto[segundo_nombre]=" + document.getElementById("boleta_arrime_conjunto_segundo_nombre").value;
+    pars += "&arrime_conjunto[primer_apellido]=" + document.getElementById("boleta_arrime_conjunto_primer_apellido").value;
+    pars += "&arrime_conjunto[segundo_apellido]=" + document.getElementById("boleta_arrime_conjunto_segundo_apellido").value;
+    pars += "&arrime_conjunto[peso_condicionado]=" + document.getElementById("boleta_arrime_conjunto_peso_condicionado").value;
+    pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+
+    pars += "&boleta_arrime_id=<%= @boleta_arrime.id %>"
+    var myAjax = new Ajax.Request("/prestamos/boleta_arrime/save_new_arrime_conjunto?" + pars, {asynchronous:true, evalScripts:true, method: 'get', onLoaded:function(request){image_unload()}, onFailure: function(){ document.getElementById("agregar_arrime").style.display= 'none'; }, onLoading:function(request){image_load()}}); return false;
+
+  }
+
+  function inputChange_conjunto()
+  {
+    //alert("LLEGO");
+    document.getElementById("button_close").style.display="none";
+    document.getElementById("buttons_edit_conjunto").style.display="";
+  }
+
+</script>
+
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<table style="width: 100%">
+  <br/>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_arrime_conjunto')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.cedula_de_identidad')%></label><label style="color:red"> (*)</label>
+    </td>
+    <td >
+      <%= select(
+        'boleta_arrime_conjunto', 'letra_cedula',
+        [['V','V'],['E','E']],
+        { :include_blank => true },
+        { :class=>'select', :onchange=>'inputChange_conjunto();' } ) %>
+      <%= text_field  'boleta_arrime_conjunto','cedula',
+        :class=>'text', :style=>'width: 80px',
+        :maxlength=>'12', :onkeypress=>'inputChange_conjunto();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label><label style="color:red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'boleta_arrime_conjunto', 'primer_nombre', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange_conjunto();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label></td>
+    <td>
+      <%= text_field 'boleta_arrime_conjunto', 'segundo_nombre', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange_conjunto();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %> </label><label style="color:red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'boleta_arrime_conjunto', 'primer_apellido', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange_conjunto();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label></td>
+    <td>
+      <%= text_field 'boleta_arrime_conjunto', 'segundo_apellido', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange_conjunto();'  -%> &ensp;
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_acondicionado')%></label></td>
+    <td>
+      <%= text_field 'boleta_arrime_conjunto', 'peso_condicionado', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange_conjunto();'-%>
+      <samp id="agregar_arrime">
+        <%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.agregar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.agregar'), :onclick=>"javascript:cargar_arrime();", :OnMouseOver=>"style.cursor='pointer'" ) %>
+      </samp>
+    </td>
+  </tr>
+</table>
+<br/>
+
+<!-- -->
+<table class="lista" style="width: 80%">
+  <tr>
+    <th style="width: 200px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}"%></label>
+    </th>
+    <th >
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </th>
+    <th >
+      <label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_acondicionado')%></label>
+    </th>
+    <th >
+      <label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.posee_financiamiento')%></label>
+    </th>
+    <th style="width: 10px">
+     <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+    </th>
+  </tr>
+  <% unless @arrime_conjunto_boleta_arrime_list.nil?
+    clase = "lista0"
+    @arrime_conjunto_boleta_arrime_list.each { |arrime| %>
+      <tr id="coj_<%= arrime.id %>" class='<%= clase %>'>
+        <td>
+          <%= arrime.letra_cedula.to_s %>-<%= arrime.cedula.to_i %>
+        </td>
+        <td>
+          <%= arrime.primer_nombre.to_s %>-<%= arrime.primer_apellido.to_s %>
+        </td>
+        <td align="center">
+          <%= format_f(arrime.peso_condicionado)%>
+        </td>
+        <td align="center">
+          <%= format_bool(arrime.financiamiento_fondas) %>
+        </td>
+        <td align="center">
+          <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+            :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+            :id=>"button_enviar", :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+            :url => {:action => :delete_arrime_conjunto, :id => arrime.id, :boleta_arrime_id=>arrime.boleta_arrime_id}) -%>
+        </td>
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+</table>
+<br/>
+<table  style="width: 30%">
+  <tr>
+    <th>
+      <label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.total_peso_acondicionado')%> </label>
+    </th>
+    <td align="center">
+      <label><%unless @total_acondicionado.nil? %>
+          <% total = @total_acondicionado[0].total_peso_acondicionado.to_f %>
+          <%=format_fm(total)%>
+        <% end%>
+      </label>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,31 @@
+<% moneda = @moneda if moneda.nil? %>
+<td>
+	<%= moneda.nombre  %>
+</td>
+<td>
+	<%= moneda.abreviatura  %>
+</td>	
+<td>
+	<%= moneda.ruta_icono  %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(moneda.activo)  %>
+</td>	
+<td style="text-align: right">
+	
+	
+<%= link_to_remote(
+		image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+    :method =>:get,
+		:url => {:controller => 'moneda', :action => :edit, :id => moneda.id} ) if vlink 'edit' -%>
+
+	<%= link_to_remote(
+		image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+		:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'moneda', :action => :delete, :id => moneda.id}) if vlink 'delete' -%>
+		
+</td>

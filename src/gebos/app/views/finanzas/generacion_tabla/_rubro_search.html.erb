@@ -1,0 +1,11 @@
+<% rubro_onchange = remote_function(
+  :loading =>'Element.show("loading")',
+  :loaded => 'Element.hide("loading")',
+  :url=>{:controller=>'condiciones_financiamiento',
+  :action=>:rubro_search },
+  :with=>"'id='+value") %>
+<%= select_tag(
+  'rubro_id',
+  [options_for_select([["Seleccione un rubro", "0"]]),options_for_select(@rubro_select.map{|i| [i.nombre, i.id]})],
+  { :class=>'select', :onchange=>'inputChange();'} ) 
+%>

@@ -1,0 +1,62 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 200px" <%= sort_class_helper('condiciones_financiamiento.programa.nombre') %>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.programa'), 'condiciones_financiamiento.programa.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('condiciones_financiamiento.programa.moneda.nombre') %>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.moneda'), 'condiciones_financiamiento.programa.moneda.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('condiciones_financiamiento.sector.nombre') %>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sector'), 'condiciones_financiamiento.sector.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('condiciones_financiamiento.sub_sector.nombre') %>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sub_sector'), 'condiciones_financiamiento.sub_sector.nombre', 'list' %>
+      </th>
+      <th style="width: 160px" <%= sort_class_helper('condiciones_financiamiento.rubro.nombre') %>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.rubro'), 'condiciones_financiamiento.rubro.nombre', 'list' %>
+      </th>
+      <th style="width: 160px" <%= sort_class_helper('condiciones_financiamiento.sub_rubro.nombre') %>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sub_rubro'), 'condiciones_financiamiento.sub_rubro.nombre', 'list' %>
+      </th>
+
+      <th style="width: 160px" <%= sort_class_helper('condiciones_financiamiento.actividad.nombre') %>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.actividad'), 'condiciones_financiamiento.actividad.nombre', 'list' %>
+      </th>
+      <th  style="width: 50px">
+        <%= I18n.t('Sistema.Body.Modelos.PlanPago.Columnas.frecuencia_pago') %>
+      </th>
+      <th style= "width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.metodo_amortizacion') %>
+      </th>
+      <th  style="width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.plazo_total') %>
+      </th>
+      <th  style="width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.plazo') %>
+      </th>
+      <th  style="width: 100px">
+        <%=I18n.t('Sistema.Body.General.periodo_gracia') %>
+      </th>
+      <th style="width: 100px" %>
+        <%=I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.diferimiento_intereses') %>
+      </th>
+      <th style="width: 50px" %>
+        <%= I18n.t('Sistema.Body.Vistas.General.activo')%>
+      </th>
+      <th style="width: 80px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+
+    </tr>
+  </thead>
+<tbody id="list_body">
+  <%
+  even_odd = 1
+  for condiciones_financiamiento in @list
+    even_odd = 1 - even_odd %>
+    <%= render :partial => 'row', :locals => { :condiciones_financiamiento => condiciones_financiamiento, :even_odd => even_odd } -%>
+  <% end %>
+</tbody>
+</table>
+<%= form_pagination %>

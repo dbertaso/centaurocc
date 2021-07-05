@@ -1,0 +1,4 @@
+<% formula = @formula if formula.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= formula.id %>">
+	<%= render :partial => 'data', :locals => { :formula => formula, :even_odd => even_odd } -%>
+</tr>

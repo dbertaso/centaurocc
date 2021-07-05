@@ -1,0 +1,30 @@
+<td>
+  <%= solicitud.fecha_evento.strftime('%d/%m/%Y')  %>
+</td>
+<td>
+  <%= solicitud.fecha_evento.strftime('%I:%M:%S %p') %>
+</td>
+<td>
+  <%= solicitud.estatus_origen %>
+</td>
+<td>
+  <%= solicitud.estatus_destino %>
+</td>
+<td align="center">
+  <%if solicitud.accion2 == 'Avanzar'%>
+    <img src="/assets/enviar.gif" alt="Avanzar"/>
+
+  <%elsif solicitud.accion2 == 'Reversar'%>
+    <img src="/assets/reversar.gif" alt="Reversar"/>
+  <%elsif solicitud.accion2 == 'Deshacer'%>
+    <img src="/assets/deshacer.gif" alt="Deshacer"/>
+  <%end%>
+
+</td>
+<td>
+  <%= solicitud.observacion.to_s.html_safe %>
+</td>
+<td>
+  <% usuario = Usuario.find(:first, :conditions=>['nombre_usuario = ?', solicitud.cuenta_usuario]) %>
+  <%= usuario.primer_nombre + ' ' + usuario.primer_apellido %>
+</td>

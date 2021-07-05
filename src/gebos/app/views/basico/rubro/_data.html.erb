@@ -1,0 +1,28 @@
+<% rubro = @rubro if rubro.nil? %>
+<td>
+	<%= rubro.sub_sector.codigo unless rubro.nil? %>
+</td>
+<td>
+	<%= rubro.sub_sector.nombre unless rubro.nil? %>
+</td>	
+<td>
+	<%= rubro.codigo unless rubro.nil?%>
+</td>	
+<td>
+	<%= rubro.nombre unless rubro.nil?%>
+</td>	
+<td>
+	<%= rubro.descripcion unless rubro.nil? %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(rubro.activo) unless rubro.nil? %>
+</td>
+<td style="text-align: right">
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), :action => 'edit', :sub_sector_id => @sub_sector.id, :popup=>params[:popup], :id => rubro.id ) if vlink 'edit' %>
+	<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'rubro', :action => :delete, :id => rubro.id}) if vlink 'delete' -%>
+</td>
+

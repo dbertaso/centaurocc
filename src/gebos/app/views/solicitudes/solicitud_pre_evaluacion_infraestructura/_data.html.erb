@@ -1,0 +1,47 @@
+<% unidad_produccion_infraestructura = @unidad_produccion_infraestructura if unidad_produccion_infraestructura.nil? %>
+
+<td>
+  <%= unidad_produccion_infraestructura.tipo_infraestructura.nombre  %>
+
+</td>
+<td>
+  <%= unless unidad_produccion_infraestructura.cantidad.nil?
+    valor = sprintf('%01.2f', unidad_produccion_infraestructura.cantidad).sub('.', ',')
+    valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")
+  end
+%>
+</td>
+<td>
+  <%= unless unidad_produccion_infraestructura.dimension.nil?
+    valor = sprintf('%01.3f', unidad_produccion_infraestructura.dimension).sub('.', ',')
+    valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")
+  end
+%>
+  <label title="<%= unidad_produccion_infraestructura.unidad_medida.nombre %>"><%= unidad_produccion_infraestructura.unidad_medida.abreviatura %></label>
+</td>
+<td>
+
+  <%= I18n.t('Sistema.Body.Vistas.General.excelente') if unidad_produccion_infraestructura.condicion == 'E' %>
+  <%= I18n.t('Sistema.Body.Vistas.General.buena') if unidad_produccion_infraestructura.condicion == 'B' %>
+  <%= I18n.t('Sistema.Body.Vistas.General.regular') if unidad_produccion_infraestructura.condicion == 'R' %>
+  <%= I18n.t('Sistema.Body.Vistas.General.mala') if unidad_produccion_infraestructura.condicion == 'M' %>
+
+</td>
+<td>
+  <%= unidad_produccion_infraestructura.material_construccion %>
+</td>
+<td>
+  <%= unidad_produccion_infraestructura.observaciones %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Modificar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:action => :edit, :seguimiento_visita_id => @seguimiento_visita.id, :id => unidad_produccion_infraestructura.id}) -%>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :seguimiento_visita_id => @seguimiento_visita.id, :id => unidad_produccion_infraestructura.id}) -%>
+</td>

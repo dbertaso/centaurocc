@@ -1,0 +1,18 @@
+<% transaccion_contable = @transaccion_contable if transaccion_contable.nil? %>
+<td>
+	<%= transaccion_contable.nombre %>
+</td>
+<td>
+	<%= transaccion_contable.descripcion %>
+</td>
+<td style="text-align: right">
+  <%= link_to image_tag(image_path(t('Sistema.Body.Imagenes.consultar'))), :action => 'view', :id => transaccion_contable.id %>&nbsp;
+	<%= link_to( image_tag(image_path(t('Sistema.Body.Imagenes.modificar'))), 
+		:action => 'edit', :id => transaccion_contable.id ) if vlink 'edit' %>&nbsp;
+	<%= link_to_remote(
+		image_tag(image_path(t('Sistema.Body.Imagenes.eliminar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	  :confirm => t('Sistema.Body.Controladores.Mensaje.esta_seguro'),
+		:url => {:action => :delete, :id => transaccion_contable.id}) if vlink 'delete' -%>
+</td>

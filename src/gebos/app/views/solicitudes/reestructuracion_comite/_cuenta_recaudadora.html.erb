@@ -1,0 +1,5 @@
+
+<%= select('reestructuracion','numero_cuenta',
+           @cuenta_bcv_select.map{|i| [i.numero_cuenta, i.numero_cuenta]},
+           { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+           { :class=>'select' } ) %>

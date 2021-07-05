@@ -1,0 +1,29 @@
+<% item = @item if item.nil? %>
+<td>
+  <%= item.origen %>
+</td>
+
+<td style="text-align: center">
+  <%= item.destino %>
+</td>
+
+<td style="text-align: center">
+  <%= item.valor_f %>
+</td>
+
+<td style="text-align: center">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => {:controller => 'convertidor', :action => :edit, :id => item.id}) if vlink 'edit'
+  -%>
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'convertidor', :action => :delete, :id => item.id}) if vlink 'delete'
+  -%>
+</td>

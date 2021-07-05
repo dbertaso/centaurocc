@@ -1,0 +1,101 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.urbanizacion_barrio_sector')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo', 'urbanizacion',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.avenida_calle_callejon')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'calle',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.casa_edificio_galpon')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'casa',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.numero_apto_casa')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'numero_apta',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.piso')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'piso',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.punto_de_referencia')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'punto_referencia',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label></td>
+    <td>
+      <span id="estado-select">
+        <%= render :partial => 'estado_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%></label></td>
+    <td>
+      <span id="parroquia-select">
+        <%= render :partial => 'parroquia_select' %>
+      </span>
+    </td>
+  </tr>
+</table>
+<br></br>

@@ -1,0 +1,10 @@
+<% if @usuario.admin_empresa == true %>
+	<%= error %>
+	<%= message %>
+
+	<%= content_for :list do %>
+	<div id="list">
+	<%= render :partial => 'list' -%>
+	</div>
+	<%end%>
+<% end %>

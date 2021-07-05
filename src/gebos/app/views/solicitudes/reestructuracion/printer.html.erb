@@ -1,0 +1,153 @@
+<script language="JavaScript">
+  <!-- Begin
+  function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+  }
+  function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+  }
+  //  End -->
+</script>
+<table width="1024px" border="0">
+  <tr>
+    <td style="width: 100%" align="center">
+      <font size="+1"><strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.solicitud_reestructuracion_con_renegociacion').html_safe%></strong></font>
+    </td>
+  </tr>
+</table>
+<br><br><br>
+<table width="1024px" border="1" style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;line-height: 150%">
+  <tr>
+    <td style="width: 25%">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.tramite')%></strong><br>
+
+    </td>
+    <td style="width: 50%">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.solicitante')%></strong>&nbsp;
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+        <%= @cliente.persona.nombre_corto %>
+      <% else %>
+        <%= @cliente.empresa.nombre %>
+      <% end %>
+    </td>
+    <td style="width: 25%">
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+        <%=I18n.t('Sistema.Body.Vistas.General.ci')%> <%= @cliente.persona.cedula_nacionalidad << '-' << @cliente.persona.cedula.to_s %>
+      <% else %>
+        <%= @cliente.empresa.rif %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%" rowspan="2">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.nro_credito')%> </strong><%= @cantidad_prestamos %><br>
+      <%= "#{@listado_prestamos}".html_safe %>
+    </td>
+    <td style="width: 50%">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.direccion')%></strong>&nbsp;
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+        <%= PersonaDireccion.direccion(@cliente.persona.id) %>
+      <% else %>
+        <%= EmpresaDireccion.direccion(@cliente.empresa.id) %>
+      <% end %>
+    </td>
+    <td style="width: 25%" rowspan="2">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.telefonos')%></strong>&nbsp;
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+        <%= @cliente.persona.telefonos[0].codigo << '-' << @cliente.persona.telefonos[0].numero if @cliente.persona.telefonos.length > 0 %>
+      <% else %>
+        <%= @cliente.empresa.telefonos[0].codigo << '-' << @cliente.empresa.telefonos[0].numero if @cliente.empresa.telefonos.length > 0 %>
+      <% end %>
+    </td>
+  </tr>
+  <tr> 
+    <td style="width: 50%">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.monto_renegociado')%></strong>&nbsp;
+      <%= format_fm(@monto_negociacion) %>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan=3>
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.rubros_a_reestructurar')%></strong>&nbsp;
+      <%= @listado_rubros %>
+    </td>
+  </tr>
+</table>
+
+<br><br>
+
+<table width="1024px" border="0" style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;line-height: 200%">
+  <tr>
+    <td align="center" colspan=3 style="font-size: 25px">	
+      <strong><br><br><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.declaracion')%><br><br></strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="justify" colspan=3>
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+        <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.declaracion_cliente_persona', 
+          :nombre_completo=> @cliente.persona.nombre_completo, :nacionalidad=> @cliente.persona.venezolano == true ? 'Venezolana' : 'Extranjera', 
+          :cedula_nacionalidad=> @cliente.persona.cedula_nacionalidad, :anio_solicitudes=>  @anio_solicitudes, :bancos_solicitudes=> @bancos_solicitudes, :listado_prestamos2=> @listado_prestamos2).html_safe %>
+      <% else %>
+        <%= I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.declaracion_cliente_persona', :representante_legal_nombre=> @cliente.empresa.representante_legal.nombre_completo,
+          :representante_nacionalidad=> @cliente.empresa.representante_legal.venezolano == true ? 'Venezolana' : 'Extranjera', :representante_cedula_nacionalidad=> @cliente.empresa.representante_legal.cedula_nacionalidad,
+          :representante_cedula=> @cliente.empresa.representante_legal.cedula, :empresa_nombre=> @cliente.empresa.nombre, :empresa_rif=> @cliente.empresa.rif, :registro_mercantil=> @registro_mercantil.nombre_registro,
+          :registro_mercantil_Estado=> @registro_mercantil.Estado.nombre, :registro_mercantil_numero=> @registro_mercantil.numero, :registro_mercantil_nro_tomo=> @registro_mercantil.nro_tomo,
+          :nro_protocolo=> @registro_mercantil.nro_protocolo, :fecha_registro=> @fecha_registro, :anio_solicitudes=> @anio_solicitudes, :bancos_solicitudes=> @bancos_solicitudes,
+          :listado_prestamos2=> @listado_prestamos2).html_safe %>
+
+      <% end %>
+
+    </td>
+  </tr>
+  <tr>
+    <td width=30 align="left" valign="top">
+    </td>
+    <td width=30 align="left" valign="top">
+      I.		
+    </td>
+    <td align="justify">
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.texto_i')%>
+    </td>
+  </tr>
+  <tr>
+    <td width=30 align="left" valign="top">
+    </td>
+    <td width=30 align="left" valign="top">
+      II.		
+    </td>
+    <td align="justify">
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.texto_ii')%>
+    </td>
+  </tr>
+  <tr>
+    <td width=30 align="left" valign="top">
+    </td>
+    <td width=30 align="left" valign="top">
+      III.		
+    </td>
+    <td align="justify">
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.texto_iii')%>
+    </td>
+  </tr>
+</table>
+
+
+<table width="1024px" border="0"  style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;">
+
+  <tr height="200" valign="bottom">
+    <td width="50%" align="center">
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.firma_productor')%>
+    </td>
+    <td width="50%" align="center">
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.recibido_oficina_regional')%>
+    </td>
+  </tr>
+</table>

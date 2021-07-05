@@ -1,0 +1,23 @@
+<% garantia_sector= @garantia_sector if garantia_sector.nil? %>
+
+<td>
+  <%= garantia_sector.sub_sector.sector.nombre  %>
+</td> 
+<td>
+  <%= garantia_sector.sub_sector.nombre  %>
+</td> 
+<td style="text-align: center">
+  <%= garantia_sector.tipo_garantia.nombre  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')),:title=>'Editar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'garantia_sector', :action => :edit, :id => garantia_sector.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'garantia_sector', :action => :delete, :id => garantia_sector.id}) if vlink 'delete' -%>
+</td>
+

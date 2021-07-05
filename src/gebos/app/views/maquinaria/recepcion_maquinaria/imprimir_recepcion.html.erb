@@ -1,0 +1,207 @@
+<script language="JavaScript">
+window.moveTo(0,0);
+window.resizeTo(screen.width,screen.height);
+<!-- Begin
+function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("window.close();", 2000)
+    
+}
+function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+}
+//  End -->
+</script>
+
+
+<table width="1120px" border="1">
+  <tr>
+    <td style="width: 100%">
+      <table width="100%" border="0">
+        <tr>
+          <td style="width: 20%; text-align: left">
+            <img src="/assets/logo_reporte.gif" alt="logo"/>
+          </td>
+          <td align="center">
+            <label style="font-size: 16px"> <%=(I18n.t('Sistema.Body.Vistas.General.recepcion')).upcase%> <%=(I18n.t('Sistema.Body.Vistas.General.maquinaria')).upcase%> <br/> <%=((I18n.t('Sistema.Body.General.sector_maquinaria')).downcase).capitalize%></label>
+          </td>
+          <td style="width: 25%; text-align: left" valign="top">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.nro')%>: <%=  @guiam.numero_guia.to_s unless @guiam.nil?%></label>  <br/>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #bbbcd2"><label><%=(I18n.t('Sistema.Body.General.beneficiario')).upcase%></label></th>
+  </tr>
+
+<% if @solicitud.cliente.type.to_s == 'ClientePersona' %>
+  <tr>
+    <td style="width: 30%"><label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label> <%=  (@solicitud.cliente.persona.cedula_nacionalidad.to_s << '-' <<  @solicitud.cliente.persona.cedula.to_s) unless @solicitud.cliente.persona.nil? unless @solicitud.cliente.nil?%></td>
+    <td style="width: 70%" colspan="2"><label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}"%> / <%=I18n.t('Sistema.Body.Vistas.General.razon_social')%></label> <%=  @solicitud.cliente.persona.nombre_corto.to_s unless @solicitud.cliente.persona.nil? unless @solicitud.cliente.nil?%></td>
+  </tr>
+
+ <% else %>
+  <tr>
+    <td style="width: 30%"><label><%=I18n.t('Sistema.Body.Vistas.General.rif')%>:</label> <%= @solicitud.cliente.empresa.rif.to_s unless @solicitud.cliente.empresa.nil? unless @solicitud.cliente.nil?%></td>
+    <td style="width: 70%" colspan="2"><label><%=I18n.t('Sistema.Body.Vistas.General.razon_social')%>:</label>  <%= @solicitud.cliente.empresa.nombre.to_s unless @solicitud.cliente.empresa.nil? unless @solicitud.cliente.nil? %></td>
+  </tr>
+ <% end %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label><%= ("#{I18n.t('Sistema.Body.Vistas.General.informacion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.Form.envio')}").upcase %></label></th>
+  </tr>
+  <tr>
+    <td><label><%="#{I18n.t('Sistema.Body.Vistas.General.almacen')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.salida')}"%>:</label> <%= @viewalmacenmaquinaria.almacen.to_s unless @viewalmacenmaquinaria.nil? %></td>
+    <td colspan="3"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.figura_juridica_entrega')%>:</label> <%= (@solicitud.oficina.primer_nombre_supervisor.to_s << ' ' << @solicitud.oficina.primer_apellido_supervisor.to_s) unless @solicitud.oficina.nil?%></td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.direccion_entrega')%>:</label> <%= @viewenviomaquinaria.unidad_produccion_direccion.to_s unless @viewenviomaquinaria.nil?%></td>
+  </tr>
+ 
+  <tr>
+    <td colspan="2"><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%>:</label> <%= @viewenviomaquinaria.estado.to_s unless @viewenviomaquinaria.nil?%></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%>:</label> <%= @viewenviomaquinaria.municipio.to_s unless @viewenviomaquinaria.nil?%></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%>:</label> <%= @viewenviomaquinaria.parroquia.to_s unless @viewenviomaquinaria.nil?%></td>
+ </tr>
+ 
+  <tr>
+    <td colspan="3"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.empresa_transporte')%>:</label> <%= @guiam.empresa_transporte_maquinaria.nombre.to_s unless @guiam.empresa_transporte_maquinaria.nil?%></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.telefax')%>:</label> <%= @guiam.empresa_transporte_maquinaria.telefono.to_s unless @guiam.empresa_transporte_maquinaria.nil? %></td>
+  </tr>
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label><%=(I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.informacion_recepcion')).upcase%></label></th>
+  </tr>
+  <tr>
+    <td colspan="2"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.recibido_por')%>: </label><%=@datos_recepcion.nombe_receptor.to_s unless @datos_recepcion.nil?%></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>: </label><%=@datos_recepcion.cedula_receptor.to_s unless @datos_recepcion.nil?%></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%>: </label><%=@datos_recepcion.telefono_receptor.to_s unless @datos_recepcion.nil?%></td>
+  </tr>
+  <!--<tr>
+    <td colspan="2"><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%>:</label></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%>:</label></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%>:</label></td>
+ </tr>
+  <tr>
+    <td colspan="2"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.ciudad_mas_cercana')%>:</label></td>
+    <td colspan="2"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.caserio_sector')%>:</label></td>
+  </tr>-->
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label><%= (I18n.t('Sistema.Body.Vistas.General.funcionarios')).upcase %> <%= (I18n.t('Sistema.Body.Vistas.Form.responsable')).upcase %></label></th>
+  </tr>
+  <tr>
+    <td colspan="2"><label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}"%> (<%=I18n.t('Sistema.Body.Vistas.General.primer')%> <%=I18n.t('Sistema.Body.Vistas.Form.responsable')%>):</label> <%=@guiam.nombre_contacto_1.to_s unless @guiam.nil?%></td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>:</label> <%=(@guiam.ci_nacionalidad_1.to_s << " " << @guiam.ci_contacto_1.to_s) unless @guiam.nil?%></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.telefono')%>:</label> <%=@guiam.telefono_contacto_1.to_s unless @guiam.nil?%></td>
+ </tr>
+<tr>
+    <td colspan="2"><label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}"%> (<%=I18n.t('Sistema.Body.Vistas.General.segundo')%> <%=I18n.t('Sistema.Body.Vistas.Form.responsable')%>):</label> <%=@guiam.nombre_contacto_2.to_s unless @guiam.nil?%></td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>:</label> <%=(@guiam.ci_nacionalidad_2.to_s << " " << @guiam.ci_contacto_2.to_s) unless @guiam.nil?%></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.telefono')%>:</label> <%=@guiam.telefono_contacto_2.to_s unless @guiam.nil?%></td>
+ </tr>
+
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="8" style="background-color: #c9c9c9"><label><%=(I18n.t('Sistema.Body.General.sector_maquinaria')).upcase%></label></th>
+  </tr>
+    <tr>
+      <th align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.nro')%></label></th>
+      <th align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label></th>
+      <th align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label></th>
+      <th align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label></th>
+      <th align="center"><label><%=I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.pais_origen')%></label></th>
+      <th align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.precio')%></label></th>
+      <th align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.serial')%> (<%=I18n.t('Sistema.Body.Vistas.General.motor')%> / <%=I18n.t('Sistema.Body.Vistas.General.chasis')%>)</label></th>
+      <th align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.conforme')%></label></th>
+    </tr>
+    <% nro = 1
+    @datos_maquinaria.each do |maquina| %>
+      <tr>
+        <td><label><%= nro %></label></td>
+        <td><label><%= maquina.clase %></label></td>
+        <td><label><%= maquina.marca %></label></td>
+        <td><label><%= maquina.modelo %></label></td>
+        <td><label><%= maquina.pais %></label></td>
+        <td align="right"><label><%= format_fm(maquina.monto) %></label></td>
+        <td align="center"><label><%= maquina.serial << "/" << maquina.chasis %></label></td>
+		<td align="center"><label><%= format_bool GuiaCatalogo.find_by_guia_movilizacion_maquinaria_id(maquina.guia_movilizacion_maquinaria_id).conforme unless GuiaCatalogo.find_by_guia_movilizacion_maquinaria_id(maquina.guia_movilizacion_maquinaria_id).nil?%></label></td>
+      </tr>
+   <%  nro=nro+1
+      end %>
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label><%=(I18n.t('Sistema.Body.Vistas.General.observaciones')).upcase%></label></th>
+  </tr>
+  <tr>
+    <td colspan="2"><%=@datos_recepcion.observaciones unless @datos_recepcion.nil?%></td>    
+  </tr>
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #c9c9c9"><label><%=(I18n.t('Sistema.Body.Vistas.General.firma')).upcase%></label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #c9c9c9; width: 33%"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.elaborado_por')%></label></th>
+    <th style="background-color: #c9c9c9; width: 33%"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.analista_despacho')%></label></th>
+    <th style="background-color: #c9c9c9; width: 34%"><label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.aprobado_por')%></label></th>
+  </tr>
+  <tr>
+    <td valign="top"><label><%="#{I18n.t('Sistema.Body.Vistas.General.apellidos')} / #{I18n.t('Sistema.Body.Vistas.General.nombres')}"%>:</label> </td>
+    <td valign="top"><label><%="#{I18n.t('Sistema.Body.Vistas.General.apellidos')} / #{I18n.t('Sistema.Body.Vistas.General.nombres')}"%>:</label></td>
+    <td valign="top"><label><%="#{I18n.t('Sistema.Body.Vistas.General.apellidos')} / #{I18n.t('Sistema.Body.Vistas.General.nombres')}"%>:</label> </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.cargo')%>:</label> </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>:</label> </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>:</label> </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.firma')%>:</label> </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.firma')%>:</label> </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.firma')%>:</label> </td>
+  </tr>
+</table>
+<br/>
+<table width="1120px" >
+  <tr>
+    <td colspan="4">
+      <div style="padding: 6px" align="center">
+        <form>
+          <div id = boton>
+            <input name="print" type="button" value="<%= I18n.t('Sistema.Body.General.imprimir') %>" onclick="varitext()" />
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>

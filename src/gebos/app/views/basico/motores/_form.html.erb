@@ -1,0 +1,251 @@
+<!-- <script language="javascript">varEnviado = false;</script> -->
+<table>
+
+  <%= hidden_field 'motores', 'embarcacion_id',
+    :value => "#{@identificador_embarcacion}" %>
+
+
+  <!-- Caso especial -->
+
+  <%if @mo1==0%>
+    <%= hidden_field 'motores', 'condicion',
+      :value => "#{I18n.t('Sistema.Body.Controladores.Embarcacion.Etiquetas.no_aplica')}" %>
+  <%end%>
+
+  <%if @mo2==0%>
+    <%= hidden_field 'motores', 'observacion',
+      :value => "#{I18n.t('Sistema.Body.Controladores.Embarcacion.Etiquetas.no_aplica')}" %>
+  <%end%>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%if @es_algo!=1%>
+
+        <%= select(
+          'motores','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=>'Seleccione una embarcación... '},
+          { :class=>'select' }  ) %>
+
+        <%
+        @seleccionado=true
+      else
+        @seleccionado=false
+      %>
+
+        <%= select(
+          'motores','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=>'Seleccione una embarcación... '},
+          { :class=>'select' ,:disabled=>'true'}  ) %>
+      <%end%>
+    </td>
+  </tr>	
+
+  <tr>
+    <td style="width: 25%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.propio') %></label> <label style="color: red">*</label>
+    </td>
+    <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+      <%if @estoy_editando!="1" %>  
+
+        <%= radio_button('motores', 'es_propio', 'true', :class=>'text', :onclick=> 'verifico();inputChange();') -%> 
+
+        <%= I18n.t('Sistema.Body.Vistas.General.propio') %>:
+
+        <%=
+        radio_button('motores','es_propio', 'false',
+          :class=>'text', :onclick=> "verifico();inputChange();")
+        -%>
+      <%else%>
+        <%=
+        radio_button('motores','es_propio', 'true',
+          :class=>'text', :onclick=> 'verifico2();inputChange();')
+        -%> 
+
+        <%= I18n.t('Sistema.Body.Vistas.General.propio') %>:
+
+        <%=
+        radio_button('motores','es_propio', 'false',
+          :class=>'text', :onclick=> "verifico2();inputChange();")
+        -%>
+      <%end%>            
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'motores', 'cantidad_motores', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'motores','tipo_motor_id',
+        @tipo_motor.map{|i| [i.tipo, i.id]},
+        {:prompt=>'Seleccione un tipo de motor... '},
+        { :class=>'select'} ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %> / <%= I18n.t('Sistema.Body.Vistas.General.modelo') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'motores', 'modelo_motor', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.serial') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <% if @es_propio!="1" %>
+
+        <%= text_field 'motores', 'numero_serial', :class=>'text', :style=>'width: 240px',
+          :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+
+      <%else%>
+        <%= text_field 'motores', 'numero_serial', :class=>'text', :style=>'width: 240px',
+          :maxlength=>'160', :onkeypress=>'inputChange();',:readonly=>'readonly'  -%>
+      <%end%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.año') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'motores', 'ano', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Motores.Columnas.potencia') %></label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'motores', 'potencia_f', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%> (<%= I18n.t('Sistema.Body.Vistas.General.caballos_fuerza') %>)
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Motores.Columnas.proveedor_marino') %> <br>¿<%= "#{I18n.t('Sistema.Body.Vistas.General.asociado')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.General.cliente_gprotec')}" %>?</label> <label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= I18n.t('Sistema.Body.General.si') %>:
+      <%if @estoy_editando=="1"%>
+        <%if @es_asociado_fondas%>
+          <%=
+          radio_button('','proveedor', 'true',           
+            :class=>'text', :onclick=> "#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'motores',
+            :action=>:proveedor_click },
+            :with=>"'valor='+ this.value ")};verifico3();inputChange();",:checked=>true) -%>
+        <%else%>
+          <%=
+          radio_button('','proveedor','true',                    
+            :class=>'text', :onclick=> "#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'motores',
+            :action=>:proveedor_click },
+            :with=>"'valor='+ this.value ")};verifico3();inputChange();",:checked=>false) -%>
+        <%end%>
+
+        <%= I18n.t('Sistema.Body.General.negacion') %>:
+        <%if !@es_asociado_fondas%>
+          <%=
+          radio_button('','proveedor','false',	                    
+            :class=>'text', :onclick=> "#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'motores',
+            :action=>:proveedor_click },
+            :with=>"'valor='+ this.value ")};verifico3();inputChange();",:checked=>true)-%>
+        <%else%>
+          <%=
+          radio_button('','proveedor','false',	                    
+            :class=>'text', :onclick=> "#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'motores',
+            :action=>:proveedor_click },
+            :with=>"'valor='+ this.value ")};verifico3();inputChange();",:checked=>false)-%>
+        <%end%>
+
+
+      <%else%>
+        <%=
+        radio_button('','proveedor', 'true',                    
+          :class=>'text', :onclick=> "#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'motores',
+          :action=>:proveedor_click },
+          :with=>"'valor='+ this.value ")};verifico3();inputChange();")
+        -%>
+
+        <%= I18n.t('Sistema.Body.General.negacion') %>:
+
+        <%=
+        radio_button('','proveedor', 'false',	                    
+          :class=>'text', :onclick=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'motores',
+          :action=>:proveedor_click },
+          :with=>"'valor='+ this.value ")};verifico3();inputChange();")
+        -%>
+
+      <%end%>
+    </td></tr>
+  <%if @estoy_editando=="1"%>
+    <tr id="celda_proveedor" style="visibility:visible;">
+    <%else%>
+    <tr id="celda_proveedor" style="visibility:hidden;">
+    <%end%>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Motores.Columnas.proveedor_marino') %></label> <label style="color: red">*</label>
+    </td>
+
+    <td>			
+      <span id="proveedor-marino-select"><%= render :partial => 'proveedor_marino_select' -%></span>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"javacript:actualizo(); if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;

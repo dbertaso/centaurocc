@@ -1,0 +1,4 @@
+<% cultivo_laguna = @cultivo_laguna if cultivo_laguna.nil? %>
+<tr  id="row_<%= cultivo_laguna.id %>">
+	<%= render :partial => 'data_cultivo_laguna', :locals => { :cultivo_laguna => cultivo_laguna } -%>
+</tr>

@@ -1,0 +1,139 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+<%= form_title_search %>
+<%= form_remote_tag(
+  :loading =>'image_load()', :loaded => 'image_unload()',  :method => :get,
+  :url => { :action => :list } ) do -%>
+  <table>
+    <tr>
+      <td style="width: 150px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label>Nro. Ticket</label>
+      </td>
+      <td>
+        <%= text_field_tag 'ticket', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label>Nombre del Beneficiario</label>
+      </td>
+      <td>
+        <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+      </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="width: 170px">
+        <label>Silo</label>
+      </td>
+      <td>
+        <%= select(
+          'silo_id','', @silo.map{|i| [i.nombre, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select' ,:onchange=>';inputChange();' } ) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 30%">
+        <label>Sector</label> 
+      </td>
+      <td style="width: 70%">
+        <% sector_onchange = remote_function(
+          :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+          :url=>{:controller=>'bandeja_arrime', :action=>:sector_form_change }, :with=>"'sector_id='+value" ) %>
+        <%= select(
+          'sector_id', '',
+          @sector_list.map{|i| [i.nombre, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select',:onchange=>sector_onchange + ';inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Sub-Sector</label> 
+      </td>
+      <td>
+        <div id="sub-sector-select">
+          <% sub_sector_onchange = remote_function(
+            :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+            :url=>{:controller=>'bandeja_arrime', :action=>:sub_sector_change }, :with=>"'sub_sector_id='+value") %>
+
+          <%= select(
+            'sub_sector_id', '',
+            @sub_sector_list.map{|i| [i.nombre, i.id]},
+            {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select',:onchange=>sub_sector_onchange + ';inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Rubro</label> 
+      </td>
+      <td>
+        <div id="rubro-select">
+          <% rubro_onchange = remote_function(
+            :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+            :url=>{:controller=>'bandeja_arrime', :action=>:rubro_form_change }, :with=>"'rubro_id='+value") %>
+
+          <%= select(
+            'rubro_id', '',
+            @rubro_list.map{|i| [i.nombre, i.id]},
+            {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select',:onchange=>rubro_onchange + ';inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Sub Rubro</label> 
+      </td>
+      <td>
+        <div id="sub-rubro-select">
+          <% sub_rubro_onchange = remote_function(
+            :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+            :url=>{:controller=>'bandeja_arrime', :action=>:sub_rubro_change }, :with=>"'sub_rubro_id='+value") %>
+
+          <%= select(
+            'sub_rubro_id', '',
+            @sub_rubro_list.map{|i| [i.nombre, i.id]},
+            {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select',:onchange=>sub_rubro_onchange + ';inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Actividad</label> 
+      </td>
+      <td>
+        <div id="actividad-select">
+          <%= select(
+            'actividad_id', '',
+            @actividad_list.map{|i| [i.nombre, i.id]},
+            {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td> &nbsp;</td>
+      <td><%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar')), :title=>I18n.t('Sistema.Body.Vistas.General.buscar')) -%></td>
+    </tr>
+  </table>
+  <% end %>
+  <br/>
+  <%= error %>
+  <%= message %>
+
+  <div id="list"></div>

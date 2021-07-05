@@ -1,0 +1,106 @@
+<table style="width: 100%">
+
+  <tr>
+    <td><label>Técnico a Asignar:</label></td>
+    <td>
+      <%= select(
+          'control_asignacion', 'usuario_id',
+          @usuario_select.map{|e| [e.primer_nombre + ' ' + e.primer_apellido, e.id]},
+          { :include_blank=>true },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Observaciones</label>
+    </td>
+    <td>
+      <%= text_area 'control_asignacion', 'observacion',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+
+</table>
+<br/>
+<table class="lista" style="width: 100%">
+
+  <tr>
+    <th style="width: 2%">
+
+    </th>
+    <th style="width: 10%">
+      Nro. Trámite
+    </th>
+    <th style="width: 10%">
+      Cédula/Rif
+    </th>
+    <th style="width: 20%">
+      Beneficiario
+    </th>
+    <th style="width: 13%">
+      Sector
+    </th>
+    <th style="width: 20%">
+      Unidad de Producción
+    </th>
+    <th style="width: 13%">
+      Muninipio
+    </th>
+    <th style="width: 13%">
+      Parroquia
+    </th>
+  </tr>
+
+  <% clase = "lista0"
+    @solicitud.each { |s| %>
+  <tr class="<%= clase %>">
+      <td style="text-align: center">
+        <input type="checkbox" name="solicitud_id[]" value="<%= s.id.to_s %>" />
+      </td>
+      <td style="text-align: center">
+        <%= s.numero %>
+      </td>
+      <% unless s.cliente.persona_id.nil? %>
+        <td style="text-align: center">
+            <%= s.cliente.persona.cedula_nacionalidad << '-' << s.cliente.persona.cedula.to_s %>
+        </td>
+        <td style="text-align: center">
+          <%= s.cliente.persona.primer_nombre << " " << s.cliente.persona.primer_apellido %>
+        </td>
+       <% else %>
+        <td style="text-align: center">
+          <%= s.cliente.empresa.rif %>
+        </td>
+        <td style="text-align: center">
+          <%= s.cliente.empresa.nombre %>
+        </td>
+      <% end %>
+
+        <td style="text-align: center">
+          <%= s.sector.nombre %>
+        </td>
+
+        <td style="text-align: center">
+          <%= s.UnidadProduccion.nombre %>
+        </td>
+
+        <td style="text-align: center">
+          <%= s.UnidadProduccion.Municipio.nombre %>
+        </td>
+
+        <td style="text-align: center">
+          <%= s.UnidadProduccion.Parroquia.nombre %>
+        </td>
+    </tr>
+  <% if clase == 'lista0'
+      clase = 'lista1'
+    else
+      clase = 'lista0'
+    end
+    } %>
+</table>
+<br/>

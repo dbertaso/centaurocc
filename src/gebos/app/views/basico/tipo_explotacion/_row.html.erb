@@ -1,0 +1,4 @@
+<% tipo_explotacion = @tipo_explotacion if tipo_explotacion.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= tipo_explotacion.id %>">
+	<%= render :partial => 'data', :locals => { :tipo_explotacion => tipo_explotacion, :even_odd => even_odd } -%>
+</tr>

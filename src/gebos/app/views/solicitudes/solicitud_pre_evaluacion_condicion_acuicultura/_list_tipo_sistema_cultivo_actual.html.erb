@@ -1,0 +1,25 @@
+
+
+<% lista = 'lista0'
+@tipo_sistema_cultivo_actual.each { |i| %>
+  &nbsp;&nbsp;
+  <%= check_box 'recaudo_check',
+  i.id,
+  {:checked=>i.marcado, :onchange=>"#{remote_function(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :method =>:get,
+    :url=>{:controller=>"solicitud_pre_evaluacion_condicion_acuicultura",
+    :action=>:save_sistema_cultivo_actual },
+    :with=>"'id=#{i.id}&unidad_produccion_condicion_acuicultura_id=#{@unidad_produccion_condicion_acuicultura.id}'")}", :name => "sistema_cultivo[]", :id => "tipo_sistema_cultivo_#{i.id}" }  %>
+
+  &nbsp;
+
+  <%= i.nombre %>
+
+  <br>
+
+<%  
+} %>
+
+<br/>

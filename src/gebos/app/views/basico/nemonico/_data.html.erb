@@ -1,0 +1,27 @@
+<% item = @nemonico if item.nil? %>
+<td>
+  <%= item.nemonico %>
+</td>
+
+<td style="text-align: center">
+  <%= item.nombre %>
+</td>
+
+<td style="text-align: center">
+  <%= item.descripcion %>
+</td>
+
+<td style="text-align: center">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => {:controller => 'nemonico', :action => :edit, :id => item.id}) if vlink 'edit' -%>
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'nemonico', :action => :delete, :id => item.id}) if vlink 'delete' -%>
+</td>

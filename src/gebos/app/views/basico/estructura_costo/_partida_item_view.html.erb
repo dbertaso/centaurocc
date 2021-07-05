@@ -1,0 +1,91 @@
+<br/>
+<table width="100%" class="lista">
+
+  <% unless  @partida_list.length > 0 %>
+    <tr>
+      <th><%= I18n.t('Sistema.Body.Controladores.EstructuraCosto.no_encontraron') %></th>
+    </tr>
+  <% else %>
+    <tr>
+      <td colspan="4">
+        <% c = Configurador.items(@partida_list[0].id, @oficina_id, @moneda_id) %>
+        <label>Justificación: </label><%= c[0].justificacion unless c[0].blank? %><br/><br/>
+      </td>
+    </tr>
+
+    <% @partida_list.each{|p| %>
+      <tr>
+        <td class="separador" valign="bottom" colspan="4">
+          <span><%= p.nombre %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <table class="lista" width="100%">
+
+            <tr>
+              <th style="width: 8%"><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %></th>
+              <th style="width: 9%">Código</th>
+              <th style="width: 20%">Ítem</th>
+              <th style="width: 7%">Tipo</th>
+              <th style="width: 9%">Unidad de Medida</th>
+              <th style="width: 9%">Costo</th>
+              <th style="width: 9%">Costo Fijo</th>
+              <th style="width: 9%">Costo Mínimo</th>
+              <th style="width: 9%">Costo Máximo</th>
+              <th style="width: 9%" >Desembolso</th>
+              <th style="width: 2%"></th>
+            </tr>
+
+            <% c = Configurador.items(p.id, @oficina_id, @moneda_id)
+            c.each{|i| %>
+              <tr class="lista0" id="row_<%= i.id %>">
+                <td align="center"><%= i.moneda.nombre %></td>
+                <td align="center"><%= i.item.codigo %></td>
+                <td align="center"><%= i.item.nombre %></td>
+                <td align="center"><% if i.item.tipo_item == 'I' %>
+                  Insumo
+                <% elsif i.item.tipo_item == 'B' %>
+                  Banco
+                <% elsif i.item.tipo_item == 'M' %>
+                  Maquinaria
+                <% end %>
+                </td>
+                <td align="center"><%= i.item.unidad_medida.nombre %></td>
+                <td align="center"><%= i.tipo_costo_w %></td>
+                <td align="center"><%= format_fm(i.costo_fijo) %></td>
+                <td align="center"><%= format_fm(i.costo_minimo) %></td>
+                <td align="center"><%= format_fm(i.costo_maximo) %></td>
+                <td align="center"><%= i.item.numero_desembolso %></td>
+                <td align="center">
+                  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+                    :url => {:action => :delete, :id => i.id}) if vlink 'delete' -%>
+                </td>
+              </tr>
+
+            <% } %>
+          </table>
+          <br/>
+        </td>
+      </tr>
+
+    <% } %>
+  <% end %>
+</table>
+<% if  @partida_list.length > 0 %>
+  <table class="lista" width="100%">
+    <tr>
+      <th style="width: 50%">Estructura de Costo Mínima</th>
+      <th style="width: 50%">Estructura de Costo Máxima</th>
+    </tr>
+    <tr class="lista0" >
+      <td align="center"><%= Configurador.total_costo_minimo(@partida_list[0].actividad_id, @oficina_id, @moneda_id) %></td>
+      <td align="center"><%= Configurador.total_costo_maximo(@partida_list[0].actividad_id, @oficina_id, @moneda_id) %></td>
+    </tr>
+  </table>
+  <br/>
+<% end %>

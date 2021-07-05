@@ -1,0 +1,6 @@
+<%= select_tag( :actividad_id,
+                options_from_collection_for_select(@actividad_select, "id" ,"nombre" ),
+                { :class=>'select',
+                  :prompt=> I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.seleccione_actividad'),
+                  :onchange=>'inputChange();',:style=>'width:200px;' })%>
+

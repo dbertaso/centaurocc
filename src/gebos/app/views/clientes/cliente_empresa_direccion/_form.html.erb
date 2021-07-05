@@ -1,0 +1,254 @@
+<script type="text/javascript">
+
+  onload = function()
+  {
+    showAlquiler('<%= @empresa_direccion.tenencia %>');
+  }
+
+  function showAlquiler(value)
+  {
+    if (value == 'A'){
+      document.getElementById("alquiler1").style.display="";
+      document.getElementById("alquiler2").style.display="";
+    }else{
+      document.getElementById("alquiler1").style.display="none";
+      document.getElementById("alquiler2").style.display="none";
+      document.getElementById("empresa_direccion_alquiler_mensual").value="0.0";
+
+    }
+  }
+
+</script>
+
+<table style="width: 100%">
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <%= radio_button 'empresa_direccion', 'tipo', 'P',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.sede')} #{I18n.t('Sistema.Body.Vistas.General.principal')}" %><br />
+      <%= radio_button 'empresa_direccion', 'tipo', 'S',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.sucursal') %><br />
+      <%= radio_button 'empresa_direccion', 'tipo', 'L',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.planta') %><br />
+      <%= radio_button 'empresa_direccion', 'tipo', 'D',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.Form.deposito') %><br />
+      <%= radio_button 'empresa_direccion', 'tipo', 'T',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.otra') %><br />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.urbanizacion_barrio_sector') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_direccion', 'zona',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.avenida_calle_callejon') %></label>
+    </td>
+    <td>
+      <%= text_field 'empresa_direccion', 'avenida',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.casa_edificio_otro') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_direccion', 'edificio',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.piso') %></label>
+    </td>
+    <td>
+      <%= text_field 'empresa_direccion', 'piso',
+        :class=>'text',
+        :style=>'width: 30px',
+        :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.numero_apto_casa') %></label>
+    </td>
+    <td>
+      <%= text_field 'empresa_direccion', 'numero',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.postal')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'empresa_direccion', 'codigo_postal',
+        :class=>'text',
+        :style=>'width: 40px',
+        :maxlength=>'4', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.punto')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.referencia')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_direccion', 'referencia',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.region') %></label> <label style="color: red">*</label></td>
+    <td>
+      <%= select(
+        'empresa_direccion', 'region_id',
+        @region_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'cliente_empresa_direccion',
+          :action=>:region_change },
+          :with=>"'region_id='+ this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %>:</label> <label style="color: red">*</label></td>
+    <td>
+      <span id="estado-select">
+        <%= render :partial => 'estado_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label> <label style="color: red">*</label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label> <label style="color: red">*</label></td>
+    <td>
+      <span id="parroquia-select">
+        <%= render :partial => 'parroquia_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label> <label style="color: red">*</label></td>
+    <td>
+      <span id="ciudad-select">
+        <%= render :partial => 'ciudad_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.espacio')} #{I18n.t('Sistema.Body.Vistas.General.fisico')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <%= radio_button 'empresa_direccion', 'tipo_inmueble', 'L',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.local') %><br />
+      <%= radio_button 'empresa_direccion', 'tipo_inmueble', 'H',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.habitacion') %><br />
+      <%= radio_button 'empresa_direccion', 'tipo_inmueble', 'G',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.galpon') %><br />
+      <%= radio_button 'empresa_direccion', 'tipo_inmueble', 'T',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.terreno') %><br />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.espacio')} #{I18n.t('Sistema.Body.Vistas.General.aprox')}" %> </label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_direccion', 'espacio_aproximado_m2_f',
+        :class=>'text',
+        :style=>'width: 80px',
+        :maxlength=>'8', :onkeypress=>'inputChange();',
+        :onkeyup=>"formatCurrency(this.value, 'empresa_direccion_espacio_aproximado_m2');"  -%>
+      <%= display_number @empresa_direccion.espacio_aproximado_m2, 'empresa_direccion_espacio_aproximado_m2' %>
+      <label>m2</label>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tenencia') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <%= radio_button 'empresa_direccion', 'tenencia', 'P',
+        :class=>'text', :onclick=>"inputChange(); showAlquiler('P'); checktenencia();formatCurrency(0, 'empresa_direccion_alquiler_mensual');"-%><%= I18n.t('Sistema.Body.Vistas.General.propia') %><br />
+      <%= radio_button 'empresa_direccion', 'tenencia', 'A',
+        :class=>'text', :onclick=>"inputChange(); showAlquiler('A'); checktenencia()"-%><%= I18n.t('Sistema.Body.Vistas.General.alquilada') %><br />
+      <%= radio_button 'empresa_direccion', 'tenencia', 'C',
+        :class=>'text', :onclick=>"inputChange(); showAlquiler('C'); checktenencia();formatCurrency(0, 'empresa_direccion_alquiler_mensual');" -%><%= I18n.t('Sistema.Body.Vistas.General.comodato') %><br />
+      <%= radio_button 'empresa_direccion', 'tenencia', 'H',
+        :class=>'text', :onclick=>"inputChange(); showAlquiler('H'); checktenencia();formatCurrency(0, 'empresa_direccion_alquiler_mensual');" -%><%= I18n.t('Sistema.Body.Vistas.General.hipoteca') %><br />
+      <%= radio_button 'empresa_direccion', 'tenencia', 'F',
+        :class=>'text', :onclick=>"inputChange(); showAlquiler('F'); checktenencia();formatCurrency(0, 'empresa_direccion_alquiler_mensual');" -%><%= I18n.t('Sistema.Body.Vistas.General.con_familiar') %><br />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div id="alquiler1" style="display: none"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.alquiler')} #{I18n.t('Sistema.Body.General.mensual')}" %></label> <label style="color: red">*</label></div>
+    </td>
+    <td>
+      <div id="alquiler2" style="display: none"><%= text_field 'empresa_direccion', 'alquiler_mensual',
+          :class=>'text',
+          :style=>'width: 150px',
+          :maxlength=>'12', :onkeypress=>'inputChange();',
+          :onkeyup=>"formatCurrency(this.value, 'empresa_direccion_alquiler_mensual');"  -%>
+        <%= display_number @empresa_direccion.alquiler_mensual, 'empresa_direccion_alquiler_mensual' %></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.direccion_aplica_envio') %></label>
+    </td>
+    <td>
+      <%= check_box 'empresa_direccion', 'correspondencia',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onclick=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'empresa_direccion', 'activo',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onclick=>'inputChange();'-%>
+    </td>
+  </tr>
+</table>

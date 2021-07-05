@@ -1,0 +1,4 @@
+<% factura = @factura if factura.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= factura.id %>">
+	<%= render :partial => 'data', :locals => { :factura => factura, :even_odd => even_odd } -%>
+</tr>

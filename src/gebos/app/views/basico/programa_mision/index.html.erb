@@ -1,0 +1,29 @@
+<div class="marco-titulo"><div><div>
+	Modificando Programa  <span class="titulo_modificar">'<%= @programa.alias %>'</span>
+</div></div></div>
+
+<%= render :partial=>'basico/programa/common/tabs' %>
+<div class="marco-contenido2">
+
+	<div class="marco-boton-in" id="button_new">
+	  <%= link_to_remote( 
+	  	image_tag(I18n.t('Sistema.Body.Imagenes.agregar')), 
+		  :loading =>'image_load()',
+	    :loaded => 'image_unload()',
+	  	:url => { :action => :new, :programa_id=>@programa.id } ) %>
+	</div>
+	
+	<%= error %>
+	<%= message %>
+
+	<div class="lista-form" id="form_new" style="display: none"></div>
+
+	<div id="list">
+		<%= render :partial=>"list" %>
+	</div>
+	
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :controller => 'programa', :action => :index },
+		{ :id=>'button_close' } ) -%>
+	
+</div>

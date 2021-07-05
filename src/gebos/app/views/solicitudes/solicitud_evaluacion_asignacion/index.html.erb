@@ -1,0 +1,128 @@
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list } ) do -%>
+    <table>
+
+      <tr>
+        <td style="width: 140px">
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.nro_tramite') %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 140px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')} / #{I18n.t('Sistema.Body.Vistas.General.rif')}" %></label>
+        </td>
+        <td>
+          <select name="tipo" id="tipo" class="select">
+            <option value="V ">V</option>
+            <option value="E ">E</option>
+            <option value="J-">J</option>
+            <option value="G-">G</option>
+          </select>
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> Ej: J-12345678-9
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 140px">
+          <label><%= I18n.t('Sistema.Body.General.beneficiario') %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 140px">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.unidad_produccion') %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'unidad_produccion', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+          <span id="municipio-select">
+            <%= select(
+              'municipio_id', '',
+              @municipio_list.map{|e| [e.nombre, e.id]},
+              {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select', :onchange=>"#{remote_function(
+                :loading =>'Element.show("loading")',
+                :loaded => 'Element.hide("loading")',
+                :method => :get,
+                :url=>{:controller=>'solicitud_evaluacion_asignacion',
+                :action=>:municipio_change },
+                :with=>"'municipio_id='+ this.value")};inputChange();" } ) %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label>
+        </td>
+        <td>
+          <span id="parroquia-select">
+            <%= select(
+              'parroquia_id', '',
+              [],
+              {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 150px">
+          <label>¿<%= "#{I18n.t('Sistema.Body.Vistas.General.solicitud')} #{I18n.t('Sistema.Body.Vistas.General.not')} #{I18n.t('Sistema.Body.Vistas.General.viable')}" %>?</label>
+        </td>
+        <td>
+          <%= check_box_tag 'viable', 'false', false, :class => 'text' %>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 140px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.asignado')} #{I18n.t('Sistema.Body.Vistas.General.a')} " %></label>
+        </td>
+        <td>
+          <%= select(
+            'usuario_id','',
+            @usuario_list.map{|i| [i.primer_nombre << ' ' << i.primer_apellido, i.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();' } ) %>&emsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2" style="text-align: center"><br/>
+          <%= link_to( image_tag('boton_re-asignacion_masiva.gif',:title=>'Re-asignación Masiva'),
+            { :action => :re_asignar_maxiva },
+            { :id=>'re_asignar_maxivo' } ) -%>
+        </td>
+      </tr>
+
+
+    </table>
+  <% end %>
+  <br></br>
+  <%= error %>
+  <%= message %>
+  <div id="list">
+  </div>
+</div>

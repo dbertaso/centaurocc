@@ -1,0 +1,73 @@
+<script language="JavaScript">
+  function verifico(){
+    if (document.getElementById('equipo_seguridad_es_propio_').checked == true){
+      //es a solicitar
+      document.getElementById('equipo_seguridad_sereal').style.display = 'none';
+      document.getElementById('equipo_seguridad_sereal').value = '***No-aplica***';
+      //alert("s");
+    }else{
+      document.getElementById('equipo_seguridad_sereal').style.display = 'block';
+      document.getElementById('equipo_seguridad_sereal').value = '';
+    }
+  }
+</script>
+
+<div class="marco-titulo"><div><div>
+      Modificando Información de la Visita <span style="color: #FF0000">'<%= @full_info %>'</span>
+    </div></div></div>
+<div id="contenedor_principal">
+  <%= render :partial=>'visitas/control_visitas_pesca/embarcacion/common/tabs' %>
+
+
+  <% embarcaciones_onchange = remote_function(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url=>{:controller=>'equipo_seguridad',
+      :action=>:list },
+    :with=>"'id_de_embarcacion='+value+'&id='+#{params[:id]}")
+  @embarcaciones=Embarcacion.find(:all,:conditions=>"seguimiento_visita_id=#{@visita}", :order=>"nombre_embarcacion")
+%>
+
+  <div class="marco-contenido2"> 
+    <%
+    begin
+      controller.method(:new)
+    %><br>
+
+      <div class="marco-boton-out" id="button_new">
+        <table align="right">
+          <tr>
+            <td align="right">
+              <label>Seleccione Embarcación por equipo de seguridad </label>
+            </td>
+            <td align="right"> 
+              <%= select('identificador_embarcacion','',
+                @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                { :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+                { :class=>'select', :onchange=>embarcaciones_onchange+';inputChange();' } ) %>
+            </td>
+          </tr>
+     
+        </table>
+
+        <br><br>
+
+      </div>
+    <%
+    rescue NameError
+    end
+  %>
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+
+    <div id="list">
+
+      <div id="list">
+        <%= render :partial => 'list' -%>
+      </div>
+    </div>
+  </div>

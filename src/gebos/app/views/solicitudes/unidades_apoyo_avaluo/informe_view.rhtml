@@ -1,0 +1,88 @@
+<div class="marco-contenido">
+  <div class="marco-titulo"><div><div>
+          Consultando Solicitud <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+  </div></div></div>
+
+          <%= render :partial=>'solicitudes/solicitud/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%= render :partial=>'solicitudes/unidades_apoyo_consultoria/common/tabs' %>
+      <div class="marco-contenido2">
+        <%= render :partial=>'solicitudes/unidades_apoyo_avaluo/common/tabs' %>
+
+          <div class="marco-contenido2">
+            <br/>
+            <table class="lista" style="width: 100%">
+              <tr>
+                <th style="width: 30%">
+                  <label>Garantía</label>
+                </th>
+                <th style="width: 10%">
+                  <label>Área</label>
+                </th>
+                <th style="width: 20%">
+                  <label>Ubicación</label>
+                </th>
+                <th style="width: 35%">
+                  <label>Linderos</label>
+                </th>
+                <th style="width: 5%"></th>
+              </tr>
+              <% formato = 'lista0'
+                  @solicitud_tipo_garantia.each { |s| %>
+              <tr id="tipo_<%= s.id %>" class="<%= formato %>">
+                <td align="center">
+                  <%= s.TipoGarantia.nombre %>
+                </td>
+                <% unless s.SolicitudAvaluo[0].nil?
+                    unless s.SolicitudAvaluo[0].SolicitudAvaluoInmobiliario[0].nil? %>
+                      <td align="center">
+                        <%= display_number s.SolicitudAvaluo[0].SolicitudAvaluoInmobiliario[0].espacio, '' %> M2
+                      </td>
+
+                      <td>
+                        <%= s.SolicitudAvaluo[0].SolicitudAvaluoInmobiliario[0].ubicacion %>
+                      </td>
+
+                      <td>
+                        <b>Norte: </b><%= s.SolicitudAvaluo[0].SolicitudAvaluoInmobiliario[0].lindero_norte %><br/>
+                        <b>Sur: </b><%= s.SolicitudAvaluo[0].SolicitudAvaluoInmobiliario[0].lindero_sur %><br/>
+                        <b>Este: </b><%= s.SolicitudAvaluo[0].SolicitudAvaluoInmobiliario[0].lindero_este %><br/>
+                        <b>Oeste: </b><%= s.SolicitudAvaluo[0].SolicitudAvaluoInmobiliario[0].lindero_oeste %>
+                      </td>
+                  <% else %>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                  <% end %>
+               <% else %>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+               <% end %>
+
+                   <td align="center">
+                      <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'),
+                          {:action => :edit_view,
+                          :id => s.id,
+                          :controlador => params[:controlador]} %>
+                   </td>
+                
+              </tr>
+              <%  if formato == 'lista0'
+                    formato = 'lista1'
+                  else
+                    formato = 'lista0'
+                  end
+                } %>
+            </table>
+            <br/><br/>
+
+            <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+                    { :controller => params[:controlador], :action => :index },
+                    { :id=>'button_close' } ) -%>
+          </div>
+     </div>
+  </div>
+
+</div>

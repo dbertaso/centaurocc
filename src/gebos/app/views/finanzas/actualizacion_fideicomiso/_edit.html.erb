@@ -1,0 +1,24 @@
+<tr id="row_<%= @tipo_movimiento_fideicomiso.id %>_edit">
+	<td class="lista-form" colspan="9">
+	
+		<%= form_title_edit @tipo_movimiento_fideicomiso.motivo %>
+	
+		<%= error "row_#{@tipo_movimiento_fideicomiso.id}" %>
+	
+		<%= form_remote_tag(
+		  :loading =>'image_load()',
+			:loaded => 'image_unload()',
+		  :url => { :action => :save_edit, :id => @tipo_movimiento_fideicomiso.id } ) do-%>
+				<%= render 'form' %>
+					<%= link_to_remote(
+		        image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+					  :loading =>'image_load()',
+					  :loaded => 'image_unload()',
+					  :method=>:get,
+		        	  :url => { :action => :cancel_edit, :id => @tipo_movimiento_fideicomiso.id}) -%>
+			   </td>
+		    </tr>
+		  </table>
+		<% end%>
+	</td>
+</tr>

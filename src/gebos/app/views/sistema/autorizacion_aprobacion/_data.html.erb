@@ -1,0 +1,54 @@
+<% autorizacion = @autorizacion if autorizacion.nil? %>
+
+<% transaccion = Transaccion.find(autorizacion.referencia_id)
+prestamo = Prestamo.find(transaccion.prestamo_id) unless transaccion.prestamo_id ==0
+cliente = Cliente.find(prestamo.cliente_id) unless prestamo.nil?
+if cliente.class.to_s == "ClienteEmpresa"
+  empresa = Empresa.find(cliente.empresa_id)
+else
+  persona = Persona.find(cliente.persona_id) unless cliente.nil?
+end
+if persona.nil?
+  nombre_cliente = empresa.nombre unless empresa.nil?
+else
+  nombre_cliente = persona.primer_apellido + ' ' + persona.primer_nombre
+end
+%>
+<td>
+  <%= autorizacion.creacion_f  %>
+</td>
+<td>
+  <%= autorizacion.vencimiento_f  %>
+</td>
+<td>
+  <%= autorizacion.opcion_accion.autorizacion_nombre  %>
+</td>
+<td>
+  <%= autorizacion.descripcion  %>
+</td>
+<td>
+  <%= nombre_cliente if !cliente.nil? %>
+</td>
+<td>
+  <%= transaccion.monto_transaccion_fm if !transaccion.nil?%>
+</td>
+<td>
+  <%= autorizacion.usuario.nombre_usuario %>
+</td>
+<td>
+  <%= autorizacion.estatus_w  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote('Aprobar', :title=>I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.aprobar'),
+    :method=>:get,
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.confirmacion_aprobacion'),
+    :url => {:controller => 'autorizacion_aprobacion', :action => :aprobar, :method=>:get, :id => autorizacion.id}) if autorizacion.para_aprobar  -%>
+  <%= link_to_remote('Rechazar', :title=>I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.rechazar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.confirmacion_rechazo'),
+    :url => {:controller => 'autorizacion_aprobacion', :action => :rechazar, :method=>:get, :id => autorizacion.id}) if autorizacion.para_aprobar  -%>
+</td>
+

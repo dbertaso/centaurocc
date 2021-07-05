@@ -1,0 +1,173 @@
+<script>
+
+  function presupuesto(mostrar,ocultar){
+
+    document.getElementById(mostrar).style.display = "block";
+    document.getElementById(ocultar).style.display = "none";
+    //document.getElementById("aux_botones").style.display = "block";
+    
+ 
+    document.getElementById('button_save').style.visibility="visible";
+
+  }
+
+  function seleccionar_estado(campo,tipo){
+    if(tipo=="carga"){
+
+      document.getElementById("sector_id_").value = "";
+      try { document.getElementById("presupuesto_carga_rubro_id").value = "";
+      } catch(e) {}
+		try { document.getElementById("presupuesto_carga_sub_rubro_id").value = "";
+      } catch(e) {}
+    }
+
+
+
+    if(tipo == "origen"){
+      document.getElementById("sector_id_origen_").value = "";
+      try { document.getElementById("presupuesto_transferencia_rubro_id_origen").value = "";
+      } catch(e) {}
+
+	  try {document.getElementById("presupuesto_transferencia_sub_rubro_id_origen").value = "";
+      } catch(e) {}
+    }
+
+    if(tipo == "destino"){
+      document.getElementById("sector_id_destino_").value = "";
+      try { document.getElementById("presupuesto_transferencia_rubro_id_destino").value = "";
+      } catch(e) {}
+
+	  try {document.getElementById("presupuesto_transferencia_sub_rubro_id_destino").value = "";
+      } catch(e) {}
+    }
+
+  }
+
+</script>
+
+<div class="marco-contenido">
+	<%= form_title_list %>	
+	
+<%= form_remote_tag(
+   :loading =>'image_load()',
+   :loaded => 'image_unload()',
+   :method=>:get,
+   :url => { :action => :list } ) do-%>
+
+
+ <table>
+   <tr>
+    <td width="160px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.programa')%></label>
+    </td>
+    <td>
+       <%= select(
+                'programa_id', '',
+                @programa_list.map{|i| [i.nombre, i.id]},
+                { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                { :class=>'select',:style=>'width:250px',:onchange=>'inputChange();' } ) %>
+    </td>
+   </tr>
+
+
+   <tr>
+     <td style="width: 100px">
+       <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+     </td>
+     <td>
+       <%= select(
+         'estado_id','',
+         @estado_index.map{|i| [i.nombre, i.id]},
+         { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+         { :class=>'select', :onchange=>'inputChange();', :style=>'width:250px' } ) %>
+
+     </td>
+     <td></td>
+   </tr>
+
+   <tr>
+     <td>
+       <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+     </td>
+     <td>
+       <% sector_index_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'presupuesto_pidan',
+            :action=>:sector_index_form_change },
+            :with=>"'sector_index_id='+value" ) %>
+       
+       <%= select(
+         'sector_index_id', '',
+         @sector_index.map{|i| [i.nombre, i.id]},
+         { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+         { :class=>'select',:onchange=>sector_index_onchange + ';inputChange();', :style=>'width:250px'  } ) %>
+     </td>
+   </tr>
+
+	<tr>
+     <td>
+       <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+     </td>
+     <td>
+       <div id="sub-sector-index-select">         
+         <%= render :partial => 'sub_sector_form_select' %>
+       </div>
+     </td>
+   </tr>
+
+   <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+      </td>
+      <td>
+        <div id="rubro-index-select"> 
+            <%= render :partial => 'rubro_index_form_select' %>
+        </div>
+      </td>
+    </tr>
+
+
+   <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+      </td>
+      <td>
+        <div id="sub-rubro-index-select">
+            <%= render :partial => 'sub_rubro_index_form_select' %>
+        </div>
+      </td>
+    </tr>
+
+
+
+
+	<tr>
+     <td>
+			
+     </td>
+     <td>
+		
+		<div style="" class="marco-boton-out" id="button_new">
+            <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+    <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.agregar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.agregar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',    
+    :url => {:controller => 'presupuesto_pidan', :action => :new}) -%>  
+		</div>
+	</td>
+   </tr>
+   <tr>
+
+ </table>
+ <% end %>
+
+	<div class="lista-form" id="form_new" style="display: none"></div>
+	
+	<div id="list">
+		<%= render :partial => 'list' -%>
+	</div>
+
+</div>

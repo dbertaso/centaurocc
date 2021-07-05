@@ -1,0 +1,12 @@
+<% formula = @formula if formula.nil? %>
+<td>
+  <%= formula.nombre  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :producto_id => @producto.id, :programa_id => @programa.id, :id => formula.id}) -%>
+</td>

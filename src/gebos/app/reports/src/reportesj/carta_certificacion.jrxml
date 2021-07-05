@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="carta_certificacion"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="442"
+		 columnSpacing="0"
+		 leftMargin="85"
+		 rightMargin="85"
+		 topMargin="56"
+		 bottomMargin="56"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="p_solicitud_numero" isForPrompting="true" class="java.lang.Integer">
+		<parameterDescription><![CDATA[Número interno de solicitud]]></parameterDescription>
+		<defaultValueExpression ><![CDATA[new Integer(1)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["/var/cartera/produccion/current/app/reports/bin/prestamos/"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT
+     solicitud."numero" AS solicitud_numero,
+     programa."nombre" AS programa_nombre,
+     persona."primer_nombre"||' '||' '||persona."primer_apellido"||' '||' '||persona."segundo_apellido" AS representante_legal,
+     persona."segundo_nombre" AS persona_segundo_nombre,
+     persona."primer_apellido" AS persona_primer_apellido,
+     persona."segundo_apellido" AS persona_segundo_apellido,
+     persona."cedula" AS persona_cedula,
+     empresa."nombre" AS empresa_nombre,
+     empresa_integrante."cargo" AS empresa_integrante_cargo,
+     solicitud."numero_resolucion_comite",
+     solicitud."id"
+FROM
+     "public"."cliente" cliente INNER JOIN "public"."solicitud" solicitud ON cliente."id" = solicitud."cliente_id"
+     INNER JOIN "public"."empresa" empresa ON cliente."empresa_id" = empresa."id"
+     INNER JOIN "public"."empresa_integrante" empresa_integrante ON empresa."id" = empresa_integrante."empresa_id"
+     INNER JOIN "public"."persona" persona ON empresa_integrante."persona_id" = persona."id"
+     INNER JOIN "public"."programa" programa ON solicitud."programa_id" = programa."id"
+ 
+WHERE
+     solicitud.numero = $P{p_solicitud_numero}
+limit 1]]></queryString>
+
+	<field name="solicitud_numero" class="java.lang.Integer"/>
+	<field name="programa_nombre" class="java.lang.String"/>
+	<field name="representante_legal" class="java.lang.String"/>
+	<field name="persona_segundo_nombre" class="java.lang.String"/>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_segundo_apellido" class="java.lang.String"/>
+	<field name="persona_cedula" class="java.lang.Integer"/>
+	<field name="empresa_nombre" class="java.lang.String"/>
+	<field name="empresa_integrante_cargo" class="java.lang.String"/>
+	<field name="numero_resolucion_comite" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+
+	<variable name="texto_primera_parte" class="java.lang.String" resetType="Report" calculation="Nothing">
+	</variable>
+	<variable name="texto_segunda_parte" class="java.lang.String" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[" N°. "]]></variableExpression>
+	</variable>
+	<variable name="texto_tercera_parte" class="java.lang.String" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[", en relación a la solicitud de financiamiento para: "]]></variableExpression>
+	</variable>
+	<variable name="texto_concatenado" class="java.lang.String" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$V{texto_primera_parte} + $F{programa_nombre} + $V{texto_segunda_parte} + $V{texto_tercera_parte}]]></variableExpression>
+	</variable>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="197"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="285"
+						y="14"
+						width="60"
+						height="20"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[Caracas,]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="345"
+						y="14"
+						width="90"
+						height="20"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="2"
+						y="94"
+						width="130"
+						height="20"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[Ciudadano]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="2"
+						y="134"
+						width="340"
+						height="20"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{empresa_integrante_cargo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="2"
+						y="154"
+						width="340"
+						height="20"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="2"
+						y="174"
+						width="130"
+						height="20"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[Presente]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="2"
+						y="114"
+						width="340"
+						height="20"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{representante_legal}]]></textFieldExpression>
+				</textField>
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="1"
+						width="84"
+						height="83"
+						key="image-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA["/var/www/cartera/public/images/logo_foncrei.jpg"]]></imageExpression>
+				</image>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="185"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="14"
+						width="440"
+						height="120"
+						key="staticText-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="1_1_2">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[Para su información y fines consiguientes, tengo a bien dirigirme a usted en la oportunidad de remitirle Certificación de la Resolución de Comité Regional No Concurrente en el Marco del Programa Especial de Financiamiento a Lanceros (as) Vuelvan Caras Año 2007 N°.                                          , en relación a la solicitud  a favor de                                                                                                          para el financiamiento de las siguientes partidas:    ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="195"
+						y="71"
+						width="118"
+						height="20"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{numero_resolucion_comite}]]></textFieldExpression>
+				</textField>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="-27"
+						y="142"
+						width="419"
+						height="10"
+						key="subreport-1"/>
+					<subreportParameter  name="p_solicitud_numero">
+						<subreportParameterExpression><![CDATA[$F{solicitud_numero}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "financiamiento_certificacion_carta.jasper"]]></subreportExpression>
+				</subreport>
+				<staticText>
+					<reportElement
+						x="5"
+						y="160"
+						width="437"
+						height="20"
+						key="staticText-7"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[Sin otro particular al cual hacer referencia quedo de usted,]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="113"
+						y="91"
+						width="325"
+						height="20"
+						key="textField-3"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="88"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="46"
+						width="170"
+						height="20"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[María Elena Hernández B.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="67"
+						width="180"
+						height="20"
+						key="staticText-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[Secretaria del Directorio (Acc.)]]></text>
+				</staticText>
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="50"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

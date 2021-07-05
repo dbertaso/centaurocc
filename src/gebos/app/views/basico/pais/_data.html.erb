@@ -1,0 +1,23 @@
+<% pais = @pais if pais.nil? %>
+<td>
+  <%= pais.id %>
+</td>
+<td>
+  <%= pais.nombre  %>
+</td>
+<td>
+  <%= pais.abreviacion  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'pais', :action => :edit, :id => pais.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'pais', :action => :delete, :id => pais.id}) if vlink 'delete' -%>
+</td>

@@ -1,0 +1,5 @@
+<%= select(
+  'garantia_sector', 'sub_sector_id',
+  @sub_sector_list.map{|e| [e.nombre, e.id]},
+  { :prompt => "Seleccionar"},
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

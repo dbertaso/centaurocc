@@ -1,0 +1,4 @@
+<% especie_variedad_pasto = @especie_variedad_pasto if especie_variedad_pasto.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= especie_variedad_pasto.id %>">
+	<%= render :partial => 'data', :locals => { :especie_variedad_pasto => especie_variedad_pasto, :even_odd => even_odd } -%>
+</tr>

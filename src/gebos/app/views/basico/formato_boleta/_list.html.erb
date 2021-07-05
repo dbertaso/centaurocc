@@ -1,0 +1,45 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 13%" style="text-align: center" <%= sort_class_helper('sector') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector', 'list' %>
+      </th>
+
+      <th style="width: 13%" style="text-align: center" <%= sort_class_helper('sub_sector') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector', 'list' %>
+      </th>
+
+      <th style="width: 13%" style="text-align: center" <%= sort_class_helper('rubro') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro', 'list' %>
+      </th>
+
+      <th style="width: 13%" style="text-align: center" <%= sort_class_helper('sub_rubro') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_rubro'), 'sub_rubro', 'list' %>
+      </th>
+
+      <th style="width: 13%" style="text-align: center" <%= sort_class_helper('actividad') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad', 'list' %>
+      </th>
+
+      <th style="width: 25%" style="text-align: center" <%= sort_class_helper('formato_operacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.FormatoBoleta.Etiquetas.formato_boleta'), 'formato_operacion', 'list' %>
+      </th>
+
+      <th style="width: 5%" style="text-align: center" <%= sort_class_helper('status') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.status'), 'status', 'list' %>
+      </th>
+
+      <th style="width: 5%" style="text-align: center">
+        <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%  even_odd = 1
+    for item in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :item => item, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>

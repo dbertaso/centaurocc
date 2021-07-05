@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-10" />
+
+
+  </head>
+  <script type="text/javascript">
+
+    //   function onload()
+    //   {
+    //     window.print();
+    //   }
+
+    function imprime(){
+      //desaparece el boton
+      document.getElementById("noprint").style.visibility='hidden';
+      //se imprime la pagina
+      print();
+      setTimeout("showlayer()",2000);
+
+    }
+    function showlayer(){
+      document.getElementById("noprint").style.visibility='visible';
+    }
+
+  </script>
+  <body>
+
+    <!-- caso en que se desee imprimir la marca de agua
+    <div style="font-size: 14px;background-image: url(/images/marca_agua.jpg);z-index:1;">
+    -->
+    <%#*<div style="font-size: 13px;">%>
+
+      <br></br>
+
+      <table width="950">
+        <tr>
+          <td width="117" rowspan="3"><img src="/images/casa.jpeg" width="200" height="120" align="right" /></td>
+          <td colspan="6">&nbsp;</td>
+          <td width="80" rowspan="3"><img src="/images/ministerio_alimentacion.jpeg" width="200" height="120" align="right" /></td>
+        </tr>
+        <tr>
+          <td colspan="6"><div align="center"><font size="5"><label>RECEPCIÓN DEL PRODUCTO</label></font></div></td>
+        </tr>
+        <tr>
+          <td colspan="6"><p align="center"><font size="5"><label><%=@boleta_arrime.rubro.nombre %></label></font></p></td>
+        </tr>
+      </table>
+
+      <br></br>
+      <table width="500" border="1" align="center">
+        <tr>
+
+          <td width="150"><label>Silo:</label></td>
+          <td width="120"> <%=@boleta_arrime.silo.direccion %></td>
+          <td width="170"><label>Número de Ticket:</label> </td>
+          <td colspan="" width="120"><%=@boleta_arrime.numero_ticket unless @boleta_arrime.nil?%></td>
+
+        </tr>
+        <tr>
+          <td><label>Rif:</label></td>
+          <td> <%=@boleta_arrime.silo.rif %></td>
+          <td><label>Hora de Entrada: </label></td>
+          <td><%= @boleta_arrime.hora_entrada.strftime("%H:%M:%S") unless @boleta_arrime.nil?%></td>
+
+        </tr>
+        <tr>
+          <td><label>Placa del Vehículo:</label> </td>
+          <td><%= @boleta_arrime.placa_vehiculo unless @boleta_arrime.nil?%></td>
+          <td><label>Guia de Movilización:</label></td>
+          <td><%= @boleta_arrime.guia_movilizacion unless @boleta_arrime.nil?%></td>
+        
+
+        </tr>
+       
+      </table>
+      <p>&nbsp;</p>
+      <table width="950" border="1">
+        <tr>
+          <td width="6"><label>Asociación:</label></td>
+          <td width="20">FONDAS</td>
+          <td width="20"><label>Cédula del Conductor:</label></td>
+          <td width="20"><%= @boleta_arrime.cedula_conductor unless @boleta_arrime.nil?%></td>
+        </tr>
+        <tr>
+          <td><label>Cédula del Productor: </label></td>
+          <td><%= @view_boleta_arrime.cedula_rif %></td>
+          <td><label>Nombre del Conductor:</label></td>
+          <td><%= @boleta_arrime.nombre_conductor unless @boleta_arrime.nil? %></td>
+        </tr>
+        <tr>
+          <td><label>Nombre del Productor:</label></td>
+          <td> <%= @view_boleta_arrime.productor%></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+
+      <p>&nbsp;</p>
+      <table width="950" border="1">
+        <tr>
+          <td colspan="8"><div align="center"><label>DATOS DEL PESO </label></div></td>
+        </tr>
+        <tr>
+          <td width="100">&nbsp;</td>
+          <td width="99">&nbsp;</td>
+          <td width="100"><div align="center"><label>Fecha</label></div></td>
+          <td width="150">&nbsp;</td>
+          <td width="97"><div align="center"><label>Hora</label></div></td>
+          <td width="200" colspan=""><div align="center"><label>Peso Total Vehículo</label></div></td>
+        </tr>
+        <tr>
+          <td><div align="center"><label>Entrada:</label> </div></td>
+          <td>&nbsp;</td>
+          <td><div align="center"><%= @boleta_arrime.fecha_entrada.strftime("%d/%m/%Y") unless @boleta_arrime.nil?%></div></td>
+          <td>&nbsp;</td>
+          <td><div align="center"><%= @boleta_arrime.hora_entrada.strftime("%H:%M:%S") unless @boleta_arrime.nil?%></div></td>
+          <td colspan="2"><div align="center">
+              <%unless @boleta_arrime.nil?%>
+              <%valor = sprintf('%01.2f', @boleta_arrime.valor_total_entrada).sub('.', ',')%>
+              <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+              <%end%> &nbsp;
+            </div></td>
+        </tr>
+        <tr>
+          <td><div align="center"><label>Salida:</label> </div></td>
+          <td>&nbsp;</td>
+          <td><div align="center"><%= @boleta_arrime.fecha_salida.strftime("%d/%m/%Y") unless @boleta_arrime.nil?%></div></td>
+          <td>&nbsp;</td>
+          <td><div align="center"><%= @boleta_arrime.hora_salida.strftime("%H:%M:%S") unless @boleta_arrime.nil?%></div></td>
+          <td colspan="2"><div align="center">
+              <%unless @boleta_arrime.nil?%>
+              <%valor = sprintf('%01.2f', @boleta_arrime.valor_total_salida).sub('.', ',')%>
+              <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+              <%end%> &nbsp;
+            </div></td>
+        </tr>
+
+      </table>
+
+
+      <br></br>
+      <table width="950" border="1">
+        <tr>
+          <td width="250"><div align="center"><label>Peso Neto:</label> </div></td>
+          <td width="200">
+             <%unless @boleta_arrime.nil?%>
+             <%valor = sprintf('%01.2f',@boleta_arrime.peso_neto).sub('.', ',')%>
+             <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+             <%end%> &nbsp;
+          </td>
+          <td width="200"><div align="center"><label>Peso Acondicionado:</label> </div></td>
+          <td width="200">
+              <%unless @boleta_arrime.nil?%>
+              <%valor = sprintf('%01.2f', @boleta_arrime.peso_acondicionado).sub('.', ',')%>
+              <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+              <%end%> &nbsp;
+          </td>
+        </tr>
+      </table>
+
+      <br></br>
+
+
+      <div id="formulario">
+        <%= render :partial => @laboratorio_imprimir %>
+      </div>
+
+
+
+      <p>&nbsp;</p>
+      <table width="950" border="1">
+        <tr>
+          <td width="112"><label>Compra Bs.F:</label></td>
+          <td width="200">
+              <%unless @boleta_arrime.nil?%>
+              <%valor = sprintf('%01.2f', @boleta_arrime.peso_acondicionado).sub('.', ',')%>
+              <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+              <%end%> &nbsp;
+
+          </td>
+          <td colspan="2"><label>Resultado:</label></td>
+          <td width=0">
+              <%unless @boleta_arrime.nil?%>
+
+                  <% if  @boleta_arrime.resultado == 'A' %>
+                  Aprobado
+
+                 <% else  @boleta_arrime.resultado == 'R' %>
+                  Rechazado
+
+                 <%end%>
+             <%end%> &nbsp;
+          </td>
+
+
+
+          <td width="50"><label>Clase:</label></td>
+          <td width="97">
+              <%unless @view_precio_gaceta.nil?%>
+                 <% if @view_precio_gaceta.tipo_clase = 'A' -%>
+                    Tipo A
+                  <%elsif  @view_precio_gaceta.clase= 'B'%>
+                    Tipo B
+                  <%elsif  @view_precio_gaceta.clase= 'C'%>
+                    Tipo C
+                  <%end%>
+             <%end%> &nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td><label>Banco:</label></td>
+          <td><%= @entidad_financiera.alias unless @entidad_financiera.nil? %></td>
+          <td colspan="2"><label>Tipo de Cuenta:</label></td>
+          <td>
+            <%unless @cuenta_bancaria.nil?%>
+                  <% if @cuenta_bancaria.tipo == 'A' %>
+                    Ahorro
+                  <%elsif @cuenta_bancaria.tipo =='C'%>
+                    Corriente
+                  <%end%>
+             <%end%>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><label>Cuenta Nro:</label></td>
+          <td><%=@cuenta_bancaria.numero unless @cuenta_bancaria.nil? %></td>
+          <td colspan="2">&nbsp;</td>
+          <td>&nbsp;</td>
+
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td><label>Observaciones:</label></td>
+          <td colspan="8"><p>&nbsp;</p> </td>
+
+        </tr>
+
+      </table>
+
+      <br/><br/>
+
+          <table width="950" border="1">
+            <tr>
+              <td colspan="4" ><p>&nbsp;</p></td>
+              <td colspan="5"><p>&nbsp;</p></td>
+            </tr>
+            <tr>
+              <td colspan="4" width="120"><div align="center"><label>Firma: Corporación CASA</label></div></td>
+              <td colspan="5"><div align="center"><label>Firma. Conductor</label></div></td>
+            </tr>
+
+            <tr>
+              <td colspan="9"><div align="center">
+                  <br><label>ORIGINAL ANALISIS PEAJE AUTOMATICO</label></br>
+                  <br><label>Tipo Ticket: AUTOMATICO</label></br>
+                </div><div align="center"></div></td>
+            </tr>
+          </table>
+          <p>&nbsp;</p>
+
+
+          <div id=noprint>
+            <table width="93%" cellpadding="2">
+              <tr align="center">
+                <td><input id="imprimir" name="imprimir" onclick="Javascript:imprime()" type="button" value="Imprimir" /></td>
+              </tr>
+            </table>
+          </div>
+
+          </body>
+
+          </html>

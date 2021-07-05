@@ -1,0 +1,60 @@
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%= sort_class_helper('numero') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}", 'numero', 'list' %>
+        </th>
+
+         <th style="width: 20px" <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+        </th>        
+         <th style="width: 20px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'nombre', 'list' %>
+        </th>
+        
+        <th style="width: 150px" <%= sort_class_helper('estatus') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus') << " " << I18n.t('Sistema.Body.Vistas.General.del') << " " << I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b'), 'estatus', 'list' %>
+        </th>
+        <th style="width: 20px" <%= sort_class_helper('rubro') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper('municipio') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.municipio'), 'municipio', 'list' %>
+       </th>
+
+          <th style="width: 60px" <%= sort_class_helper('control_visita_numero') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.Form.control')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.visita')}", 'control_visita_numero', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper('fecha') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.fecha_control_visita'), 'fecha', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper('monto_orden') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.orden'), 'monto_orden', 'list' %>
+        </th>
+
+       <th style="width: 60px" <%= sort_class_helper('estatus_odi') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus') << " " << I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.abreviatura'), 'estatus_odi', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper('monto_facturado') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.facturado'), 'monto_facturado', 'list' %>
+        </th>
+        <th style="width: 60px"><%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+        </th>
+      </tr>
+
+  </thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for orden_despacho in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_especial', :locals => { :orden_despacho => orden_despacho, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

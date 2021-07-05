@@ -1,0 +1,21 @@
+<% empresa_email = @empresa_email if empresa_email.nil? %>
+<td>
+  <%= empresa_email.tipo_nombre  %>
+</td>
+<td>
+  <%= empresa_email.email %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title =>'Editar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:action => :edit, :empresa_id => @empresa.id, :id => empresa_email.id}) -%>
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title =>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :empresa_id => @empresa.id, :id => empresa_email.id}) -%>
+</td>

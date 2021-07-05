@@ -1,0 +1,39 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 500px" <%= sort_class_helper('hierro_fondas.nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'hierro_fondas.nombre_registro', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('hierro_fondas.estado.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'estado.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('hierro_fondas.fecha_registro') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'hierro_fondas.fecha_registro', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('hierro_fondas.numero') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'hierro_fondas.numero', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('hierro_fondas.tomo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.tomo'), 'hierro_fondas.tomo', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('hierro_fondas.protocolo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.protocolo'), 'hierro_fondas.protocolo', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('hierro_fondas.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'hierro_fondas.activo', 'list' %>
+      </th>
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for hierro_fondas in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :hierro_fondas => hierro_fondas, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

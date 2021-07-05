@@ -1,0 +1,22 @@
+<td style="width: 130px">
+  <label>Tipo Transacción</label>
+</td>
+<td>
+ <%if @comprobante_contable.size > 0%>
+             <%= select('tipo','transaccion',@comprobante_contable.collect{|p| [p.codigo_transaccion, p.codigo_transaccion]},
+                         {:include_blank => false,:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                         :onchange=>remote_function(:update => "list_form", :url=>{:action=>:list},:with=>"'fecha='+$('tipo_fecha').value+'&tipo='+value"),
+					                :class=>'select') %>
+ <%else%>
+   <label>Seleccione una fecha:</label>
+   <%unless @fecha_mala.nil?%>
+     <script language="JavaScript">
+       alert('No hay movientos contables para la fecha seleccionada');
+     </script>
+   <%end%>
+ <%end%>
+</td>
+<td>
+    <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.procesar')) -%>
+</td>
+

@@ -1,0 +1,4 @@
+<% causales_anulacion_revocatoria = @causales_anulacion_revocatoria if causales_anulacion_revocatoria.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= causales_anulacion_revocatoria.id %>">
+	<%= render :partial => 'data', :locals => { :causales_anulacion_revocatoria => causales_anulacion_revocatoria, :even_odd => even_odd } -%>
+</tr>

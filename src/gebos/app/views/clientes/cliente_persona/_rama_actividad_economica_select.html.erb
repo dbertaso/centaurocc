@@ -1,0 +1,14 @@
+<% unless @rama_actividad_economica_select.nil? %>
+  <%= select(
+    'persona', 'rama_actividad_economica_id',
+    @rama_actividad_economica_select.map{|c| [c.descripcion, c.id]},
+    { },
+    { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% else %>
+
+  <%= select(
+    'persona', 'rama_actividad_economica_id',
+    [],
+    { :include_blank => true },
+    { :class=>'select', :onchange=>';inputChange();' } ) %>
+<% end %>

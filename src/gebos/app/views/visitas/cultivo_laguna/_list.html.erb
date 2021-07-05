@@ -1,0 +1,34 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 220px" <%= sort_class_helper('numero_laguna') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.CultivoLaguna.Columnas.numero_laguna'), 'numero_laguna', 'list' %>
+      </th>
+      <th align="center" style="width: 160px" <%= sort_class_helper('espejo_agua') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaCultivoLaguna.Etiquetas.area_espejo_agua'), 'espejo_agua', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('cantidad_peces') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.CultivoLaguna.Columnas.cantidad_peces'), 'cantidad_peces', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('fecha_siembra') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.fecha_siembra'), 'fecha_siembra', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('fecha_cosecha') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaCultivoLaguna.Etiquetas.fecha_cosecha'), 'fecha_cosecha', 'list' %>
+      </th>
+
+      <th><%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for cultivo_laguna in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :cultivo_laguna => cultivo_laguna, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

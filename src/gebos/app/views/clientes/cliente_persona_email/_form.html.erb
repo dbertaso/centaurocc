@@ -1,0 +1,50 @@
+<table>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label>
+    </td>
+    <td style="width: 80%">
+      <%= radio_button 'persona_email', 'tipo', 'R',
+        :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.trabajo') %><br />
+      <%= radio_button 'persona_email', 'tipo', 'P',
+        :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.personal') %><br />
+      <%= radio_button 'persona_email', 'tipo', 'T',
+        :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.otro') %><br />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.correo_electronico') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona_email', 'email',
+        :class=>'text',
+        :style=>'width: 500px',
+        :maxlength=>'80'  -%>
+    </td>
+  </tr>
+    <tr>
+    <td>
+      <label>Facebook </label>
+    </td>
+    <td>
+      <%= text_field 'persona_email', 'facebook',
+        :class=>'text',
+        :style=>'width: 500px',
+        :maxlength=>'80'  -%>
+    </td>
+  </tr>
+    <tr>
+    <td>
+        <label>Twitter </label>
+    </td>
+    <td>
+      <%= text_field 'persona_email', 'twitter',
+        :class=>'text',
+        :style=>'width: 500px',
+        :maxlength=>'80'  -%>(@fondas)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

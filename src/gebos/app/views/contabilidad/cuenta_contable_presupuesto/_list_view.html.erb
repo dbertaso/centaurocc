@@ -1,0 +1,30 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 50%" <%= sort_class_helper('codigo') %>>
+				<%= sort_link_helper 'Código', 'codigo', 'list' %>
+ 			</th>
+ 			<th style="width: 50%" <%= sort_class_helper('anio') %>>
+				<%= sort_link_helper 'Año', 'anio', 'list' %>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for cuenta_contable_presupuesto in @list
+		even_odd = 1 - even_odd %>
+  	<% cuenta_contable_presupuesto = @cuenta_contable_presupuesto if cuenta_contable_presupuesto.nil? %>
+  	<tr class="lista<%= even_odd %>" id="row_<%= cuenta_contable_presupuesto.id %>">
+      <td>
+      	<%= cuenta_contable_presupuesto.codigo  %>
+      </td>	
+      <td>
+      	<%= cuenta_contable_presupuesto.anio  %>
+      </td>
+  	</tr>
+<% end %>
+    </tbody>
+  </table>
+
+<%= form_pagination %>

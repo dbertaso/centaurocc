@@ -1,0 +1,27 @@
+<% cuenta_bancaria = @cuenta_bancaria if cuenta_bancaria.nil? %>
+<td>
+  <%= cuenta_bancaria.numero  %>
+</td>
+<td>
+  <%= cuenta_bancaria.tipo_w %>
+</td>
+<td>
+  <%= cuenta_bancaria.fecha_apertura_f %>
+</td>
+<td>
+  <%= cuenta_bancaria.entidad_financiera.nombre %>
+</td>
+<td align="center">
+  <%= format_bool cuenta_bancaria.activo %>
+</td>
+<td align="center">
+  <%= link_to image_tag('historico',:title=>'Resumen de todos los cambios a la cuenta'),
+    {:action => 'detalles_cambios_cuenta', :controller => 'cliente_persona_cuentas',
+    :popup=>true, :id => cuenta_bancaria.id},
+    :popup => ['cliente_persona_cuentas', 'height=600,width=1230, scrollbars=yes, resizable=false'] %>
+</td>
+
+<td style="text-align: right">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title =>'Editar'),
+    :action => 'edit', :id => cuenta_bancaria.id) if vlink 'edit'  %>
+</td>

@@ -1,0 +1,31 @@
+<% perito = @perito if perito.nil? %>
+
+<td>
+  <%= perito.cedula  %>
+</td>	
+<td>
+  <%= perito.primer_nombre  %>
+</td>	
+<td>
+  <%= perito.segundo_nombre  %>
+</td>	
+<td>
+  <%= perito.primer_apellido  %>
+</td>	
+<td>
+  <%= perito.segundo_apellido  %>
+</td>	
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'perito', :action => :edit, :id => perito.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+     :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'perito', :action => :delete, :id => perito.id}) if vlink 'delete' -%>
+</td>

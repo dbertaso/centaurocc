@@ -1,0 +1,70 @@
+<div align="center" style="width: 100%">
+
+  <table>
+    <tr style="width: 100%" >
+      <td class="separador" valign="bottom" colspan="3">
+        <span>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.datos')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>
+        </span>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <div style="border:1px; border-color: #000; border-style: solid; width: 75% ">
+
+    <table>
+      <tr>
+
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.General.cedula')  %>
+          </label>
+        </td>
+
+        <td>
+          <%= @cliente.identificador %>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.apellidos')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.nombres')}" %>
+          </label>
+        </td>
+
+        <td>
+            <%= @cliente.nombre %>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}"  %>
+          </label>
+        </td>
+
+        <td>
+            <%= @cliente.id %>
+        </td>
+        <td>
+          <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))),
+            { :controller=>'/clientes/cliente_persona', :action=>'view', :id=>@cliente.persona.id, :popup=>true },
+            :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "',
+'height=800,width=1000,scrollbars=yes, resizable=yes'); return false;") %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<br>
+<%= render 'telefonos' %>
+<br>
+<%= render 'correos' %>
+<br>
+<%= render 'datos_financiamiento' %>
+<br>
+<br>

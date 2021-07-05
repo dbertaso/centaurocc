@@ -1,0 +1,175 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+        Consultando Visita <span class="titulo_modificar">'<%= @full_info %>'</span>
+      </div></div></div>
+
+
+  <div class="marco-contenido2">
+
+    <table>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span>Datos de la Visita</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 300px">
+          <label>Fecha </label>
+        </td>
+        <td style="width: 650px">
+          <%= @seguimiento_visita.fecha_visita_f unless  @seguimiento_visita.fecha_visita.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Hora </label>
+        </td>
+        <td>
+
+          <%= @seguimiento_visita.hora_visita_f unless @seguimiento_visita.hora_visita.nil? -%>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Motivo de la Visita </label>
+        </td>
+        <td>
+
+          <% @motivo_visita = MotivoVisita.find(@seguimiento_visita.motivo_visita_id)%>
+          <%= @motivo_visita.descripcion  unless @seguimiento_visita.motivo_visita_id.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label>La Dirección Práctica es Correcta?</label> 
+        </td>
+        <td>
+          <% if !@seguimiento_visita.direccion_correcta -%> No <% end %>
+          <% if @seguimiento_visita.direccion_correcta -%> Si <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label>Detalle de rutas ó caminos alternos, desvíos</label>
+        </td>
+
+        <td>
+          <%= @unidad_produccion.referencia  unless @unidad_produccion.referencia.nil? -%>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label>Observaciones</label>
+        </td>
+
+        <td>
+          <%= @seguimiento_visita.observaciones  unless @seguimiento_visita.observaciones.nil? -%>
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span>Datos de la Persona que atendió al Técnico de Campo</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Cédula </label>
+        </td>
+        <td>
+
+          <%= @seguimiento_visita.cedula_nacionalidad_persona_atencion  unless @seguimiento_visita.cedula_nacionalidad_persona_atencion.nil? %> - <%= @seguimiento_visita.cedula_persona_atencion unless @seguimiento_visita.cedula_persona_atencion.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Nombre </label>
+        </td>
+        <td>
+
+          <%= @seguimiento_visita.nombre_persona_atencion unless @seguimiento_visita.nombre_persona_atencion.nil? -%>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Apellido </label>
+        </td>
+        <td>
+
+          <%= @seguimiento_visita.apellido_persona_atencion unless @seguimiento_visita.apellido_persona_atencion.nil? -%>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Vinculo con el Solicitante </label>
+        </td>
+        <td>
+
+          <%= @seguimiento_visita.vinculo_persona_atencion unless @seguimiento_visita.vinculo_persona_atencion.nil? -%>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Teléfonos</label>
+        </td>
+        <td>
+
+          <%= @seguimiento_visita.telf1_persona_atencion unless @seguimiento_visita.telf1_persona_atencion.nil? -%>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <%= @seguimiento_visita.telf2_persona_atencion unless @seguimiento_visita.telf2_persona_atencion.nil? -%>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <%= @seguimiento_visita.telf3_persona_atencion  unless @seguimiento_visita.telf3_persona_atencion.nil? -%>
+
+
+        </td>
+      </tr>
+
+
+      <% if @seguimiento_visita.solicitud.sub_sector.nemonico=="AN" %>
+        <%= render :partial=>'animal' %>
+      <% elsif @seguimiento_visita.solicitud.sub_sector.nemonico=="VE" %>
+        <%= render :partial=>'vegetal' %>
+      <% elsif @seguimiento_visita.solicitud.sub_sector.nemonico=="AC" %>
+        <%= render :partial=>'acuicola' %>
+      <% elsif @seguimiento_visita.solicitud.sub_sector.nemonico=="PE" %>
+        <%= render :partial=>'pesca' %>
+      <% end %>
+
+
+      <%= render :partial=>'siniestro' -%>
+
+      <%= render :partial=>'recomendacion' %>
+
+    </table>		
+
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :controller => '/visitas/visita_seguimiento', :action => :index, :id=> @seguimiento_visita.solicitud.id} ) -%>
+  </div>
+</div>
+

@@ -1,0 +1,4 @@
+<% arte_pesca = @arte_pesca if arte_pesca.nil? %>
+<tr  id="row_<%= arte_pesca.id %>">
+	<%= render :partial => 'data_arte_pesca', :locals => { :arte_pesca => arte_pesca } -%>
+</tr>

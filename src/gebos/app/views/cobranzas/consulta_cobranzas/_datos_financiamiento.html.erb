@@ -1,0 +1,285 @@
+<div align="center" id="datos_financiamiento" style="width: 100%">
+
+  <table>
+    <tr style="width: 100%" >
+      <td class="separador" valign="bottom" colspan="3">
+        <span>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.datos')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}" %>
+        </span>
+      </td>
+    </tr>
+  </table>
+
+  <div style="width: 75%; border:1px; border-color: #000; border-style: solid">
+
+    <table>
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}"%>
+          </label>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= @prestamo.numero %>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), {:controller => 'prestamos/consulta_prestamo', :action => 'view', :id => @gestion.prestamo_id, :popup=>true },:onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.financiamiento') + "',
+'height=800,width=1000,scrollbars=yes, resizable=yes'); return false;")  %>&nbsp;
+        </td>
+      </tr>
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.registro')}"%>
+          </label>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= format_fecha(@gestion.fecha_registro) %>
+        </td>
+
+      </tr>
+
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.hora')} #{I18n.t('Sistema.Body.Vistas.General.registro')}" %>
+          </label>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= format_hora(@gestion.hora_registro) %>
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.confirmacion')}"%>
+          </label>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= format_fecha(@gestion.fecha_confirmacion) %>
+        </td>
+
+      </tr>
+
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.hora')} #{I18n.t('Sistema.Body.Vistas.General.confirmacion')}" %>
+          </label>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= format_hora(@gestion.hora_confirmacion) %>
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.status')%>
+          </label>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= @gestion.estatus_w %>
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.cuotas_totales')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @gestion.cantidad_cuotas_vencidas%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_cuotas_vencidas')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @gestion.cantidad_cuotas_vencidas%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.monto_liquidado')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm(@gestion.monto_liquidado) %>
+        </td>
+      </tr>
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_deudor') %>
+          </label>
+        </td>
+        <td style="width: 50%; text-align: right">
+          <%= format_fm(@gestion.saldo_insoluto) -%>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.deuda') %>
+          </label>
+        </td>
+        <td style=" text-align: right">
+          <b><%= format_fm(@gestion.deuda) %></b>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible') %>
+          </label>
+        </td>
+        <td style=" text-align: right">
+          <b><%= format_fm(@gestion.exigible) %></b>
+        </td>
+        <td style="width: 20%">
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.capital_vencido') %>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm(@gestion.monto_capital_vencido) -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.interes_diferido_vencido')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm(@gestion.monto_interes_diferido_vencido) %>
+        </td>
+      </tr>
+      <tr>
+
+        <td>
+          <label>
+           <%= "#{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.intereses')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.vencidos')}"%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm(@gestion.monto_interes_vencido) %>
+        </td>
+
+      </tr>
+
+       <tr>
+
+        <td>
+          <label>
+           <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora') %>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm(@gestion.monto_interes_mora) %>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.capital_pagado')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm(@gestion.monto_capital_pagado) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.interes_pagado')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm(@gestion.monto_interes_pagado) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.mora_pagada')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm(@gestion.monto_interes_mora_pagado) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.cantidad_dias_mora')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @gestion.cantidad_dias_mora_acumulados %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.cantidad_veces_vigente')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @gestion.cantidad_veces_vigente %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.cantidad_veces_mora')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @gestion.cantidad_veces_mora %>
+        </td>
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>

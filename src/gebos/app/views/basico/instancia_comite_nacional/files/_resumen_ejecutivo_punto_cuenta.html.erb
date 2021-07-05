@@ -1,0 +1,12 @@
+<%=
+  texto = ""
+  if @textoPredeterminado    
+    texto = I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Mensajes.mega_ley')
+  else
+    texto=@punto_cuenta[0].resumen_ejecutivo
+  end
+
+  text_area 'instancia_comite_estadal', 'resumen_ejecutivo', :class=>'text',
+  :style=>'width: 950px', :rows => 5,
+  :onkeypress=>'inputChange();', :value=>texto
+-%>

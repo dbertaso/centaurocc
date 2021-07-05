@@ -1,0 +1,4 @@
+<% firma_autorizada = @firma_autorizada if firma_autorizada.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= firma_autorizada.id %>">
+	<%= render :partial => 'data', :locals => { :firma_autorizada => firma_autorizada, :even_odd => even_odd } -%>
+</tr>

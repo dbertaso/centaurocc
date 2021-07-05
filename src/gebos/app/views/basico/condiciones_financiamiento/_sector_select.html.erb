@@ -1,0 +1,13 @@
+      <% sector_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'condiciones_financiamiento',
+          :action=>:sector_change },
+          :with=>"'id='+value") %>
+
+      <%= select(
+      'condiciones_financiamiento', 'sector_id',
+      @sector_select.map{|i| [i.nombre, i.id]},
+      {:prompt=>I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.seleccione_sector')},
+      { :class=>'select', :onchange=>sector_onchange + ';inputChange();' } ) %>

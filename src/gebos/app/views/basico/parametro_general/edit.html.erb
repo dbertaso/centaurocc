@@ -1,0 +1,1353 @@
+<%= form_title_edit %>
+
+<%= error %>
+<%= message %>
+
+<% action_name = controller.action_name %>
+<script language="javascript">
+
+  function mostrar_facturacion(){
+    var facturacion = document.getElementById('parametro_general_dia_facturacion_c').checked;
+    var div = document.getElementById('facturacion');
+
+
+    if (facturacion == true)
+       {
+         div.style.display = 'block';
+       }
+    else
+      {
+         div.style.display = 'none';
+       }
+  }
+
+</script>
+<%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit } ) do -%>
+
+    <table style="width: 100%">
+
+      <table style="width: 100%">
+
+        <!--
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+             <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.grupos')%></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_grupo_inicial')%></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_grupo_inicial',
+                           :class=>'text', :style=>'width: 40px',
+                           :maxlength=>'4', :onkeypress=>'inputChange();', :disabled => 'true' -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.maximo_integrante_grupos')%></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'max_integrantes_grupo',
+                           :class=>'text', :style=>'width: 40px',
+                           :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.minimo_integrante_grupos')%></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'min_integrantes_grupo',
+                           :class=>'text', :style=>'width: 40px',
+                           :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+
+        <tr>
+
+         <td class="separador" valign="bottom" colspan="2">
+           <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.solvencia_crediticia')%></span>
+         </td>
+
+        </tr>
+
+          <tr>
+
+            <td style="width: 65%">
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cantidad_cuotas_vencidas')%></label>
+            </td>
+
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'cuotas_credito_solvente',
+                             :class=>'text', :style=>'width: 40px',
+                             :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+            </td>
+
+          </tr>
+        -->
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.mora')%></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.tasa_maxima_mora')%></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'tasa_maxima_mora',
+                           :class=>'text', :style=>'width: 40px',
+                           :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+         <td style="width: 65%">
+           <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.dias_gracia_mora')%></label>
+         </td>
+
+         <td style="width: 35%">
+           <%= text_field 'parametro_general', 'dias_gracia_mora',
+                          :class=>'text', :style=>'width: 30px',
+                          :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+         </td>
+
+        </tr>
+
+        <tr>
+
+          <td valign="top">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.tipo_dia_gracia_mora')%></label>
+          </td>
+
+          <td>
+
+            <table>
+
+              <tr>
+
+                <td>
+                  <%= radio_button 'parametro_general', 'tipo_dia_gracia_mora', "H",
+                      :class=>'text', :onclick=>'inputChange();'  -%>
+                </td>
+
+                <td>
+                  <label> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.habil')%> </label>
+                </td>
+
+              </tr>
+
+              <tr>
+
+                <td>
+                  <%= radio_button 'parametro_general', 'tipo_dia_gracia_mora', "C",
+                      :class=>'text', :onclick=>'inputChange();'  -%>
+                </td>
+
+                <td>
+                  <label> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.calendario')%> </label>
+                </td>
+
+              </tr>
+
+        </table>
+
+      </td>
+    
+    </tr>
+        <!---
+        <tr>
+
+          <td colspan="2">
+            <%#= check_box 'parametro_general', 'penalizacion_mora',
+              :checked_value=>"1",
+              :unchecked_value=>"0",
+              :onclick=>'inputChange();' -%>
+            <label><%#= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.penalizacion_mora')%></label>
+          </td>
+
+        </tr>
+        -->
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cantidad_cuotas_pase_vencido')%></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'cuotas_pase_vencido',
+                :class=>'text', :style=>'width: 50px',
+                :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cuotas')%>
+          </td>
+
+        </tr>
+        
+        <tr>
+
+      <td style="width: 100%" colspan=2>
+        <p><label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.advertencia')%></label></p>
+      </td>
+    </tr>     
+
+      </table>
+
+      <!--
+
+      <table style="width: 100%">
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.forma_detener_mora')%></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.edad_mora')%></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'detener_mora_edad',
+                :class=>'text', :style=>'width: 50px',
+                :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cuotas')}" %></label>
+          </td>
+          <td>
+            <%= text_field 'parametro_general', 'detener_mora_cuotas',
+                :class=>'text', :style=>'width: 50px',
+                :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cuotas')%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.porcentaje_insuficiencia_garantia')%></label>
+          </td>
+          <td>
+            <%= text_field 'parametro_general', 'detener_mora_garantia',
+                :class=>'text', :style=>'width: 40px',
+                :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.criterio_creditos_vencidos')%></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 30%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cantidad_cuotas_vencidas')%></label>
+          </td>
+
+          <td style="width: 70%">
+            <%= text_field 'parametro_general', 'cuotas_credito_vencido',
+                :class=>'text', :style=>'width: 40px',
+                :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+      </table>
+
+    </table>
+    -->
+
+      <table style="width: 100%">
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.dia_vencimiento_cuota')%></span>
+          </td>
+        </tr>
+
+        <tr style="width: 65%">
+          <td>
+            <%= radio_button 'parametro_general', 'dia_facturacion', "C",
+                :class=>'text',:onclick=>'inputChange(); mostrar_facturacion();' -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.ciclo_facturacion')%></label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= radio_button 'parametro_general', 'dia_facturacion', "V",
+                :class=>'text',:onclick=>'inputChange(); mostrar_facturacion();' -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.variable')%></label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= radio_button 'parametro_general', 'dia_facturacion', "F",
+                :class=>'text',:onclick=>'inputChange(); mostrar_facturacion();' -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.fijo')%></label>
+          </td>
+        </tr>
+
+      
+      <tr>
+
+     <td style="width: 65%">
+       <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.plazo_maximo_orden_despacho')%></label>
+     </td>
+
+     <td style="width: 35%">
+       <%= text_field 'parametro_general', 'dias_max_vencimiento_ultima_cuota',
+                      :class=>'text', :style=>'width: 30px',
+                      :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Vistas.General.dias')%>        
+     </td>
+
+    </tr>
+      
+      
+      </table>
+
+      <div id="facturacion">
+
+        <table style="width: 100%">
+
+          <tr>
+            <td class="separador" valign="bottom" colspan="2">
+              <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.facturacion')%></span>
+            </td>
+          </tr>
+
+          <tr style="width: 65%">
+
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.dia_primer_ciclo')%></label>
+            </td>
+
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'dia_mes_primer_ciclo',
+                 :class=>'text', :style=>'width: 20px',
+                 :maxlength=>'2', :onkeypress=>'inputChange();'  -%>
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.dia_segundo_ciclo')%></label>
+            </td>
+
+            <td>
+              <%= text_field 'parametro_general', 'dia_mes_segundo_ciclo',
+                 :class=>'text', :style=>'width: 20px',
+                 :maxlength=>'2', :onkeypress=>'inputChange();'  -%>
+            </td>
+
+          </tr>
+
+        </table>
+
+      </div>
+
+      <!--
+      <table style="width: 100%">
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.tasas')%></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.porcentaje_maximo_tapp')%></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'porcentaje_maximo_tapp',
+                           :class=>'text', :style=>'width: 40px',
+                         :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.porcentaje_minimo_tapp')%></label>
+          </td>
+
+          <td>
+            <%= text_field 'parametro_general', 'porcentaje_minimo_tapp',
+                           :class=>'text', :style=>'width: 40px',
+                           :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+      </table>
+
+      <table style="width: 100%">
+
+        <tr>
+
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.aprobacion_prestamos')%></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_prestamo_comite') %></label>
+          </td>
+
+          <td style="width: 35%">
+
+            <%= text_field 'parametro_general', 'monto_maximo_aprueba_comite',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'16', :onkeypress=>'inputChange();',
+                :onkeyup=>"formatCurrency(this.value, 'parametro_general_monto_maximo_aprueba_comite');"  -%> 
+            <%= display_number @parametro_general.monto_maximo_aprueba_comite, 'parametro_general_monto_maximo_aprueba_comite' %>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 60%">
+            <label>Monto Máximo de un Préstamo por Integrante UEA</label>
+          </td>
+
+          <td style="width: 40%">
+            <%= text_field 'parametro_general', 'monto_max_credito_integrante_uea',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'16', :onkeypress=>'inputChange();',
+                :onkeyup=>"formatCurrency(this.value, 'parametro_general_monto_max_credito_integrante_uea');"  -%> 
+            <%= display_number @parametro_general.monto_max_credito_integrante_uea, 'parametro_general_monto_max_credito_integrante_uea' %>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 60%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_prestamo_cooperativa') %></label>
+          </td>
+
+          <td style="width: 40%">
+            <%= text_field 'parametro_general', 'monto_max_credito_coop',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'16', :onkeypress=>'inputChange();',
+                :onkeyup=>"formatCurrency(this.value, 'parametro_general_monto_max_credito_coop');"  -%> 
+             <%= display_number @parametro_general.monto_max_credito_coop, 'parametro_general_monto_max_credito_coop' %>
+          </td>
+
+        </tr>
+
+      </table>
+
+      <table style="width: 100%">
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.desembolsos') %></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td colspan="2">
+
+            <%= check_box 'parametro_general', 'exonerar_intereses_desembolso',
+                :checked_value=>"1",
+                :unchecked_value=>"0",
+                :onclick=>'inputChange();' -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.exonerar_interes_desembolso') %></label>
+          </td>
+
+        </tr>
+
+      </table>
+      -->
+
+      <table style="width: 100%">
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.fianzas_solidarias') %></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_fianza_solidaria') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'monto_maximo_fianza_solidaria',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'16', :onkeypress=>'inputChange();',
+                :onkeyup=>"formatCurrency(this.value, 'parametro_general_monto_maximo_fianza_solidaria');"  -%> 
+            <%= display_number @parametro_general.monto_maximo_fianza_solidaria, 'parametro_general_monto_maximo_fianza_solidaria' %>
+          </td>
+
+        </tr>
+
+      </table>
+
+      <table style="width: 100%">
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.porcentaje_sras') %></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.primer_ano') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'porcentaje_sras_primer_ano',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'16', :onkeypress=>'inputChange();',
+                :onkeyup=>"formatCurrency(this.value, 'parametro_general_porcentaje_sras_primer_ano');"  -%>
+            <%= display_number @parametro_general.porcentaje_sras_primer_ano, 'parametro_general_porcentaje_sras_primer_ano' %> %
+          </td>
+
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.anos_subsiguientes') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'porcentaje_sras_anos_subsiguientes',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'16', :onkeypress=>'inputChange();',
+                :onkeyup=>"formatCurrency(this.value, 'parametro_general_porcentaje_sras_anos_subsiguientes');"  -%>
+            <%= display_number @parametro_general.porcentaje_sras_anos_subsiguientes, 'parametro_general_porcentaje_sras_anos_subsiguientes' %> %
+          </td>
+
+        </tr>
+
+      </table>
+
+      
+      <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.porcentaje_sras_maquinaria') %></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.primer_ano') %></label>
+      </td>
+
+      <td style="width: 35%">
+        <%= text_field 'parametro_general', 'porcentaje_sras_maquinaria_primer_anno',
+                        :class=>'text', :style=>'width: 100px',
+                        :maxlength=>'16', :onkeypress=>'inputChange();',
+                        :onkeyup=>"formatCurrency(this.value, 'parametro_general_porcentaje_sras_maquinaria_primer_anno');"  -%> 
+        <%= display_number @parametro_general.porcentaje_sras_maquinaria_primer_anno, 'parametro_general_porcentaje_sras_maquinaria_primer_anno' %> %.
+      </td>
+
+    </tr>
+
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.anos_subsiguientes') %></label>
+      </td>
+
+      <td style="width: 35%">
+        <%= text_field 'parametro_general', 'porcentaje_sras_maquinaria_anno_subsiguientes',
+                        :class=>'text', :style=>'width: 100px',
+                        :maxlength=>'16', :onkeypress=>'inputChange();',
+                        :onkeyup=>"formatCurrency(this.value, 'parametro_general_porcentaje_sras_maquinaria_anno_subsiguientes');"  -%> 
+        <%= display_number @parametro_general.porcentaje_sras_maquinaria_anno_subsiguientes, 'parametro_general_porcentaje_sras_maquinaria_anno_subsiguientes' %> %.
+      </td>
+
+    </tr>
+
+  </table>
+      
+      
+      
+      <table style="width: 100%">
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.seguridad') %></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.vigencia_clave') %></label>
+          </td>
+
+          <td style="width: 35%">
+              <%= text_field 'parametro_general', 'dias_vigencia_clave',
+                  :class=>'text', :style=>'width: 50px',
+                  :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+          </td>
+
+        </tr>
+
+      </table>
+
+      <!--
+      <table style="width: 100%">
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.solicitudes') %></span>
+          </td>
+       </tr>
+
+      <tr>
+
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_solicitud_uea') %></label>
+        </td>
+
+        <td style="width: 35%">
+          <%= text_field 'parametro_general', 'numero_solicitud_inicial_uea',
+                         :class=>'text', :style=>'width: 90px',
+                         :maxlength=>'10', :onkeypress=>'inputChange();', :disabled => 'true' -%>
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_solicitud_cooperativa') %></label>
+        </td>
+
+        <td style="width: 35%">
+          <%= text_field 'parametro_general', 'numero_solicitud_inicial_coop',
+                         :class=>'text', :style=>'width: 90px',
+                         :maxlength=>'10', :onkeypress=>'inputChange();', :disabled => 'true' -%>
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_solicitud_individual') %></label>
+        </td>
+
+        <td style="width: 35%">
+          <%= text_field 'parametro_general', 'numero_solicitud_inicial_indiv',
+                         :class=>'text', :style=>'width: 90px',
+                         :maxlength=>'10', :onkeypress=>'inputChange();', :disabled => 'true' -%>
+        </td>
+
+       </tr>
+
+      </table>
+      -->
+
+      <table style="width: 100%">
+          <tr>
+            <td class="separador" valign="bottom" colspan="2">
+              <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.interfases') %></span>
+            </td>
+          </tr>
+          <tr>
+              <td colspan="2">
+                <%= check_box 'parametro_general', 'integracion_administrativo',
+                        :checked_value=>"1",
+                        :unchecked_value=>"0",
+                        :onchange=>'inputChange(); detectar_ruta();' -%>
+                <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.interfase_integracion') %></label>
+              </td>
+          </tr>
+      </table>
+
+      <table style="width: 100%">
+
+        <!--
+        <tr>
+
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.prestamos') %></span>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_prestamo_inicial') %></label>
+          </td>
+
+          <td style="width: 35%">
+
+            <%= text_field 'parametro_general', 'numero_prestamo_inicial',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();', :disabled => 'true' -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 50%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.plazo_maximo_reestructurados') %></label>
+          </td>
+
+          <td style="width: 50%">
+
+            <%= text_field 'parametro_general', 'plazo_maximo_prestamo_reestructurado',
+                :class=>'text', :style=>'width: 20px',
+                :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Modelos.General.expresado_en_meses') %>
+          </td>
+
+        </tr>
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.contratos_actas') %></span>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_uea') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_acta_uea',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_cooperativa') %></label>
+          </td>
+
+          <td style="width: 35%">
+
+            <%= text_field 'parametro_general', 'numero_acta_coop',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_individual') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_acta_indiv',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_liquidacion_uea') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_acta_liq_uea',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_liquidacion_cooperativa') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_acta_liq_coop',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_liquidacion_individual') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_acta_liq_indiv',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_reestructuracion') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_acta_reestructuracion',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_contrato_inicial') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_contrato_inicial',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_seguimiento_inicial') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_seguimiento_inicial',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+        -->
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.comite') %></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.ano_comite') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'anio_constitucion_comite_vigente',
+                           :class=>'text', :style=>'width: 90px',
+                           :maxlength=>'4', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_comite') %></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'numero_comite_vigente',
+                           :class=>'text', :style=>'width: 90px',
+                           :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.cobranzas') %></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cantidad_maxima_cuotas_cobro') %></label>
+          </td>
+
+          <td style="width: 35%">
+          <%= text_field 'parametro_general', 'cuotas_envio_cobro',
+              :class=>'text', :style=>'width: 90px',
+              :maxlength=>'4', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.gestion_cobranzas') %></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.dias_gracia_compromiso_pago') %></label>
+          </td>
+
+          <td style="width: 35%">
+          <%= text_field 'parametro_general', 'rango_dias_compromiso_pago',
+              :class=>'text', :style=>'width: 90px',
+              :maxlength=>'4', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.firmas') %></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.presidente') %></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'firma_presidente',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.gerencia_cooperacion') %></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'firma_gerencia_cooperacion_financiamiento_nacional',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.coordinacion_presupuestaria') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'firma_coordinacion_presupuestaria',
+                :class=>'text', :style=>'width: 90px',
+                :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+          </td>
+
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.coordinacion_tecnica') %></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'firma_coordinacion_seguimiento',
+               :class=>'text', :style=>'width: 90px',
+               :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.coordinacion_seguimiento') %></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'firma_especialista_seguimiento',
+               :class=>'text', :style=>'width: 90px',
+               :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.rangos_aprobacion') %></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_comite_nacional') %></label>
+          </td>
+
+          <td style="width: 35%">
+              <%= text_field 'parametro_general', 'banda_inferior_comite_credito',
+                  :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+                  :onkeypress=>'inputChange()',
+                  :onchange=>"inputChange();"%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.expresado_ut') %>
+
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_comite') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'banda_superior_comite_credito',
+                :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+                :onkeypress=>'inputChange()',
+                :onchange=>"inputChange();"%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.expresado_ut') %>
+
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_minimo_directorio') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'banda_inferior_directorio',
+                :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+                :onkeypress=>'inputChange()',
+                :onchange=>"inputChange();"%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.expresado_ut') %>
+
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_directorio') %></label>
+          </td>
+
+          <td style="width: 35%">
+
+            <%= text_field 'parametro_general', 'banda_superior_directorio',
+                :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+                :onkeypress=>'inputChange()',
+                :onchange=>"inputChange();"%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.expresado_ut') %>
+
+
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.valor_unidad') %></label>
+          </td>
+
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'tasa_conversion_unidades_tributarias',
+                :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+                :onkeypress=>'inputChange()',
+                :onchange=>"inputChange();cambio_bsf('10/10/2010',this.value,this.id);",
+                :onkeyup=>"formatCurrency(this.value, 'tasa_conversion_unidades_tributarias');"  -%>
+
+            <%= display_number 0, 'tasa_conversion_unidades_tributarias' %>
+
+            <span id="tasa_conversion_unidades_tributarias"></span>
+
+            <script language="javascript">formatCurrency('<%=@parametro_general.tasa_conversion_unidades_tributarias %>', 'tasa_conversion_unidades_tributarias');</script>
+
+
+          </td>
+
+        </tr>
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.notificaciones') %></span>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.correo_liquidacion') %></label>
+          </td>
+
+          <td style="width: 35%">
+
+            <%= text_field 'parametro_general', 'notif_liquidacion',
+                :class=>'text', :style=>'width: 150px',
+                :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.correo_tesoreria') %></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'notif_tesoreria',
+                :class=>'text', :style=>'width: 150px',
+                :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.orden_despacho') %></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.caducidad_orden_despacho') %></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'caducidad_orden_despacho',
+                :class=>'text', :style=>'width: 150px',
+                :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 65%">
+            <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.caducidad_casa_proveedora') %></label>
+          </td>
+          <td style="width: 35%">
+            <%= text_field 'parametro_general', 'caducidad_casa_proveedora',
+                :class=>'text', :style=>'width: 150px',
+                :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+          </td>
+        </tr>
+
+      </table>
+
+      <table style="width: 100%">
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.configurar_pagina') %></span>
+          </td>
+        </tr>
+
+      </table>
+
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 65%">
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.margen_derecho') %></label>
+            </td>
+
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'margen_derecho',
+                  :class=>'text', :style=>'width: 20px',
+                  :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.cm') %>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 65%">
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.margen_inferior') %></label>
+            </td>
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'margen_inferior',
+                  :class=>'text', :style=>'width: 20px',
+                  :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.cm') %>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 65%">
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.margen_izquierdo') %></label>
+            </td>
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'margen_izquierdo',
+                  :class=>'text', :style=>'width: 20px',
+                  :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.cm') %>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 65%">
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.margen_superior') %></label>
+            </td>
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'margen_superior',
+                  :class=>'text', :style=>'width: 20px',
+                  :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.cm') %>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 65%">
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.fuente') %></label>
+            </td>
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'tipo_fuente',
+                  :class=>'text', :style=>'width: 100px',
+                  :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 65%">
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.tamano_fuente') %></label>
+            </td>
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'tamano_fuente',
+                  :class=>'text', :style=>'width: 20px',
+                  :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.pt') %>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 65%">
+              <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.interlineado') %></label>
+            </td>
+            <td style="width: 35%">
+              <%= text_field 'parametro_general', 'interlineado',
+                :class=>'text', :style=>'width: 20px',
+                :maxlength=>'3', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.mm') %>
+          </tr>
+        </table>
+
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="3">
+          <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.divisas') %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.moneda_por_defecto') %></label>
+        </td>
+        <td style="width: 35%">
+          <%= select(
+              'parametro_general', 'moneda_id',
+              @moneda_list.map{|i| [i.nombre + ' - ' +i.abreviatura , i.id]},
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+        </td>
+      </tr>
+
+      <!---
+      <tr>
+        <td style="width: 65%">
+          <label><%#= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.valor_dolar') %></label>
+        </td>
+         <td style="width: 35%">
+           <%#= text_field 'parametro_general', 'valor_dolar',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'12', :onkeypress=>'inputChange();'  -%> 
+         </td>
+      </tr>
+      -->
+    </table>
+
+  </table>
+
+  <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.reestructuracion') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.porcentaje_arrime_reestructuracion') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= text_field 'parametro_general', 'porcentaje_arrime_reestructuracion',
+            :class=>'text', :style=>'width: 100px',
+            :maxlength=>'16', :onkeypress=>'inputChange();',
+            :onkeyup=>"formatCurrency(this.value, 'porcentaje_arrime_reestructuracion');"  -%>
+        <%= display_number @parametro_general.porcentaje_arrime_reestructuracion, 'porcentaje_arrime_reestructuracion' %>  %
+      </td>
+
+    </tr>
+
+  </table>
+
+  <div id="buttons_edit" style="display: none">
+    <%= form_buttons_edit %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+<% end %>
+</div>
+<br><br><br><br>
+<script language="javascript">
+
+  mostrar_facturacion();
+
+</script>
+

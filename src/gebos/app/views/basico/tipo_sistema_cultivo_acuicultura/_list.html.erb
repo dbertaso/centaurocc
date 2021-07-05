@@ -1,0 +1,27 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th <%= sort_class_helper('nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'nombre', 'list' %>
+ 			</th>
+ 			<th <%= sort_class_helper('descripcion') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'descripcion', 'list' %>
+ 			</th>
+			<th style="width:50px" <%= sort_class_helper('activo') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'activo', 'list' %>
+ 			</th>
+			<th style="width:50px" >
+                          <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+                        </th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for tipo_sistema_acuicultura in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :tipo_sistema_acuicultura => tipo_sistema_acuicultura, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

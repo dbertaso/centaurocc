@@ -1,0 +1,39 @@
+<table class="lista" style="width: 100%">
+  <thead>
+      <tr>
+      <th style="width: 130px" <%= sort_class_helper('recaudo.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'recaudo.nombre', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('recaudo.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.descripcion'), 'recaudo.descripcion', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('recaudo.obligatorio') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.obligatorio'), 'recaudo.obligatorio', 'list' %>
+      </th>
+      <th style="width: 30px" <%= sort_class_helper('recaudo.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'recaudo.activo', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('tipo_cliente.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.tipo_cliente'), 'tipo_cliente.nombre', 'list' %>
+      </th>
+      <th style="width: 130px" <%= sort_class_helper('Sector.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector.nombre', 'list' %>
+      </th>
+      <th style="width: 130px" <%= sort_class_helper('sub_sector.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector.nombre', 'list' %>
+      </th>
+      <th style="width: 34px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for recaudo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :recaudo => recaudo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

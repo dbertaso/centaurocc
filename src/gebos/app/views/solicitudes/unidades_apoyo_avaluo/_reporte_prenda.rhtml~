@@ -1,0 +1,156 @@
+<table width="100%" border="1">
+  <tr>
+    <td colspan="3" align="center" style="background-color: #d9d4d4; font-size: 15px"><label>Avalúo Bandes</label></td>
+  </tr>
+
+  <tr>
+    <td colspan="3" align="justify" style="font-size: 14px">
+      Nombre del Perito: <%= @solicitud_avaluo_prenda.nombre_perito %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 33%; font-size: 14px">
+      Fecha Avalúo: <%= @solicitud_avaluo_prenda.fecha_avaluo_prenda_f %>
+    </td>
+    <td style="width: 33%; font-size: 14px">
+      Número Sudeban: <%= @solicitud_avaluo_prenda.numero_sudeban_prenda %>
+    </td>
+    <td style="width: 34%; font-size: 14px">
+      Valor Avalúo: <%= display_number @solicitud_avaluo_prenda.valor_avaluo_prenda, '' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="3" align="center" style="background-color: #d9d4d4; font-size: 15px"><label>Semovientes</label></td>
+  </tr>
+
+</table>
+
+<table class="lista" style="width: 100%" border="1">
+
+  <tr>
+    <th style="width: 17%">
+      <label>Tipo de Semoviente</label>
+    </th>
+
+    <th style="width: 16%">
+      <label>Cantidad</label>
+    </th>
+
+    <th style="width: 17%">
+      <label>Peso</label>
+    </th>
+
+    <th style="width: 17%">
+      <label>Raza</label>
+    </th>
+
+    <th style="width: 16%">
+      <label>Edad</label>
+    </th>
+
+    <th style="width: 17%">
+      <label>Monto</label>
+    </th>
+  </tr>
+
+  <% if @prenda_semoviente_list[0].nil? %>
+    <tr class="lista0">
+      <td style="font-size: 14px">&nbsp;</td>
+      <td style="font-size: 14px">&nbsp;</td>
+      <td style="font-size: 14px">&nbsp;</td>
+      <td style="font-size: 14px">&nbsp;</td>
+      <td style="font-size: 14px">&nbsp;</td>
+      <td style="font-size: 14px">&nbsp;</td>
+    </tr>
+    <% else
+        clase = "lista0"
+        @prenda_semoviente_list.each { |semoviente| %>
+          <tr id="sem_<%= semoviente.id %>" class='<%= clase %>'>
+              <td style="font-size: 14px">
+                <%= semoviente.TiposSemovientes.nombre %>
+              </td>
+
+              <td style="font-size: 14px">
+                <%= semoviente.cantidad %>
+              </td>
+
+              <td style="font-size: 14px">
+                <%= semoviente.peso %>
+              </td>
+
+              <td style="font-size: 14px">
+                <%= semoviente.raza %>
+              </td>
+
+              <td style="font-size: 14px">
+                <%= semoviente.edad.to_s %> <%= semoviente.unidad_edad %>
+              </td>
+
+              <td align="right" style="font-size: 14px">
+                <%= display_number semoviente.monto, '' %>
+              </td>
+
+          </tr>
+    <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+      }
+    end %>
+
+</table>
+<table style="width: 100%" border="1">
+  <tr>
+    <td colspan="2" align="center" style="background-color: #d9d4d4; font-size: 15px"><label>Documento de Oferta</label></td>
+  </tr>
+
+  <tr>
+    <td style="width: 50%; font-size: 14px">
+      Tipo de Documento de Oferta: <%= @solicitud_avaluo_prenda.tipo_documento_w %>
+    </td>
+    <td style="width: 50%; font-size: 14px">
+      Referencia: <%= @solicitud_avaluo_prenda.referencia_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 50%; font-size: 14px">
+      Fecha Documento: <%= @solicitud_avaluo_prenda.fecha_documento_f %>
+    </td>
+    <td style="width: 50%; font-size: 14px">
+      Rif Empresa: <%= @solicitud_avaluo_prenda.rif_empresa_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="font-size: 14px" colspan="2" align="justify">
+      Empresa Documento: <%= @solicitud_avaluo_prenda.empresa_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center" style="background-color: #d9d4d4; font-size: 15px"><label>Documento Definitivo</label></td>
+  </tr>
+
+  <tr>
+    <td style="width: 50%; font-size: 14px">
+      Referencia: <%= @solicitud_avaluo_prenda.referencia_definitivo %>
+    </td>
+    <td style="width: 50%; font-size: 14px">
+      Fecha Factura: <%= @solicitud_avaluo_prenda.fecha_factura_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 50%; font-size: 14px">
+      Empresa Factura: <%= @solicitud_avaluo_prenda.empresa_factura %>
+    </td>
+    <td style="width: 50%; font-size: 14px">
+      Rif Empresa: <%= @solicitud_avaluo_prenda.rif_empresa_difinitivo %>
+    </td>
+  </tr>
+
+</table>

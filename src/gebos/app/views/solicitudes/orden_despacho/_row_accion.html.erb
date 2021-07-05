@@ -1,0 +1,8 @@
+<% factura = @factura if factura.nil? 
+  
+    color = '#fff495'
+  
+%>
+<tr class="lista<%= even_odd %>" style="background-color: <%= color %>" id="row_accion_<%= factura.id %>">
+	<%= render :partial => 'data_accion', :locals => { :factura => factura, :even_odd => even_odd } -%>
+</tr>

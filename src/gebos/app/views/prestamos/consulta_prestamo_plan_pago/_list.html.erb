@@ -1,0 +1,521 @@
+
+<table style="width: 100%; background-color: #ddf6ee">
+ <tr>
+  <td>
+    <table style="width: 40%; background-color: #ddf6ee; " border=0>
+      <tr>
+        <td style="width: 120px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Controladores.ConsultaPrestamo.FormTitles.form_title_record') %> #
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left">
+          <span class="titulo_modificar">
+            <%= @plan_pago.prestamo.numero %>
+          </span>
+        </td>
+
+        <td style="width: 110px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Form.rubro') %>
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left">
+          <%= @plan_pago.prestamo.solicitud.rubro.nombre %>
+        </td>
+
+        <td style="width: 110px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Form.estatus') %>
+          </label>
+        </td>
+        <td style="width: 150px;text-align: left">
+          <%= @prestamo.estatus_w %>
+        </td>
+
+        <td style="text-align: left">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.Form.liquidacion')}"%>
+          </label>
+        </td>
+        <td style="text-align: left"><%= @prestamo.fecha_liquidacion_f %></td>
+
+      </tr>
+      <tr>
+        <td style="width: 120px; text-align: left">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.banco')}"%>
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left"><%= format_fm(@prestamo.monto_banco) %> </td>
+
+        <td style="width: 150px; text-align: left">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.Form.inicio')}"%>
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left"><%= @plan_pago.fecha_inicio_f %></td>
+
+        <td style="text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.General.saldo_deudor') %>
+          </label>
+        </td>
+        <td style="text-align: left"><b><%= format_fm(@prestamo.saldo_insoluto_total) %> </b></td>
+
+        <td style="text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_liquidado') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <b><%= format_fm(@prestamo.monto_liquidado) %></b>
+        </td>
+        <td style="width: 50px">
+        </td>
+        <td style="text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_por_liquidar') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <b><%= format_fm(@prestamo.monto_por_liquidar) %></b>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 110px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_insumos') %>
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left">
+          <%= format_fm(@plan_pago.prestamo.monto_insumos) %> 
+        </td>
+
+        <td style="text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <%= format_fm(@prestamo.exigible) %> 
+        </td>
+
+        <td style="text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.deuda') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <%= format_fm(@prestamo.deuda) %>
+        </td>
+        <td style="width: 170px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_despachado') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <b>
+            <%= format_fm(@prestamo.monto_despachado) %> 
+          </b>
+        </td>
+        <td style="width: 50px">
+        </td>
+        <td style="width: 170px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_por_despachar') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <b>
+            <b><%= format_fm(@prestamo.monto_por_despachar_fm) %></b>
+          </b>
+        </td>
+    </tr>
+
+      <tr>
+      </tr>
+
+      <% if @prestamo.reestructurado == 'F' or @prestamo.reestructurado == 'A' %>
+        <tr>
+          <td style="text-align: right"></td>
+          <td style="text-align: left">
+            <label>
+              <span class="titulo_modificar">
+                <%= I18n.t('Sistema.Body.Vistas.General.reestructurado') %>
+              </span>
+            </label>
+          </td>
+          <td style="text-align: right">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.prestamo_original') %>
+            </label>
+          </td>
+          <td style="text-align: left">
+            <%= @prestamo.prestamo_origen.numero unless @prestamo.prestamo_origen.nil?%>
+          </td>
+          <td style="text-align: right">
+            <label></label>
+          </td>
+          <td style="text-align: left"></td>
+        </tr>
+
+      <% end -%>
+
+      <% if @prestamo.estatus == 'F' %>
+        <tr>
+          <td style="text-align: right"></td>
+          <td style="text-align: left">
+            <label>
+              <span class="titulo_modificar">
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.cancelado_reestructuracion') %>
+              </span>
+            </label>
+          </td>
+          <td style="text-align: right">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.prestamo_destino') %>
+            </label>
+          </td>
+          <td style="text-align: left">
+            <%= @prestamo.prestamo_destino.numero unless @prestamo.prestamo_destino.nil? %>
+          </td>
+          <td style="text-align: right">
+            <label>
+            </label></td>
+          <td style="text-align: left"></td>
+        </tr>
+      <% end -%>
+    </table>
+  </td>
+ </tr>
+</table>
+
+<table style="width: 100%; background-color: #e4ffd6" border=0>
+ <tr>
+  <td>
+    <table style="width: 40%px; background-color: #e4ffd6" border=0>
+      <tr>
+
+        <td style="width: 120px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.monto_sras') %>
+          </label>
+        </td>
+
+        <td style="width: 150px; text-align: left">
+          <%= format_fm(@plan_pago.prestamo.monto_sras_total) %> 
+        </td>
+
+        <td style="width: 170px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ProgramaProductoFormula.Labels.metodo_amortizacion') %>
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left">
+          <%= @plan_pago.prestamo.formula.nombre %>
+        </td>
+
+        <td style="width: 110px; text-align: left">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.interes')}"%>
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left">
+          <%= @plan_pago.prestamo.tasa_vigente_fm %> %
+        </td>
+
+        <td style="width: 110px; text-align: left">
+          <label>
+            <%#= I18n.t('Sistema.Body.General.imprimir') %>
+          </label>
+        </td>
+
+        <td style="width: 30px; text-align: left">
+          <%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')),:title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir')), 
+              {:action => 'imprimir', :prestamo_id => @prestamo.id, :popup=>true}, :onclick=>"window.open(this.href,'" + "#{I18n.t('Sistema.Body.Vistas.Form.plan_pago')} #{@plan_pago.id.to_s} Prestamo #{@prestamo.numero}" + "','height=500,width=700,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+        </td>
+        <% unless @plan_pago.prestamo.solicitud.por_inventario %>
+          <td style="width: 110px; text-align: left">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.plan_inversion') %>
+            </label>
+          </td>
+          <td style="width: 80px; text-align: rigth">
+            <b><%= format_fm(@prestamo.total_plan_inversion_fm) %></b>&nbsp;&nbsp;&nbsp;
+          </td>
+          <td style="width: 150px; text-align: left">
+            <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), 
+            {:controller => '/solicitudes/consulta_plan_inversion', :action => 'view', :id =>@prestamo.solicitud_id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.plan_inversion') + "','height=600,width=1000,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+          </td>
+        <% end %>
+        <% if @intermediado %>
+            <td style="width: 110px; text-align: left">
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.tasa_institucion') %>
+              </label>
+            </td>
+            <td style="width: 150px; text-align: left">
+              <b><%= format_fm(@tasa_foncrei) %> % </b>
+            </td>
+
+            <td style="width: 110px; text-align: left">
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.tasa_intermediario') %>
+              </label>
+            </td>
+            <td style="width: 150px; text-align: left">
+              <b> <%= format_fm(@tasa_intermediario) %> % </b>
+            </td>
+
+        <% end %>
+
+      </tr>
+      <tr>
+        <td style="width: 120px; text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.monto_gastos') %>
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left">
+          <%= format_fm(@plan_pago.prestamo.monto_gasto_total) %> 
+        </td>
+
+        <td style="width: 150px; text-align: left">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.total')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.financiamiento')}"  %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <b><%= @prestamo.total_financiamiento_fm %> </b>
+        </td>
+
+        <td style="text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.cuotas_amortizacion') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <%= @plan_pago.plazo / @plan_pago.frecuencia_pago %>
+        </td>
+
+        <td style="text-align: left">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.periodicidad') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+          <%= @plan_pago.frecuencia_pago_w %>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+      </tr>
+
+    </table>
+
+  </td>
+ </tr>
+</table>
+
+
+<% if @plan_pago.meses_gracia >= 1 %>
+  <table style="width: 100%; background-color: #fffad3" border=0>
+   <tr>
+    <td>
+      <table style="width: 40%; background-color: #fffad3" border=0>
+        <tr>
+          <td style="width: 110px; text-align: left">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.cuotas_gracia') %>
+            </label>
+          </td>
+          <td style="width: 150px; text-align: left">
+            <%= @plan_pago.meses_gracia / @plan_pago.frecuencia_pago %>
+          </td>
+
+          <td style="width: 110px; text-align: left">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.interes_gracia') %>
+            </label>
+          </td>
+          <td style="width: 150px; text-align: left">
+            <%= @plan_pago.tasa_gracia_f %> %
+          </td>
+
+          <td style="width: 110px; text-align: left">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.meses_diferidos') %>
+            </label>
+          </td>
+          <td style="width: 150px; text-align: left">
+            <%= @plan_pago.prestamo.meses_diferidos%>
+          </td>
+
+          <td style="width: 110px; text-align: left">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.cuotas_diferidas') %>
+            </label>
+          </td>
+          <td style="width: 150px; text-align: left">
+            <%= @plan_pago.prestamo.meses_diferidos.to_i / @plan_pago.frecuencia_pago.to_i %>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: left">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.periodicidad') %>
+            </label>
+          </td>
+          <td style="text-align: left">
+            <%= @plan_pago.frecuencia_pago_gracia_w %>
+          </td>
+
+          <td style="text-align: left">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.interes_diferido') %>
+            </label>
+          </td>
+          <td style="text-align: left">
+            <%= @plan_pago.diferir_intereses_w %>
+          </td>
+
+        </tr>
+      </table>
+   </td>
+   </tr>
+  </table>
+<% end %>
+
+<table style="width: 100%; background-color: #fffad3" border=0>
+  <tr>
+    <td>
+      <table style="width: 40%; background-color: #fffad3" border=0>
+        <tr>
+          <td style="width: 110px; text-align: left">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.General.moneda') %>
+            </label>
+          </td>
+          <td style = "width: 150px; text-align: left">
+            <%= @prestamo.moneda.nombre + " - " + @prestamo.moneda.abreviatura %>
+          </td>
+          <td style="width: 110px; text-align: left">
+          </td>
+          <td style="width: 150px; text-align: left">
+          </td>
+          <td style="width: 110px; text-align: left">
+          </td>
+          <td style="width: 150px; text-align: left">
+          </td>
+          <td style="width: 110px; text-align: left">
+          </td>
+          <td style="width: 150px; text-align: left">
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<% if @plan_pago.meses_muertos >= 1 %>
+<table style="width: 100%; background-color: #e4e4f9">
+ <tr>
+  <td>
+    <table style="width: 40%; background-color: #e4e4f9">
+
+      <tr>
+        <td style="width: 110px; text-align: right">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.meses_muertos') %>
+          </label>
+        </td>
+        <td style="width: 150px; text-align: left">
+          <%= @plan_pago.meses_muertos %>
+        </td>
+
+        <td style="width: 110px; text-align: right"></td>
+        <td style="width: 150px; text-align: left"></td>
+        <td style="width: 110px; text-align: right"></td>
+        <td style="width: 150px; text-align: left"></td>
+      </tr>
+      <tr>
+        <td style="text-align: right"></td>
+        <td style="text-align: left"></td>
+        <td style="text-align: right"></td>
+        <td style="text-align: left"></td>
+        <td style="text-align: right"></td>
+        <td style="text-align: left"></td>
+      </tr>
+    </table>
+ </td>
+ </tr>
+</table>
+<% end %>
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <%= render 'encabezado' %>
+  </thead>
+  <% if @plan_pago.meses_muertos >= 1 %>
+  <tbody>
+    <tr style="background-color: #e4e4f9">
+      <td>
+        <a href="javascript: click_sector('muerto');">
+          <%= image_tag I18n.t('Sistema.Body.Imagenes.img_colapsar'), :id=>'button_muerto' %>
+        </a>
+      </td>
+      <td colspan="26">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.periodo_muerto') %>
+        </label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_muerto">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :cuotas=>@plan_pago.cuotas.find_all_by_tipo_cuota('M', :order=>'numero'), :clear=>'e4e4f9', :dark=>'c2c2f9' } %>
+  </tbody>
+  <% end %>
+  <% if @plan_pago.meses_gracia >= 1 %>
+  <tbody>
+    <tr style="background-color: #fffad3">
+      <td>
+        <a href="javascript: click_sector('gracia');">
+          <%= image_tag I18n.t('Sistema.Body.Imagenes.img_colapsar'), :id=>'button_gracia' %>
+        </a>
+      </td>
+      <td colspan="26">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.periodo_gracia') %>
+        </label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_gracia">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :prestamo=>@prestamo, :cuotas=>@plan_pago.cuotas.find_all_by_tipo_cuota('G', :order=>'numero'), :clear=>'fffad3', :dark=>'fff495' } %>
+  </tbody>
+  <% end %>
+  <tbody>
+    <tr style="background-color: #e4ffd6">
+      <td>
+        <a href="javascript: click_sector('cuotas');">
+          <%= image_tag I18n.t('Sistema.Body.Imagenes.img_colapsar'), :id=>'button_cuotas' %>
+        </a>
+      </td>
+      <td colspan="26">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.periodo_amortizacion') %>
+        </label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_cuotas">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :cuotas=>@plan_pago.cuotas.find_all_by_tipo_cuota('C', :order=>'numero'), :clear=>'e4ffd6', :dark=>'b2e19a' } %>
+  </tbody>
+</table>
+

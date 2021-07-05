@@ -1,0 +1,94 @@
+            <table class="lista" style="width: 100%">
+                <thead>
+                    <tr>
+                  		<th style="width: 15%">
+                   		</th>
+                  		<th style="width: 15%" colspan="2">
+                  		    Vigente
+                   		</th>
+                  		<th style="width: 15%" colspan="2">
+                  		    Vencida
+                   		</th>
+                  		<th style="width: 15%" colspan="2">
+                  		    Demorada
+                   		</th>
+                  		<th style="width: 15%" colspan="2">
+                  		    Litigio
+                   		</th>
+                  		<th style="width: 15%" colspan="2">
+                  		    Reestructurada
+                   		</th>
+                  	</tr>
+                    <tr>
+                  		<th>
+                   		</th>
+                  		<th>
+                  		    Cant
+                   		</th>
+                  		<th>
+                  		    Monto (Bs.)
+                   		</th>
+                  		<th>
+                  		    Cant
+                   		</th>
+                  		<th>
+                  		    Monto (Bs.)
+                   		</th>
+                  		<th>
+                  		    Cant
+                   		</th>
+                  		<th>
+                  		    Monto (Bs.)
+                   		</th>
+                  		<th>
+                  		    Cant
+                   		</th>
+                  		<th>
+                  		    Monto (Bs.)
+                   		</th>
+                  		<th>
+                  		    Cant
+                   		</th>
+                  		<th>
+                  		    Monto (Bs.)
+                   		</th>
+                  	</tr>
+            	</thead>
+            	<tbody>
+                    <tr class="lista0">
+                  		<td>
+            				<label>Indicador</label>
+                   		</td>
+                  		<td>
+            				<%= @vigente_cantidad %>
+                   		</td>
+                  		<td>
+            				<%= format_fm @vigente_monto %>
+                   		</td>
+                  		<td>
+            				<%= @vencido_cantidad %>
+                   		</td>
+                  		<td>
+            				<%= format_fm @vencido_monto %>
+                   		</td>
+                  		<td>
+            				<%= @demorada_cantidad %>
+                   		</td>
+                  		<td>
+            				<%= format_fm @demorada_monto %>
+                   		</td>
+                  		<td>
+            				<%= @litigio_cantidad %>
+                   		</td>
+                  		<td>
+            				<%= format_fm @litigio_monto %>
+                   		</td>
+                  		<td>
+            				<%= @reestructurado_cantidad %>
+                   		</td>
+                  		<td>
+            				<%= format_fm @reestructurado_monto %>
+                   		</td>
+                  	</tr>
+            	</tbody>
+            </table>

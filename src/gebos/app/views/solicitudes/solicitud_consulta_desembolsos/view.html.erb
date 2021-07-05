@@ -1,0 +1,135 @@
+<div class="marco-contenido">
+  <% prestamo = Prestamo.find(params[:id]) unless params[:id].nil? %>
+  <div class="marco-titulo"><div><div>
+        <%= I18n.t('Sistema.Body.Vistas.General.prestamo') %> <span class="titulo_modificar">'<%= prestamo.numero %> <%=' - Reestructurado' if prestamo.reestructurado != 'N' %>'</span> <%= I18n.t('Sistema.Body.General.beneficiario') %> <span class="titulo_modificar">'<%= prestamo.cliente.class.to_s=='ClienteEmpresa' ? prestamo.cliente.empresa.nombre : prestamo.cliente.persona.nombre_corto  %>'</span>
+      </div></div></div>
+
+  <table style="width: 100%">
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.prestamo')} #{I18n.t('Sistema.Body.Vistas.General.nro')}" %> <%= prestamo.numero %></span>
+        </td>
+      </tr>
+    </table>
+
+    <table  style="width: 100%">
+      <tr>
+        <td style="width: 25%">
+          <label><%= I18n.t('Sistema.Body.General.beneficiario') %></label>
+        </td>
+        <td style="width: 75%">
+          <% logger.debug "Prestamo " << prestamo.cliente.type.to_s %>
+          <% if prestamo.cliente.type.to_s == 'ClientePersona' %>
+            <%= prestamo.cliente.persona.primer_nombre + ' ' + prestamo.cliente.persona.primer_apellido%>
+          <% else %>
+            <%= prestamo.cliente.empresa.nombre %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 25%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.rubro') %></label>
+        </td>
+        <td style="width: 75%">
+          <%= prestamo.solicitud.rubro.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.destinatario') %></label>
+        </td>
+        <td>
+          <%= prestamo.cliente.class.to_s=='ClienteEmpresa' ?
+            prestamo.destinatario_w :
+            '' %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.estatus') %></label>
+        </td>
+        <td>
+          <%= prestamo.estatus_w %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.moneda') %></label>
+        </td>
+        <td>
+          <%= prestamo.moneda.nombre + ' - ' + prestamo.moneda.abreviatura unless prestamo.moneda.nil? %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.monto_financiamiento') %></label>
+        </td>
+        <td>
+          <%= prestamo.total_financiamiento_fm %> 
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.monto_por_desembolsar') %></label>
+        </td>
+        <td>
+          <%= prestamo.monto_por_liquidar_fm %> 
+        </td>
+      </tr>
+
+      <tr>
+      <table style="width: 100%">
+        <tr>
+          <td class="sub-separador" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.General.desembolsos') %></span>
+          </td>
+        </tr>
+      </table>
+      <% even_odd_desembolso = 1
+      for desembolso in Desembolso.find(:all, :conditions=>'realizado = true and prestamo_id = ' + prestamo.id.to_s)
+        even_odd_desembolso = 1 - even_odd_desembolso %>
+
+        <table style="width: 100%">
+
+          <tr>
+            <td style="width: 25%">
+              <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label>
+            </td>
+            <td style="width: 75%">
+              <%= desembolso.tipo_w %>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <label> <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.desembolso')}" %> </label>
+            </td>
+            <td>
+              <%= desembolso.fecha_valor_f %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.General.monto') %></label>
+            </td>
+            <td>
+              <%= desembolso.monto_fm %>
+            </td>
+
+          </tr>
+        </table>
+      <%end%>
+    </table>
+  </table>
+  <br>
+  <br>
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')), :action => 'index' %>
+

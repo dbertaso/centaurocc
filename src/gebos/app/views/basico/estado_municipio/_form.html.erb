@@ -1,0 +1,30 @@
+<table style="width: 100%">	
+	
+	<tr>
+		<td style="width: 100px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.eje') << " " << I18n.t('Sistema.Body.Vistas.General.estrategico')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+			<%=select("municipio", "eje_id",
+    @eje_list.map {|u| [u.nombre,u.id]},
+    {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+    { :class=>'select', :onchange=>'inputChange();'}) %>			
+			
+		</td>
+	</tr>
+        <tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_field 'municipio', 'nombre', 
+				:class=>'text', 
+				:style=>'width: 300px', 
+				:maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>		
+
+
+</table>

@@ -1,0 +1,40 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+        <th style="width: 100px" <%= sort_class_helper('codigo') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.codigo'), 'codigo', 'list' %>
+        </th>
+      <% if @persona.cliente_persona.es_pescador == false %>
+        <th style="width: 240px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'nombre', 'list' %>
+        </th>
+        <th style="width: 220px" <%= sort_class_helper('total_hectareas') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.total_hectareas'), 'total_hectareas', 'list' %>
+        </th>
+      <% else %>
+        <th style="width: 340px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.puerto_base'), 'nombre', 'list' %>
+        </th>
+      <% end %>
+      <th style="width: 140px">
+        <%= I18n.t('Sistema.Body.Vistas.General.estado') %>
+      </th>
+      <th style="width: 140px">
+        <%= I18n.t('Sistema.Body.Vistas.General.municipio') %>
+      </th>
+      <th style="width: 70px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%
+    even_odd = 1
+    for unidad_produccion in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :unidad_produccion => unidad_produccion, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

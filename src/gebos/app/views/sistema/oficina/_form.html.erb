@@ -1,0 +1,216 @@
+<table>
+  <tr>
+    <td style="width: 40%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'oficina', 'nombre', :class=>'text',
+        :style=>'width: 300px', :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label><label class="requerido"> (*)</label></td>
+    <td>
+      <%= select(
+        'oficina', 'estado_id',
+        @estado_list.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+        { :class=>'select', :onchange=>"#{remote_function(
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :method => :get,
+        :url=>{:controller=>'oficina',
+          :action=>:estado_change },
+        :with=>"'estado_id='+value")};inputChange();" } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label><label class="requerido"> (*)</label></td>
+    <td>
+      <span id="ciudad-select">
+        <%= render :partial => 'ciudad_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label><label class="requerido"> (*)</label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 40%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.tomo')}" %></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'oficina', 'tomo_autenticacion',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'3', :onkeypress=>'inputChange(); return NumberKey(event);'  -%>
+    </td>
+  </tr>
+<tr>
+    <td style="width: 40%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.folio')}" %></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'oficina', 'folio_autenticacion',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'3', :onkeypress=>'inputChange(); return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.Oficina.Etiquetas.datos_coord') %></label></td>
+  </tr>
+  <tr>
+    <td style="width: 40%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'oficina', 'cedula_nacionalidad',
+        [['V','V'],['E','E']],
+        { :include_blank => true },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+      <%= text_field 'oficina', 'cedula_supervisor',
+        :class=>'text', :style=>'width: 70px',
+        :maxlength=>'8', :readonly=>false, :onkeypress=>'inputChange(); return NumberKey(event);'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'oficina', 'primer_nombre_supervisor',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 40%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'oficina', 'segundo_nombre_supervisor',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'oficina', 'primer_apellido_supervisor',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'oficina', 'segundo_apellido_supervisor',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+
+<tr>
+    <td valign="top" colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.Oficina.Etiquetas.datos_gefe_brigada') %></label></td>
+  </tr>
+  <tr>
+    <td style="width: 40%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'oficina', 'cedula_nacionalidad_jefe_brigada',
+        [['V','V'],['E','E']],
+        { :include_blank => true },
+        { :class=>'select', :onchange=>';inputChange();' } ) %>
+      <%= text_field 'oficina', 'cedula_jefe_brigada',
+        :class=>'text', :style=>'width: 70px',
+        :maxlength=>'8', :readonly=>false, :onkeypress=>'inputChange(); return NumberKey(event);'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'oficina', 'primer_nombre_jefe_brigada',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'oficina', 'segundo_nombre_jefe_brigada',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'oficina', 'primer_apellido_jefe_brigada',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'oficina', 'segundo_apellido_jefe_brigada',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><label><%= I18n.t('Sistema.Body.Vistas.Oficina.Etiquetas.departamentos') %></label></td>
+    <td>
+      <table>
+        <tbody>
+          <%
+          even_odd = 1
+          for departamento in @departamento_list
+            even_odd = 1 - even_odd
+          %>
+            <tr>
+              <td>
+                <%= departamento.nombre %>
+              </td>
+              <td style="text-align: right">
+                <%= check_box_tag 'departamento_check',  departamento.id,
+                  checked=@oficina.departamentos.find_by_departamento_id_and_oficina_id(departamento.id, @oficina.id),
+                  { :onchange=>'inputChange();', :name => "departamentos[]", :id => "departamentos_#{departamento.id}" }  %>
+              </td>
+            </tr>
+          <%
+          end
+        %>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</table>

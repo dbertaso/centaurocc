@@ -1,0 +1,192 @@
+<script type="text/javascript">
+
+  function formatCurrency2(num) {
+   
+    num = num.toString().replace(/\$|\,/g,'.');
+
+    if(isNaN(num))
+      num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+      cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+      num = num.substring(0,num.length-(4*i+3))+'.'+
+      num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + ',' + cents);
+    return numero;
+  }
+
+  function formatCurrency3(num) {
+    //alert("numero entrante "+num);   
+    aux=num.toString().split('.');
+    num = num.toString().replace(/\$|\,/g,'.');
+
+    if(isNaN(num))
+      num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*1000+0.50000000001);
+
+    //cents = num%100;
+    if (aux.length > 1){  
+      cents = aux[1].toString();
+    }else{
+      cents ="00";
+    }
+    //alert("numero centimos "+cents);
+    num = Math.floor(num/1000).toString();
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+      num = num.substring(0,num.length-(4*i+3))+'.'+
+      num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + ',' + cents);
+    return numero;
+  }
+
+  function trunco_a_2_decimales(numero) { 
+    
+    pot = Math.pow(10,2); 
+    //alert("Numero con 2 decimales al numero "+numero+" "(numero * pot).toFixed(0) / pot);
+    return (numero * pot).toFixed(0) / pot; 
+  } 
+
+  function trunco_a_3_decimales(numero) { 
+    
+    pot = Math.pow(10,3);
+    //alert("Numero con 3 decimales al numero #{numero}"+(numero * pot).toFixed(0) / pot); 
+    return (numero * pot).toFixed(0) / pot; 
+  } 
+
+  function ValidarNumero2(nombre)
+  {
+    var campo =  $(nombre);
+    var myStr;
+    var strLen;
+
+    if( isNaN(campo.value) ){
+      myStr = campo.value;
+      strLen = myStr.length;
+      myStr = myStr.slice(strLen-1,strLen); 
+      alert('Los valores soportados son solo numéricos el caracter '+myStr+' no es soportado');
+      campo.value = campo.value.slice(0,(strLen-1));
+
+    }else{
+      //verifico si el numero posee decimales, si es asi veo si tiene 3 decimales
+      aux=campo.value.toString().split('.');
+      if (aux.length > 1){  
+        if (aux[1].toString().length>3) {
+          alert('Lo sentimos, solo esta permitido como máximo 3 decimales');
+          campo.value = campo.value.slice(0,(strLen-1));
+        }
+    
+      }
+ 
+
+    } 
+
+  }
+
+
+  function substr_count(string,substring,start,length)
+  {
+    var c = 0;
+    if(start) { string = string.substr(start); }
+    if(length) { string = string.substr(0,length); }
+    for (var i=0;i<string.length;i++)
+    {
+      if(substring == string.substr(i,substring.length))
+        c++;
+    }
+    return c;
+  }
+
+
+  function suma(){
+    // se recorre todos los textfield y se pone el resultado en el div resultado_suma
+
+    var form=$('principal_form');
+    var contador=0.0;
+
+    for (i=0;i<form.elements.length;i++){
+      if (form.elements[i].type=='text'){
+        if (substr_count(form.elements[i].name,"monto_recomendado_")!=0 ){
+          if(form.elements[i].value!=''){
+            //alert("resultado 1 "+contador);
+            contador=parseFloat(contador) + parseFloat(form.elements[i].value);
+            //alert("resultado 2 "+trunco_a_2_decimales(655.05));
+          }
+
+        }
+
+      }
+
+    }
+
+    $('resultado_suma').innerHTML = formatCurrency3(trunco_a_3_decimales(contador));
+  }
+
+</script>
+
+
+<div class="marco-contenido">
+  <div class="marco-titulo"><div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.modificando')} #{I18n.t('Sistema.Body.Controladores.VisitaDescripcionesEspecificas.FormTitles.form_title_record')}"%> <span style="color: #FF0000">'<%= @full_info %> '</span>
+      </div></div></div>
+  <div id="contenedor_principal">
+    <div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+
+    <% @seguimiento_cultivo = SeguimientoCultivo.find_by_seguimiento_visita_id(@visitas.id)%>
+    <% if @visitas.solicitud.sub_sector.nemonico=="AN" %>
+      <%= render :partial=>'visitas/visita_pastizales_potreros/common/tabs' %>
+    <% elsif @visitas.solicitud.sub_sector.nemonico=="VE" %>
+      <%= render :partial=>'visitas/visita_seguimiento_cultivo/common/tabs' %>
+    <% elsif @visitas.solicitud.sub_sector.nemonico=="AC" %>
+      <%= render :partial=>'visitas/condiciones_acuicultura/common/tabs' %>
+    <% elsif @visitas.solicitud.sub_sector.nemonico=="PE" %>
+      <%= render :partial=>'visitas/control_visitas_pesca/embarcacion/common/tabs' %>
+    <% end %>
+
+    <div class="marco-contenido">
+      <%= form_title_search %>
+
+      <%= form_remote_tag(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method => :get,
+        :url => { :action => :list, :solicitud_id =>@solicitud.id, :id=>@visitas.id} ) do -%>
+        <table>
+          <tr>
+            <td style="width:  40px">
+              <label>Tipo</label>
+            </td>
+            <td>
+              <%= select_tag "tipo", "<option value = ''>#{I18n.t('Sistema.Body.Vistas.General.seleccionar')}</option>
+                <option value = 'B'>Banco</option>
+                <option value = 'I'>Insumo</option>".html_safe,
+                { :class=>'select', :onchange=>'inputChange();' }  %>&emsp;
+              <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar')), :title=> I18n.t('Sistema.Body.Vistas.General.buscar')) -%>
+            </td>
+          </tr>
+        </table>
+        <br/>
+        <%= error %>
+        <%= message %>
+        <br/>
+        <div id="list">
+        </div>
+      <% end %>
+      <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+        { :action => :index, :controller => 'visita_seguimiento', :popup=>params[:popup], :id => @visitas.solicitud.id },
+        { :id=>'button_close', } ) -%>
+    </div>
+  </div>
+</div>

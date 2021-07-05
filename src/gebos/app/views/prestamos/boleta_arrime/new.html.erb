@@ -1,0 +1,27 @@
+<%#= form_title_new %>
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.agregando_boleta_de_arrime')%><span class="titulo_modificar">
+      </span> &ensp;<label style="color: red">"<%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%> <%= @view_boleta_arrime.nro_solicitud unless @view_boleta_arrime.nil? %>"
+        &ensp; "<%=I18n.t('Sistema.Body.Vistas.General.productor')%> <%= @view_boleta_arrime.productor unless @view_boleta_arrime.nil? %>" </label>
+    </div>
+  </div>
+</div>
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+<%= error %>
+<%= message %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()', :loaded => 'image_unload()',
+  :url => { :action => :save_new, :solicitud_id=> params[:solicitud_id], :rubro_id=> params[:rubro_id], :cliente_id => params[:cliente_id], :popup=>params[:popup] }) do -%>
+
+<%= render :partial => @formato_boleta.formato_operacion.to_s %>
+
+<%= form_buttons_edit :solicitud_id=>@view_boleta_arrime.solicitud_id, :productor=>@view_boleta_arrime.productor,
+  :nro_solicitud=>@view_boleta_arrime.nro_solicitud, :rubro_id=>@view_boleta_arrime.rubro_id, :popup=>params[:popup] %>
+
+<% end %>
+
+

@@ -1,0 +1,27 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+          Revisión de la solicitud número <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+  </div></div></div>
+  
+  <%= render :partial=>'solicitudes/unidades_apoyo_avaluo/common/tabs' %>
+  
+  <div class="marco-contenido2">
+
+    <div class="marco-boton-in" id="boton_new">
+      <%= render :partial => 'boton_agregar' %>
+    </div>
+
+	<%= error %>
+	<%= message %>
+    
+    <div id="list">
+      <%= render :partial => 'list_garantia' %>
+      <br></br>
+    </div>
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :action => :index },
+      { } ) -%>
+  </div>
+
+</div>

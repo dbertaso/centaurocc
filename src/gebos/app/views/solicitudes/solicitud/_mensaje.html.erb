@@ -1,0 +1,27 @@
+<div id="sombra" style="width:400px; height: 120px; left: 20px; top: 20px; position: absolute; background-color:#BDBDBD;">
+	
+</div>
+<div id="mensaje" style="width:400px; height: 120px; border-width: 1.5px; border-color: #999999; border-style: solid; padding: 1%; left: 0px; top: 0px; position: absolute; background-color:#EEF6FF;">
+	<div style="width:405px; height: 20px; background-color:#0B0B61; left: 1px; top: 1px; position: absolute;"><b><font color="white">ADVERTENCIA</font></b></div>
+	<div id="contenido" style="margin-left: 3px; margin-right: 3px; width:400px; height: 90px; left: 1px; top: 25px; position: absolute;">
+		<%= Etiquetas.etiqueta(9) %> <b><%= @nombre %></b> posee <%= @cuantas %> <b><%= @solicitud %></b> en el sistema.<br><br>
+		Desea registar una nueva?<br><br>
+		<center>
+			<%= form_remote_tag(
+				:loading =>'Element.show("loading")',
+				:loaded => 'Element.hide("loading")',
+			  :url => { :action => :nuevo } ) -%>
+			  <input type="hidden" name="identificacion" value="<%= @rif %>">
+			<table>
+				<tr>
+					<td><%= image_submit_tag I18n.t('Sistema.Body.Imagenes.agregar'),
+								:id=>'button_add' -%></td>
+					<td><%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+						{ :action => :index },
+						{ :id=>'button_close' } ) -%></td>
+				</tr>
+			</table>
+			<%= end_form_tag %>
+		</center>
+	</div>
+</div>

@@ -1,0 +1,46 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 80px" <%= sort_class_helper('partida.rubro.sector.codigo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.sector')}", 'partida.rubro.sector.codigo', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('partida.rubro.sector.nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.sector')}", 'partida.rubro.sector.nombre', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('partida.rubro.sector.sub_sector.codigo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.sub_sector')}", 'partida.rubro.sector.sub_sector.codigo', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('partida.rubro.sector.sub_sector.nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.sub_sector')}", 'partida.rubro.sector.sub_sector_nombre', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('partida.rubro.codigo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.rubro')}", 'partida.rubro.codigo', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('partida.rubro.nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.rubro')}", 'partida.rubro.nombre', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('partida.codigo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.partida')}", 'partida.codigo', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.partida')}", 'nombre', 'list' %>
+      </th>
+      <th style="width: 260px" <%= sort_class_helper('descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'descripcion', 'list' %>
+      </th>
+      <th style="width: 60px">
+        <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for partida in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :partida => partida, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,35 @@
+<% envio_maquinaria = @envio_maquinaria if envio_maquinaria.nil? %>
+
+<td align ="center">
+  <%= envio_maquinaria.nro_tramite unless envio_maquinaria.nro_tramite.nil? %>
+</td>
+<td>
+  <%= envio_maquinaria.cedula_rif unless envio_maquinaria.cedula_rif.nil?  %>
+</td>
+<td>
+  <%= envio_maquinaria.productor unless envio_maquinaria.productor.nil?  %>
+</td>
+<td>
+  <%=  envio_maquinaria.estatus unless envio_maquinaria.estatus.nil?   %>
+</td>
+<td>
+  <%= envio_maquinaria.estado unless envio_maquinaria.estado.nil?  %>
+</td>
+<td>
+  <%= envio_maquinaria.municipio unless envio_maquinaria.municipio.nil? %>
+</td>
+<td>
+  <%= envio_maquinaria.parroquia unless envio_maquinaria.parroquia.nil? %>
+</td>
+<td>
+  <%= envio_maquinaria.unidad_produccion unless envio_maquinaria.unidad_produccion.nil? %>
+</td>
+<td style="text-align: center">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Vistas.General.consultar')),
+		{:action => :view,:id => envio_maquinaria.solicitud_id,:controller => '/solicitudes/solicitud',:controlador => '/maquinaria/envio_maquinaria'} %>&ensp;
+
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.modificar')),
+    {:action => :index,
+    :solicitud_id => envio_maquinaria.solicitud_id,
+    :controller => 'guia_movilizacion_maquinaria'} %>
+</td>

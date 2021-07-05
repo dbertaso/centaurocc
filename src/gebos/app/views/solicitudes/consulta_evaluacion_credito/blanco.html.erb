@@ -1,0 +1,1327 @@
+<script language="JavaScript">
+<!-- Begin
+function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+}
+function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+}
+//  End -->
+</script>
+<table width="1120px" border="1">
+  <tr>
+    <td style="width: 100%">
+      <table width="100%" border="0">
+        <tr>
+          <td style="width: 20%; text-align: left">
+            <%= image_tag('logo_reporte.gif') %>
+          </td>
+          <td align="center">
+            <label style="font-size: 16px"> <%= I18n.t('Sistema.Body.Vistas.General.informe_recomendacion').upcase.gsub('ó', 'Ó') %> <br/>
+              <% if @solicitud.sub_sector.nemonico == 'VE' %>
+                <%= I18n.t('Sistema.Body.General.sector_vegetal') %>
+              <% elsif @solicitud.sub_sector.nemonico == 'AN' %>
+              <%= I18n.t('Sistema.Body.General.sector_animal') %>
+              <% elsif @solicitud.sub_sector.nemonico == 'PE' %>
+                <%= I18n.t('Sistema.Body.General.sector_pesca') %>
+              <% elsif @solicitud.sub_sector.nemonico == 'AC' %>
+                <%= I18n.t('Sistema.Body.General.sector_acuiculrura') %>
+              <% elsif @solicitud.sub_sector.nemonico == 'MA' %>
+                <%= I18n.t('Sistema.Body.General.sector_maquinaria') %>
+              <% end %>
+            </label>
+          </td>
+          <td style="width: 25%; text-align: left" valign="top">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.visita')}" %>:</label>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #bbbcd2"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.del').upcase} #{I18n.t('Sistema.Body.Vistas.General.productor').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <td style="width: 33%"><label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %>:</label> <%= @solicitud.fecha_solicitud_f %></td>
+    <td style="width: 33%"><label><%= I18n.t('Sistema.Body.Vistas.Form.nro_tramite') %>:</label> <%= @solicitud.numero %></td>
+    <td style="width: 34%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>:</label> <%= @solicitud.cliente.tipo_cliente.nombre %></td>
+  </tr>
+<% if @solicitud.cliente.type.to_s == 'ClientePersona' %>
+  <tr>
+    <td colspan="2" style="font-size: 16px"><label><%= "#{I18n.t('Sistema.Body.Vistas.Form.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}" %>:</label>  <%= @solicitud.cliente.persona.nombre_corto %></td>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %>:</label> <%= @solicitud.cliente.persona.cedula_nacionalidad << '-' << @solicitud.cliente.persona.cedula.to_s %></td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.fecha_nacimiento') %>:</label> <%= @solicitud.cliente.persona.fecha_nacimiento_f %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.estado_civil') %>:</label> <%= @solicitud.cliente.persona.estado_civil_w %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.edad') %>:</label> <%= @solicitud.cliente.persona.edad(Time.now, @solicitud.cliente.persona.fecha_nacimiento).to_s << " años" %></td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="justify"><label><%= "#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.habitacion')}" %>:</label> <%= PersonaDireccion.direccion(@solicitud.cliente.persona.id) %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.telefonos') %>:</label> <%= @solicitud.cliente.persona.telefonos[0].codigo << '-' << @solicitud.cliente.persona.telefonos[0].numero if @solicitud.cliente.persona.telefonos.length > 0 %>  </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %>:</label> <%= @solicitud.cliente.persona.direcciones[0].ciudad.estado.nombre  %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %>:</label> <%= @solicitud.cliente.persona.direcciones[0].ciudad.nombre %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %>:</label> <%= @solicitud.cliente.persona.direcciones[0].municipio.nombre %></td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %>:</label> <%= @solicitud.cliente.persona.direcciones[0].parroquia.nombre %></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.sector') %>:</label> <%= @solicitud.cliente.persona.direcciones[0].zona %></td>
+  </tr>
+
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %><br/><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'T') %></td>
+    <td valign="bottom"><label><%= I18n.t('Sistema.Body.Vistas.General.numero') %>:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'N') %></td>
+    <td valign="bottom"><label><%= I18n.t('Sistema.Body.Vistas.General.banco') %>:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'B') %></td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.vivienda')}" %>:</label> <%= @solicitud.cliente.persona.direcciones[0].tipo_nombre %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.numero_hijos') %>:</label> <%= @solicitud.cliente.persona.cantidad_total_hijos %></td>
+  </tr>
+<% else %>
+  <tr>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.razon_social') %>:</label>  <%= @solicitud.cliente.empresa.nombre %></td>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.rif')}" %>:</label> <%= @solicitud.cliente.empresa.rif %></td>
+  </tr>
+  <% persona = @solicitud.cliente.empresa.representante_legal %>
+  <tr>
+    <td colspan="2"><label><%= "#{I18n.t('Sistema.Body.General.representante')} #{I18n.t('Sistema.Body.Vistas.General.legal')}" %>:</label> <%= persona.primer_nombre << ' ' << persona.primer_apellido %></td>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.cedula')} #{I18n.t('Sistema.Body.General.representante')} #{I18n.t('Sistema.Body.Vistas.General.legal')}" %>:</label> <%= persona.cedula %></td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" align="justify"><label><%= I18n.t('Sistema.Body.Vistas.General.domicilio_fiscal') %>:</label> <%= EmpresaDireccion.direccion(@solicitud.cliente.empresa.id) %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.telefonos') %>:</label> <%= @solicitud.cliente.empresa.telefonos[0].codigo << '-' << @solicitud.cliente.empresa.telefonos[0].numero if @solicitud.cliente.empresa.telefonos.length > 0 %></td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %>:</label> <%= @solicitud.cliente.empresa.direcciones[0].ciudad.estado.nombre  %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %>:</label> <%= @solicitud.cliente.empresa.direcciones[0].ciudad.nombre %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %>:</label> <%= @solicitud.cliente.empresa.direcciones[0].municipio.nombre %></td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %>:</label> <%= @solicitud.cliente.empresa.direcciones[0].parroquia.nombre %></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.sector') %>:</label> <%= @solicitud.cliente.empresa.direcciones[0].zona %></td>
+  </tr>
+
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %><br/><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'T') %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.numero') %>:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'N') %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.banco') %>:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'B') %></td>
+  </tr>
+<% end %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+<% unless @solicitud.sub_sector.nemonico == 'PE' %>
+  <tr>
+    <th colspan="3" style="background-color: #bbbcd2"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.la').upcase} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion').upcase.gsub('ó', 'Ó')}" %></label></th>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.tenencia_tierra') %>:</label> <%= @solicitud.unidad_produccion.registro_mercantil[0].tenencia_unidad_produccion.nombre %></td>
+    <td colspan="2"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.documento')}" %>:</label> <%= @solicitud.unidad_produccion.registro_mercantil[0].tipo_documento.tipo %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')}" %>:</label> <%= @solicitud.unidad_produccion.nombre %></td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %>:</label> <%= @solicitud.sub_sector.nombre %></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label> <%= @solicitud.rubro.nombre %></td>
+  </tr>
+  
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.sub_rubro') %>:</label> <%= @solicitud.sub_rubro.nombre %></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.actividad') %>:</label> <%= @solicitud.actividad.nombre %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3"><label><%= "#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')}" %>:</label> <%= @solicitud.unidad_produccion.direccion %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.como_llegar_poblado')} (#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.practica')})" %>:</label> <%= @solicitud.unidad_produccion.referencia %></td>
+  </tr>
+
+  <tr>
+    <td style="width: 36%"><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %>:</label> <%= @solicitud.unidad_produccion.municipio.estado.nombre %></td>
+    <td style="width: 32%"><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %>:</label> <%= @solicitud.unidad_produccion.municipio.nombre %></td>
+    <td style="width: 32%"><label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %>:</label> <%= @solicitud.unidad_produccion.parroquia.nombre %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %>:</label> <%= @solicitud.unidad_produccion.ciudad.nombre %>
+    </td>
+  </tr>
+<% if @solicitud.sub_sector.nemonico == 'AC' %>
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.espejo_agua')} #{I18n.t('Sistema.Body.Vistas.General.solicitado')} (#{I18n.t('Sistema.Body.Vistas.General.mts2')})" %>:</label> </td>
+    <td colspan="2"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.TipoSistemaAcuicultura.FormTitles.form_title_record')} #{I18n.t('Sistema.Body.Vistas.General.a')} #{I18n.t('Sistema.Body.Vistas.General.implementar').downcase}" %>:</label> </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="justify"><label><%= I18n.t('Sistema.Body.Controladores.TipoEspecieAcuicultura.FormTitles.form_title_record') %> <%= I18n.t('Sistema.Body.Vistas.General.solicitadas') %>:</label> <% especi_solicitada = TipoEspecieAcuicultura.find(:all, :conditions=>"activo = true")
+        valor = ''
+        c = ''
+        especi_solicitada.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << ' ' << f.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor.html_safe %></td>
+                      
+    <td valign="top"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.cultivo')}" %>:</label> </td>
+  </tr>
+
+  <tr>
+    <td colspan="3" align="justify"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.financiamiento')} #{I18n.t('Sistema.Body.Vistas.General.solicitado')} #{I18n.t('Sistema.Body.Vistas.General.para').downcase}" %>:</label> <br/><br/><br/><br/></td>
+  </tr>
+<% end %>
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label><%= I18n.t('Sistema.Body.Vistas.General.linderos').upcase %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label><%= I18n.t('Sistema.Body.Vistas.General.norte') %>:</label> <%= @solicitud.unidad_produccion.lindero_norte %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label><%= I18n.t('Sistema.Body.Vistas.General.sur') %>:</label> <%= @solicitud.unidad_produccion.lindero_sur %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label><%= I18n.t('Sistema.Body.Vistas.General.este') %>:</label> <%= @solicitud.unidad_produccion.lindero_este %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label><%= I18n.t('Sistema.Body.Vistas.General.oeste') %>:</label> <%= @solicitud.unidad_produccion.lindero_oeste %></td>
+  </tr>
+
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.coordenadas').upcase} #{I18n.t('Sistema.Body.Vistas.General.geograficas').upcase.gsub('í', 'Í')} (#{I18n.t('Sistema.Body.Vistas.General.utm')})" %></label></th>
+  </tr>
+
+    <tr>
+      <td style="width: 33%" align="center"><br/>&nbsp;</td>
+      <td style="width: 33%" align="center"></td>
+      <td style="width: 34%" align="center"></td>
+    </tr>
+
+    <tr>
+      <td align="center"><br/>&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+</table>
+<% if @solicitud.sub_sector.nemonico == 'AC' %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.acuicultura').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.vialidad') %></label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.suelos') %></label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.vegetacion') %></label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.topografia') %></label></th>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label><br/>
+      <% vialidad = TipoVialidad.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        vialidad.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip %>
+      <% c = '<br/>&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+    <td align="left" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.textura') %>:</label><br/>
+      <% suelo = TipoSuelo.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        suelo.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip << '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%' %>
+      <% c = '<br/>&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+    <td align="center"><label><%= I18n.t('Sistema.Body.Vistas.General.baja') %>:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%</td>
+    <td align="left" valign="top" rowspan="3">
+      <% topografia = TipoTopografia.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        topografia.each{ |f| %>
+          <% valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip << ':</label> ' << '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%' %>
+      <% c = '<br/>&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px" align="left"><label>&nbsp;&nbsp;<%= I18n.t('Sistema.Body.Vistas.General.distancia') %> (<%= I18n.t('Sistema.Body.Vistas.General.km').downcase %>):</label></td>
+    <td align="left"><label>&nbsp;&nbsp;<%= I18n.t('Sistema.Body.Vistas.General.ph') %>:</label></td>
+    <td align="center"><label><%= I18n.t('Sistema.Body.Vistas.General.media') %>:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%</td>
+
+  </tr>
+
+  <tr>
+    <td align="center"><label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label><br/><input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.buena') %>  <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.regular') %>   <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.mala') %></td>
+    <td align="center"><label></label> </td>
+    <td align="center"><label><%= I18n.t('Sistema.Body.Vistas.General.alta') %>:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%</td>
+  </tr>
+
+  <tr>
+    <th colspan="4" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.fuente_agua') %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="left" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      <% fuente_agua = TipoFuenteAgua.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        fuente_agua.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip %>
+      <% c = ',&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.superficie') %>:</label>
+    </td>
+    <td colspan="3"><label>¿<%= I18n.t('Sistema.Body.Vistas.General.el_beneficiario_posee_permisologia_recursos_hidricos') %>?</label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+  </tr>
+
+  <tr>
+    <th colspan="2" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.cultivo')}" %></label></th>
+    <th colspan="2" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.TipoSistemaAcuicultura.FormTitles.form_title_record')} #{I18n.t('Sistema.Body.Vistas.General.implementado')}" %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>  <% cultivo = TipoCultivoAcuicultura.find(:all, :conditions=>'activo = true')
+        valor = ''
+        c = ''
+        cultivo.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << ' ' << f.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor.html_safe %></td>
+    <td colspan="2" align="center" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>  <% sistema = TipoSistemaAcuicultura.find(:all, :conditions=>'activo = true')
+        valor = ''
+        c = ''
+        sistema.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << ' ' << f.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor.html_safe %></td>
+  </tr>
+
+  <tr>
+    <th colspan="4" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= "#{I18n.t('Sistema.Body.Controladores.TipoEspecieAcuicultura.FormTitles.form_title_records')} #{I18n.t('Sistema.Body.Vistas.General.animales')}" %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="center" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      <% especie = TipoEspecieAcuicultura.find(:all, :conditions=>"activo = true")
+        valor = ''
+        c = ''
+        especie.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << ' ' << f.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor.html_safe %></td>
+  </tr>
+
+  <tr>
+    <th colspan="4" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.sistema_drenaje') %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="center" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      <% drenaje = TipoDrenaje.find(:all, :conditions=>"activo = true")
+        valor = ''
+        c = ''
+        drenaje.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << ' ' << f.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor.html_safe %></td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.superficie') %>:</label> </td>
+    <td colspan="3" align="center"><label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.buena') %>,  <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.regular') %>,   <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.mala') %></td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.calidad')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.agua')}" %>:</label> </td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ph') %>:</label> </td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.temperatura') %>:</label></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.od') %>:</label> </td>
+  </tr>
+
+  <tr>
+    <th colspan="4" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones')} #{I18n.t('Sistema.Body.Vistas.General.climaticas').downcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label><%= I18n.t('Sistema.Body.Vistas.General.observacion') %>:</label> <br/><br/><br/><br/></td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.servicios')} #{I18n.t('Sistema.Body.Vistas.General.animales')} #{I18n.t('Sistema.Body.Vistas.General.existentes')}" %>:</label> <br/><br/><br/><br/></td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.descripcion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.lo').downcase} #{I18n.t('Sistema.Body.Vistas.General.observado').downcase}" %>:</label> <span style="font-size: 12px">(<%= I18n.t('Sistema.Body.Vistas.General.incluir_piscinas_depositos') %>)</span> <br/><br/><br/><br/></td>
+  </tr>
+</table>
+<% end %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.servicios').upcase} #{I18n.t('Sistema.Body.Vistas.General.basicos').upcase.gsub('á', 'Á')}" %></label></th>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.empleos_directos') %></label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.empleos_directos') %>:</label> </td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.empleos_indirectos') %>:</label> </td>
+  </tr>
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.vivienda') %>:</label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>:</label></td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.electricidad') %>:</label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>:</label></td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.transporte_publico') %>:</label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>:</label></td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %>:</label><%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %> 1:</label><br/><br/>
+     <label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %> 2:</label><br/><br/>
+     <label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %> 3:</label><br/><br/>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.gas') %>:</label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>:</label></td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.aguas_blancas') %>:</label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>:</label></td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.aguas_servidas') %>:</label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>:</label></td>
+  </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+<% unless @solicitud.sub_sector.nemonico == 'AC' %>
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label><%= I18n.t('Sistema.Body.Vistas.General.caracterizacion').upcase.gsub('ó', 'Ó') %></label></th>
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.vialidad') %></label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.suelos') %></label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.vegetacion') %></label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.topografia') %></label></th>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label><br/>
+      <% vialidad = TipoVialidad.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        vialidad.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip %>
+      <% c = '<br/>&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+    <td align="left" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.textura') %>:</label><br/>
+      <% suelo = TipoSuelo.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        suelo.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip << '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%' %>
+      <% c = '<br/>&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+    <td align="center"><label><%= I18n.t('Sistema.Body.Vistas.General.baja') %>:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%</td>
+    <td align="left" valign="top" rowspan="3">
+      <% topografia = TipoTopografia.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        topografia.each{ |f| %>
+          <% valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip << ':</label> ' << '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%' %>
+      <% c = '<br/>&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="left" style="height: 50px"><label>&nbsp;&nbsp;<%= I18n.t('Sistema.Body.Vistas.General.distancia') %> (<%= I18n.t('Sistema.Body.Vistas.General.km').downcase %>):</label></td>
+    <td align="left"><label>&nbsp;&nbsp;<%= I18n.t('Sistema.Body.Vistas.General.ph') %>:</label></td>
+    <td align="center"><label><%= I18n.t('Sistema.Body.Vistas.General.media') %>:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%</td>
+    
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label><br/><input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.buena') %>  <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.regular') %>   <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.mala') %></td>
+    <td align="center"><label></label> </td>
+    <td align="center"><label><%= I18n.t('Sistema.Body.Vistas.General.alta') %>:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%</td>
+  </tr>
+
+  <tr>
+    <th colspan="4" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.fuente_agua') %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="left" valign="top" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      <% fuente_agua = TipoFuenteAgua.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        fuente_agua.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip %>
+      <% c = ',&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.drenaje') %>:</label>
+    </td>
+    <td colspan="3"><label>¿<%= I18n.t('Sistema.Body.Vistas.General.el_beneficiario_posee_permisologia_recursos_hidricos') %>?</label> </td>
+  </tr>
+
+  <tr>
+    <th colspan="4" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.drenaje') %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="left" valign="top" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      <% tipo_drenaje = TipoDrenaje.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        tipo_drenaje.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip %>
+      <% c = ',&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.superficie') %>:</label>
+    </td>
+    <td colspan="3" align="left"><label><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones')} #{I18n.t('Sistema.Body.Vistas.General.fisicas')}" %>:</label>&nbsp;&nbsp;<input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.buena') %>  <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.regular') %>   <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.mala') %></td>
+  </tr>
+
+  <tr>
+    <th colspan="4" align="center"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.riego') %></label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="left" valign="top" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      <% tipo_riego = TipoRiego.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        tipo_riego.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip %>
+      <% c = ',&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.superficie') %>:</label>
+    </td>
+    <td colspan="3" align="left"><label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label>&nbsp;&nbsp;<input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.buena') %>  <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.regular') %>   <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.Vistas.General.mala') %></td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.se')} #{I18n.t('Sistema.Body.Vistas.General.requiere')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.un')} #{I18n.t('Sistema.Body.Vistas.General.sistema_riego')} " %>:</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    <td colspan="3" align="left" valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      <% tipo_riego = TipoRiego.find(:all, :conditions=>['activo = true'])
+        valor = '&nbsp;&nbsp;'
+        c = ''
+        tipo_riego.each{ |f| %>
+          <%  valor << c << '<input type="checkbox" disabled />' << '&nbsp;&nbsp;' << f.nombre.strip %>
+      <% c = ',&nbsp;&nbsp;'
+        } %>
+      <%= valor.html_safe %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="height: 50px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.superficie') %>:</label>
+    </td>
+    <td valign="top" colspan="3" align="left"><label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>:</label><br/><br/></td>
+  </tr>
+
+  <tr>
+    <th colspan="4" align="center"  style="background-color: #cee3ba; width: 25%"><label>Condición Climática</label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify" valign="top" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.observacion') %>:</label><br/><br/><br/><br/></td>
+  </tr>
+  
+  <tr>
+    <td colspan="4" align="justify"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.rubros')} #{I18n.t('Sistema.Body.Vistas.General.vegetales')} #{I18n.t('Sistema.Body.Vistas.General.existentes')}" %>:</label><br/><br/><br/><br/></td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.rubros')} #{I18n.t('Sistema.Body.Vistas.General.animales')} #{I18n.t('Sistema.Body.Vistas.General.existentes')}" %>:</label><br/><br/><br/><br/></td>
+  </tr>
+<% end %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="8" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.infraestructura').upcase} #{I18n.t('Sistema.Body.Vistas.General.existente').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.la').upcase} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion').upcase.gsub('ó', 'Ó')}" %></label></th>
+  </tr>
+
+  <tr>
+    <th align="center" rowspan="2" style="background-color: #cee3ba; width: 20%"><label><%= I18n.t('Sistema.Body.Vistas.General.item') %></label></th>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 8%"><label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label></th>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 12%"><label><%= I18n.t('Sistema.Body.Vistas.General.Dimensiones') %></label></th>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 20%"><label><%= I18n.t('Sistema.Body.Vistas.General.material') %></label></th>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 25%"><label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label></th>
+    <th align="center" colspan="3"  style="background-color: #cee3ba;"><label><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones')} #{I18n.t('Sistema.Body.Vistas.General.fisicas')}" %></label></th>
+  </tr>
+
+  <tr>
+    <th align="center" style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.buena') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.regular') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.mala') %></label></th>
+  </tr>
+
+  <% infraestructura = TipoInfraestructura.find(:all, :conditions=>['activo = true'], :order =>'nombre')
+     infraestructura.each{|i| %>
+    <tr>
+      <td align="center" style="height: 50px"><%= i.nombre %></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% } %>
+  <tr>
+    <td align="center">&nbsp;</td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center"></td>
+  </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="13" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.materiales').upcase}, #{I18n.t('Sistema.Body.Vistas.General.equipos').upcase} #{I18n.t('Sistema.Body.Vistas.General.e')} #{I18n.t('Sistema.Body.Vistas.General.implementos').upcase} #{I18n.t('Sistema.Body.Vistas.General.agricolas').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 20%"><label><%= I18n.t('Sistema.Body.Vistas.General.item') %></label></th>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.Cant') %></label></th>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.año') %></label></th>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 12%"><label><%= I18n.t('Sistema.Body.Vistas.General.marca') %></label></th>
+    <th align="center" rowspan="2"  style="background-color: #cee3ba; width: 12%"><label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %></label></th>
+    <th align="center" colspan="4"  style="background-color: #cee3ba;"><label><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones')} #{I18n.t('Sistema.Body.Vistas.General.fisicas')}" %></label></th>
+    <th align="center" colspan="4"  style="background-color: #cee3ba;"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.tenencia')}" %></label></th>
+  </tr>
+
+  <tr>
+    <th align="center" style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.b') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.r') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.m') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 5%"><label><%= I18n.t('Sistema.Body.Vistas.General.n') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 6%"><label><%= I18n.t('Sistema.Body.Vistas.General.propia') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 6%"><label><%= I18n.t('Sistema.Body.Vistas.General.alquilada') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 6%"><label><%= I18n.t('Sistema.Body.Vistas.General.financiada') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 6%"><label><%= I18n.t('Sistema.Body.Vistas.General.adjudicada') %></label></th>
+  </tr>
+
+  <% maquinaria = [1,2,3,4,5,6,7,8,9,10]
+     maquinaria.each {|m| %>
+    <tr>
+      <td align="center" style="height: 50px">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% } %>
+
+    <tr>
+      <td colspan="13" align="right"><span style="font-size: 10px"><%= I18n.t('Sistema.Body.Vistas.General.buena') %> (<%= I18n.t('Sistema.Body.Vistas.General.b') %>), <%= I18n.t('Sistema.Body.Vistas.General.regular') %> (<%= I18n.t('Sistema.Body.Vistas.General.r') %>), <%= I18n.t('Sistema.Body.Vistas.General.mala') %> (<%= I18n.t('Sistema.Body.Vistas.General.m') %>), <%= "#{I18n.t('Sistema.Body.General.negacion')} #{I18n.t('Sistema.Body.Vistas.General.operativa')}" %> (<%= I18n.t('Sistema.Body.Vistas.General.n') %>)</span> </td>
+    </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.sitios').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.colocacion').upcase} #{I18n.t('Sistema.Body.Vistas.General.potenciales').upcase} #{I18n.t('Sistema.Body.Vistas.General.del').upcase} #{I18n.t('Sistema.Body.Vistas.General.rubro').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 30%"><label><%= I18n.t('Sistema.Body.Vistas.General.sitios') %></label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 50%"><label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 20%"><label><%= I18n.t('Sistema.Body.Vistas.General.distancia') %> (<%= I18n.t('Sistema.Body.Vistas.General.km').downcase %>)</label></th>
+  </tr>
+  <% sitios = SitioColocacion.find(:all, :conditions=>['activo = true'], :order=>"sitio")
+      sitios.each {|s| %>
+    <tr>
+      <td align="center" style="height: 50px"><%= s.sitio %></td>
+      <td align="center"><%= s.nombre %></td>
+      <td align="center"></td>
+    </tr>
+  <% } %>
+  <% unless @solicitud.unidad_produccion_colocacion.length > 0 %>
+    <tr>
+      <td align="center">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% end %>
+</table>
+<% if @solicitud.sub_sector.nemonico == 'AN' %>
+  <table width="1120px" border="1" style="font-size: 16px">
+    <tr>
+      <th colspan="4" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.inventario').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.animales').upcase}" %> </label></th>
+    </tr>
+
+    <tr>
+      <td style="width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.bovinos') %>:</label></td>
+      <td style="width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.bufalinos') %>:</label></td>
+      <td style="width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.equinos') %>:</label></td>
+      <td style="width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.ovinos') %>:</label></td>
+    </tr>
+
+    <tr>
+      <td style="width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.porcinos') %>:</label></td>
+      <td style="width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.caprinos') %>:</label> </td>
+      <td style="width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.aves') %>:</label></td>
+      <td style="width: 25%; height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.piscicolas') %>:</label></td>
+    </tr>
+
+    <tr>
+      <td style="height: 50px" colspan="4"><label><%= I18n.t('Sistema.Body.Vistas.General.otros') %>:</label></td>
+    </tr>
+
+    <tr>
+      <td colspan="4" align="justify"><label><%= I18n.t('Sistema.Body.Vistas.General.descripcion') %>:</label><br/><br/><br/></td>
+    </tr>
+  </table>
+<% end %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #bbbcd2"><label><%= "#{I18n.t('Sistema.Body.Vistas.Form.solicitud').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.financiamiento').upcase} " %><span style="font-size: 10px"><%= "#{I18n.t('Sistema.Body.Vistas.General.segun').downcase} #{I18n.t('Sistema.Body.Vistas.General.el').downcase} #{I18n.t('Sistema.Body.Vistas.General.productor').downcase}" %></span></label></th>
+  </tr>
+
+  <tr>
+    <td style="width: 33%"><label><%= I18n.t('Sistema.Body.Vistas.General.sector') %>:</label> <%= @solicitud.sector.nombre %></td>
+    <td style="width: 33%"><label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %>:</label> <%= @solicitud.sub_sector.nombre %></td>
+    <td style="width: 34%"><label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label> <%= @solicitud.rubro.nombre %></td>
+  </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="6" style="background-color: #bbbcd2"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.analisis').upcase}, #{I18n.t('Sistema.Body.Vistas.General.conclusion').upcase.gsub('ó','Ó')} #{I18n.t('Sistema.Body.Vistas.General.y').upcase} #{I18n.t('Sistema.Body.Vistas.General.recomendaciones').upcase}" %></label></th>
+  </tr>
+  <tr>
+    <th align="center" colspan="4" style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Vistas.General.evaluacion') %></label></th>
+    <th align="center" colspan="2" style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Vistas.General.respuesta') %></label></th>
+  </tr>
+  <% encuesta = AnalisisConclusion.find(:all, :conditions=>['activo = true'], :order=>'numero')
+     encuesta.each {|e| %>
+    <tr>
+      <td colspan="4" style="height: 50px"><%= e.numero.to_s << '.- ' << e.nombre  %></td>
+      <td colspan="2" align="center"><%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+    </tr>
+  <% }
+    unless encuesta.length > 0 %>
+      <tr>
+        <td colspan="4"></td>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+   <% end %>
+   <tr>
+    <th align="center" colspan="6" style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Vistas.General.nivel_conocimiento_productor') %></label></th>
+   </tr>
+   <tr>
+     <th align="center" colspan="2" style="background-color: #cee3ba; width: 50%"><label><%= I18n.t('Sistema.Body.Vistas.General.topicos') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.alto') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Vistas.General.moderado') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Vistas.General.poco') %></label></th>
+    <th align="center" style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Vistas.General.ninguno') %></label></th>
+   </tr>
+   <% topico = AnalisisTopico.find(:all, :conditions=>['activo = true'], :order=>"nombre")
+      topico.each {|t| %>
+        <tr>
+          <td colspan="2" align="center" style="height: 50px"><%= t.nombre %></td>
+          <td align="center"></td>
+          <td align="center"></td>
+          <td align="center"></td>
+          <td align="center"></td>
+        </tr>
+   <% } 
+    unless topico.length > 0 %>
+        <tr><td colspan="2">&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+   <% end %>
+   <tr>
+    <th align="center" colspan="6" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.recomendaciones').upcase} #{I18n.t('Sistema.Body.Vistas.General.finales').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.la').upcase} #{I18n.t('Sistema.Body.Vistas.General.inspeccion_tecnica').upcase.gsub('ó', 'Ó').gsub('é', 'É')}" %></label></th>
+   </tr>
+
+   <tr>
+     <td colspan="6"><label><span style="font-size: 15px">¿<%= I18n.t('Sistema.Body.Vistas.General.financiamiento_solicitado_viable') %>?</span></label> <%= I18n.t('Sistema.Body.General.si') %> <input type="checkbox" disabled /> <%= I18n.t('Sistema.Body.General.negacion') %> <input type="checkbox" disabled /></td>
+   </tr>
+
+    <tr>
+      <td colspan="6" align="justify"><label><%= I18n.t('Sistema.Body.Vistas.General.en_caso_no_viable') %>:</label> <br/><br/><br/><br/></td>
+    </tr>
+
+    <tr>
+    <th align="center" colspan="6" style="background-color: #c9c9c9"><label><%= I18n.t('Sistema.Body.Vistas.General.justificacion') %></label></th>
+   </tr>
+
+   <tr>
+     <td colspan="6" align="justify"><label><%= I18n.t('Sistema.Body.Vistas.General.Explicacion') %>:</label><br/><br/><br/><br/></td>
+   </tr>
+</table>
+<% else %>
+  <% if @solicitud.cliente.type.to_s == 'ClientePersona' %>
+    <table width="1120px" border="1" style="font-size: 16px">
+      <tr>
+        <th colspan="2" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Modelos.Errores.comunidad_pesquera').upcase}" %></label></th>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="justify"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Modelos.Errores.comunidad_pesquera')}:" %></label> <%= @solicitud.unidad_produccion.nombre %></td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="justify"><label><%= "#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Modelos.Errores.comunidad_pesquera')}:" %></label> <%= @solicitud.unidad_produccion.direccion %></td>
+      </tr>
+
+      <tr>
+        <td style="width: 50%"><label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %>:</label> <%= @solicitud.sub_sector.nombre %></td>
+        <td style="width:  50%"><label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label> <%= @solicitud.rubro.nombre %></td>
+      </tr>
+      
+      <tr>
+        <td style="width: 50%"><label><%= I18n.t('Sistema.Body.Vistas.General.sub_rubro') %>:</label> <%= @solicitud.sub_rubro.nombre %></td>
+        <td style="width:  50%"><label><%= I18n.t('Sistema.Body.Vistas.General.actividad') %>:</label> <%= @solicitud.actividad.nombre %></td>
+      </tr>
+    </table>
+  <% end %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="10" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.la').upcase} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.embarcacion').upcase.gsub('ó', 'Ó')} #{I18n.t('Sistema.Body.Vistas.General.que').upcase} #{I18n.t('Sistema.Body.Vistas.General.posee').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title')}" %></label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title')}" %></label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Vistas.General.material_construccion') %></label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label><%= I18n.t('Sistema.Body.Vistas.General.matricula') %></label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.eslora') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.manga') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.puntal') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %></label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label><%= I18n.t('Sistema.Body.Vistas.General.u_a_b') %></label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.cantidad_tripulante') %></label></th>
+  </tr>
+
+  <% [1,2,3,4,5,6].each {|e| %>
+    <tr>
+      <td align="center" style="height: 50px">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% } %>
+
+  <tr>
+    <th colspan="10" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.la').upcase} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.embarcacion').upcase.gsub('ó', 'Ó')} #{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label></th>
+    <th style="background-color: #cee3ba"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title')}" %></label></th>
+    <th style="background-color: #cee3ba" colspan="3"><label><%= I18n.t('Sistema.Body.Vistas.General.material_construccion') %></label></th>
+    <th style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.eslora') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</label></th>
+    <th style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.manga') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</label></th>
+    <th style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.puntal') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</label></th>
+    <th style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Vistas.General.u_a_b') %></label></th>
+    <th style="background-color: #cee3ba"><label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.cantidad_tripulante') %></label></th>
+  </tr>
+
+  <% [1,2,3,4,5,6].each {|e| %>
+    <tr>
+      <td align="center" style="height: 50px"></td>
+      <td align="center"></td>
+      <td align="center" colspan="3">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% } %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="6" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.motores').upcase} #{I18n.t('Sistema.Body.Vistas.General.que').upcase} #{I18n.t('Sistema.Body.Vistas.General.posee').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= I18n.t('Sistema.Body.Vistas.General.serial') %></label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %></label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label><%= I18n.t('Sistema.Body.Vistas.General.marca') %></label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %></label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= I18n.t('Sistema.Body.Modelos.Motores.Columnas.potencia') %> (<%= I18n.t('Sistema.Body.Vistas.General.hp') %>)</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Vistas.General.año') %></label></th>
+  </tr>
+
+  <% [1,2,3,4,5,6].each {|e| %>
+    <tr>
+      <td align="center" style="height: 50px">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% } %>
+
+  <tr>
+    <th colspan="6" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.motores').upcase} #{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %></label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label><%= I18n.t('Sistema.Body.Vistas.General.marca') %></label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %></label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= I18n.t('Sistema.Body.Modelos.Motores.Columnas.potencia') %> (<%= I18n.t('Sistema.Body.Vistas.General.hp') %>)</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Vistas.General.año') %></label></th>
+  </tr>
+
+  <% [1,2,3,4,5,6].each {|e| %>
+    <tr>
+      <td align="center" style="height: 50px">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% } %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="7" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.las').upcase} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_records').upcase} #{I18n.t('Sistema.Body.Vistas.General.que').upcase} #{I18n.t('Sistema.Body.Vistas.General.posee').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.redes') %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="cenleftter" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>): </td>
+    <td align="left" style="width: 10%"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.redes') %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.palangres').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.cantidad_anzuelos') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.nro_anzuelo') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>)<br/><%= I18n.t('Sistema.Body.Vistas.General.linea_madre') %>:</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %><br/><%= I18n.t('Sistema.Body.Vistas.General.rendales') %> (<%= I18n.t('Sistema.Body.Vistas.General.mm') %>):</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.palangres').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.cantidad_anzuelos') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.nro_anzuelo') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>)<br/><%= I18n.t('Sistema.Body.Vistas.General.linea_madre') %>:</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %><br/><%= I18n.t('Sistema.Body.Vistas.General.rendales') %> (<%= I18n.t('Sistema.Body.Vistas.General.linea_madre') %>):</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.nasas').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.alto') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.nasas').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.alto') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.cordeles').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %> (<%= I18n.t('Sistema.Body.Vistas.General.mm') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.nro_anzuelo') %>: </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.cordeles').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %> (<%= I18n.t('Sistema.Body.Vistas.General.mm') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.nro_anzuelo') %>: </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.atarrayas').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>):</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.tamano') %>:</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>):</td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.atarrayas').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>):</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.tamano') %>:</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>):</td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <th colspan="7" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.las').upcase} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_records').upcase} #{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar').upcase}" %></label></th>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.redes') %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.redes') %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.palangres').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.cantidad_anzuelos') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.nro_anzuelo') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>)<br/><%= I18n.t('Sistema.Body.Vistas.General.linea_madre') %>:</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %><br/><%= I18n.t('Sistema.Body.Vistas.General.rendales') %> (<%= I18n.t('Sistema.Body.Vistas.General.mm') %>):</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.palangres').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.cantidad_anzuelos') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.nro_anzuelo') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>)<br/><%= I18n.t('Sistema.Body.Vistas.General.linea_madre') %>:</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %><br/><%= I18n.t('Sistema.Body.Vistas.General.rendales') %> (<%= I18n.t('Sistema.Body.Vistas.General.mm') %>):</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.nasas').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.alto') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.nasas').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.alto') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.cordeles').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %> (<%= I18n.t('Sistema.Body.Vistas.General.mm') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.nro_anzuelo') %>: </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.cordeles').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %> (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.nro_nylon') %> (<%= I18n.t('Sistema.Body.Vistas.General.mm') %>): </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.nro_anzuelo') %>: </td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.atarrayas').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>):</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.tamano') %>:</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>):</td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.atarrayas').downcase.capitalize %></label></td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>):</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.tamano') %>:</td>
+    <td align="left"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %> (<%= I18n.t('Sistema.Body.Vistas.General.cm') %>):</td>
+    <td align="left" colspan="2"><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %>: </td>
+    <td align="left"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>: </td>
+  </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="7" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.los').upcase} #{I18n.t('Sistema.Body.Controladores.EquipoSeguridad.FormTitles.form_title_records').upcase} #{I18n.t('Sistema.Body.Vistas.General.que').upcase} #{I18n.t('Sistema.Body.Vistas.General.posee').upcase}" %></label></th>
+  </tr>
+
+  <% equipo = TipoEquipoSeguridad.find(:all, :conditions=>"activo = true") %>
+      <tr>
+        <td align="left" style="width: 15%; height: 50px"><%= equipo[0].tipo.strip + ":" unless equipo[0].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[1].tipo.strip + ":" unless equipo[1].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[2].tipo.strip + ":" unless equipo[2].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[3].tipo.strip + ":" unless equipo[3].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[4].tipo.strip + ":" unless equipo[4].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[5].tipo.strip + ":" unless equipo[5].nil? %></td>
+        <td align="left" style="width: 15%"><%= equipo[6].tipo.strip + ":" unless equipo[6].nil? %>&nbsp;</td>
+      </tr>
+  <% unless equipo[7].nil? %>
+      <tr>
+        <td align="left" style="width: 15%; height: 50px"><%= equipo[7].tipo.strip + ":" unless equipo[7].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[8].tipo.strip + ":" unless equipo[8].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[9].tipo.strip + ":" unless equipo[9].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[10].tipo.strip + ":" unless equipo[10].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[11].tipo.strip + ":" unless equipo[11].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[12].tipo.strip + ":" unless equipo[12].nil? %></td>
+        <td align="left" style="width: 15%"><%= equipo[13].tipo.strip + ":" unless equipo[13].nil? %>&nbsp;</td>
+      </tr>
+    <% unless equipo[14].nil? %>
+      <tr>
+        <td align="left" style="width: 15%; height: 50px"><%= equipo[14].tipo.strip + ":" unless equipo[14].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[15].tipo.strip + ":" unless equipo[15].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[16].tipo.strip + ":" unless equipo[16].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[17].tipo.strip + ":" unless equipo[17].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[18].tipo.strip + ":" unless equipo[18].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[19].tipo.strip + ":" unless equipo[19].nil? %></td>
+        <td align="left" style="width: 15%"><%= equipo[20].tipo.strip + ":" unless equipo[20].nil? %>&nbsp;</td>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <tr>
+    <th colspan="7" style="background-color: #c9c9c9"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.datos').upcase} #{I18n.t('Sistema.Body.Vistas.General.de').upcase} #{I18n.t('Sistema.Body.Vistas.General.los').upcase} #{I18n.t('Sistema.Body.Controladores.EquipoSeguridad.FormTitles.form_title_records').upcase} #{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar').upcase}" %></label></th>
+  </tr>
+  <% equipo = TipoEquipoSeguridad.find(:all, :conditions=>"activo = true") %>
+      <tr>
+        <td align="left" style="width: 15%; height: 50px"><%= equipo[0].tipo.strip + ":" unless equipo[0].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[1].tipo.strip + ":" unless equipo[1].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[2].tipo.strip + ":" unless equipo[2].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[3].tipo.strip + ":" unless equipo[3].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[4].tipo.strip + ":" unless equipo[4].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[5].tipo.strip + ":" unless equipo[5].nil? %></td>
+        <td align="left" style="width: 15%"><%= equipo[6].tipo.strip + ":" unless equipo[6].nil? %>&nbsp;</td>
+      </tr>
+  <% unless equipo[7].nil? %>
+      <tr>
+        <td align="left" style="width: 15%; height: 50px"><%= equipo[7].tipo.strip + ":" unless equipo[7].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[8].tipo.strip + ":" unless equipo[8].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[9].tipo.strip + ":" unless equipo[9].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[10].tipo.strip + ":" unless equipo[10].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[11].tipo.strip + ":" unless equipo[11].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[12].tipo.strip + ":" unless equipo[12].nil? %></td>
+        <td align="left" style="width: 15%"><%= equipo[13].tipo.strip + ":" unless equipo[13].nil? %>&nbsp;</td>
+      </tr>
+    <% unless equipo[14].nil? %>
+      <tr>
+        <td align="left" style="width: 15%; height: 50px"><%= equipo[14].tipo.strip + ":" unless equipo[14].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[15].tipo.strip + ":" unless equipo[15].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[16].tipo.strip + ":" unless equipo[16].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[17].tipo.strip + ":" unless equipo[17].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[18].tipo.strip + ":" unless equipo[18].nil? %></td>
+        <td align="left" style="width: 14%"><%= equipo[19].tipo.strip + ":" unless equipo[19].nil? %></td>
+        <td align="left" style="width: 15%"><%= equipo[20].tipo.strip + ":" unless equipo[20].nil? %>&nbsp;</td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<% end %>
+
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="6" style="background-color: #c9c9c9"><label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.plan_inversion').upcase.gsub('ó', 'Ó') %></label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.Form.desembolso')}" %></label></th>
+    <th style="background-color: #cee3ba; width: 35%"><label><%= I18n.t('Sistema.Body.Vistas.Form.descripcion') %> (<%= "#{I18n.t('Sistema.Body.Vistas.General.rubros')}, #{I18n.t('Sistema.Body.Vistas.General.maquinarias')}, #{I18n.t('Sistema.Body.Vistas.General.equipos')}, #{I18n.t('Sistema.Body.Vistas.General.implementos')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.otros')}" %>)</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label><%= I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.unidad_medida') %></label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.costo')} #{I18n.t('Sistema.Body.Vistas.General.unitario')}" %></label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label><%= I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total') %></label></th>
+  </tr>
+
+  <% a = [1,2,3,4,5,6,7,8,9,0]
+    a.each{|i| %>
+    <tr>
+      <td align="center" style="height: 50px">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% } %>
+
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #c9c9c9"><label><%= I18n.t('Sistema.Body.Vistas.General.firmas').upcase %></label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #c9c9c9; width: 33%"><label><%= I18n.t('Sistema.Body.Vistas.General.tecnico_campo_realizo_visita') %></label></th>
+    <th style="background-color: #c9c9c9; width: 33%"><label><%= I18n.t('Sistema.Body.Vistas.General.persona_atiende_visita') %></label></th>
+    <th style="background-color: #c9c9c9; width: 34%"><label><%= I18n.t('Sistema.Body.Vistas.General.responsable_brigada') %></label></th>
+  </tr>
+<% usuario = Usuario.find(:first, :conditions=>["nombre_usuario = '#{@solicitud.usuario_pre_evaluacion}'"])
+  tecnico_campo = TecnicoCampo.find(:first, :conditions=>"cedula = #{usuario.cedula}") %>
+  <tr>
+    <td valign="top" style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.apellidos') %> / <%= I18n.t('Sistema.Body.Vistas.General.nombres') %>:</label> <%= usuario.nombre_corto %><%=  %></td>
+    <td valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.apellidos') %> / <%= I18n.t('Sistema.Body.Vistas.General.nombres') %>:</label></td>
+    <td valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.apellidos') %> / <%= I18n.t('Sistema.Body.Vistas.General.nombres') %>:</label> </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.ci') %>:</label> <%= usuario.cedula_nacionalidad << '-' << usuario.cedula.to_s %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ci') %>:</label> </td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ci') %>:</label> </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.codigo_tecnico') %>:</label> <%= tecnico_campo.codigo %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.firma') %>:</label> </td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.telf') %>:</label> </td>
+  </tr>
+
+  <tr>
+    <td style="height: 50px"><label><%= I18n.t('Sistema.Body.Vistas.General.telf') %>:</label> <%= tecnico_campo.telefono_habitacion %></td>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.firma') %>:</label></td>
+    <td valign="top" rowspan="2"><label><%= I18n.t('Sistema.Body.Vistas.General.firma') %>:</label> </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="height: 80px"><label><%= I18n.t('Sistema.Body.Vistas.General.firma') %>:</label> </td>
+    <td valign="top"><label><%= I18n.t('Sistema.Body.Vistas.General.huella_digital') %></label> </td>
+  </tr>
+</table>
+<table width="1120px" >
+  <tr>
+    <td colspan="4">
+      <div style="padding: 6px" align="center">
+        <form>
+          <div id = boton>
+            <input name="print" type="button" value="<%= I18n.t('Sistema.Body.General.imprimir') %>" onclick="varitext()" />
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>

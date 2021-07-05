@@ -1,0 +1,98 @@
+<script type="text/javascript">
+
+  function habilitar_texto(){
+    var combo = document.getElementById('item_atributo_tipo_c').checked;
+    var texto = document.getElementById('item_atributo_tabla_combo');
+
+
+    //alert(combo);
+    //alert(texto.name);
+    //alert(texto.readOnly);
+
+    if (combo == true)
+    {
+      texto.readOnly = false;
+    }
+    else
+    {
+      texto.readOnly = true;
+      texto.value = '';
+    }
+  }
+</script>
+<table>
+  <tr>
+    <td style="width: 140px">
+      <label><%=I18n.t('Sistema.Body.General.titulo')%></label>
+    </td>
+    <td style="width: 560px">
+      <%= text_field 'item_atributo', 'nombre', :class=>'text', :style=>'width: 200px', :maxlength=>'40', :onkeypress=>'inputChange();', :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label>
+    </td>
+    <td>
+      <%= text_area 'item_atributo', 'descripcion',
+        :class=>'text',
+        :style=>'width: 580px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,300)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+    </td>
+    <td>
+      <%= radio_button 'item_atributo', 'tipo', '1', :class=>'text', :onkeypress=>'habilitar_texto();'+'inputChange();', :onchecked=>'habilitar_texto()'+'inputChange();', :onclick=>'habilitar_texto(); inputChange();'  -%>
+      <%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.texto_100')%> <br />
+
+      <%= radio_button 'item_atributo', 'tipo', '5', :class=>'text', :onkeypress=>'habilitar_texto();'+'inputChange();', :onchecked=>'habilitar_texto()'+'inputChange();', :onclick=>'habilitar_texto();inputChange();'  -%>
+      <%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.texto_500')%> <br />
+
+      <%= radio_button 'item_atributo', 'tipo', 'I', :class=>'text', :onkeypress=>'habilitar_texto();inputChange();', :onchecked=>'habilitar_texto()', :onclick=>'habilitar_texto();'  -%>
+      <%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.numerico_entero')%> <br />
+
+      <%= radio_button 'rubro_atributo', 'tipo', 'F', :class=>'text', :onkeypress=>'habilitar_texto();inputChange();', :onchecked=>'habilitar_texto()', :onclick=>'habilitar_texto();'  -%>
+      <%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.numerico_decimales')%> <br />
+
+      <%= radio_button 'item_atributo', 'tipo', 'B', :class=>'text', :onkeypress=>'habilitar_texto(); inputChange();', :onchecked=>'habilitar_texto()', :onclick=>'habilitar_texto();'  -%>
+      <%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.si_no')%> <br />
+
+      <%= radio_button 'item_atributo', 'tipo', 'D', :class=>'text', :onkeypress=>'habilitar_texto(); inputChange();', :onchecked=>'habilitar_texto()', :onclick=>'habilitar_texto();' -%>
+      <%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.fecha')%> <br />
+      <table>
+        <tr>
+          <td align='left'>
+            <%= radio_button 'item_atributo', 'tipo', 'C', 
+              :class=>'text',
+              :onkeypress=>'habilitar_texto();',
+              :onchecked=>'habilitar_texto()',
+              :onclick=>'habilitar_texto();'  -%>
+            <%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.cuadro_lista')%> <br />
+          </td>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.tabla')%></label>
+          </td>
+          <td>
+            <%= text_field 'item_atributo', 'tabla_combo', :class=>'text', :readonly=>'readonly', :style=>'width: 400px', :maxlength=>'100'  -%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'item_atributo', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0",
+        :onkeypress=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+</table>

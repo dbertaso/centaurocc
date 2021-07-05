@@ -1,0 +1,54 @@
+<div id="tabs">
+  <ul>
+    <%
+      action_name = controller.action_name
+      controller_name = controller.controller_name
+
+      if controller_name=='programa_producto'
+    %>
+
+        <li id="actual">
+          <div>
+            <a href="#"><%= I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a>
+          </div>
+        </li>
+
+      <%
+      else
+      %>
+
+      <li>
+        <div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'programa_producto', :action => 'edit', :programa_id => @programa.id, :id => @producto.id) if action_name == 'index' %>
+
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'programa_producto', :action => 'view_detail', :programa_id => @programa.id, :id => @producto.id) if (action_name=='view_detail' || action_name=='view')  %>
+        </div>
+      </li>
+
+      <%
+      end
+
+      if @producto.id
+
+        if controller_name=='programa_producto_formula'
+        %>
+          <li id="actual">
+            <div>
+              <a href="#"><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Tabs.metodo_amortizacion') %></a>
+            </div>
+          </li>
+        <%
+        else
+        %>
+          <li>
+            <div>
+                <%= link_to(I18n.t('Sistema.Body.Vistas.ProgramaProducto.Tabs.metodo_amortizacion'), :controller => 'programa_producto_formula', :action => 'index', :programa_id => @programa.id, :producto_id => @producto.id) if action_name == 'edit' || action_name == 'index' %>
+                <%= link_to(I18n.t('Sistema.Body.Vistas.ProgramaProducto.Tabs.metodo_amortizacion'), :controller => 'programa_producto_formula', :action => 'view', :programa_id => @programa.id, :producto_id => @producto.id) if (action_name == 'view' || action_name == 'view_detail')  %>
+            </div>
+          </li>
+        <%
+        end
+      end
+      %>
+  </ul>
+</div>

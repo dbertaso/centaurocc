@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+  <head>
+    <meta http-equiv="REFRESH" content="960" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= I18n.t('Sistema.Body.Vistas.Form.aplicativo')%> - <%= I18n.t('Sistema.Body.Vistas.Form.sistema')%> </title>
+
+    <%= stylesheet_link_tag  "basic","menu" ,"main", "menuGeBos", "calendar_date_select", :media => "all" %> <!-- "menuGeBos","main", -->
+    <%= javascript_include_tag "application", "stuHover", "menu/jscookmenu", "menu/style", 
+      "prototype", "validation", "effects", "developer","calendar_date_select", 
+      "eforsys" %>  <!-- "stuHover", -->
+
+    <%= calendar_date_select_includes :style => 'default',:locale=> I18n.locale %>
+    <%= csrf_meta_tags %>
+
+
+    <% if session[:id] %>
+      <script language="JavaScript">
+  <%= menu unless menu.blank?%>
+      </script>
+    <% end %>
+
+  </head>
+
+  <% if !session[:id] %>
+<body style="background-image:url(/assets/marcadeagua.png);background-repeat:no-repeat;background-position: 90% 100px;">
+<%end%>
+<!-- Contenido -->
+<div id="loading" style="display: none">
+  <table>
+    <tr>
+      <td>
+        <span style="color: #22f"><%=I18n.t('Sistema.Body.General.cargando')%></span>
+      </td>
+      <td>
+        <%= image_tag(image_path('cargando.gif')) %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+    <% if session[:id] %>
+      <% if params[:popup].nil? %>
+<!-- Encabezado -->
+<body style="background-image:url(/assets/marcadeagua.png);background-repeat:no-repeat;background-position: 90% 100px;">
+<div id="header-theme">
+<div id="header-theme-agua">
+<div id="header-theme-bglogo">
+<div id="logo">
+  <img src="/assets/logo.png" width="118" height="51" /> </div>
+</div>
+<div id="header-theme-icons">
+<!--<img src="assets/idioma.png" width="82" height="24" />-->
+
+<% if session[:id] %>
+          <% if params[:popup].nil? %>
+<%valor_sucu="".html_safe      
+        @idiomas.each{ |x|         
+         archivo_yml=Rails.root.join('config', 'locales', "#{x.nemonico}.yml")
+         if I18n.locale.to_s==x.nemonico.to_s and File.exist?(archivo_yml)            
+            valor_sucu+="<option selected value=#{x.nemonico} style='background: url(/assets/paises/#{x.bandera}) no-repeat center left; padding-left:30px;padding-top:3px;background-size: 23px 15px;'>#{I18n.t('Idiomas.idioma'+x.id.to_s)}</option>".html_safe        
+         elsif File.exist?(archivo_yml)
+            valor_sucu+="<option value=#{x.nemonico} style='background: url(/assets/paises/#{x.bandera}) no-repeat center left; padding-left:30px;padding-top:3px;background-size: 23px 15px;'>#{I18n.t('Idiomas.idioma'+x.id.to_s)}</option>".html_safe        
+         end         
+        }        
+        %>        
+        
+        <%= select_tag(
+              'usuario_lenguaje',
+              valor_sucu,
+              { :class=>'select', :onchange=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method => :get,
+                  :url=>{:controller=>'/sistema/usuario',
+                  :action=>:locate_change },
+                  :with=>"'lenguaje='+ this.value")};inputChange();",:style=>"background: #D7D7D7 url(/assets/paises/#{@bandera_actual}) no-repeat center left;padding-left:30px;padding-top:3px;background-size: 23px 15px;position: relative; top: -7px; left: 0px;" } ) %> 
+ 
+
+<%=link_to(image_tag(image_path('icon1.png'),:width=>'23', :height=>'23',
+                  :title=>I18n.t('Sistema.Body.Vistas.Form.inicio')), '/')%>
+<%= link_to(image_tag(image_path('icon2.png'), :width=>'23',:height=>'23',
+                  :title=>I18n.t('Sistema.Body.Vistas.Form.cerrar_sesion')), logout_path) %>
+<%= link_to(image_tag(image_path('icon3.png')),  {:controller=>'/basico/ayuda',  :popup=>true  }, :title=>I18n.t('Sistema.Body.Vistas.Form.ayuda'), :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>3) + "','height=420,width=600, scrollbars=no, resizable=no,top=200,left=360'); return false;")  %>
+                  
+                  
+ <% end %>
+ <% end %>                  
+
+</div>
+</div>
+</div>
+<!-- /Encabezado -->
+
+
+        <% end %>
+
+        <% end %>       
+
+      </div>
+
+      <div style="background: transparent url(/assets/tope/menu_fondo_estilo.gif) repeat-x; height: 24px;">
+        <div id="myMenuID"></div>
+      </div>
+
+      <% if session[:id] %>
+        <% if params[:popup].nil? %>
+          <script language="JavaScript">
+            cmDraw ('myMenuID', myMenu, 'hbr', cmFoncrei, 'Foncrei');
+          </script>
+        <% end %>
+      <% end %>
+
+      <% if @form_title %>
+        <h1><%= form_title %></h1>
+      <% else %>
+        <br><br>
+          <% end %>
+
+          <div id="content">
+
+            <div class="marco" style="width: <%= @width_layout.nil? ? '700' : @width_layout  %>px">
+
+              <% 
+              begin
+                controller.method(:new)
+              %>
+                <div class="marco-boton-out" id="button_new">
+                  <%= link_to_remote( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.agregar')),
+                      :loading =>'image_load()',
+                      :loaded => 'image_unload()',
+                      :url => { :action => :new, :id => @solicitud, :onclick=>'ocultar_filtros();'} )) if vlink 'edit' -%>
+                </div>
+              <%
+              rescue NameError
+              end
+            %>
+
+              <div class="marco-contenido">
+
+                <div class="marco-titulo">
+                  <div>
+                    <div>
+                      <%=I18n.t('Sistema.Body.Vistas.Form.header_control_visitas') %> <span style="color: #FF0000">'<%= @full_info %> '</span>
+                    </div>
+                  </div>
+                </div>
+
+                <%= error %>
+                <%= message %>
+
+                <div class="lista-form" id="form_new" style="display: none"></div>
+
+                <div id="list">
+<%#= @content_for_layout %>
+                  <%=yield :list%>
+                </div>
+              </div>    
+            </div>
+          <br><br><br>
+          </div>
+
+          <% if session[:id] %>
+            <%  @usuario_aux = Usuario.find(session[:id])
+            @oficina = Oficina.find(session[:oficina])
+            @estado = @oficina.municipio.estado_id
+            @oficina_aux = @oficina.nombre.to_s
+            @empresa_sistema = EmpresaSistema.find(@usuario_aux.empresa_sistema_id) unless @usuario_aux.empresa_sistema_id.blank?
+          %>
+          <% end %>
+          <!-- Footer -->
+<br>
+<br>
+<div id="footer-theme">
+<div id="footer-theme-div1">
+</div>
+<div style="text-align:center" id="footer-theme-div2"><%=I18n.t('Sistema.Body.General.version')%> <%=I18n.t('Sistema.Body.General.version_actual')%> <br> <%=Time.now.strftime("%Y")%>
+</div>
+<div id="footer-theme-div3">
+</div>
+<% if session[:id] %>
+  <% unless @usuario_aux.empresa_sistema_id.blank? %>
+    <div id="footer-theme-div5" style ="font-family: Arial; display: block; color: #FFFFFF; font-size: 10px; height: 22px; float: left;">
+      <br/>
+      <b><%= I18n.t('Sistema.Body.Vistas.General.empresa_sesion') %>: <%= @empresa_sistema.nombre_corto %></b>
+    </div>
+  <% end %>
+<div id="footer-theme-div4"><b><%=I18n.t('Sistema.Body.Vistas.Filtros.oficina')%>: <%= @oficina.nombre %> (<%= @oficina.municipio.estado.nombre %>)</b> <br>
+                      <b><%=I18n.t('Sistema.Body.Vistas.Login.user')%>: <%= @usuario_aux.primer_nombre + " " + @usuario_aux.primer_apellido %></b>
+                    <% end %>
+</div>
+</div>
+<!-- /Footer -->          
+          </body>
+          </html>

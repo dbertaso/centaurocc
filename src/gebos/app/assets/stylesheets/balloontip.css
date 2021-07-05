@@ -1,0 +1,27 @@
+.balloonstyle
+{
+    BORDER-RIGHT: black 1px solid;
+    PADDING-RIGHT: 5px;
+    BORDER-TOP: black 1px solid;
+    PADDING-LEFT: 5px;
+    Z-INDEX: 100;
+    LEFT: 0px;
+    VISIBILITY: hidden;
+    PADDING-BOTTOM: 5px;
+    FONT: 10px/14px Verdana;
+    BORDER-LEFT: black 1px solid;
+    WIDTH: 200px;
+    PADDING-TOP: 5px;
+    BORDER-BOTTOM: black 1px solid;
+    POSITION: absolute;
+    TOP: -500px;
+    BACKGROUND-COLOR: white
+}
+#arrowhead
+{
+    Z-INDEX: 99;
+    LEFT: 0px;
+    VISIBILITY: hidden;
+    POSITION: absolute;
+    TOP: -500px
+}

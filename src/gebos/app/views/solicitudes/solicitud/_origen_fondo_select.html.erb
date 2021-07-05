@@ -1,0 +1,5 @@
+<%= select(
+  'solicitud', 'origen_fondo_id',
+  @programa_origen_fondo_select.map{|c| [c.nombre, c.id]},
+  {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

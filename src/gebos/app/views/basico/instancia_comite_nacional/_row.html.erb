@@ -1,0 +1,4 @@
+<% comite = @comite if comite.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= comite.id %>">
+  <%= render :partial => 'data', :locals => { :comite => comite, :even_odd => even_odd } -%>
+</tr>

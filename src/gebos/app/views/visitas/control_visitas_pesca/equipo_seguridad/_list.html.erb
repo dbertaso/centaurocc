@@ -1,0 +1,33 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th align="center" style="width: 100px" <%= sort_class_helper('es_propio') %>>
+        <%= sort_link_helper 'Es Propia', 'es_propio', 'list' %>
+      </th>
+      <th style="width: 300px" <%= sort_class_helper('tipo_equipo_id') %>>
+        <%= sort_link_helper 'Tipo de Equipo', 'tipo_equipo_id', 'list' %>
+      </th>
+      <th style="width: 300px" <%= sort_class_helper('modelo') %>>
+        <%= sort_link_helper 'Modelo', 'modelo', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('cantidad') %>>
+        <%= sort_link_helper 'Cantidad', 'cantidad', 'list' %>
+      </th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for equipo_seguridad in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :equipo_seguridad => equipo_seguridad, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))), 
+  visitas_visita_seguimiento_index_path<<"/#{@visitas.solicitud_id.to_s}", {:popup=>params[:popup],:id=>'button_close' } ) -%>

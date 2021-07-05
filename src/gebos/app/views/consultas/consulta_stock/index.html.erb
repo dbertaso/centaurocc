@@ -1,0 +1,81 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+  <table>
+
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <% clase_onchange =  %>
+        <%= select(
+          'consulta','rubro_id',
+          @tipo_maquinaria.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method=>:get,
+            :url=>{:controller=>'consulta_stock',
+            :action=>:clase_search },
+            :with=>"'id='+ this.value")};inputChange();"})
+      %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      </td>
+      <td>
+        <div id="clase-search">
+          <%=select(
+            'consulta','tipo_id',
+            [],
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();'}) %>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %>:</label>
+      </td>
+      <td>
+        <%=select(
+          'consulta','marca_id',
+          @marca.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();'}) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %>:</label>
+      </td>
+      <td>
+        <%=select(
+          'consulta','modelo_id',
+          @modelo.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();'}) %>&nbsp&nbsp&nbsp<%= image_submit_tag('boton_buscar.gif') -%>
+      </td>
+
+  </table>
+  <% end %>
+  <br/>
+  <%= error %>
+  <%= message %>
+  <br/>
+  <div id="list">
+  </div>
+</div>

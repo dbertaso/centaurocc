@@ -1,0 +1,536 @@
+/* General */
+body {
+	background:#fff;
+	margin: 0px;
+	color: #000;
+	/* font-family: Verdana, Arial, Helvetica, sans-serif; */
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	padding-left: 0px;
+	padding-right: 0px;
+	height: 100%;
+}
+
+span.titulo_modificar {
+	color: #F00;
+}
+
+
+li {
+	list-style: none;
+}
+
+div#loading {
+	font-size: 12px;
+	padding: 5px;
+	top: 10px;
+	right: 10px;
+	background: #fff;
+	border: 1px;
+	border-color: #44f;
+	border-style: solid;
+	position: absolute;
+	margin-top: 0px;
+}
+
+.msg-notice {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #44AA44;
+	background-color: #fff;
+	border: solid 1px #000;
+	padding: 4px;
+	margin-bottom: 5px;
+}
+
+.msg-warning {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color:orange;
+	background-color: #fff;
+	border: solid 1px #000;
+	padding: 4px;
+	margin-bottom: 5px;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td.separador {
+	height: 38px;
+}
+td.separador span {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	background-color: #D7D7D7;
+	/* border-bottom: 1px solid #575757; */
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	/* color: #474747; */
+	color: #000;
+	padding-left: 4px;
+}
+td.sub-separador span {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	background-color: #E3E3E3;
+	/* border-bottom: 1px solid #575757; */
+	display: block;
+	font-size: 10px;
+	font-weight: bold;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	/* color: #474747; */
+	color: #000;
+	padding-left: 4px;
+}
+
+.sortup {
+	background-color: red;
+}
+.sortdown {
+	background-color: green;
+}
+
+input.text, select.select, textarea.text {
+	border:1px solid #999999;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+label {
+	font-weight: bold;
+	/* color: #575757; */
+	color: #000;
+}
+
+label.requerido {
+
+  color: red
+
+}
+
+img {
+	border: 0px;
+}
+
+h1 {
+	font-family: Trebuchet, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #000000;
+}
+div#titulo {
+	padding:10px;
+	margin:0px;
+	background: #fff  url(assets/titulo_sombra.gif) repeat-x bottom;	
+}
+div#content {
+	padding: 10px;
+	margin: 0px;
+    /*background-image:url(/assets/marcadeagua.png);
+    background-repeat:no-repeat;
+    background-position: 90% 0px;*/
+	/* background: #ffedd4  url(assets/contenido_sombra.gif) repeat-x top;	*/	
+	height: 100%;
+	/*background-color: #fff;*/
+}
+
+div.marco {
+	padding-bottom: 10px;
+	border: 0px;
+	margin: 0 auto;
+}
+
+.form-titulo {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #575757;
+	padding-bottom: 6px;
+}
+
+div.marco-titulo {
+	background-image: url(/assets/titulo_fondo_2.gif);
+	background-repeat:  repeat-x;
+	background-position: left top;
+	height: 22px;
+	border: 1px solid #797979;
+	margin-bottom: 10px;
+}
+div.marco-titulo div {
+	background-image: url(/assets/titulo_fondo_3.gif);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+div.marco-titulo div div {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	background-image: url(/assets/titulo_fondo_1.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+	padding: 4px;
+	padding-right: 12px;
+	color: #444011;
+}
+
+
+div.marco div.marco-contenido, div.marco div.marco-contenido2 {
+	background-color: #eef6ff;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #999;
+	padding: 5px;
+	clear: both;
+}
+div.marco div.marco-contenido2 {
+	border-top: 0px;
+}
+div.marco-contenido table td {
+	padding: 3px;
+}
+
+div.marco-boton-out {
+	border-width: 0px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin: 0px;
+	text-align: right;
+	clear: both;
+}
+
+table.tabla-boton-out {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #999;
+	margin-bottom: 6px;
+}
+table.tabla-boton-out td {
+	padding: 6px;
+}
+
+div.marco-boton-in {
+	border-width: 0px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-right: 5px;
+	margin: 0px;
+	text-align: right;
+	clear: both;
+}
+
+div.lista-paginas {
+	text-align: center;
+	clear: both;
+	font-size: 14px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: #565656;
+}
+div.lista-paginas a {
+	color: #565656;
+}
+
+div.lista-total {
+	text-align: center;
+	clear: both;
+	font-size: 10px;
+	padding-top: 0px;
+	padding-bottom: 2px;
+	color: #565656;
+	font-style: italic;
+}
+
+div.lista-form, td.lista-form {
+	background: #efefef;
+	padding-top: 10px;
+	padding-bottom: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
+	color: #565656;
+	margin: 0px;
+}
+
+td.lista-form {
+	border:1px solid #666666;
+}
+
+div.lista-form {
+	border-style: solid ;
+	border-color: #666666;
+	border-width: 1px 1px 0px 1px;
+}
+
+table.lista {
+	border:1px solid #666666;
+	border-width:1px 0px 0px 1px;
+	background-color:#FFFFFF;
+	border-spacing: 0px;
+}
+
+table.lista thead tr {
+	height: 22px;
+	background-image: url(/assets/titulo_fondo_2.gif);
+}
+
+table.lista th.ascendente {
+	background: #fff url(/assets/ascendente.gif) right 50% no-repeat;    
+}
+table.lista th.descendente {
+	background: #fff url(/assets/descendente.gif) right 50% no-repeat;
+}
+
+table.lista th a {
+	text-decoration: none;
+	display: block;
+	color: #000;
+}
+
+tr.modificar td {
+	border:1px solid #666666;
+	border-width:0px 1px 1px 0px;
+	padding: 0px;
+	color: #000;
+	padding-left: 2px;
+	padding-right: 2px;
+	background-color: #efefef;
+}
+
+tr.lista0 td, tr.lista1 td, tr.lista_alert td, table.lista th {
+	border:1px solid #666666;
+	border-width:0px 1px 1px 0px;
+	padding: 0px;
+	color: #000;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+tr.lista0 {
+	background-color: #efefef;
+}
+
+tr.lista_alert {
+	background-color: #fff9a8;
+}
+
+tr.lista0 td table tr td, tr.lista1 td table tr td{
+	border-width: 0px 0px 0px 0px;
+}
+
+/* Tabs */
+
+div#tabs {
+	height: 24px;
+  background-color: #eef6ff;
+  background-image: url("/assets/tabsbg.gif");
+  background-position: bottom;
+  background-repeat: repeat-x;
+  font-size: 10px;
+  line-height: normal;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+#tabs ul {
+  margin: 0px;
+  padding: 0px 0px 0px;
+  list-style: none;
+}
+#tabs li {
+  float:left;
+  background:url("/assets/pestgris2.gif") repeat-x left top;
+  margin: 0px;
+  padding: 0px;
+}
+#tabs div {
+  float:left;
+  background:url("/assets/pestgris1.gif") no-repeat left top;
+  margin: 0px;
+  padding: 0px;
+}
+#tabs a {
+  float:left;
+  display:block;
+  background:url("/assets/pestgris3.gif") no-repeat right top;
+  padding:5px 16px 4px 16px;
+  text-decoration:none;
+  font-weight:bold;
+  color:#000000;
+}
+/* Commented Backslash Hack
+   hides rule from IE5-Mac \*/
+#tabs a {float:none;}
+/* End IE5-Mac hack */
+#tabs a:hover {
+  color:#666666;
+}
+#tabs #actual {
+  background-image:url("/assets/pestgris2-on.gif");
+}
+#tabs #actual div {
+  background-image:url("/assets/pestgris1-on.gif");
+}
+#tabs #actual a {
+  background-image:url("/assets/pestgris3-on.gif");
+  color:#000000;
+  padding-bottom:5px;
+}
+
+
+/* Head */
+div#menu {
+	padding-top: 9px;
+	height: 22px;
+}
+
+div#menu a {
+	font-weight: bold;
+	color: #fff;
+	font-size: 12px;
+	text-decoration: none;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+/* Error */
+
+ .errorExplanation {
+	background: #fcc;
+	margin: 0px;
+	border: solid 1px #f66;
+	margin-bottom: 5px;
+}
+
+ .errorExplanation h2 {
+	padding: 2px 5px 3px 20px;
+	color: #333;
+	font-size: 11px;
+	margin: 0;
+	letter-spacing: 0;
+	font-family: Verdana;
+	background: #f66 url(/assets/error.gif) 2px 1px no-repeat;
+}
+
+ .errorExplanation ul {
+	margin: 0;
+	padding: 2px 2px 4px 25px;
+}
+
+ .errorExplanation p {
+	font-size: 11px;
+	padding: 2px 5px;
+	font-family: Verdana;
+	margin: 0;
+}
+
+ .errorExplanation ul li {
+	font-size: 11px;
+	margin: 0;
+	font-family: Verdana;
+	padding: 0;
+}
+
+#fieldWithErrors input {
+	border: solid 1px #f00;
+}
+
+.menutitle{
+cursor:pointer;
+margin-bottom: 5px;
+background-color:#ECECFF;
+color:#000000;
+width:140px;
+padding:2px;
+text-align:center;
+font-weight:bold;
+/*/*/border:1px solid #000000;/* */
+}
+
+.submenu{
+margin-bottom: 0.5em;
+
+}
+
+
+#foot {
+	
+	    bottom: 0;
+	    margin: 0 15px 0 0;
+	    padding: 0 10px;
+	    position: fixed;
+	color:block;
+}
+.button {
+	-moz-box-shadow: 0px 0px 10px -50px #64ada2;
+	-webkit-box-shadow: 0px 0px 10px -50px #64ada2;
+	box-shadow: 0px 0px 10px -50px #64ada2;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9bada8), color-stop(1, #e4eded));
+	background:-moz-linear-gradient(top, #9bada8 5%, #e4eded 100%);
+	background:-webkit-linear-gradient(top, #9bada8 5%, #e4eded 100%);
+	background:-o-linear-gradient(top, #9bada8 5%, #e4eded 100%);
+	background:-ms-linear-gradient(top, #9bada8 5%, #e4eded 100%);
+	background:linear-gradient(to bottom, #9bada8 5%, #e4eded 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9bada8', endColorstr='#e4eded',GradientType=0);
+	background-color:#9bada8;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#141214;
+	font-family:Verdana;
+	font-size:10px;
+	font-weight:bold;
+	padding:0px 15px;
+	text-decoration:none;
+	text-shadow:0px 2px 0px #5a968d;
+}
+.button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e4eded), color-stop(1, #9bada8));
+	background:-moz-linear-gradient(top, #e4eded 5%, #9bada8 100%);
+	background:-webkit-linear-gradient(top, #e4eded 5%, #9bada8 100%);
+	background:-o-linear-gradient(top, #e4eded 5%, #9bada8 100%);
+	background:-ms-linear-gradient(top, #e4eded 5%, #9bada8 100%);
+	background:linear-gradient(to bottom, #e4eded 5%, #9bada8 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e4eded', endColorstr='#9bada8',GradientType=0);
+	background-color:#e4eded;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+
+.myButton {
+	background-color:#cfd4d6;
+	-moz-border-radius:18px;
+	-webkit-border-radius:18px;
+	border-radius:18px;
+	display:inline-block;
+	cursor:pointer;
+	color:#02080a;
+	font-family:Verdana;
+	font-size:14px;
+	font-weight:bold;
+	padding:6px 38px;
+	text-decoration:none;
+}
+.myButton:hover {
+	background-color:#56b5c4;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}

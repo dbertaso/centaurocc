@@ -1,0 +1,22 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 500px" <%= sort_class_helper('formula.nombre') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'formula.nombre', 'list' %>
+      </th>
+      <th style="width: 44px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+  </tr>
+  </thead>
+  <tbody id="list_body">
+<%
+  even_odd = 1
+  for formula in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :formula => formula, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

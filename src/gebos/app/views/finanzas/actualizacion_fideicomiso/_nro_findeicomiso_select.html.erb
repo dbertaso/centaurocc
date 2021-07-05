@@ -1,0 +1,12 @@
+               <% nrof_onchange = remote_function(
+                       :loading =>'image_load()',
+                       :loaded => 'image_unload()',
+                       :method=>:get,
+                       :url=>{:controller=>'actualizacion_fideicomiso',
+                       :action=>:nro_fideicomiso_change },
+                       :with=>"'nro_fideicomiso='+value" ) %>
+<%= select(
+     'nro_fideicomiso', '',
+     @nro_fideicomiso_list.map{|i| [i.numero_fideicomiso, i.id]},
+     { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+     { :class=>'select',:onchange=>nrof_onchange + ';inputChange();'} ) %>

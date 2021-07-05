@@ -1,0 +1,20 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.modificando')} #{I18n.t('Sistema.Body.Controladores.Program.FormTitles.form_title_record')}"%>  <span class="titulo_modificar">'<%= @programa.alias %>'</span>
+    </div>
+  </div>
+</div>
+
+<%= render :partial=>'basico/programa/common/tabs' %>
+<div class="marco-contenido2">
+        <br/>
+  <div id="tasa_historico_list">
+    <%= render "basico/programa/tasa_historico/list" %>
+  </div>
+  <br/>
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller => 'programa', :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

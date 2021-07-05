@@ -1,0 +1,22 @@
+<%= form_title_edit %>
+<%= render 'basico/precio_gaceta/common/tabs' %>
+<div class="marco-contenido2">
+   <%= error  %>
+  <%= message  %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id=>@detalle_precio_gaceta.id, :precio_gaceta_id=>@precio_gaceta.id} ) do-%>
+  <%= render 'form' %>
+
+  <div id="buttons_edit" style="display: none">
+    <%= form_buttons_edit :precio_gaceta_id => @precio_gaceta.id, :popup=>params[:popup] %>
+  </div>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :action => :index, :precio_gaceta_id => @precio_gaceta.id, },
+    { :id=>'button_close' } ) -%>
+
+  <% end -%>
+</div>

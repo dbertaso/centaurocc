@@ -1,0 +1,273 @@
+<tr id="row_<%= @comprobante_contable.id %>_view">
+	<td valign="top" style="text-align: center">
+		<%= link_to_remote(
+			image_tag(image_path(t('Sistema.Body.Imagenes.img_colapsar'))),
+		  :loading =>'image_load()',
+	 	  :loaded => 'image_unload()',
+      :method => :get,
+			:url => {:action => :collapse, :comprobante_contable_id => @comprobante_contable.id}) -%>
+	</td>
+	<td colspan="8" style="padding-bottom: 10px">
+	  <table style="width: 100%">
+	    <tr>
+	      <td style="vertical-align: top">
+      		<table>
+      		  <tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.General.programa') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.prestamo.solicitud.programa.nombre %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>    
+              </td>
+      				<td>
+      				</td>
+      			</tr>
+            <tr>
+              <td>
+                <label>
+                  <%= t('Sistema.Body.General.beneficiario') %>:
+                </label>
+              </td>
+              <td>
+                <%= @comprobante_contable.prestamo.cliente.nombre %>
+              </td>
+            </tr>
+            <tr>
+              <td>    
+              </td>
+              <td>
+              </td>
+            </tr>      			
+            <tr>
+      				<td>
+                <label>
+                  <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.solicitud')}" %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.prestamo.solicitud.numero %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.prestamo')}" %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.prestamo.numero %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.Form.actividad') %>: 
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.prestamo.solicitud.actividad.nombre %>
+      				</td>
+
+      		</table>
+	      </td>
+	      <td style="vertical-align: top">
+      		<table>
+      		    <tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif') %>:
+                </label>
+              </td>
+      				<td>
+      					<%=  if @comprobante_contable.prestamo.cliente.class.to_s =='ClientePersona'
+                        @comprobante_contable.prestamo.cliente.persona.cedula
+                     else
+                        @comprobante_contable.prestamo.cliente.empresa.rif
+                     end 
+                %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.numero_comprobante') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.id %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.fecha_comprobante') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.fecha_comprobante_f %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.enviado') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= format_bool @comprobante_contable.enviado %>
+      				</td>
+
+            </tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.fecha_envio') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.fecha_envio_f %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.numero_lote_envio') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.numero_lote_envio %>
+      				</td>
+              </tr>
+              <tr>
+              <% unless @comprobante_contable.factura.nil? %>
+
+              <td>
+                  <label>
+                    <%= t('Sistema.Body.Vistas.General.numero') %>:
+                  </label>
+                </td>
+                <td>
+                  <% factura = Factura.find(@comprobante_contable.factura_id) %>
+                  <%unless factura.nil? %>
+                    <%= @comprobante_contable.factura.numero if !@comprobante_contable.factura.nil? %>
+                  
+                    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>"#{I18n.t('Sistema.Body.Controladores.Accion.consultar')} #{I18n.t('Sistema.Body.Vistas.General.facturas')}"), 
+                      {:controller => '/prestamos/consulta_prestamo_factura', :action => 'view', :id=>@comprobante_contable.factura.id, :prestamo_id=>@comprobante_contable.factura.prestamo_id, :popup=>true}, 
+                      :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.facturas') + "','height=600,width=800, scrollbars=yes, resizable=yes'); return false;")  %>
+                      &nbsp;
+                      
+                  <%else%>
+                    <% boleta = BoletaArrime.find(@comprobante_contable.factura_id) %>
+                    
+                    <% unless boleta.nil? %>
+                    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>"#{I18n.t('Sistema.Body.Controladores.Accion.consultar')} #{I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.boleta_arrime_id')}"), 
+                      {:controller => '/prestamos/boleta_arrime', :action => 'view', :id => boleta.id, :solicitud_id=> boleta.solicitud_id, :popup=>true}, 
+                      :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.facturas') + "','height=600,width=800, scrollbars=yes, resizable=yes'); return false;")  %>
+                      &nbsp;
+                
+                    <% end %>
+                  <%end%>
+                </td>
+              </tr>
+            <%end%>
+      			</tr>
+  		
+          </table>
+	      </td>
+	      <td style="vertical-align: top">
+	        <table>
+	           <tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.transaccion_numero') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.transaccion.id if @comprobante_contable.transaccion %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Modelos.ComprobanteContable.Columnas.anio') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.anio %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.fecha_contable') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.fecha_registro_f %>
+      				</td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.total_debe') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.total_debe_fm %>
+      				</td>
+      				<td></td>
+      				<td></td>
+      			</tr>
+      			<tr>
+      				<td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.total_haber') %>:
+                </label>
+              </td>
+      				<td>
+      					<%= @comprobante_contable.total_haber_fm %>
+      				</td>
+      				<td></td>
+      				<td></td>
+     			</tr>
+          <tr>
+            <td>
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.General.moneda') %>:
+              </label>
+            </td>
+            <td>
+              <%= @comprobante_contable.prestamo.moneda.nombre %>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+      		</table>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.referencia') %>:
+                </label>
+              </td>
+              <td colspan="2">
+                <%= @comprobante_contable.referencia %>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+
+      </tr>
+		</table>
+                <br/>
+		<%= render :partial=>"list_asiento" %>
+	</td>
+</tr>

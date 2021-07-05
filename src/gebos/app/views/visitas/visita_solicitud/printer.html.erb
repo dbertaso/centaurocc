@@ -1,0 +1,1045 @@
+<table width="1120px" border="1">
+  <tr>
+    <td style="width: 100%">
+      <table width="100%" border="0">
+        <tr>
+          <td style="width: 20%; text-align: left">
+            <img src="/images/logo_reporte.gif" alt="logo"/>
+          </td>
+          <td align="center">
+            <label style="font-size: 16px"> INFORME DE RECOMENDACIÓN <br/>
+              <% if @solicitud.sub_sector.nemonico == 'VE' %>
+                SECTOR VEGETAL / FORESTAL
+              <% elsif @solicitud.sub_sector.nemonico == 'AN' %>
+                SECTOR ANIMAL
+              <% elsif @solicitud.sub_sector.nemonico == 'PE' %>
+                SECTOR PESCA
+              <% elsif @solicitud.sub_sector.nemonico == 'AC' %>
+                SECTOR ACUICULTURA
+              <% end %>
+            </label>
+          </td>
+          <td style="width: 25%; text-align: left" valign="top">
+            <label>Nro.:</label> <%= @visita.codigo_visita %> <br/> <label>Fecha de visita:</label> <%= @visita.fecha_visita_f %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #bbbcd2"><label>DATOS DEL PRODUCTOR</label></th>
+  </tr>
+
+  <tr>
+    <td style="width: 33%"><label>Fecha de Trámite:</label> <%= @solicitud.fecha_solicitud_f %></td>
+    <td style="width: 33%"><label>Nro. Trámite:</label> <%= @solicitud.numero %></td>
+    <td style="width: 34%"><label>Tipo de Beneficiariio:</label> <%= @solicitud.cliente.tipo_cliente.nombre %></td>
+  </tr>
+<% if @solicitud.cliente.type.to_s == 'ClientePersona' %>
+  <tr>
+    <td colspan="2" style="font-size: 16px"><label>Nombre y Apellido:</label>  <%= @solicitud.cliente.persona.nombre_corto %></td>
+    <td><label>Cédula:</label> <%= @solicitud.cliente.persona.cedula_nacionalidad << '-' << @solicitud.cliente.persona.cedula.to_s %></td>
+  </tr>
+
+  <tr>
+    <td><label>Fecha de Nacimiento:</label> <%= @solicitud.cliente.persona.fecha_nacimiento_f %></td>
+    <td><label>Estado Civil:</label> <%= @solicitud.cliente.persona.estado_civil_w %></td>
+    <td><label>Edad:</label> <%= @solicitud.cliente.persona.edad(Time.now, @solicitud.cliente.persona.fecha_nacimiento).to_s << " años" %></td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="justify"><label>Dirección de Habitación:</label> <%= PersonaDireccion.direccion(@solicitud.cliente.persona.id) %></td>
+    <td><label>Teléfonos:</label> <%= @solicitud.cliente.persona.telefonos[0].codigo << '-' << @solicitud.cliente.persona.telefonos[0].numero if @solicitud.cliente.persona.telefonos.length > 0 %>  </td>
+  </tr>
+
+  <tr>
+    <td><label>Estado:</label> <%= @solicitud.cliente.persona.direcciones[0].ciudad.estado.nombre  %></td>
+    <td><label>Ciudad:</label> <%= @solicitud.cliente.persona.direcciones[0].ciudad.nombre %></td>
+    <td><label>Municipio:</label> <%= @solicitud.cliente.persona.direcciones[0].municipio.nombre %></td>
+  </tr>
+
+  <tr>
+    <td><label>Parroquia:</label> <%= @solicitud.cliente.persona.direcciones[0].parroquia.nombre %></td>
+    <td colspan="2"><label>Sector:</label> <%= @solicitud.cliente.persona.direcciones[0].zona %></td>
+  </tr>
+
+  <tr>
+    <td><label>Cuenta del Beneficiario<br/>Tipo:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'T') %></td>
+    <td valign="bottom"><label>Número:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'N') %></td>
+    <td valign="bottom"><label>Banco:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'B') %></td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><label>Tipo de Vivienda:</label> <%= @solicitud.cliente.persona.direcciones[0].tipo_nombre %></td>
+    <td><label>Nro. de Hijos:</label> <%= @solicitud.cliente.persona.cantidad_total_hijos %></td>
+  </tr>
+<% else %>
+  <tr>
+    <td colspan="2"><label>Razón Social:</label>  <%= @solicitud.cliente.empresa.nombre %></td>
+    <td><label>Rif:</label> <%= @solicitud.cliente.empresa.rif %></td>
+  </tr>
+  <% persona = @solicitud.cliente.empresa.representante_legal %>
+  <tr>
+    <td colspan="2"><label>Representante Legal:</label> <%= persona.primer_nombre << ' ' << persona.primer_apellido %></td>
+    <td><label>Cédula Representante Legal:</label> <%= persona.cedula %></td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" align="justify"><label>Domicilio Fiscal:</label> <%= EmpresaDireccion.direccion(@solicitud.cliente.empresa.id) %></td>
+    <td><label>Teléfonos:</label> <%= @solicitud.cliente.empresa.telefonos[0].codigo << '-' << @solicitud.cliente.empresa.telefonos[0].numero if @solicitud.cliente.empresa.telefonos.length > 0 %></td>
+  </tr>
+
+  <tr>
+    <td><label>Estado:</label> <%= @solicitud.cliente.empresa.direcciones[0].ciudad.estado.nombre  %></td>
+    <td><label>Ciudad:</label> <%= @solicitud.cliente.empresa.direcciones[0].ciudad.nombre %></td>
+    <td><label>Municipio:</label> <%= @solicitud.cliente.empresa.direcciones[0].municipio.nombre %></td>
+  </tr>
+
+  <tr>
+    <td><label>Parroquia:</label> <%= @solicitud.cliente.empresa.direcciones[0].parroquia.nombre %></td>
+    <td colspan="2"><label>Sector:</label> <%= @solicitud.cliente.empresa.direcciones[0].zona %></td>
+  </tr>
+
+  <tr>
+    <td><label>Cuenta del Beneficiario:<br/>Tipo:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'T') %></td>
+    <td><br/><label>Número:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'N') %></td>
+    <td><br/><label>Banco:</label> <%= CuentaBancaria.view(@solicitud.cliente.id, 'B') %></td>
+  </tr>
+<% end %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+<% unless @solicitud.sub_sector.nemonico == 'PE' %>
+  <tr>
+    <th colspan="3" style="background-color: #bbbcd2"><label>DATOS DE LA UNIDAD DE PRODUCCIÓN</label></th>
+  </tr>
+
+  <tr>
+    <td><label>Tenencia de la Tierra:</label> <%= @solicitud.UnidadProduccion.RegistroMercantil[0].TenenciaUnidadProduccion.nombre %></td>
+    <td colspan="2"><label>Tipo de Documento:</label> <%= @solicitud.UnidadProduccion.RegistroMercantil[0].TipoDocumento.tipo %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3"><label>Nombre de la Unidad de Producción:</label> <%= @solicitud.UnidadProduccion.nombre %></td>
+  </tr>
+
+  <tr>
+    <td><label>Subsector:</label> <%= @solicitud.sub_sector.nombre %></td>
+    <td colspan="2"><label>Rubro:</label> <%= @solicitud.rubro.nombre %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3"><label>Dirección de la Unidad de Producción:</label> <%= @solicitud.UnidadProduccion.direccion %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3"><label>Como llegar desde el poblado más cercano (Dirección Práctica):</label> <%= @solicitud.UnidadProduccion.referencia %></td>
+  </tr>
+
+  <tr>
+    <td><label>Estado:</label> <%= @solicitud.UnidadProduccion.Municipio.estado.nombre %></td>
+    <td><label>Municipio:</label> <%= @solicitud.UnidadProduccion.Municipio.nombre %></td>
+    <td><label>Parroquia:</label> <%= @solicitud.UnidadProduccion.Parroquia.nombre %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3">
+      <label>Ciudad más cercana:</label> <%= @solicitud.UnidadProduccion.Ciudad.nombre %>
+    </td>
+  </tr>
+<% if @solicitud.sub_sector.nemonico == 'AC' %>
+  <tr>
+    <td colspan="2"><label>Espejo de Agua Solicitado (mts2):</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].superficie_disponible).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @solicitud.UnidadProduccionCondicionAcuicultura[0].nil? %></td>
+    <td><label>Tipo de Sistema de Cultivo a Implementar:</label> <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].TipoSistemaAcuicultura.nombre unless @solicitud.UnidadProduccionCondicionAcuicultura[0].nil? %></td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="justify"><label>Especie Solicitada:</label> <% especie_solicitas = CondicionesEspeciesSolicitadas.find(:all, :conditions=>"unidad_produccion_condicion_acuicultura_id = #{@solicitud.UnidadProduccionCondicionAcuicultura[0].id}")
+                      testo = ""
+                      especie_solicitas.each {|especie| %>
+                        <% testo = testo + especie.tipo_especie_acuicultura.nombre.strip << ", " %><% } %>
+        <%= testo[0, testo.length - 2] << "." %>
+    </td>
+                      
+    <td><label>Tipo de Cultivo:</label> <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].TipoCultivoAcuicultura.nombre unless @solicitud.UnidadProduccionCondicionAcuicultura[0].nil? %></td>
+  </tr>
+
+  <tr>
+    <td colspan="3" align="justify"><label>Financiamiento Solicitado para:</label> <%= @solicitud.objetivo_proyecto %></td>
+  </tr>
+<% end %>
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label>LINDEROS</label></th>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label>Norte:</label> <%= @solicitud.UnidadProduccion.lindero_norte %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label>Sur:</label> <%= @solicitud.UnidadProduccion.lindero_sur %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label>Este:</label> <%= @solicitud.UnidadProduccion.lindero_este %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label>Oeste:</label> <%= @solicitud.UnidadProduccion.lindero_oeste %></td>
+  </tr>
+
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label>COORDENADAS GEOGRAFÍCAS (UTM)</label></th>
+  </tr>
+
+  <% utm = @solicitud.UnidadProduccion.UtmUnidadProduccion %>
+    <tr>
+      <td align="center"><%= utm[0].utm unless utm[0].nil? %> &nbsp;</td>
+      <td align="center"><%= utm[1].utm unless utm[1].nil? %></td>
+      <td align="center"><%= utm[2].utm unless utm[2].nil? %></td>
+    </tr>
+
+    <tr>
+      <td align="center"><%= utm[3].utm unless utm[3].nil? %> &nbsp;</td>
+      <td align="center"><%= utm[4].utm unless utm[4].nil? %></td>
+      <td align="center"><%= utm[5].utm unless utm[5].nil? %></td>
+    </tr>
+
+  <% coordenadas = LinderosCoordenadas.find(:all, :conditions=>['solicitud_id = ?', @solicitud.id]) %>
+   <tr>
+    <td style="width: 33%"><label>¿La Dirección se Ajustan a la Indicada en la Documentación?</label> <%= format_bool(coordenadas[0].direccion_correcta) unless coordenadas[0].nil? %></td>
+    <td style="width: 33%"><label>¿Los Linderos se Ajustan Indicada en la Documentación?</label> <%= format_bool(coordenadas[0].lindero_correcto) unless coordenadas[0].nil? %></td>
+    <td style="width: 34%"><label>¿La Superficie se Ajustan a la Indicada en la Documentación?</label> <%= format_bool(coordenadas[0].superficie_correcta) unless coordenadas[0].nil? %></td>
+  </tr>
+</table>
+<% if @solicitud.sub_sector.nemonico == 'AC' %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label>CONDICIONES DE ACUICULTURA</label></th>
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Vialidad</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Suelos</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Vegetación</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Topografía</label></th>
+  </tr>
+
+  <tr>
+    <td align="center"><label>Tipo:</label>
+      <% vialidad = @solicitud.UnidadProduccionCondicionAcuicultura[0].CondicionesTipoVialidad
+        valor = ''
+        c = ''
+        vialidad.each{ |f| %>
+          <%  valor << c << f.tipo_vialidad.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor %>
+    </td>
+    <td align="center"><label>Textura:</label>
+      <% suelo = @solicitud.UnidadProduccionCondicionAcuicultura[0].CondicionesTipoSuelo
+        valor = ''
+        c = ''
+        suelo.each{ |f| %>
+          <%  valor << c << f.tipo_suelo.nombre.strip << ' ' << sprintf('%01.2f',f.porcentaje.to_s).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") << " %" %>
+      <% c = ', '
+        } %>
+      <%= valor %>
+    </td>
+    <td align="center"><label>Baja:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].porcentaje_vegetacion_baja).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") + " %" %></td>
+    <td align="center" rowspan="3">
+      <% topografia = CondicionesTipoTopografia.find(:all, :conditions=>['unidad_produccion_condicion_acuicultura_id = ?', @solicitud.UnidadProduccionCondicionAcuicultura[0].id])
+        valor = ''
+        c = ''
+        topografia.each{ |f| %>
+          <% valor << c << '<label>' << f.tipo_topografia.nombre.strip << ':</label> ' << sprintf('%01.2f',f.porcentaje).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") << " %" %>
+      <% c = ', '
+        } %>
+      <%= valor %>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><label>Distancia (km):</label>  <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].vialidad_distancia).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") + " %" %></td>
+    <td align="center"><label>pH:</label> <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].suelo_ph %></td>
+    <td align="center"><label>Media:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].porcentaje_vegetacion_media).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") + " %" %></td>
+
+  </tr>
+
+  <tr>
+    <td align="center"><label>Condiciones:</label>  <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].vialidad_condicion_w %></td>
+    <td align="center"><label></label> </td>
+    <td align="center"><label>Alta:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].porcentaje_vegetacion_alta).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") + " %" %></td>
+
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Fuente de Agua</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Drenaje</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Sistema de Cultivo Implementado</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Especies Animales</label></th>
+  </tr>
+
+  <tr>
+    <td align="center"><label>Tipo:</label>
+      <% fuente_agua = @solicitud.UnidadProduccionCondicionAcuicultura[0].CondicionesFuenteAgua
+        valor = ''
+        c = ''
+        fuente_agua.each{ |f| %>
+          <%  valor << c << f.tipo_fuente_agua.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor %>
+    </td>
+    <td align="center"><label>Tipo:</label>  <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].TipoDrenaje.nombre %></td>
+    <td align="center" valign="top" rowspan="3"><label>Tipo:</label>  <% sistema = @solicitud.UnidadProduccionCondicionAcuicultura[0].CondicionesSistemaCultivoActual
+        valor = ''
+        c = ''
+        sistema.each{ |s| %>
+          <%  valor << c << s.tipo_sistema_acuicultura.nombre.strip %>
+      <% c = ', '
+        }
+        valor << "." %>
+      <%= valor %></td>
+    <td align="center" valign="top" rowspan="3"><label>Tipo:</label>
+      <% especie = CondicionesEspecies.find(:all, :conditions=>['unidad_produccion_condicion_acuicultura_id = ?', @solicitud.UnidadProduccionCondicionAcuicultura[0].id])
+        valor = ''
+        c = ''
+        especie.each{ |e| %>
+          <%  valor << c << e.tipo_especie_acuicultura.nombre.strip %>
+      <% c = ', '
+        }
+        valor << "." %>
+      <%= valor %></td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td align="center"><label>Superficie:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].superficie_drenaje).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %> ha</td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td align="center"><label>Condiciones:</label> <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].condicion_drenaje_w %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label>Condición Climática:</label> <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].condiciones_climaticas %></td>
+  </tr>
+
+  <tr>
+    <td><label>Calidad del Agua:</label> </td>
+    <td><label>PH:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].calidad_agua_ph).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+    <td><label>Temperatura:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].calidad_agua_temperatura).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+    <td><label>O.D.:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCondicionAcuicultura[0].calidad_agua_od).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label>Rubros Animales Existentes:</label> <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].rubros_animales %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label>Descripción de lo Observado:</label> <%= @solicitud.UnidadProduccionCondicionAcuicultura[0].observaciones %></td>
+  </tr>
+</table>
+<% end %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #c9c9c9"><label>SERVICIOS BÁSICOS</label></th>
+  </tr>
+
+  <tr>
+    <td align="center"><label>Impacto Social</label></td>
+    <td><label>Empleos Directos:</label> </td>
+    <td><label>Empleos Indirectos:</label> </td>
+  </tr>
+  <% servicios = ServiciosBasicos.datos(@solicitud.id) %>
+  <tr>
+    <td><label>Vivienda:</label> <%= format_bool(servicios.vivienda) unless servicios.nil? %></td>
+    <td colspan="2"><label>Observaciones:</label> <%= servicios.observaciones_vivienda unless servicios.nil? %></td>
+  </tr>
+
+  <tr>
+    <td><label>Electricidad:</label> <%= format_bool(servicios.electricidad) unless servicios.nil? %></td>
+    <td colspan="2"><label>Observaciones:</label> <%= servicios.observaciones_electricidad unless servicios.nil? %></td>
+  </tr>
+
+  <tr>
+    <td><label>Transporte Publico:</label> <%= format_bool(servicios.transporte_publico) unless servicios.nil? %></td>
+    <td colspan="2"><label>Observaciones:</label> <%= servicios.observaciones_transporte unless servicios.nil? %></td>
+  </tr>
+
+  <tr>
+    <td><label>Teléfono:</label> <%= format_bool(servicios.telefono) unless servicios.nil? %></td>
+    <td colspan="2"><label>Teléfono 1:</label> <%= servicios.observaciones_telefono1 unless servicios.nil? %><br/>
+     <label>Teléfono 2:</label> <%= servicios.observaciones_telefono2 unless servicios.nil? %><br/>
+     <label>Teléfono 3:</label> <%= servicios.observaciones_telefono3 unless servicios.nil? %><br/>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Gas:</label> <%= format_bool(servicios.gas) unless servicios.nil? %></td>
+    <td colspan="2"><label>Observaciones:</label> <%= servicios.observaciones_gas unless servicios.nil? %></td>
+  </tr>
+
+  <tr>
+    <td><label>Aguas Blancas:</label> <%= format_bool(servicios.aguas_blancas) unless servicios.nil? %></td>
+    <td colspan="2"><label>Observaciones:</label> <%= servicios.observaciones_aguas_blancas unless servicios.nil? %></td>
+  </tr>
+
+  <tr>
+    <td><label>Aguas Servidas</label> <%= format_bool(servicios.aguas_servidas) unless servicios.nil? %></td>
+    <td colspan="2"><label>Observaciones:</label> <%= servicios.observaciones_aguas_servidas unless servicios.nil? %></td>
+  </tr>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+<% unless @solicitud.sub_sector.nemonico == 'AC' %>
+  <tr>
+    <th colspan="4" style="background-color: #c9c9c9"><label>CARACTERIZACIÓN</label></th>
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Vialidad</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Suelos</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Vegetación</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Topografía</label></th>
+  </tr>
+
+  <tr>
+    <td align="center"><label>Tipo:</label>
+      <% vialidad = CaracterizacionTipoVialidad.find(:all, :conditions=>['unidad_produccion_caracterizacion_id = ?', @solicitud.UnidadProduccionCaracterizacion[0].id])
+        valor = ''
+        c = ''
+        vialidad.each{ |f| %>
+          <%  valor << c << f.tipo_vialidad.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor %>
+    </td>
+    <td align="center"><label>Textura:</label>
+      <% suelo = CaracterizacionTipoSuelo.find(:all, :conditions=>['unidad_produccion_caracterizacion_id = ?', @solicitud.UnidadProduccionCaracterizacion[0].id])
+        valor = ''
+        c = ''
+        suelo.each{ |f| %>
+          <%  valor << c << f.tipo_suelo.nombre.strip << ' ' << sprintf('%01.2f',f.porcentaje.to_s).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") << " %" %>
+      <% c = ', '
+        } %>
+      <%= valor %>
+    </td>
+    <td align="center"><label>Baja:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCaracterizacion[0].porcentaje_vegetacion_baja).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") + " %" %></td>
+    <td align="center" rowspan="3">
+      <% topografia = CaracterizacionTipoTopografia.find(:all, :conditions=>['unidad_produccion_caracterizacion_id = ?', @solicitud.UnidadProduccionCaracterizacion[0].id])
+        valor = ''
+        c = ''
+        topografia.each{ |f| %>
+          <% valor << c << '<label>' << f.tipo_topografia.nombre.strip << ':</label> ' << sprintf('%01.2f',f.porcentaje).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") << " %" %>
+      <% c = ', '
+        } %>
+      <%= valor %>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><label>Distancia (km):</label>  <%= sprintf('%01.2f',@solicitud.UnidadProduccionCaracterizacion[0].vialidad_distancia).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") + " %" %></td>
+    <td align="center"><label>pH:</label> <%= @solicitud.UnidadProduccionCaracterizacion[0].suelo_ph %></td>
+    <td align="center"><label>Media:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCaracterizacion[0].porcentaje_vegetacion_media).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") + " %" %></td>
+    
+  </tr>
+
+  <tr>
+    <td align="center"><label>Condiciones:</label>  <%= @solicitud.UnidadProduccionCaracterizacion[0].vialidad_condicion_w %></td>
+    <td align="center"><label></label> </td>
+    <td align="center"><label>Alta:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCaracterizacion[0].porcentaje_vegetacion_alta).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") + " %" %></td>
+    
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Fuente de Agua</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Drenaje</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Riego</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 25%"><label>Condición Climática</label></th>
+  </tr>
+
+  <tr>
+    <td align="center"><label>Tipo:</label>
+      <% fuente_agua = CaracterizacionFuenteAgua.find(:all, :conditions=>['unidad_produccion_caracterizacion_id = ?', @solicitud.UnidadProduccionCaracterizacion[0].id])
+        valor = ''
+        c = ''
+        fuente_agua.each{ |f| %>
+          <%  valor << c << f.tipo_fuente_agua.nombre.strip %>
+      <% c = ', '
+        } %>
+      <%= valor %>
+    </td>
+    <td align="center"><label>Tipo:</label>  <%= @solicitud.UnidadProduccionCaracterizacion[0].tipo_drenaje.nombre %></td>
+    <td align="center"><label>Tipo:</label>  <%= @solicitud.UnidadProduccionCaracterizacion[0].tipo_riego_actual.nombre %></td>
+    <td align="justify" valign="top" rowspan="3"><%= @solicitud.UnidadProduccionCaracterizacion[0].condiciones_climaticas %></td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td align="center"><label>Superficie:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCaracterizacion[0].superficie_drenaje).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %> ha</td>
+    <td align="center"><label>Superficie:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCaracterizacion[0].superficie_riego_actual).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %> ha</td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td align="center"><label>Condiciones:</label> <%= @solicitud.UnidadProduccionCaracterizacion[0].condicion_drenaje_w %></td>
+    <td align="center"><label>Condiciones:</label> <%= @solicitud.UnidadProduccionCaracterizacion[0].condicion_riego_actual_w %></td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><label>Se Requiere Sistema de Riego:</label> <%= format_bool(@solicitud.UnidadProduccionCaracterizacion[0].requiere_riego) %></td>
+    <td align="center"><label>Tipo:</label> <%= @solicitud.UnidadProduccionCaracterizacion[0].tipo_riego_propuesto.nombre %></td>
+    <td align="center"><label>Superficie:</label> <%= sprintf('%01.2f',@solicitud.UnidadProduccionCaracterizacion[0].superficie_riego_propuesto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %> ha</td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label>Rubros Vegetales Existentes:</label> <%= @solicitud.UnidadProduccionCaracterizacion[0].rubros_vegetales %></td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify"><label>Rubros Animales Existentes:</label> <%= @solicitud.UnidadProduccionCaracterizacion[0].rubros_animales %></td>
+  </tr>
+<% end %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="6" style="background-color: #c9c9c9"><label>INFRAESTRUCTURA EXISTENTE EN LA UNIDAD DE PRODUCCIÓN</label></th>
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 20%"><label>Item</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 8%"><label>Cantidad</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 12%"><label>Dimensiones</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 20%"><label>Material</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 24%"><label>Observaciones</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 16%"><label>Condiciones Físicas</label></th>
+  </tr>
+
+  <% @solicitud.UnidadProduccionInfraestructura.each{ |i| %>
+    <tr>
+      <td align="center"><%= i.TipoInfraestructura.nombre %></td>
+      <td align="center"><%= sprintf('%01.2f',i.cantidad).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+      <td align="center"><%= sprintf('%01.2f',i.dimension).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %> <%= i.UnidadMedida.abreviatura %></td>
+      <td align="center"><%= i.material_construccion %></td>
+      <td align="center"><%= i.observaciones %></td>
+      <td align="center"><%= "Excelente" if i.condicion == 'E' %><%= "Buena" if i.condicion == 'B' %><%= "Regular" if i.condicion == 'R' %><%= "Mala" if i.condicion == 'M' %></td>
+    </tr>
+  <% } %>
+  <% unless @solicitud.UnidadProduccionInfraestructura.length > 0 %>
+    <tr>
+      <td align="center">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% end %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="8" style="background-color: #c9c9c9"><label>MATERIALES, EQUIPOS E IMPLEMENTOS AGRICOLAS</label></th>
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 11%"><label>Clase</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 16%"><label>Item</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 8%"><label>Cantidad</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 7%"><label>Año</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 12%"><label>Marca</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 12%"><label>Modelo</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 18%"><label>Condiciones Físicas</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 16%"><label>Tipo de Tenencia</label></th>
+  </tr>
+  <% maquinaria = UnidadProduccionMaquinaria.find(:all, :conditions=>['solicitud_id = ?', @solicitud.id])
+     maquinaria.each {|m| %>
+    <tr>
+      <td align="center"><%= m.clase_nombre %></td>
+      <td align="center"><%= m.descripcion_item %></td>
+      <td align="center"><%= m.cantidad %></td>
+      <td align="center"><%= m.anio %></td>
+      <td align="center"><%= m.marca %></td>
+      <td align="center"><%= m.modelo %></td>
+      <td align="center"><%= m.condicion_nombre %></td>
+      <td align="center"><%= m.tenencia_nombre %></td>
+    </tr>
+  <% } %>
+  <% unless maquinaria.length > 0 %>
+    <tr>
+      <td align="center">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% end %>
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #c9c9c9"><label>SITIOS DE COLOCACIÓN POTENCIALES DEL RUBRO</label></th>
+  </tr>
+
+  <tr>
+    <th align="center"  style="background-color: #cee3ba; width: 30%"><label>Sitio</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 50%"><label>Nombre</label></th>
+    <th align="center"  style="background-color: #cee3ba; width: 20%"><label>Distancia (Km)</label></th>
+  </tr>
+  <% @solicitud.UnidadProduccionColocacion.each {|s| %>
+    <tr>
+      <td align="center"><%= s.SitioColocacion.sitio %></td>
+      <td align="center"><%= s.SitioColocacion.nombre %></td>
+      <td align="center"><%= s.ubicacion %></td>
+    </tr>
+  <% } %>
+  <% unless @solicitud.UnidadProduccionColocacion.length > 0 %>
+    <tr>
+      <td align="center">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% end %>
+</table>
+<% if @solicitud.sub_sector.nemonico == 'AN' %>
+  <table width="1120px" border="1" style="font-size: 16px">
+    <tr>
+      <th colspan="4" style="background-color: #c9c9c9"><label>INVERTARIO DE ANIMALES</label></th>
+    </tr>
+<% animales = UnidadProduccionInventarioAnimales.find(:first, :conditions=>"solicitud_id = #{@solicitud.id}") %>
+    <tr>
+      <td style="width: 25%"><label>Bovinos:</label> <%= animales.cantidad_bovinos unless animales.nil? %></td>
+      <td style="width: 25%"><label>Bufalinos:</label> <%= animales.cantidad_bufalinos unless animales.nil? %></td>
+      <td style="width: 25%"><label>Equinos:</label> <%= animales.cantidad_equinos unless animales.nil? %></td>
+      <td style="width: 25%"><label>Ovinos:</label> <%= animales.cantidad_ovinos unless animales.nil? %></td>
+    </tr>
+
+    <tr>
+      <td style="width: 25%"><label>Porcinos:</label> <%= animales.cantidad_porcinos unless animales.nil? %></td>
+      <td style="width: 25%"><label>Caprinos:</label> <%= animales.cantidad_caprinos unless animales.nil? %></td>
+      <td style="width: 25%"><label>Aves:</label> <%= animales.cantidad_aves unless animales.nil? %></td>
+      <td style="width: 25%"><label>Piscícolas:</label> <%= animales.cantidad_piscicolas unless animales.nil? %></td>
+    </tr>
+
+    <tr>
+      <td colspan="4"><label>Otros:</label> <%= animales.cantidad_otros unless animales.nil? %></td>
+    </tr>
+
+    <tr>
+      <td colspan="4" align="justify"><label>Descripción:</label> <%= animales.observaciones unless animales.nil? %></td>
+    </tr>
+  </table>
+<% end %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="6" style="background-color: #bbbcd2"><label>ANALISIS, CONCLUSIÓN Y RECOMENDACIONES</label></th>
+  </tr>
+  <tr>
+    <th align="center" colspan="4" style="background-color: #cee3ba"><label>Evaluacón</label></th>
+    <th align="center" colspan="2" style="background-color: #cee3ba"><label>Respuesta</label></th>
+  </tr>
+  <% encuesta = EncuestaVisita.find_by_sql("select e.id, e.respuesta, e.seguimiento_visita_id, a.numero, a.nombre from encuesta_visita e join analisis_conclusion a on a.id = e.analisis_conclusion_id where e.seguimiento_visita_id = #{@visita.id} order by a.numero, nombre")
+     encuesta.each {|e| %>
+    <tr>
+      <td colspan="4"><%= e.numero.to_s << '.- ' << e.nombre  %></td>
+      <td colspan="2" align="center"><%= format_bool(e.respuesta) %></td>
+    </tr>
+  <% }
+    unless encuesta.length > 0 %>
+      <tr>
+        <td colspan="4"></td>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+   <% end %>
+   <tr>
+    <th align="center" colspan="6" style="background-color: #cee3ba"><label>Nivel de Conocimiento del Productor</label></th>
+   </tr>
+   <tr>
+     <th align="center" colspan="2" style="background-color: #cee3ba; width: 50%"><label>Tópico</label></th>
+    <th align="center" style="background-color: #cee3ba; width: 10%"><label>Alto</label></th>
+    <th align="center" style="background-color: #cee3ba; width: 10%"><label>Moderado</label></th>
+    <th align="center" style="background-color: #cee3ba; width: 10%"><label>Poco</label></th>
+    <th align="center" style="background-color: #cee3ba; width: 10%"><label>Ninguno</label></th>
+   </tr>
+   <% topico = EncuestaVisitaTopico.find_by_sql("select e.id, e.respuesta, e.seguimiento_visita_id , a.nombre from encuesta_visita_topico e join analisis_topico a on a.id = e.analisis_topico_id where e.seguimiento_visita_id = #{@visita.id} order by nombre")
+      topico.each {|t| %>
+        <tr>
+          <td colspan="2" align="center"><%= t.nombre %></td>
+          <td align="center"><% if (t.respuesta.to_s == 'A') %>
+                                <%= image_tag("activo.gif") %>
+                             <% end %></td>
+          <td align="center"><% if (t.respuesta.to_s == 'M') %>
+                                <%= image_tag("activo.gif") %>
+                             <% end %></td>
+          <td align="center"><% if (t.respuesta.to_s == 'P') %>
+                                <%= image_tag("activo.gif") %>
+                             <% end %></td>
+          <td align="center"><% if (t.respuesta.to_s == 'N') %>
+                                <%= image_tag("activo.gif") %>
+                             <% end %></td>
+        </tr>
+   <% } 
+    unless topico.length > 0 %>
+        <tr><td colspan="2">&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+   <% end %>
+   <tr>
+    <th align="center" colspan="6" style="background-color: #c9c9c9"><label>RECOMENDACIONES FINALES DE LA INSPECCIÓN TÉCNICA</label></th>
+   </tr>
+
+   <tr>
+     <td colspan="6"><label>¿El(los) Financiamiento(s) Solicitado(s) es viable desde el punto de vista técnico en la unidad de producción visitada?</label> <%= format_bool(@solicitud.decision_final) %></td>
+   </tr>
+
+   <% if @solicitud.decision_final == false %>
+    <% rubro_sugerido = @solicitud.SolicitudRubroSugerido
+      rubros = ""
+       if rubro_sugerido.length > 0
+         rubro_sugerido.each{|r|
+          rubros = rubros + r.rubro.nombre + ', '
+         }
+         a = rubros.length - 2
+         rubros = rubros[0, a] + '.'
+       end %>
+    <tr>
+      <td colspan="6" align="justify"><label>En caso de que algún rubro no sea viable, indicar otro(s) rubro(s) que puede(n) ser viable(s):</label> <%= rubros %></td>
+    </tr>
+   <% end %>
+    <tr>
+    <th align="center" colspan="6" style="background-color: #c9c9c9"><label>JUSTIFICACIÓN</label></th>
+   </tr>
+
+   <tr>
+     <td colspan="6" align="justify">Expliación: <%= @solicitud.justificacion %></td>
+   </tr>
+</table>
+<% else %>
+  <% if @solicitud.cliente.type.to_s == 'ClientePersona' %>
+    <table width="1120px" border="1" style="font-size: 16px">
+      <tr>
+        <th colspan="2" style="background-color: #c9c9c9"><label>DATOS DE LA COMUNIDAD PESQUERA</label></th>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="justify"><label>Nombre de la Comunidad Pesquera:</label> <%= @solicitud.UnidadProduccion.nombre %></td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="justify"><label>Dirección de la Comunidad Pesquera:</label> <%= @solicitud.UnidadProduccion.direccion %></td>
+      </tr>
+
+      <tr>
+        <td style="width: 50%"><label>SubSector:</label> <%= @solicitud.sub_sector.nombre %></td>
+        <td style="width:  50%"><label>Rubro:</label> <%= @solicitud.rubro.nombre %></td>
+      </tr>
+    </table>
+  <% end %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="10" style="background-color: #c9c9c9"><label>DATOS DE LA(S) EMBARCACIÓN(ES) QUE POSEE</label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba; width: 15%"><label>Nombre de la Embarcación</label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label>Tipo de Embarcación</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label>Materiales de Construcción</label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label>Matricula</label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label>Eslora (mts)</label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label>Manga (mts)</label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label>Puntal (mts)</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label>Condiciones</label></th>
+    <th style="background-color: #cee3ba; width: 7%"><label>U.A.B</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label>Nro. Tripulantes</label></th>
+  </tr>
+
+  <% embarcacion = Embarcacion.find(:all, :conditions=>"es_propia = false and seguimiento_visita_id = #{@visita.id}")
+    embarcacion.each {|e| %>
+    <tr>
+      <td align="center"><%= e.nombre_embarcacion %></td>
+      <td align="center"><%= e.Item.nombre %></td>
+      <td align="center"><%= e.TipoMaterial.tipo %></td>
+      <td align="center"><%= e.matricula %></td>
+      <td align="center"><%= e.eslora %></td>
+      <td align="center"><%= e.manga %></td>
+      <td align="center"><%= e.puntal %></td>
+      <td align="center"><%= e.condicion %></td>
+      <td align="center"><%= e.uab %></td>
+      <td align="center"><%= e.cantidad_tripulantes %></td>
+    </tr>
+  <% } %>
+  <% unless embarcacion.length > 0 %>
+    <tr>
+      <td align="center">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th colspan="10" style="background-color: #c9c9c9"><label>DATOS DE LA(S) EMBARCACIÓN(ES) A SOLICITAR</label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba"><label>Cantidad</label></th>
+    <th style="background-color: #cee3ba" colspan="2"><label>Tipo de Embarcación</label></th>
+    <th style="background-color: #cee3ba" colspan="2"><label>Materiales de Construcción</label></th>
+    <th style="background-color: #cee3ba"><label>Eslora (mts)</label></th>
+    <th style="background-color: #cee3ba"><label>Manga (mts)</label></th>
+    <th style="background-color: #cee3ba"><label>Puntal (mts)</label></th>
+    <th style="background-color: #cee3ba"><label>U.A.B</label></th>
+    <th style="background-color: #cee3ba"><label>Nro. Tripulantes</label></th>
+  </tr>
+
+  <% embarcacion = Embarcacion.find(:all, :conditions=>"es_propia = true and seguimiento_visita_id = #{@visita.id}")
+    embarcacion.each {|e| %>
+    <tr>
+      <td align="center"></td>
+      <td align="center" colspan="2"><%= e.Item.nombre %></td>
+      <td align="center" colspan="2"><%= e.TipoMaterial.tipo %></td>
+      <td align="center"><%= e.eslora %></td>
+      <td align="center"><%= e.manga %></td>
+      <td align="center"><%= e.puntal %></td>
+      <td align="center"><%= e.uab %></td>
+      <td align="center"><%= e.cantidad_tripulantes %></td>
+    </tr>
+  <% } %>
+  <% unless embarcacion.length > 0 %>
+    <tr>
+      <td align="center">&nbsp;</td>
+      <td align="center" colspan="2"></td>
+      <td align="center" colspan="2"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% end %>
+
+</table>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="6" style="background-color: #c9c9c9"><label>DATOS DE LOS MOTORES QUE POSEE</label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba; width: 15%"><label>Serial del Motor</label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label>Tipo de Motor</label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label>Marca</label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label>Modelo</label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label>Potencia (Hp)</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label>Año</label></th>
+  </tr>
+
+  <% motores = Motores.find(:all, :conditions=>"es_propio = false and seguimiento_visita_id = #{@visita.id}")
+    motores.each {|e| %>
+    <tr>
+      <td align="center"><%= e.numero_serial %></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"><%= e.modelo_motor %></td>
+      <td align="center"><%= sprintf('%01.2f',e.potencia).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+      <td align="center"><%= e.ano %></td>
+    </tr>
+  <% } %>
+  <% unless motores.length > 0 %>
+    <tr>
+      <td align="center">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% end %>
+
+<tr>
+    <th colspan="6" style="background-color: #c9c9c9"><label>DATOS DE LOS MOTORES A SOLICITAR</label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba; width: 15%"><label>Cantidad</label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label>Tipo de Motor</label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label>Marca</label></th>
+    <th style="background-color: #cee3ba; width: 20%"><label>Modelo</label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label>Potencia (Hp)</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label>Año</label></th>
+  </tr>
+
+  <% motores = Motores.find(:all, :conditions=>"es_propio = true and seguimiento_visita_id = #{@visita.id}")
+    motores.each {|e| %>
+    <tr>
+      <td align="center"><%= e.cantidad_motores %></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"><%= e.modelo_motor %></td>
+      <td align="center"><%= sprintf('%01.2f',e.potencia).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+      <td align="center"><%= e.ano %></td>
+    </tr>
+  <% } %>
+  <% unless motores.length > 0 %>
+    <tr>
+      <td align="center">&nbsp;</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="center"></td>
+    </tr>
+  <% end %>
+</table>
+
+<% end %>
+<% if @solicitud.decision_final == true 
+      plan_inversion = PlanInversion.find(:all,:conditions=>"solicitud_id = #{@solicitud.id}", :order =>"estado_nombre,oficina_nombre,sector_nombre,tipo_item", :include=>[:UnidadMedida]) %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="6" style="background-color: #c9c9c9"><label>PLAN DE INVERSIÓN</label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #cee3ba; width: 15%"><label>Nro. Desembolso</label></th>
+    <th style="background-color: #cee3ba; width: 35%"><label>Descriión (Rubros, Maquinaria, Equipos, Implementos y Otros)</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label>Cantidad</label></th>
+    <th style="background-color: #cee3ba; width: 10%"><label>Unidad de Medida</label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label>Costo Unitario (Bs.)</label></th>
+    <th style="background-color: #cee3ba; width: 15%"><label>Total</label></th>
+  </tr>
+
+<% partida = ""
+   rubro = ""
+   monto_partida = 0.00
+   monto_rubro = 0.00
+   plan_inversion.each do |plan|
+%>
+<% if partida != plan.partida_nombre
+  unless partida.empty? %>
+    <tr>
+      <td colspan="5" style="text-align: right"><b><%= "Total #{partida}"%></b></td>
+      <td style="text-align: right">
+        <b>  <%=  valor = sprintf('%01.2f', monto_partida).sub('.', ',')
+                valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+        </b>
+      </td>
+    </tr>
+    <% end %>
+    <% partida = plan.partida_nombre
+       monto_partida = 0.00 %>
+
+    <tr>
+          <td></td>
+          <td colspan="4"><b><%=plan.partida_nombre %></b></td>
+    </tr>
+
+
+   <% end %>
+
+    <% if rubro.empty?
+       rubro = plan.rubro_nombre
+     end
+    %>
+
+    <tr>
+      <td align="center">
+        <%= plan.numero_desembolso  unless plan.numero_desembolso.nil? %>
+      </td>
+
+      <td align="left">
+        <%= plan.item_nombre %>
+      </td>
+
+      <td align="right">
+        <%= plan.cantidad_fm unless plan.cantidad.nil? -%>
+      </td>
+
+      <td align="center">
+        <%= plan.unidad_medida.nombre %>
+      </td>
+
+       <td align="right">
+        <%= plan.costo_real_fm %>
+      </td>
+
+      <td align="right">
+        <%= plan.monto_financiamiento_fm  unless plan.monto_financiamiento.nil? %>
+      </td>
+  </tr>
+  
+   <% monto_partida += plan.monto_financiamiento
+      monto_rubro += plan.monto_financiamiento %>
+
+ <%end%>
+
+  <tr>
+    <td colspan="5" style="text-align: right"><b><%= "Total #{partida}" %></b></td>
+    <td style="text-align: right">
+      <b>  <%=  valor = sprintf('%01.2f', monto_partida).sub('.', ',')
+              valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      </b>
+    </td>
+  </tr>
+
+ <tr>
+  <td colspan="5" style="text-align: right"><b>Total Plan de Inversión</b></td>
+  <td style="text-align: right">
+    <b>
+      <%=valor = sprintf('%01.2f', monto_rubro).sub('.', ',')
+         valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+    </b>
+  </td>
+ </tr>
+
+</table>
+<% end %>
+<table width="1120px" border="1" style="font-size: 16px">
+  <tr>
+    <th colspan="3" style="background-color: #c9c9c9"><label>FIRMAS</label></th>
+  </tr>
+
+  <tr>
+    <th style="background-color: #c9c9c9; width: 33%"><label>Técnico de campo que realizó la inspección</label></th>
+    <th style="background-color: #c9c9c9; width: 33%"><label>Persona que atendió la visita / Beneficiario del financiamiento</label></th>
+    <th style="background-color: #c9c9c9; width: 34%"><label>Responsable de la brigada</label></th>
+  </tr>
+<% usuario = Usuario.find(:first, :conditions=>["nombre_usuario = '#{@solicitud.usuario_pre_evaluacion}'"])
+  tecnico_campo = TecnicoCampo.find(:first, :conditions=>"cedula = #{usuario.cedula}") %>
+  <tr>
+    <td valign="top"><label>Apellidos / Nombres:</label> <%= usuario.nombre_corto %><%=  %></td>
+    <td valign="top"><label>Apellidos / Nombres:</label> <%= @visita.nombre_persona_atencion << ' ' << @visita.apellido_persona_atencion %></td>
+    <td valign="top"><label>Apellidos / Nombres:</label> </td>
+  </tr>
+
+  <tr>
+    <td><label>C.I.:</label> <%= usuario.cedula_nacionalidad << '-' << usuario.cedula.to_s %></td>
+    <td><label>C.I.:</label> <%= @visita.cedula_persona_atencion %></td>
+    <td><label>C.I.:</label> </td>
+  </tr>
+
+  <tr>
+    <td><label>Código del técnico:</label> <%= tecnico_campo.codigo %></td>
+    <td><label>Firma:</label> </td>
+    <td><label>Telf:</label> </td>
+  </tr>
+
+  <tr>
+    <td><label>Telf:</label> <%= tecnico_campo.telefono_habitacion %></td>
+    <td valign="top" rowspan="2"><label>Huella Digital</label> </td>
+    <td valign="top" rowspan="2"><label>Firma:</label> </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="height: 70px"><label>Firma:</label> </td>
+  </tr>
+</table>

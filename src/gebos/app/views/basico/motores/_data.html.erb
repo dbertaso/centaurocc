@@ -1,0 +1,31 @@
+<% motores = @motores if motores.nil? %>
+
+<td>
+  <%= motores.modelo_motor  %>
+</td>
+<td align="center">
+  <%= format_bool !motores.es_propio  %>
+</td>
+<td align="center">
+  <%= motores.numero_serial %>
+</td>
+<td align="right">
+  <%= motores.cantidad_motores %>
+</td>
+<td align="right">
+  <%= motores.potencia_f %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => {:controller => 'motores', :action => :edit, :id_equipo => motores.id, :id => params[:id]}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'motores', :action => :delete, :id => motores.id}) if vlink 'delete' -%>
+</td>

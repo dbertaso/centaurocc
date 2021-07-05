@@ -1,0 +1,29 @@
+<% comunidad_indigena = @comunidad_indigena if comunidad_indigena.nil? %>
+
+<td>
+	<%= comunidad_indigena.pueblo_indigena.to_s unless comunidad_indigena.pueblo_indigena.nil?  %>
+</td>	
+<td>
+	<%= comunidad_indigena.comunidad_indigena.to_s unless comunidad_indigena.comunidad_indigena.nil?  %>
+</td>	
+<td style="text-align: center">
+	<%= comunidad_indigena.estado.nombre  %>
+</td>
+<td style="text-align: center">
+	<%= comunidad_indigena.municipio.nombre  %>
+</td>
+<td style="text-align: center">
+	<%= comunidad_indigena.parroquia.nombre  %>
+</td>
+<td style="text-align: right">
+	<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+          :method =>:get,
+	  :url => {:controller => 'comunidad_indigena', :action => :edit, :id => comunidad_indigena.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'comunidad_indigena', :action => :delete, :id => comunidad_indigena.id}) if vlink 'delete' -%>
+</td>

@@ -1,0 +1,57 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+	<tr>
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Controladores.EntidadFinanciera.FormTitles.form_title_record')%>:</label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= select(
+		  'cuenta_bcv', 'entidad_financiera_id',
+		  @entidad_financiera_list.map{|e| [e.nombre, e.id]},
+		  { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+		  { :class=>'select', :onchange=>'inputChange();' } ) %>
+		</td>
+	</tr>
+        	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.numero')%>:</label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_field 'cuenta_bcv', 'numero', :class=>'text', :style=>'width: 240px',
+				:maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%>:</label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+	                <%= radio_button("cuenta_bcv", "tipo", "C", :onchange=>'inputChange();') %> <%=I18n.t('Sistema.Body.Vistas.General.corriente')%><br />
+                    <%= radio_button("cuenta_bcv", "tipo", "A", :onchange=>'inputChange();') %><%=I18n.t('Sistema.Body.Vistas.General.ahorro')%><br />
+
+		</td>
+	</tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.recaudadora')%></label>
+    </td>
+    <td>
+      <%= check_box 'cuenta_bcv', 'recaudador',
+        :checked_value=>"1", :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>	
+  <tr>
+	    <td>
+	       <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+	   </td>
+	   <td>
+			<%= check_box 'cuenta_bcv', 'activo',
+			:checked_value=>"1", 
+			:unchecked_value=>"0",
+			:onchange=>'inputChange();'
+	            -%>
+	    </td>
+	</tr>
+
+	
+</table>

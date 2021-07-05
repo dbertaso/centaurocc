@@ -1,0 +1,17 @@
+<%unless @view_precio_gaceta.nil?%>
+  <%= format_fm(@view_precio_gaceta.valor)%>
+<%end%>
+<% unless @view_precio_gaceta.nil? %>
+  <%  if (@view_precio1.nil? || @view_precio1.to_s.empty?) %>
+    <%= hidden_field 'boleta_arrime', 'detalle_precio_gaceta_id', :value=>"#{@view_precio_gaceta.id}", :style=>'display:hidden', :onkeypress=>'inputChange(); prue();' %>
+    <%= hidden_field 'boleta_arrime', 'detalle_convenio_silo_id', :value=>"", :style=>'display:hidden', :onkeypress=>'inputChange(); prue();' %>
+  <%else%>
+    <%= hidden_field 'boleta_arrime', 'detalle_convenio_silo_id', :value=>"#{@view_precio_gaceta.detalle_convenio_silo_id}", :style=>'display:hidden', :onkeypress=>'inputChange(); prue();' %>          
+    <%= hidden_field 'boleta_arrime', 'detalle_precio_gaceta_id', :value=>"", :style=>'display:hidden', :onkeypress=>'inputChange(); prue();' %>
+  <%end%>
+  <%= hidden_field_tag 'valor', :"#{@view_precio_gaceta.valor unless @view_precio_gaceta.nil?}" %>
+
+<%end%>
+<% if @view_precio_gaceta.nil? %>
+  <%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.sin_precio')%>
+<%end%>

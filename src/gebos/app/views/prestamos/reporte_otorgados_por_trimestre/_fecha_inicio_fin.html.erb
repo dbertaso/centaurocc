@@ -1,0 +1,30 @@
+<table>
+<tr>
+    <td style="width: 35%">
+	    <label>Fecha Desde</label>
+    </td>
+    <td style="width: 65%">
+    
+	    <%= text_field_tag 'fecha_desde',@fecha_inicio, 
+		  :class=>'text', :style=>'width: 100px', 
+		  :maxlength=>'10', :onkeypress=>'inputChange();' -%>
+		 
+		  <%= calendar 'fecha_desde', 'calendar_fecha_desde'%> (dd/mm/aaaa) 
+		  
+    </td>
+</tr>
+<tr>
+    <td style="width: 35%">
+	    <label>Fecha Hasta</label>
+    </td>
+    <td style="width: 65%">
+    
+	    <%= text_field_tag 'fecha_fin',@fecha_fin, 
+		  :class=>'text', :style=>'width: 100px', 
+		  :maxlength=>'10', :onkeypress=>'inputChange();' -%>
+		 
+		  <%= calendar 'fecha_fin', 'calendar_fecha_fin' %> (dd/mm/aaaa) 
+		  
+    </td>
+</tr>
+</table>

@@ -1,0 +1,52 @@
+<script language="JavaScript">
+  document.getElementById("errorExplanation").style.display = 'none';
+</script>
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th <%= sort_class_helper('nro_tramite') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.solicitud'), 'nro_tramite', 'list' %>
+      </th>
+
+      <th <%= sort_class_helper('nro_prestamo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.financiamiento'), 'nro_prestamo', 'list' %>
+      </th>
+      <th>
+        <%= I18n.t('Sistema.Body.Vistas.General.nombre') %>
+      </th>
+      <th>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.cedula')} / #{I18n.t('Sistema.Body.Vistas.General.rif')}" %>
+      </th>
+      <th>
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.forma_pago') %>
+      </th>
+      <th>
+        <%= I18n.t('Sistema.Body.Vistas.General.fecha_envio_banco') %>
+      </th>
+      <th>
+        <%= I18n.t('Sistema.Body.Vistas.General.fecha_abono') %>
+      </th>
+      <th >
+        <%= I18n.t('Sistema.Body.Vistas.General.fecha_real') %> / <%= I18n.t('Sistema.Body.Vistas.General.fecha_cheque') %>
+      </th>
+      <th >
+        <%= I18n.t('Sistema.Body.Vistas.General.monto_abono') %>
+      </th>
+      <th>
+        <%= I18n.t('Sistema.Body.Vistas.Form.estatus') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%
+    even_odd = 1
+    for view_excedente_arrime in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :view_excedente_arrime => view_excedente_arrime, :even_odd => even_odd } -%>
+    <% end %>
+
+  </tbody>
+</table>
+<%= form_pagination %>
+</div>

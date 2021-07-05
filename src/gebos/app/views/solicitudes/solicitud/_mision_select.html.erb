@@ -1,0 +1,13 @@
+<% unless @misiones.nil? %> 
+<%= select(
+  'solicitud', 'mision_id',
+  @misiones.map{|m| [m.nombre, m.id]},
+  { :include_blank => true },
+  { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% else %>
+	<%= select(
+  'programa_mision', 'mision_id',
+  {},
+  { :include_blank => true },
+  { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% end %>

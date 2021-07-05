@@ -1,0 +1,11 @@
+<% sub_rubro_onchange = remote_function(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method => :get,
+  :url=>{:controller=>'condiciones_financiamiento',:action=>:sub_rubro_search },
+  :with=>"'id='+value") %>
+<%= select_tag( :sub_rubro_id,
+                options_from_collection_for_select(@sub_rubro_select, "id" ,"nombre" ),
+                { :class=>'select',
+                  :prompt=> I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.seleccione_sub_rubro'),
+                  :onchange=>sub_rubro_onchange + ';inputChange();' })%>

@@ -1,0 +1,19 @@
+<% porcentaje_ganancia = @porcentaje_ganancia if porcentaje_ganancia.nil? %>
+<td style="text-align: center">
+  <%= porcentaje_ganancia.nombre %>
+</td>
+
+<td style="text-align: center">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'porcentaje_ganancia', :action => :edit, :id => porcentaje_ganancia.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'porcentaje_ganancia', :action => :delete, :id => porcentaje_ganancia.id}) if vlink 'delete' -%>
+</td>

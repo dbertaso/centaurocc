@@ -1,0 +1,76 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()', :url => { :action => :list }) do -%>
+  <table>
+
+    <tr>
+    <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'solicitud_numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'prestamo_numero', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'12', :style=>'width: 100px'  %> <%=I18n.t('Sistema.Body.General.ejemplo_documento')%>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.General.beneficiario')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>&emsp;
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar')), :title=>I18n.t('Sistema.Body.Vistas.General.buscar')) -%>
+      </td>
+    </tr>
+
+    <tr> 	
+
+      <td style="width: 150px">
+
+      </td>
+      <td>
+
+      </td>
+      <td> </td>
+    </tr>
+
+
+  </table>
+  <% end %>
+
+  <%= error %>
+  <%= message %>
+  <table width="100%">
+    <tr><td>
+        <div class="msg-notice" id="message_status1" style="display: none; text-align: center;"></div>
+        <div class="msg-notice" id="message_status2" style="display: none; text-align: center;"></div>
+        <div class="msg-notice" id="message_status3" style="display: none; text-align: center;"></div>
+      </td></tr>
+  </table>	
+
+  <br>	
+  <div id="list">
+  </div>
+</div>

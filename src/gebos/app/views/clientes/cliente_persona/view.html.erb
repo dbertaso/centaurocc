@@ -1,0 +1,310 @@
+<script type="text/javascript">
+
+  function cerrar()
+  {
+    window.close();
+  }
+
+</script>
+
+<%= form_title_view @persona.nombre_corto %>
+		
+<%= render :partial=>'clientes/cliente_persona/common/tabs' %>
+<div class="marco-contenido2">
+  <table style="width: 100%">
+
+<tr>
+  <td style="width: 20%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label>
+    </td>
+    <td style="width: 80%">
+      <b><%= @persona.id unless @persona.nil? %></b>
+    </td>
+  </tr>
+
+<%unless @persona.id.nil?%>
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_puede_solicitar_financiamiento') %>?</label> 
+    </td>
+    <td style="width: 50%">
+      <%= Cliente.find_by_persona_id(@persona.id).viable ? "<label >SI</label>".html_safe : "<label style='color: red'>NO</label>".html_safe unless Cliente.find_by_persona_id(@persona.id).nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_esta_solvente') %>?</label> 
+    </td>
+    <td style="width: 50%">
+    <%=!Cliente.find_by_persona_id(@persona.id).moroso ? "<label >SI</label>".html_safe : "<label style='color: red'>NO</label>".html_safe unless Cliente.find_by_persona_id(@persona.id).nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_reestructuro_deuda') %>?</label> 
+    </td>
+    <td style="width: 50%">
+      <%=Cliente.find_by_persona_id(@persona.id).reestructurado ? "<label style='color: red'>SI</label>".html_safe : "<label >NO</label>".html_safe unless Cliente.find_by_persona_id(@persona.id).nil? %>
+    </td>
+  </tr>
+<%end%>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %></label>
+    </td>
+    <td style="width: 80%">
+      <%= @persona.cedula_nacionalidad %>-<%= @persona.cedula %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label>
+    </td>
+    <td>
+      <%= @persona.primer_nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label>
+    </td>
+    <td>
+      <%= @persona.segundo_nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label>
+    </td>
+    <td>
+      <%= @persona.primer_apellido %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label>
+    </td>
+    <td>
+      <%= @persona.segundo_apellido %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sexo') %></label>
+    </td>
+    <td>
+      <% if @persona.sexo %>
+        Masculino
+      <% else %>
+        Femenino
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.fecha_nacimiento') %></label>
+    </td>
+    <td>
+      <%= @persona.fecha_nacimiento_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.lugar')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.nacimiento')}" %></label>
+    </td>
+    <td>
+      <%= @persona.lugar_nacimiento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.pais')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.nacimiento')}" %></label>
+    </td>
+    <td>
+      <%= @persona.pais.nombre if !@persona.pais.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nacionalidad') %></label>
+    </td>
+    <td>
+      <%= @persona.nacionalidad.masculino %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.estado_civil') %></label>
+    </td>
+    <td>
+      <% if @persona.estado_civil == 'S' %>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.soltero')}/#{I18n.t('Sistema.Body.Vistas.General.soltera')}" %>
+      <% elsif @persona.estado_civil == 'C' %>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.casado')}/#{I18n.t('Sistema.Body.Vistas.General.casada')}" %>
+      <% elsif @persona.estado_civil == 'O' %>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.concubino')}/#{I18n.t('Sistema.Body.Vistas.General.concubina')}" %>
+      <% elsif @persona.estado_civil == 'V' %>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.viudo')}/#{I18n.t('Sistema.Body.Vistas.General.viuda')}" %>
+      <% elsif @persona.estado_civil == 'D' %>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.divorciado')}/#{I18n.t('Sistema.Body.Vistas.General.divorciada')}" %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.profesion_oficio') %></label>
+    </td>
+    <td>
+      <%= @persona.profesion.nombre unless @persona.profesion.nil?%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ocupacion') %></label>
+    </td>
+    <td>
+      <%= @persona.ocupacion %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_dedica_pesca') %>?</label>
+    </td>
+    <td>
+      <% if @persona.cliente_persona.es_pescador == true %>
+        <%= image_tag('activo.gif') %>
+      <% elsif @persona.cliente_persona.es_pescador == false %>
+        <%= image_tag('inactivo.gif') %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo_dependencia_laboral') %></label>
+    </td>
+    <td>
+      <%= @persona.tipo_dependencia_laboral %>
+    </td>
+  </tr>
+
+</table>
+<br>
+<% if @persona.estado_civil == 'C' || @persona.estado_civil == 'O' %>
+<table style="width: 100%">
+
+  <tr>
+    <th colspan="2" align="left" ><div class="marco-titulo"><%= "#{I18n.t('Sistema.Body.Vistas.General.informacion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></div></th>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+    </td>
+    <td style="width: 80%">
+      <%= @persona.conyuge_cedula_nacionalidad %>-<%= @persona.conyuge_cedula_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+    </td>
+    <td>
+      <%= @persona.conyuge_nombre_apellido %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.lugar')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.nacimiento')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+    </td>
+    <td>
+      <%= @persona.conyuge_lugar_nacimiento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nacionalidad')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+    </td>
+    <td>
+      <%= @persona.conyuge_nacionalidad %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.profesion_oficio')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+    </td>
+    <td>
+      <%= @persona.conyuge_profesion %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.empresa_donde_labora') %></label>
+    </td>
+    <td>
+      <%= @persona.conyuge_empresa %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.telefono')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+    </td>
+    <td>
+      <%= @persona.conyuge_telefono %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.celular')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+    </td>
+    <td>
+      <%= @persona.conyuge_celular %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.trabajo')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+    </td>
+    <td>
+      <%= @persona.conyuge_direccion_trabajo.gsub("\n","<br/>") unless @persona.conyuge_direccion_trabajo.nil? %>
+    </td>
+  </tr>
+<% end %>
+	</table>
+
+      <% unless params[:popup] == 'true' %>
+	<%= link_to( image_tag("boton_modificar.gif"),
+		:action => :edit, :popup=>params[:popup],
+		:id => @persona.id,
+		:html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+        <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :action => :index, :popup=>params[:popup] },
+		{ :id=>'button_close' } ) -%>
+     <% else %>
+        <%= image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'),:title=>'Agregar', :onclick=>"javascript:cerrar();", :OnMouseOver=>"style.cursor='pointer'" ) %>
+     <% end %>
+</div>

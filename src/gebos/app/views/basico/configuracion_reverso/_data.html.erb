@@ -1,0 +1,48 @@
+<% configuracion_reverso = @configuracion_reverso if configuracion_reverso.nil? %>
+<td>
+	<%= configuracion_reverso.programa.nombre  unless configuracion_reverso.nil? -%>
+</td>
+<td>
+	<% 
+		begin
+			estatus_origen = Estatus.find(configuracion_reverso.estatus_origen_id,:select=>'nombre')
+			nombre_estatus = estatus_origen.nombre
+		rescue
+			nombre_estatus = 'Estatus Eliminado'
+		end
+	-%>
+	<%= nombre_estatus -%>
+</td>	
+<td>
+	<% 
+		begin
+			estatus_destino = Estatus.find(configuracion_reverso.estatus_destino_id, :select=>'nombre') 
+			nombre_estatus = estatus_destino.nombre
+		rescue
+			nombre_estatus = 'Estatus Eliminado'
+		end-%>
+	<%= nombre_estatus -%>
+</td>
+<td>
+	<%= configuracion_reverso.ruta_primaria -%>
+</td>
+<td>
+	<%= format_bool(configuracion_reverso.condicionado) -%>
+</td>
+<td style="text-align: right">
+	
+	
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+    :method =>:get,
+		:url => {:controller => 'configuracion_reverso', :action => :edit, :id => configuracion_reverso.id} ) if vlink 'edit' -%>
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'configuracion_reverso', :action => :delete, :id => configuracion_reverso.id}) if vlink 'delete' -%>
+		
+</td>

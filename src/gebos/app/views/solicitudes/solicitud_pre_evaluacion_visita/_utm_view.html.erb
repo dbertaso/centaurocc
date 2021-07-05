@@ -1,0 +1,40 @@
+
+<table style="width: 100%">
+  <br/>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Coordenadas UTM</span>
+    </td>
+  </tr>
+</table>
+<br/>
+<table class="lista" style="width: 50%">
+  <tr>
+    <th style="width: 200px">
+      <label>UTM</label>
+    </th>
+    <th style="width: 100px">
+      <label>Ubicación Geográfica</label>
+    </th>
+  </tr>
+  <% unless @utm_unidad_produccion_list.nil?
+    clase = "lista0"
+    @utm_unidad_produccion_list.each { |utm| %>
+      <tr id="utm_<%= utm.id %>" class='<%= clase %>'>
+        <td>
+          <%= utm.utm %>
+        </td>
+        <td>
+          <%= utm.ubicacion_geografica_w %>
+        </td>
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+
+</table>
+<br/>

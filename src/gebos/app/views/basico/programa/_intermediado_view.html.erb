@@ -1,0 +1,43 @@
+<table>
+   <tr>
+    <td style="width: 250px">
+      <label><%=I18n.t('Sistema.Body.Modelos.Programa.porcentaje_riesgo_beneficiario') %></label>
+    </td>
+    <td style="width: 450px">
+        <%= @programa.porcentaje_riesgo_foncrei_f -%>
+    </td>
+   </tr>
+   <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Programa.porcentaje_riesgo_intermediario') %></label>
+    </td>
+    <td>
+        <%= @programa.porcentaje_riesgo_intermediario_f -%>
+    </td>
+   </tr>
+   <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.beneficiario')}"%></label>
+    </td>
+    <td>
+        <%= @programa.porcentaje_tasa_foncrei_f -%>
+    </td>
+   </tr>
+   <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.intermediario')}%></label>
+    </td>
+    <td>
+        <%= @programa.porcentaje_tasa_intermediario_f -%>
+    </td>
+   </tr>
+   <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.frecuencia_pago_intermediado')%></label>
+    </td>
+    <td>
+        <%= @programa.frecuencia_pago_intermediario_w -%>
+    </td>
+   </tr>
+
+</table>

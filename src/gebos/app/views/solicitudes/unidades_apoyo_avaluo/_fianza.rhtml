@@ -1,0 +1,177 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Fianza Personal</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Cédula de Identidad:</label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_fianza', 'cedula',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Nombre:</label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_fianza', 'nombre',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Nacionalidad</label>
+    </td>
+    <td>
+      <%= select(
+        'solicitud_avaluo_fianza', 'nacionalidad_id',
+        @nacionalidad_select.map{|c| [c.descripcion, c.id]},
+        { :include_blank => true},
+        { :class=>'select', :onchange=> ';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Estado Civil</label>
+    </td>
+    <td>
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'S', :checked => true,
+          :class=>'text', :onclick=>'inputChange();showConyuge("S");'  -%>Soltero<br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'C',
+          :class=>'text', :onclick=>'inputChange();showConyuge("C");'  -%>Casado<br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'O',
+          :class=>'text', :onclick=>'inputChange();showConyuge("O");'  -%>Concubino<br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'V',
+          :class=>'text', :onclick=>'inputChange();showConyuge("V");'  -%>Viudo<br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'D',
+          :class=>'text', :onclick=>'inputChange();showConyuge("D");'  -%>Divorciado<br />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label>Domiciliado en:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_area 'solicitud_avaluo_fianza', 'domicilio',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,500)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label>Estado:</label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'solicitud_avaluo_fianza', 'estado_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        { },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Información del Conyugue</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Cédula de Identidad:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_fianza', 'cedula_conyugue',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Nombre:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_fianza', 'nombre_conyugue',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Nacionalidad</label>
+    </td>
+    <td>
+      <%= select(
+        'solicitud_avaluo_fianza', 'nacionalidad_conyugue_id',
+        @nacionalidad_select.map{|c| [c.descripcion, c.id]},
+        { :include_blank => true},
+        { :class=>'select', :onchange=> ';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Estado Civil</label>
+    </td>
+    <td>
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'S', :checked => true,
+          :class=>'text', :onclick=>'inputChange();showConyuge("S");'  -%>Soltero<br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'C',
+          :class=>'text', :onclick=>'inputChange();showConyuge("C");'  -%>Casado<br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'O',
+          :class=>'text', :onclick=>'inputChange();showConyuge("O");'  -%>Concubino<br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'V',
+          :class=>'text', :onclick=>'inputChange();showConyuge("V");'  -%>Viudo<br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'D',
+          :class=>'text', :onclick=>'inputChange();showConyuge("D");'  -%>Divorciado<br />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label>Domiciliado en:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_area 'solicitud_avaluo_fianza', 'domicilio_conyugue',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,500)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label>Estado:</label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'solicitud_avaluo_fianza', 'estado_conyugue_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        { },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  
+</table>

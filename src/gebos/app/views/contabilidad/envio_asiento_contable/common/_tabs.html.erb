@@ -1,0 +1,55 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    logger.info "Controller+Action <=====> #{controller_name} - #{action_name}"
+    if action_name =='index' and action_name != 'consulta_envio'
+
+    %>
+      <li id="actual">
+        <div>
+          <a href="#">
+            <%= I18n.t('Sistema.Body.Vistas.EnvioAsientoContable.Tabs.envio_comprobantes')%>
+          </a>
+        </div>
+      </li>
+    <% else %>
+      <li>
+        <div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.EnvioAsientoContable.Tabs.envio_comprobantes'), :action => 'index')  %>
+        </div>
+      </li>
+    <% end %>
+    <% if action_name == 'consulta_envio' and action_name != 'index' %>
+      <li id="actual">
+        <div>
+          <a href="#">
+            <%= I18n.t('Sistema.Body.Vistas.EnvioAsientoContable.Tabs.comprobantes_enviados')%>
+          </a>
+        </div>
+      </li>
+    <% else %>
+      <li>
+        <div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.EnvioAsientoContable.Tabs.comprobantes_enviados'),  :action => 'consulta_envio')  %>
+        </div>
+      </li>
+    <% end %>
+    <% if action_name == 'consulta_rechazos'%>
+      <li id="actual">
+        <div>
+          <a href="#">
+            <%= I18n.t('Sistema.Body.Vistas.EnvioAsientoContable.Tabs.comprobantes_rechazados')%>
+          </a>
+        </div>
+      </li>
+    <% else %>
+      <li>
+        <div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.EnvioAsientoContable.Tabs.comprobantes_rechazados'), :action => 'consulta_rechazos')  %>
+        </div>
+      </li>
+    <% end %>  
+  </ul>
+</div>

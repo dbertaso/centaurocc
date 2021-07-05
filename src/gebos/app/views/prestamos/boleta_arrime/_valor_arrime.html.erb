@@ -1,0 +1,14 @@
+<%unless @calculo_valor.blank?%>
+  <%= format_fm(@calculo_valor)%>
+<%#else%>
+  <%#= text_field 'boleta_arrime', 'valor_arrime_fm' %>
+<%end%>
+<%#= @calculo_valor unless @calculo_valor.nil? %>
+<% unless @calculo_valor.blank? %>
+  <%= hidden_field 'boleta_arrime', 'valor_arrime', :value=>"#{@calculo_valor}", :style=>'display:hidden' %>
+<%end%>
+
+<% if @calculo_valor.nil? %>
+<%= hidden_field_tag 'check', '', :value=>"#{@calculo_valor}", :style=>'display:hidden' %>
+Sin Valor
+<%end%>

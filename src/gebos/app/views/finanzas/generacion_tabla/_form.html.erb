@@ -1,0 +1,229 @@
+
+
+<table>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= Etiquetas.etiqueta(9) %></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 40%">
+      <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Rif' : 'Cédula' %></label>
+    </td>
+    <td style="width: 60%">
+      <% if @cliente.class.to_s=='ClienteEmpresa' %>
+        <%= @cliente.empresa.rif %>
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+          { :controller=>'/clientes/cliente_empresa', :action=>'view', :id=>@cliente.empresa.id, :popup=>true },
+          :popup => ['cliente_empresa', 'height=600,width=800, scrollbars=yes, resizable=yes']  %>
+      <% else %>
+        <%= @cliente.persona.cedula %>
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+          { :controller=>'/clientes/cliente_persona', :action=>'view', :id=>@cliente.persona.id, :popup=>true },
+          :popup => ['cliente_persona', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Nombre' : 'Nombre, Apellido' %></label>
+    </td>
+    <td>
+      <%= @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.alias : @cliente.persona.nombre_corto %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Número '+ Etiquetas.etiqueta(9) + ' Jurídico' : 'Número Grupo' %></label>
+
+    </td>
+    <td>
+      <%= @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.numero :  @cliente.persona.GrupoIntegrante[0].Grupo.numero  %>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Datos Básicos del Microcrédito</span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Solicita Microcrédito por Primera Vez</label>
+    </td>
+    <td>
+      <%= radio_button 'solicitud', 'recredito', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%> Sí
+      <%= radio_button 'solicitud', 'recredito', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%> No
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <% unless @solicitud.numero.nil? -%><label>Número</label><% end -%>
+    </td>
+    <td>
+      <%= @solicitud.numero -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Promotora</label>
+    </td>
+    <td>
+
+  <%= select(
+        'solicitud', 'promotora_id',
+        @promotora.map{|i| [i.nombre + ' ' + i.apellido, i.id]},
+         { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Programa Social </label>
+    </td>
+    <td>
+    <% if controller.action_name != 'new' %>
+      <% if @solicitud.change_programa == true %>
+        <% programa_onchange = remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>'solicitud',
+          :action=>:programa_change },
+          :with=>"'programa_id='+value") %>
+
+        <%= select(
+          'solicitud', 'programa_id',
+          @programa_list.map{|i| [i.alias, i.id]},
+           { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select', :onchange=>programa_onchange + ';inputChange();' } ) %>
+      <% else %>
+          <%= @solicitud.programa.alias %>
+      <% end %>
+        <% else %>
+      <% programa_onchange = remote_function(
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'solicitud',
+        :action=>:programa_change },
+        :with=>"'programa_id='+value") %>
+
+      <%= select(
+        'solicitud', 'programa_id',
+        @programa_list.map{|i| [i.alias, i.id]},
+        { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>programa_onchange + ';inputChange();' } ) %>
+    <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label>Fecha Solicitud</label>
+    </td>
+    <td style="width: 500px">
+      <%= text_field 'solicitud', 'fecha_solicitud_f',
+        :class=>'text', :style=>'width: 80px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+      <%= calendar 'solicitud_fecha_solicitud_f', 'calendar_fecha_solicitud' %> (dd/mm/aaaa)
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Monto Solicitado</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud', 'monto_cliente_f',
+        :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+        :onkeypress=>'montosolicitud(); inputChange();',
+        :onchange=>'inputChange();',
+        :onkeyup=>"formatCurrency(this.value, 'solicitud_monto_cliente');"  -%>
+      <%= display_number @solicitud.monto_cliente, 'solicitud_monto_cliente' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Monto Aprobado</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud', 'monto_solicitado_f',
+        :class=>'text',:style=>'width: 100px', :maxlength=>'16',
+        :onkeypress=>'inputChange();',
+        :onchange=>'inputChange(); ',
+        :onkeyup=>"formatCurrency(this.value, 'solicitud_monto_solicitado');"  -%>
+      <%= display_number @solicitud.monto_solicitado, 'solicitud_monto_solicitado' %>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Origen de Fondo</label></td>
+    <td>
+      <span id="origen_fondo-select">
+        <%= render :partial => 'origen_fondo_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Destino</label>
+    </td>
+    <td>
+      <%= text_area 'solicitud', 'objetivo_proyecto',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Ubicación del Crédito</span>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Estado:</label></td>
+    <td>
+      <% estado_onchange = remote_function(
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'solicitud',
+        :action=>:estado_change },
+        :with=>"'estado_id='+value") %>
+      <%= select(
+        'solicitud', 'estado_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>estado_onchange + ';inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Ciudad:</label></td>
+    <td>
+      <span id="ciudad-select">
+        <%= render :partial => 'ciudad_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Municipio:</label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Parroquia:</label></td>
+    <td>
+      <span id="parroquia-select">
+        <%= render :partial => 'parroquia_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr height=10><td colspan="2"></td></tr>
+
+</table>

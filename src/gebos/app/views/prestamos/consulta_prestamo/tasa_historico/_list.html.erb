@@ -1,0 +1,35 @@
+
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%= sort_class_helper('fecha') %>>
+          <%= sort_link_helper "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.actualizacion')}", 'fecha', 'tasa_historico_list' %>
+        </th>
+        <th style="text-align: center; width: 50px" <%= sort_class_helper('tasa_cliente') %>>
+          <%= sort_link_helper "#{t('Sistema.Body.Vistas.General.tasa')} #{t('Sistema.Body.General.beneficiario')}", 'tasa_cliente', 'tasa_historico_list' %>
+        </th>
+          <th style="text-align: center; width: 114px" <%= sort_class_helper('referencia') %>>
+          <%= sort_link_helper "#{t('Sistema.Body.Vistas.General.tasa')} #{t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.referencia')}", 'referencia', 'tasa_historico_list' %>
+        </th>
+
+      </tr>
+    </thead>
+
+    <tbody id="tasa_historico_list_body">
+      <%
+        even_odd = 1
+        for prestamo_tasa_historico in @prestamo_tasa_historico_list
+          even_odd = 1 - even_odd %>
+          <%= render :partial => 'prestamos/consulta_prestamo/tasa_historico/row', :locals =>{:prestamo_tasa_historico => prestamo_tasa_historico, :even_odd=>even_odd}-%>
+      <% end %>
+    </tbody>
+  </table>
+<% if @prestamo_tasa_historico_list.total_pages > 1 %>
+  <div class="lista-paginas">
+  Página de resultados
+  <%= will_paginate @prestamo_tasa_historico_pages, 'list' %>
+  </div>
+<% end %>
+<div class="lista-total">
+  <%= @tasa_historico_total %> registros en total
+</div>

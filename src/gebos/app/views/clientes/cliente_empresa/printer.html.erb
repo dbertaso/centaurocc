@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-10" />
+</head>
+
+<script language="JavaScript">
+<!-- Begin
+function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+}
+function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+}
+//  End -->
+</script>
+<body>
+<table width="1120px" border="1" aling="center">
+  <tr>
+    <td style="width: 20%; text-align: center">
+      <img src="/images/logo_reporte.jpg" alt="logo"/>
+    </td>
+    <td align="center">
+      <label style="font-size: 16px"> INFORMACIÒN DEL PRODUCTOR <br/>
+      </label>
+    </td>
+   <td style="width: 20%; text-align: center"> <!-- AQUI IRA LA FOTOGRAFIA DEL PRODUCTOR-->
+
+     <img src="/data/<%= 'F_'<< CGI::escape(@empresa.rif.to_s) << '.jpg'%>" width="200" height="150" />
+          
+
+    </td>
+  </tr>
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px"  aling="center" >
+  <tr>
+   <th colspan="3" style="background-color: #cee3ba"><label>DATOS BASICOS REPRESENTANTE</label></th>
+  </tr>
+  <tr>
+    <td><label>Nro. Rif:</label> <%= @empresa.rif %></td>
+    <td><label>Número Registro CICOM:</label>  <%= @empresa.numero_sunacop %></td>
+    <td><label>Fecha Registro CICOM:</label>  <%= @empresa.fecha_constitucion_f %></td>
+  </tr>
+  <tr>
+    <td><label>Tipo Beneficiario:</label> <%= @empresa.cliente_empresa.tipo_cliente.nombre %></td>
+
+    <td><label>Nombre Abreviado:</label> <%= @empresa.alias %></td>
+    <td><label>Nombre del Beneficiario:</label>  <%= @empresa.nombre %></td>
+  </tr>
+  <tr>
+    <td><label>Cant. Miembros:</label> <%= @empresa.cant_miembros %> </td>
+    <td><label>Número de Familias:</label> <%= @empresa.numero_familias%></td>
+    <td><label>Número de Viviendas:</label> <%= @empresa.numero_viviendas %></td>
+  </tr>
+  <tr>
+    <td><label>Cant. de Productores Beneficiados:</label> <%= @empresa.cant_productores%></td>
+    <td><label>¿Los Beneficiarios se Dedican a la Pesca?:</label>
+        <% if @empresa.cliente_empresa.es_pescador == true %>
+          <%= image_tag('activo.gif') %>
+        <% elsif @empresa.cliente_empresa.es_pescador == false %>
+          <%= image_tag('inactivo.gif') %>
+        <% end %>
+    </td>
+    <td><label>Objeto del Beneficiario:</label> <%= @empresa.objeto%></td>
+  </tr>
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px"  aling="center">
+  <tr>
+    <th colspan="3" style="background-color: #cee3ba"><label>DIRECCION</label></th>
+  </tr>
+  <tr>
+    <td><label>Tipo:</label>
+         <% if @empresa_direccion.tipo == 'P' %>
+            Sede Principal
+          <% elsif @empresa_direccion.tipo == 'S' %>
+            Sucursal
+          <% elsif @empresa_direccion.tipo == 'L' %>
+            Planta
+          <% elsif @empresa_direccion.tipo == 'D' %>
+            Deposito
+          <% elsif @empresa_direccion.tipo == 'T' %>
+            Otra
+          <% end %>
+    </td>
+    <td><label>Urbanización/ Barrio/ Sector:</label>  <%= @empresa_direccion.zona %></td>
+    <td><label>Calle /Avenida /Callejón:</label> <%= @empresa_direccion.avenida %> </td>
+  </tr>
+  <tr>
+    <td><label>Casa /Edificio /Otro:</label> <%= @empresa_direccion.edificio %></td>
+    <td><label>Piso:</label> <%= @empresa_direccion.piso %></td>
+    <td><label>Número Apto / Casa:</label> <%= @empresa_direccion.numero %></td>
+  </tr>
+
+  <tr>
+    <td><label>Código Postal:</label> <%= @empresa_direccion.codigo_postal %></td>
+    <td><label>Punto de Referencia:</label> <%= @empresa_direccion.referencia %></td>
+    <td><label>Región:</label> <%= @empresa_direccion.ciudad.estado.region.nombre %></td>
+  </tr>
+  <tr>
+    <td><label>Estado:</label> <%= @empresa_direccion.ciudad.estado.nombre %></td>
+    <td><label>Municipio:</label> <%= @empresa_direccion.municipio.nombre %></td>
+    <td><label>Parroquia:</label> <%= @empresa_direccion.parroquia.nombre %></td>
+  </tr>
+  <tr>
+    <td><label>Ciudad:</label> <%= @empresa_direccion.ciudad.nombre %></td>
+    <td><label>Espacio Físico:</label>
+        <% if @empresa_direccion.tipo_inmueble == 'L' %>
+            Local
+          <% elsif @empresa_direccion.tipo_inmueble == 'H' %>
+            Habitacion
+          <% elsif @empresa_direccion.tipo_inmueble == 'G' %>
+            Galpon
+          <% elsif @empresa_direccion.tipo_inmueble == 'T' %>
+            Terreno
+          <% end %>
+    </td>
+    <td><label>Espacio Aprox.:</label> <%= @empresa_direccion.espacio_aproximado_m2_f %></td>
+  </tr>
+  <tr>
+    <td><label>Tenencia:</label> 
+          <% if @empresa_direccion.tenencia == 'P' %>
+            Propia
+          <% elsif @empresa_direccion.tenencia == 'A' %>
+            Alquilada
+          <% elsif @empresa_direccion.tenencia == 'C' %>
+            Comodato
+          <% elsif @empresa_direccion.tenencia == 'H' %>
+            Hipoteca
+          <% elsif @empresa_direccion.tenencia == 'F' %>
+            Con Familiar
+          <% end %>
+    </td>
+    <td><label>Teléfonos:</label> <%= @empresa.telefonos[0].codigo << '-' << @empresa.telefonos[0].numero if @empresa.telefonos.length > 0 %></td>
+  </tr>
+ 
+ </table>
+
+  <table width="1120px" border="1" style="font-size: 16px"  aling="center">
+
+    <tr>
+      <th colspan="3" style="background-color: #cee3ba"><label>INTEGRANTES</label></th>
+    </tr>
+      <%@cant = 0 %>
+      <%while @cant < @empresa.cant_miembros  %>
+    <tr>
+      <td><label>Nro. Cédula:</label> <%= @empresa_integrantre[@cant].persona.cedula_nacionalidad %>-<%= @empresa_integrantre[@cant].persona.cedula %></td>
+      <td><label>Nombre:</label>  <%= @empresa_integrantre[@cant].persona.primer_nombre %></td>
+      <td><label>Apellido:</label>  <%= @empresa_integrantre[@cant].persona.primer_apellido %></td>
+    </tr>
+    <tr>
+      <td><label>Fecha de Nacimiento:</label> <%= @empresa_integrantre[@cant].persona.fecha_nacimiento_f %></td>
+      <td><label>Estado Civil:</label> <%= @empresa_integrantre[@cant].persona.estado_civil_w %></td>
+      <td><label>Edad:</label> <%= @empresa_integrantre[@cant].persona.edad(Time.now, @empresa_integrantre[@cant].persona.fecha_nacimiento).to_s << " años" %></td>
+    </tr>
+    <tr>
+      <td><label>Lugar de Nacimiento:</label> <%= @empresa_integrantre[@cant].persona.lugar_nacimiento %> </td>
+      <td><label>Pais de Nacimiento:</label> <%= @empresa_integrantre[@cant].persona.Pais.nombre if !@empresa_integrantre[@cant].persona.Pais.nil? %></td>
+      <td><label>Nacionalidad:</label> <%= @empresa_integrantre[@cant].persona.Nacionalidad.masculino %></td>
+    </tr>
+    <% @empresa_integrantre_tipo = EmpresaIntegranteTipo.find(:all, :conditions=>['empresa_integrante_id = ?', @empresa_integrantre[@cant].id]) %>
+    <tr>
+      <td><label>Tipo Asociada/Asociado :</label> 
+        <% if @empresa_integrantre_tipo[0].tipo == 'R' %>
+            Representante Legal
+        <% elsif @empresa_integrantre_tipo[0].tipo == 'S' %>
+            Asociado
+        <% elsif @empresa_integrantre_tipo[0].tipo == 'V' %>
+           Vocero
+        <%end%>
+        
+      </td>
+      
+    </tr>
+    <tr>
+      <td></td>
+    </tr>
+ 
+
+   <%@cant += 1%>
+
+   <% end %>
+  </table>
+
+<table width="1120px" border="1" style="font-size: 16px"  aling="center">
+
+    <tr>
+      <th colspan="3" style="background-color: #cee3ba"><label>DATOS DE LA UNIDAD DE PRODUCCIÓN</label></th>
+    </tr>
+
+    <tr>
+      <td colspan="3"><label>Nombre de la Unidad de Producción:</label> <%= @UnidadProduccion.nombre %></td>
+     
+    </tr>
+
+    <tr>
+      <td colspan="3"><label>Dirección de la Unidad de Producción:</label> <%= @UnidadProduccion.direccion %></td>
+    </tr>
+    <tr>
+      <td colspan="3"><label>Como llegar desde el poblado más cercano (Dirección Práctica):</label> <%= @UnidadProduccion.referencia %></td>
+    </tr>
+    <tr>
+      <td><label>Estado:</label> <%= @UnidadProduccion.Municipio.estado.nombre %></td>
+      <td><label>Municipio:</label> <%= @UnidadProduccion.Municipio.nombre %></td>
+      <td><label>Parroquia:</label> <%= @UnidadProduccion.Parroquia.nombre %></td>
+    </tr>
+    <tr>
+      <td colspan="3"><label>Ciudad:</label> <%= @UnidadProduccion.Ciudad.nombre %></td>
+    </tr>
+  <tr>
+    <td colspan="3"><label>Total Hectáreas:</label> <%= @UnidadProduccion.total_hectareas %></td>
+  </tr>
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px"  aling="center">
+  <tr>
+      <td colspan="3" style="background-color: #cee3ba"><label>INFORMACION DE CUENTAS</label></td>
+  </tr>
+  <tr>
+
+    <td><label>Cuenta del Beneficiario:<br/>Tipo: </label>
+        <% if @CuentaBancaria.tipo == 'C' %>
+            Corriente
+        <% else @CuentaBancaria.tipo == 'A' %>
+            Ahorros
+        <%end%>
+
+    </td>
+    <td><br/><label>Número:</label> <%= @CuentaBancaria.numero %></td>
+    <td><br/><label>Banco:</label> <%= @CuentaBancaria.EntidadFinanciera.nombre %></td>
+  </tr>
+
+</table>
+<table   width="1120px" border="1" style="font-size: 16px"  aling="center">
+    <tr colspan="3" style="background-color: #cee3ba">
+      <th colspan="3" style="background-color: #cee3ba"><label>INFORMACION</label></th>
+    </tr>
+  <tr>
+     <td>
+        <label>Firma Representante Legal:</label>
+        <% persona = @cliente.empresa.representante_legal %>
+         <%= persona.primer_nombre << ' ' << persona.primer_apellido %>
+      </td>
+
+      <td>
+        <label>Huella:</label>
+         <img src="/data/<%= 'H_'<< @empresa.rif << '.jpg'%>" width="200" height="150" />
+
+      </td>
+  </tr>
+  </table>
+
+
+<table width="1120px" >
+  <tr>
+    <td colspan="4">
+      <div style="padding: 6px" align="center">
+        <form>
+          <div id = boton>
+            <input name="print" type="button" value="Imprimir" onclick="varitext()" />
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+

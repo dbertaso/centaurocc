@@ -1,0 +1,57 @@
+
+
+<table>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label>
+    </td>
+    <td style="width: 80%">
+      <%# if @persona_telefono.persona_direccion.nil? %>
+      <%# if @persona_telefono.nil? %>
+        <%= radio_button 'persona_telefono', 'tipo', 'H',
+          :class=>'text' -%><%= I18n.t('Sistema.Body.Vistas.General.habitacion') %><br />
+        <%= radio_button 'persona_telefono', 'tipo', 'O',
+          :class=>'text' -%><%= I18n.t('Sistema.Body.Vistas.General.oficina') %><br />
+        <%= radio_button 'persona_telefono', 'tipo', 'C',
+          :class=>'text' -%><%= I18n.t('Sistema.Body.Vistas.General.celular') %><br />
+        <%= radio_button 'persona_telefono', 'tipo', 'L',
+          :class=>'text' -%><%= I18n.t('Sistema.Body.Vistas.General.local') %><br />
+        <%= radio_button 'persona_telefono', 'tipo', 'T',
+          :class=>'text' -%><%= I18n.t('Sistema.Body.Vistas.General.otra') %><br />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.codigo') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona_telefono', 'codigo',
+        :class=>'text',
+        :style=>'width: 35px',
+        :maxlength=>'4', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.telefono')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'persona_telefono', 'numero',
+        :class=>'text',
+        :style=>'width: 80px',
+        :maxlength=>'7', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <%= check_box 'persona_telefono', 'fax',
+        :checked_value=>"1",
+        :unchecked_value=>"0" -%>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.fax') %></label>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

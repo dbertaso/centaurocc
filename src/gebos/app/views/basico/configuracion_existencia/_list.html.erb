@@ -1,0 +1,43 @@
+
+<table class="lista" style="width: 99%">
+  <thead>
+    <tr>
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('tipo_maquinaria_id') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'tipo_maquinaria.nombre', 'list' %>
+      </th>
+
+      <th style="width: 20%" style="text-align: center" <%= sort_class_helper('clase_id') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.tipo'), 'clase.nombre', 'list' %>
+      </th>
+
+      <th style="width: 20%" style="text-align: center" <%= sort_class_helper('marca_maquinaria_id') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Controladores.Marca.FormTitles.form_title_record'), 'marca_maquinaria.nombre', 'list' %>
+      </th>
+
+      <th style="width: 20%" style="text-align: center" <%= sort_class_helper('modelo_id') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.modelo'), 'modelo.nombre', 'list' %>
+      </th>
+
+      <th style="width: 13%" style="text-align: center" <%= sort_class_helper('minimo') %>>
+              <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.existencia')} #{I18n.t('Sistema.Body.Vistas.General.minima')}", 'minimo', 'list' %>
+      </th>
+
+      <th style="width: 13%" style="text-align: center" <%= sort_class_helper('maximo') %>>
+              <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.existencia')} #{I18n.t('Sistema.Body.Vistas.General.maxima')}", 'maximo', 'list' %>
+      </th>
+
+      <th style="width: 8%" style="text-align: center">
+              <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%  even_odd = 1
+        for stock_maquinaria in @list
+                  even_odd = 1 - even_odd %>
+          <%= render :partial => 'row', :locals => { :stock_maquinaria => stock_maquinaria, :even_odd => even_odd } -%>
+        <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

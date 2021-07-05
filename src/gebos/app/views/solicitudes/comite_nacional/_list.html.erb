@@ -1,0 +1,57 @@
+<div class="marco-contenido">
+  <form id="form_solicitud_comite_nacional">
+    <table class="lista" style="width: 100%">
+      <thead>
+        <tr>
+          <th style="width:5px"><%=I18n.t('Sistema.Body.General.seleccionar_todos')%> <br/>
+            <input type="checkbox" value="" onClick="checkbox_select_all('form_solicitud_comite_nacional',this,'decision_solicitud_id')" />
+          </th>
+          <th style="width: 50px" <%= sort_class_helper('numero_helper') %>>
+            <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'numero_helper', 'list' %>
+          </th>
+          <th style="width: 80px" <%= sort_class_helper('identificacion') %> >
+            <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cedula') <<  " / " << I18n.t('Sistema.Body.Vistas.General.rif'), 'identificacion', 'list' %>
+          </th>
+          <th style="width: 190px" <%= sort_class_helper('nombre') %> >
+            <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'nombre', 'list' %>
+          </th>
+          <th style="width: 130px"><%=I18n.t('Sistema.Body.Vistas.Form.estatus')%></th>
+          <th style="width: 80px" ><%= I18n.t('Sistema.Body.Vistas.General.moneda') %></th>
+          <th style="width: 90px"><%=I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.monto_financiar') %></th>
+          
+          <th style="width: 100px" <%= sort_class_helper('sector.nombre') %> >
+            <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector.nombre', 'list' %>
+          </th>
+
+          <th style="width: 100px" <%= sort_class_helper('sub_sector.nombre') %> >
+            <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector.nombre', 'list' %>
+          </th>
+          
+          <th style="width: 100px" <%= sort_class_helper('rubro.nombre') %> >
+            <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro.nombre', 'list' %>
+          </th>
+          
+          <th style="width: 80px"><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></th>
+          <th style="width: 80px"><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></th>
+          <th style="width: 20px"><%=I18n.t('Sistema.Body.Vistas.General.apertura') << " " << I18n.t('Sistema.Body.Vistas.General.sesion')%></th>
+          <th style="width: 60px"><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.sesion')%></th>
+          <th style="width: 45px"></th>
+          <th style="width: 45px"><%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+          
+        </tr>
+      </thead>
+      <tbody id="list-body">
+        <%
+        even_odd = 1
+        for solicitud in @list
+          even_odd = 1 - even_odd
+        %>
+          <%=
+          render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd }
+          -%>
+        <% end %>
+      </tbody>
+    </table>
+    <%= form_pagination %>
+  </form>
+</div>

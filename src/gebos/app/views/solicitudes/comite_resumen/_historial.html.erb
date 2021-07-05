@@ -1,0 +1,34 @@
+<table class="lista" style="width: 67%">
+	<thead>
+	<tr>
+		<th style="width: 10%">
+			<%=I18n.t('Sistema.Body.Vistas.Form.fecha')%>
+		</th>
+		<th style="width: 10%">
+			<%=I18n.t('Sistema.Body.Vistas.General.hora')%>
+		</th>
+		<th style="width: 26%">
+			<%=I18n.t('Sistema.Body.Vistas.General.motivo')%>
+		</th>
+
+		<th style="width: 26%">
+			<%=I18n.t('Sistema.Body.Controladores.CausaRenuncia.FormTitles.form_title_record')%> / <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.reestructuracion') %>
+		</th>
+		<th style="width: 26%">
+			<%=I18n.t('Sistema.Body.Vistas.General.observaciones')%>
+		</th>
+		<th style="width: 26%">
+			<%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+		</th>
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for detalle in @historial
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_historial', :locals => { :detalle => detalle, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+<br/>
+</table>

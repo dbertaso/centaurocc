@@ -1,0 +1,74 @@
+
+<div class="marco-titulo"><div><div>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.modificando')} #{I18n.t('Sistema.Body.Vistas.General.plan_inversion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %>
+      <span class="titulo_modificar">'<%=  @plan_inversion[0].solicitud.numero.to_s %>'</span>
+      <%= I18n.t('Sistema.Body.Vistas.General.beneficiario') %>
+      <span class="titulo_modificar">'<%= @plan_inversion[0].solicitud.cliente.class.to_s=='ClienteEmpresa' ? @plan_inversion[0].solicitud.cliente.empresa.nombre : @plan_inversion[0].solicitud.cliente.persona.nombre_corto  %>'</span> -
+      <span class="titulo_modificar"><%= @plan_inversion[0].solicitud.estatus_w -%></span>
+</div></div></div>
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+<%= render :partial=>'solicitudes/plan_inversion/common/tabs' %>
+<div class="marco-contenido2">
+
+  </br>
+  </br>
+  </br>
+  <table>
+    <tr>
+      <td style="width: 200px">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.plan_inversion')}" %></label>
+      </td>
+      <td style="width: 600px; align: right">
+        <%= @prestamo.monto_solicitado_fm -%>
+      </td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.sras')} #{I18n.t('Sistema.Body.General.primer')} #{I18n.t('Sistema.Body.Vistas.General.año')}" %></label>
+      </td>
+      <td>
+        <%= @prestamo.monto_sras_primer_ano_fm -%>
+      </td>
+      <td></td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.sras')} #{I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.anos_subsiguientes')}" %></label>
+      </td>
+      <td>
+        <%= @prestamo.monto_sras_anos_subsiguientes_fm -%>
+      </td>
+      <td></td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.sras')}" %></label>
+      </td>
+      <td>
+        <%= @prestamo.monto_sras_total_fm -%>
+      </td>
+      <td></td>
+    </tr>
+    <tr></tr>
+        <%= render :partial => 'gastos' -%>
+    <tr>
+      <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}" %></label>
+      </td>
+      <td>
+        <%= @prestamo.total_financiamiento_fm -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td> <label> <%= I18n.t('Sistema.Body.Vistas.General.moneda') %> </label> </td>
+      <td> <%= @prestamo.moneda.nombre %> </td>
+    </tr>
+  </table>
+
+</div>
+</div>

@@ -1,0 +1,94 @@
+<%
+def cas_mes(mes)
+mes_casteado = ''
+if mes.to_i == 1 
+mes_casteado = 'ENE'
+end
+
+if mes.to_i == 2 
+mes_casteado = 'FEB'
+end
+if mes.to_i == 3
+mes_casteado = 'MAR'
+end
+if mes.to_i == 4
+mes_casteado = 'ABR'
+end
+if mes.to_i == 5 
+mes_casteado = 'MAY'
+end
+if mes.to_i == 6
+mes_casteado = 'JUN'
+end
+if mes.to_i == 7 
+mes_casteado = 'JUL'
+end
+if mes.to_i == 8 
+mes_casteado = 'AGO'
+end
+if mes.to_i == 9
+mes_casteado = 'SEP'
+end
+if mes.to_i == 10 
+mes_casteado = 'OCT'
+end
+if mes.to_i == 11
+mes_casteado = 'NOV'
+end
+
+if mes.to_i == 12
+mes_casteado = 'DIC'
+end
+
+return mes_casteado
+end
+
+
+%>
+<% list = @list if list.nil? %>
+<td align="center">
+	<%= cas_mes(list.mes.to_s) + '/' + list.ano.to_s  %>
+</td>	
+
+<td align="right">
+	<% unless list.saldo.nil? %>
+				<%= sprintf('%01.2f',list.saldo ).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")  %>
+			<% else %> 0,00<% end %> 
+</td>	
+<td align="right">
+	<% unless list.desembolso.nil? %>
+				<%= sprintf('%01.2f',list.desembolso).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")  %>
+			<% else %> 0,00<% end %> 
+</td>	
+<td align="right">
+	<% unless list.cobranza.nil? %>
+				<%= sprintf('%01.2f',list.cobranza).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")  %>
+			<% else %> 0,00<% end %> 
+</td>			
+<td align="right">
+	<% unless list.diferencia.nil? %>
+				<%= sprintf('%01.2f',list.diferencia).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")  %>
+			<% else %> 0,00<% end %> 
+</td>
+
+<td align="center">
+	<%= link_to(image_tag('icono-pe-excel.gif', :title=>'Exportar a Excel'), :action => :xls_cartera,  :xls_mes => list.mes, :xls_ano => list.ano) -%>
+</td>			
+<td align="center">
+	<%= link_to(image_tag('icono-pe-excel.gif', :title=>'Exportar a Excel'), :action => :xls_desembolsos,  :xls_mes => list.mes, :xls_ano => list.ano) -%>
+</td>
+<td align="center">
+	<%= link_to(image_tag('icono-pe-excel.gif', :title=>'Exportar a Excel'), :action => :xls_cobranza,  :xls_mes => list.mes, :xls_ano => list.ano) -%>
+</td>
+<td align="center">
+	<%= link_to(image_tag('icono-pe-excel.gif', :title=>'Sector y Estatus'), :action => :xls_sector_estatus,  :xls_mes => list.mes, :xls_ano => list.ano) -%>
+</td>
+<td align="center">
+	<%= link_to(image_tag('icono-pe-excel.gif', :title=>'Region y Estatus'), :action => :xls_region_estatus,  :xls_mes => list.mes, :xls_ano => list.ano) -%>
+</td>
+<td align="center">
+	<%= link_to(image_tag('icono-pe-excel.gif', :title=>'Cartera y Analista'), :action => :xls_cartera_analista,  :xls_mes => list.mes, :xls_ano => list.ano) -%>
+</td>
+<td align="center">
+	<%= link_to(image_tag('icono-pe-excel.gif', :title=>'Cartera, Codigo y Cliente'), :action => :xls_cartera_codigo_cliente,  :xls_mes => list.mes, :xls_ano => list.ano) -%>
+</td>

@@ -1,0 +1,5 @@
+<%# logger.debug "TOTALROW " << total.to_s %>
+<tr class="lista<%= even_odd %>" id="row_<%= orden_despacho_insumo.id %>">
+	<%= render :partial => 'data', :locals => {:total=>@total, :orden_despacho_insumo => orden_despacho_insumo, :even_odd => even_odd } -%>
+</tr>
+

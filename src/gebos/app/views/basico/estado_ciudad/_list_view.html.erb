@@ -1,0 +1,20 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 600px" <%= sort_class_helper('ciudad.nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'ciudad.nombre', 'list' %>
+ 			</th>
+ 			
+		</tr>
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for ciudad in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_view', :locals => { :ciudad => ciudad, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,56 @@
+<% guia = @guia if guia.nil? %>
+
+<td align ="center">
+  <%= guia.numero_guia unless guia.numero_guia.nil? %>
+</td>
+<td>
+  <%= guia.fecha_emision_f unless guia.fecha_emision.nil?  %>
+</td>
+<td>
+  <%= guia.fecha_estimada_f unless guia.fecha_estimada.nil?  %>
+</td>
+<td>
+  <%=  guia.nombre_destino unless guia.nombre_destino.nil?   %>
+</td>
+<td>
+  <%= guia.cedula_rif unless guia.cedula_rif.nil?  %>
+</td>
+<td>
+  <%= guia.productor unless guia.productor.nil? %>
+</td>
+<td>
+  <% unless guia.estatus.nil? 
+     if guia.estatus == 'R' %>
+       <%=I18n.t('Sistema.Body.Vistas.General.recibida')%>
+   <% else %> 
+       <%=I18n.t('Sistema.Body.Vistas.General.en_transito')%>
+ <%  end
+    end %>  
+</td>
+<td style="text-align: center">
+  <% if guia.estatus_real == 'T' %>
+    <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.modificar')),
+      {:action => :edit,
+      :guia_id => guia.guia_movilizacion_maquinaria_id,
+      :controller => 'recepcion_maquinaria'} %>
+    <% if guia.valida_recepcion == true  %>
+ 
+      <%= link_to_remote(
+          image_tag(I18n.t('Sistema.Body.Imagenes.candado'),:title =>"#{I18n.t('Sistema.Body.Vistas.General.cerrar')} #{I18n.t('Sistema.Body.Vistas.General.recepcion')}" ),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :confirm => I18n.t('Sistema.Body.Vistas.RecepcionMaquinaria.Mensajes.esta_seguro_cerrar_recepcion'),
+          :url => {:action => :cerrar, :id => guia.guia_movilizacion_maquinaria_id}) -%>
+  <%  end
+     end %>
+  <% if guia.estatus == 'R' %>
+    <%= link_to_remote(
+          image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title =>I18n.t('Sistema.Body.Controladores.Accion.deshacer')),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :confirm => I18n.t('Sistema.Body.Vistas.RecepcionMaquinaria.Mensajes.esta_seguro_abrir_recepcion'),
+          :url => {:action => :deshacer, :id => guia.guia_movilizacion_maquinaria_id}) -%>
+ <% end %>
+</td>

@@ -1,0 +1,26 @@
+<% autorizacion = @autorizacion if autorizacion.nil? %>
+<td>
+  <%= autorizacion.creacion_f  %>
+</td>	
+<td>
+  <%= autorizacion.vencimiento_f  %>
+</td>
+<td>
+  <%= autorizacion.opcion_accion.autorizacion_nombre  %>
+</td>
+<td>
+  <%= autorizacion.descripcion  %>
+</td>
+<td>
+  <%= autorizacion.usuario.nombre_usuario  %>
+</td>
+<td>
+  <%= autorizacion.estatus_w  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm =>I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'autorizacion_solicitud', :action => :delete, :id => autorizacion.id}) if autorizacion.para_aprobar   -%>
+</td>

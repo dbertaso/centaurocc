@@ -1,0 +1,58 @@
+<%= form_title_view @rubro.nombre %>
+		
+<div class="marco-contenido2">
+
+	<table>
+		<tr>
+			<td style="width: 100px">
+				<label>Sector</label>
+			</td>
+			<td style="width: 600px">
+				<%= @rubro.sector.nombre -%>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 100px">
+				<label>Sub Sector</label>
+			</td>
+			<td style="width: 600px">
+				<%= @rubro.sub_sector.nombre -%>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 100px">
+				<label>Nombre</label>
+			</td>
+			<td style="width: 600px">
+				<%= @rubro.nombre -%>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Descripción</label>
+			</td>
+			<td>
+				<%= @rubro.descripcion -%>
+			</td>
+		</tr>
+		<tr>
+		  <td>
+		      <label>Activo</label>
+		  </td>
+		  <td>
+				<%= format_bool @rubro.activo -%>
+		  </td>
+	  </tr>
+	</table>
+		
+	<%= link_to( image_tag("boton_modificar.gif"),
+		:action => :edit,
+		:id => @rubro.id,
+		:html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+		
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+</div>

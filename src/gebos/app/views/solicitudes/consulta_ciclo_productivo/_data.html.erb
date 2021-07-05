@@ -1,0 +1,80 @@
+<td align="center">
+  <%= solicitud.numero %>
+</td>
+
+<td align="center">
+	<%= solicitud.cliente.identificador %>
+</td>
+
+<td align="center">
+  <%= solicitud.cliente.nombre %>
+</td>
+<td align="center">
+	<%= solicitud.oficina.nombre %>
+</td>
+<td align="center">	
+	<%= solicitud.unidad_produccion.municipio.estado.nombre %>
+</td>
+<td align="center">
+	<%= solicitud.actividad.nombre %>
+</td>
+<td align="right">
+	
+	<% @prestamos = Prestamo.find_by_solicitud_id(solicitud.id) %>
+	<% if  @prestamos.monto_insumos == nil 
+	    @prestamos.monto_insumos = 0 
+	   end %>
+	<%= format_fm(@prestamos.monto_insumos )%>
+</td>
+<td align="right">
+	<% if  @prestamos.monto_banco == nil
+			@prestamos.monto_banco = 0 
+	   end %>
+	<%= format_fm(@prestamos.monto_banco) %>
+</td>
+<td align="right">
+	<% if  @prestamos.monto_solicitado == nil
+	     @prestamos.monto_solicitado = 0 	     
+	   end %>
+	<%= format_fm(@prestamos.monto_solicitado) %>
+</td>
+<td align="right">
+	<% if  @prestamos.monto_sras_total == nil
+	      @prestamos.monto_sras_total = 0 
+	   end %>
+	<%= format_fm(@prestamos.monto_sras_total)%>
+</td>
+<td align="right">
+	<% if  @prestamos.monto_gasto_total == nil
+	    @prestamos.monto_gasto_total = 0 
+	   end %>
+	<%= format_fm(@prestamos.monto_gasto_total)%>
+</td>
+<td align="right">
+	<%=format_fm(solicitud.monto_solicitado)%>    
+</td>
+<td width="8%" align="center">
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), {:controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :method=>:get,:id=>solicitud.id, :popup=>true }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>solicitud.numero) + "',
+'height=600,width=1040, scrollbars=yes, resizable=yes,top=200,left=100'); return false;")  %>
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+		            { :controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :method=>:get,:id=>solicitud.id, :popup=>true }, :target => '_blank',
+		            :popup => ['consulta_solicitud', 'height=600,width=800, scrollbars=yes, resizable=yes']	%>       
+
+<% if solicitud.actividad.ciclo_productivo.activo == true %>
+
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'),:title=>I18n.t('Sistema.Body.Vistas.General.avanzar')),
+		:loading =>'image_load()',
+  		:loaded => 'image_unload()',
+        :method=>:get,
+  		:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro_avanzar_tramite') << "#{solicitud.numero}?",
+  		:id=>"button_enviar",  		
+  		:onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+		:url => {:action => :liberar_solicitud, :controlador => 'consulta_ciclo_productivo', :solicitud_id => solicitud.id}) -%>	
+
+ <% else %>
+	<font color="red"><strong><%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.no_ha_iniciado_ciclo')%> (<%= solicitud.actividad.ciclo_productivo.nombre %>)</strong></font>
+ <% end %>  
+
+</td>

@@ -1,0 +1,51 @@
+
+<div id="correos" align="center" style="width: 100%">
+
+  <table>
+    <tr style="width: 100%" >
+      <td class="separador" valign="bottom" colspan="3">
+        <span>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.correo_electronico')}" %>
+        </span>
+      </td>
+    </tr>    
+  </table>
+  <br>
+  <table class="lista" style="width: 75%">
+
+    <thead>
+
+      <tr>
+
+        <th>
+          <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+        </th>
+
+         <th>
+          <%= I18n.t('Sistema.Body.Vistas.General.correo') %>
+        </th>
+
+      </tr>
+
+    </thead>
+
+    <% even_odd = 1
+      for mail in @correos
+      even_odd = 1 - even_odd %>
+
+      <tr class="lista<%= even_odd %>" id="row_<%= mail.id %>">
+
+       <td>
+        <%= mail.tipo_nombre %>
+       </td>
+
+       <td style="text-align: center; color: blue">
+        <%= mail.email %>
+       </td>
+      </tr>
+
+    <% end %>
+
+  </table>
+
+</div>

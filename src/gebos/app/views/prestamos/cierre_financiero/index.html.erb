@@ -1,0 +1,48 @@
+<% list = @list if list.nil? %>
+<div class="marco-contenido">
+
+	<%= form_remote_tag(
+      			:confirm => I18n.t('Sistema.Body.Controladores.Mensaje.esta_seguro_cierre'),
+						:loading =>'Element.show("loading")',
+						:loaded => 'Element.hide("loading")',
+		  			:url => { :action => :list } )  do -%>
+
+				<table>
+				<tr>
+					<td style="width: 80px">
+						<label>
+							<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.periodo') %> 
+						</label>
+					</td>
+					<td style="width: 80px">
+					<%= select( 'mes_cierre_id','',
+				  		@meses_cierre_select,
+				   		{ :include_blank => false },
+				 		{ :class=>'select', :onchange=>'inputChange();' } ) %>
+					</td>
+					<td>
+						<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title => I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.generar_cierre')) -%>
+					</td>
+				</tr>
+		</table>
+	<% end %>
+
+  <div id='error'>
+  	<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>
+  </div>
+  
+  <%= error %>
+	<%= message %>
+<br>	
+	
+	
+<div id="list">
+	<%= render :partial => 'list', :locals => {:list => list} -%>
+</div>
+
+
+</div>
+<br></br>
+<div class="marco-contenido">
+
+</div> 

@@ -1,0 +1,21 @@
+<div id="tabs">
+  <ul>
+  <%
+  if @tab.to_s=="punto_cuenta"
+  %>
+    <li><div>
+      <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'instancia_comite_estadal', :action => 'edit', :id => @comite.id,:tab=>"datos_basicos") %>
+    </div></li>
+    <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.punto') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.cuenta')%></a></div></li>
+  <%
+  else
+  %>
+    <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+    <li><div>
+      <%= link_to(I18n.t('Sistema.Body.Vistas.General.punto') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.cuenta'), :controller => 'instancia_comite_estadal', :action => 'edit', :id => @comite.id,:tab=>"punto_cuenta") %>
+    </div></li>
+  <%
+  end
+  %>
+  </ul>
+</div>

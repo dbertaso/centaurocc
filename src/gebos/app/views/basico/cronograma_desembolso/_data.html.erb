@@ -1,0 +1,23 @@
+<% cronograma_desembolso = @cronograma_desembolso if cronograma_desembolso.nil? %>
+<td  style="text-align: center">
+      <b><label style="color: red"><%= cronograma_desembolso.numero_desembolso  %></b></label>
+</td>
+
+<td style="text-align: right">
+  <%= cronograma_desembolso.dias  %> días
+</td>
+
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+                :loading =>'image_load()',
+                :loaded => 'image_unload()',
+    :url => {:controller => 'cronograma_desembolso', :action => :edit, :id => cronograma_desembolso.id}) if vlink 'edit' -%>&nbsp;
+
+        <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+                :loading =>'image_load()',
+                :loaded => 'image_unload()',
+                :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'cronograma_desembolso', :action => :delete, :id => cronograma_desembolso.id, :rubro_id => cronograma_desembolso.rubro_id}) if vlink 'delete' -%>
+</td>

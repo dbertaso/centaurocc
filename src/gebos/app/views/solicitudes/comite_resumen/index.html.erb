@@ -1,0 +1,269 @@
+<style type="text/css">
+  .sel_comite{ font-weight:bold;font-size: 14; }
+</style>
+
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;"></div>
+
+<div class="marco-contenido">
+  
+  <%= form_title_search %>
+  
+  <%= form_remote_tag(
+    :html=>{:id=>'form_comite_resumen_buscar'},
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list } ) do -%>
+  
+  <div id="imprimir_resumen" style="display:none; position:absolute; left:650px;" align="right" width="300px;">
+    <table border="0" width="300px">
+      <tr>
+        <td align="center" width="150px">
+          <a href="#" onclick="generar_punto_cuenta();">
+            <img title="<%=I18n.t('Sistema.Body.General.exportar')%> <%=I18n.t('Sistema.Body.Vistas.General.a')%> PDF." src="/assets/print.png" alt="Print pdf" />
+          </a>
+        </td>
+        <td align="center" width="150px">
+          <a href="#" onclick="generar_detalle_financiamiento();">
+            <img title="<%=I18n.t('Sistema.Body.General.exportar')%> <%=I18n.t('Sistema.Body.Vistas.General.a')%> PDF." src="/assets/print.png" alt="Print xls" />
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center"><span style=" font-size: 7px;"><%=I18n.t('Sistema.Body.Vistas.General.impresion')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <br/><%="#{I18n.t('Sistema.Body.Vistas.General.acta')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.aprobacion')}"%></span></td>
+        <td align="center"><span style=" font-size: 7px;"><%=I18n.t('Sistema.Body.Vistas.General.detalle')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <br/><%=I18n.t('Sistema.Body.Vistas.General.financiamientos')%></span></td>
+      </tr>
+    </table>
+  </div>
+  
+  <table border="0">
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nivel')%> <%=I18n.t('Sistema.Body.Vistas.General.aprobacion')%></label>&nbsp;<span style="color:#FF0000" >*</span>
+      </td>
+      <td>        
+        <table border="0">
+          <tr>
+            <% sesion_onclick = remote_function(
+            :loading =>'image_load()',
+			      :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'comite_resumen',
+            :action=>:numero_sesion_search },
+            :with=>"'tipo_comite='+value+'&estado_id='+$('estado_id_').value") %>
+
+
+          <% reseteo_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'comite_resumen',
+            :action=>:reseteo_combos },
+            :with=>"'tipo_comite='+value") %>
+
+                        
+            <td><input name="tipo_comite" id="tipo_comite" type="radio" value="e" onclick="$('list').hide();<%=reseteo_onchange%>;checkComite(this);<%=sesion_onclick%>;" /></td>
+            <td width="50px"><span id="tipo_estadal"><%=I18n.t('Sistema.Body.Vistas.General.estadal')%></span></td>
+            <td><input name="tipo_comite" id="tipo_comite" type="radio" value="n" onclick="$('list').hide();<%=reseteo_onchange%>;checkComite(this);<%=sesion_onclick%>;" /></td>
+            <td><span id="tipo_nacional"><%=I18n.t('Sistema.Body.Vistas.General.nacional')%></span></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    
+    <tr id="tr_numero_sesion" style="display:none;">
+      <td>
+        <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.sesion')}"%></label>&nbsp;<span style="color:#FF0000" >*</span>
+      </td>
+      <td>
+        <img style="margin-left: 10px;" id="imagen_cargando" src="/assets/cargando.gif" width="15px" height="15px" />
+        <div id="numero-sesion" style=" display:none; margin-left: 10px;"></div>
+      </td>
+      <td></td>
+    </tr>
+
+    <%if !@estado.nil?%>
+    <tr  id="tr_estado" style="display:none;">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>&nbsp;
+      </td>
+      <td>
+        <div id="label-estado-search" style=" margin-left: 10px;">
+        <%= render :partial => 'estado_search' %>
+        <%#= select(
+          'estado_id','',
+          @estado.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select', :onchange=>''} )
+        -%>
+        </div>
+      </td>
+      <td></td>
+    </tr>
+    <%end%>
+    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+      </td>
+      <td>
+        <div id="label-sector-search" style=" margin-left: 10px;">
+        <% #subsector_onchange = remote_function(
+            #:loading =>'image_load()',
+			      #:loaded => 'image_unload()',
+            #:method=>:get,
+            #:url=>{:controller=>'comite_resumen',
+            #:action=>:subsector_search },
+            #:with=>"'id='+value") 
+            %>
+        <%#= select(
+            'sector_id','',
+            @sector.map{|i| [i.nombre, i.id]},
+            { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select', :onchange=>subsector_onchange+';inputChange();selectSector(this);' } )
+        %>
+        <%= render :partial => 'sector_search' %>
+        </div>
+      </td>
+      <td></td>
+    </tr>
+
+    <tr id="tr_subsector_search" style="display:none;">
+      <td>
+        <div id="label-subsector-search" style="display:none"><label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label></div>
+      </td>
+      <td>
+        <table>
+          <tr>
+            <td align="left">
+              <div  id="subsector-search"  style="display:none; margin-left:7px;">
+              <%= render :partial => 'subsector_search' %>
+              </div>
+            </td>
+            <td>
+              <img style="margin-left: 10px;" id="imagen_cargando_subsector" src="/assets/cargando.gif" width="15px" height="15px" />
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td></td>
+    </tr>
+    
+    <tr id="tr_rubro_search" style="display:none;">
+      <td>
+        <div id="label-rubro-search" style="display:none;"><label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label></div>
+      </td>
+      <td>        
+        <div id="rubro-search" style="display:none;margin-left: 10px;"></div>
+        <img style="margin-left: 10px;" id="imagen_cargando_rubro" src="/assets/cargando.gif" width="15px" height="15px" />
+      </td>
+      <td></td>
+    </tr>
+
+    <tr id="tr_btn_numero_sesion">
+      <td></td>      
+      <td>            
+        <div id="btn_numero_sesion" style="display:none;margin-left: 10px;"><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'),:onclick=>"$('list').show();") -%><%#= image_tag(I18n.t('Sistema.Body.Imagenes.buscar'),{:onclick=>"buscarListResumenComite();"}) -%></div>
+      </td>
+      <td></td>
+    </tr>
+    
+  </table>
+  
+  <input id="comite_id" type="hidden" value="<%=@comite_id%>" />
+  <input id="tipo_sesion_comite" type="hidden" />
+
+  <% end %>
+ 
+ 
+</div>
+
+<br/>
+
+<div id="list"></div>
+
+<script type="text/javascript">
+  function activarBoton(this_){
+    if(this_.value.length!=0) {
+      $('comite_id').value=$("comite_").value;
+      $('btn_numero_sesion').show();
+      $('imprimir_resumen').show();
+    }
+    else {
+      $('btn_numero_sesion').hide();
+      $('imprimir_resumen').hide();
+    }
+  }
+  
+  
+  function reseteo_combos(){
+
+
+  }
+
+
+  // Agrega un estilo al seleccionar un tipo de comite.
+  function checkComite(this_){    
+
+    $('btn_numero_sesion').hide();
+    $('imagen_cargando').show();
+    $('imprimir_resumen').hide();
+    $('tipo_sesion_comite').value=this_.value;
+    
+    $("tr_numero_sesion").hide();    
+    
+    //la llamada ajax estaba antes aqui
+    
+    if(this_.value=='e'){
+      
+      $('tr_estado').hide();
+      $("tipo_estadal").addClassName("sel_comite");
+      $("tipo_nacional").removeClassName("sel_comite");
+    }
+    else {
+      
+      $('tr_estado').show();
+      $("tipo_nacional").addClassName("sel_comite");
+      $("tipo_estadal").removeClassName("sel_comite");
+    }
+    return false;
+  }
+  function selectSector(this_){
+    if(this_.value.length!=0){
+      $('imagen_cargando_subsector').show();
+      $("tr_subsector_search").show();      
+      $("tr_rubro_search").hide();
+    }
+    else{
+      $("tr_subsector_search").hide();
+      $("tr_rubro_search").hide();
+      $("subsector_id_").value="";
+      $("rubro_id_").value="";          
+    }
+  }
+  function selectSubsector(this_){
+    if(this_.value.length!=0){
+      $("tr_rubro_search").show();
+      $('imagen_cargando_rubro').show();
+    }
+    else{
+      $("rubro_id_").value="";
+      $("tr_rubro_search").hide();
+    }
+  }
+  function generar_punto_cuenta(){    
+    
+    location.href="/solicitudes/comite_resumen/generar_resumen_sesion?comite_id="+$('comite_id').value+"&tipo_comite="+$('tipo_sesion_comite').value + "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+    return false;
+  }
+  function generar_detalle_financiamiento(){
+    
+    location.href="/solicitudes/comite_resumen/generar_detalle_financiamiento?comite_id="+$('comite_id').value+"&tipo_comite="+$('tipo_sesion_comite').value + "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+    return false;    
+  }
+  // Limpia los campos que se encuentran en el formulario de decision del comite.
+  Event.observe(window, 'load', function() {
+      var elements=$('form_comite_resumen_buscar').getInputs('radio');
+      elements.each(function(item){ item.checked=false; });
+  });
+</script>

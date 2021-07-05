@@ -1,0 +1,36 @@
+<% comprobante_contable = @comprobante_contable if comprobante_contable.nil? %>
+<td style="text-align: center">
+	<%= link_to_remote(
+		image_tag(image_path(t('Sistema.Body.Imagenes.img_expandir'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method => :get,
+		:url => {:action => :expand, :comprobante_contable_id => comprobante_contable.id}) -%>
+</td>
+<td>
+	<%= comprobante_contable.tc_nombre %>
+</td>
+<td style="text-align: center">
+	<%= comprobante_contable.id %>
+</td>
+<td>
+	<%= format_fecha(comprobante_contable.fecha_registro) %>
+</td>
+<td>
+	<%= format_fecha(comprobante_contable.fecha_comprobante) %>
+</td>
+<td style="text-align: center">
+	<%= format_bool comprobante_contable.enviado %>
+</td>
+<td style="text-align: center">
+	<%= comprobante_contable.prestamo_numero %>
+</td>
+<td style="text-align: right">
+	<%= format_fm(comprobante_contable.total_debe) %>
+</td>
+<td style="text-align: right">
+	<%= format_fm(comprobante_contable.total_haber) %>
+</td>
+<td style="text-align: center">
+	<%= comprobante_contable.moneda_nombre %>
+</td>

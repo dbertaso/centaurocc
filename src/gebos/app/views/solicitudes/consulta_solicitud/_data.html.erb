@@ -1,0 +1,138 @@
+<td align="center">
+  <%= solicitud.numero %>
+</td>
+
+<td align="center">
+  <%= solicitud.cedula_rif %>
+</td>
+
+<td align="center">
+  <%= solicitud.nombre %>
+</td>
+
+<td align="center">
+  <span style="color: #FF0000"><b><%= Solicitud.find(solicitud.solicitud_id).estatus_w %></b></span>
+</td>
+<td align="right">
+
+  <%= format_fm(solicitud.monto_solicitado) %>
+</td>
+
+<td align="center">
+   
+  <%= solicitud.moneda.nombre.to_s + " - " + solicitud.moneda.abreviatura.to_s %>
+</td>
+
+<td align="center">
+	 
+	<%= solicitud.fecha_solicitud_f %>
+</td>
+<td align="center">
+	 
+	<%= solicitud.programa %>
+</td>
+
+
+<td align="center">
+        <%
+        #ojo este codigo se comento el 28/05/2013
+         #estado = Solicitud.find_by_numero(solicitud.numero.to_i) 
+         
+         %>
+        <%#= estado.UnidadProduccion.Municipio.estado.nombre %>
+        <%= solicitud.estado %>
+</td>
+
+<td align="center">      
+  <%= solicitud.oficina %>
+</td>
+
+<td align="center">
+  <%= solicitud.sector %>
+</td>
+
+<td align="center">
+  <%= solicitud.sub_sector %>
+</td>
+
+<td align="center">
+  <%= solicitud.rubro %>
+</td>
+
+<td align="center">
+  <%= solicitud.sub_rubro %>
+</td>
+
+<td align="center">
+  <%= solicitud.actividad %>
+</td>
+
+<td align="center">
+   
+	<%
+    #nuevos botones para la anulacion y revocatoria (parcial o total) del tramite agregado el 13/06/2013
+    if ((solicitud.estatus_id > 10000 && solicitud.estatus_id < 10024) && solicitud.oficina_id==session[:oficina]) %>
+    
+    
+    <% @arreglo_anulacion=Rol.find_by_sql("select id from rol where id in (select rol_id from usuario_rol where usuario_id=#{session[:id]}) and id=2001")
+     unless @arreglo_anulacion.empty? %>
+     
+      <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')),:title=>I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.anulacion_tramite')), {:controller=>'/solicitudes/solicitud', :action=>'anulacion', :popup=>true, :id => solicitud.solicitud_id,:controlador => 'consulta_solicitud'}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>solicitud.solicitud_id) + "',
+'height=350,width=760,left=250,top=200, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+     <%#=link_to image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Anulación del Trámite'),
+		{:action => :anulacion,
+		:id => solicitud.solicitud_id,
+                :controller => '/solicitudes/solicitud',
+                :controlador => 'consulta_solicitud', :popup=>true},
+                :popup => ['cliente_persona', 'height=350,width=760,left=250,top=200, scrollbars=yes, resizable=yes'] %>&nbsp;
+    <%end%>
+    <%end%>
+    <%     
+    #verificar si es de finanza el usuario logueado
+    if ((solicitud.estatus_id > 10035 && solicitud.estatus_id < 10120) || (solicitud.estatus_id==10180)) %>
+     
+     <% @arreglo_revocatoria=Rol.find_by_sql("select id from rol where id in (select rol_id from usuario_rol where usuario_id=#{session[:id]}) and id=2000")
+     unless @arreglo_revocatoria.empty? 
+     
+     pres=Prestamo.find_by_solicitud_id(solicitud.solicitud_id)
+     unless pres.nil?
+     unless ((pres.monto_banco == pres.monto_liquidado) && (pres.monto_insumos == pres.monto_despachado))%>
+
+
+     <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.renuncia')),:title=>I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.revocatoria_tramite')), {:controller=>'/solicitudes/solicitud', :action=>'revocatoria', :popup=>true, :id => solicitud.solicitud_id,:controlador => 'consulta_solicitud'}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>solicitud.solicitud_id) + "',
+'height=940,width=760,left=250,top=0, scrollbars=yes, resizable=yes'); return false;")  %>
+
+     
+     
+     <%#=link_to image_tag('renuncia.gif',:title=>'Revocatoria del Trámite'),
+		{:action => :revocatoria,:id => solicitud.solicitud_id,
+                :controller => '/solicitudes/solicitud',
+                :controlador => 'consulta_solicitud', :popup=>true},
+                :popup => ['cliente_persona', 'height=940,width=760,left=250,top=0, scrollbars=yes, resizable=yes'] %>&nbsp;
+    
+    
+    <%end%>
+    <%end%>
+    <%end%>
+    <%end%>
+       
+    
+    <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+		{:action => :view,
+		:id => solicitud.solicitud_id,
+                :controller => '/solicitudes/solicitud',
+                :controlador => 'consulta_solicitud'} %>&nbsp;
+         
+<%= link_to(I18n.t('Sistema.Body.Vistas.General.eventos'), {:controller=>'/solicitudes/solicitud_consulta_evento', :action=>'index', :popup=>true, :id => solicitud.solicitud_id}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>solicitud.solicitud_id) + "',
+'height=800,width=1000,left=150,top=50, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+         <%#= link_to "Eventos",
+            { :action => 'index',
+              :controller => '/solicitudes/solicitud_consulta_evento',
+              :id => solicitud.solicitud_id, :popup=>true },
+              :popup => ['cliente_persona', 'height=600,width=800, scrollbars=yes, resizable=yes'] if (vlink 'evento')%>
+   
+</td>

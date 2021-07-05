@@ -1,0 +1,170 @@
+<script language="javascript">varEnviado = false;</script> 
+<table>
+
+  <%= hidden_field 'equipo_seguridad', 'embarcacion_id', :value => "#{@identificador_embarcacion}" %>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Por favor introduzca los datos a continuación</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Embarcación:</label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%if @es_algo!=1%>
+
+        <%= select(
+          'equipo_seguridad','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')}, { :class=>'select' }  ) %>
+
+      <%else%>
+        <%= select(
+          'equipo_seguridad','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')}, { :class=>'select' ,:disabled=>'true'}  ) %>
+      <%end%>
+    </td>
+  </tr>	
+
+
+  <tr>
+    <td style="width: 25%">
+      <label>Es propio</label> <label style="color: red">*</label>
+    </td>
+    <td>A Solicitar:
+      <%=
+      radio_button 'equipo_seguridad','es_propio', 'true',
+        :class=>'text',:disabled=>'disabled', :onclick=> 'verifico();inputChange();'
+      -%> &nbsp;
+
+      Propia:
+
+      <%=
+      radio_button 'equipo_seguridad','es_propio', 'false',
+      :class=>'text',:disabled=>'disabled', :onclick=> 'verifico();inputChange();'
+      -%> &nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Cantidad:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'equipo_seguridad', 'cantidad', :class=>'text', :style=>'width: 240px',
+        :readonly=>'readonly',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label>Tipo de Equipo de Seguridad</label> <label style="color: red">*</label>
+    </td>
+    <td>
+
+
+      <%= select(
+        'equipo_seguridad','tipo_equipo_id',
+        @tipo_equipo_seguridad.map{|i| [i.tipo, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select',:disabled=>'disabled'} ) %>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label>Año:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'equipo_seguridad', 'ano', :class=>'text', :style=>'width: 240px',
+        :readonly=>'readonly',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Marca / Modelo:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'equipo_seguridad', 'modelo', :class=>'text', :style=>'width: 240px',
+        :readonly=>'readonly',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Serial:</label><label style="color: red">(Editable)</label>
+    </td>
+    <td>
+      <%= text_field 'equipo_seguridad', 'numero_serial', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>¿Posee GPS?:</label><label style="color: red">*</label>
+    </td>
+    <td>Si:
+      <%=
+      radio_button 'equipo_seguridad','con_gps', 'true',
+        :class=>'text', :onclick=> 'inputChange();',:disabled=>'disabled'
+      -%> &nbsp;
+
+      No:
+
+      <%=
+      radio_button 'equipo_seguridad','con_gps', 'false',
+        :class=>'text', :onclick=> 'inputChange();',:disabled=>'disabled'
+      -%> &nbsp;
+
+    </td>
+  </tr> 
+
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="20">
+      <span>Nuevas Especificaciones</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Condiciones </label> <label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= select('equipo_seguridad', 'condicion',
+        ([["Bueno", "Bueno"],["Regular", "Regular"],["Malo","Malo"]]),
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        {:class=>'select' })%>			
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Descripción</label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_area 'equipo_seguridad', 'descripcion',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :maxlength=>'160',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;
+

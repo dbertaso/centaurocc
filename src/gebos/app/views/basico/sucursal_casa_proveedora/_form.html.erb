@@ -1,0 +1,244 @@
+ <script language="javascript">varEnviado = false;</script> 
+<table>
+	<tr>
+		<td style="width: 150px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.region')%> </label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+
+     <% region_onchange = remote_function(
+             :loading =>'image_load()',
+	         :loaded => 'image_unload()',
+            :method=> :get,
+            :url=>{:controller=>'sucursal_casa_proveedora',
+            :action=>:region_search },
+            :with=>"'id='+value") %>
+
+      
+<%=select(
+    'sucursal_casa_proveedora', 'region_id',
+    @region_list.map {|i| ["#{I18n.t('Sistema.Body.Vistas.General.region')}: " << i.nombre  << " - #{I18n.t('Sistema.Body.Vistas.General.pais')}: " << i.pais.nombre,i.id]},
+    {:prompt => I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+    { :class=>'select', :onchange=>region_onchange+';inputChange();' } ) %>
+
+
+
+<%#=select(
+    'sucursal_casa_proveedora', 'region_id',
+    @region_list.map {|i| [i.nombre,i.id]},
+    {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+    { :class=>'select', :onchange=>region_onchange+';inputChange();' } ) %>		
+
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 150px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.ciudad')%> </label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+
+      <span id="ciudad-search">
+            <%= render :partial => 'ciudad_search'
+            %>
+        </span>
+
+		</td>
+	</tr>
+
+	<tr>
+		<td style="width: 150px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%> </label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+      <span id="municipio-search">
+            <%= render :partial => 'municipio_search'
+            %>
+        </span>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="width: 150px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%> </label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+      <span id="parroquia-search">
+            <%= render :partial => 'parroquia_search'
+            %>
+        </span>
+    </td>
+	</tr>
+
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.la') << " " << I18n.t('Sistema.Body.Vistas.General.sucursal')%> </label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_field 'sucursal_casa_proveedora', 'nombre', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'300', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.avenida')%> </label><label style="color:red">*</label>
+		</td>
+		<td>
+			<%= text_field 'sucursal_casa_proveedora', 'avenida', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'90', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.urbanizacion')%> </label><label style="color:red">*</label>
+		</td>
+		<td>
+			<%= text_field 'sucursal_casa_proveedora', 'urbanizacion', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'90', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.edificio')%> </label><label style="color:red">*</label>
+		</td>
+		<td>
+			<%= text_field 'sucursal_casa_proveedora', 'edificio', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'150', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.numero') << " " << I18n.t('Sistema.Body.Vistas.General.del') << " " << I18n.t('Sistema.Body.Vistas.General.edificio')%> </label>
+		</td>
+		<td>
+			<%= text_field 'sucursal_casa_proveedora', 'numero', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.piso')%> </label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_field 'sucursal_casa_proveedora', 'piso', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.persona') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.contacto')%> </label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_field 'sucursal_casa_proveedora', 'persona_contacto', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'150', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+
+		<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.email') << " " << I18n.t('Sistema.Body.Vistas.General.persona') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.contacto')%> </label><label style="color:red">*</label>
+		</td>
+		<td>
+			<%= text_field 'sucursal_casa_proveedora', 'email_persona_contacto', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+
+
+
+<!-- aqui vienen los telefonos -->
+
+		<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> 1</label>
+		</td>
+		<td>
+			
+			<%= select('sucursal_casa_proveedora', 'tipo_telefono1',
+				   ([[I18n.t('Sistema.Body.Vistas.General.oficina'), "O"],[I18n.t('Sistema.Body.Vistas.General.fax'), "F"],
+                                    [I18n.t('Sistema.Body.Vistas.General.celular'), "C"],
+                                    [I18n.t('Sistema.Body.Vistas.General.otro'), "X"]]),
+                          {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                          {:class=>'select' })%>			
+
+			<%= text_field 'sucursal_casa_proveedora', 'telefono1', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+		</td>
+	</tr>
+
+<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> 2</label>
+		</td>
+		<td>
+			<%= select('sucursal_casa_proveedora', 'tipo_telefono2',
+				   ([[I18n.t('Sistema.Body.Vistas.General.oficina'), "O"],[I18n.t('Sistema.Body.Vistas.General.fax'), "F"],
+                                    [I18n.t('Sistema.Body.Vistas.General.celular'), "C"],
+                                    [I18n.t('Sistema.Body.Vistas.General.otro'), "X"]]),
+                          {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                          {:class=>'select' })%>
+
+			<%= text_field 'sucursal_casa_proveedora', 'telefono2', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+		</td>
+	</tr>
+
+<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> 3</label>
+		</td>
+		<td>
+			
+			<%= select('sucursal_casa_proveedora', 'tipo_telefono3',
+				   ([[I18n.t('Sistema.Body.Vistas.General.oficina'), "O"],[I18n.t('Sistema.Body.Vistas.General.fax'), "F"],
+                                    [I18n.t('Sistema.Body.Vistas.General.celular'), "C"],
+                                    [I18n.t('Sistema.Body.Vistas.General.otro'), "X"]]),
+                          {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                          {:class=>'select' })%>
+			
+
+			<%= text_field 'sucursal_casa_proveedora', 'telefono3', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+		</td>
+	</tr>
+
+<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> 4</label>
+		</td>
+		<td>
+			
+			<%= select('sucursal_casa_proveedora', 'tipo_telefono4',
+				   ([[I18n.t('Sistema.Body.Vistas.General.oficina'), "O"],[I18n.t('Sistema.Body.Vistas.General.fax'), "F"],
+                                    [I18n.t('Sistema.Body.Vistas.General.celular'), "C"],
+                                    [I18n.t('Sistema.Body.Vistas.General.otro'), "X"]]),
+                          {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                          {:class=>'select' })%>			
+
+			<%= text_field 'sucursal_casa_proveedora', 'telefono4', :class=>'text', :style=>'width: 200px',
+				:maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label>¿<%=I18n.t('Sistema.Body.General.es') << " " << I18n.t('Sistema.Body.Vistas.General.express')%>?</label>
+		</td>
+		<td>
+      <%= check_box 'sucursal_casa_proveedora', 'es_express',
+		      :checked_value=>"1",
+		      :unchecked_value=>"0", :onclick=>'inputChange();'
+	    -%>
+		</td>
+	</tr>
+
+<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;
+
+

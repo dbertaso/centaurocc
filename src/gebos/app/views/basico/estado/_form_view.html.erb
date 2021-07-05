@@ -1,0 +1,29 @@
+<table>
+	<tr>
+			
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.region')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= @estado.region.nombre %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+		</td>
+		<td>
+			<%= @estado.nombre -%>
+		</td>
+	</tr>
+	
+     <tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.pais')%></label>
+		</td>
+		<td>
+			<%= @estado.pais.nombre -%>
+		</td>
+	</tr>
+
+</table>

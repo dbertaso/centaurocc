@@ -1,0 +1,62 @@
+<tr id="row_<%= @gestion.id %>_view">
+  <td valign="top" style="text-align: center">
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.img_colapsar'), :title=>I18n.t('Sistema.Body.Vistas.General.colapsar')),
+      :method => :get,
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => {:action => :colapsar, :gestion_id => @gestion.id}) -%>
+  </td> 
+  <td>
+    <%=
+
+      if @cliente.class.to_s=='ClienteEmpresa'
+        render 'juridica'
+      else
+        render 'natural'
+      end
+    %>
+
+
+    <div align="center">
+
+      <table>
+        <tr>
+          <td style="font-family: verdana; font-size: 14px; background-color: #D7D7D7; font-weight: bold;color: #000; padding-left: 10px; width: 200px; text-align: center">
+            <label>
+              <%= @gestion.tipo_gestion_cobranzas.descripcion unless @gestion.tipo_gestion_cobranzas.nil? %>
+            </label>
+          </td>
+
+
+      </table>
+
+      <br>
+      <br>
+      <!-- show telecobranzas -->
+
+      <% if @gestion.tipo_gestion_cobranza_id == 3 %>
+        <div id = 'telecobranzas' align="left" style="border:1px; border-color: #000; border-style: solid; width: 80%; padding-left: 4px;">
+
+          <%= render 'telecobranzas' %>
+        </div>
+      <% end %>
+
+      <!-- show SMS -->
+      <% if @gestion.tipo_gestion_cobranza_id == 2 %>
+        <div id = 'telecobranzas' align="left" style="border:1px; border-color: #000; border-style: solid; width: 80%; padding-left: 4px;">
+
+          <%= render 'sms' %>
+        </div>
+      <% end %>
+
+      <!-- show email -->
+      <% if @gestion.tipo_gestion_cobranza_id == 1 %>
+        <div id = 'telecobranzas' align="left" style="border:1px; border-color: #000; border-style: solid; width: 80%; padding-left: 4px;">
+
+          <%= render 'email' %>
+        </div>
+      <% end %>
+
+    </div>
+  </td>
+</tr>

@@ -1,0 +1,407 @@
+<script type="text/javascript">
+
+  onload = function()
+  {
+    <% if @solicitud_avaluo_inmobiliario.clasificacion %>
+        showTipo('<%= @solicitud_avaluo_inmobiliario.clasificacion %>');
+    <% end %>
+  }
+
+  function showTipo(value)
+  {
+    if (value == 'C' ){
+        document.getElementById("div_construccion").style.display="";
+    }else{
+        document.getElementById("div_construccion").style.display="none";
+    }
+  }
+
+</script>
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Revisión Bandes</span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 20%">
+      <label>Nombre del Perito:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'nombre_perito',
+          :class=>'text',
+          :style=>'width: 400px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha Avalúo:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'fecha_avaluo_inmobiliario_f',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      <%= calendar 'solicitud_avaluo_inmobiliario_fecha_avaluo_inmobiliario_f', 'calendar_avaluo_inmobiliario_fecha' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Número Sudeban:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'numero_sudeban_inmobiliario',
+          :class=>'text', :style=>'width: 100px',
+          :maxlength=>'20', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Valor Avalúo:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'valor_avaluo_inmobiliario_f',
+          :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+          :onkeypress=>'montosolicitud(); inputChange();',
+          :onchange=>'inputChange();',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_inmobiliario_valor_avaluo_inmobiliario'); "  -%>
+      <%= display_number @solicitud_avaluo_inmobiliario.valor_avaluo_inmobiliario, 'solicitud_avaluo_inmobiliario_valor_avaluo_inmobiliario' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Inmobiliaria</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Clasificación Inmobiliaria:</label>
+    </td>
+    <td>
+      <%= radio_button 'solicitud_avaluo_inmobiliario', 'clasificacion', 'T',
+          :class=>'text', :onclick=>'inputChange();showTipo("T")'  -%>Terreno<br/>
+      <%= radio_button 'solicitud_avaluo_inmobiliario', 'clasificacion', 'C',
+          :class=>'text', :onclick=>'inputChange();showTipo("C")'  -%>Terreno/Construcción<br/>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Terreno</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Espacio:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'espacio_f',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_inmobiliario_espacio'); "  -%>
+      <%= display_number @solicitud_avaluo_inmobiliario.espacio, 'solicitud_avaluo_inmobiliario_espacio' %> M2
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Ubicación:</label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_avaluo_inmobiliario', 'ubicacion',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',:onkeyup=>'inputChange()' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Descripción del Bien:</label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_avaluo_inmobiliario', 'descripcion',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',:onkeyup=>'inputChange()' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label>Linderos:</label></td>
+    <td>
+      <table border="0" style="width: 100%">
+        <tr>
+          <td style="width: 10%">
+            <label>Norte</label>
+          </td>
+          <td style="width: 90%">
+            <%= text_field 'solicitud_avaluo_inmobiliario', 'lindero_norte',
+                            :class=>'text',
+                            :style=>'width: 320px',
+                            :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Sur</label>
+          </td>
+          <td>
+            <%= text_field 'solicitud_avaluo_inmobiliario', 'lindero_sur',
+                            :class=>'text',
+                            :style=>'width: 320px',
+                            :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Este</label>
+          </td>
+          <td>
+            <%= text_field 'solicitud_avaluo_inmobiliario', 'lindero_este',
+                            :class=>'text',
+                            :style=>'width: 320px',
+                            :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Oeste</label>
+          </td>
+          <td>
+            <%= text_field 'solicitud_avaluo_inmobiliario', 'lindero_oeste',
+                            :class=>'text',
+                            :style=>'width: 320px',
+                            :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="bottom" colspan="2">
+      <label>Registro Protocolización del Bien</label>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Nombre del Registro:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'nombre_registro',
+          :class=>'text',
+          :style=>'width: 400px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label>Estado:</label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'solicitud_avaluo_inmobiliario', 'estado_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        { },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'fecha_registro_f',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      <%= calendar 'solicitud_avaluo_inmobiliario_fecha_registro_f', 'calendar_registro_fecha' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Número de Registro:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'numero_registro',
+          :class=>'text',
+          :style=>'width: 200px',
+          :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Tomo:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'tomo_registro',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Protocolo:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_inmobiliario', 'protocolo_registro',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+</table>
+
+<div id="div_construccion">
+<table style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span>Construcción</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label>Tipo de Construcción:</label>
+      </td>
+      <td>
+        <%= text_area 'solicitud_avaluo_inmobiliario', 'tipo_construccion',
+            :class=>'text',
+            :style=>'width: 400px; height: 60px',
+            :onkeypress=>'inputChange();' -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Espacio:</label>
+      </td>
+      <td>
+<!--        <%= text_field 'solicitud_avaluo_inmobiliario', 'espacio_construccion',
+            :class=>'text',
+            :style=>'width: 100px',
+            :maxlength=>'10', :onkeypress=>'inputChange();'  -%> M2
+-->
+<%= text_field 'solicitud_avaluo_inmobiliario', 'espacio_construccion',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_inmobiliario_espacio_contruccion'); "  -%>
+      <%= display_number @solicitud_avaluo_inmobiliario.espacio_construccion, 'solicitud_avaluo_inmobiliario_espacio_contruccion' %> M2
+
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label>Ubicación:</label>
+      </td>
+      <td>
+        <%= text_area 'solicitud_avaluo_inmobiliario', 'ubicacion_construccion',
+            :class=>'text',
+            :style=>'width: 400px; height: 60px',
+            :onkeypress=>'inputChange();' -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="bottom" colspan="2">
+        <label>Registro Protocolización del Bien</label>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label>Registro:</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'nombre_registro_constrccion',
+            :class=>'text',
+            :style=>'width: 400px',
+            :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top" style="width: 20%">
+        <label>Estado:</label>
+      </td>
+      <td style="width: 80%">
+        <%= select(
+          'solicitud_avaluo_inmobiliario', 'estado_constrccion_id',
+          @estado_select.map{|e| [e.nombre, e.id]},
+          { },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Fecha:</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'fecha_registro_constrccion_f',
+            :class=>'text', :style=>'width: 80px',
+            :maxlength=>'10', :onkeypress=>'inputChange();',
+            :onchange=>'inputChange();'  -%>
+        <%= calendar 'solicitud_avaluo_inmobiliario_fecha_registro_constrccion_f', 'calendar_registro_fecha_constrccion' %> (dd/mm/aaaa)
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Número de Registro:</label></td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'numero_registro_constrccion',
+            :class=>'text',
+            :style=>'width: 200px',
+            :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Tomo:</label></td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'tomo_registro_constrccion',
+            :class=>'text',
+            :style=>'width: 100px',
+            :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Protocolo:</label></td>
+      <td>
+        <%= text_field 'solicitud_avaluo_inmobiliario', 'protocolo_registro_constrccion',
+            :class=>'text',
+            :style=>'width: 100px',
+            :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <label>Sistema Constructivo:</label><br/>
+        <%= text_area 'solicitud_avaluo_inmobiliario', 'sistema_construtivo',
+            :class=>'text',
+            :style=>'width: 850px; height: 60px',
+            :onkeypress=>'inputChange();' -%>
+      </td>
+    </tr>
+</table>
+</div>

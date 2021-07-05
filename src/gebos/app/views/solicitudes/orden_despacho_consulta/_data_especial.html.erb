@@ -1,0 +1,69 @@
+<% orden_despacho_detalle = @orden_despacho_detalle if orden_despacho_detalle.nil? %>
+
+<td align="center">
+<%=@numero_desembolso%>  
+</td>
+<td align="center">
+  <%= orden_despacho_detalle.item_nombre.strip.upcase  %>
+</td>
+<td align="center">
+<%condi="nombre ='#{orden_despacho_detalle.item_nombre}'"%>
+<%=Item.find_by_nombre(orden_despacho_detalle.item_nombre).descripcion unless Item.count(:conditions=>condi) == 0 %>  
+</td>
+<td align="center">
+  <%= orden_despacho_detalle.unidad_medida.abreviatura.strip.upcase %>
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.cantidad}));"%>  
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.costo_real}));"%>  
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_recomendado}));"%>  
+</td>
+
+<%if @imprimo!='1'%>
+<td align="center" bgcolor="#CFFFE8">
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+<%=format_fm('0')%>
+<%else%>
+<%=javascript_tag "document.write(formatCurrency2(#{FacturaOrdenDespacho.find_by_orden_despacho_detalle_id(orden_despacho_detalle.id).cantidad_factura}));"%>
+<%end %>
+
+</td>
+<td align="center" bgcolor="#FEFF99">
+
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+<%=format_fm('0')%>
+<%else
+resultado_resta_factura=orden_despacho_detalle.cantidad.to_f - FacturaOrdenDespacho.find_by_orden_despacho_detalle_id(orden_despacho_detalle.id).cantidad_factura.to_f
+%>
+<%=javascript_tag "document.write(formatCurrency2(#{resultado_resta_factura}));"%>
+<%end %>
+
+</td>
+
+<%end%>
+<td align="right">
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+
+<%if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || @imprimio="1" %>
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_recomendado}));"%>
+<%else%>
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_facturacion}));"%>
+<%end%>
+
+<%else
+resultado_resta=orden_despacho_detalle.monto_recomendado - orden_despacho_detalle.monto_facturacion
+
+if resultado_resta < 0
+resultado_resta=resultado_resta * -1
+end
+%>
+
+<%=javascript_tag "document.write(formatCurrency2(#{resultado_resta}));"%>
+<%end %>
+
+  <%#= orden_despacho_detalle.monto_facturacion_f %>
+</td>

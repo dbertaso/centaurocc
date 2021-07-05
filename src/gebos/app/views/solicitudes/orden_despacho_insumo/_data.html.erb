@@ -1,0 +1,222 @@
+<td checked=false, align="center"><%= check_box_tag 'factura_numero', orden_despacho_insumo.identificador, checked=false, :onClick=>"checkOne(this,form.todos);muestro();suma_monto_facturado_uno(this,'#{orden_despacho_insumo.identificador}');" %></td>
+
+
+
+<%
+ ordenes=OrdenDespachoDetalle.find(:all, :conditions=>"orden_despacho_id=#{orden_despacho_insumo.orden_despacho_id}")   
+
+    unless ordenes.empty?
+      condi="("
+      ordenes.each{ |orden|
+        condi+=orden.id.to_s << ","
+        }
+      condi=condi[0,condi.length-1]
+      condi+=")"
+
+      logger.info "wwwwwwwwwwwwwwwwww "<< condi.to_s
+
+
+    actualiza_factura=FacturaOrdenDespacho.find(:first,:conditions=>"numero_factura='#{orden_despacho_insumo.num_factura}' and casa_proveedora_id = #{orden_despacho_insumo.casa_proveedora} and orden_despacho_detalle_id in #{condi}")
+
+     
+    end
+
+
+
+%>
+
+<td align="center">
+       <%= OrdenDespacho.find(orden_despacho_insumo.orden_despacho_id).solicitud.numero %>
+</td>
+
+
+<td align="center">
+       <%=  OrdenDespacho.find(orden_despacho_insumo.orden_despacho_id).numero  %>
+</td>
+
+<td align="center">
+       <%= CasaProveedora.find(orden_despacho_insumo.casa_proveedora).rif %>
+</td>
+
+<td align="center">
+       <%= CasaProveedora.find(orden_despacho_insumo.casa_proveedora).nombre.strip.upcase %>
+</td>
+
+<td align="center">
+<%=actualiza_factura.sucursal_casa_proveedora.nombre.strip.upcase unless actualiza_factura.nil?%>
+
+       <%#= FacturaOrdenDespacho.find_by_numero_factura(orden_despacho_insumo.num_factura).sucursal_casa_proveedora.nombre.strip.upcase %>
+</td>
+
+
+
+<td align="center"><font color="red"><b>
+       <%= orden_despacho_insumo.estatus %></font></b>
+</td>
+
+<td align="center">
+       <%#= anteriormente estaba este orden_despacho_insumo.rubro %>
+<%= Solicitud.find(orden_despacho_insumo.solicitud_id).rubro.nombre %>
+
+</td>
+<td align="center">
+       <%= format_fecha(orden_despacho_insumo.fecha_orden) %>
+</td>
+
+<td align="center">
+       <%= format_fecha(orden_despacho_insumo.fecha_factura) %>
+</td>
+
+<td align="center">
+       <%= orden_despacho_insumo.num_factura %>
+</td>
+
+<td align="center">
+      <span id="monto_factura_tabla_<%=orden_despacho_insumo.identificador%>"><%= orden_despacho_insumo.monto_total_factura_fm%></span>
+</td>
+
+
+<td style="text-align: center"><font color="green"><b>
+  
+<% 
+case OrdenDespacho.find(orden_despacho_insumo.orden_despacho_id).estatus_id
+ when 20000 %>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.por_generar_orden_despacho')%>
+ <%when 20010%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.generada_orden_despacho')%>
+  <%when 20020%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.emitida_orden_despacho')%>
+<%when 20030%>
+
+    <%
+unless actualiza_factura.nil?
+case actualiza_factura.factura_estatus_id 
+  when 0%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.factura_sin_procesarse_orden_despacho')%>
+<%when 10057%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco_orden_despacho')%>
+<%when 10070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_orden_despacho')%>
+<%end 
+end
+%>
+
+
+<%when 20040%>
+
+    <%
+unless actualiza_factura.nil?
+case actualiza_factura.factura_estatus_id 
+  when 0%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.factura_sin_procesarse_orden_despacho')%>
+<%when 10057%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco_orden_despacho')%>
+<%when 10070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_orden_despacho')%>
+<%end 
+end
+%>
+
+
+
+<%when 20050%>
+
+
+    <%
+unless actualiza_factura.nil?
+case actualiza_factura.factura_estatus_id 
+  when 0%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.factura_sin_procesarse_orden_despacho')%>
+<%when 10057%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco_orden_despacho')%>
+<%when 10070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_orden_despacho')%>
+<%end 
+end
+%>
+
+
+
+<%when 20060%>
+
+    <%
+unless actualiza_factura.nil?
+case actualiza_factura.factura_estatus_id 
+  when 0%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.factura_sin_procesarse_orden_despacho')%>
+<%when 10057%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco_orden_despacho')%>
+<%when 10070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_orden_despacho')%>
+<%end 
+end
+%>
+
+
+
+<%when 20070%>
+
+<%
+unless actualiza_factura.nil?
+case actualiza_factura.factura_estatus_id 
+  when 0%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.factura_sin_procesarse_orden_despacho')%>
+<%when 10057%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco_orden_despacho')%>
+<%when 10070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_orden_despacho')%>
+<%end 
+end
+%>
+
+<%when 20080%>
+
+<%
+unless actualiza_factura.nil?
+case actualiza_factura.factura_estatus_id 
+  when 0%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.factura_sin_procesarse_orden_despacho')%>
+<%when 10057%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco_orden_despacho')%>
+<%when 10070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_orden_despacho')%>
+<%end 
+end
+%>
+
+
+<%else%>
+
+<%
+unless actualiza_factura.nil?
+case actualiza_factura.factura_estatus_id 
+  when 0%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.factura_sin_procesarse_orden_despacho')%>
+<%when 10057%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco_orden_despacho')%>
+<%when 10070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_orden_despacho')%>
+<%end 
+end
+%>
+
+
+
+<%end%>
+
+</font></b>
+</td>

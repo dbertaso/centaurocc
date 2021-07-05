@@ -1,0 +1,21 @@
+<%= form_title_edit @oficina.nombre %>
+<%= render :partial=>'sistema/oficina/common/tabs' %>
+<div class="marco-contenido2">
+  <%= error %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id=>@oficina.id } ) do -%>
+    <%= render :partial => 'form' %>
+
+    <div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit %>
+    </div>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+      { :action => :index },
+      { :id=>'button_close' } ) -%>
+
+  <%end%>
+</div>

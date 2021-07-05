@@ -1,0 +1,34 @@
+<% item = @formato_boleta if item.nil? %>
+<td style="text-align: center">
+  <%= item.sector.nombre unless item.nil? %>
+</td>
+<td style="text-align: center">
+  <%= item.sub_sector.nombre unless item.nil? %>
+</td>
+<td style="text-align: center">
+  <%= item.rubro.nombre unless item.nil? %>
+</td>
+<td style="text-align: center">
+  <%= item.sub_rubro.nombre unless item.nil? %>
+</td>
+<td style="text-align: center">
+  <%= item.actividad.nombre unless item.nil? %>
+</td>
+<td style="text-align: center">
+  <%= item.formato_operacion unless item.nil? %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(item.status) %>
+</td>
+<td style="text-align: center">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :method=>:get, :loading =>'image_load()',  :loaded => 'image_unload()',
+    :url => {:controller => 'formato_boleta', :action => :edit, :id => item.id}) if vlink 'edit' -%>&nbsp;
+
+    
+  <%#= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => "¿Está usted seguro que desea eliminar este registro?",
+    :url => {:controller => 'formato_boleta', :action => :delete, :id => item.id}) if vlink 'delete' -%>
+</td>

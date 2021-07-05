@@ -1,0 +1,67 @@
+<% solicitud = @solicitud if solicitud.nil? %>
+
+<td checked=false, align="center">
+  <% if solicitud.disponible == '1' %>
+  <%= check_box_tag 'solicitud_id', solicitud.solicitud_id,
+      checked=false, :onClick=>"checkOne(this,form.todos);" %>
+  <%else%>
+    <%= check_box_tag '', solicitud.solicitud_id,
+      checked=false, :disabled=>true, :onClick=>"checkOne(this,form.todos);" %>
+  <%end%>
+</td>
+
+<td align="center">
+  <%= solicitud.numero unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.productor unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.cedula_rif unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.estado unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.programa unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.sector unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.sub_sector unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.rubro unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.sub_rubro unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.actividad unless solicitud.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud.moneda unless solicitud.nil? %>
+</td>
+
+<td align="right">
+  <%= format_fm(solicitud.monto_tramite) %>
+</td>
+
+<% if solicitud.disponible == '1' %>
+<td align="right" style="background-color: #9FF781">
+<%else%>
+<td align="right" style="background-color: #FCFA8E">
+<%end%>
+  <%= format_fm(solicitud.disponibilidad) %>
+</td>

@@ -1,0 +1,18 @@
+<%= form_title_new %>
+<%= render :partial=>'basico/silo/common/tabs' %>
+<div class="marco-contenido">
+  <%= render :partial=>'basico/convenio_silo/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%= error %>
+    <%= message %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()', :loaded => 'image_unload()', :url => { :action => :save_new, :convenio_silo_id=>params[:convenio_silo_id], :popup=>params[:popup]}) do -%>
+    </br>
+    <%= render :partial => 'form' %>
+    </br>
+    <%= form_buttons_edit :convenio_silo_id => @convenio_silo.id, :silo_id =>@silo.id, :popup=>params[:popup] %>
+    <% end -%>
+  </div>
+</div>

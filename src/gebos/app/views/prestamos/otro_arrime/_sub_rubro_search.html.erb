@@ -1,0 +1,8 @@
+<% sub_rubro_onchange = remote_function(
+  :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',              
+  :url=>{:controller=>'otro_arrime',:action=>:sub_rubro_change }, :with=>"'sub_rubro_id='+value+'&actividad_id='+#{@actividad_id.to_s}") %>
+<%= select(
+  'solicitud', 'sub_rubro_id',
+  @sub_rubro_list.map{|e| [e.nombre, e.id]},
+  { :prompt => "Seleccionar"},
+  { :class=>'select', :onchange=>sub_rubro_onchange + ';inputChange();' } ) %>

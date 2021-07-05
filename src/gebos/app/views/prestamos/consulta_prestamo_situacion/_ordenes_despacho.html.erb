@@ -1,0 +1,80 @@
+    <div id="ordenes_despacho">
+      <table style="width: 100%; margin-bottom: 10px" border="0">
+        <tr>
+          <td class="separador" valign="bottom" colspan="10" style="text-align: center" >
+            <span>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Separadoes.ordenes_despacho_confirmadas') %>
+            </span>
+          </td>
+
+        </tr>
+      </table>
+      
+	<table class="lista" style="width: 100%">
+		<thead>
+  		<tr>
+  			<th style="width: 10%">
+  				<%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.numero_factura') %>
+   			</th>
+        <th style="width: 10%">
+  				<%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.casa_proveedora') %>
+   			</th>
+  			<th style="width: 10%">
+  				<%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.sucursal')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.casa_proveedora')}" %>
+   			</th>
+  			<th style="width: 10%">
+  				<%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_items_facturados') %>
+   			</th>
+  			<th style="width: 10%">
+  				<%= t('Sistema.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_emision') %>
+   			</th>
+        <th style="width: 10%">
+  				<%= t('Sistema.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_factura') %>
+   			</th>
+  			<th style="width: 10%">
+  				<%= t('Sistema.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_total_factura') %>
+   			</th>
+
+  		</tr>
+		</thead>        
+        <% monto_total = 0.00 %>
+        <% even_odd = 1 %>
+        <% for factura in @facturas
+
+            even_odd = 1 - even_odd %>
+          <tr class="lista<%= even_odd %>">
+            <td  style="text-align: center">
+              <%= factura.numero_factura.to_s.strip.upcase %>
+            </td>
+
+
+            <td align="center">
+              <%= factura.casa_proveedora.nombre.strip.upcase unless factura.casa_proveedora.nil? %>
+            </td>	
+            <td align="center">
+              <%= factura.sucursal_casa_proveedora.nombre.strip.upcase unless factura.sucursal_casa_proveedora.nil? %>
+            </td>
+            <td align="center">
+              <%valor = sprintf('%01.2f', factura.cantidad_total_factura.to_f).sub('.', ',')%>
+              <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+
+            </td>
+            <td align="center">
+              <%= factura.fecha_emision_f %>
+            </td>
+            <td align="center">
+              <%=factura.fecha_factura_f%>
+            </td>
+
+            <td align="center">
+
+              <%valor = sprintf('%01.2f', factura.monto_total_factura).sub('.', ',')%>
+              <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+
+            </td>
+          </tr>
+          
+        <% end %>
+
+     </table>
+    </div>

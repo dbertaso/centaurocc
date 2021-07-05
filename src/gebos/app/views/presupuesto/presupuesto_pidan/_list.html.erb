@@ -1,0 +1,55 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="text-align: center" <%= sort_class_helper('programa.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.programa'), 'programa.nombre', 'list' %>
+      </th>
+      <th style="text-align: center" <%= sort_class_helper('estado.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'estado.nombre', 'list' %>
+      </th>
+      <th style="text-align: center" <%= sort_class_helper('(select nombre from sector where id=rubro.sector_id)') %>>
+        <%= sort_link_helper 'Sector', '(select nombre from sector where id=rubro.sector_id)', 'list' %>
+      </th>
+       <th style="text-align: center" <%= sort_class_helper('(select nombre from sub_sector where id=rubro.sub_sector_id)') %>>
+        <%= sort_link_helper 'Sub Sector', '(select nombre from sub_sector where id=rubro.sub_sector_id)', 'list' %>
+      </th>
+
+      <th style="text-align: center" <%= sort_class_helper('rubro.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro.nombre', 'list' %>
+      </th>
+      <th style="text-align: center" <%= sort_class_helper('sub_rubro.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_rubro'), 'sub_rubro.nombre', 'list' %>
+      </th>
+      <th style="text-align: center">
+        <%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>
+      </th>
+
+      <th style="text-align: center" <%= sort_class_helper('presupuesto') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Controladores.PresupuestoPidan.FormTitles.form_title_records') , 'presupuesto', 'list' %>
+      </th>
+      <th style="text-align: center" <%= sort_class_helper('compromiso') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.compromiso') , 'compromiso', 'list' %>
+      </th>
+      <th style="text-align: center" <%= sort_class_helper('disponibilidad') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.disponible') , 'disponibilidad', 'list' %>
+      </th>
+      <th style="text-align: center" <%= sort_class_helper('monto_liquidado') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto_liquidado'), 'monto_liquidado', 'list' %>
+      </th>      
+      <th style="width: 10%" style="text-align: center">
+	<%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for item in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :item => item, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

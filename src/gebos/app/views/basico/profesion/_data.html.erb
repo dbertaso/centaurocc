@@ -1,0 +1,21 @@
+<% profesion = @profesion if profesion.nil? %>
+<td>
+  <%= profesion.nombre  %>
+</td>	
+<td>
+  <%= profesion.descripcion  %>
+</td>	
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'profesion', :action => :edit, :id => profesion.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'profesion', :action => :delete, :id => profesion.id}) if vlink 'delete' -%>
+</td>

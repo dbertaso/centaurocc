@@ -1,0 +1,37 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th  <%= sort_class_helper('tipo_infraestructura_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.tipo'), 'tipo_infraestructura_id', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('cantidad') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cantidad'), 'cantidad', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('dimension') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.dimension'), 'dimension', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('condicion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones'), 'condicion', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('material_construccion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.material_construccion'), 'material_construccion', 'list' %>
+      </th> 
+      <th  <%= sort_class_helper('observaciones') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.observaciones'), 'observaciones', 'list' %>
+      </th> 	
+      <th style="width: 44px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for unidad_produccion_infraestructura in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :unidad_produccion_infraestructura => unidad_produccion_infraestructura, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

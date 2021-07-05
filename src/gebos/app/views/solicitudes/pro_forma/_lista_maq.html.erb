@@ -1,0 +1,61 @@
+<table class="lista" style="width: 80%">
+  <thead>
+    <tr>
+      <th colspan="5">
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.maquinaria_equipos_implementos')} #{I18n.t('Sistema.Body.Vistas.General.por')} #{I18n.t('Sistema.Body.Vistas.General.proforma')}" %>
+      </th>
+    </tr>
+
+    <tr>
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.rubro') %>
+      </th>
+
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+      </th>
+
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.marca') %>
+      </th>
+
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.modelo') %>
+      </th>
+
+      <th style="width: 10; text-align: center">
+        <%= I18n.t('Sistema.Body.Vistas.General.proforma') %>
+      </th>
+    </tr>
+  </thead>
+  <% lista = 0
+  @solicitud_maquinaria_list.each {|maq| %>
+    <% if lista == 0 %>
+      <tr class="lista0">
+      <% else %>
+      <tr class="lista1">
+      <% end %>
+      <td><%= maq.tipo_maquinaria.descripcion %></td>
+
+      <td><%= maq.clase.nombre %></td>
+
+      <td><%= maq.marca_maquinaria.nombre %></td>
+
+      <td><%= maq.modelo.nombre %></td>
+
+      <td style="text-align: center"><% if maq.proforma_id.nil?  %>
+          <%= image_tag('inactivo.gif') %>
+        <% else %>
+          <%= image_tag('activo.gif') %>
+        <% end %>
+      </td>
+    </tr>
+
+    <% if lista == 0
+      lista = 1
+      else
+      lista = 0
+    end
+    } %>
+
+</table>

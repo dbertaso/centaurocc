@@ -1,0 +1,220 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+        <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.consultando_solicitud')%> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+      </div></div></div>
+
+  <%= render :partial=>'solicitudes/consulta_solicitud/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <table>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= Etiquetas.etiqueta(9) %></span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 40%">
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Rif' : 'Cédula' %></label>
+        </td>
+        <td style="width: 60%">
+          <% if @cliente.class.to_s=='ClienteEmpresa' %>
+            <%= @cliente.empresa.rif %>
+            <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=> I18n.t('Sistema.Body.Vistas.General.consultar')), 
+              { :controller=>'/clientes/cliente_empresa', :action=>'view', :id=>@cliente.empresa.id, :popup=>true },
+          :onclick=>"window.open(this.href,'cliente_empresa','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>
+          
+          <% else %>
+            <%= @cliente.persona.cedula %>
+            <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=> I18n.t('Sistema.Body.Vistas.General.consultar')), 
+              { :controller=>'/clientes/cliente_persona', :action=>'view', :id=>@cliente.persona.id, :popup=>true },
+          :onclick=>"window.open(this.href,'cliente_persona','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Nombre' : 'Nombre, Apellido' %></label>
+        </td>
+        <td>
+          <%= @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.alias : @cliente.persona.nombre_corto %> 
+
+          <% unless @cliente.tipo_cliente_id.nil? %>
+            <% @tipo_cliente = TipoCliente.find(@cliente.tipo_cliente_id) %>
+            (<%= @tipo_cliente.nombre %>)
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Número '+ Etiquetas.etiqueta(9) + ' Jurídico' : 'Número Grupo' %></label>
+
+        </td>
+        <td>
+          <% if @cliente.class.to_s=='ClienteEmpresa' %>
+            <%= @cliente.empresa.numero %>	  
+          <% elsif @cliente.persona.grupo_integrante[0] != nil %>
+            <%= @cliente.persona.grupo_integrante[0].grupo.numero  %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.microcredito') %></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.microcredito_primera_vez')%></label>
+        </td>
+        <td>
+          <% if @solicitud.recredito == true %> 
+            <%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%>
+            <% else %> 
+            <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si') %> 
+            <% end -%>
+            </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.numero')%></label>
+        </td>
+        <td>
+          <b><span class="titulo_modificar"><%= @solicitud.numero -%></span></b>
+        </td>
+      </tr>
+      <% if !@solicitud.numero_origen.nil? && @solicitud.numero_origen > 0  %>
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.numero_sgc')%></label>
+          </td>
+          <td>
+            <b><%= @solicitud.numero_origen -%></b>
+          </td>
+        </tr>
+      <%end%>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.promotora')%></label>
+        </td>
+        <td>
+          <%  @promotora = Promotora.find(@solicitud.promotora_id) %>
+          <%=	@promotora.nombre -%> <%=	@promotora.apellido-%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.ReglaContable.Etiquetas.programa')%> </label>
+        </td>
+        <td>
+          <%  @programa = Programa.find(@solicitud.programa_id) %>
+          <%=	@programa.alias -%>    		
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 200px">
+          <label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.fecha_solicitud')%></label>
+        </td>
+        <td style="width: 500px">
+          <%= format_fecha(@solicitud.fecha_solicitud) %>
+        </td>
+      </tr>	
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.monto_solicitado')%></label>
+        </td>
+        <td>
+          <%= format_fm(@solicitud.monto_cliente)%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.monto_aprobado')%></label>
+        </td>
+        <td>
+          <%= format_fm(@solicitud.monto_solicitado) %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.origen_fondo')%></label></td>
+        <td>
+          <%  @origen = OrigenFondo.find(@solicitud.origen_fondo_id) %>
+          <%= @origen.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.destino')%></label>
+        </td>
+        <td>
+          <%= @solicitud.objetivo_proyecto %>
+        </td>
+      </tr>
+      <tr>
+      <tr><% if @cliente.class.to_s !='ClienteEmpresa' %>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.Form.microcredito_asociado_a_grupo')%></label>
+          </td>
+          <td><% if @solicitud.numero_grupo == 0 || @solicitud.numero_grupo.nil? -%> <%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.inactivo'))) %></td></tr><% else -%> <%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.activo')))%></td></tr><% end -%></td>
+        </tr>
+      <%end%>
+
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.ubicacion_credito')%></span>
+      </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%>:</label></td>
+        <td>
+          <%= @solicitud.ciudad.estado.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.ciudad')%>:</label></td>
+        <td>
+          <%= @solicitud.ciudad.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%>:</label></td>
+        <td>
+          <%= @solicitud.municipio.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%>:</label></td>
+        <td>
+          <%= @solicitud.parroquia.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label>
+        </td>
+        <td>
+          <%= @solicitud.observacion -%>
+        </td>
+      </tr>
+      <% if !@historial.nil? && @historial.length > 0%>
+        <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.modificacion_credito')%></span>
+        </td>
+        </tr>
+        <%= render :partial=>'historial' %>
+        
+      <% end %>
+      
+      <tr height=10><td colspan="2"></td></tr>
+
+    </table>		
+    <% if @accion == nil && params[:popup].nil?  %>
+      <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+        { :controller => params[:controlador], :action => :index },
+        { :id=>'button_close' } ) -%>
+    <% end%>
+  </div>
+</div>

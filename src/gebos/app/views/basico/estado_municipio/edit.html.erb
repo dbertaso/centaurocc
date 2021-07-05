@@ -1,0 +1,30 @@
+<div class="marco-titulo"><div><div>
+	<%=I18n.t('Sistema.Body.Vistas.General.modificando') << " " << I18n.t('Sistema.Body.Vistas.General.estado')%> <span class="titulo_modificar">'<%= @estado.nombre %>'</span> - <%=I18n.t('Sistema.Body.Vistas.General.region')%> <span class="titulo_modificar">'<%= @estado.region.nombre %>'</span> - <%=I18n.t('Sistema.Body.Vistas.General.pais')%> <span class="titulo_modificar">'<%= @estado.pais.nombre %>'</span>
+</div></div></div>
+<%= render :partial=>'basico/estado_municipio/common/tabs' %>
+<div class="marco-contenido2">
+
+	<%= form_title_edit @municipio.nombre %>
+
+
+		<%= error  %>
+		<%= message  %>
+
+		<%= form_remote_tag(
+		  :loading =>'image_load()',
+			:loaded => 'image_unload()',
+		  :url => { :action => :save_edit, :estado_id => @estado.id, :id => @municipio.id, :popup=>params[:popup] } ) do-%>
+
+			<%= render 'form' %>
+
+			<div id="buttons_edit" style="display: none">
+				<%= form_buttons_edit :action => :index, :estado_id => @estado.id, :popup=>params[:popup] %>
+			</div>
+
+			<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+				{ :action => :index, :estado_id => @estado.id, :popup=>params[:popup] },
+				{ :id=>'button_close', } ) -%>
+
+		<% end -%>
+
+</div>

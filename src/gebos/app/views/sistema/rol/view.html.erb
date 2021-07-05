@@ -1,0 +1,33 @@
+<%= form_title_view @rol.nombre %>
+
+<%= render :partial=>'sistema/rol/common/tabs' %>
+<div class="marco-contenido2">
+
+  <table>
+    <tr>
+      <td style="width: 60px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      </td>
+      <td style="width: 640px">
+        <%= @rol.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label>
+      </td>
+      <td>
+        <%= @rol.descripcion %>
+      </td>
+    </tr>
+  </table>
+
+  <%#= link_to( image_tag("boton_modificar.gif", :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :action => :edit, :id => @rol.id, :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

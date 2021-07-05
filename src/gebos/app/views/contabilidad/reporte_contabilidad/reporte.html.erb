@@ -1,0 +1,202 @@
+<script>
+  var a = <%= @mostrar %>
+  a = a * 1;
+  if (a != 0){
+    if (a == 1){
+      alert('<%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_desde')} #{I18n.t('Sistema.Body.Modelos.Errores.es_requerida')}" %>');
+      window.close();
+    }else{
+      if (a == 2){
+        alert('<%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_desde')} #{I18n.t('Sistema.Body.Modelos.Errores.fecha_invalida')}" %>');
+        window.close();
+      }else{
+        if (a == 3){
+          alert("<%= I18n.t('Sistema.Body.Vistas.General.no_hay_registro') %> <%= @mostrar %>");
+          window.close();
+        }else{
+          if (a == 4){
+            alert('<%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_hasta')} #{I18n.t('Sistema.Body.Modelos.Errores.es_requerida')}" %>');
+            window.close();
+          }else{
+            if (a == 5){
+              alert('<%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_hasta')} #{I18n.t('Sistema.Body.Modelos.Errores.fecha_invalida')}" %>');
+              window.close();
+            }else{
+              if (a == 6){
+                alert("<%= I18n.t('Sistema.Body.Modelos.General.fecha_hasta_mayor_desde') %>");
+                window.close();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+</script>
+<script language="JavaScript">
+<!-- Begin
+function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+}
+</script>
+<% if @mostrar == 0 %>
+<table align="center" width="1120px" border="1">
+  <tr>
+    <td style="width: 100%">
+      <table width="100%" border="0">
+        <tr>
+          <td style="width: 20%; text-align: left">
+            <%= image_tag('logo_reporte.gif') %>
+          </td>
+          <td align="center">
+            <label style="font-size: 16px"> <%= I18n.t('Sistema.Body.Controladores.Contabilidad.ReporteContabilidad.FormTitles.form_title').upcase.gsub('ó', 'Ó') %></br><%= "#{I18n.t('Sistema.Body.Vistas.General.fecha')} #{I18n.t('Sistema.Body.Vistas.General.desde')} #{@fecha_desde} #{I18n.t('Sistema.Body.Vistas.General.hasta')} #{@fecha_hasta}" %>
+            </label>
+          </td>
+          <td style="width: 25%; text-align: right" valign="top">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.fecha') %> <%= I18n.t('Sistema.Body.Vistas.General.de') %> <%= I18n.t('Sistema.Body.Vistas.General.impresion') %>:</label> <%= Time.now.strftime('%d/%m/%Y') %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% @comprabante_contrable.each {|comprobante| %>
+  </br>
+  <table align="center" width="1120px" border="1">
+    <tr>
+      <th colspan="4"><label><%= I18n.t('Sistema.Body.Vistas.General.datos_comprobante') %></label></th>
+    </tr>
+
+    <tr>
+      <td style="width: 25%; text-align: left">
+        <label><%= I18n.t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.numero_comprobante') %></label>
+      </td>
+      <td style="width: 25%; text-align: left">
+        <%= comprobante.id %>
+      </td>
+      <td style="width: 25%; text-align: left">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.fecha_comprobante') %></label>
+      </td>
+      <td style="width: 25%; text-align: left">
+        <%= comprobante.fecha_comprobante_f %>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 25%; text-align: left">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.total')} #{I18n.t('Sistema.Body.Vistas.AsientoContable.Etiquetas.haber')}" %></label>
+      </td>
+      <td style="width: 25%; text-align: left">
+        <%= comprobante.total_haber_fm %>
+      </td>
+      <td style="width: 25%; text-align: left">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.total')} #{I18n.t('Sistema.Body.Vistas.AsientoContable.Etiquetas.debe')}" %></label>
+      </td>
+      <td style="width: 25%; text-align: left">
+        <%= comprobante.total_debe_fm %>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 25%; text-align: left">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.referencia') %></label>
+      </td>
+      <td colspan ="3" style="text-aling: justify">
+        <%= comprobante.referencia %>
+      </td>
+    </tr>
+  </table>
+  </br>
+  <table align="center" width="1120px" border="1">
+    <tr>
+      <th colspan = "5"><%= I18n.t('Sistema.Body.Vistas.General.detalle_comprobante') %> <%= comprobante.id %></th>
+    </tr>
+
+    <tr>
+      <th width = "20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ReglaContable.Etiquetas.codigo_contable') %></label>
+      </th>
+      <th width = "20%">
+        <label><%= I18n.t('Sistema.Body.Modelos.AsientoContable.Columnas.auxiliar_contable') %></label>
+      </th>
+      <th width = "20%">
+        <label><%= I18n.t('Sistema.Body.General.descripcion') %></label>
+      </th>
+      <th width = "20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.AsientoContable.Etiquetas.debe') %></label>
+      </th>
+      <th width = "20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.AsientoContable.Etiquetas.haber') %></label>
+      </th>
+    </tr>
+
+    <% asiento_contable = ComprobanteContable.asiento_detalle(comprobante.id)
+        asiento_contable.each{|asiento| %>
+
+        <tr>
+          <td>
+            <%= asiento.codigo_contable %>
+          </td>
+          <td>
+            <%= asiento.auxiliar_contable %>
+          </td>
+          <td>
+            <% cuenta = CuentaContable.first(:conditions => "codigo = \'#{asiento.codigo_contable}\'", :select=>"nombre")
+               if cuenta.nil?
+                descripcion = 'Sin descripcion'
+               else 
+                descripcion = cuenta.nombre
+               end
+            %>
+            <%#= asiento.tipo_st %>
+            <%= descripcion %>
+          </td>
+          <td style = "text-align: right">
+            <% if asiento.tipo == 'D' %>
+              <%= asiento.monto_fm %>
+            <% else %>
+              0,00
+            <% end %>
+          </td>
+          <td style = "text-align: right">
+            <% if asiento.tipo == 'H' %>
+              <%= asiento.monto_fm %>
+            <% else %>
+              0,00
+            <% end %>
+          </td>
+        </tr>
+
+    <% } %>
+    <tr>
+      <td colspan = "3" style = "text-align: right">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.totales').upcase %></label>
+      </td>
+      <td style = "text-align: right">
+        <label><%= comprobante.total_debe_fm %></label>
+      </td>
+      <td style = "text-align: right">
+        <label><%= comprobante.total_haber_fm %></label>
+      </td>
+    </tr>
+  </table>
+<% } %>
+
+<table align="center" width="1120px" >
+  <tr>
+    <td colspan="4">
+      <div style="padding: 6px" align="center">
+        <form>
+          <div id = boton>
+            <input name="print" type="button" value="Imprimir" onclick="varitext()" />
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>
+<% end %>

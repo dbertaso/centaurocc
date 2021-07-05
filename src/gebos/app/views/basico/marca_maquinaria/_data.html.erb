@@ -1,0 +1,25 @@
+<% marca_maquinaria = @marca_maquinaria if marca_maquinaria.nil? %>
+<td>
+  <%= marca_maquinaria.id %>
+</td>
+<td>
+  <%= marca_maquinaria.nombre unless marca_maquinaria.nombre.nil? %>
+</td> 
+<td>
+  <%= marca_maquinaria.descripcion unless marca_maquinaria.descripcion.nil? %>
+</td> 
+<td style="text-align: center">
+  <%= format_bool(marca_maquinaria.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'marca_maquinaria', :action => :edit, :id => marca_maquinaria.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'marca_maquinaria', :action => :delete, :id => marca_maquinaria.id}) if vlink 'delete' -%>
+</td>
+

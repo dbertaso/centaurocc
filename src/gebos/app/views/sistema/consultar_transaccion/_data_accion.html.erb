@@ -1,0 +1,19 @@
+<% transaccion_accion = @transaccion_accion if transaccion_accion.nil? %>
+<td valign="top" style="text-align: center">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.img_expandir')), :title=>I18n.t('Sistema.Body.Vistas.General.expandir')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:action => :expand_accion, :transaccion_accion_id => transaccion_accion.id}) -%>
+</td>
+<td>
+  <%= transaccion_accion.id %>
+</td>	
+<td>
+  <%= transaccion_accion.tabla %>
+</td>
+<td>
+  <%= transaccion_accion.tipo_w %>
+</td>
+<td>
+  <%= transaccion_accion.tabla_id  %>
+</td>

@@ -1,0 +1,35 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td style="width: 180px">
+      <label>
+        <%= I18n.t('Sistema.Body.Vistas.MensajesCorreo.Etiquetas.mensaje') %>
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'mensajes_correo', 'nombre', :class=>'text', :style=>'width: 240px', :maxlength=>'100' , :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= I18n.t('Sistema.Body.Vistas.MensajesCorreo.Etiquetas.contenido') %>
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td style="width: 620px">
+      <%= text_area 'mensajes_correo', 'descripcion', :class=>'text', :style=>'width: 300px', :height=>'200', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'mensajes_correo', 'activo', :checked_value=>"1", :unchecked_value=>"0" -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

@@ -1,0 +1,24 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 45%" <%= sort_class_helper('codigo') %>>
+				<%= sort_link_helper 'Código', 'codigo', 'list' %>
+ 			</th>
+ 			<th style="width: 45%" <%= sort_class_helper('anio') %>>
+				<%= sort_link_helper 'Año', 'anio', 'list' %>
+ 			</th>
+ 			<th style="width: 10%">
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for cuenta_contable_presupuesto in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :cuenta_contable_presupuesto => cuenta_contable_presupuesto, :even_odd => even_odd } -%>
+<% end %>
+    </tbody>
+  </table>
+
+<%= form_pagination %>

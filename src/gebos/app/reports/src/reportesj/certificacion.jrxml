@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="certificación"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="442"
+		 columnSpacing="0"
+		 leftMargin="85"
+		 rightMargin="85"
+		 topMargin="56"
+		 bottomMargin="56"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="p_solicitud_numero" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(1)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["/var/cartera/produccion/current/app/reports/bin/prestamos/"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT
+     solicitud."fecha_acta_directorio" AS solicitud_fecha_acta_directorio,
+     solicitud."fecha_acta_comite" AS solicitud_fecha_acta_comite,
+     solicitud."numero_acta_comite" AS solicitud_numero_acta_comite,
+     solicitud."numero_resolucion_directorio" AS solicitud_numero_resolucion_directorio,
+     solicitud."numero_acta_directorio" AS solicitud_numero_acta_directorio,
+     solicitud."numero_resolucion_comite" AS solicitud_numero_resolucion_comite,
+     solicitud."numero" AS solicitud_numero,
+     solicitud."programa_id" AS solicitud_programa_id,
+     programa."nombre" AS programa_nombre,
+     solicitud."monto_aprobado" AS solicitud_monto_aprobado,
+     empresa."nombre" AS empresa_nombre,
+     solicitud."monto_solicitado" AS solicitud_monto_solicitado,
+     solicitud."id" AS solicitud_id,
+     solicitud."numero" as solicitud_numero,
+     programa."id" AS programa_id
+FROM
+     "public"."programa" programa INNER JOIN "public"."solicitud" solicitud ON programa."id" = solicitud."programa_id"
+     INNER JOIN "public"."cliente" cliente ON solicitud."cliente_id" = cliente."id"
+     INNER JOIN "public"."empresa" empresa ON cliente."empresa_id" = empresa."id"
+where solicitud.NUMERO = $P{p_solicitud_numero}]]></queryString>
+
+	<field name="solicitud_fecha_acta_directorio" class="java.sql.Date"/>
+	<field name="solicitud_fecha_acta_comite" class="java.sql.Date"/>
+	<field name="solicitud_numero_acta_comite" class="java.lang.String"/>
+	<field name="solicitud_numero_resolucion_directorio" class="java.lang.String"/>
+	<field name="solicitud_numero_acta_directorio" class="java.lang.String"/>
+	<field name="solicitud_numero_resolucion_comite" class="java.lang.String"/>
+	<field name="solicitud_numero" class="java.lang.Integer"/>
+	<field name="solicitud_programa_id" class="java.lang.Integer"/>
+	<field name="programa_nombre" class="java.lang.String"/>
+	<field name="solicitud_monto_aprobado" class="java.lang.Double"/>
+	<field name="empresa_nombre" class="java.lang.String"/>
+	<field name="solicitud_monto_solicitado" class="java.lang.Double"/>
+	<field name="solicitud_id" class="java.lang.Integer"/>
+	<field name="programa_id" class="java.lang.Integer"/>
+
+	<variable name="texto1" class="java.lang.String" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[new String("fjsdfgjagfaga")]]></variableExpression>
+	</variable>
+
+		<group  name="condiciones" >
+			<groupExpression><![CDATA[$F{solicitud_id}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="102"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-30"
+						y="0"
+						width="289"
+						height="19"
+						key="subreport-1"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<subreportParameter  name="p_solicitud_numero">
+						<subreportParameterExpression><![CDATA[$F{solicitud_numero}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "financiamiento_certificacion.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-30"
+						y="21"
+						width="289"
+						height="18"
+						key="subreport-2"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<subreportParameter  name="p_numero_solicitud">
+						<subreportParameterExpression><![CDATA[$F{solicitud_numero}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "garantia_certificacion.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-45"
+						y="42"
+						width="353"
+						height="11"
+						key="subreport-3"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<subreportParameter  name="p_solicitud_numero">
+						<subreportParameterExpression><![CDATA[$P{p_solicitud_numero}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "condiciones certificacion.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-45"
+						y="55"
+						width="347"
+						height="20"
+						key="subreport-4"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<subreportParameter  name="p_solicitud_numero">
+						<subreportParameterExpression><![CDATA[$P{p_solicitud_numero}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "propuesta_social_certificacion.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="29"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="45"
+						y="4"
+						width="351"
+						height="23"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<text><![CDATA[C E R T I F I C A C I O N]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="162"
+						y="-399"
+						width="100"
+						height="20"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{solicitud_numero_resolucion_comite}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="360"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="8"
+						width="441"
+						height="80"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[Yo, MARIA ELENA HERNANDEZ B., procediendo en mi carácter de Secretaria del Directorio (Acc) del FONDO DE CRÉDITO INDUSTRIAL, certifico la autenticidad de la Resolución N°                         , la cual corre inserta en el Acta N°                celebrada el                               , cuyo texto se transcribe a continuación:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="115"
+						y="32"
+						width="66"
+						height="20"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{solicitud_numero_resolucion_comite}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="131"
+						y="92"
+						width="223"
+						height="90"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[FONDO DE CRÉDITO INDUSTRIAL COMITÉ REGIONAL NO CONCURRENTE EN EL MARCO DE LA MISIÓN VUELVAN CARAS AÑO 2007 RESOLUCION NRO: ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="205"
+						y="157"
+						width="66"
+						height="20"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{solicitud_numero_resolucion_comite}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="1"
+						y="190"
+						width="433"
+						height="170"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[El Comité Regional No Concurrente del FONDO DE CREDITO INDUSTRIAL (FONCREI), en el marco del Programa Especial de Financiamiento a Lanceros(as) Vuelvan Caras Año 2007, aprobado por el Directorio de FONCRE segun Resolución N°.  01-01-001, Acta 01-07 de fecha 17 de Enero de 2007, en ejercicio de las facultades que le fueron conferidas por el  Directorio del Fondo de Crédito Industrial, mediante Resoluciones N°. 12-01-536, Acta N°. 12-06 de fecha 6 de Septiembre de 2006; a los fines de analizar el punto de cuenta presentado por la Gerencia de Gestión de Proyectos del Organismo, en relación a la solicitud tramitada ante el Fondo de Crédito Industrial "FONCREI" por la Asociación Cooperativa                                                                       por un monto de                              ,acordó, aprobar la mencionada solicitud, bajo las siguientes condiciones:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="¤ #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="56"
+						y="328"
+						width="105"
+						height="18"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{solicitud_monto_solicitado}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="73"
+						y="47"
+						width="72"
+						height="20"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{solicitud_fecha_acta_comite}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="378"
+						y="33"
+						width="60"
+						height="20"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{solicitud_numero_acta_comite}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="145"
+						y="313"
+						width="258"
+						height="17"
+						key="textField"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="53"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="3"
+						y="5"
+						width="157"
+						height="19"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[María Elena Hernandez B.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="3"
+						y="24"
+						width="178"
+						height="19"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Secretaria del Directorio (Acc.)]]></text>
+				</staticText>
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

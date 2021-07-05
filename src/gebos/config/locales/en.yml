@@ -1,0 +1,3719 @@
+en:
+  Sistema:
+    Head:
+      title: 'GeBOS'
+    Body:
+      EstatusPrestamo:
+        cambio_estatus: 'Status Change'
+        cancelado: 'Canceled'
+        castigado: 'Punished'
+        litigio: 'Litigation'
+        seleccione_estatus: 'Select Status'
+        vencido: 'Expired'
+        vigente: 'Valid'
+      ExpresionesRegulares:
+        separador_decimal: ','
+        letras_espacio: "^[a-zA-ZñÑáÁéÉíÍóÓúÚüÜÇ' ]+$"
+        letras_espacio_numero: "^[0-9a-zA-ZñÑáÁéÉíÍóÓúÚüÜÇ' ]+$"
+        letras_espacio_numero_otro: ! '^[0-9a-zA-ZñÑáÁéÉíÍóÓúÚüÜÇ/.,\-\_°# ]+$'
+        formato_numero: ! '(\d)(?=(\d\d\d)+(?!\d))'
+        letras_espacio_numero_puntuacion: "^[0-9a-zA-ZñÑáÁéÉíÍóÓúÚüÜÇ,;.:' ]+$"
+        formato_numero: '(\d)(?=(\d\d\d)+(?!\d))'
+        solo_letras: "^[a-zA-ZñÑáÁéÉíÍóÓúÚüÜÇ']+$"
+        letras: "^[a-zA-Z]+$"
+        solo_numeros: '^[0-9]+$'
+        letras_numero: "^[a-zA-Z0-9 ]+$"
+        separador_miles: '.'
+        separador_grupo_miles: ! '\1.'
+        validar_celular: ! '^[0]{1}[4]{1}[1-2]{1}[246]{1}[0-9]{7}$'
+        validar_fecha: ! '^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/](19|20)\d{2}$'
+        validar_correo: ! '^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$'
+        validar_direccion: ! "^[a-zA-Z0-9°/.,ñÑáÁéÉíÍóÓúÚüÜÇ' ]+$"
+        validar_facebook: ! '^([^@\s]+)@((?:[-a-zA-Z0-9]+.)+[a-z]{2,})$'
+        validar_formato_boleta: ! '^[a-zA-Z_ ]+$'
+        validar_nombre: "^[a-zA-ZÑáÁéÉíÍóÓúÚüÜÇ' ]+$"
+        validar_rif: ! '^[J,N,T,V,G-j,n,t,v,g][\-]\d{8}[\-]\d$'
+        validar_telefono_habitacion: ! '^[0]{1}[2]{1}[1-9]{1}[2-9]{1}[0-9]{7}$'
+        validar_telefono_multi: ! '^([0]{1}[2]{1}[1-9]{1}[2-9]{1}[0-9]{7})|([0]{1}[4]{1}[1-2]{1}[246]{1}[0-9]{7})$'
+        validar_twitter: ! '^@|#((?:[-a-zA-Z0-9]?.)+[\w]{2,})$'
+      General:
+        actual: 'Actual'
+        afirmacion: 'Yes'
+        analisis_pago: 'Payments analysis'
+        apellido_empresa: 'Surname/Company'
+        aprobado: 'Approved'
+        aprobar: 'Approve'
+        asunto: 'Subject'
+        atentamente: 'Attentively'
+        avanzar: 'Advance'
+        avanzar_segun_filtro: 'Advance According Filter'
+        autorizacion: 'Authorization'
+        archivo_generado: 'Generated file'
+        archivo_enviado: 'Sent File'
+        banco_origen: 'FONDAS'
+        beneficiario: 'Beneficiary'
+        beneficiarios: 'Beneficiaries'
+        ab_bolivares: '$'
+        anual: 'Annual'
+        carga: 'Load'
+        cargar: 'Load'
+        cargando: 'Loading'
+        campo: 'Field'
+        ciudad_institucion: 'Caracas'
+        cliente: 'Cliente'
+        cliente_gprotec: 'FONDAS'
+        coma: "','"
+        concepto: 'concept'
+        condiciones_financiamiento: 'Conditions of Funding'
+        contacto: 'Contact'
+        comentario: 'Comment'
+        comentarios: 'Comments'
+        cooperativa: 'Cooperative'
+        correcto: 'Correct'
+        cuenta: 'Account'
+        de_forma_descendente: ', in descending order'
+        de_forma_ascendente: ', in ascending order'
+        delegado: 'Delegate'
+        delegada: 'Delegate'
+        descripcion: 'Description'
+        descargue_aqui: 'Download here'
+        desempeno_cobranza: 'Performance Collection'
+        despachado: 'Dispatched'
+        diferido: 'deferred'
+        diferir_intereses: 'Defer Interest'
+        diferir: 'Defer'
+        direccion: 'Address'
+        direccion_institucion: 'Av. Fuerzas Armadas, Esq. de Salvador de León a Socarrás, Edificio FONDAS, La Hoyada, Caracas, Distrito Capital'
+        ejecutar_reporte: 'Run Report'
+        ejemplo_documento: 'Ej: J-12345678-9'
+        ejemplo_documento_completo: 'Ej: J-12345678-9 / Ej: V-12345678'
+        el: 'El'
+        empresa: 'Company'
+        en_meses: '(in months)'
+        es: 'is'
+        espera: 'Wait'
+        estado_cuenta: 'Statement of Account'
+        eventos_financieros: 'Financial Events'
+        Excepciones:
+          datos_invalidos: 'Invalid Data'
+          debe_selecionar: 'You must select a'
+          error_guardando_desembolso: 'Failed to update the disbursement'
+          error_guardando_solicitud: 'Error Updating Step'
+          introduzca_fecha_para_continuar: 'Please enter a date to continue'
+          termino_tiempo_sesion: 'Their activity time has expired.'
+          ya_no_se_encuentra_registrado_en_el_sistema: 'The user who posted this operation is no longer registered in the system'
+        exportar: 'Export'
+        fecha_de_hoy: "Today's Date"
+        fecha_evento: 'Event Date'
+        fecha_fin: 'End Date'
+        fecha_inicio: 'Start Date'
+        frecuencia_pago: 'Frequency of Payment'
+        fondas: 'Fondas'
+        formato_fecha: '(mm/dd/aaaa)'
+        fundo: 'Farm'
+        general: 'General'
+        generando_archivo: 'Generating File'
+        gerencia_administracion_cartera: 'Management Portfolio Administration'
+        gerencia_financiamiento: 'Financial Management'
+        gerencia_cobranzas: 'Management of Collections and Recoveries'
+        guardar: 'The records were stored successfully.'
+        incorrecto: 'Incorrect'
+        importante: 'Important'
+        imprimir: 'Print'
+        integrante: 'Integrant'
+        invalida: 'Invalid'
+        invalido: 'Invalid'
+        la: 'The'
+        liquidada: 'Liquidated'
+        liquidado: 'Liquidated'
+        maximo: 'Maximun'
+        memorando: 'MEMORANDUM'
+        mensual: 'Monthly'
+        meses: 'Months'
+        minimo: 'Minimun'
+        monto_solicitado: 'Amount Requested'
+        monto_desembolso: 'Disbursement Amount'
+        movilizar: 'Mobilize'
+        natural: 'Natural'
+        negacion: 'Not'
+        no_aplica: 'not applicable'
+        nota: 'Note'
+        no_hay_cronograma: 'No Payment Schedule'
+        no_hay_ordenes_confirmadas: 'No Confirmed Orders to Date'
+        no_hay_pagos: 'No payments to Date'
+        no_hay_pagos_excedentes: 'No Excess Payments to Date'
+        nombre: 'Name'
+        nombre_institucion: 'GeBos®'
+        ocurrio_error: 'An error has occurred'
+        ocurrio_error_interno: 'An internal error occurred.'
+        se_realizaron_los_cambios_satisfactoriamente: 'Changes were made Successfully'
+        sin_comentarios: 'no comments'
+        oficina: 'Office'
+        ordenar_por_este_campo: 'Sort by this field'
+        otro: 'Other'
+        periodo_gracia: 'Grace Period'
+        Periodos:
+          mensual: 'Monthly'
+          bimestral: 'Bimonthly'
+          trimestral: 'Quarterly'
+          cuatrimestral: 'Cuatrimestral'
+          pago_unico: 'Single Payment'
+          pentamestral: 'Pentamestral'
+          semestral: 'Semiannual'
+          heptamestral: 'Heptamestral'
+          anual: 'Annual'
+        persona: 'Person'
+        plazo: 'Term'
+        presente: 'Present'
+        procedencia: 'EZEQUIEL ZAMORA'
+        procesando: 'Processing'
+        primer: 'First'
+        punto: "'.'"
+        publicidad: 'Advertising'
+        rechazado: 'Rejected'
+        rechazar: 'Reject'
+        recibe: 'Receive'
+        reciben: 'Receive'
+        reversar: 'Reverse'
+        representante: 'Representative'
+        representantes: 'Representatives'
+        saldo_deudor: 'Debit Balance'
+        sector_acuiculrura: 'AQUACULTURE SECTOR'
+        sector_animal: 'ANIMAL SECTOR'
+        sector_maquinaria: 'MACHINERY, EQUIPMENT AND IMPLEMENT'
+        sector_maquinarias: 'MACHINERY, EQUIPMENT AND IMPLEMENTS'
+        sector_pesca: 'FISHERIES SECTOR'
+        sector_vegetal: 'PLANT FOREST SECTOR'
+        segundo: 'Second'
+        seleccionar_todos: 'Select All'
+        seleccione_archivo_procesar: 'Select the file to be processed'
+        senor: 'Mr.'
+        senores: 'Messrs'
+        si: 'Yes'
+        siglas_gcia_financiamiento: 'FM'
+        solicitud: 'Step'
+        tabla_amortizacion: 'Amortization Table'
+        tabla_amortizacion_se_ha_generado_con_exito: 'The amortization table has been generated successfully'
+        se_han_avanzado_los_tramites_generado_tabla_amortizacion: 'Were advanced the formalities and amortization table generated successfully'
+        se_ha_avanzado_solcitud_con_exito: 'Has advanced successfully request'
+        se_ha_reversado_solicitud_con_exito: 'The request has been successfully reversed'
+        se_actualizo_con_exito_registro: 'The record was updated successfully'
+        testigo: 'Witness'
+        texto_cobranzas: 'The amounts reflected in the payment schedule may vary due to new disbursements, cancellations, claims, payments and implementation of measures'
+        tipo_credito: 'Type of Credit'
+        TipoDocumento:
+          extranjero: 'E'
+          juridico: 'J'
+          gobierno: 'G'
+          pasaporte: 'P'
+          venezolano: 'V'
+        titulo: 'Title'
+        usuario: 'User'
+        version: 'Version'
+        version_actual: '5.0'
+        viabilidad: 'Viability'
+      Imagenes:
+        agregar: 'boton_agregar.gif'
+        agregar_mas: 'agregar.gif'
+        aplicar: 'boton_aplicar.gif'
+        asignar: 'asignar.jpg'
+        avanzar: 'boton_avanzar.gif'
+        avanzar_filtro: 'boton_avanzar_filtro.gif'
+        agricultura_tierras: 'agricultura y tierras.jpg'
+        boton_agregar: 'boton_agregar.gif'
+        boton_confirmar: 'boton_confirmar.gif'
+        boton_modificar: 'boton_modificar.gif'
+        buscar: 'boton_buscar.gif'
+        cancelar: 'boton_cancelar.gif'
+        candado: 'candado.png'
+        cargando: 'cargando.gif'
+        cerrar: 'boton_cerrar.gif'
+        consultar: 'consultar.gif'
+        desembolsar: 'desembolsar.gif'
+        deshacer: 'deshacer.gif'
+        boton_generar_filtro: 'boton_generar_filtro.gif'
+        boton_generar_seleccion: 'boton_generar_seleccion.gif'
+        boton_liquidar_cheque: 'boton_liquidar_con_cheque.gif'
+        descargar: 'descargar.png'
+        eliminar: 'eliminar.gif'
+        enviar: 'boton_enviar.gif'
+        enviar_flecha: 'enviar.gif'
+        generar: 'boton_generar.gif'
+        guardar: 'boton_guardar.gif'
+        icono_excel: 'icono-pe-excel.gif'
+        img_colapsar: 'colapsar.gif'
+        img_expandir: 'expandir.gif'
+        imprimir: 'imprimir.gif'
+        imprimir_grande: 'print.png'
+        modificar: 'modificar.gif'
+        procesar: 'boton_procesar_archivo.gif'
+        copia_beneficiario: 'print_copia_beneficiario.png'
+        copia_fondas: 'print_copia_fondas.png'
+        copia_agrotienda: 'print_copia_agrotienda.png'
+        renuncia: 'renuncia.gif'
+        eliminar: 'eliminar.gif'
+        confirmar: 'confirmar.jpg'
+        reversar: 'reversar.gif'
+        registrar: 'registrar.gif'
+        icono_pdf: 'icono_pdf.gif'
+        logo_institucion: 'logo_institucion.png'
+        logo_reporte: 'logo_reporte.jpg'
+        logo_reporte_gif: 'logo_reporte.gif'
+        bolivariano: 'bolivariano17p.png'
+      Institucion:
+        agro: 'AGROVENEZUELA'
+        fondafa: 'FONDAFA'
+        fondas: 'FONDAS'
+        seleccione_institucion: 'Select Institution Origin'
+      Menu:
+        menu1: 'Administration'
+        menu2: 'Organizational Structure'
+        menu3: 'Office'
+        menu4: 'Departments'
+        menu6: 'Security'
+        menu7: 'Rols'
+        menu8: 'Users'
+        menu9: 'Event Log'
+        menu10: 'Authorizations'
+        menu11: 'Set Authorization'
+        menu12: 'Request Authorization'
+        menu13: 'Approve Authorization'
+        menu14: 'Beneficiaries'
+        menu15: 'Legal Beneficiaries'
+        menu16: 'Natural Beneficiaries'
+        menu17: 'Formalities'
+        menu18: 'Register Formalities'
+        menu24: 'Open Instance National Approval'
+        menu32: 'Internal Inputs Files'
+        menu34: 'Consultation Disbursements'
+        menu46: 'Collection'
+        menu47: 'Financing Simulator'
+        menu48: 'Consultation Loan'
+        menu49: 'Payments by Deposit'
+        menu51: 'Pre Cancellation of Loan'
+        menu52: 'Change of Status'
+        menu53: 'Accounting'
+        menu54: 'Accounting accounts'
+        menu55: 'Accounting Consultation'
+        menu56: 'Accounting Reports'
+        menu57: 'Configuration'
+        menu58: 'General Parameters'
+        menu59: 'Basic Tables'
+        menu62: 'Application Collections'
+        menu63: 'Funding Modalities'
+        menu64: 'Guarantee Type'
+        menu65: 'Expense Type'
+        menu66: 'Type of Credit'
+        menu67: 'Organization Type'
+        menu68: 'Origins of Fund'
+        menu69: 'Causes Loan Rejection'
+        menu70: 'Causes Loan Deferment'
+        menu72: 'Financial Institutions'
+        menu75: 'Surveyors'
+        menu76: 'Professions'
+        menu77: 'Programs'
+        menu78: 'Taxes'
+        menu100: 'Reports'
+        menu101: 'Several reports'
+        menu103: 'Reports Loan'
+        menu104: 'Management'
+        menu107: 'Management Indicators'
+        menu109: 'Portfolio'
+        menu110: 'Portfolio Quality'
+        menu111: 'Indicators of Recovery'
+        menu112: 'Age of the Moor'
+        menu113: 'Portfolio Indices'
+        menu511: 'Nationality'
+        menu513: 'Causes of Renunciation'
+        menu514: 'Financial Instruments'
+        menu517: 'Consultation Formalities'
+        menu566: 'National Committee'
+        menu597: 'Committee Member'
+        menu600: 'Committee Estadal'
+        menu602: 'Documentation Formalitie'
+        menu603: 'Subscription Agreement and Historical'
+        menu604: 'Statistics'
+        menu611: 'Risk and Provision SUDEBAN'
+        menu612: 'Risk and Provision OWN'
+        menu622: 'Regions'
+        menu623: 'State Municipality'
+        menu624: 'Axis'
+        menu625: 'Collections of Evaluations and Inspections'
+        menu627: 'Types Livestock'
+        menu629: 'Earrings by Availability'
+        menu630: 'Tenure Production Unit'
+        menu631: 'Operation type'
+        menu632: 'Experience'
+        menu633: 'Training'
+        menu634: 'Percentage Gain'
+        menu639: 'Initiative type'
+        menu642: 'Accounting Rules'
+        menu645: 'Reassign Formalitie'
+        menu646: 'Assign / Re Assign Formalitie'
+        menu649: 'Technical Evaluation'
+        menu651: 'Conditions Credit Assessment'
+        menu659: 'Territorial Divisions'
+        menu660: 'Scoring Acceptance'
+        menu661: 'Credit Path'
+        menu662: 'Care Producer'
+        menu664: 'Recommendation Report'
+        menu665: 'Budget'
+        menu666: 'Instances of Approval'
+        menu668: 'Control of Visits'
+        menu674: 'Control of Visit Report'
+        menu679: 'Manage Guarantees'
+        menu681: 'Restructuring'
+        menu683: 'Request for Debt Restructuring'
+        menu685: 'Open Instance State Authority Approval'
+        menu686: 'Authorized Signatures'
+        menu691: 'Budget Entries'
+        menu693: 'Effective Settlement'
+        menu694: 'Causes Return to Beneficiary'
+        menu698: 'Country'
+        menu701: 'Portfolio Management'
+        menu703: 'Financing'
+        menu704: 'Productive Sector'
+        menu706: 'Unit of Measure'
+        menu707: 'Provider Company'
+        menu708: 'Type Grass'
+        menu709: 'Production Cycle'
+        menu711: 'Material Type'
+        menu712: 'Engine Type'
+        menu714: 'Reason for Visit'
+        menu715: 'Motor Marks'
+        menu717: 'Vocation of the Earth'
+        menu719: 'Type of Vessel'
+        menu722: 'Type Nylon'
+        menu727: 'Cost Structure'
+        menu728: 'Financing Policies'
+        menu729: 'Editor Contracts'
+        menu730: 'Pasture Condition'
+        menu731: 'Forage Grass type'
+        menu732: 'Vaccines'
+        menu733: 'Variety of Pasture Species'
+        menu734: 'Placement sites'
+        menu735: 'Exchange Infrastructure'
+        menu736: 'Topography Type'
+        menu737: 'Soil type'
+        menu738: 'Type of Roads'
+        menu739: 'Water Source Type'
+        menu741: 'Charge Budget'
+        menu742: 'Analysis Conclusion and Recommendations'
+        menu743: 'Topics for Analysis'
+        menu744: 'Bank Accounts'
+        menu745: 'Type of Irrigation'
+        menu746: 'Type Drainage'
+        menu747: 'Type Species (Aquaculture)'
+        menu748: 'Type Cultivation System (Aquaculture)'
+        menu749: 'Cultivation Type (Aquaculture)'
+        menu750: 'Cycle Wait'
+        menu753: 'Institutional Iron'
+        menu754: 'Lawyers'
+        menu755: 'Fishing Gear Type'
+        menu756: 'Security Type Equipment'
+        menu757: 'Finance Settlement'
+        menu758: 'Trust Formalitie Waiting'
+        menu759: 'Historic Trust Transaction'
+        menu760: 'Comodities'
+        menu761: 'Production'
+        menu762: 'Field Technician'
+        menu763: 'Silo'
+        menu764: 'Official Gazette'
+        menu768: 'Operations'
+        menu769: 'Payments'
+        menu770: 'Consolidated Report'
+        menu775: 'Settlement Transfer'
+        menu776: 'Settlement Cheque'
+        menu777: 'Instance Summary Approval'
+        menu778: 'Receiving the Archive Bank'
+        menu779: 'Record Checks'
+        menu784: 'Order Dispatch'
+        menu785: 'Dispatch Operations Orders'
+        menu786: 'Consultation Payment Provider House'
+        menu787: 'Conventions Machinery and Equipment'
+        menu788: 'Type of Machinery'
+        menu789: 'Check Inventory'
+        menu790: 'Query Comodities'
+        menu791: 'Rejects Settlement'
+        menu792: 'Rejects Surplus Credit by Comodities'
+        menu793: 'Credit by Surplus (Transfer)'
+        menu794: 'Receive File (Transfer)'
+        menu795: 'Confirmation Ballot'
+        menu796: 'Finance Payment to Beneficiaries'
+        menu797: 'Pay Home Finance Provider'
+        menu798: 'Payment provider house by transfer'
+        menu799: 'Payment by Check house provider'
+        menu800: 'Reception House Provider Payment File'
+        menu801: 'Matrix Guarantees'
+        menu802: 'Query Credit Surplus by Comodities'
+        menu803: 'Payment by Surplus (Check)'
+        menu804: 'Register check'
+        menu807: 'Confirmation Differents Comodities'
+        menu808: 'Indigenous Communities'
+        menu809: 'Machinery'
+        menu810: 'Change Password'
+        menu811: 'Reprint Dispatch Order'
+        menu814: 'Consultation Inventory'
+        menu815: 'Assign Machinery'
+        menu816: 'Settlement Machinery and Equipment'
+        menu817: 'Generated Files for Payment to House Provider'
+        menu818: 'Marine supplier'
+        menu819: 'Restructuring Committee'
+        menu820: 'Role in the Committee'
+        menu822: 'Role in the Committee'
+        menu823: 'Type of Document'
+        menu824: 'Type of Document'
+        menu825: 'Accounting transactions'
+        menu826: 'Warehouse Machinery'
+        menu827: 'Transportation Company'
+        menu828: 'Brand of Machinery'
+        menu829: 'Model of Machinery'
+        menu830: 'Consultation Mobilization Machinery'
+        menu831: 'Sending Machinery'
+        menu832: 'Measures of Financing'
+        menu833: 'Receiving Machinery'
+        menu834: 'Configuring Inventory Replenishment'
+        menu836: 'Reports with Parameters'
+        menu840: 'Projection Portfolio Recovery'
+        menu844: 'Confirmed Billing Inquiry'
+        menu849: 'Update Trust'
+        menu850: 'Consultation Availability Trust'
+        menu851: 'Causes for Annulment and/or Annulment'
+        menu856: 'Ballot Templates'
+        menu857: 'Languages'
+        menu858: 'Recoveries'
+        menu859: 'Add Collection Management'
+        menu860: 'Historic of Collections'
+        menu862: 'Imputations Machinery'
+        menu861: 'Coins'
+        menu863: 'Comodities'
+        menu864: 'Beneficiary'
+        menu865: 'Legal Consulting'
+        menu866: 'Finances'
+        menu867: 'Guarantees'
+        menu868: 'Machineries'
+        menu869: 'Budget'
+        menu870: 'Reports with Parameters'
+        menu871: 'Projection Portfolio Recovery'
+        menu872: 'Trust Movement Type'
+        menu875: 'Budget Print'
+        menu876: 'Credits Awarded by Quarter'
+        menu877: 'Surrenders By Quarter'
+        menu878: 'Analysis of Execution'
+        menu879: 'Currencies'
+        menu880: 'Exchange Rate'
+        menu881: 'Mnemonic'
+        menu882: 'Send Collection'
+        menu883: 'Application Collection'
+        menu884: 'Status/Paths'
+        menu885: 'Status'
+        menu886: 'Approval Path'
+        menu887: 'Reversal Path'
+        menu888: 'Shipping Accounting Vouchers'
+        menu889: 'Proof Accounting Report'
+        menu890: 'Direct Debiting'
+        menu891: 'Applied Retrieval'
+        menu892: 'Direct Debit Rejections'
+        menu893: 'Recovery'
+        menu894: 'Analyst Retrieval'
+        menu895: 'Financial Close'
+        menu896: 'Report Of Retrieval'
+        menu897: 'Management indicators by Analyst'
+        menu898: 'E-mail Messages'
+        menu899: 'SMS Text Messages'
+        menu900: 'Reasons for De'
+        menu901: 'Multicompanies'
+        menu902: 'Multicompanies'
+        menu904: 'Restructuring'
+        menu906: 'Request for Debt Restructuring'
+        menu907: 'Restructuring Committee'
+        menu908: 'Financial Close'
+      MesesCortos:
+        enero: 'JAN'
+        febrero: 'FEB'
+        marzo: 'MAR'
+        abril: 'APR'
+        mayo: 'MAY'
+        junio: 'JUN'
+        julio: 'JUL'
+        agosto: 'AUG'
+        setiembre: 'SEP'
+        octubre: 'OCT'
+        noviembre: 'NOV'
+        diciembre: 'DEC'
+        sin_mes: 'INI'
+      ModalidadPago:
+        arrime: 'Comoditie'
+        deposito: 'Deposit account'
+        devengo: 'Interest Accrual'
+        orden_despacho: 'Order Dispatch'
+        seleccione_modalidad: 'Select Method of Payment'
+      Montos:
+        capital: 'Capital'
+        interes_diferido: 'Deferred interest'
+        interes_mora: 'Interesting Mora'
+        interes_ordinario: 'Ordinary Interest'
+        monto_boleta: 'Amount Ballot'
+        monto_desembolso: 'Disbursement amount'
+        monto_excedente: 'Surplus amount'
+        monto_gasto: 'Expense amount'
+        monto_sras: 'Insurance Seguro (SAR)'
+        monto_transaccion: 'Transaction amount'
+        seleccione_monto: 'Select Amount Account for'
+      Separadores:
+        aspectos_tecnicos: 'Technical Aspects'
+        datos_basicos: 'Basic data'
+        estado: 'State'
+        indicadores: 'Indicators'
+      TextoBotones:
+        guardar: 'Save'
+      TipoFinanciamiento:
+        normal: 'Normal'
+        reestructurado: 'Restructured'
+        seleccione_tipo: 'Select Type Financing'
+      TipoMovimiento:
+        debe: 'Debit'
+        haber: 'Havings'
+        seleccione_tipo: 'Select Type Movement'
+      TipoPlazo:
+        corto: 'Short Term'
+        largo: 'Long Term'
+        seleccione_plazo: 'Select Term'
+        sin_plazo: 'Without Term'
+      Controladores:
+        Accion:
+          agregar: 'Add'
+          agregar_gestion: 'Add Collection Management'
+          consultar: 'Consult'
+          consultar_gestion: 'Query Collection Management'
+          deshacer: 'Undo'
+          eliminar: 'Delete'
+          enviar: 'Send'
+          imprimir: 'Print'
+          modificar: 'Edit'
+        Mensajes:
+          actualizacion: 'has been updated successfully'
+          cambio_estatus: 'it has changed the status successfully.'
+          creacion: 'has been successfully created.'
+          eliminacion: 'successfully removed.'
+          esta_seguro: 'Are you sure you want to delete this record?'
+          enviaron: ' successfully sent.'
+          insercion: 'successfully added.'
+          modificacion: 'successfully modified.'
+          registro_se_elimino: 'The record was deleted successfully.'
+        SearchComun:
+          actividad_igual: 'Activity equals'
+          beneficiario_igual: 'Beneficiary like'
+          cargo: 'ID Cargo Hold'
+          casa_proveedora_igual: 'House Provider equals'
+          cedula_rif_contenga: 'ID or RIF containing'
+          ciclo_productivo_igual: 'Production Cycle equals'
+          codigo: 'Code contains'
+          destino_igual: 'Destination equals'
+          en_adelante: 'onwards'
+          entidad_financiera_igual: 'Financial Institution like'
+          estado_igual: 'State like'
+          estatus_igual: 'Status equals'
+          estatus_od_igual: 'Status Order Dispatch equals'
+          fecha_factura_desde: 'Invoice date from'
+          fecha_factura_hasta: 'Invoice date until'
+          fecha_desde: 'Date from'
+          fecha_envio_hasta: 'Date Shipping until'
+          fecha_hasta: 'Date until'
+          fecha_llegada_hasta: 'Date of arrival until'
+          fecha_registro_desde: 'Date creation dispatch order from'
+          fecha_registro_hasta: 'Date creation dispatch order until'
+          fecha_solicitud_desde: 'Application date from'
+          fecha_solicitud_hasta: 'Application date until'
+          moneda_igual: 'Currency equals'
+          nombre: 'Name contains'
+          nombre_corto: 'Short Name contains'
+          nombre_apellido: 'Name or Surname Contains'
+          nombre_beneficiario: 'Beneficiary Name Equals'
+          numero_desembolso_igual: 'Disbursement number equals'
+          numero_guia_igual: 'Number guide equals'
+          numero_igual: 'Number equals'
+          numero_prestamo_igual: 'Credit number equals'
+          numero_tramite: 'Number of pending equal'
+          numero_sesion: 'Session number equal'
+          oficina_igual: 'Office equals'
+          origen_igual: 'Origin equals'
+          programa_igual: 'Program equals'
+          registro_desde: 'Records from'
+          registro_hasta: 'Records until'
+          rif_cedula_contenga: 'RIF or ID containing'
+          rif_igual: 'Rif like'
+          rubro_igual: 'Heading equals'
+          sector_igual: 'Sector equals'
+          sub_sector_igual: 'Sub Sector equals'
+          sub_rubro_igual: 'Sub Heading equals'
+          sucursal_casa_proveedora_igual: 'Branch House Provider equals'
+          tipo_entidad_financiera_igual: 'Type Financial Institution like'
+          todos_destinos: 'All destinations'
+          todos_estatus: 'All status'
+        Abogado:
+          FormTitles:
+            form_title: 'Lawyer'
+            form_title_records: 'Lawyers'
+          Search:
+            id: 'Id Office contain'
+            impreabogado: 'Impreabogado containing'
+        ActaSilo:
+          FormTitles:
+            form_title: 'Acts of Silo'
+            form_title_records: 'Acts of Silo'
+        ActividadActivar:
+          FormTitles:
+            form_title: 'Enable / Disable Activities by State'
+            form_title_record: 'Enable / Disable Activity by State'
+          Mensajes:
+            activado_desactivado: 'It has on / off activity'
+            oficinas_seleccionadas: 'for selected offices'
+        Actividad:
+          FormTitles:
+            form_title: 'Activities'
+            form_title_record: 'Activity'
+            form_title_records: 'Activities'
+        ActividadEconomica:
+          FormTitles:
+            form_title: 'Economic Activities'
+            form_title_record:  'Economic Activity'
+            form_title_records: 'Economic Activities'
+        AgenciaBancaria:
+          FormTitles:
+            form_title: 'Banking Agencies'
+            form_title_record: 'Banking Agency'
+            form_title_records: 'Banking Agencies'
+          Search:
+            id_entidad: 'Id contains financial institution'
+        AgregarCobranzas:
+          FormTitles:
+            form_title: 'Add Collection'
+            form_title_records: 'Collections'
+        AlmacenMaquinaria:
+          FormTitles:
+            form_title: 'Machinery Stores'
+            form_title_record: 'Machinery Store'
+            form_title_records: 'Machinery Stores'
+        AnalisisConclusion:
+          FormTitles:
+            form_title: 'Analysis Conclusion and Recommendations'
+            form_title_record: 'Analysis'
+            form_title_records: 'Analysis'
+        AnalisisTopico:
+          FormTitles:
+            form_title: 'Topics for Analysis'
+            form_title_record: 'Topic'
+            form_title_records: 'Topics'
+        ArtePesca:
+          FormTitles:
+            form_title: 'Information by Sector / Heading'
+            form_title_record: 'Fishing Gear'
+            form_title_records: 'Fishing Gear'
+          Messages:
+            introducir_arte_pesca: 'Please introduce a Fishing Gear'
+        AutorizacionAprobacion:
+          FormTitles:
+            form_title: 'Approve Authorization'
+            form_title_record: 'Authorization'
+            form_title_records: 'Authorizations'
+            error_aprobacion: 'There was an error in the approval'
+            error_rechazo: 'There was an error in the rejection'
+        AutorizacionSolicitud:
+          FormTitles:
+            form_title: 'Request Authorization'
+            form_title_record: 'Authorization'
+            form_title_records: 'Authorizations'
+            error_eliminando: 'There was an error in removing'
+            para_el_prestamo: 'For the credit number'
+            por_monto_de: 'in the amount of'
+            se_agrego_con_exito: 'Authorization was added successfully'
+        BoletaArrime:
+          FormTitles:
+            form_title: 'Formalities Ballot'
+            form_title_record: 'Formalitie Ballot'
+            form_title_records: 'Formalities Ballot'
+        CambiarClave:
+          FormTitles:
+            form_title: 'Change Password'
+            form_title_record: 'Change Password'
+            form_title_records: 'Change Password'
+            clave_nueva_requerida: 'New pasword is required'
+            clave_nueva_mayor: 'New Password must be greater than 5 characters'
+            clave_diferente: 'The confirmation code is different'
+            confirmacion_cambio_clave: 'The password is changed successfully'
+        CalidadAguaAlimento:
+          FormTitles:
+            form_title_record: 'Water Quality Food'
+            form_title_records: 'Water Quality Foods'
+        CasaProveedora:
+          FormTitles:
+            form_title: 'House Provider'
+            form_title_records: 'Houses Providers'
+        CasoMedida:
+          FormTitles:
+            form_title: 'Cases and Measures to Implement'
+            form_title_record: 'Cases and Measures to Implement'
+            form_title_records: 'Cases and Measures to Implement'
+        CargaMasiva:
+          FormTitles:
+            form_title: 'Bulk Upload Machinery'
+            form_title_record: 'Archive'
+          Etiquetas:
+            actualizar_total: 'We updated a total of'
+        Catalogo:
+          FormTitles:
+            form_title: 'Inventory Record'
+            form_title_record: 'Inventory'
+            form_title_records: 'Inventories'
+        CausaDevolucionCliente:
+          FormTitles:
+            form_title: 'Return Cause Beneficiary'
+            form_title_record: 'Return to the Beneficiary Causes'
+            form_title_records: 'Return to the Beneficiary Cause'
+        CausaDiferimiento:
+          FormTitles:
+            form_title: 'Cause Internal Return'
+            form_title_records: 'Causes Internal Return'
+        CausaRechazo:
+          FormTitles:
+            form_title: 'Cause of Rejection'
+            form_title_records: 'Causes of Rejection'
+        CausaRenuncia:
+          FormTitles:
+            form_title: 'Cause for suspension of a Request'
+            form_title_records: 'Grounds for Suspension of a Request'
+            form_title_record: 'Cause Waiver'
+        CicloProductivo:
+          FormTitles:
+            form_title: 'Production cycles'
+            form_title_record: 'Cycle'
+            form_title_records: 'Cycles'
+        CondicionesAnalisisCredito:
+          Mensajes:
+            notice: 'The conditions have been successfully saved'
+        CondicionesFinanciamiento:
+          FormTitles:
+            form_title: 'Conditions of Funding'
+            form_title_record: 'Conditions of Funding'
+        ConfiguracionAvance:
+          FormTitles:
+            form_title: 'Configuration Credit Path Approval'
+            form_title_record: 'Configure Path Approval'
+            form_title_records: 'Configure Path Approval'            
+        ConfiguracionExistencia:
+          FormTitles:
+            form_title: 'Configuring Existence'
+            form_title_records: 'Configurations'
+        ConfiguracionReverso:
+          FormTitles:
+            form_title: 'onfiguration Credit Path Reversal'
+            form_title_record: 'Configure Path Reversal'
+            form_title_records: 'Configure Path Reversal'            
+        ConsultaCicloProductivo:
+          FormTitles:
+            form_title: 'Formalities Waiting Opening of Cycle'
+            form_title_record: 'Step'
+            form_title_records: 'Steps'
+        ConsultaPrestamo:
+          FormTitles:
+            form_title: 'Consultation Financing'
+            form_title_record: 'Financing'
+            form_title_records: 'Financing'
+          Finiquito:
+            asi_mismo: 'It also requested that once made that formality, the record of this Executive Management for final custody guard and forward.'
+            certificacion_parte_interesada: 'Certification is issued upon request of the interested party'
+            el_cual_fue_otorgado: 'which was granted in the amount of'
+            en_este_sentido: 'In this regard, we request your cooperation will serve to make all necessary arrangements for the release of mortgage is for Institution.'
+            liberacion_hipoteca: 'Release of Mortgage'
+            nombre_archivo: 'finiquito'
+            prestamo_otorgado_a: 'financing granted to'
+            prestamo_otorgado_sociedad: 'loan to the mercantile society'
+            sin_otro_particular: 'Without further reference to which'
+            tengo_honor_de_dirigirme: 'I have the honor to address you, the opportunity to inform you that the credit extended to the Mercantile Society'
+            texto_finiquito_parte_1: 'The Collection Management, hereby certifies FINIQUITO, the'
+            texto_finiquito_parte_2: 'was paid in full by the borrower as follows'
+            texto_finiquito_parte_3: 'by concepts of capital and the amount of'
+            texto_finiquito_parte_4: 'for both regular and default interest caused'
+            texto_finiquito_parte_5: 'to date. In this sense there is no action, suit, investigation, judicial or administrative proceedings affecting the credit standing of it, because the obligations inherent in the financing granted, are not subordinated to any indebtedness.'
+            titular_cedula: 'holder of the identity card number'
+            titular_registro_fiscal: 'holder Fiscal Information Registry No.'
+            totalmente_cancelado: 'is completely canceled at the last payment made on time'
+        ConsultaPrestamoCobranzas:
+          FormTitles:
+            form_title: 'Analysis of Payments'
+        ConsultaPrestamoDesempeno:
+          FormTitles:
+            form_title: 'Performance Collection'
+        ConsultaPrestamoFactura:
+          FormTitles:
+            form_title: 'Query Financing'
+            form_title_record: 'Invoice'
+            form_title_records: 'Invoices'
+          NombreReporte:
+            aplicacion_pagos: 'AplicacionPagos'
+            factura: 'factura'
+            factura_abono: 'factura_abono_extraordinario'
+            factura_desembolso: 'factura_desembolso'
+            factura_cancelacion: 'factura_precancelacion'
+            factura_reestructuracion_destino: 'factura_restructuracion_destino'
+            factura_reestrcuturacion_origen: 'factura_restructuracion_origen'
+        ConsultaPrestamoFinanciamiento:
+          FormTitles:
+            form_title: 'Query Financing'
+            form_title_record: 'Conditions of Funding'
+        ConsultaPrestamoPlanPago:
+          FormTitles:
+            form_title: 'Query Financing'
+            form_title_record: 'Payment plan'
+            form_title_records: 'Payment plan'
+        ConsultaPrestamoSituacion:
+          FormTitles:
+            form_title: 'Query Financing'
+            form_title_record: 'Loan'
+            form_title_records: 'Loans'
+        ContratoMaquinariaEquipo:
+          FormTitles:
+            form_title: 'Machinery and Equipment Convention'
+            form_title_record: 'Convention Machinery and Equipment'
+            form_title_records: 'Conventions Machinery and Equipment'
+        ControlCobranzas:
+          FormTitles:
+            form_title: 'Application of Payments'
+            form_title_record: 'Payments Archive'
+            form_title_records: 'Collections'
+          Mensajes:
+            debe_seleccionar_archivo: 'Please select the file to be processed'
+            el_archivo: 'The file'
+            ya_fue_procesado: 'already been processed, please check'
+        CuentaBcv:
+          FormTitles:
+            form_title: 'Accounts in Banks'
+            form_title_record: 'Account'
+            form_title_records: 'Accounts'
+        CronogramaDesembolso:
+          FormTitles:
+            form_title: 'Disbursement Schedule'
+            form_title_record: 'Disbursement Schedule'
+            form_title_records: 'Timetable for Disbursements'
+        ConsultarTransaccion:
+          FormTitles:
+            form_title: 'Query Transactions'
+            form_title_record: 'Transaction'
+            form_title_records: 'Transactions'
+          Etiquetas:
+            con_exito: ' successfully'
+            error_reverso: 'There was an error reversing the transaction number '
+            fecha_menor_a: 'Date is less than '
+            fecha_mayor_a: 'Date is greater than '
+            nro_prestamo: 'Number of loan equals '
+            nro_suceso: 'Event Number is equal to '
+            tipo_suceso_igual_a: 'Event Type equals '
+            se_reverso_transaccion: 'It reversed the transaction number '
+            sucesos_no_sean_reversos: 'Events are not reverse'
+            sucesos_sean_reversados: 'Events are reverse'
+            usuario_igual_a: 'User equals '
+        Contabilidad:
+          CargaDataload:
+            FormTitles:
+              form_title: 'Accounting file sharing load'
+              form_title_record: 'Accounting file sharing load'
+              form_title_records: 'Accounting file sharing load'
+        ConsultarComprobante:
+          FormTitles:
+            form_title: 'Accounting vouchers'
+            form_title_record: 'Accounting voucher'
+            form_title_records: 'Accounting vouchers'
+          FormSearch:
+            fecha_desde: 'Date from'
+            fecha_hasta: 'Date until'
+            numero_financiamiento_igual: 'Financing number equals'
+            numero_tramite_igual: 'Step number equal to'
+            programa_igual: 'Programa equals'
+            transaccion_igual: 'Transaction equals'
+        ContabilizarDevengo:
+          FormTitles:
+            form_title: 'Accounting for Yield Receivable'
+            form_title_record: 'Criteria'
+            form_title_records: 'Criteria'
+        CuentaContable:
+          FormTitles:
+            form_title: 'Accounting accounts'
+            form_title_record: 'Accounting account'
+            form_title_records: 'Accounting accounts'
+          FormSearch:
+            codigo_igual: 'Code equals'
+            codigo_contenga: 'Code contains'
+            nombre_contenga: 'Name Contains'
+        CuentaContableAuxiliar:
+          FormTitles:
+            form_title: 'Accounting accounts'
+            form_title_record: 'Accounting accounts Auxiliary'
+            form_title_records: 'Accounting accounts Auxiliary'
+        CuentaContablePresupuesto:
+          FormTitles:
+            form_title: 'Accounting accounts'
+            form_title_record: 'Accounting account Budget'
+            form_title_records: 'Accounting accounts Budget'
+        ReglaContable:
+          FormTitles:
+            form_title: 'Accounting rules'
+            form_title_record: 'Accounting rule'
+            form_title_records: 'Accounting rules'
+          FormSearch:
+            codigo_transaccion_igual: 'Transaction code equals'
+            estatus_igual: 'Status equals'
+            institucion_igual: 'Origin Institution equals'
+            modalidad_pago_igual: 'Payment mode is equal'
+            plazo_igual: 'Term equals'
+            programa_igual: 'Program equals'
+        ReporteContabilidad:
+          FormTitles:
+            form_title: 'Accounting Report Receipts'
+            form_title_record: 'Criteria'
+            form_title_records: 'Criteria'
+        TransaccionContable:
+          FormTitles:
+            form_title: 'Accounting Transactions'
+            form_title_record: 'Accounting Transaction'
+            form_title_records: 'Accounting Transactions'
+        CultivoLaguna:
+          FormTitles:
+            form_title_record: 'Growing of Laguna'
+            form_title_records: 'Growing of Laguna'
+        Departamento:
+          FormTitles:
+            form_title: 'Departments'
+            form_title_record: 'Department'
+            form_title_records: 'Departments'
+        DetallePrecioGaceta:
+          FormTitles:
+            form_title: 'Prices Gazette'
+            form_title_record: 'Price Gazette'
+            form_title_records: 'Price Gazette'
+        DetalleReestructuracion:
+          Mensajes:
+            cambio_estatus: 'Status Change'
+            renuncia_prestamo: 'Waiver of loan'
+            reestructuracion_financiera: 'Financial restructuring'
+            renuncia_desembolso: 'Waiver disbursement in transit'
+            exoneracion_interes_moratorios: 'Exemption from penalty interest'
+            activacion_calculo: 'Activation calculation of default interest'
+            reformulacion_error: 'Reformulation / Error'
+            cambio_condiciones: 'Change funding conditions'
+            extension_periodo_muerto: 'Extension of the dead period'
+            cambio_tasa: 'Exchange rate'
+            no_aplica_abreviatura: 'N/A'
+            causa_renuncia_reestructuracion: 'Cause Waiver / Restructuring'
+        EdadMora:
+          FormTitles:
+            form_title: 'Age of Default Interest'
+            form_title_record: 'Portfolio Indicator'
+            form_title_records: 'Portfolio Indicator'
+        Eje:
+          FormTitles:
+            form_title: 'Axles'
+            form_title_record: 'Axis'
+            form_title_records: 'Axles'
+          Mensajes:
+            no_se_puede_eliminar_eje: 'can not be removed the axl because it has municipalities associated with it'
+        Embarcacion:
+          Etiquetas:
+            no_aplica: "***Not-apply***"
+            solo_busqueda: '(Only search)'
+          FormTitles:
+            form_title: 'Watercraft'
+            form_title_record: 'Vessel'
+            form_title_records: 'Watercraft'
+        EmpleadoSilo:
+          FormTitles:
+            form_title: 'Employees Silo'
+            form_title_record: 'Employee Silo'
+            form_title_records: 'Employees Silo'
+        EnvioCobranzas:
+          FormTitles:
+            form_title: 'Sending Collections'
+            form_title_record: 'Collections'
+            form_title_records: 'Collections'
+        EntidadFinanciera:
+          FormTitles:
+            form_title: 'Financial Institutions'
+            form_title_record: 'Financial Institution'
+            form_title_records: 'Financial Institutions'
+            tipo_entidad: 'Type of Entity'
+        EnvioMaquinaria:
+          FormTitles:
+            form_title: 'Request Shipping Machinery'
+        EmpresaTransporteMaquinaria:
+          FormTitles:
+            form_title: 'Machinery Transport Companies'
+            form_title_record: 'Machinery Transportation Company'
+            form_title_records: 'Machinery Transport Companies'
+        EquipoSeguridad:
+          FormTitles:
+            form_title: 'Safety and Navigation Equipment'
+            form_title_records: 'Safety and Navigation Equipment'
+        EspecieVariedadPasto:
+          FormTitles:
+            form_title: 'Variety Species Pastures'
+            form_title_record: 'Variety Species Grazing'
+            form_title_records: 'Variety Species Pastures'
+        Estado:
+          FormTitles:
+            form_title: 'States'
+            form_title_record: 'State'
+            form_title_records: 'States'
+          Mensajes:
+            no_se_puede_eliminar_ciudad: 'can not be removed the state because it has cities associated with it'
+            no_se_puede_eliminar_municipio: 'can not be removed the state because it has municipalities associated with it'
+        Estatus:
+          FormTitles:
+            form_title: 'Status'
+            form_title_record: 'Status'
+            form_title_records: 'Status'
+        EstimadoRecuperacion:
+          FormTitles:
+            form_title: 'Estimated Recovery'
+            form_title_record: 'Estimated Recovery'
+            form_title_records: 'Estimated Recovery'
+        EstructuraCosto:
+          actividad_consultar: 'You must select the consulting activity.'
+          item_seleccion: 'Can not keep records, you must select at least one item.'
+          moneda_consultar: 'Please select the currency to consult.'
+          no_encontraron: 'NO RECORDS FOUND WITH SELECTED CRITERIA.'
+          oficina_consultar: 'You must select the office to consult.'
+          oficina_seleccion: 'Can not keep records, you must select at least one office.'
+          title: 'Cost Structure'
+        Experiencia:
+          FormTitles:
+            form_title: 'Experiences'
+            form_title_record: 'Experience'
+            form_title_records: 'Experiences'
+        FaenasPesca:
+          FormTitles:
+            form_title_record: 'Faena Fisheries'
+            form_title_records: 'Faena Fisheries'
+        FirmaAutorizada:
+          FormTitles:
+            form_title: 'Authorized Signatures'
+            form_title_record: 'Firm'
+            form_title_records: 'Signatures'
+        Formacion:
+          FormTitles:
+            form_title: 'Formations'
+            form_title_records: 'Training'
+        FormatoBoleta:
+          FormTitles:
+            form_title: 'Update Arrime Ballot Templates'
+            form_entity: 'Ballot Template'
+            form_identity_field: 'Operation Template'
+        GarantiaSector:
+          FormTitles:
+            form_title: 'Matrix Guarantees'
+            form_title_record: 'Sector Guarantee'
+            form_title_records: 'Guarantees by Sector'
+        GestionCobranzas:
+          FormTitles:
+            form_title: 'Management Collections'
+            form_title_record: 'Management Collections'
+            form_title_records: 'Management Collections'
+        HistoricoCobranzas:
+          FormTitles:
+            form_title: 'Historical Collections Management'
+            form_title_record: 'Historical Collections Management'
+            form_title_records: 'Historical Collections Managements'
+        HierroFondas:
+          FormTitles:
+            form_title: 'Iron Fondas'
+            form_title_record: 'Iron Fondas'
+            form_title_records: 'Iron Fondas'
+        ImputacionesMaquinaria:
+          FormTitles:
+            form_title: 'Allegations of Machinery'
+            form_title_record: 'Allocation of Machinery'
+            form_title_records: 'Allegations of Machinery'
+        IndicadorCartera:
+          Agrupadores:
+            actividad: 'Activity'
+            estado: 'State'
+            moneda: 'Currency'
+            region: 'Region'
+            rubro: 'Entry'
+            sector: 'Sector'
+            sub_rubro: "Sub-Entry"
+            sub_sector: "Sub-Sector"
+          FormTitles:
+            form_title: 'Portfolio Quality'
+            form_title_record: 'Portfolio Indicator'
+            form_title_records: 'Portfolio Indicators'
+        IndicadorGlobal:
+          FormTitles:
+            form_title: 'Portfolio Indices'
+            form_title_record: 'Global Indicators'
+            form_title_records: 'Global Indicators'
+        InstrumentoFinanciero:
+          FormTitles:
+            form_title: 'Financial Instrument'
+            form_title_record: 'Financial Instrument'
+            form_title_records: 'Financial Instrument'
+        Item:
+          FormTitles:
+            form_title: 'Items'
+            form_title_record: 'Item'
+            form_title_records: 'Items'
+        ItemAtributo:
+          FormTitles:
+            form_title: 'Attributes of Items'
+            form_title_record: 'Item Attribute'
+            form_title_records: 'Item Attributes'
+        InstanciaComiteEstadal:
+          FormTitles:
+            form_title: 'Directory Estadal Finance Committee'
+            form_title_nacional: 'National Directory of Finance Committee'
+            form_title_record: 'Session of Approval'
+            form_title_records: 'Approval Sessions'      
+          Mensajes:
+            form_title: 'Estadal Finance Committee'
+            form_title_nacional: 'National Finance Committee'
+        Marca:
+          FormTitles:
+            form_title: 'Brands'
+            form_title_record: 'Brand'
+            form_title_records: 'Brand'
+        MarcaMaquinaria:
+          FormTitles:
+            form_title: 'Brands of Machinery'
+            form_title_record: 'Brand of machinery'
+            form_title_records: 'Brand of machinery'
+        MiembroComite:
+          FormTitles:
+            form_title: 'Committee Members'
+            form_title_record: 'Member of Committee'
+            form_title_records: 'Members'
+        ModalidadFinanciamiento:
+          FormTitles:
+            form_title: 'Funding Modalities'
+            form_title_record: 'Mode of Financing'
+            form_title_records: 'Funding Modalities'
+        Modelo:
+          FormTitles:
+            form_title: 'Used Models'
+            form_title_record: 'Machine Model'
+            form_title_records: 'Machine Model'
+        Moneda:
+          FormTitles:
+            form_title: 'Currencies'
+            form_title_record: 'Currency'
+            form_title_records: 'Currencies'
+        MotivoVisita:
+          FormTitles:
+            form_title: 'Reason for Visit'
+            form_title_record: 'Reason for Visit'
+            form_title_records: 'Reason for Visit'
+        Motores:
+          FormTitles:
+            form_title: 'Information by Sector / Entry'
+            form_title_records: 'Engines'
+        Nacionalidad:
+          FormTitles:
+            form_title: 'Nationality'
+            form_title_record: 'Nationality'
+            form_title_records: 'Nationalities'
+        Oficina:
+          FormTitles:
+            form_title: 'Offices'
+            form_title_record: 'Office'
+            form_title_records: 'Offices'
+        OficinaArea:
+          FormTitles:
+            form_title: 'Areas of Influence'
+            form_title_record: 'Area of Influence'
+            form_title_records: 'Areas of Influence'
+            save_area: 'The area of ​​influence has been saved successfully'
+        OlvidoClave:
+          FormTitles:
+            form_title: 'Forgot Password'
+            form_title_record: 'Forgot Password'
+            form_title_records: 'Forgot Password'
+          Mensajes:
+            cedula_requerida: 'Identification Number is requiredo'
+            letra_requerida: 'Letter of Identification Number is required'
+            nombre_cedula_incorrecto: 'User Name or identification number is incorrect, please review'
+            nombre_usuario_requerido: 'The user name is required'
+        OpcionAccionAutorizacion:
+          FormTitles:
+            form_title: 'Option Action Authorizations'
+            form_title_record: 'Option Action Authorization'
+            form_title_records: 'Option Action Authorizations'
+        OrigenFondo:
+          FormTitles:
+            form_title: 'Sources of Fund'
+            form_title_record: 'Source of Fund'
+            form_title_records: 'Sources of Fund'
+        Pago:
+          Errores:
+            boleta_arrime_numero: 'The ballot of payment with harvest with guide mobilization number:'
+            cheque_numero: 'Check with the number'
+            fecha_actual_no_mayor_hoy: "Current date can not be greater than today's date"
+            fecha_del_arrime_es_diferente: 'Date of ballot of payment with harvest is different from the date of payment'
+            fecha_deposito_no_mayor_hoy: "Date of deposit may not exceed today's date"
+            fecha_no_puede_pertenecer_mes_cerrado: 'The system date can not belong to a closed month'
+            fecha_no_puede_ser_mayor_ultimo_cierre: 'The system date can not be greater than the last closing date + 2 months'
+            fecha_realización_es_requerida: 'The date of the payment is required'
+            mensaje_cancelacion: 'The payment amount is equal to the debt. If you want to cancel the loan use the appropriate option'
+            monto_pago_diferente: 'The amount payable is not equal to the value of ballot payment with harvest'
+            monto_pago_diferente_suma_cheques: 'The amount of the loan payment can not be different from the sum of checks'
+            monto_pago_diferente_suma_cheques_efectivo: 'The amount of the loan payment can not be different from the sum of the cash more checks'
+            monto_pago_no_puede_superar_deuda: 'The payment amount can not exceed the amount of debt'
+            no_esta_confirmada: 'It is not confirmed'
+            no_existe_autorizacion_exoneracion_mora: 'There is no authority to waive the dwells'
+            no_existe_boleta_arrime: 'No ballot of payment with harvest with the guide number mobilization'
+            no_se_puede_pagar_prestamos_cancelados_por_recaudadora: 'You can not make payments for collector account in financings canceled'
+            numero_cuenta_recaudadora_requerido: 'The Collector Account number is required'
+            numero_voucher_requerido: 'The voucher number is required'
+            prestamo_intermediado_seleccione_modalidad: 'The loan is intermediated, select the appropriate mode'
+            requiere_autorizacion_no_existe: 'Require authorization, but there is not'
+            voucher: 'The voucher '
+            ya_fue_cancelada: 'already been canceled'
+            ya_registrado: ' already registered'
+          FormTitles:
+            form_title: 'Payments by Deposit'
+            form_title_record: 'Loan Payment'
+            form_title_records: 'Loan Payments'
+        PagoArrime:
+          FormSearch:
+            actividad_igual: 'Activity equals'
+            beneficiario_semejante: 'Beneficiary is similar'
+            cedula_rif_contenga: 'ID or RIF contains'
+            financiamiento_igual: 'Financing Number equals'
+            rubro_igual: 'Rubro equals'
+            silo_igual: 'Silo equals'
+            sub_rubro_igual: 'Sub Rubro equals'
+            tramite_igual: 'Formalitie equals'
+          FormTitles:
+            form_title: 'Payments with harvest'
+            form_title_record: 'Payment with harvest'
+            form_title_records: 'Payments with harvest'
+          Mensajes:
+            debe_seleccionar_boleta: 'You must select at least one ballot of payment with harvest to proceed to confirmation'
+            no_existe_boleta: 'Ballot of payment with harvest not exists'
+            pago_aplicado_con_exito: 'Payment Applied Success'
+        Pais:
+          FormTitles:
+            form_title: 'Country'
+            form_title_record: 'Country'
+            form_title_records: 'Countries'
+        ParametroGeneral:
+          FormTitles:
+            form_title: 'General Parameters'
+            form_title_record: 'General Parameters'
+            form_title_records: 'General Parameters'
+        Partida:
+          FormTitles:
+            form_title: 'Batch'
+            form_title_record: 'Batch'
+        PartidaPresupuestaria:
+          FormTitles:
+            form_title: 'Budget Items'
+            form_title_record: 'Budget Item'
+            form_title_records: 'Budget Items'
+          Rangos:
+            de_cero_noventa: 'The value range consists of 00 to 99'
+            de_cero_noveciento: 'The value range consists of 00 to 999'
+            de_cuatro: 'Must be at least 4 characters'
+        PastizalesPotreros:
+          FormTitles:
+            form_title: 'Information by Sector/Rubro'
+            form_title_record: 'Lot Pasture and Paddocks'
+            form_title_records: 'Lot Pasture and Paddocks'
+        PlanInversion:
+          FormTitles:
+            form_title: 'Investment plan'
+        PorcentajeGarantia:
+          FormTitles:
+            form_title: 'Percent Gain'
+            form_title_records: 'Percentage'
+        Profesion:
+          FormTitles:
+            form_title: 'Professions'
+            form_title_record: 'Profession'
+        Perito:
+          FormTitles:
+            form_title: 'Surveyors'
+            form_title_record: 'Proficient'
+        PrecioGaceta:
+          FormTitles:
+            form_title: 'Price Artime Gazette'
+            form_title_record: 'Price Gazette'
+            form_title_records: 'Price Gazette'
+        PresupuestoPidan:
+          FormTitles:
+            form_title: 'Budget Entries'
+            form_title_record: 'Budget Entry'
+            form_title_records: 'Budgets Entries'
+        PrestamoCambioEstatus:
+          FormTitles:
+            form_title: 'Cambio de Estatus'
+            form_title_record: 'Trámite'
+            form_title_records: 'Trámites'
+        Programa:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Program'
+            form_title_records: 'Programs'
+        ProgramaGarantia:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Type of Guarantee'
+            form_title_records: 'Types of Guarantees'
+        ProgramaGasto:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Expense'
+            form_title_records: 'Expenses'
+        ProgramaOrigenFondo:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Source of Fund'
+            form_title_records: 'Source of Fund'
+        ProgramaProducto:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Financing Condition'
+            form_title_records: 'Financing Conditions'
+        ProgramaProductoFormula:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Amortization Method'
+            form_title_records: 'Amortization Methods'
+        ProgramaProductoGasto:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Expense'
+            form_title_records: 'Expenses'
+        ProgramaTipoCliente:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Customer Type'
+            form_title_records: 'Customers Type'
+        ProgramaTipoGarantia:
+          FormTitles:
+            form_title: 'Programs'
+            form_title_record: 'Guarantee'
+            form_title_records: 'Guarantees'
+        Recaudo:
+          FormTitles:
+            form_title: 'Collection'
+            form_title_records: 'Proceeds'
+        RecomendacionPlanInversion:
+          FormTitles:
+            form_title: 'Data Sector / Rubro'
+            form_title_record: 'Disbursement Recommendation'
+            form_title_records: 'Disbursement Recommendation'
+          Errores:
+            debe_esperar_hasta_el_dia: 'You must wait until the day'
+            debe_eliminar_registro_proforma: 'You must delete this record proform number'
+            debe_selecciona_almenos_un_item: 'You must select at least one Item. \n'
+            debe_seleccionar_item: 'Please Select a Type of Item (Bank or Input)'
+            eliminacion_item: 'The item was removed from the formality'
+            error_recomendar_plan_insumo: 'Can not Do a recommendation Investment Plan Input type still exists an Order Dispatch carried'
+            error_recomendar_plan_inversion: 'Unable to Perform recommendation of Plan Investment Type Bank for Disbursement Number'
+            error_recomendar_plan_inversion_existe_desembolso: 'Unable to Perform recommendation Plan Investment of Type Bank, A Disbursement still be undertaken'
+            es_mayor_monto_desembolsar: 'is greater than the amount disbursed\n'
+            monto_recomendado: 'The Recommended Amount of Item'
+            no_existen_datos_caracterizacion: 'There are no data on the characterization of the production unit for formality #'
+            no_existen_items: 'There are No Items Earring Type Bank Share'
+            no_existen_items_insumo: 'There are No Items Input Type pending for Share'
+            no_existe_tasa_rubro: 'There is no fee for the entry'
+            para_confirmar_plan_inversion: 'To confirm the investment plan must contain at least one unconfirmed MEI.'
+            problemas_registro_plan_inversion: 'Problems registering investment plan for the Productive Sector'
+            segun_cronograma: 'according to the Schedule of Disbursement'
+            superficie_aprovechable_mayor: 'The the number of hectares is greater than the recommended useful area'
+            y_sub_sector: 'and sub sector'
+          Messages:
+            complemento_un_item: ! ' $</b>. successfully.'
+            de_tipo_banco: ' Items</b> Type Bank in the amount of <b>'
+            de_tipo_insumo: ' Items</b> Input type in the amount of <b>'
+            no_existen_condiciones_financiamiento: 'There is no general conditions of financing for the sector'
+            se_ha_recomendado_plan_inversion_un_item: 'Recommended Plan has <b>an Item</ b>Investment Bank type in the amount of<b>'
+            se_ha_recomendado_plan_inversion_total_item: 'It is Recommended Investment Plan<b>'
+            se_ha_recomendado_plan_inversion_un_item_insumo: 'It is Recommended Investment Plan <b>an Item</ b> Input type in the amount of<b>'
+          SearchComun:
+            clase_igual: 'Class equals'
+            contrato_igual: 'Contract is equal'
+            tipo_igual: 'Type equals'
+        Region:
+          FormTitles:
+            form_title: 'Regions'
+            form_title_record: 'Region'
+            form_title_records: 'Regions'
+          Mensajes:
+            no_se_puede_eliminar_region: 'can not be removed the region because it has states associated with it'  
+        Reestructuracion:
+          FormTitles:
+            form_title: 'restructuring'
+            form_title_record: 'restructuring'
+            form_title_records: 'restructuring'
+          Messages:
+          Errores:
+            no_es_posible_actualizar_solicitud: 'Unable to update formalities'
+            debe_imprimir_formato_solicitud: 'You must print the application form before submitting restructuring the committee'
+            los_financiamientos_del_beneficiario: 'The financing of the beneficiary'
+            se_enviaron_comite_reestructuracion: 'were sent to the restructuring committee'
+        RiesgoInstitucion:
+          FormTitles:
+            form_title: 'Risk and Provision Institutional'
+            form_title_record: 'Classifiers'
+            form_title_records: 'Classifiers'
+        RiesgoSudeban:
+          FormTitles:
+            form_title: 'Risk and Provision Finance Authority'
+            form_title_record: 'Classifiers'
+            form_title_records: 'Classifiers'
+        Rol:
+          FormTitles:
+            form_title: 'Roles'
+            form_title_record: 'Rol'
+            form_title_records: 'Roles'
+        RolComite:
+          FormTitles:
+            form_title: 'Committee Role'
+        RolOpcion:
+          FormTitles:
+            form_title: 'Roles'
+            form_title_record: 'Option'
+            form_title_records: 'OPtions'
+        Rubro:
+          FormTitles:
+            form_title: 'Entry'
+            form_title_record: 'Entry'
+            form_title_records: 'Items'
+        SitioColocacion:
+          FormTitles:
+            form_title: 'Placement Sites'
+            form_title_record: 'Site Placement'
+            form_title_records: 'Site Placement'
+        Sector:
+          FormTitles:
+            form_title: 'Productive Sectors'
+            form_title_record: 'Productive Sector'
+            form_title_records: 'Productive Sectors'
+        SectorTecnico:
+          FormTitles:
+            form_title: 'Technical sectors'
+            form_title_record: 'Technical sectors'
+            form_title_records: 'Technical sectors'
+        SolicitudTestigos:
+          FormTitles:
+            form_title: ! 'Witnesses for Tramite Note Authentication No. %{numero}'
+            form_title_record: 'Witness'
+            form_title_records: 'Witness'
+          Mensajes:
+            maximo_tres_testigos: 'At most you can only add three Witnesses'
+        SubSector:
+          FormTitles:
+            form_title: 'Productive Sub Sectors'
+            form_title_record: 'Productive Sub Sector'
+            form_title_records: 'Productive Sub Sectors'
+        SubRubro:
+          FormTitles:
+            form_title: 'Sub Entries'
+            form_title_record: 'Sub Entry'
+            form_title_records: 'Sub Entries'
+        SucursalCasaProveedora:
+          FormTitles:
+            form_title: 'Branch House Provider'
+            form_title_records: 'Branches House Provider'
+        Tasa:
+          FormTitles:
+            form_title: 'Reference rates'
+            form_title_record: 'Reference rate'
+            form_title_records: 'Reference rates'
+        TasaValor:
+          FormTitles:
+            form_title: 'Reference rates'
+            form_title_record: 'Value Rate'
+            form_title_records: 'Value Rates'
+        TenenciaUnidadProduccion:
+          FormTitles:
+            form_title: 'Tenure Production Unit'
+            form_title_record: 'Tenure'
+            form_title_records: 'Holdings'
+        TecnicoCampo:
+          FormTitles:
+            form_title: 'Field Technician'
+            form_title_record: 'Field Technician'
+            form_title_records: 'Field Technician'
+        TipoArtePesca:
+          FormTitles:
+            form_title: 'Fishing Art Type'
+            form_title_record: 'Type of fishing gear'
+            form_title_records: 'Types of fishing gear'
+        TipoCredito:
+          FormTitles:
+            form_title: 'Credit Type'
+            form_title_records: 'Credit Types'
+        TipoDocumento:
+          FormTitles:
+            form_title: 'Document Types'
+            form_title_record: 'Document Type'
+        TipoDrenaje:
+          FormTitles:
+            form_title: 'Drainage Types'
+            form_title_record: 'Type Drainage'
+            form_title_records: 'Type Drainage'
+        TipoEmbarcacion:
+          FormTitles:
+            form_title: 'Vessel Types'
+            form_title_record: 'Type of Vessel'
+            form_title_records: 'Vessel Types'
+        TipoFuenteAgua:
+          FormTitles:
+            form_title: 'Types of Water Sources'
+            form_title_record: 'Type of Water Source'
+            form_title_records: 'Types of Water Sources'
+        TipoGarantia:
+          FormTitles:
+            form_title: 'Guarantee Types'
+            form_title_records: 'Guarantee Types'
+        TipoInfraestructura:
+          FormTitles:
+            form_title: 'Types of Infrastructure'
+            form_title_record: 'Type of Infrastructure'
+            form_title_records: 'Types of Infrastructure'
+        TipoIniciativa:
+          FormTitles:
+            form_title: 'Types Initiative'
+            form_title_record: 'Type of Initiative'
+            form_title_records: 'Types Initiative'
+        TipoMaterial:
+          FormTitles:
+            form_title: 'Material Types'
+            form_title_record: 'Type of Material'
+            form_title_records: 'Material Types'
+        TipoMotor:
+          FormTitles:
+            form_title: 'Motor Types'
+            form_title_record: 'Engine Type'
+            form_title_records: 'Motor Types'
+        TipoNylon:
+          FormTitles:
+            form_title: 'Nylon Types'
+            form_title_record: 'Nylon Type'
+            form_title_records: 'Nylon Types'
+        TipoPastoForraje:
+          FormTitles:
+            form_title: 'Forage Grass Types'
+            form_title_record: 'Type Pasto'
+            form_title_records: 'Forage Grass Types'
+        TipoSemoviente:
+          FormTitles:
+            form_title: 'Types of livestock'
+            form_title_record: 'Type chattel'
+            form_title_records: 'Types of livestock'
+        TipoSuelo:
+          FormTitles:
+            form_title: 'Soil Types'
+            form_title_record: 'Soil Type'
+            form_title_records: 'Soil Types'
+        TipoTopografia:
+          FormTitles:
+            form_title: 'Types of Surveying'
+            form_title_record: 'Topography Type'
+            form_title_records: 'Types of Surveying'
+        TipoVialidad:
+          FormTitles:
+            form_title: 'Types of Roads'
+            form_title_record: 'Type of Road'
+            form_title_records: 'Types of Roads'
+        TipoEspecieAcuicultura:
+          FormTitles:
+            form_title: 'Types of Species (Aquaculture)'
+            form_title_record: 'Species'
+            form_title_records: 'Species'
+        TipoEquipoSeguridad:
+          FormTitles:
+            form_title: 'Type Security Team'
+            form_title_record: 'Type of Safety Equipment'
+            form_title_records: 'Types of Safety Equipment'
+        TipoSistemaAcuicultura:
+          FormTitles:
+            form_title: 'Cropping Systems (Aquaculture)'
+            form_title_record: 'Culture System'
+            form_title_records: 'Cropping Systems'
+        TipoSistemaCultivoAcuicultura:
+          FormTitles:
+            form_title: 'Cropping Systems (Aquaculture)'
+            form_title_record: 'Culture System'
+            form_title_records: 'Cropping Systems'
+        TipoExplotacion:
+          FormTitles:
+            form_title: 'Types of Exploitation'
+            form_title_record: 'Exploitation'
+            form_title_records: 'Farms'
+        TipoRiego:
+          FormTitles:
+            form_title: 'Types of Irrigation System'
+            form_title_record: 'Type of Irrigation System'
+            form_title_records: 'Types of Irrigation System'
+        UnidadMedida:
+          FormTitles:
+            form_title: 'Unit of Measure'
+            form_title_record: 'Unit of Measure'
+            form_title_records: 'Units of Measure'
+        Usuario:
+          FormTitles:
+            form_title: 'Users'
+            form_title_record: 'User'
+            form_title_records: 'Users'
+        UsuarioClave:
+          FormTitles:
+            form_title: 'Change Password'
+            form_title_record: 'Change Password'
+            form_title_records: 'Change Password'
+          Mensajes:
+            clave_invalida: 'The previous key is invalid'
+            clave_confirmacion_diferente: 'The confirmation key is different'
+            cambio_contrasena_exitosa: 'The password is changed successfully'
+        UsuarioRol:
+          FormTitles:
+            form_title: 'Users'
+            form_title_record: 'Role'
+            form_title_records: 'Roles'
+        Vacuna:
+          FormTitles:
+            form_title: 'Vaccine'
+            form_title_record: 'Vaccine'
+            form_title_records: 'Vaccines'
+        VisitaCondicionesAcuicultura:
+          FormTitles:
+            form_title_record: 'Condition of Aquaculture'
+            form_title_records: 'Conditions of Aquaculture'
+        VisitaSanidadAnimal:
+          FormTitles:
+            form_title: 'Sector/Entry Information'
+            form_title_record: 'Installation and Animal Health'
+            form_title_records: 'Installation and Animal Health'
+          Messages:
+            se_actualizo_manejo_instalacion: 'Success has been updated with Facilities Management and Animal Health.'
+        VisitaDescripcionesEspecificas:
+          FormTitles:
+            form_title: 'Sector/Entry Information'
+            form_title_record: 'Visit Information'
+            form_title_records: 'Visit Information'
+          Messages:
+            se_actualizo: 'Success has been updated with the Specific Descriptions'
+        VisitaProduccionLecheCarne:
+          FormTitles:
+            form_title: 'Sector/Entry Information'
+            form_title_record: 'Meat and Milk Production'
+            form_title_records: 'Meat and Milk Production'
+          Messages:
+            se_actualizo_produccion: 'Success has been updated with the production of meat and milk.'
+        VisitaSeguimiento:
+          FormTitles:
+            form_title: 'Visit Control'
+            form_title_record: 'Visit Control'
+            form_title_records: 'Visit Control'
+          Errores:
+            error_new: 'Add a new Visit impossible without Confirmed Previous Visit'
+            imposible_confirmar_registrar_seguimiento: 'Unable to Confirm this Visit, must register the Track Cultivation in the Field'
+            imposible_confirmar_registrar_descripcion: 'Unable to Confirm this Visit, must register the Specific Descriptions'
+            imposible_confirmar_registrar_patizales: 'Unable to Confirm this Visit, must Register the evaluation of Rangeland and Pastures'
+            imposible_confirmar_registrar_instalaciones: 'Unable to Confirm this Visit, must register and Animal Health Facility'
+            imposible_confirmar_registrar_produccion_leche: 'Unable to Confirm this Visit, must Register Milk and Meat Production'
+            imposible_confirmar_registrar_semovientes: 'Unable to Confirm this Visit, the livestock must Register'
+            imposible_confirmar_registrar_calidad_agua: 'Unable to Confirm this Visit, Water Quality and Food must Register'
+            imposible_confirmar_registrar_condicion_acuicultura: 'Unable to Confirm this Visit, must register the Terms of Aquaculture'
+            imposible_confirmar_registrar_cultivo_laguna: 'Unable to Confirm this Visit, must register the crops Lagoons'
+            imposible_confirmar_registrar_decision: 'Unable to Confirm this Visit, must register Decision'
+            imposible_confirmar_registrar_recomendacion: 'Unable to Confirm this Visit,  must Register the recommendation of Disbursement'
+          Messages:
+            se_actualizo_con_exito: 'Success has been updated with Control Visit'
+            se_confirmo_con_exito: 'Success has been Confirmed to Visit'
+            y_el_tramite: ' and the formality'
+            fue_enviado: 'it was sent to Finance'
+        VisitaSeguimientoCultivo:
+          Errores:
+            fecha_no_puede_ser_posterior: 'The Sowing date can not be after the Record Date of Visit'
+          FormTitles:
+            form_title: 'Sector/Entry Information'
+            form_title_record: 'Visit Information'
+            form_title_records: 'Visit Information'
+          Menssages:
+            se_actualizo_con_exito: 'Success has been updated with the Data Monitoring Cultivation in Field.'
+        VisitaDecision:
+          FormTitles:
+            form_title: 'Sector/Entry Information'
+            form_title_record: 'Visit Information'
+            form_title_records: 'Decision'
+          Messages:
+            decision_se_actualizo: 'The decision has been Successfully Updated.'
+        VisitaSemovientes:
+          FormTitles:
+            form_title: 'Sector/Entry Information'
+            form_title_record: 'Livestock'
+            form_title_records: 'Livestocks'
+          Messages:
+            semovientes: 'Success has been updated with the livestock.'
+        VisitaSolicitud:
+          FormTitles:
+            form_title: 'Relation Control Technical Visit'
+          Messages:
+            la_solicitud_numero: 'The formality number '
+            fue_enviada: ' was Sent to '
+            se_confirmo_con_exito: ' it has been confirmed successfully.'
+            semovientes: 'Success has been updated with the livestock.'
+        VocacionTierra:
+          FormTitles:
+            form_title: 'Vocation of the Land'
+            form_title_record: 'Land'
+            form_title_records: 'Vocation of the Land'
+        Helpers:
+        Mensajes:
+          eliminacion: 'successfully removed.'
+          en_total: 'in total'
+          modificacion: 'successfully modified.'
+          insercion: 'successfully added.'
+          registros_de: 'records'
+          para_la_expresion: '. For expression'
+          pagina: 'Page:'          
+      Modelos:
+        General:
+          debe_ser_mayor_cero: 'must be greater than zero (0)'
+          el_plan_inversion_tramite: "The plan's investment formality"
+          expresado_meses: 'Expressed in Months'
+          modificando_el_comite_nro: 'Modifying the committee No.'
+          no_se_pudo_agregar_item: 'Could not add items'
+          numero_con_dos_decimales: "The decimal separator for the amount is the dot (.) and a maximum of two decimal places allowed"
+          pendiente_por_disponibilidad: 'Pending Availability'
+          se_actualizo_exito: 'was updated successfully'
+          se_agrego_item_tramite: 'The item was added to the formality'
+          se_elimino_item: 'The item was removed from the process'
+        Errores:
+          analista_asignar_es_requerido: 'Analyst is required to assign'
+          archivo_seleccionar: 'You must select a file'
+          archivo_formato: 'The file is not formatted correctly'
+          archivo_informacion: 'The file does not have information'
+          area_influencia_oficina_receptora: 'must be equal to the area of ​​influence of the receiving office'
+          beneficiario_juridico: '<b> Legal Beneficiary: </ b>'
+          beneficiario_natural: '<b> Natural Beneficiary: </ b>'
+          beneficiario_integrante_representante: "Beneficiary <b> Legal / Intregrant 'Legal Representative': </ b>"
+          beneficiario_ya_posee_cuenta: 'The Beneficiary has already registered an account'
+          cedula_sin_decimales: 'Certificate must be numeric with no decimal'
+          ciclo_productivo_sin_disponibilidad_pidan: 'Production Cycle Open without Availability PIDAN'
+          ciclo_productivo_con_disponibilidad: 'Production Cycle Open, with budget allocated'          
+          codigo_area_no_valido: 'The area code is not valid.'
+          comunidad_pesquera: ' Fishing Community'
+          confirmar_viabilidad: 'Are you sure you want to confirm the non-viability of the formality number'
+          correo: 'Email'
+          debe_configurar_condiciones_financiamiento: 'You must set the conditions for financing for this operation'
+          debe_estar_1_4: 'must be within 1 to 4'
+          debe_eliminar_registro_proforma: 'You must remove this item from the proforma number'
+          debe_seleccionar_tramite: 'You must select at least one formality.'
+          debe_ser_mayor_al: 'must be greater than'
+          debe_ser_mayor_a_la: 'must be greater than the'
+          debe_ser_mayor_cero: 'must be greater than zero (0)'
+          debe_ser_mayor_edad: 'must be of age.'
+          debe_guardar_comunidad_pesquera_agregar_utm: 'You must save the fishing community to add UTM'
+          debe_guardar_unidad_produccion_agregar_utm: 'You must save the production unit to add the UTM'
+          debe_ser_numerico: 'must be numeric'
+          deshacer_viabilidad: 'It is certain that you want to undo the viability of Formality number'
+          direccion_invalida: 'The Address is invalid'
+          edad: 'Age'
+          edad_invalida: 'Age must be numeric without decimals'
+          el_beneficiario: 'The Beneficiary'
+          el_tramite_no_tiene_proforma: "Then Formality not contains item by ProForma"
+          email_invalido:  'The email format is invalid'
+          en_la_linea: 'on line'
+          en_espera_de_fideicomiso: ' trust fund pending'
+          en_espera_disponibilidad_presupuestaria: "'Waiting for budget availability'"
+          en_espera_por_aprobacion: ' waiting for approval'
+          enviado_con_exito_a_la_bandeja: 'The procedure has been successfully sent to tray '
+          es_requerida: 'is required'
+          es_requerido: 'is required'
+          es_invalida: 'is invalid'
+          es_invalido: 'is invalid'
+          es_utilizado: 'being used'
+          esta_en_blanco: 'is blank'
+          estado_registro_debe_ser_igual_estado: 'Registry status must equal status'
+          fax_invalido: 'The Fax number is invalid'
+          fax_sin_decimales: 'Fax number must be numeric without decimals'
+          fecha_fin_no_posterior: 'The end date can not be after the current date'
+          fecha_inicio: 'Start Date'
+          fecha_inicio_no_posterior: 'The start date can not be after the current date'
+          fecha_invalida: 'Date format is invalid (dd / mm / yyyy)'
+          formato_rif_invalido: 'This format is not valid. Example valid format (J-12345678-9)'
+          formato_cod_swift_invalido: 'This format is not valid. Example valid format CHT354'
+          historico_asignacion_fideicomiso: 'Assignment History Trust'
+          historico_transacciones_fideicomiso: 'Transaction History Trust'
+          ir_directamente: 'Go directly'
+          item_seleccion: 'You can not save the record, you must select at least one item.'
+          item_utilizado: 'The item is being used, it can not be removed'
+          juridico: 'Legal:'
+          letra_rif: 'letter RIF'
+          mayor_que_sistema: 'must be greater than the system date'
+          menor_a: 'and less than'
+          metodo_amortizacion_no_asignado: 'Not yet assigned Amortization Method'
+          monto_invalido: ' Amount is invalid'
+          monto_solicitado_debe_ser_mayor: 'The amount requested must be greater than'
+          municipio_requerido: 'Municipality is required'
+          no_esta_completada: 'not completed.'
+          no_esta_completado: 'not completed.'
+          no_existe: 'Not exist'
+          no_existe_condiciones_financiamiento_generales_sector: 'No general conditions of financing for the sector'
+          no_existen_datos_caracterización_unidad_produccion: 'There are no data on the characterization of the production unit for processing'
+          no_existe_estructura_costos_rubro: 'There is the cost structure for the Entry'
+          no_existe_tasa_rubro: 'There is no fee for the entry'
+          no_hay_recursos_en_el_subrubro_para_transferencia: 'Not enough resources in the sub-heading home to carry out the transfer'
+          no_puede_tener: 'can not have numbers or special characters'
+          no_puede_tener_espacios: 'you can not have numbers or special characters or spaces'
+          no_puede_tener_especiales: 'can not have special characters'
+          no_puede_ser_anterior_fecha_actual: 'can not be earlier than the current date'
+          no_puede_ser_posterior_fecha_actual: 'can not be later than the current date'
+          no_puede_ser_mayor_al_año_actual: 'can not be greater than the current year'
+          no_puede_ser_eliminada: 'It can not be removed'
+          no_puede_ser_eliminado: 'It can not be removed'
+          no_puede_eliminar_miembro_del_comite: 'You can not delete Committee Member until you have added another.'
+          no_se_pudo_actualizar: 'Could not update'
+          no_se_pudo_agregar_item_serial: 'Failed to add the item with the serial'
+          no_se_puede_eliminar_casa_proveedora: 'can not be removed because it has dispatch orders associated with it'
+          no_se_puede_eliminar_sucursal_casa_proveedora: 'Can not delete the branch house provider since it has firm orders associated with it'
+          nombre_apellido_invalido: 'Name or Last Name is invalid'
+          nombre_apellido_requerido: 'Names or Surnames are required'
+          numero_cedula_requerido: 'Identification number is required'
+          numero_invalido: ' Number is Invalid'
+          numero_rif: 'RIF Number'
+          numerico_sin_decimales: 'number without decimals'
+          numero_telefono_requerido: 'Phone number is required'
+          observacion_es_requerido: 'Observations required'
+          parroquia_requerido: 'Parish is required'
+          periodicidad_prestamo_invalida: 'Financing frequency of payment is invalid, must be an integer'
+          periodicidad_periodo_gracia_invalido: 'Periodicity of payment grace period is invalid, must be an integer'
+          persona_contacto_invalida: 'Contact Person is invalid'
+          plazo_debe_ser_divisible_en_periodo: 'Months term financing must be divisible by the frequency of payment'
+          plazo_gracia_no_mayor_plazo: 'The grace period may not exceed the term of the financing'
+          plazo_gracia_deber_ser_divisible_en_periodo: 'Term in months grace period must be divisible by the frequency of payment'
+          plazo_periodo_gracia_invalido: 'Term in months grace period is invalid, must be an integer'
+          plazo_periodo_gracia_mayor_cero: 'Term in months grace period must be greater than zero (0)'
+          plazo_periodo_muerto_invalido: 'Dead time in months period is invalid, must be an integer'
+          plazo_prestamo_invalido: 'months term financing is invalid, must be an integer'
+          porcentaje_invalido: 'Percentage must be greater than zero (0) and less than or equal to cient (100)'
+          posee_registros_asociados: 'Has associated recordss'
+          primer_apellido_invalido: ' First Name is invalid'
+          primer_nombre_invalido: ' First Name is invalid'
+          redefinir_parametros_reestructuracion: 'With this option, you can redo a new request for restructuring. \n then you will be redirected to the area of restructuring and the current request will lapse.'
+          rif_invalido: ' RIF Invalid'
+          rif_formato_invalido: 'RIF format is not valid. example J-99999999-9'
+          segundo_apellido_invalido:  ' Second Last Name is invalid'
+          segundo_nombre_invalido:  ' Middle Name is invalid'
+          se_han_enviado: 'Have been sent '
+          sexo: 'Gender'
+          solo_permite_numeros: 'allows only numbers and letters (V) and (E)'
+          tasa_periodo_gracia_invalida: 'Fee grace period is invalid, must be a numeric value'
+          telefono_habitacion_invalido: ' The phone number is invalid Room'
+          telefono_invalido:            ' The phone number is invalid'
+          telefono_movil_invalido:      ' The mobile phone number is invalid'
+          telefono_sin_decimales: 'Telephone Number must be numeric with no decimal'
+          tramite: '<b> Formality: </ b>'
+          tramites: 'Formalities'
+          tramite_sin_b: 'Formality without bank items'
+          tipo_cliente: 'Beneficiary'
+          tipo_semoviente: 'THIS RECORD HAS ELEMENTS system partners'
+          unidad_produccion: ' Production Unit'
+          unidad_produccion_asociada_solicitud: 'The production unit is associated with an formality'
+          unidad_produccion_asociada_registro: 'The production unit is associated with a commercial register'
+          usado_actividad: 'activity is being used, it can be removed'
+          usada_catalogo: 'is being used in the catalog, can not be removed'
+          usada: 'is being used, it can be removed'
+          usado: 'is being used, it can be removed'
+          usado_condicion_financiamiento: 'is being used in financing conditions, can not be removed'
+          usado_condiciones: 'is being used in financing conditions, can not be removed'
+          usado_configurador: 'is being used in Setup Costs can not be removed'
+          usado_comite_miembro: 'is assigned as a committee member can not be removed'
+          usado_en_sub_rubro: 'is being used in Sub Heading can not be removed'
+          usado_item: 'Item is being used, pueder not be eliminated'
+          usado_rubro: 'Heading is being used, it can be removed'
+          usado_partida: 'Part being used, it can be removed'
+          usado_parroquia: 'has at least one associated parish therefore can not be removed'
+          usado_sub_sector: 'siendo_utilizado in this sub-sector, can not be removed'
+          usado_sucursal: 'has associated therewith at least one branch, therefore can not be eliminated'
+          usado_tramite: 'Formality is being used, it can be removed'
+          ya_el_estatus_es: 'because the status is'
+          ya_existe: ' exists'
+          ya_registrado: 'already registered'
+        Abogado:
+          Errores:
+            numero_impreabogado_requerido: 'Required number Impreabogado'
+            numero_impre_sin_decimales: 'Impreabogado Number must be numeric with no decimal places'
+        ActaSilo:
+          Errores:
+            error_fecha_cierre_no_menor: 'The closing date can not be less or equal to the start date'
+            ya_existe_acta_abierta_para_rubro: 'There is already an open record for this item in the silo'
+            acta_silo_no_puede_ser_eliminada: 'The minutes of the silo is being used, can not be eliminated'
+        Actividad:
+          Errores:
+            descripcion_invalida: 'Description is invalid (only letters)'
+            nombre_invalido: 'Name is invalid (only letters)'
+            codigo_actividad_mayor_que_cero: 'The activity code must be greater than zero (0)'
+            debe_seleccionar_ciclo_productivo: 'You must select production cycle'
+            actividad_no_puede_ser_eliminada: 'The activity is being used, it can be removed'
+        ActividadEconomica:
+          Errores:
+            actividad_economica_no_puede_ser_eliminada: 'Economic activity is being used, can not be eliminated'
+        AlmacenMaquinaria:
+          Errores:
+            almacen_utilizado: 'The warehouse is being used in settings can not be removed'
+            item_utilizado: 'The item is being used in settings can not be removed'
+        ArtePesca:
+          Errores:
+          Columnas:
+            luz_maya: 'Luz Maya'
+            nro_anzuelo: 'No. Hook'
+            numero_anzuelo: 'Hook Number'
+            nro_cordel: 'No. String'
+            numero_cordel: 'String Number'
+            cantidad_anzuelos: 'Number of Hooks'
+            material_linea_madre: 'Mother line Material'
+            material: 'Material'
+            tipo_cordel: 'Type String'
+            alto: 'High'
+            largo: 'Long'
+            ancho: 'Width'
+        AsientoContable:
+          Columnas:
+            id: 'ID Accounting Register'
+            comprobante_contable_id: 'ID Accounting Evidence'
+            monto: 'Amount Movement'
+            tipo: 'Type of Movement'
+            codigo_contable: 'Accounting Code'
+            auxiliar_contable: 'Assistant Accountant'
+        BoletaArrime:
+          Columnas:
+            peso_condicionado: 'Weight Conditioning'
+            guia_movilizacion: 'Mobilization Guide'
+            fecha_entrada: 'Date of Entry'
+            fecha_salida: 'Date of Exit'
+            peso_vehiculo: 'Vehicle weight'
+            peso_remolque: 'Trailer Weight'
+            peso_neto: 'Net Weight'
+            numero_ticket: 'Number of Ticket'
+            valor_total_entrada: 'Total Value Input'
+            valor_total_salida: 'Total Value output'
+            valor_arrime: 'Value payment with harvest'
+            nro_acta_rechazo: 'Number of Act'
+            causa_rechazo: 'Cause Rejection'
+            fecha_desvio: 'Date Deviation'
+            causa_desvio: 'Cause Deviation'
+            monto_arrime: 'Value payment with harvest'
+            hora_entrada_silo: 'Hour entry in the silo'
+            hora_entrada_peso: 'Hour entry at weight'
+            hora_salida_peso: 'Hour exit at weight'
+            cantidad_total_sacos: 'Total number of bags'
+            cantidad_total_kilogramos: 'Total Kilograms'
+            peso_bruto_ajustado: 'Adjusted Gross Weighto'
+            resultado: 'Result'
+          Errores:
+            fecha_entrada: 'Date can not be later than the current date'
+            fecha_desvio: 'Deviation date can not be after the current date'
+            ya_registrado: 'already registered'
+            peso_acondicionado_menor: 'The conditioned weight should be less than the net weight'
+            fecha_salida_menor_fecha_entrada: 'The date exit can not be less than entry date'
+            peso_acondicionado_liquidar_mayor_peso_acondicionado: 'The weight should be conditioned to liquidate more weight conditioning'
+            verifique_total_peso_acondicionado: 'Error check total weight conditioning of payment with harvest together to save'
+            productor_debe_ser_registrado: ' The producer must be registered in the payment with harvest together to save '
+            no_posee_precio_en_gaceta: 'NOT POSSESSES PRICE GAZETTE'
+            nro_acta_desvio_existe: 'The number of act detour is already registered'
+            peso_acondicionado_liquidar_menor_peso_neto: 'The weight conditioning to liquidate must be less or equal to the net weight'
+            verifique_datos_arrime_conjunto: 'Error check Data payment with harvest set '
+            cedula_conductor_mayor_a_cinco: 'The driver id card must be greater than 5'
+            ticket_ya_existe: 'The ticket number is already registered'
+            peso_ajustado_mayor_peso_neto: 'Adjusted gross weight must be greater or equal to the net weight'
+            peso_bruto_mayor_peso_neto: 'Adjusted gross weight must be greater than the net weight'
+            peso_sin_descuento_mayor_peso_bruto: 'The weight must be greater undiscounted gross weight adjusted'
+            peso_bruto_ajustado_menor_peso_sin_descuento: 'Weight Adjusted Gross weight should be less than undiscounted'
+            peso_neto_mayor_peso_acondicionado: 'Net weight should be over the weight conditioning'
+            formato_hora_registro: 'The format of the Record Time is invalid'
+            formato_hora_entrada_silo: 'The format of the time entry the silo is invalid'
+            formato_hora_entrada_peso: 'The format of the time entry in data weight is invalid '
+            formato_hora_salida_peso: 'The format of the output time in data weight is invalid '
+            porcentaje_mayor_cero: 'The percentage must be greater than zero'
+            silo_posee_condicion_saco_registrada: 'The silo has already recorded the condition of bag'
+            condicion_saco_utilizada: 'The condition of sack is being used in payment by harvest, can not be eliminated'
+          Messages:
+            boleta_se_guardo_con_exito: 'Data ballot were stored successfully'
+            boleta_se_actualizo_con_exito: 'Data from the ballot is updated  successful'
+            arrime_conjunto_se_guardo_con_exito: 'Payment with harvest set data is save successfully'
+            se_elimino_con_exito: 'It was unregistered successfully'
+            no_existe_formato: 'Error There No Format For This Activity'
+        BoletasLaboratorios:
+          Columnas:
+            boleta_arrime_id: 'Ballot of payment with harvest'
+            humedad: 'Humidity'
+            impureza: 'Impurity'
+            blanco_total: 'Total White'
+            enteros: 'Whole'
+            yesosos: 'Chalky'
+            panza_blanca: 'White belly'
+            punta_negra: 'Black head'
+            danados: 'Damaged'
+            rojos: 'Reds'
+            verdes: 'Greens'
+            sin_cascara: 'Without shield'
+            manchados: 'Stained'
+            infectados: 'Infected'
+            semillas_objetables: 'Objectionable seeds'
+            luv: 'Uvl'
+            germinados_danados: 'Germinated or Damaged'
+            danados_insectos: 'Damaged by Insects'
+            quemados: 'Burned'
+            danados_microorganismos: 'Microorganisms damaged'
+            partidos: 'Broken'
+            cristalizados: 'Crystallized'
+            amilaceos: 'Starchy'
+            mezcla_color: 'Color mixture'
+            danados_total: 'Total Damaged'
+            olor: 'Odor'
+            aspecto: 'Aspect'
+            danados_calor: 'Damaged by Heat'
+            aflatoxina: 'Aflatoxin'
+            sensorial: 'Sensory'
+            hongos: 'Fungus'
+            hibrido: 'Hybrids'
+            remolque: 'Trailer'
+            motriz: 'Motor'
+            rendimiento: 'Performance'
+            yesosos_panza_blanca: 'Chalky plus White belly'
+            peso_especifico: 'specific weight'
+            humedad_absoluta: 'Absolute Humidity'
+            impureza_absoluta: 'Absolute Impurity'
+            granos_enteros: 'Whole Grains'
+            granos_verdes: 'Green Grains'
+            granos_yesosos: 'Chalky Grains'
+            granos_sin_cascaras: 'Grains without shield'
+            granos_panza_blanca: 'White Belly grains'
+            granos_manchados: 'Stained grains'
+            positivo: 'Positive'
+            negativo: 'Negative'
+            granos_punta_negra: 'Black Head grains'
+            granos_infectados: 'Infected Grains'
+            granos_danados: 'Damaged grains'
+            granos_rojos: 'Red grains'
+            granos_partidos: 'Broken grains'
+            yesosos_mas_panza_blanca: 'Chalky plus White belly grains'
+            parentesis_maiz: '(Corn)'
+            granos_germinados_danados: 'Germinated or Damaged grains'
+            granos_cristalizados: 'Crystallized grains'
+            granos_danados_insectos: 'Damaged by Insects grains'
+            granos_amilaceos: 'Starchy Grains'
+            granos_quemados: 'Burned grains'
+            danados_microorganismos: 'Microorganisms damaged grains'
+            danados_total: 'Total Damaged grains'
+            danados_por_hongos: 'Fungus damaged grains'
+            parentesis_sorgo: '(sorghum)'
+          Errores:
+            debe_ingresar_porcentaje: 'You must enter the percentage of'
+            para_confirmar: ' to confirm '
+        CalidadAguaAlimento:
+          Errores:
+          Columnas:
+            alimento_disponible: 'Total Food Consumption (Kg / Day)'
+            dias_duracion: 'Estimated Duration Food'
+            consumo_diario: 'Daily Food Consumption'
+            oxigeno_disuelto: 'Dissolved Oxygen in Water'
+            temperatura: 'Water Temperature'
+            ph: 'Ph Water'
+        CicloProductivo:
+          Errores:
+            no_puede_activar_ciclo: 'The cycle can not be activated because the date is not included in the date range of cycle activity.'
+            rangos_ya_incluidos: 'The start and end date ranges is already included.'
+        Cliente:
+          Errores:
+            debe_contener_una_ubicacion: '<b> Natural Beneficiary: </ b> must contain at least one location.'
+            ComprobanteContable:
+          Columnas:
+            id: 'ID Evidence Accounting'
+            fecha_registro: 'Registration Date Evidence'
+            fecha_comprobante: 'Date Evidence'
+            fecha_envio: 'Shipping Date Evidence'
+            enviado: 'Submitted signal'
+            numero_lote_envio: 'Shipping Lot Number'
+            total_debe: 'Total Debit'
+            total_haber: 'Total Credit'
+            numero_contabilidad: 'Evidence Number'
+            unidad_asiento: 'Seat Unit'
+            prestamo_id: 'Financing ID'
+            factura_id: 'Invoice ID'
+            anio: 'Year'
+            transaccion_id: 'Transaction ID'
+            reversado: 'Reversed Signal'
+            reverso: 'Reversal Signal'
+            comprobante_reverso_id: 'Reversal evidence ID'
+            comprobante_reversado_id: 'Reversed evidence ID'
+            referencia: 'Evidence Reference'
+            codigo_transaccion: 'Transaction Origin Code'
+            estatus: 'Status Evidence'
+        CompromisoPago:
+          Columnas:
+            fecha_limite_pago: 'Payment Deadline'
+            fecha_pago: 'Payment Date'
+            telecobranzas: 'Telecollections'
+            monto_pago: 'Payment Amount'
+        CondicionesFinanciamiento:
+          Errores:
+            condicion_ya_existe: 'Financing condition exists'
+            periodo_gracia_debe_ser_entero_mayor_cero: 'Grace Period must be integer and greater than zero (0)'
+            periodo_gracia_desde_no_divisible: 'The grace period since it is not divisible by the frequency of payment'
+            periodo_gracia_hasta_no_divisible: 'The grace period does not divide up the frequency of payment'
+            periodo_gracia_mayor_plazo_hasta: 'Grace Period from greater than deadline'
+            periodo_gracia_no_divisible: 'The grace period is not divisible by the frequency of payment'
+            plazo_gracia_mayor_que_maximo: 'The grace period is greater than the maximum grace period assigned by the program'
+            plazo_gracia_plazo_no_pueden_ser_cero: 'The grace period and the period can not be zero'
+            plazo_debe_ser_entero_mayor_cero: 'Term must be integer and greater than zero (0)'
+            plazo_desde_mayor_plazo_hasta: 'Term since it can not be greater than Term to'
+            plazo_desde_no_divisible: 'The term since it is not divisible by the frequency of payment'
+            plazo_hasta_no_divisible: 'The term to is not divisible by the frequency of payment'
+            plazo_mayor_que_maximo: 'The term is greater than the maximum time allowed by the program'
+            plazo_menor_que_minimo: 'The term is less than the minimum time allowed by the program'
+            plazo_no_divisible: 'The term is not divisible by the frequency of payment'
+          Separadores:
+            determinacion_periodos_gracia: 'Determination of Grace Periods'
+            determinacion_plazos: 'Determination of terms'
+        CondicionesAcuicultura:
+          Errores:
+          Columnas:
+            lagunas_efectivas: 'Effective lagoons'
+            espejo_agua: 'Area or Approved Water Mirror - Applies for Trout'
+            espejo_agua_up: 'Total Water mirror in UP'
+            espejo_agua_produccion: 'Water Mirror Production or Cash'
+            peso_cosecha: 'Weight Average Crop '
+            duracion_ciclo: 'Cultivation Cycle Duration'
+            densidad_siembra: 'Density Planting'
+            lagunas_totales: 'Number of Total Lagoons'
+        ControlAsignacion:
+          Errores:
+            analista_es_requerido: 'Assign Analyst is required to'
+        ControlCobranzas:
+          Errores:
+            cliente_no_existe: 'Beneficiary related to the financing does not exist'
+            prestamo_no_existe: 'Financing not exists'
+            el_archivo: 'The file collection'
+            solicitud_no_existe: 'Formality not exists'
+            ya_fue_procesado: 'already been processed'
+        ControlEnvioCobranzas:
+          Errores:
+            el_archivo: 'The file collection'
+            ya_fue_generado: 'already been generated, please check'
+          Estatus:
+            en_proceso: 'In process'
+            por_procesar: 'By Process'
+            procesado: 'Processed'
+          Etiquetas:
+            nombre_archivo: 'bicentenarioenviocobranzas'
+        ControlSolicitud:
+          Errores:
+            error_al_guardar: 'Failed to save trace tracking'
+        ComunidadIndigena:
+          Errores:
+            comunidad_requerido: 'Indian Community is required'
+            pueblo_requerido: 'Indigenous is required'
+            comunidad_invalido: 'Indian Community is Invalid'
+            pueblo_invalido: 'Indian Village is Invalid'
+            registro_existe: 'The record already exists. Please check'
+        Configurador:
+          Errores:
+            incluir_costo_fijo: 'You must include the fixed cost to save the items.'
+            incluir_costos: 'You must include the minimum and maximum cost to save the items.'
+            maximo_mayor_minimo: 'The maximum must be greater than the minimum amount in order to save the items.'
+            no_eliminado: 'Settings being used can not be eliminated'
+        Contabidad:
+          Tipo:
+            pase_castigo: 'PASS PUNISHMENT'
+            pase_consultoria: 'PASS CONSULTING'
+            pase_litigio: 'PASS LITIGATION'
+            pase_vencido: 'PASS OVERDUE'
+            pase_vigente: 'PASS ACTUAL'
+        CronogramaDesembolso:
+          Errores:
+            tiempo_invalido: 'Time for disbursement invalid, must be an integer'
+            imposible_eliminar: 'Impossible to delete this record, there are numbers in the schedule subsequent expenditure'
+        CuentaContable:
+          Errores:
+            no_puede_eliminar_comprobante: 'Not be eliminated ledger account is being used in accounting vouchers'
+            no_puede_eliminar_cta_presupuestaria: 'They prevent ledger account, since it has associated budgetary accounts'
+            no_puede_eliminar_regla_contable: 'They prevent ledger account, since it has associated accounting rules'
+        CultivoLaguna:
+          Errores:
+          Columnas:
+            numero_laguna: 'Number of lagoons'
+            cantidad_peces: 'Number of Fish'
+            peso_promedio: 'Average Weight'
+            kilo_cosechado: 'Kilograms per Harvesting / Harvested'
+        DecisionVisita:
+          Errores:
+            justificacion_requerida: 'Justification Case and Measurement is required to Apply'
+        DescripcionesEspecificas:
+          Errores:
+            presence_seguimiento_visita: 'Control of the Visit is required'
+            presence_seguimiento_cultivo: 'Monitoring cultivation is required'
+            descripcion: 'Observed description of what is required'
+            labores_beneficiario: 'Perform tasks that must Beneficiary is required'
+        Desembolso:
+          Modalidad:
+            adelanto: 'Resource Advancement'
+            reembolso: 'Refund'
+            programado: 'Programmed'
+          TipoDesembolso:
+            evento_especial: 'Special Event'
+            deposito_cuenta: 'Deposit Account'
+            retiro_caja: 'Retirement per Box'
+          Txt:
+            bschveca: 'BSCHVECA    '
+            debito: 'DEBITO  '
+            credito: 'CREDITO  '
+            cabecera_cheque: 'INBFIDECOMISO1'
+            cheques_manuales: 'CHEQUES MANUALES'
+            nombre: 'FONDO PARA EL DESARROLLO AGRARIO SO'
+            header: 'HEADER  '
+            veb: 'VEB'
+            prov: 'PROV'
+            codigo: 'G200082801'
+            nombre_archivo_excedente_arrime: 'venezuelaordenabonoexcedente'
+            nombre_archivo_excedente_arrime_cheque_propio: 'abonoexedente_venezuela_cheque_propio'
+            nombre_archivo_excedente_arrime_cheque_gerencia: 'abonoexedente_venezuela_cheque_gerencia'
+            nombre_archivo_excedente_arrime_cheque: 'abonoexedente_venezuela_cheque'
+            nombre_archivo_envio_venezuela: 'venezuelaenvioordendespachoinsumo'
+            nombre_archivo_envio_cheque_venezuela: 'venezuelaenviocheque'
+            nombre_archivo_cheque_gerencia: 'venezuela_cheque_gerencia'
+            nombre_archivo_cheque_propio: 'venezuela_cheque_propio'
+            nombre_venezuela_cheque: 'venezuela_cheque'
+            pago_excedente_beneficiario: 'Pago de Excedente al Beneficiario'
+            codigo_excel: '00040571'
+            total: 'TOTAL  '
+            titulo_inicio_transaccion: 'Updated the back of the settlement file transfer mode filter according txt '
+            transaccion_dummy: 'Dummy Transaction reverse the settlement file transfer mode filter according txto '
+            actualizar_revcerso_segun_csv: 'Updated the back of the settlement csv file transfer mode filter according '
+            trasaccion_dummy_csv: 'Dummy Transaction reverse the settlement csv file transfer mode filter according '
+            actualizar_reverso_transferencia_segun_seleccion: 'Updated the back of the settlement txt file transfer mode selection of items according '
+            transaccion_dummy_reverso_transferencia_segun_seleccion: 'Dummy Transaction reverse the settlement txt file transfer mode selection of items according '
+            actualizar_reverso_transferencia_csv_segun_seleccion: 'Updated the back of the settlement csv file transfer mode selection of items according'
+            transaccion_dummy_reverso_transferencia_csv_segun_seleccion: 'Dummy Transaction reverse the settlement csv file transfer mode selection of items according '
+            desembolso_para_el_los_prestamos: '"Disbursement for / the loans'
+            venezuela_cheque: 'venezuela_cheque'
+            venezuela_cheque_gerencia: 'venezuela_cheque_gerencia'
+            venezuela_cheque_propio: 'venezuela_cheque_propio'
+            actualizacion_reverso_cheque_con_modalidad: 'Updated the back of the settlement check with mode '
+            transaccion_dummy_reverso_cheque_con_modalidad: 'Dummy Transaction reverse the settlement check with mode'
+            transferencia_emision_cheque: 'Transfer issuing checks'
+            pago_por_transferencia: 'Payment by transfer'
+          Errores:
+            control_solicitud: 'Error creating event record'
+            no_puede_crearse_desembolso: 'Unable to create the disbursement for the formality'
+            formato_txt_incorrecto: 'The file does not have the correct format (txt)'
+            error_guardar_prestamo: 'Failed to save the loan'
+            error_guardar_desembolso: 'Failed to save the disbursement'
+            error_enviar_tramite: ! "<LI>There was an error sending formality %{numero} in Liquidation by check</LI>"
+            registrar_traza_seguimiento: 'Failed to register the trace tracking'
+            actualizar_datos_prestame: 'An error occurred while updating loan data. See the Administrator'
+            actualizar_datos_desembolso: 'An error occurred while updating the data of disbursement. See the Administrator'
+            actualizar_datos_solicitud: 'Failed to update formality data'
+            registrar_transaccion_ultrasec: 'Error registering transaction UltraSec'
+            actualizar_datos_pago: 'Failed to update the payment details'
+            comunicacion_ultrafloc: 'UltraFlo communication error. Contact the System Administrator'
+            monto_mayor_cero: 'The amount must be greater than 0'
+            completar_informacion_desembolso: 'Please complete the information Disbursement'
+            documento_solicitado: 'The requested document is already'
+            fecha_efectiva: 'Effective Date: is required'
+            fecha_nil: 'Date is nil'
+            fecha_real: 'Real date of liquidation is required'
+            la_solicitud: 'The request on line '
+            la_cedula: 'The number ID on line '
+            estatus_adecuado: ' not in the appropriate status.'
+            registrada_en_la_base_datos: 'not registered in the database.'
+            cargar_archivo_procesar: 'You must upload the file to process'
+            crear_detalle_desembolso: 'Failed to Create Item Detail Disbursement '
+            actualizar_tramite: 'Unable to update the formality '
+            envio_informacion_desembolso: ' Sending inf Disbursement '
+            traza_tramite: 'You can not register the trace of the formality '
+            posee_errores_en_los_siguientes_campos: 'You have errors in the following fields'
+            no_ha_seleecionado_entidad_financiera: 'You have not selected a financial institution'
+            no_ha_seleecionado_cuenta_fondas: 'You have not selected an instituion account'
+            no_ha_seleecionado_fecha_valor: 'You must enter a date value'
+          Estatus:
+            condicionamiento_desembolso: 'Disbursement conditioning'
+            desembolso_condicionado: 'Conditioned Disbursement'
+            desembolso_completado: 'Disbursement Completed'
+            desembolso_solicitado: 'Disbursement Requested'
+            trasladando_el_tramite_liquidacion_cheque: 'Transferring to the process with Cheque Liquidation'
+            se_han_eviado_con_exito: 'Have been sent'
+            a_liquidacion_con_cheque: 'to Liquidation by check'
+            total_registro_segun_filtros: 'Total Records according to Filters'
+            total_registro_segun_seleccion: 'Total Records as selected'
+          TipoCheque:
+            cheque_fondas: 'Disbursement Institutional check'
+            desembolso_cheque: 'Disbursement Own check'
+            desembolso_cheque_gerencia: 'Disbursement Management check'
+            desembolso_transferencia_cuenta: 'Disbursement Transfer Beneficiary Account'
+        DesembolsoDetalle:
+          Errores:
+            no_puede_crearse_detalle: 'Unable to create detailed disbursement for formality'
+            monto_supera_cantidad: 'Amount exceeds the outstanding amount disbursed to <b>'
+            monto_supera_monto_asignado: 'Amount disbursed exceeds the amount allocated to the Entry'
+            error_actualizar_monto_desembolso: 'Failed to update the amount of the disbursement'
+            error_al_validar_detalle_desembolso: 'Error validating detailed disbursement'
+            error_guardar_desembolso: 'Failed to save the disbursement'
+            error_actualizar_seguimiento: 'Failed to update the Monitoring'
+            error_actualizar_monto_detalle: 'Failed to update the detail disbursement amount'
+            monto_debe_ser_mayor_cero: 'Amount must be greater than 0'
+            rubro_es_obligatorio: 'Entry is required'
+            pendiente: '</b> (Pending: '
+        DetallePrecioGaceta:
+          Lista:
+            tipo_a: 'Type A'
+            tipo_b: 'Type B'
+            tipo_c: 'Type C'
+          Errores:
+            precio_registrado_actividad: 'The price has already been registered for the activity, Official Gazette class type'
+            precio_gaceta_usado: 'The price of Gazette being used, can not be eliminated'
+        Factura:
+          Distincion:
+            al_dia: 'At Expiration'
+            mes: 'In the month'
+            rezagada: 'Laggard'
+          Tipo:
+            abono_capital: 'Credit to Capital'
+            abono_extraordinario: 'Extraordinary Credit'
+            abono_en_cuenta_excedente_arrime: 'Credit in Account by Surplus Payment with harvest'
+            cancelacion_anticipada: 'Pre-Cancellation of Financing'
+            cancelacion_reestructuracion: 'Cancellation by Restructuring'
+            creacion_reestructuracion: 'Creating for Restructuring'
+            maquinaria: 'Machinery'
+            pago_arrime: 'Payment with harvest'
+            pago_ordinario: 'Regular payment'
+        Embarcacion:
+          Errores:
+            eslora_numerico: 'Length must be a numeric value'
+            cantidad_tripulante_numerico: 'Number of crew must be numeric without decimals'
+            capacidad_combustible_numerico: 'Fuel capacity must be numeric'
+            autonomia_pesca_numerico: 'Fishing autonomy must be numeric without decimals'
+            puntal_numerico: 'Strut must be a numeric value'
+            manga_numerico: 'Sleeve must be a numeric value'
+            propia_si_no: 'You must check whether or not the vessel itself'
+            nombre_embarcacion: 'Name Vessel'
+            nombre_embarcacion_existe: 'The ship name already exists, enter another name'
+            matricula_existe: 'Tuition introduced already exists, enter a new'
+            embarcacion_contiene_motor: 'The vessel is associated at least one motor, therefore can not be eliminated'
+            embarcacion_contiene_arte: 'The vessel has at least one associated gear, therefore can not be eliminated'
+            embarcacion_contiene_equipo_seguridad: 'The vessel has at least one associated safety equipment, therefore can not be eliminated'
+            embarcacion_contiene_faena: 'The vessel is associated with at least a fishing therefore can not be eliminated'
+          Columnas:
+            matricula: 'Tuition'
+            eslora: 'Length'
+            puntal: 'Strut'
+            manga: 'Sleeve'
+            tipo_embarcacion: 'Vessel Type'
+            tipo_material: 'Material Type'
+            cantidad_tripulante: 'Number of Crew'
+            autonomia_pesca: 'Fishing autonomy'
+            capacidad_combustible: 'Fuel capacity'
+            condicion: 'Condition'
+            coordenadas_utm_puerto_base: 'UTM coordinates of the base port'
+            lugares_pesca: 'Fishing Locations'
+        EmpleadoSilo:
+          Errores:
+            posee_supervisor: 'The silo has a supervisor'
+        Empresa:
+          Errores:
+            rif_no_valido: 'This format is not valid RIF. Valid format example J-12345678-9'
+            fecha_contitucion_mayor_inicio: 'The date of constitution can not be after the start date of operations'
+            cant_miembros_mayor_0: 'Qty Members must be greater than zero (0).'
+            num_familias_mayor_0: 'Number of Families must be greater than zero (0).'
+            num_viviendas_mayor_0: 'Number of Households must be greater than zero (0).'
+            cant_productores_mayor_0: 'Qty Producers Beneficiaries must be greater than zero (0).'
+        EquipoSeguridad:
+          Errores:
+          Columnas:
+            equipo_es_propio: 'You must check whether or not the proper safety equipment'
+            con_gps: 'You must check if you have GPS on safety equipment'
+            tipo_equipo_seguridad: 'Type of Equipment '
+            calidad: 'Quality'
+        Estacion:
+          Errores:
+            oficina_departamento: 'Department Office'
+            ip_addres: 'IP address'
+        FaenasPesca:
+          Errores:
+          Columnas:
+            ganancia_por_unidad: 'Earnings per Unit'
+            gasto_por_unidad: 'Cost per Unit'
+            destino_captura: 'Target Capture'
+            tiempo_expiracion: 'Tiempo de Expiración'
+            tipo_especie_id: 'Expiry Time'
+            faenas_mensual: 'Number of Campaigns'
+            captura_campana: 'Number by Campaigns / Faenas Fisheries'
+            captura_estimada: 'Estimated capture'
+            precio_x_kg: 'Price per Kg'
+        FirmaAutorizada:
+          Errores:
+            firma_registrada: 'The authorized signature related charge is already registered'
+        GarantiaSector:
+          Columnas:
+            tipo_garantia: 'Type of Guarantee'
+          Errores:
+            ya_asignado_sector_productivo: 'already allocated to the productive sector'
+        ImputacionesMaquinaria:
+          Columnas:
+            seguro_nacional: 'National Security'
+            flete_nacional: 'National Freight'
+            gastos_administrativos: 'Administrative Expenses'
+            seguro_internacional: 'International Security'
+            flete_internacional: 'International Freight'
+            nacionalizacion_impuestos: 'Nationalization Taxes'
+            almacenamiento: 'Storage'
+        ItemAtributo:
+          Tipo:
+            texto_100: 'Text 100'
+            texto_500: 'Text 500'
+            numerico_entero: 'Number without decimals'
+            numerico_decimales: 'Number with Decimal'
+            si_no: 'Value yes or no'
+            fecha: 'Date'
+            cuadro_lista: 'List Box'
+            tabla: 'Table'
+        Oficina:
+          Errores:
+            folio_autenticacion: 'Folio Number is required'
+        OficinaAreaInfluencia:
+          Errores:
+            parroquia_ya_fue_registrada: 'The parish is already registered in the areas of influence of the office'
+        OficinaDepartamento:
+          Errores:
+            oficina_deparatmento_no_puede_eliminarse: 'Can not delete the link Office - Department because it is associated stations'
+        Opcion:
+          Errores:
+            debe_agregar_accion: 'You must add an action'
+            opcion_no_existe: 'The option does not exist'
+            opcion_tiene_accion: 'The option already has this action'
+            opcion_grupo: 'Group Option'
+            ruta: 'Route'
+        PrecioGaceta:
+          Columnas:
+            gaceta_oficial: 'Official Gazette'
+          Errores:
+            gaceta_sin_cerrar: 'Gazette has not Close'
+          Estatus:
+            vigente: 'Valid'
+            vencida: 'Overdue'
+        Prestamo:
+          Errores:
+            estatus_desembolso: 'Failed to update the status of disbursement'
+        Rol:
+          Errores:
+            rol_tiene_accion:       'The role already has this action'
+            rol_tiene_opcion:       'The role already has this option'
+            rol_tiene_autorizacion: 'The role already has this authorization'
+            rol_ya_asignado:        'You already have this role'
+        Rubro:
+          Errores:
+        Sector:
+          Errores:
+        Solicitud:
+          Errores:
+            analisis_debe_ser_completado: 'You must thoroughly analyze the process.'
+            analisis_legal_solicitud: 'We analyzed successfully legally admissible.'
+            ano_registro_requerido: 'Year of Registration is required.'
+            cantidad_socios_femeninos_requerido: 'Qty female partners is required.'
+            cantidad_socios_masculinos_requerido: 'Qty male partners is required'
+            condiciones_financiamiento: '<b> Investment Plan: </ b> Financing conditions for financing associated with the process Investing Plan No.'
+            condicionamiento:  '<b> Constraints: </ b> The conditioning process for the No.'
+            debe_asignar_aspecto_evaluar: 'You must assign at least one aspect to evaluate institutional Ward.'
+            debe_contener_una_ubicacion:  'Must contain at least one location.'
+            debe_contener_un_registro_de_tierras: 'Must contain at least one land registration.'
+            debe_contener_un_registro_de_hierro: 'Must contain at least one record of Iron.'
+            debe_contener_un_registro_naval: 'Must contain at least naval records.'
+            debe_contener_un_numero_telefono: 'Must contain at least one number.'
+            debe_contener_un_email: 'Must contain at least one email.'
+            debe_contener_representante_legal: "Must contain at least one member of type 'Legal Representative'"
+            debe_contener_persona_contacto: 'Must contain at least one contact person.'
+            debe_contener_integrantes: 'Must contain at least five (5) members.'
+            debe_contener_integrante_junta_directiva: 'must contain at least one member of such Board.'
+            debe_contener_registro_mercantil: 'Must contain at least one commercial register.'
+            debe_contener_unidad_produccion: 'Must contain at least one unit of output.'
+            debe_completar_informacion_evaluacion: 'You must complete the assessment information.'
+            debe_completar_informacion_presidencia: 'Must complete information Presidency.'
+            debe_existir_recaudo: 'There must be at least one collection.'
+            debe_ser_pescador: ' must be marked to request a fisherman fishing process.'
+            debe_registrar_desembolso_en_cronograma: 'You must register at least one disbursement schedule.'
+            debe_registrar_direccion: 'You must register at least one direction.'
+            debe_registrar_email: ': You must register at least an email'
+            debe_registrar_numero_telefono: 'You must register at least one phone number.'
+            debe_registrar_representante_legal: 'You must register at least a legal representative.'
+            debe_registrar_grupo_familiar: ': You must register at least one person in the household'
+            debe_registrar_punto_de_contacto: ': You must register at least one point of contact'
+            decision_que_aplicara: 'You must select the decision applied to the application.'
+            destino_microcredito_requerido: 'Fate of microcredit is required'
+            error_al_guardar: 'Error saving application.'
+            estatus_no_adecuado: 'Step right has no status.'
+            fecha_comite_invalida: 'The Committee record date can not be later than the date of the minutes of Board of Directors'
+            fecha_directorio_invalida: 'The Directory record date can not be after the date of the minutes of the Board of Directors.'
+            fecha_mayor_que_la_actual: 'It can not be after the current date.'
+            fecha_registro_requerida: 'Date of Registry is required.'
+            ficha_resumen: '<b> Sheet Summary: </ b> The summary tab corresponding to Step No.'
+            hectareas_requeridas: 'Hectares Requested required.'
+            hectareas_mayor_que_cero: 'Hectares Requested must be a number greater than 0'
+            hectareas_mayor_que_unidad_produccion: 'Hectares Requested is greater than the hectares of the production unit'
+            justificacion_tecnica_requerida: 'Technical justification is required.'
+            metodo_amortizacion_no_registrado: 'Not registered the amortization method for starting'
+            monto_aprobado_no_coincide: 'The amount approved in the application does not match the sum of items'
+            monto_aprobado_no_numerico: 'Approved amount is not numeric.'
+            monto_solicitado_requerido: 'The amount requested is required.'
+            monto_aprobado_requerido: 'The amount approved is required.'
+            nombre_registro_requerido: 'Registry name is required.'
+            numero_folio_final_requerido: 'Final Folio Number is required'
+            numero_folio_inicial_requerido: 'Initial Folio Number is required.'
+            numero_registro_requerido: 'Record Number is required.'
+            numero_protocolo_requerido: 'Protocol Number is required.'
+            numero_sunacop_requerido: 'Number of Exp Sunacoop required.'
+            numero_tomo_requerido: 'Volume number is required.'
+            numero_trimestre_requerido: 'Quarter Number is required.'
+            objetivo_proyecto_es_requerido:  'Purpose of the project is required.'
+            plan_inversion_no_coincide_partida: 'The investment plan for the game does not match'
+            plazo_no_registrado: 'Not registered the deadline for starting'
+            puerto_base: ' port base'
+            punto_cuenta: 'Point <b> Account: </ b> The point corresponding to Step Account No.'
+            recaudos_no_completos: 'The collections are not complete.'
+            recaudos_no_verificados: 'The revenues are not fully verified.'
+            registrar_recaudo_entregado: 'You must register as delivered at least one collection.'
+            registrar_recaudos_obligatorios: 'You must register as delivered the required precautions.'
+            representante_legal_debe_tener_direccion: 'The Legal Representative must register at least one direction.'
+            representante_legal_debe_tener_telefono: 'The Legal Representative must register at least one phone number.'
+            revision_inspeccion_avaluos: 'Inspection and Appraisal Review the procedure successfully.'
+            revision_resguardo_institucional: 'Institutional Review Ward was successful.'
+            solicitud_en_ruta_credito: ' has a process in the route of financing.'
+            sumatoria_cronograma_no_coincide: 'The sum of the amounts recorded in the schedule must match the approved amount.'
+            seleccionar_valor_incorporacion_tecnologica: 'You must select at least one value in incorporating technology.'
+            seleccionar_al_menos: 'You must select at least'
+            semovientes_es_requerido: 'Hot livestock is required'
+            semovientes_mayor_que_cero: 'Hot livestock must be greater than 0'
+            solo_tramite_pesca: ' procedure can only apply for a fishing because it is marked as a fisherman.'
+            unidad_produccion_requerida: 'The production unit is required.'
+        Stock_Maquinaria:
+          Errores:
+            combinación: 'The combination of item, type, make and model number are recorded on the system.'
+            no_puede_agregar_maquinarias_diferentes: 'You can not add machines to different stores to the same guide'
+        TecnicoCampo:
+          Errores:
+            cedula_debe_ser_entero:       ' Certificate must be numeric with no decimal'
+            cedula_ya_existe:             ' Certificate already exists'
+            debe_ingresar_apellido:       ' name must be entered'
+            debe_ingresar_direccion:      ' must enter an address'
+            debe_ingresar_documento:      ' must enter the Certificate'
+            debe_ingresar_edo_civil:      ' status must enter'
+            debe_ingresar_movil:          ' must enter mobile phone'
+            debe_ingresar_nombre:         ' You must enter the name'
+            debe_ingresar_telefono:       ' must enter your room'
+            debe_seleccionar_estado:      ' must select a state, county and parish.'
+            tecnico_utilizado:            ' It can not be removed, the field technician is being used'
+        UnidadMedida:
+          nombre: 'Unit of Measure'
+          Columnas:
+            abreviatura: 'Abbreviation'
+        Usuario:
+          Errores:
+            cedula_es_requerido: 'Certificate is required'
+            password_es_requerido: 'Password is required'
+            cedula_ya_existe: 'Certificate already exists'
+            confirmacion_invalida: 'confirmation of the password is invalid'
+            oficina_asignada: 'The user is already assigned to this office'
+            password_invalido: 'The login / password is invalid'
+      Vistas:
+        Filtros:
+          nombre: 'Name:'
+          oficina: 'Office:'
+          entidad_financiera: 'Financial Institution:'
+          codigo: 'Code:'
+        Form:
+          abierto: 'Open'
+          actividad: 'Activity'
+          aplicativo: 'GeBos®'
+          asterisco: '*'
+          ayuda: 'Online Help'
+          cerrado: 'Closed'
+          cerrar_sesion: 'Leave'
+          cierre: 'Closure'
+          convenio: 'Agreement'
+          contrato: 'Contract'
+          cobranza: 'Collection'
+          control: 'Control'
+          comprometido: 'Committed'
+          descripcion: 'Description'
+          disponibilidad: 'Availability'
+          destino: 'Destination'
+          empresa: 'GPROTEC'
+          enviar: 'Send Mail'
+          entrega: 'Delivery'
+          error_general: 'List of Errors'
+          estatus: 'Status'
+          estimada: 'Dear'
+          evento: 'Event'
+          fecha: 'Date'
+          fin: 'End'
+          header_control_visitas: 'Checklist Step views'
+          inicio: 'Initiation'
+          item: 'Item'
+          microcredito_asociado_a_grupo: 'Microcredit associated with a group'
+          nombre: 'Name'
+          numero_tramite: 'Step Number'
+          numero_financiamiento: 'Number of Financing'
+          nro_tramite: 'Step No.'
+          nro_financiamiento: 'Financing No.'
+          partida: 'Certificate'
+          presupuestado: 'Budgeted'
+          promotora: 'Promoter'
+          resolucion: 'Resolution'
+          rubro: 'Ponto'
+          sector: 'Sector'
+          seleccionar: 'Select'
+          silo: 'Silo'
+          sistema: 'Social Orientation Banking'
+          site: 'Site'
+          solicita_microcredito_primera_vez: 'Microcredit Requests First Time'
+          presupuestado: 'Budgeted'
+          aumentar_presupuesto: 'Budget Increase'
+          promotora: 'Promoter'
+          valor: 'Value'
+        Helpers:
+          Mensajes:
+            registros:  'Records'
+            total:  'Total'
+            totales: 'Totals'
+            en: 'in'
+            pagina: 'Page'
+            para_la_expresion:  'for expression'
+            eliminacion: 'successfully removed.'
+            esta_seguro: 'Are you sure you want to delete this record?'
+            esta_seguro_reversar: 'Are you sure you want to reverse this process?'
+            esta_seguro_enviar_tramite: 'Are you sure you want to send the processes?'
+            esta_seguro_avanzar_tramite: 'Are you sure you want to proceed Step '
+            esta_seguro_avanzar_grupo_tramite: 'Are you sure you want to move the group that meet Paperwork filters whose production cycle is open?'
+            esta_seguro_avanzar_grupo_solicitudes: 'Are you sure you want to move the group of applications?'
+            esta_seguro_avanzar_solicitud: ! 'Are you sure you want to move the solicitude No. %{nume}?'
+            no_ha_iniciado_ciclo: 'It has started the production cycle'
+            insercion: 'successfully added.'
+            modificacion: 'successfully modified.'
+            se_ha_modificado_registro_con_exito: 'Registration has been modified successfully'
+            se_ha_guardado_registro_con_exito: 'Registration has been successfully saved'
+        General:
+          a: 'to'
+          am: 'AM'
+          pm: 'PM'
+          abreviatura: 'Abbreviation'
+          acciones: 'Actions'
+          accion_especifica: 'Specific Action'
+          actividad: 'Activity'
+          actividades: 'Activities'
+          activo: 'Active'
+          acta: 'Act'
+          ahorro: 'Saving'
+          agregando: 'Adding'
+          almacen: 'Store'
+          alias: 'Alias'
+          asignado: 'Assigned'
+          asignada: 'Assigned'
+          atributos: 'Attributes'
+          area: 'Area'
+          apertura: 'Opening'
+          aprobada: 'Approved'
+          aprobado: 'Approved'
+          aprobacion: 'Approval'
+          anexos: 'Annexes'
+          año: 'Year'
+          automatica: 'Automatic'
+          autorizacion: 'Authorization'
+          asunto: 'Issue'
+          avanzar: 'Advance'
+          bandeja: 'Tray'
+          bandera: 'Flag'
+          bs: 'BsF'
+          buscar: 'Search'
+          cancelar: 'Cancel'
+          anticipo: 'Advance'
+          apellido: 'Surname'
+          apellidos: 'Surnames'
+          avenida: 'Avenue'
+          banco: 'Bank'
+          cantidad: 'Amount'
+          cargo: 'Charge'
+          cedula: 'Charter'
+          celular: 'Cellular'
+          chasis: 'Chassis'
+          cheque: 'Check'
+          ciclo: 'Cycle'
+          ciudad: 'City'
+          ciudades: 'Cities'
+          clase: 'Class'
+          codigo: 'Code'
+          con: 'with'
+          condicionado: 'Conditioned'
+          comite: 'Committee'
+          contacto: 'Contact'
+          contable: 'Accountant'
+          constante: 'Constant'
+          consultando: 'Consulting'
+          compromiso: 'Pledge'
+          coordinador: 'Coordinator'
+          corriente: 'Current'
+          corto: 'Short'
+          costo: 'Cost'
+          cm: 'cm'
+          credito: 'Credit'
+          creando: 'Creating'
+          cuenta: 'Account'
+          datos: 'Data'
+          datos_basicos: 'Basic Information'
+          de: 'of'
+          decision: 'Decision'
+          del: 'of'
+          denominacion: 'Denomination'
+          detalle: 'Detail'
+          desembolso: 'Disbursement'
+          descargar_archivo: 'Download File'
+          departamento: 'Department'
+          dia: 'Day'
+          dias: 'Days'
+          disponible: 'Available'
+          directorio_ejecutivo: 'Board of Directors'
+          edificio: 'Building'
+          eje: 'Axis'
+          ejecutivo: 'Executive'
+          el: 'the'
+          elaborada: 'Elaborada'
+          en_transito: 'En Tránsito'
+          recibida: 'Recibida'
+          electronica: 'Electronics'
+          email: 'E-mail'
+          empresa: 'Company'
+          empresa_donde_labora: 'Employed By'
+          empresa_sesion: 'Company Login'
+          en: 'in'
+          entidad: 'Entity'
+          entidad_financiera: 'Financial Institution'
+          espanol: 'Spanish'
+          especifica: 'Specific'
+          estado: 'State'
+          estadal: 'Estadal'
+          estrategico: 'Strategic'
+          evaluando: 'Evaluating'
+          existencia: 'Existence'
+          express: 'Express'
+          factura: 'Bill'
+          fax: 'Fax'
+          femenino: 'Female'
+          financiamiento: 'Funding'
+          financiamientos: 'Fundings'
+          firma: 'Signature'
+          flete: 'Freight'
+          folio: 'Folio'          
+          forma: 'Form'
+          gaceta: 'Gazette'
+          generica: 'Generic'
+          generar: 'Generate'
+          genero: 'Gender'
+          gerencia: 'Management'
+          grupo: 'Group'
+          guardar: 'Save'
+          guia: 'Guide'
+          justificacion: 'Justification'
+          jefe_brigada: 'Brigade Chief'
+          hectarea: 'Hectare'
+          hectareas: 'Hectares'
+          hora: 'Hour'
+          id: 'ID'
+          idioma: 'Language'
+          ingles: 'English'
+          impresion: 'Print'
+          imputaciones: 'Imputations'
+          informacion: 'Information'
+          insumos: 'Inputs'
+          instancia: 'Instance'
+          instancias: 'Instances'
+          internacional: 'International'
+          imprimir: 'Print'
+          item: 'Item'
+          items: 'Items'
+          justificacion: 'Justification'
+          lugar: 'Place'
+          kg: 'Kg'
+          la: 'the'
+          las: 'The'
+          lista: 'List'
+          maquinaria: 'Machinery'
+          maquinarias: 'Machineries'
+          marca: 'Brand'
+          masculino: 'Male'
+          maxima: 'Maxim'
+          miembro: 'Member'
+          miembros: 'Members'
+          minima: 'Low'
+          medida: 'Measure'
+          mes: 'Month'
+          microcredito: 'Microcredit'
+          modelo: 'Model'
+          modificando: 'Modifying'
+          modificar: 'Modify'
+          modificacion: 'Modification'
+          modulo: 'Module'
+          monto: 'Amount'
+          motivo: 'Reason'
+          motor: 'Engine'
+          municipio: 'Municipality'
+          municipios: 'Municipalities'
+          mm: 'mm'
+          nacional: 'National'
+          nacionalidad: 'Nationality'
+          naturaleza: 'Nature'
+          nemonico: 'Mnemonic'
+          negocio: 'Business'
+          nivel: 'Level'
+          no: 'No'
+          nombre: 'Name'
+          nombres: 'Names'
+          nro: 'No.'
+          numero: 'Number'
+          obligatorio: 'Mandatory'
+          observacion: 'Observation'
+          observaciones: 'Observations'
+          ocultar: 'Hide'
+          oficina: 'Office'
+          origen: 'Origin'
+          otro: 'Other'
+          pais: 'Country'
+          pago: 'Payment'
+          panel: 'Panel'
+          para: 'For'
+          parroquia: 'Parish'
+          parroquias: 'Parishes'
+          partida: 'Game'
+          partidas: 'Sub'
+          persona: 'Person'
+          pero: 'But'
+          piso: 'Floor'
+          plan_inversion: 'Investment Plan'
+          por: 'by'
+          postal: 'Postal'
+          precio: 'Price'
+          primer_apellido: 'First Last name'
+          primer_nombre: 'First name'
+          privado: 'Private'
+          privada: 'Private'
+          productivo: 'Productive'
+          produccion: 'Production'
+          protocolo: 'Protocol'
+          programa: 'Program'
+          proyecto: 'Project'
+          pt: 'dt'
+          pueblo_indigena: 'Indigenous'
+          publico: 'Public'
+          razon_social: 'Corporate'
+          recaudadora: 'Collector'
+          recomendaciones: 'Recommendations'
+          rechazada: 'Rejected'
+          region: 'Region'
+          resumen: 'Summary'
+          registro: 'Register'
+          reestructuracion: 'Restructuring'
+          resolucion: 'Resolution'
+          resultado: 'Result'
+          rubro: 'Entry'
+          rubros: 'Items'
+          rif: 'RIF'
+          sector: 'Sector'
+          sectores: 'Sectors'
+          segundo_apellido: 'Second Last name'
+          segundo_nombre: 'Second Name'
+          seguro: 'Insurance'
+          seleccione: 'Select One'
+          seleccion: 'Selection'
+          seleccionar: 'Select'
+          sello: 'Stamp'
+          sesion: 'Session'
+          si: 'Yes'
+          situacion: 'Situation'
+          siglas: 'Acronym'
+          sin: 'Without'
+          serial: 'Serial'
+          social: 'Social'
+          socialista: 'Socialist'
+          solicitud: 'Solicitude'
+          solicitado: 'Applied for'
+          solicitar: 'Apply for'
+          sras: 'SRAS'
+          sub_especifica: 'Specific Sub'
+          sub_rubro: 'Sub Heading'
+          sub_rubros: 'Sub Crew'
+          sub_sector: 'Sub Sector'
+          sub_sectores: 'Sub Sectors'
+          sucursal: 'Branch'
+          sugerido: 'Suggested'
+          superficie: 'Surface'
+          supervisor: 'Supervisor'
+          telefono: 'Phone'
+          tiempo: 'Time'
+          tipo: 'Type'
+          tipo_cliente: 'Beneficiary Type'
+          titulo: 'Title'
+          todos: 'All'
+          tomo: 'Tome'
+          transferencia: 'Transfer'
+          transferir: 'Transfer'
+          ubicacion: 'Location'
+          urbanizacion: 'Urbanization'
+          una: 'a'
+          unidad: 'Unit'
+          vencida: 'Expired'
+          vigencia: 'Validity'
+          viable_juridicamente: 'Legally Viable'
+          y: 'and'
+        Login:
+          login: 'Login'
+          entrar: 'Enter'
+          iniciar_sesion: 'Log in'
+          ingresar: 'Sign in'
+          boton_inicio: 'Login'
+          clave: 'Password'
+          user: 'User'
+          password: 'Password'
+          olvido_contrasena: 'Forgot your password?'
+          usuario_ya_tiene_oficina: 'User already has this office'
+          bienvenida: 'Welcome to GeBOS'
+          descripcion_bienvenida: 'Retrieve your username and temporary password from your email account or contact your Administrator. '
+        Abogado:
+          inpreabogado: 'Inpreabogado'
+        ActaSilo:
+          Header:
+            form_header: 'Proceedings of Silo List'
+          Separador:
+            titulo_01: 'Data Act'
+          Etiquetas:
+            nombre_silo: 'Silo name'
+            numero_acta: 'Act Number'
+        ActividadActivar:
+          Header:
+            modificando: 'Modifying Activity'
+          Etiquetas:
+            primer_encabezado: 'On / Off Activity by Office'
+            segundo_encabezado: 'Select the offices you want to enable / disable'
+        Actividad:
+          Header:
+            form_header: 'List of Activities'
+          Common:
+            actividad: 'Activity'
+            activar_desactivar: 'Enable / Disable'
+          Etiquetas:
+            codigo_actividad: 'Activity Code'
+            seleccion_automatica: 'Automatic Selection'
+        ActividadEconomica:
+          Etiquetas:
+            actividad_economica: 'Economic Activity'
+            sector_economico: 'Economic Sector'
+            codigo_ciiu: 'ISIC Code'
+        AgenciaBancaria:
+          Etiquetas:
+            agencia_bancaria: 'Banking Agency'
+        AutorizacionAprobacion:
+          Etiquetas:
+            accion: 'Action'
+            aprobadas: 'Approved'
+            aprobar: 'Approve'
+            confirmacion_aprobacion: 'Are you sure you want to approve this authorization?'
+            confirmacion_rechazo: 'Are you sure you want to reject this authorization?'
+            en_espera: 'Waiting'
+            fecha_desde: 'Date From'
+            fecha_hasta: 'Date Until'
+            nombre_cliente: 'Customer Name'
+            rechazadas: 'Rejected'
+            rechazar: 'Reject'
+            solicitado: 'Application'
+            usuario_solicitante: 'Applicant user'
+            vence: 'Expires'
+            vencidas: 'Past Due'
+        AutorizacionSolicitud:
+          Etiquetas:
+            autorizador: 'Authorizer'
+            mensaje: '* The amount you enter must be equal to the amount of the payment transaction, which is already expressed in Dolars.'
+            prestamo_numero: 'Number Loan:'
+            tipo_transaccion: 'Transaction Type'
+        Catalogo:
+          Etiquetas:
+            puerto_llegada: 'Port of arrival'
+            movilizado_a: 'Mobilized'
+            nombre_buque: 'Name of vessel'
+            pais_origen: 'Country of Origin'
+            fecha_llegada: 'Date of Arrival'
+            monto_bs: 'Amount BsF'
+            monto_dolares: 'Dollar amount'
+            codigo: 'Code of Good'
+            nacionalización_impuestos: 'Nationalization and Taxes'
+        ComiteNacional:
+          Mensajes:
+            lista_errores_estadal: 'Errors prohibited this Decisión Comité Estadal from being saved'
+            lista_errores_nacional: 'Errors prohibited this Decisión Comité Nacional from being saved'
+            hubo_errores: 'There were problems with the following fields:'            
+            generico_mensaje: 'Directory Estadal Committee / National Funding'
+            esta_seguro_agregar_miembro: 'Are you sure you want to Add that Member to the Committee?'
+          Errores:
+            error_solicitudes: 'Solicitudes :You must select at least one solicitude.'
+            error_decision: 'Decision :You must select a type of decision.'
+            error_comentario: 'Comment :You need to add a comment.'
+        ComiteResumen:
+          Mensajes:
+            se_somete: 'Is submitted to '
+            comite_nacional: 'National Finance Committee'
+            gerente_financiamiento: 'Integral Finance Manager'
+            exitoso_reversar: ! 'The Solitude Number %{number} was returned successfully to Estadal Committee.'
+            exitoso_reversar_evaluacion: ! 'The Solicitude Number %{number} was returned to credit assessment successfully.'
+            mensaje_confirmacion_largo: 'With this option, you can redo a new restructuring application.\nThen you will be taken to the area of ​​restructuring and the current application will lapse.'
+            redefinir_parametros: 'Redefine request parameters Restructured'
+            pregunta_regresar: 'Are you sure you want to return this solicitude?'
+            remitiendo_a_consideracion: 'Referring to it'
+            obligacion_incrementar: 'Obligation to Increase Social Capital'
+            obligacion_corresponsabilidad: 'Stewardship Social Obligation'
+        ComunidadIndigena:
+          Header:
+            form_title: 'Indigenous Communities'
+            form_title_record: 'Indigenous Community'
+          Lista:
+            pueblo: 'People'
+            comunidad: 'Community'
+          form:
+            pueblo: 'Indigenous'
+            comunidad: 'Indigenous Community'
+        CondicionesAnalisisCredito:
+          Header:
+            form_title: 'Template Credit Assessment Terms'
+          Form:
+            desembolsos: 'Terms Disbursements'
+            financiamiento: 'Conditions of Funding'
+        CondicionPasto:
+          Header:
+            form_title: 'Pasture Condition'
+        ConsultaCertificacionPresupuestaria:
+          Etiquetas:
+            debe_seleccionar_tramite: 'You must select at least one process to implement sending'
+            no_existe_tramite: 'There is no procedure for updating'
+        ConsultarTransaccion:
+          Etiquetas:
+            antes: 'Before'
+            despues: 'After'
+            fecha_hora: 'Date/Time'
+            id_registro: 'Record ID'
+            prestamo: 'Loan'
+            por_nro_transaccion: 'By Transaction Number'
+            reverso: 'Reversals'
+            tabla: 'Table'
+        CronogramaDesembolso:
+          Header:
+            form_title: 'Disbursement Schedule'
+            form_title_singular: 'Disbursement Schedule'
+        DetallePrecioGaceta:
+          Header:
+            form_title: 'Price List'
+          View:
+            consultar: 'Check Pricing Gazette'
+        FirmaAutorizada:
+          Header:
+            form_title: 'Authorized Signatures'
+        AyudaLinea:
+          Header:
+            form_title: 'Online Help'
+          Mensajes:
+            nombre_guia: 'Name of the Guide'
+            capitulo1: 'Chapter I - Introduction and General Menu'
+            capitulo2: 'Chapter II - Basic Tables I'
+            capitulo3: 'Chapter III - Basic Tables II'
+            capitulo4: 'Chapter IV - Beneficiary'
+            capitulo5: 'Chapter V - Systems'
+            capitulo6: 'Chapter VI - Procedures Menu'
+            capitulo7: 'Chapter VII - Menu Procedures'
+            capitulo8: 'Chapter VIII - Procedures Menu'
+            capitulo9: 'Chapter IX - Portfolio'
+            capitulo10: 'Chapter X - Accounting'
+        Idioma:
+          Header:
+            form_title: 'Languages​​'
+            form_title_record: 'Language'
+            form_title_records: 'Languages​​'
+          Mensajes:
+            archivo_traduccion_yml: 'Yml translation file for the selected language'
+            sin_archivo: 'No File'
+            archivo_yml: 'yml File'
+            error_carga_archivo: 'Error loading file'
+            error_archivo_bandera: 'Wrong file type (Flag): The only image file formats supported are: png, jpg, jpeg and gif'
+            error_archivo_yml: 'Wrong file type (yml File): Only files yml are allowed'
+            error_archivo_nombre_yml: 'yml file name is incorrect: The file name must match the language with the mnemonic'
+        ConsultaMovilizacionMaquinaria:
+          Header:
+            form_title: 'Consulta de Movilización Maquinaria'
+            form_title_record: 'Movilización Maquinaria'            
+            form_title_records: 'Movilizaciones Maquinaria'            
+          Mensajes:
+            otro_destino: 'Otro Destino'
+            unidad_produccion_asociada: 'Unidad de Producción Asociada al Trámite'
+            oficina_asociada: 'Oficina Asociada al Trámite'
+        InstanciaComiteNacional:
+          Mensajes:
+            mega_ley: 'In 25/01/2011, the Commander President of Venezuela Hugo Rafael Chavez Frias, launched the AgroVenezuela Mission, a program that has as primary objective of continued impulse in agricultural activities, strengthening security and food sovereignty in the country, by providing financing over five hundred eighty thousand (580,000) small and medium producers nationwide through state financial institutions (Banco Agricola and FONDAS) and private banking.'
+            mega_ley_14: 'Request for approval of Fourteen (14) credits for Fourteen (14) Community Councils, producer of yams and sweet cassava, located in Cojedes state, for a total of Two Million Seven Hundred Sixty Thousand Three Hundred Eighty Thirty Bolivars and five cents (2,167,183.35 BsF.)'
+            mega_ley_GF: "Detailed List of Applicants Funding, Sent by the Fondas's Regional Office in the state of Cojedes, Memorandum No. GF 247/2011 dated 13/05/2011."
+            integrante_eliminado_con_exito: 'Member successfully removed'
+            integrante_agregado_con_exito: 'Member successfully added'
+          Errores:
+            debe_agregar_integrante: 'You must add a member to the committee with sign'
+            llenar_datos_instancia: 'Please fill instance data, edit icon.'
+            datos_creados_deben_tener_decision: 'Todos los trámites del último comité creado deben tener una decisión.'
+            error_en_creacion: 'Error creating the committee.'
+            no_existen_tramites_para_nuevo_comite: 'No steps to create a new committee.'
+            requeridos_integrante_rol: 'The member and the role are required'
+            requerido_rol: 'The role is required'
+            requerido_integrante: 'The member is required'
+          Tipos:
+            presidenta: 'PRESIDENT'
+            principal: 'PRINCIPAL'
+            suplente: 'RESERVE'
+            secretaria: 'SECRETARY'
+            consultor_juridico: 'COUNSEL'
+        ImputacionesMaquinaria:
+          Header:
+            form_title: 'Allocation to Modify'
+            nacional: 'National'
+            internacional: 'International'
+          Separador:
+            maquinaria_nacional: 'National Machinery'
+            maquinaria_internacional: 'International Machinery'
+        ItemAtributo:
+          Header:
+            form_title: 'Modifying Item'
+            form_title_view: 'Item Consulting'
+        Item:
+          Header:
+            form_tite: 'List of Items'
+        MarcaMotor:
+          Etiquetas:
+            nombre: 'Brand'
+        MotivoVisita:
+          Etiquetas:
+            nombre: 'Reason'
+        Oficina:
+          Tabs:
+          Etiquetas:
+            datos_coord: 'Data Coordinator:'
+            datos_gefe_brigada: 'Data Supervisor:'
+            departamentos: 'Departaments:'
+        SolicitudConsultoriaJuridica:
+          Mensajes:
+            recordar_papel: 'Remember to place legal paper in the printer'
+            notas_autenticacion: 'Authentication Notes'
+            acta_entrega: 'Proceeding of Delivery'
+            actas_entrega: 'Proceedings of Deliveries'
+            debe_seleccionar_abogado: 'You must select a Lawyer'
+            no_existe_planilla: 'There is no template for this type of contract'
+        ParametroGeneral:
+          Labels:
+            ano_comite: 'Year of Constitution Committee Effective'
+            anos_subsiguientes: 'Subsequent Years'
+            caducidad_casa_proveedora: 'Expiration Provider House'
+            caducidad_orden_despacho: 'Expiry Order Dispatch'
+            advertencia: 'If the field is zero, the credit expired pass happen, when the last installment of the same this up. If you have a value greater than zero, the credit will go up when the fees due are greater than or equal to the value of this field'
+            calendario: 'Calendar'
+            cantidad_cuotas_pase_vencido: 'Instalments Due To Go to Expired'
+            cantidad_cuotas_vencidas: 'Number of installments due'
+            cantidad_maxima_cuotas_cobro: 'Fees Maximum Amount required to send the collection'
+            ciclo_facturacion: 'Billing Cycle'
+            coordinacion_presupuestaria: 'Coordination of the Budget Execution Control'
+            coordinacion_seguimiento: 'Coordination Monitoring / Banking Specialist'
+            coordinacion_tecnica: 'Coordination of Monitoring and Technical Assistance'
+            correo_liquidacion: 'Email to Settlement'
+            correo_tesoreria: 'Email to Treasury'
+            cuotas: 'Odds'
+            dia_primer_ciclo: 'Day of the Month of First Cycle'
+            dia_segundo_ciclo: 'Day of the Month of the Second Cycle'
+            dias_gracia_mora: 'Days of Grace de la Mora'
+            edad_mora: 'Age of Mora'
+            exonerar_interes_desembolso: 'Exempt Interest Closing'
+            plazo_maximo_orden_despacho: 'Deadline to dispatch order issued prior to the expiration'
+            fijo: 'Fixed'
+            fuente: 'Source'
+            expresado_ut: 'U.T.'
+            gerencia_cooperacion: 'Executive Management Cooperation and National Funding'
+            habil: 'Business'
+            interfase_integracion: "Administrative system integration"
+            interlineado: 'Leading'
+            margen_derecho: 'Right Margin'
+            margen_inferior: 'Bottom Margin'
+            margen_izquierdo: 'Left Bank'
+            margen_superior: 'Top Margin'
+            maximo_integrantes_grupos: 'Maximum members per group'
+            minimo_integrante_grupos: 'Minimum members per group'
+            monto_maximo_comite: 'Credit Committee (upper band)'
+            monto_maximo_comite_nacional: 'National Committee Approval Amount'
+            monto_maximo_fianza_solidaria: 'Maximum Amount to Register for a bond in'
+            monto_maximo_prestamo_cooperativa: 'Maximum Amount of Loan Cooperative'
+            monto_maximo_prestamo_integrante_uea: 'Maximum Amount of Loan Integrative UEA'
+            monto_maximo_prestamo_comite: 'maximum amount of a loan that the Committee may approve'
+            monto_minimo_directorio: 'Executive Directors (lower band)'
+            monto_maximo_directorio: 'Executive Directors (upper band)'
+            numero_acta_cooperativa: 'Number of Cooperative Committee Act Now'
+            numero_acta_individual: 'Number of Individual Committee Act Now'
+            numero_acta_liquidacion_cooperativa: 'Number of Cooperative Settlement Act Now'
+            numero_acta_liquidacion_individual: 'Number of Individual Settlement Act Now'
+            numero_acta_reestructuracion: 'Acta nNumber Restructuring Committee'
+            numero_acta_liquidacion_uea: 'Number UEA Settlement Act Now'
+            numero_acta_uea: 'Number UEA Committee Act Now'
+            numero_comite: 'Number of Effective Committee'
+            numero_contrato_inicial: 'Initial Contract Number'
+            numero_grupo_inicial: 'Initial Group Number'
+            numero_prestamo_inicial: 'Number of Initial Financing'
+            numero_seguimiento_inicial: 'Start Tracking Number'
+            numero_solicitud_cooperativa: 'Initial Application Number (Cooperative)'
+            numero_solicitud_individual: 'Initial Application Number (Single)'
+            numero_solicitud_uea: 'Initial Application Number (UEA)'
+            penalizacion_mora: 'Composed Mora (Mora + tax rate in effect)'
+            plazo_maximo_reestructurados: 'Maximum Term Financing Restructured'
+            presidente: 'President'
+            porcentaje_arrime_reestructuracion: 'Percentage of Artime for Restructuring'
+            porcentaje_insuficiencia_garantia: 'Failure Rate Guarantee'
+            porcentaje_maximo_tapp: 'Maximum Percentage Beneficiary TAPP Apply'
+            porcentaje_minimo_tapp: 'TAPP Apply Minimum Percentage Beneficiary'
+            prestamos: 'Financing'
+            primer_ano: 'First Year'
+            ruta_administrativo: 'Path WSDL Administrative system'
+            solvencia_crediticia: 'Creditworthiness'
+            tamano_fuente: 'Font Size'
+            tasa_maxima_mora: 'Maximal rate Mora'
+            tipo_dia: 'type days'
+            tipo_dia_gracia_mora: 'type Mora Grace Day'
+            valor_dolar: 'dollar'
+            valor_unidad: 'Value Tax Unit'
+            variable: 'Variable'
+            vigencia_clave: 'Survival of the key'
+          Separadores:
+            aprobacion_prestamos: 'Loan Approval'
+            cobranzas: 'Collection'
+            configurar_pagina: 'Contract Page Setup'
+            comite: 'Committee'
+            contratos_actas: 'Contracts / Minutes'
+            criterio_creditos_vencidos: 'Criteria for Overdue loans'
+            desembolsos: 'Disbursements'
+            dia_vencimiento_cuota: 'fee Expiration Day'
+            divisas: 'Currencies'
+            fianzas_solidarias: 'Solidarity Bond'
+            firmas: 'Signatures'
+            facturacion: 'Billing'
+            forma_detener_mora: 'How to stop the Mora Mortatge'
+            grupos: 'Groups'
+            interfases: 'Integration Interfaces'
+            mora: 'Mora'
+            notificaciones: 'Notifications'
+            orden_despacho: 'dispatch orders'
+            porcentaje_sras: 'Percentage SRAS'
+            porcentaje_sras_maquinaria: 'Percentage SRAS Machinery'
+            rangos_aprobacion: 'Instances Ranges Approval'
+            reestructuracion: 'Restructuring'
+            seguridad: "Security"
+            solicitudes: 'Solicitudes'
+            solvencia_crediticia: 'creditworthiness'
+            tasas: 'Fees'
+        Partida:
+          Header:
+            form_title: 'List of entries'
+        PrecioGaceta:
+          Tabs:
+            gacetas_oficiales: 'Official Gazettes'
+            precios_gaceta: 'Prices Gazette'
+        PresupuestoPidan:
+          Header:
+            form_title_seleccionar: 'Select the type of record'
+            debe_seleccionar_estado: 'You must select a state to continue'
+            seleccionar_origen_fondos: 'Select the Source of Funds'
+            seleccionar_destino_fondos: 'Select the Destination of Funds'
+          Mensajes:
+            ya_existe: ! 'The budget for the program: %{programa_nombre}, State: %{estado_nombre} for Sub Sector: %{sub_rubro.nombre} already exists'
+            se_creo: ! 'The budget for the program: %{programa_nombre}, State: %{estado_nombre} for Sub Sector: %{sub_rubro_nombre} was successfully created'
+            no_se_puede_efectuar_transferencia: 'You can not make transfers between different programs'
+            transferencia_con_exito: ! 'The transfer budget has been updated successfully \nSource: %{programa_nombre} / %{estado_nombre} / %{sub_rubro_nombre}. \nDestination: %{programa_nombre_destino} / %{estado_nombre_destino} / %{sub_rubro_nombre_destino}'
+            se_actualizo: ! 'The budget for the program %{programa_nombre} in the state: %{estado_nombre} for Sub Sector: %{sub_rubro_nombre} was successfully updated'
+            presupuesto_asignado: 'Budget Allocated'
+            se_actualizaron_con_exito: 'The procedures were updated successfully'
+            no_existe_presupuesto_asignado: 'There is no budget for this sub-item in the state'
+        Rubro:
+          Header:
+            form_title: 'List of Items'
+        Sector:
+          Header:
+            form_title: 'Productive Sectors List'
+        SubRubro:
+          Header:
+            form_title: 'Sub List Items'
+        Silo:
+          Etiquetas:
+            nombre_silo: 'Silo name'
+        SitioColocacion:
+          Etiquetas:
+            sitio: 'Site'
+          sitio_colocacion: 'Site Placement'
+        SubSector:
+          Header:
+            form_title: 'Productive Sectors Sub List'
+        Usuario:
+          Etiquetas:
+            cedula_usuario: 'User ID'
+            clave: 'Password'
+            nombre_usuario: 'User Name'
+            super_usuario: '¿Is Super User?:'
+            roles: 'Rols'
+          Imprimir:
+            detalle_usuario: 'User Detail'
+            fecha_impresion: 'Print Date'
+            hora_impresion: 'Print Time '
+            seguridad_informacion: 'Security Information'
+            nombre_usuario: 'User Name'
+            nombre_rol: 'Name Rol'
+            opciones: 'Options'
+            acciones: 'Actions'
+          CambiarClave:
+            Etiquetas:
+              cambiar_clave: 'Change Password'
+              clave_nueva: 'New Password'
+              confirmar_clave: 'Password Confirm'
+        UsuarioClave:
+          Etiquetas:
+            clave_anterior: 'Old Password'
+            confirmar_clave: 'Password Confirm'
+            nueva_clave: 'New Password'
+          Titulos:
+            modificar_clave: 'Change Password'
+        UsuarioRol:
+          Etiquetas:
+            modificando_usuario: 'User Update'
+            consultando_usuario: 'User Show'
+        Telecobranzas:
+          Etiquetas:
+            agregar_compromiso_pago: 'Add Payment Commitment'
+            agregar_telecobranzas: 'Add Telecommitment'
+            cantidad_intentos: 'Number of Attempts'
+            compromiso: 'Payment Commitment?'
+            compromiso_pago: 'Payment Commitment'
+            motivo_atraso: 'Reason for Delay'
+            persona_atendio: 'Attended Person'
+            resultado_llamada: 'Call Result?'
+            telecobranzas: 'Telecommitment'
+        TransaccionContable:
+          Etiquetas:
+            nombre_transaccion_contable: 'Accounting Transaction Name'
+        TipoArtePesca:
+          Tipos:
+            atarrayas: 'Fishing Nets'
+            cordeles: 'TWINE'
+            palangres: 'LONGLINE'
+            nasas: 'POT'
+            redes: 'NETWORKS'
+        VisitaSolicitud:
+          Etiquetas:
+            cedula_rif: 'Charter/Rif'
+            asignacion: 'Assignment'
+            transcurrido: 'Lapsed'
+
+  LibreriaNumberToWords:
+    numeros:
+      un: 'one'
+      dos: 'two'
+      tres: 'three'
+      cuatro: 'four'
+      cinco: 'five'
+      seis: 'six'
+      siete: 'seven'
+      ocho: 'eight'
+      nueve: 'nine'
+    decenas:
+      diez: 'ten'
+      veinte: 'twenty'
+      treinta: 'thirty'
+      cuarenta: 'forty'
+      cincuenta: 'fifty'
+      sesenta: 'sixty'
+      setenta: 'seventy'
+      ochenta: 'eighty'
+      noventa: 'ninety'
+    centenas:
+      cien: 'hundred' 
+      ciento: 'one hundred' 
+      doscientos: 'two hundred' 
+      trescientos: 'three hundred' 
+      cuatrocientos: 'four hundred' 
+      quinientos: 'five hundred' 
+      seiscientos: 'six hundred' 
+      setecientos: 'seven hundred' 
+      ochocientos: 'eight hundred' 
+      novecientos: 'nine hundred'
+    mil: 'thousand'
+    cero: 'zero'
+    del_diez_al_diecinueve:
+      diez: 'ten' 
+      once: 'eleven'
+      doce: 'twelve'
+      trece: 'thirteen' 
+      catorce: 'fourteen' 
+      quince: 'fifteen' 
+      dieciseis: 'sixteen' 
+      diecisiete: 'seventeen' 
+      dieciocho: 'eighteen' 
+      diecinueve: 'nineteen'
+    del_veinte_al_veintinueve:
+      veinte: 'twenty' 
+      veintiun: 'twenty one' 
+      veintidos: 'twenty two' 
+      veintitres: 'twenty three' 
+      veinticuatro: 'twenty four' 
+      veinticinco: 'twenty five' 
+      veintiseis: 'twenty six' 
+      veintisiete: 'twenty seven' 
+      veintiocho: 'twenty eight' 
+      veintinueve: 'twenty nine'
+    terminacion_singular: 'on'
+    terminacion_plural: 'ons'       
+  date:
+    abbr_day_names:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    abbr_month_names:
+    -
+    - jan
+    - feb
+    - mar
+    - apr
+    - may
+    - jun
+    - jul
+    - aug
+    - sep
+    - oct
+    - nov
+    - dec
+    day_names:
+    - sunday
+    - monday
+    - tuesday
+    - wednesday
+    - thursday
+    - friday
+    - saturday
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%A, %d of %B of %Y'
+      short: ! '%d of %b'
+    month_names:
+    -
+    - january
+    - february
+    - march
+    - april
+    - may
+    - june
+    - july
+    - august
+    - september
+    - october
+    - november
+    - december
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: about 1 hour
+        other: about %{count} hours
+      about_x_months:
+        one: about 1 month
+        other: about %{count} months
+      about_x_years:
+        one: about 1 year
+        other: about %{count} years
+      almost_x_years:
+        one: almost 1 year
+        other: almost %{count} years
+      half_a_minute: half a minute
+      less_than_x_minutes:
+        one: less than 1 minute
+        other: less than %{count} minutes
+      less_than_x_seconds:
+        one: less than 1 second
+        other: less than %{count} seconds
+      over_x_years:
+        one: over 1 year
+        other: more than %{count} years
+      x_days:
+        one: 1 day
+        other: ! '%{count} days'
+      x_minutes:
+        one: 1 minute
+        other: ! '%{count} minutes'
+      x_months:
+        one: 1 month
+        other: ! '%{count} months'
+      x_seconds:
+        one: 1 second
+        other: ! '%{count} seconds'
+    prompts:
+      day: Day
+      hour: Hour
+      minute: Minute
+      month: Month
+      second: Seconds
+      year: Year
+  errors: &errors
+    format: ! '%{message}'
+    messages:
+      accepted: must be accepted
+      blank: can not be blank
+      confirmation: does not coincide with the confirmation
+      empty: can not be empty
+      equal_to: must be equal to %{count}
+      even: must be an even number
+      exclusion: is reserved
+      greater_than: must be greater than %{count}
+      greater_than_or_equal_to: must be greater than or equal to %{count}
+      inclusion: not included in the list
+      invalid: is invalid
+      less_than: must be less than %{count}
+      less_than_or_equal_to: must be less than or equal to %{count}
+      not_a_number: is a number
+      not_an_integer: must be an integer
+      odd: must be an odd number
+      record_invalid: ! 'Validation failed: %{errors}'
+      taken: already been taken
+      too_long:
+        one: ! 'is too long (maximum 1 character)'
+        other: ! 'is too long (max %{count} characters)'
+      too_short:
+        one: ! 'is too short (minimum 1 character)'
+        other: ! 'is too short (minimum %{count} characters)'
+      wrong_length:
+        one: ! 'wrong length (should be 1 character)'
+        other: ! 'wrong length (should be %{count} characters)'
+    template:
+      body: ! 'Check that the following fields are valid:'
+      header:
+        one: ! '%{model} could not be saved due to 1 error'
+        other: ! '%{model} could not be saved due to %{count} errors'
+  helpers:
+    select:
+      prompt: Please select
+    submit:
+      create: Create %{model}
+      submit: Save %{model}
+      update: Update %{model}
+  number:
+    currency:
+      format:
+        delimiter: ! ','
+        format: ! '%u%n'
+        precision: 0
+        separator: .
+        significant: false
+        strip_insignificant_zeros: false
+        unit: $
+    format:
+      delimiter: ! ','
+      precision: 2
+      separator: .
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion: one billion
+          million: million
+          quadrillion: trillion
+          thousand: thousand
+          trillion: billion
+          unit: ''
+      format:
+        delimiter: ! ','
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ! ','
+    precision:
+      format:
+        delimiter: ! ','
+  support:
+    array:
+      last_word_connector: ! ' and '
+      two_words_connector: ! ' and '
+      words_connector: ! ', '
+  time:
+    am: am
+    formats:
+      default: ! '%a, %d of %b of %Y at %H:%M:%S %Z'
+      gebos_short: ! '%d/%m/%Y'
+      gebos_short2: ! '%d-%m-%Y'
+      gebos_txt_banco: ! '%Y%d%m'
+      gebos_large: ! '%d of %b of %Y at %H:%M:%S'
+      gebos_inverted: ! '%Y/%m/%d'
+      gebos_inverted2: ! '%Y-%m-%d'
+      long: ! '%A, %d of %B of %Y at %I:%M %p'
+      short: ! '%d of %b at %H:%M hrs'
+      gebos_time_short: ! '%I:%M:%S, %p'
+      hora_corta: ! '%I:%M:%S %p'
+      hora_banco: '%H%m%s'
+    pm: pm
+  # remove these aliases after 'ActiveModel' and 'activerecord' namespaces are removed from Rails repositor
+  Idiomas:
+    idioma1: 'Spanish'
+    idioma2: 'English'
+    idioma3: 'Arabic'
+    idioma4: 'Czech'
+    idioma5: 'Danish'
+    idioma6: 'German'
+    idioma7: 'Finnish'
+    idioma8: 'French'
+    idioma9: 'Hungarian'
+    idioma10: 'Italian'
+    idioma11: 'Japanese'
+    idioma12: 'Dutch'
+    idioma13: 'Polish'
+    idioma14: 'Portuguese'
+    idioma15: 'Russian'
+    idioma16: 'Slovak'
+    idioma17: 'Swedish'
+    idioma18: 'Chinese'
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors
+  will_paginate:
+    previous_label: "&#8592; Previous page"
+    next_label: "Next page &#8594;"
+    page_gap: "&hellip;"

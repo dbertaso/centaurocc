@@ -1,0 +1,64 @@
+
+<table>
+	<tr>
+		<td style="width: 60px">
+			<label># <%=I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.comite')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= @comite.numero  -%>
+
+		</td>
+	</tr>
+          <tr>
+		<td style="width: 200px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.instancia') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.aprobacion')%></label>
+		</td>
+		<td style="width: 620px">
+		<%= @comite.instancia_tipo.nombre  -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.fecha')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= @comite.fecha_apertura_f -%>
+		</td>
+	</tr>	
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.hora')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= @comite.hora_apertura -%>: <%= @comite.minuto_apertura -%> <%= @comite.meridiano_apertura -%>
+		</td>
+	</tr>	
+	<tr>
+		<td valign="top">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.lugar')%></label>
+		</td>
+		<td>
+			<%= @comite.lugar -%>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
+			<label><%=I18n.t('Sistema.Body.General.direccion')%></label>
+		</td>
+		<td>
+			<%= @comite.direccion -%>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" colspan="2">
+			<label><span style="color: #FF0000"><%=I18n.t('Sistema.Body.Vistas.General.miembros') << " " << I18n.t('Sistema.Body.Vistas.General.del') %> <%= @form_title_record %> '<%= @comite.numero %>' </span></label>
+		</td>		
+	</tr>
+
+</table>
+
+<br>
+
+<div id="list-miembro">
+<%= render :partial => 'list_miembro_view' -%>
+</div>

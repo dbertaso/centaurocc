@@ -1,0 +1,186 @@
+<script>
+  var a = <%= @mostrar %>
+  a = a * 1
+  if (a != 0){
+    if (a == 1){
+      alert("<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Messages.fecha_rechazo') %>");
+      window.close();
+    }
+    if (a == 2){
+      alert("<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Messages.formato_fecha_rechazo_incorrecto') %>");
+      window.close();
+    }
+    if (a == 4){
+      alert("<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Messages.no_hay_registro_rechazo') %>");
+      window.close();
+    }
+  
+  }
+  
+  function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+  }
+  function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+  }
+</script>
+<div text-align:center;>
+     <br/><br/>
+  <table align="center" width="1180px" border="1">
+    <tr>
+      <td style="width: 100%">
+        <table width="100%" border="0">
+          <tr>
+            <td style="width: 20%; text-align: left">
+              <%= image_tag('logo_reporte.gif') %>
+            </td>
+            <td align="center">
+              <label style="font-size: 16px"> <%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.FormTitlesRechazo.form_title_records') %>
+              </label>
+            </td>
+            <td style="width: 28%; text-align: right" valign="top">
+              <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.fecha_rechazo') %>:</label> <%= @fecha_rechazo  %> <br/> 
+              <%if @rechazo_cobranza.length > 0%>
+                <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.nombre_archivo') %>:</label> <%= @rechazo_cobranza[0].archivo  %>
+              <%end%>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+
+  <br/><br/><br/><br/>
+  <table class="lista" align="center" style="width: 90%">
+
+    <tr>
+      <th style="width: 10px">
+        <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numeral') %></label>
+      </th>
+
+      <th style="width: 70px">
+        <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numero_prestamo') %></label>
+      </th>
+
+      <th style="width: 70px">
+        <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numero_solicitud') %></label>
+      </th>
+
+      <th style="width: 140px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.cliente') %></label>
+      </th>
+
+      <th style="width: 60px">
+        <label><%=  I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif') %></label>
+      </th>
+
+      <th style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.monto')%></label>
+      </th>
+
+      <th style="width: 100px">
+        <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numero_cuenta') %></label>
+      </th>
+
+      <th style="width: 200px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.banco') %></label>
+      </th>
+
+      <th style="width: 40px">
+        <label><%=I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.codigo_error')%></label>
+      </th>
+
+      <th style="width: 200px">
+        <label><%=I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.descripcion_error')%></label>
+      </th>
+
+    </tr>
+
+    <% unless @rechazo_cobranza.nil?
+      clase = "lista0"
+      nro = 0
+      total = 0.00
+      moneda = ""
+      @rechazo_cobranza.each { |rechazo| %>
+        <tr id="cob_<%= rechazo.rechazo_cobranza_id %>" class='<%= clase %>'>
+          <td><%= nro = nro + 1 %></td>
+          <td>
+            <%= rechazo.prestamo_numero %>
+          </td>
+
+          <td>
+            <%= rechazo.numero_solicitud %>
+          </td>
+
+          <td>
+            <%= rechazo.nombre_cliente %>
+          </td>
+
+          <td align="center">
+            <%= rechazo.cedula_rif %>
+          </td>
+
+          <td align="right">
+            <%= format_fm(rechazo.monto_pago) %>
+          </td>
+
+          <td align="center">
+            <%= rechazo.numero_cuenta unless rechazo.numero_cuenta.nil? %>
+          </td>
+
+          <td>
+            <%= rechazo.entidad_financiera %>
+          </td>
+
+          <td>
+            <%= rechazo.codigo_error%>
+          </td>
+
+          <td>
+            <%= rechazo.descripcion_error%>
+          </td>
+
+        </tr>
+        <% if clase == 'lista0'
+          clase = 'lista1'
+        else
+          clase = 'lista0'
+        end
+        total = total + rechazo.monto_pago
+        moneda = rechazo.moneda
+      }
+    end %>
+    <tr class='<%= clase %>'>
+      <td colspan="5" align="left">
+        <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.total_registro') %> <%= nro %></label>
+      </td>
+      <td colspan="6" align="left">
+        <label> <%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.total') %> <%= "#{format_fm(total)}  #{moneda}"%> </label>
+      </td>
+    </tr>
+
+  </table>
+  <br/><br/><br/><br/><br/>
+  <br/><br/><br/><br/><br/>
+
+  <table align="center" width="1120px" >
+    <tr>
+      <td colspan="4">
+        <div style="padding: 6px" align="center">
+          <form>
+            <div id = boton>
+              <input name="print" type="button" value="<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.boton_imprimir') %>" onclick="varitext()" />
+            </div>
+          </form>
+        </div>
+      </td>
+    </tr>
+  </table>
+

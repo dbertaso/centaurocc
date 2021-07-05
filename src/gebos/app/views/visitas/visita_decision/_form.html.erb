@@ -1,0 +1,136 @@
+<table width="100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.sugerencia_recomendacion')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 350px">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.realizo_lavor_recomendacion')%></label><label style="color: red"> *</label>
+    </td>
+    <td style="width: 600px">
+      <%= radio_button 'decision_visita', 'labor_visitas_previas', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%> &nbsp;
+      <%= radio_button 'decision_visita', 'labor_visitas_previas', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.continuidad_financiamiento')%></label><label style="color: red"> *</label>
+    </td>
+    <td>
+      <%= radio_button 'decision_visita', 'continuidad_financiamiento', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%> &nbsp;
+      <%= radio_button 'decision_visita', 'continuidad_financiamiento', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%> &nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.financiamiento_presenta_perdida')%></label><label style="color: red"> *</label>
+    </td>
+    <td>
+      <%if params[:siniestro_checked]=="1"%>
+        <%= radio_button 'decision_visita_presenta_siniestro',nil, 'true', :class=>'text', :onclick=>';actualizar_hidden(true);inputChange();' ,:checked=>true -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%> &nbsp;
+        <%= radio_button 'decision_visita_presenta_siniestro',nil, 'false', :class=>'text', :onclick=>';actualizar_hidden(false);inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%> &nbsp;&nbsp;&nbsp;&nbsp;<label id="mensajito" style="color: red"></label>
+      <%elsif params[:siniestro_checked]=="0"%>
+        <%= radio_button 'decision_visita_presenta_siniestro',nil, 'true', :class=>'text', :onclick=>';actualizar_hidden(true);inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%> &nbsp;
+        <%= radio_button 'decision_visita_presenta_siniestro',nil, 'false', :class=>'text', :onclick=>';actualizar_hidden(false);inputChange();' ,:checked=>true -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%> &nbsp;&nbsp;&nbsp;&nbsp;<label id="mensajito" style="color: red"></label>
+      <%else%>
+        <%= radio_button 'decision_visita_presenta_siniestro',nil, 'true', :class=>'text', :onclick=>';actualizar_hidden(true);inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%> &nbsp;
+        <%= radio_button 'decision_visita_presenta_siniestro',nil, 'false', :class=>'text', :onclick=>';actualizar_hidden(false);inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%> &nbsp;&nbsp;&nbsp;&nbsp;<label id="mensajito" style="color: red"></label>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.medidas_financiamiento')%></label>
+    </td>
+    <td>
+      <%= select(
+        'decision_visita', 'caso_medida_id',
+        @caso_medida_select.map{|i| [i.descripcion, i.id]},
+        {:prompt =>  I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+        { :class=>'select',:onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.justificacion_medida_financiamiento')%></label>
+    </td>
+    <td>
+      <%= text_area 'decision_visita', 'justificacion', :class=>'text', :style=>'width: 600px; height: 50px',
+        :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.labores_realizar_beneficiario')%></label>
+    </td>
+    <td>
+      <%= text_area 'decision_visita', 'labores_por_realizar',  :class=>'text',
+        :style=>'width: 600px; height: 50px',  :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.recomendacion_sugerencia_tecnico')%></label>
+    </td>
+    <td>
+      <%= text_area 'decision_visita', 'recomendaciones', :class=>'text',
+        :style=>'width: 600px; height: 50px',  :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+
+  <%
+  #nuevo codigo
+  unless @visitas.solicitud.por_inventario %>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.recomienda_generacion_desembolso')%></label><label style="color: red"> *</label>
+      </td>
+      <td>
+        <%= radio_button 'decision_visita', 'recomienda_generar_desembolso', 'true',
+          :class=>'text', :onclick=>"#{remote_function(:method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+        :url=>{:controller=>'visita_decision',
+        :action=>:change_decision }, :with=>"'decision='+value+'&id=#{@visitas.id}'")}; inputChange();" -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%> &nbsp;
+        <%= radio_button 'decision_visita', 'recomienda_generar_desembolso', 'false',
+          :class=>'text', :onclick=>"#{remote_function(:method=>:get, :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")', :url=>{:controller=>'visita_decision',
+        :action=>:change_decision }, :with=>"'decision='+value+'&id=#{@visitas.id}'")};inputChange();" -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%> &nbsp;
+      </td>
+
+    </tr>
+  <%end%>
+  <tr>
+    <td colspan="2">
+      <span id="decision-div">
+        <table>
+
+          <% if @visitas.solicitud.sub_sector.nemonico=="VE" && @decision=='true' %>
+
+            <td style="width: 300px">
+              <label><%= I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.superficie_recomendada') %></label>
+            </td>
+            <td style="width: 600px">
+              <%= text_field 'seguimiento_cultivo', 'superficie_recomendada_f', :class=>'text',
+                :style=>'width: 150px',  :onkeypress=>'inputChange();',
+                :maxlength=>'100' -%> <%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')}#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+            </td>
+          <% end %>
+        </table>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: left"></td>
+  </tr>
+</table>
+

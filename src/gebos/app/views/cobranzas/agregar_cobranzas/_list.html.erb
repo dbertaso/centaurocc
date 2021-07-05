@@ -1,0 +1,57 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+
+    <th style="width: 130px" <%= sort_class_helper('prestamo.numero')%>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}", 'prestamo.numero', 'list' %>
+    </th>
+
+    <th style="width: 130px">
+      <%= "#{I18n.t('Sistema.Body.Vistas.Form.estatus')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}" %>
+    </th>
+
+    <th style="width: 130px" <%= sort_class_helper('solicitud.sector_id')%>>
+      <%=  sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sector'), 'solicitud.sector_id', 'list' -%>
+    </th>
+
+    <th style="width: 130px" <%= sort_class_helper('solicitud.sub_sector_id')%>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sub_sector'), 'solicitud.sub_sector_id', 'list' -%>
+    </th>
+
+    <th style="width: 120px" <%= sort_class_helper('capital_vencido')%>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.capital_vencido'), 'capital_vencido', 'list' %>
+    </th>
+
+    <th style="width: 120px" <%= sort_class_helper('prestamo.moneda.nombre') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda'), 'prestamo.moneda.nombre', 'list' %>
+    </th>
+
+    <th style="width: 150px" <%= sort_class_helper('cantidad_cuotas_vencidas')%>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.cuotas')} #{I18n.t('Sistema.Body.Vistas.General.vencidas')}", 'cantidad_cuotas_vencidas', 'list' %>
+    </th>
+
+    <th style="width: 150px" <%= sort_class_helper('dias_mora')%>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.dias')} #{I18n.t('Sistema.Body.Vistas.General.en')} #{I18n.t('Sistema.Body.Vistas.General.mora')}", 'dias_mora', 'list' %>
+    </th>
+
+    <th style="width: 150px" %>
+      <%= I18n.t('Sistema.Body.Vistas.AnalistaCobranzas.Etiquetas.analista_cobranzas') %>
+    </th>
+
+    <th style="width: 30px">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+    </th>
+
+  </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for prestamo in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :prestamo => prestamo, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,24 @@
+<%= form_title_edit @convenio_silo.numero_memorandum %>
+<%= render :partial=>'basico/silo/common/tabs' %>
+<div class="marco-contenido">
+  <%= render :partial=>'basico/convenio_silo/common/tabs' %>
+  <div class="marco-contenido2">
+    <%= error %>
+    <%= message %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',  :loaded => 'image_unload()', :url => { :action => :save_edit, :id=>@convenio_silo.id} ) do -%>
+    </br>
+    <%= render :partial => 'form' %>
+
+    </br>
+    <div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit %>
+    </div>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+      { :action => :index, :silo_id=>@silo.id}, { :id=>'button_close' } ) -%>
+
+    <% end -%>
+  </div>
+</div>

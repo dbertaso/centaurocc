@@ -1,0 +1,4 @@
+<% motores = @motores if motores.nil? %>
+<tr  id="row_<%= motores.id %>">
+	<%= render :partial => 'data_motores', :locals => { :motores => motores } -%>
+</tr>

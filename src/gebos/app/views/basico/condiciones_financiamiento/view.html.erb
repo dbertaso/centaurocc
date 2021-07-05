@@ -1,0 +1,141 @@
+<% condiciones_financiamiento = CondicionesFinanciamiento.find(params[:id]) %>
+<%= form_title_view @condiciones_financiamiento.sector.nombre + ' ' + @condiciones_financiamiento.sub_sector.nombre + ' ' + @condiciones_financiamiento.rubro.nombre %>
+
+<div class="marco-contenido2">
+
+<table width="100%" border="0">
+  <tr>
+    <td style="width: 30%">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.programa') %></label>
+    </td>
+    <td style="width: 70%">
+      <%= condiciones_financiamiento.programa.nombre %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.sector') %></label>
+    </td>
+    <td style="width: 70%">
+      <%= condiciones_financiamiento.sector.nombre %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.sub_sector') %></label>
+    </td>
+    <td>
+      <%= condiciones_financiamiento.sub_sector.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>
+        <%= I18n.t('Sistema.Body.Vistas.Form.rubro') %>
+      </label>
+    </td>
+    <td>
+      <span id="rubro-select">
+        <%= condiciones_financiamiento.rubro.nombre %>
+      </span>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.sub_rubro') %></label>
+    </td>
+    <td>
+      <span id="rubro-select">
+        <%= condiciones_financiamiento.sub_rubro.nombre %>
+      </span>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.actividad') %></label>
+    </td>
+    <td>
+      <span id="rubro-select">
+        <%= condiciones_financiamiento.actividad.nombre %>
+      </span>
+
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.metodo_amortizacion') %></label>
+    </td>
+    <td>
+      <span>
+        <%= condiciones_financiamiento.formula.nombre %>
+      </span>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.PlanPago.Columnas.frecuencia_pago') %></label>
+    </td>
+    <td>
+        <%= condiciones_financiamiento.frecuencia_pago_w  -%>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td>
+      <label>
+        <%= I18n.t('Sistema.Body.General.plazo')%>
+      </label>
+    </td>
+
+    <td>
+      <%= condiciones_financiamiento.plazo  %>
+    </td>
+  </tr>
+
+
+
+    <tr>
+      <td style="width: 30%">
+        <label>
+          <%=I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_gracia') %>
+        </label>
+      </td>
+      <td style="width: 70%">
+        <%= condiciones_financiamiento.periodo_gracia  -%>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 30%">
+        <label> <%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+      </td>
+      <td style="width: 70%">
+        <%= format_bool(condiciones_financiamiento.activo) %>
+      </td>
+     </tr>
+
+  </table>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.boton_modificar'))),
+    :action => :edit,
+    :id => condiciones_financiamiento.id,
+    :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

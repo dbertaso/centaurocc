@@ -1,0 +1,7 @@
+
+<%= select(
+      'producto', 'sub_sector_id',
+      @sub_sector_select.map{|i| [i.nombre, i.id]},
+      {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+      { :class=>'select', :onchange=>';inputChange();' } 
+    ) %>

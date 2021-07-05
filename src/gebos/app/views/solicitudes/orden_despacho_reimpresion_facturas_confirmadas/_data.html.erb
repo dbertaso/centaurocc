@@ -1,0 +1,101 @@
+<% orden_despacho = @orden_despacho if orden_despacho.nil? %>
+<td align="center">
+  <%= orden_despacho.numero %>
+</td>
+<td align="center">
+  <%= orden_despacho.cedula_rif  %>
+</td>
+<td align="center">
+  <%= orden_despacho.nombre %>
+</td>
+<td align="center"><font color="red"><b>
+  <%= orden_despacho.estatus %></font></b>
+</td>
+<td align="center">
+  <%= orden_despacho.rubro %>
+</td>
+<td align="center">
+  <%= orden_despacho.oficina_nombre %>
+</td>
+<td align="center">
+<%= orden_despacho.codigo_visita %>
+</td>
+<td align="center">
+<%= orden_despacho.fecha_orden_f %>
+</td>
+<td align="center">
+
+<%= orden_despacho.monto_fm %>
+
+</td>
+<td align="center"><font color="green"><b>
+<% 
+case orden_despacho.estatus_id
+ when 20000 %>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.por_generar_orden_despacho')%>
+ <%when 20010%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.generada_orden_despacho')%>
+  <%when 20020%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.emitida_orden_despacho')%>
+<%when 20030%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.cerrada_manualmente')%>
+<%when 20040%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.cerrada')%>
+<%when 20050%>
+  <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.parcialmente_entregada')%>
+<%when 20060%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.por_liquidar')%>
+<%when 20070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco')%>
+<%when 20080%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+  <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_banco')%>
+<%end%>
+</td></font></b>
+<td align="center">
+
+<%=orden_despacho.sumatoria_monto_total_factura_fm(orden_despacho.orden_despacho_id)%>
+
+</td>
+
+<td  align="center">
+
+<%
+
+usuario=Usuario.find(session[:id])
+
+ofici=Oficina.find(usuario.oficina_id)
+
+cedula_supervisor_asignado=ofici.cedula_nacionalidad.to_s.strip.upcase + " " + ofici.cedula_supervisor.to_s
+
+cedula_usuario=usuario.cedula_nacionalidad.to_s.strip.upcase + " " + usuario.cedula.to_s
+
+#logger.debug "cedula logeado " << cedula_usuario.to_s << " cedula supervisor " << cedula_supervisor_asignado.to_s
+
+if cedula_usuario == cedula_supervisor_asignado %>
+<!-- Proceso de reimpresion para el usuario administrador no debe de verse la marca de agua -->
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir'))), {:controller=>'orden_despacho_reimpresion_facturas_confirmadas', :action=>'imprimir',
+				:popup=>true, :solicitud_id=>orden_despacho.solicitud_id, :id=>orden_despacho.orden_despacho_id,:marca=>0 }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "','height=screen.height,width=screen.width, scrollbars=yes, resizable=false'); return false;")  %>  
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>'Reimprimir la Orden de Despacho Confirmadas por Supervisor'),
+				{ :controller=>'orden_despacho_reimpresion_facturas_confirmadas', :action=>'imprimir',
+				:popup=>true, :solicitud_id=>orden_despacho.solicitud_id, :id=>orden_despacho.orden_despacho_id,:marca=>0 },
+				:popup => ['orden_despacho_historico', 'height=screen.height,width=screen.width, scrollbars=yes, resizable=false'] %>      
+
+<%else%>
+<!-- Imprimir con marca de agua height=600,width=1030 -->
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir'))), {:controller=>'orden_despacho_reimpresion_facturas_confirmadas', :action=>'imprimir',
+				:popup=>true, :solicitud_id=>orden_despacho.solicitud_id, :id=>orden_despacho.orden_despacho_id,:marca=>1 }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "','height=screen.height,width=screen.width, scrollbars=yes, resizable=false'); return false;")  %>  
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>'Reimprimir la Orden de Despacho Confirmadas Solo Consulta'),
+				{ :controller=>'orden_despacho_reimpresion_facturas_confirmadas', :action=>'imprimir',
+				:popup=>true, :solicitud_id=>orden_despacho.solicitud_id, :id=>orden_despacho.orden_despacho_id,:marca=>1 },
+				:popup => ['orden_despacho_historico', 'height=screen.height,width=screen.width, scrollbars=yes, resizable=false'] %>
+
+<%end%>
+
+  </td>

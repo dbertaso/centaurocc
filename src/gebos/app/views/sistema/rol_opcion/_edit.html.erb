@@ -1,0 +1,47 @@
+<tr id="row_<%= @opcion.id %>_edit">
+  <td class="lista-form">
+  </td>
+  <td class="lista-form" colspan="4">
+    <%= form_title_edit @opcion.nombre %>
+    <%= error "row_#{@opcion.id}" %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :rol_id=> @rol.id, :id => @opcion.id } ) do %>
+    <table>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.grupo')%></label></td>
+        <td>
+          <%= @opcion.opcion_grupo.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Controladores.RolOpcion.FormTitles.form_title_record')%></label></td>
+        <td>
+          <%= @opcion.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.Opcion.Errores.ruta')%></label></td>
+        <td>
+          <%= @opcion.ruta %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.acciones')%></label>
+        </td>
+        <td id="accion_list">
+          <%= render :partial => 'accion_list', :locals=>{:edit=>true} %>
+        </td>
+      </tr>
+    </table>
+    <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method=>:get, :url => { :action => :cancel_edit, :rol_id=>@rol.id, :id=>@opcion.id}) -%>
+    <% end %>
+  </td>
+</tr>

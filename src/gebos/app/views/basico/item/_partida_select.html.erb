@@ -1,0 +1,7 @@
+<%= select(
+'item', 'partida_id',
+@partida_select.map{|c| [c.nombre, c.id]},
+{:prompt=>'Seleccione una Partida'},
+{ :class=>'select', :onchange=>'inputChange();' } ) %>
+
+

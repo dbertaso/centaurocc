@@ -1,0 +1,11 @@
+<% sub_sector_onchange = remote_function(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url=>{:controller=>'generacion_tabla',
+    :action=>:sub_sector_search },
+    :with=>"'id='+value") %>
+<%= select_tag(
+  'sub_sector_id',
+  [options_for_select([["Seleccione un sub sector", "0"]]),options_for_select(@sub_sector_select.map{|i| [i.nombre, i.id]})],
+  { :class=>'select', :onchange=>sub_sector_onchange + ';inputChange();'} )
+%>

@@ -1,0 +1,32 @@
+<div class="marco-contenido">
+<br>
+  <p align="center" style="width: 90%">
+  	<font size="4">
+  		<b>
+  			<%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.archivo_generado') %>
+  		</b>
+  	</font>
+  </p>
+<br>	
+	<table class="lista" style="width: 90%">
+		<tr>
+			<th><%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.entidad_financiera') %></th>
+			<th><%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.nombre_archivo') %></th>
+			<th><%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.cantidad_registros') %></th>
+			<th><%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.monto') %></th>
+			<th></th>
+		</tr>
+	<% @resultado.each {|lista|%>
+		<%= lista %>
+	<% } %>
+	</table>
+	
+	<br>
+	
+	<p align="center" style="width: 80%">
+		<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+				{ :action => :index },
+				{ :id=>'button_close',
+				  :confirm => I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.seguro_desea_cerrar')} ) -%></p>
+	
+</div>

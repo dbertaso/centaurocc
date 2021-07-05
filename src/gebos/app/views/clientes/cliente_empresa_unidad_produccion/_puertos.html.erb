@@ -1,0 +1,94 @@
+<script type="text/javascript">
+
+  function cargar_puerto()
+  {
+    document.getElementById("agregar_puerto").style.display= 'none';
+    var pars = "puerto_base[nombre_puerto]=" + encodeURIComponent(document.getElementById("puerto_base_nombre_puerto").value);
+    pars += "&unidad_produccion_id=<%= @unidad_produccion.id %>"
+    pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+    var myAjax = new Ajax.Request("/clientes/cliente_empresa_unidad_produccion/save_new_puertos?" + pars, {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onFailure: function(){ document.getElementById("agregar_utm").style.display= 'none'; }, onLoading:function(request){image_load()}}); return false;
+
+  }
+
+</script>
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<table style="width: 100%">
+  <br/>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.puerto_base')} #{I18n.t('Sistema.Body.Vistas.General.adicional')}" %></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 15%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label>
+    </td>
+    <% unless @unidad_produccion.id.nil? || @unidad_produccion.id.to_s.empty? %>
+      <td style="width: 85%">
+        <%= text_field 'puerto_base', 'nombre_puerto',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'200', :onkeypress=>'inputChange();'  -%>&nbsp;&nbsp;
+        <samp id="agregar_puerto">
+          <%= image_tag(I18n.t('Sistema.Body.Imagenes.agregar'),
+            :title=>'Agregar',
+            :onclick=>"javascript:cargar_puerto();",
+            :OnMouseOver=>"style.cursor='pointer'" ) %>
+        </samp>
+      </td>
+    <% else %>
+      <td style="width: 80%">
+        <%= text_field 'puerto_base', 'nombre_puerto', :disabled => 'true',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+      </td>
+    <tr>
+      <td colspan="2"> <label style="color: red">
+          <%= I18n.t('Sistema.Body.Modelos.Errores.debe_guardar_comunidad_pesquera_agregar_utm') %>
+        </label>
+      </td>
+    </tr>
+  <%end%>
+</tr>
+</table>
+<br/>
+<table class="lista" style="width: 50%">
+  <tr>
+    <th style="width: 90%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label>
+    </th>
+    <th style="width: 10%">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+    </th>
+  </tr>
+  <% unless @puerto_base_list.nil?
+    clase = "lista0"
+    @puerto_base_list.each { |puerto| %>
+      <tr id="puerto_<%= puerto.id %>" class='<%= clase %>'>
+        <td>
+          <%= puerto.nombre_puerto %>
+        </td>
+        <td align="center">
+          <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Eliminar'),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+            :id=>"button_enviar",
+            :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+            :url => {:action => :delete_utm,
+              :id => puerto.id,
+              :unidad_produccion_id=>puerto.unidad_produccion_id}) -%>
+        </td>
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+
+</table>
+<br/>

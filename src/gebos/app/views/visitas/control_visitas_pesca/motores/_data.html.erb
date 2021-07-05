@@ -1,0 +1,23 @@
+<% motores = @motores if motores.nil? 
+pro=ProveedorMarino.find(motores.proveedor_marino_id)
+%>
+<td align="center">
+  <%= motores.modelo_motor  %>
+</td>
+<td>
+  <%= pro.nombre %>
+</td>
+<td align="center">
+  <%= motores.ano %>
+</td>
+
+<td style="text-align: right">
+
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+    :url => {:controller => 'motores', :action => :edit, :id =>@visita, :id_equipo=>motores.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()', :loaded => 'image_unload()', :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'motores', :action => :delete, :id =>@visita, :id_equipo=>motores.id}) if vlink 'delete' -%>
+</td>
+

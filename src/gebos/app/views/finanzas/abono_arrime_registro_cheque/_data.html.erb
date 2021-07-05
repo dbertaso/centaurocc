@@ -1,0 +1,57 @@
+
+
+<td align="center" width="10"><input type="checkbox"
+                    name="orden_abono_excedente_arrime_id_<%=view_excedente_arrime.orden_abono_excedente_arrime_id%>" id="orden_abono_excedente_arrime_id_<%=view_excedente_arrime.orden_abono_excedente_arrime_id%>"
+                                  onClick="GenericcheckOne(this,form.todos,'orden_abono_excedente_arrime_id'); abrirCampos(this, '<%= view_excedente_arrime.orden_abono_excedente_arrime_id %>')" value="<%= view_excedente_arrime.orden_abono_excedente_arrime_id %>" /></td>
+
+<td align="center" width="120">	
+<%= calendar_date_select_tag "fecha_registro_cheque_#{view_excedente_arrime.orden_abono_excedente_arrime_id}", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off',:disabled=>"true", :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %>
+</td>
+
+<td align="center"><%= text_field_tag "numero_cheque_#{view_excedente_arrime.orden_abono_excedente_arrime_id}", '',
+  :class=>'text', :style=>'width: 100px', :maxlength=>'15', :disabled=>"true" -%>
+</td>
+
+<td align="center">
+  <%= view_excedente_arrime.cedula_rif %>
+</td>
+<td align="center">
+  <%= view_excedente_arrime.beneficiario %>
+</td>
+<td align="center">
+  <%= view_excedente_arrime.nro_tramite %>
+</td>
+<td align="center">
+  <%= view_excedente_arrime.nro_prestamo %>
+</td>
+<td align="center">
+  <%= view_excedente_arrime.estado %>
+</td>
+<td align="center">
+  <%= view_excedente_arrime.sector %>
+</td>
+<td align="center">
+  <%= view_excedente_arrime.rubro %>
+</td>
+<td align="center">
+  <%= SubRubro.find(view_excedente_arrime.sub_rubro_id).nombre.to_s unless SubRubro.find(view_excedente_arrime.sub_rubro_id).nil?%>
+</td>
+<td align="center">
+  <%= Actividad.find(view_excedente_arrime.actividad_id).nombre.to_s unless Actividad.find(view_excedente_arrime.actividad_id).nil? %>
+</td>
+
+
+<td align="center">
+  <% estatus = Estatus.find(view_excedente_arrime.estatus_excedente) %>
+  <strong><%=  estatus.nombre unless estatus.nil? %></strong>
+</td>
+<td style="text-align: right">
+	<%= format_fm(view_excedente_arrime.monto_abono)%>
+</td>
+
+
+<td style="text-align: center">
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), {:controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>view_excedente_arrime.solicitud_id, :accion=>'1' ,:popup=>true  }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>view_excedente_arrime.nro_tramite) + "','height=600,width=1100, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+</td>
+
+

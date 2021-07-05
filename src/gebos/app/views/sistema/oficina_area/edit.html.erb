@@ -1,0 +1,24 @@
+<%= form_title_edit @oficina_area_influencia.estado.nombre %>
+
+<%= render :partial=>'sistema/oficina/common/tabs' %>
+<div class="marco-contenido2">
+  <%= error  %>
+  <%= message  %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :oficina_id => @oficina.id, :id => @oficina_area_influencia.id, :popup=>params[:popup] } ) do -%>
+
+    <%= render :partial => 'form' %>
+
+    <div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit :oficina_id => @oficina.id, :popup=>params[:popup] %>
+    </div>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+      { :action => :index, :oficina_id => @oficina.id, :popup=>params[:popup] },
+      { :id=>'button_close', } ) -%>
+
+  <%end-%>
+</div>

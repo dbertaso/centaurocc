@@ -1,0 +1,4 @@
+<% proforma = @proforma if proforma.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= proforma.id %>">
+  <%= render :partial => 'data', :locals => { :proforma => proforma, :even_odd => even_odd } -%>
+</tr>

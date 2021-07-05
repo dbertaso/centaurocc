@@ -1,0 +1,72 @@
+  <div align="center">
+    <table>
+      <tr style="width: 100%">
+        <td class="separador" valign="bottom" colspan="3" >
+          <span style="text-align: center">
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.sms')}" %>
+          </span>
+        </td>
+      </tr>    
+    </table>
+  <br>
+  <table>
+    <tr>
+      <td>
+        <label style="width: 30%">
+          <%= I18n.t('Sistema.Body.Vistas.General.telefonos') %>
+          <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>        
+        </label>
+      </td>
+
+      <td style="width: 40%">
+
+
+        <%= select_tag(:telefono,
+                        options_for_select(@telefonos.map {|i| [i.codigo + '-' + i.numero, i.codigo + i.numero]},
+                        params[:telefono]),
+                        { :class=>'select',
+                          :prompt=> I18n.t('Sistema.Body.Vistas.General.seleccionar'),
+                          :onchange=>'inputChange();'
+                        }
+                      )%>
+      </td>
+      <td style="width: 30%"></td>   
+      <tr>
+      <td>
+        <label style="width: 30%">
+          <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.mensaje_sms') %>
+          <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>        
+        </label>
+      </td>
+
+      <td style="width: 40%">
+        <% sms_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method => :get,
+            :url=>{:controller=>'gestion_cobranzas',
+            :action=>:sms_change, :prestamo_id=>@prestamo.id, :analista_id=>@analista.id  },
+            :with=>"'id='+value") %>
+
+        <%= select_tag(:mensajes_sms_id,
+                        options_for_select(@mensajes_sms_select.map {|i| [i.nombre, i.id]},
+                        params[:mensajes_sms_id]),
+                        { :class=>'select',
+                          :prompt=> I18n.t('Sistema.Body.Vistas.General.seleccionar'),
+                          :onchange=>sms_onchange + ';inputChange(); '
+                        }
+                      )%>
+      </td>
+      <td style="width: 30%"></td>
+
+    </tr>
+  </table>
+
+    <div id="mensajes_sms" style="display: none;">
+
+      <%= render 'mensaje_sms' %>
+
+    </div>
+
+ </div>
+ 

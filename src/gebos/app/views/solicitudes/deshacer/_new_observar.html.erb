@@ -1,0 +1,56 @@
+<div id="errorCustomizado_<%=@solicitud.id%>">
+  <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+  </div>
+</div>
+
+<%= message %>
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :confirm => params[:pregunta_confirmacion],
+  :url => { :controller => 'reversar', :action => :reversar, :id=>@solicitud.id, :mensaje_exito => "#{I18n.t('Sistema.Body.Vistas.General.solicitud')} #{I18n.t('Sistema.Body.Vistas.General.numero')} #{@solicitud.numero} #{I18n.t('Sistema.Body.Vistas.General.fue_retornada_evaluacion_credito')}"} ) do -%>
+
+  <div class="marco-contenido2">	
+    <table style="width: 100%">
+      <tr>
+        <td class="form-titulo" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.General.observacion') %></span>
+
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%">	
+      <tr>
+        <td>
+          <%= @control_solicitud[0].comentario if !@control_solicitud[0].nil?-%>
+
+        </td>
+      </tr>
+      <% if !@solicitud.causa_liberacion.nil? %>
+        <tr>
+          <td>
+            <a onclick="if (confirm(I18n.t('Sistema.Body.Modelos.Errores.mediante_podra_rehacer'))) { new Ajax.Request('/solicitudes/consulta_evaluacion_credito/redefinir_solicitud_reestructurada/<%=@solicitud.id%>', {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}}); return false;}" href="#"><%= I18n.t('Sistema.Body.Vistas.General.fue_retornada_tecnico') %></a>
+
+          </td>
+        </tr>
+      <% end %>
+      <input type="hidden" name="codigo" value="<%= @codigo %>"/>
+      <input type="hidden" name="codigo_exitoso" value="<%= @codigo_exitoso %>"/>
+      <tr>
+        <td colspan="2" align="left">
+          <div id="botones1" ><br>
+
+
+            <%= link_to_remote(
+              image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :method => :get,
+              :url => {:controller => 'reversar', :action => :hide_reversar, :id => @solicitud.id}) -%>&nbsp;	
+
+          </div>	
+        </td>
+      </tr>
+    </table>
+  </div>	
+<% end %>

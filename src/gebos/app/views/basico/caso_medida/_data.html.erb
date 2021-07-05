@@ -1,0 +1,25 @@
+<% caso_medida= @caso_medida if caso_medida.nil? %>
+
+<td>
+  <%= caso_medida.nombre  %>
+</td> 
+<td>
+  <%= caso_medida.descripcion  %>
+</td> 
+<td style="text-align: center">
+  <%= format_bool(caso_medida.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'caso_medida', :action => :edit, :id => caso_medida.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'caso_medida', :action => :delete, :id => caso_medida.id}) if vlink 'delete' -%>
+</td>
+

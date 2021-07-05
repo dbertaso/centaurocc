@@ -1,0 +1,91 @@
+<% factura = @factura if factura.nil? %>
+<td>
+  <%= factura.numero  %>
+</td>
+<td>
+  <%= factura.fecha_f  %>
+</td>
+<td>
+  <%= factura.fecha_realizacion_f  %>
+</td>
+<td>
+  <%= factura.tipo_w.to_s  %>
+</td>
+<td>
+  <% unless factura.tipo == 'D' %>
+    <% unless factura.pago_cliente.nil? %>
+      <%= if !factura.pago_cliente.cheques[0].nil?
+              factura.pago_cliente.cheques[0].entidad_financiera.nombre
+          elsif factura.pago_cliente.modalidad == 'R'
+               factura.pago_cliente.entidad_financiera.nombre unless factura.pago_cliente.entidad_financiera.nil?
+          elsif factura.pago_cliente.modalidad == 'A'
+              factura.pago_cliente.nombre_silo
+          elsif factura.pago_cliente.modalidad == 'D'
+              factura.pago_cliente.entidad_financiera.nombre unless factura.pago_cliente.entidad_financiera.nil?
+          else
+               I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.taquilla')
+          end %>
+    <% end %>
+  <% else %>
+    <% unless factura.desembolso.nil? %>
+      <%= factura.desembolso.entidad_financiera.nombre  %>
+    <% end %>
+  <% end %>
+</td>
+<td>
+  <% unless factura.tipo == 'D' %>
+    <% unless factura.pago_cliente.nil? %>
+      <%= if !factura.pago_cliente.cheques[0].nil?
+              factura.pago_cliente.cheques[0].referencia
+          elsif factura.pago_cliente.modalidad == 'R' || factura.pago_cliente.modalidad == 'A'
+              factura.pago_cliente.numero_voucher
+          elsif factura.tipo == 'R'
+              factura.pago_cliente.numero_voucher
+          elsif factura.pago_cliente.modalidad == 'D'
+              factura.pago_cliente.numero_voucher 
+          else
+              I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.taquilla')
+          end
+       %>
+    <% end %>
+  <% else %>
+    <% unless factura.desembolso.nil? %>
+       <% if factura.desembolso.tipo_cheque == 'G' ||
+             factura.desembolso.tipo_cheque == 'P' %>
+          <%= factura.desembolso.referencia %>
+       <% else %>
+          <%= factura.desembolso.numero_cuenta %>
+       <% end %>
+    <% end %>
+  <% end %>
+</td>
+
+<td style="text-align: right">
+  <%= format_fm(factura.monto_banco) %>
+</td>
+
+<td style="text-align: right">
+  <%= format_fm(factura.monto_insumos)  %>
+</td>
+
+<td style="text-align: right">
+  <%= format_fm(factura.monto_inventario)  %>
+</td>
+<td style="text-align: right">
+  <%= format_fm(factura.monto_sras)  %>
+</td>
+
+<td style="text-align: right">
+  <%= format_fm(factura.monto_gastos)  %>
+</td>
+
+<td style="text-align: right">
+    <%= format_fm(factura.monto) %>
+</td>
+
+<td style="text-align: right">
+
+        <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))),
+               :action => 'view', :prestamo_id => @prestamo.id, :id => factura.id) %>&nbsp;
+
+</td>

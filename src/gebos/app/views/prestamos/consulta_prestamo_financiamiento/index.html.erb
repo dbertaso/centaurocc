@@ -1,0 +1,350 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.General.prestamo')%>
+      <span class="titulo_modificar">'
+        <%= @prestamo.numero %> <%= " - #{I18n.t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+      </span>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>
+      <span class="titulo_modificar">'
+        <%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @prestamo.cliente.empresa.nombre : @prestamo.cliente.persona.nombre_corto  %>'
+      </span>
+    </div>
+  </div>
+</div>
+
+  <%= render 'prestamos/consulta_prestamo/common/tabs' %>
+
+  <div class="marco-contenido2">
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 20%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Form.rubro') %>
+          </label>
+        </td>
+        <td style="width: 60%">
+        <%= @prestamo.solicitud.rubro.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Tabs.metodo_amortizacion') %>
+          </label>
+        </td>
+        <td>
+          <% if @prestamo.formula -%>
+            <%= @prestamo.formula.nombre %>
+          <% else %>
+            <label>
+              <%= I18n.t('Sistema.Body.Modelos.Errores.metodo_amortizacion_no_asignado') %>
+            </label>
+          <% end -%>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label>
+            <%= I18n.t('Sistema.Body.Modelos.PlanPago.Columnas.frecuencia_pago') %>
+          </label>
+        </td>
+        <td style="text-align: left">
+           <%= @prestamo.frecuencia_pago_w %>
+        </td>
+       </tr>
+      <tr>
+        <td>
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}"%>
+          </label>
+        </td>
+        <td>
+          <%= @prestamo.total_financiamiento_fm %>&nbsp;&nbsp;
+          <br>
+          <b><%= I18n.t('Sistema.Body.General.minimo') %>:</b>: <%= format_fm(@prestamo.producto.monto_minimo) %>&nbsp;
+          &nbsp;&nbsp;&nbsp;
+          <b><%= I18n.t('Sistema.Body.General.maximo') %>:</b>: <%= format_fm(@prestamo.producto.monto_maximo) %>&nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.General.plazo') %></label>
+        </td>
+        <td>
+          <%= @prestamo.plazo %> <%= I18n.t('Sistema.Body.General.en_meses') %>
+          <%= I18n.t('Sistema.Body.General.minimo') %>: <%= @prestamo.producto.plazo_minimo %>
+          <%= I18n.t('Sistema.Body.General.maximo') %>: <%= @prestamo.producto.plazo_maximo %>
+
+        </td>
+      </tr>
+      <% if @prestamo.estatus == 'F' %>
+        <tr>
+        <td>
+          <label></label>
+        </td>
+        <td>
+            <label>
+              <span class="titulo_modificar">
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.cancelado_reestructuracion') %>
+              </span>
+            </label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.financiamiento_destino') %>
+          </label>
+        </td>
+        <td>
+          <%= @prestamo.prestamo_destino.numero %>
+        </td>
+      </tr>
+        <% end %>
+        <% if @prestamo.reestructurado == 'F' %>
+        <tr>
+        <td>
+          <label></label>
+        </td>
+        <td>
+            <label>
+              <span class="titulo_modificar">
+                <%= I18n.t('Sistema.Body.Vistas.General.reestructurado') %>
+              </span>
+            </label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.financiamiento_origen') %>
+          </label>
+        </td>
+        <td>
+          <%= @prestamo.prestamo_origen.numero unless @prestamo.prestamo_origen.nil?%>
+        </td>
+      </tr>
+        <% end %>
+      <tr>
+        <td class="separador" colspan="2">
+          <span>
+            <%= I18n.t('Sistema.Body.Vistas.General.intereses') %>
+          </span>
+        </td>
+      </tr>
+      <% if @prestamo.producto.exonerar_intereses %>
+        <tr>
+          <td colspan="2">
+            <%= format bool @prestamo.formula.nombre %>
+             <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.exonerar_intereses') %></label>
+           </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td valign="top">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.tasa_referencia') %>
+          </label>
+        </td>
+        <td colspan="2">
+          <%= @prestamo.tasa.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.valor_tasa') %>
+          </label>
+        </td>
+        <td colspan="2">
+           <%= @valor_tasa %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.fecha_vigencia_tasa') %>
+          </label>
+        </td>
+        <td colspan="2">
+           <%= @fecha_tasa %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.fecha_vigencia_tasa') %>
+          </label>
+        </td>
+        <td>
+          <%= @prestamo.tasa_vigente_f %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.base_calculo') %>
+          </label>
+        </td>
+        <td >
+            <%= @prestamo.base_calculo_intereses %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.tipo_tasa') %>
+          </label>
+        </td>
+        <td colspan="2">
+          <%= radio_button 'prestamo', 'tasa_fija', 'true',
+            :class=>'text',
+            :disabled => "true"  -%>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.fija')}"%> <br />
+
+          <%= radio_button 'prestamo', 'tasa_fija', 'false',
+            :class=>'text',
+            :disabled => "true"  -%>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.variable')}"%>
+        </td>
+      </tr>
+      <!--
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.meses_fijos_garantia_tasa') %>
+          </label>
+        </td>
+        <% if @prestamo.producto.meses_fijos_sin_cambio_tasa > 0 %>
+        <td>
+            <%= @prestamo.meses_fijos_sin_cambio_tasa %> <%= I18n.t('Sistema.Body.General.meses') %>
+            => <%= I18n.t('Sistema.Body.Vistas.General.minimo') %>: <%= @prestamo.producto.meses_fijos_sin_cambio_tasa %>
+        </td>
+        <% else %>
+
+        <td>
+          <span>
+            <%= I18n.t('Sistema.Body.General.no_aplica') %>
+          </span>
+        </td>
+        <% end %>
+      </tr>
+      -->
+      <tr>
+        <td class="separador" colspan="2">
+          <span>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.abonos_extraordinarios') %>
+          </span>
+        </td>
+      </tr>
+      <% if @prestamo.producto.permitir_abonos %>
+        <tr>
+          <td colspan="2">
+
+            <%= format_bool @prestamo.permitir_abonos %>
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.permitir_abonos') %>
+              </label>
+          </td>
+        </tr>
+      <% else %>
+
+        <tr>
+        <td>
+          <span>
+            <%= I18n.t('Sistema.Body.General.no_aplica') %>
+          </span>
+        </td>
+      </tr>
+       <% end %>
+      <% if @prestamo.producto.exonerar_intereses_mora %>
+        <tr>
+          <td colspan="2">
+            <%= format_bool @prestamo.exonerar_intereses_mora %>
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.exonerar_mora') %>
+            </label>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="separador" colspan="2">
+          <span>
+            <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_gracia') %>
+          </span>
+        </td>
+      </tr>
+      <% if @prestamo.meses_gracia_si %>
+          <tr>
+            <td>
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.meses_gracia') %>
+              </label>
+            </td>
+            <td>
+                <%= @prestamo.meses_gracia %> <%= I18n.t('Sistema.Body.General.meses') %>
+                      => <%= I18n.t('Sistema.Body.General.minimo') %>: <%= @prestamo.producto.meses_gracia %>
+            </td>
+          </tr>
+        <tr>
+          <td colspan="2">
+            <%= format_bool @prestamo.diferir_intereses %>
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.diferir_intereses') %>
+            </label>
+          </td>
+        </tr>
+        <!--<tr>
+          <td colspan="2">
+            <%#= format_bool @prestamo.exonerar_intereses_diferidos %>
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.exonerar_intereses_diferidos') %>
+            </label>
+          </td>
+        </tr>-->
+      <% else %>
+      <tr>
+        <td>
+          <span>
+            <%= I18n.t('Sistema.Body.General.no_aplica') %>
+          </span>
+        </td>
+      </tr>
+      <% end %>
+      <tr>
+        <td class="separador" colspan="2">
+          <span>
+            <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_muerto') %></span>
+        </td>
+      </tr>
+      <% if @prestamo.meses_muertos_si %>
+
+        <tr>
+            <td>
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.meses_muertos') %>
+              </label>
+            </td>
+            <td>
+                <%= @prestamo.meses_muertos %> <%= I18n.t('Sistema.Body.General.meses') %>
+                      => <%= I18n.t('Sistema.Body.General.minimo') %>: <%= @prestamo.producto.meses_muertos %>
+            </td>
+          </tr>
+      <% else %>
+      <tr>
+        <td>
+          <span>
+            <%= I18n.t('Sistema.Body.General.no_aplica') %>
+          </span>
+        </td>
+      </tr>
+      <% end %>
+
+    </table>
+        <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+          { :controller => 'consulta_prestamo', :action => :index },
+          { :id=>'button_close' } ) -%>
+
+  </div>
+</div>

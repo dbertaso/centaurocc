@@ -1,0 +1,19 @@
+<td>
+  <%= programa.alias %>
+</td>
+<td>
+  <%= programa.nombre %>
+</td>
+<td>
+  <%= programa.descripcion %>
+</td>
+<td style="text-align: right">
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), :action => 'view', :id => programa.id) %> &nbsp;
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))), :action => 'edit', :id => programa.id) if vlink 'edit' %>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :id => programa.id}) if vlink 'delete' -%>
+</td>

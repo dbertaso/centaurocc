@@ -1,0 +1,133 @@
+<div class="marco" style="width: 1100px">
+  <div class="marco-contenido" style="width: 100%">
+    <%= form_title_search %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :url => { :action => :list } ) do %>
+      <table style="width: 100%">
+        <tr>
+          <td>
+            <%= check_box_tag 'por_numero_transaccion', "true", false,
+              :onclick=>"if (this.checked) { $('grupo_numero_transaccion').show(); $('grupo_avanzada').hide() } else { $('grupo_avanzada').show(); $('grupo_numero_transaccion').hide() } " -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.por_nro_transaccion')%></label>
+          </td>
+        </tr>
+      </table>
+      <div id="grupo_numero_transaccion" style="width: 100%; display: none" >
+        <table>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.General.numero')%></label>
+            </td>
+            <td>
+              <%= text_field_tag 'numero_transaccion', '', :class=>'text', :style=>'width: 80px', 
+                :maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();'  -%>
+            </td>
+            <td>
+              <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'), :title=>I18n.t('Sistema.Body.Vistas.General.buscar')) -%>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="grupo_avanzada" style="width: 100%; display: inline" >
+        <table id="seccion_rango_fechas">
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_desde')%></label>
+            </td>
+            <td>
+              <%= calendar_date_select_tag 'fecha_desde', @fecha_desde, 
+                :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+                :onkeypress=>'inputChange();',:onchange=>'inputChange();' %> 	
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_hasta')%></label>
+            </td>
+            <td>
+              <%= calendar_date_select_tag 'fecha_hasta', @fecha_hasta, 
+                :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+                :onkeypress=>'inputChange();',:onchange=>'inputChange();' %> 	
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= check_box_tag 'por_usuario', "true", false,
+                :onclick=>"this.checked ? $('usuario_id').show() : $('usuario_id').hide() " -%>
+              <label><%= I18n.t('Sistema.Body.Vistas.Login.user')%></label>
+            </td>
+            <td>
+              <%= select_tag('usuario_id', 
+                options_for_select(@usuario_select.map{|e| [e.nombre_usuario, e.id]}),
+                { :class=>'select', :style=>'display: none',  :onchange=>'inputChange();' }) %>
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= check_box_tag 'por_tipo_transaccion', "true", false,
+                :onclick=>"this.checked ? $('meta_transaccion_id').show() : $('meta_transaccion_id').hide() " -%>
+              <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionSolicitud.Etiquetas.tipo_transaccion')%></label>
+            </td>
+            <td>
+              <%= select_tag('meta_transaccion_id', 
+                options_for_select(@tipo_transaccion_select.map{|e| [e.nombre, e.id]}),
+                { :class=>'select', :style=>'display: none', :onchange=>'inputChange();' } ) %>
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= check_box_tag 'por_prestamo', "true", false,
+                :onclick=>"this.checked ? $('prestamo_numero').show() : $('prestamo_numero').hide() " -%>
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.prestamo')%></label>
+            </td>
+            <td>
+              <%= text_field_tag 'prestamo_numero', '', :class=>'text', :style=>'width: 80px', 
+                :maxlength=>'11', :onkeypress=>'inputChange();', :onchange=>'inputChange();'  -%>
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= check_box_tag 'reverso', "true", false -%>
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.reverso')%></label>
+            </td>
+            <td>
+            </td>
+            <td>
+              <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'), :title=>I18n.t('Sistema.Body.Vistas.General.buscar')) -%>
+            </td>
+          </tr>
+        </table>
+        <table style="width: 100%">
+          <tr>
+            <td>
+
+            </td>
+          </tr>
+        </table>
+      </div>
+    <% end %>
+
+    <font size=-1 color=red> 
+    <b> 
+      <%= error %> <br>
+      <%= message %></b></font>
+
+    <div id="list" style="padding-top: 10px">
+    </div>
+
+  </div>
+</div>

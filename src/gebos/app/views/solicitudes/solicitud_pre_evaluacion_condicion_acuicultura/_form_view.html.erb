@@ -1,0 +1,201 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label>Tipo</label>
+    </td>
+    <td style="width: 80%">
+      <% if @empresa_direccion.tipo == 'P' %>
+      	Sede Principal
+      <% elsif @empresa_direccion.tipo == 'S' %>
+      	Sucursal
+      <% elsif @empresa_direccion.tipo == 'L' %>
+      	Planta
+      <% elsif @empresa_direccion.tipo == 'D' %>
+        Depósito
+      <%  elsif @empresa_direccion.tipo == 'T' %>
+        Otra
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Urbanización/ Barrio/ Sector</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.zona %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Calle/ Avenida/ Callejón</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.avenida %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Casa/ Edificio/ Galpón</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.edificio %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        <label>Piso</label>
+    </td>
+    <td>
+        <%= @empresa_direccion.piso %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Número</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.numero %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Código Postal</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.codigo_postal %>
+    </td>
+  </tr>
+        
+  <tr>
+    <td>
+      <label>Punto de Referencia</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.referencia %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Región:</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.ciudad.estado.region.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Estado:</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.ciudad.estado.nombre %>
+    </td>
+  </tr>
+        
+  <tr>
+    <td>
+      <label>Ciudad:</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.ciudad.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Municipio:</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.municipio.nombre %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label>Parroquia:</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.parroquia.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label>Espacio Físico</label>
+    </td>
+    <td style="width: 80%">
+      <%  if @empresa_direccion.tipo_inmueble == 'L' %>
+        Local
+      <% elsif @empresa_direccion.tipo_inmueble == 'H' %>
+        Habitación
+      <% elsif @empresa_direccion.tipo_inmueble == 'G' %>
+        Galpón
+      <% elsif @empresa_direccion.tipo_inmueble == 'T' %>
+        Terreno
+      <% end %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label>Espacio Aprox.</label>
+    </td>
+    <td>
+      <%= display_number @empresa_direccion.espacio_aproximado_m2, 'empresa_direccion_espacio_aproximado_m2' %> <label>m2</label>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label>Tenencia</label>
+    </td>
+    <td style="width: 80%">
+      <% if @empresa_direccion.tenencia == 'P' %>
+        Propia
+      <% elsif @empresa_direccion.tenencia == 'A' %>
+        Alquilada
+      <% elsif @empresa_direccion.tenencia == 'C' %>
+        Comodato
+      <% elsif @empresa_direccion.tenencia == 'H' %>
+        Hipoteca
+      <% elsif @empresa_direccion.tenencia == 'F'%>
+        De un Familiar
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Alquiler Mensual en Bs.</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.alquiler_mensual %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Correspondencia</label>
+    </td>
+    <td>
+      <%= format_bool @empresa_direccion.correspondencia  %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Activo</label>
+    </td>
+    <td>
+      <%= format_bool @empresa_direccion.activo  %>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,185 @@
+<script type="text/javascript">
+  varEnviado = false;
+</script>
+<table width="100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.produccion_leche')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td width=310>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.prod_diaria_leche_plantas_estado')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','prod_diaria_leche_plantas_estado',
+        :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%> <%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.parentesis_ele')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.prod_diaria_leche_vendida_terceros')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','prod_diaria_leche_vendida_terceros',
+        :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%> <%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.parentesis_ele')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%> 
+    </td>
+  </tr>  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.prod_diaria_leche_finca')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','prod_diaria_leche_finca',
+        :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.parentesis_ele')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%> 
+    </td>
+  </tr>
+  <tr><td colspan=2>&nbsp;</td></tr> 
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.total_litros_dia_leche')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','total_litros_dia_leche',
+        :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%> <%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')%>
+    </td>
+  </tr> 
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.l_vaca_total_dia')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','l_vaca_total_dia',
+        :class=>'text',:style=>'width: 100px', :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%> <%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')%>
+    </td>
+  </tr> 
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.total_l_dia')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','total_l_dia',
+        :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%> <%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')%>
+    </td>
+  </tr>  
+  <tr><td colspan=2>&nbsp;</td></tr>
+  <tr>
+    <td colspan=2>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.observaciones_ordenio')%></label>
+      <br>
+      <%= text_area 'produccion_leche_carne', 'observaciones_ordenio',
+        :class=>'text', :style=>'width: 100%; height: 50px', :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr> 
+
+  <tr><td colspan=2 heigth=10>&nbsp;</td></tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.produccion_carne')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.carne_plantas_estado')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','carne_plantas_estado',
+        :class=>'text',
+        :style=>'width: 100px',
+        :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%> <%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.kg_anio')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.carne_anual_terceros')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','carne_anual_terceros',
+        :class=>'text',
+        :style=>'width: 100px',
+        :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%> <%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.kg_anio')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.carne_anual_finca')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','carne_anual_finca',
+        :class=>'text',
+        :style=>'width: 100px',
+        :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%> <%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.kg_anio')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+
+  <tr><td colspan=2>&nbsp;</td></tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.carne_peso_diario_promedio_ganancia')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','carne_peso_diario_promedio_ganancia',
+        :class=>'text',
+        :style=>'width: 100px',
+        :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.kg_anio')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.carne_peso_promedio_matadero')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','carne_peso_promedio_matadero',
+        :class=>'text',
+        :style=>'width: 100px',
+        :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.parentesis_kg')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.carne_total_arrime_anual')%></label>
+    </td>
+    <td>
+      <%= text_field 'produccion_leche_carne','carne_total_arrime_anual',
+        :class=>'text',
+        :style=>'width: 100px',
+        :onkeypress=>'inputChange();',
+        :maxlength=>'10' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaProduccionLecheCarne.Etiquetas.kg_anio')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+
+  <tr><td colspan=2>&nbsp;</td></tr>
+
+  <tr>
+    <td colspan=2>
+      <label><%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.observaciones_prod_carne')%></label>
+      <br>
+      <%= text_area 'produccion_leche_carne', 'observaciones_prod_carne',
+        :class=>'text',
+        :style=>'width: 100%; height: 50px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>   
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: left">
+

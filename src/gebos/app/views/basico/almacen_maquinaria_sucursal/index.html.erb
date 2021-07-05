@@ -1,0 +1,30 @@
+<div class="marco-titulo"><div><div>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.modificando')} #{I18n.t('Sistema.Body.Vistas.General.las').downcase} #{I18n.t('Sistema.Body.Vistas.General.sucursales')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.almacen')}" %> <span class="titulo_modificar">'<%= @almacen_maquinaria.nombre %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'basico/almacen_maquinaria/common/tabs' %>
+<div class="marco-contenido2">
+
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to_remote( 
+      image_tag(I18n.t('Sistema.Body.Imagenes.agregar')), 
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method =>:get,
+      :url => { :action => :new, :almacen_maquinaria_id=>@almacen_maquinaria.id } ) %>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial=>"list" %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller => 'almacen_maquinaria', :action => :edit, :id => @almacen_maquinaria.id, :popup=>params[:popup] },
+    { :id=>'button_close' } ) -%>
+
+</div>

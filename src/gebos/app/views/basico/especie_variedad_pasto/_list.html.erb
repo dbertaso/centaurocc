@@ -1,0 +1,25 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+
+            <th style="width: 200px" <%= sort_class_helper('tipo_pasto_forraje.descripcion') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Controladores.EspecieVariedadPasto.FormTitles.form_title_record'), 'tipo_pasto_forraje.descripcion', 'list' %>
+ 			</th>
+ 			<th style="width: 200px" <%= sort_class_helper('descripcion') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Controladores.TipoEspecieAcuicultura.FormTitles.form_title_record'), 'descripcion', 'list' %>
+ 			</th> 			
+ 			<th style="width: 10px"> 
+               <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for especie_variedad_pasto in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :especie_variedad_pasto => especie_variedad_pasto, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

@@ -1,0 +1,154 @@
+<script language="javascript">
+  function abrirCampos(chk, id){
+    if (chk.checked == true){
+      document.getElementById('fecha_registro_cheque_' + id).disabled = false;
+      document.getElementById('numero_cheque_' + id).disabled = false;
+    }else{
+      document.getElementById('fecha_registro_cheque_' + id).disabled = true;
+      document.getElementById('numero_cheque_' + id).disabled = true;
+      document.getElementById('fecha_registro_cheque_' + id).value = '';
+      document.getElementById('numero_cheque_' + id).value = '';
+
+    }
+  }
+</script>
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list } ) do-%>
+
+    <table>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+
+        <td>
+          <%= select(
+                'estado', 'id',
+                @estado_select.map{|e| [e.nombre, e.id]},
+                {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                { :class=>'select', :onchange=>'inputChange();',:style=>'width:200px;' } ) %>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td style="width: 120px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+        </td>
+
+        <td>
+          <% sector_onchange = remote_function(
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :method=>:get,
+              :url=>{:controller=>'abono_arrime_registro_cheque',:action=>:sector_search },
+              :with=>"'id='+value") %>
+          
+          <%= select(
+			    'sector_id', '',
+			    @sector_select.map{|i| [i.nombre, i.id]},
+			    {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+			    { :class=>'select',:onchange=>sector_onchange + ';inputChange();'}) %>          
+          
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 100px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+        </td>
+        <td style="width: 480px">
+          <span id="sub-sector-search">
+              <%= render :partial => 'sub_sector_search' %>
+          </span>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 100px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+        </td>
+        <td style="width: 480px">
+          <span id="rubro-search">
+              <%= render :partial => 'rubro_search' %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 100px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+        </td>
+        <td style="width: 480px">
+          <span id="sub-rubro-search">
+              <%= render :partial => 'sub_rubro_search' %>
+          </span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td style="width: 100px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+        </td>
+        <td style="width: 480px">
+          <span id="actividad-search">
+              <%= render :partial => 'actividad_search' %>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'8', :style=>'width: 150px',:onkeypress=>' return NumberKey(event);'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label>
+        </td>
+        <td>
+         <select name="tipo" id="tipo" class="select">
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.venezolano') %> "><%= I18n.t('Sistema.Body.General.TipoDocumento.venezolano') %></option>
+              <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.extranjero') %> "><%= I18n.t('Sistema.Body.General.TipoDocumento.extranjero') %></option>
+              <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.juridico') %>-"><%= I18n.t('Sistema.Body.General.TipoDocumento.juridico') %></option>
+              <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.gobierno') %>-"><%= I18n.t('Sistema.Body.General.TipoDocumento.gobierno') %></option>
+          </select>
+
+          <%= text_field_tag 'cedula', '', :class=>'text', :maxlength=>'10', :style=>'width: 150px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.General.beneficiario')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'100', :style=>'width: 300px'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+        </td>
+      </tr>
+
+    </table>
+
+  <% end %>
+
+  <div id="list">
+  </div>
+
+</div>

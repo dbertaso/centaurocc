@@ -1,0 +1,184 @@
+<div id="tabs">
+	<ul>
+
+<%
+	action_name = controller.action_name 
+	controller_name = controller.controller_name
+    controller_top = params[:controlador]
+
+if (action_name.to_s == "delete" or action_name.to_s == "save_new" or action_name.to_s == "save_edit")
+action_name = "edit"
+end
+
+#CONDICIONAL DUMMY PARA APAGAR DATOS BASICOS
+if ('on' == 'on')
+	if controller_name=='consulta_evaluacion_credito' 
+%>
+		<li id="actual"><div><a href="#">Básico</a></div></li>
+<% 
+	else 	   
+%>
+		<li><div>
+		      <%= link_to('Datos Básicos', :controller => 'consulta_evaluacion_credito', :action => 'edit', :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+		      <%= link_to('Datos Básicos', :controller => 'consulta_evaluacion_credito', :action => 'view', :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>	
+		</div></li>
+<% 
+	end
+end
+
+
+
+	if controller_name=='solicitud_unidad_negocio' 
+%>
+		<li id="actual"><div><a href="#">Unidad de Negocio</a></div></li>
+<% 
+	else 	   
+%>
+		<li><div>
+		      <%= link_to('Visita', :controller => 'solicitud_unidad_negocio', :action => 'view', :solicitud_id => @solicitud.id,  :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>'consulta_evaluacion_credito') if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+		      <%= link_to('Unidad de Negocio', :controller => 'solicitud_unidad_negocio', :action => 'view', :id => @solicitud.id,  :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>'consulta_evaluacion_credito') if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>	
+		</div></li>
+<% 
+	end
+
+
+
+	if controller_name=='solicitud_producto' 
+%>
+		<li id="actual"><div><a href="#">Productos</a></div></li>
+<% 
+	else 	   
+%>
+		<li><div>
+		      <%= link_to('U.P.', :controller => 'solicitud_producto', :action => 'view', :solicitud_id => @solicitud.id,  :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>'consulta_evaluacion_credito') if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+		      <%= link_to('Productos', :controller => 'solicitud_producto', :action => 'view', :id => @solicitud.id,  :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>'consulta_evaluacion_credito') if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>	
+		</div></li>
+<% 
+	end
+
+	if controller_name=='solicitud_recaudo' 
+%>
+		<li id="actual"><div><a href="#">Recaudos</a></div></li>
+<% 
+	else 	   
+%>
+		<li><div>
+		      <%= link_to('Servicios', :controller => 'solicitud_recaudo', :action => 'view', :solicitud_id => @solicitud.id,  :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>'consulta_evaluacion_credito') if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+		      <%= link_to('Recaudos', :controller => 'solicitud_recaudo', :action => 'view', :id => @solicitud.id,  :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>'consulta_evaluacion_credito') if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>	
+		</div></li>
+<% 
+	end
+
+
+
+	if @solicitud.id 
+		if controller_name=='solicitud_plan'
+%>
+			<li id="actual"><div><a href="#">Plan Inversión</a></div></li>
+<% 
+		else
+%>
+			<li><div>
+	     <%= link_to('Caracterización', :controller => 'solicitud_plan', :action => 'index', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if @solicitud.causa_liberacion.nil? %>
+
+             <%= link_to('Plan Inversión', :controller => 'solicitud_plan', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top, :credito_reestructurado => 'true') if !@solicitud.causa_liberacion.nil?  %>
+
+       
+          </div></li>
+<% 
+		end	
+
+		if controller_name=='solicitud_ficha_resumen'
+%>
+			<li id="actual"><div><a href="#">Ficha Resumen</a></div></li>
+<% 
+		else
+%>
+			<li><div>
+	     <%= link_to('Infraestructura', :controller => 'solicitud_ficha_resumen', :action => 'edit', :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+             <%= link_to('Ficha Resumen', :controller => 'solicitud_ficha_resumen', :action => 'edit', :solicitud_id => @solicitud.id, :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>
+			</div></li>
+<% 
+		end		
+
+
+
+	        #LA CONDICION 'opcion' == 'deshabilitada' SE USA EN TERMINOS PRACTICOS PARA APAGAR LA PESTANA EN ESTA EDICION DE GEBOS
+			if controller_name=='solicitud_cronograma'
+%>
+				<li id="actual"><div><a href="#">Cronograma de Desembolso</a></div></li>
+<% 
+			else
+%>
+				<li><div>
+	    		 <%= link_to('Maquinarias', :controller => 'solicitud_cronograma', :action => 'index', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+       			 <%= link_to('Cronograma de Desembolso', :controller => 'solicitud_cronograma', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail') %>
+				</div></li>
+<% 
+			end
+			if controller_name=='ups'
+%>
+				<li id="actual"><div><a href="#">Unidad de Producción Socialista</a></div></li>
+<% 
+			else
+%>
+				<li><div>
+	    		 <%= link_to('Sitios', :controller => 'ups', :action => 'index', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+       			 <%= link_to('Unidad de Producción Socialista', :controller => 'ups', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail') %>
+				</div></li>
+<% 
+			end
+		if controller_name=='solicitud_condicionamientos_analisis_credito'
+%>
+			<li id="actual"><div><a href="#">Condicionamiento</a></div></li>
+<%
+		else
+%>
+			<li><div>
+	     <%= link_to('Inventario', :controller => 'solicitud_condicionamientos_analisis_credito', :action => 'edit', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top)  %>
+             
+			</div></li>
+<%
+		end
+
+	if controller_name=='solicitud_disponibilidad_presupuestaria'
+%>
+			<li id="actual"><div><a href="#">Presupuesto</a></div></li>
+<% 
+		else
+%>
+			<li><div>
+
+
+   <%= link_to('Decisión', :controller => 'solicitud_disponibilidad_presupuestaria', :action => 'index', :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+             
+			</div></li>
+<% 
+		end	
+		if controller_name=='solicitud_punto_cuenta'
+%>
+			<li id="actual"><div><a href="#">Punto de Cuenta</a></div></li>
+<% 
+		else
+%>
+
+
+<li><div>
+     <%= link_to('Plan de Inversión', :controller => 'solicitud_punto_cuenta', :action => 'edit', :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top)  %>
+           
+			</div></li>  
+
+
+
+
+
+
+<% 
+		end
+
+	
+
+	end
+%>
+	</ul>
+</div>

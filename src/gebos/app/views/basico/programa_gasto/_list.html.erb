@@ -1,0 +1,31 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 130px" <%= sort_class_helper('tipo_gasto.nombre') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'tipo_gasto.nombre', 'list' %>
+    </th>
+    <th style="width: 140px" <%= sort_class_helper('programa_tipo_gasto.porcentaje') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Modelos.ProgramaGasto.Columnas.porcentaje'), 'programa_tipo_gasto.porcentaje', 'list' %>
+    </th>
+    <th style="width: 140px" <%= sort_class_helper('programa_tipo_gasto.monto_fijo') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.General.ab_bolivares')}", 'programa_tipo_gasto.monto_fijo', 'list' %>
+    </th>
+    <th style="width: 140px" <%= sort_class_helper('programa_tipo_gasto.forma_cobro') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Modelos.ProgramaTipoGasto.Labels.forma_cobro'), 'programa_tipo_gasto.forma_cobro', 'list' %>
+    </th>
+    <th style="width: 44px">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+    </th>
+  </tr>
+  </thead>
+  <tbody id="list_body">
+<%
+  even_odd = 1
+  for programa_tipo_gasto in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :programa_tipo_gasto => programa_tipo_gasto, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

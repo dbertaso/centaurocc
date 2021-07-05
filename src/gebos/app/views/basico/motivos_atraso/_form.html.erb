@@ -1,0 +1,24 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td style="width: 200px">
+      <label>
+        <%= I18n.t('Sistema.Body.General.descripcion') %>
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'motivos_atraso', 'descripcion', :class=>'text', :style=>'width: 300px', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'motivos_atraso', 'activo', :checked_value=>"1", :unchecked_value=>"0" -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

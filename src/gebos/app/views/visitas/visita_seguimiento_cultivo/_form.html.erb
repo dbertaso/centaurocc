@@ -1,0 +1,140 @@
+<script language="JavaScript">
+  function conversion(id){
+    var valor = document.getElementById(id).value;
+    valor = valor.replace(",",".");
+
+    if (isNaN(valor)){
+      document.getElementById(id).value="0,000";
+    }else{
+      valor = valor.replace(".",",");
+      document.getElementById(id).value= valor;
+    }
+    return true;
+  }
+  varEnviado = false;
+</script>
+
+<table style="width: 100%">
+  <tr>
+    <td>
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.superficie')} #{I18n.t('Sistema.Body.Vistas.General.aprobada')}"%> </label>
+    </td>
+    <td><b> <label style="color: red"> <%=  format_fm3(@visitas.solicitud.hectareas_recomendadas) -%></label>&nbsp;<%=  I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')%> </b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.superficie_sembrada')%> </label><label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'seguimiento_cultivo', 'superficie_sembrada_f', :class=>'text', :style=>'width: 150px',
+        :onkeypress=>'inputChange();', :onchange=>"#{remote_function(:method=>:get, :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',:url=>{:controller=>'visita_seguimiento_cultivo',
+      :action=>:superficie_efectiva_onchange }, :with=>"'superficie_sembrada='+value+'&id=#{@visitas.id}'")};inputChange();conversion(this.id);",
+        :maxlength=>'100' -%> <%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.fecha_siembra')%></label> <label class="requerido"> (*)</label>
+    </td>
+
+    <td style="width: 500px">    
+      <%= calendar_date_select_tag "seguimiento_cultivo[fecha_siembra_f]", @seguimiento_cultivo.fecha_siembra_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",
+        :onchange=>"#{remote_function(:method=>:get,:loading =>'Element.show("loading")', :loaded => 'Element.hide("loading")',
+      :url=>{:controller=>'visita_seguimiento_cultivo', :action=>:change_fecha_siembra },
+      :with=>"'fecha_siembra_f='+value+'&id=#{@visitas.id}'")}; inputChange();" %>&emsp; <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.fecha_estimada_cosecha')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td style="width: 500px">
+      <%= calendar_date_select_tag "seguimiento_cultivo[fecha_estimada_cosecha_f]", @seguimiento_cultivo.fecha_estimada_cosecha_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onchange=>"inputChange();pa=document.getElementById('seguimiento_cultivo[fecha_siembra_f]').value;", 
+        :popup => "force" %>&emsp; <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.edad_cultivo')%></label>
+    </td>
+    <td>
+      <span id="edad_cultivo-div">
+        <%= text_field 'seguimiento_cultivo', 'edad_cultivo',
+          :class=>'text', :readonly => true, :value=> @edad_cultivo,
+          :style=>'width: 30px',:onkeypress=>'inputChange();'-%><%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.dias')%>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.superficie_preparada')%></label><label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'seguimiento_cultivo', 'superficie_preparada_f',
+        :class=>'text', :style=>'width: 150px', :onkeypress=>'inputChange();', :onchange=>'conversion(this.id);',
+        :maxlength=>'100' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.superficie_sin_labores')%></label><label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'seguimiento_cultivo', 'superficie_sin_labores_f',
+        :class=>'text', :style=>'width: 150px',
+        :onkeypress=>'inputChange();', :onchange=>'conversion(this.id);',
+        :maxlength=>'100' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.superficie_semillero')%></label>
+    </td>
+    <td>
+      <%= text_field 'seguimiento_cultivo', 'superficie_semillero_f',
+        :class=>'text', :style=>'width: 150px', :onkeypress=>'inputChange();', :onchange=>'conversion(this.id);',
+        :maxlength=>'100' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.superficie_efectiva')%></label><label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <span id="superficie_efectiva-text">
+        <%= render :partial => 'superficie_efectiva_text' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.superficie_cosechada')%></label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'seguimiento_cultivo', 'superficie_cosechada_f',
+        :class=>'text', :style=>'width: 150px',
+        :onkeypress=>'inputChange();', :onchange=>'conversion(this.id);',
+        :maxlength=>'100' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.rendimientos_estimados')%></label><label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'seguimiento_cultivo', 'rendimientos_estimados_f',
+        :class=>'text', :style=>'width: 150px',
+        :onkeypress=>'inputChange();', :onchange=>'conversion(this.id);',
+        :maxlength=>'100' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.kg_ha')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  </tr>
+</table>
+

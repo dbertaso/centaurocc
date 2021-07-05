@@ -1,0 +1,261 @@
+<table>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.beneficiario') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Rif' : 'Cédula' %></label>
+    </td>
+    <td style="width: 70%">
+      <% if @cliente.class.to_s=='ClienteEmpresa' %>
+        <%= @cliente.empresa.rif %>
+          <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), 
+            {:controller => '/clientes/cliente_empresa', :action => 'view', :id => @cliente.empresa.id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+      <% else %>
+        <%= @cliente.persona.cedula %>
+       <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), 
+       {:controller => '/clientes/cliente_persona', :action => 'view', :id => @cliente.persona.id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Nombre' : 'Nombre, Apellido' %></label>
+    </td>
+    <td>
+      <%= @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.alias : @cliente.persona.nombre_corto %>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= t('Sistema.Body.Vistas.General.datos_basicos') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.solicitud')}" %>
+      </label>
+    </td>
+    <td>
+      <%= @solicitud.numero -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= t('Sistema.Body.Vistas.General.programa')%></label>
+    </td>
+    <td>
+        <%= @solicitud.programa.alias %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label>
+        <%="#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.General.solicitud')}" %>
+      </label>
+    </td>
+    <td style="width: 500px">
+      <%= @solicitud.fecha_solicitud_f %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_aprobado')%></label>
+    </td>
+    <td>
+      <%= @solicitud.monto_solicitado_fm %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.total_plan_inversion')%></label>
+    </td>
+    <td>
+      <%= @prestamo.total_plan_inversion_fm %>
+    </td>
+  </tr>  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>
+        <%="#{t('Sistema.Body.Vistas.General.datos')} #{t('Sistema.Body.Vistas.General.del')} #{t('Sistema.Body.Vistas.General.financiamiento')}" %>
+      </span>
+    </td>
+  </tr>
+    <tr>
+    <td>
+      <label>
+        <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.financiamiento')}" %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.numero %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 25%">
+      <label>
+        <%= t('Sistema.Body.Vistas.General.rubro') %>
+      </label>
+    </td>
+      <td style="width: 75%">
+        <%= @solicitud.rubro.nombre %>
+      </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>
+        <%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.banco').upcase %>
+      </span>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_banco') %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.monto_banco_fm %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_liquidado') %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.monto_liquidado_fm %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_liquidar') %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.monto_por_liquidar_fm %>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>
+        <%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.insumos').upcase %>
+      </span>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_insumos') %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.monto_insumos_fm %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_despachado') %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.monto_despachado_fm %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_despachar') %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.monto_por_despachar_fm %>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>
+        <%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.gastos_seguros').upcase %>
+      </span>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_sras') %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.monto_sras_total_fm %>
+    </td>
+  </tr>  
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_gastos') %>
+      </label>
+    </td>
+    <td>
+      <%= @prestamo.monto_gasto_total_fm %>
+    </td>
+  </tr>  
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>
+        <%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.estatus').upcase %>
+
+      </span>
+    </td>
+    <td></td>
+  </tr>
+    <tr>
+        <td>
+          <label>
+             <%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.estatus_actual') %>
+          </label>
+        </td>
+        <td>
+          <div style="color: red"><b><%= @prestamo.estatus_w %></b></div>
+        </td>
+    </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.causa') %>
+      </label>
+    </td>
+    <td>
+          <%= radio_button 'cambio', 'estatus', 'K',
+            :class=>'text', :onclick=>'inputChange();'  -%><%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.castigado') %><br/>
+          <%= radio_button 'cambio', 'estatus', 'Q',
+            :class=>'text', :onclick=>'inputChange();'  -%><%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.condonado') %><br/>
+          <%= radio_button 'cambio', 'estatus', 'J',
+            :class=>'text', :onclick=>'inputChange();'  -%><%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.consultoria_juridica') %><br/>
+          <%= radio_button 'cambio', 'estatus', 'L',
+            :class=>'text', :onclick=>'inputChange();'  -%><%= t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.pase_litigio') %><br/>
+   </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= t('Sistema.Body.Vistas.General.observaciones')%>
+      </label>
+    </td>
+    <td>
+      <%= text_area 'cambio', 'observaciones',
+      :class=>'text', :style=>'width: 500px; height: 70px;',
+      :onkeypress=>'inputChange();'-%>
+
+    </td>
+  </tr>
+</table>

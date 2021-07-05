@@ -1,0 +1,83 @@
+<div>
+  <%= form_remote_tag(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,    
+          :url => { :action => :generar_tabla } ) do-%>
+       <input id="prestamos_id" type="hidden" name="prestamos_id"/>
+ 
+ <div id="registrar">
+       <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.avanzar')) -%>
+ </div>
+<br>
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 5%">
+          <br><input type="hidden" title="Click para seleccionar todos los registros en la página" id="todos" name="todos" onClick="checkAll(form.prestamo_id,form.todos)" />
+      </th>
+      <th style="width: 30%" <%#= sort_class_helper('fecha_registro') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Vistas.General.fecha_registro'), 'fecha_registro', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.fecha_registro')%>
+      </th>
+      
+      <th><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %></th>
+
+      <th style="width: 5%" <%= sort_class_helper('numero_tramite') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'numero_tramite', 'list' %>
+      </th>
+      <th style="width: 5%" <%= sort_class_helper('numero_prestamo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento'), 'numero_prestamo', 'list' %>
+      </th>
+
+      <th style="width: 15%" <%= sort_class_helper('estatus_tramite') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'estatus_tramite', 'list' %>
+      </th>
+
+      <th style="width: 10%" <%= sort_class_helper('documento_beneficiario') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'documento_beneficiario', 'list' %>
+      </th>
+
+      <th style="width: 30%" <%= sort_class_helper('nombre_beneficiario') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'nombre_beneficiario', 'list' %>
+      </th>
+
+      <th style="width: 10%" <%= sort_class_helper('estado_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'estado_nombre', 'list' %>
+      </th>
+      
+      <th style="width: 10%" <%= sort_class_helper('sector_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector_nombre', 'list' %>
+      </th>
+      
+      <th style="width: 10%" <%= sort_class_helper('sub_sector_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector_nombre', 'list' %>
+      </th>
+      
+      <th style="width: 10%" <%= sort_class_helper('rubro_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro_nombre', 'list' %>
+      </th>
+
+      <th style="width: 10%" <%= sort_class_helper('monto_aprobado') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto'), 'monto_aprobado', 'list' %>
+      </th>
+      
+      <th style="width: 5%" >
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+
+    </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for liquidacion_maquinaria_equipo in @list
+    even_odd = 1 - even_odd %>
+    <%= render :partial => 'row', :locals => { :liquidacion_maquinaria_equipo => liquidacion_maquinaria_equipo, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>
+  <% end %>

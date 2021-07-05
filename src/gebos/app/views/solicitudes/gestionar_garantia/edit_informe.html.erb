@@ -1,0 +1,58 @@
+<script type="text/javascript">
+
+  function editar_mobiliario()
+  {
+    document.getElementById("agregar").style.display= 'none';
+    var pars = "solicitud_avaluo_mobiliario_tipos[tipo]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_tipo1").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[mobiliaria_id]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_mobiliaria_id").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[modelo]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_modelo1").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[marca]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_marca1").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[serial]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_serial1").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[hipoteca_f]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_hipoteca1_f").value;
+    pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+    pars += "&solicitud_tipo_garantia_id=<%= @solicitud_tipo_garantia_id %>"
+    pars += "&solicitud_avaluo_mobiliario_tipos[ubicacion]=D"
+    var myAjax = new Ajax.Request("/solicitudes/unidades_apoyo_avaluo/update_mobiliaria?" + pars, {asynchronous:true, evalScripts:true, method: 'get', onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}}); return false;
+  }
+  varEnviado = false;
+</script>
+
+<div class="marco-contenido">
+  <div class="marco-titulo">
+    <div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.modificando_tramite')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.General.beneficiario') %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+      </div></div>
+  </div>
+
+  <%= render :partial=>'solicitudes/gestionar_garantia/common/tabs' %>
+  <div class="marco-contenido2">
+
+<%= errores2 %>    
+<%= error %>
+    <%= message %>
+
+
+    <%= form_remote_tag(:loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => @metodo.to_sym, :id=>@solicitud_avaluo.id, :solicitud_tipo_garantia_id=>@solicitud_tipo_garantia_id, :solicitud_id=>@solicitud.id }) do -%>
+
+
+  <%= render :partial => 'form_avaluo' %>
+
+      <br/>
+      <div id="buttons_edit" style="display: none">
+        <%= form_buttons_edit :action => :edit, :id => @solicitud.id %>
+      </div>
+
+      <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar')), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+        { :action => :edit, :id => @solicitud.id }, { :id=>'button_close' } ) -%>
+
+
+    <%end%>
+
+    <div id="archivo-imagen">
+<%= render :partial => 'archivo' %>
+    </div>
+  </div>
+</div>
+<br/><br/><br/>
+

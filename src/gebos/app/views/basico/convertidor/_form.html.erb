@@ -1,0 +1,41 @@
+<script language="text/javascript">varEnviado = false;</script>
+
+<table style="width: 100%">
+  <tr>
+    <td width="150px">
+      <label><%= "#{I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda')} #{I18n.t('Sistema.Body.Vistas.General.origen')}" %>:</label>
+    </td>
+    <td style="width: 580px">
+      <%= select(
+        'convertidor', 'moneda_origen_id',
+        options_from_collection_for_select(@moneda, 'id', 'nombre', selected=@convertidor.moneda_origen_id),
+        {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+        {:class=>'select', :onchange=>'inputChange();'} ) %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td width="150px">
+      <label><%= "#{I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda')} #{I18n.t('Sistema.Body.Vistas.Form.destino')}" %>:</label>
+    </td>
+    <td style="width: 580px">
+      <%= select(
+        'convertidor', 'moneda_destino_id',
+        options_from_collection_for_select(@moneda, 'id', 'nombre', selected=@convertidor.moneda_destino_id),
+        {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+        {:class=>'select', :onchange=>'inputChange();'} ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td width="110px">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.valor') %> <span style="color:red">*</span></label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'convertidor', 'valor', :class=>'text', :style=>'width: 480px', :maxlength=>'15', :onkeypress=>"return NumberDoubleKey(event);" -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>

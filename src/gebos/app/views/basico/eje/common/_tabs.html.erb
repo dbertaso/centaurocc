@@ -1,0 +1,35 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name 
+	controller_name = controller.controller_name
+  
+
+
+	if action_name=='riesgo_provision_sudeban' 
+%>
+		<li id="actual"><div><a href="#">SUDEBAN</a></div></li>
+<% 
+	else 	   
+%>
+		<li><div>
+		      <%= link_to('SUDEBAN', :controller => 'riesgo_provision', :action => 'riesgo_provision_sudeban') %>
+		</div></li>
+<% 
+	end
+	
+	if action_name=='riesgo_provision_bandes'
+%>
+		<li id="actual"><div><a href="#">BANDES</a></div></li>
+<% 
+	else
+%>
+			<li><div>
+	       <%= link_to('BANDES', :controller => 'riesgo_provision', :action => 'riesgo_provision_bandes') %>
+			</div></li>
+<% 
+	end
+
+%>
+	</ul>
+</div>

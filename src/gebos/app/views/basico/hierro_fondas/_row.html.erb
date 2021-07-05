@@ -1,0 +1,4 @@
+<% hierro_fondas = @hierro_fondas if hierro_fondas.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= hierro_fondas.id %>">
+	<%= render :partial => 'data', :locals => { :hierro_fondas => hierro_fondas, :even_odd => even_odd } -%>
+</tr>

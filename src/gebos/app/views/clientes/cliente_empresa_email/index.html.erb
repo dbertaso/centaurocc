@@ -1,0 +1,30 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando') %> <%= "#{I18n.t('Sistema.Body.General.beneficiario')} #{I18n.t('Sistema.Body.Vistas.General.juridico')}" %> <span class="titulo_modificar">'<%= @empresa.alias %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'clientes/cliente_empresa/common/tabs' %>
+<div class="marco-contenido2">
+
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to_remote(
+      image_tag(I18n.t('Sistema.Body.Imagenes.agregar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method =>:get,
+      :url => { :action => :new, :popup=>params[:popup], :empresa_id=>@empresa.id } ) %>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial=>"list" %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller => 'cliente_empresa', :action => :index, :popup=>params[:popup], :empresa_id => @empresa.id },
+    { :id=>'button_close' } ) -%>
+
+</div>

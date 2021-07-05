@@ -1,0 +1,29 @@
+<% sub_sector = @sub_sector if sub_sector.nil? %>
+<td>
+  <%= sub_sector.sector.codigo unless sub_sector.nil? %>
+</td>
+<td>
+  <%= sub_sector.sector.nombre unless sub_sector.nil? %>
+</td>
+<td>
+  <%= sub_sector.codigo unless sub_sector.nil?%>
+</td>
+<td>
+  <%= sub_sector.nombre unless sub_sector.nil?%>
+</td>
+<td>
+  <%= sub_sector.descripcion unless sub_sector.nil? %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(sub_sector.activo) unless sub_sector.nil? %>
+</td>
+<td style="text-align: right">
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), :action => 'edit', :sector_id => @sector.id, :popup=>params[:popup], :id => sub_sector.id ) if vlink 'edit' %>
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'sub_sector', :action => :delete, :id => sub_sector.id}) if vlink 'delete' -%>
+</td>
+

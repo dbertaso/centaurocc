@@ -1,0 +1,51 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span> <%= I18n.t('Sistema.Body.Vistas.VisitaDescripcionesEspecificas.Etiquetas.descripcion_observado') %> <label class="requerido">*</label></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 1000px" colspan="2">
+      <%= text_area 'descripciones_especificas', 'descripcion', :class=>'text', :style=>'width: 900px; height: 120px',
+        :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.VisitaDescripcionesEspecificas.Etiquetas.comportamiento_agronomico') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 1000px" colspan="2">
+      <%= text_area 'descripciones_especificas', 'comportamiento_agronomico',
+        :class=>'text', :style=>'width: 900px; height: 120px', :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.VisitaDescripcionesEspecificas.Etiquetas.factor_condicion') %></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 1000px" colspan="2">
+      <%= text_area 'descripciones_especificas', 'factores_condicionantes',
+        :class=>'text', :style=>'width: 900px; height: 120px', :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.VisitaDescripcionesEspecificas.Etiquetas.labor_realiza_beneficiario') %><label style="color: red">*</label></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 1000px" colspan="2">
+      <%= text_area 'descripciones_especificas', 'labores_beneficiario',
+        :class=>'text', :style=>'width: 900px; height: 120px', :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+</table>
+

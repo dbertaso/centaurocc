@@ -1,0 +1,28 @@
+<% cultivo_laguna = @cultivo_laguna if cultivo_laguna.nil? %>
+<td align="center">
+  <%= cultivo_laguna.numero_laguna  %>
+</td>
+<td align="right">
+  <%= cultivo_laguna.espejo_agua_fm  %>
+</td>
+<td align="right">
+  <%= cultivo_laguna.cantidad_peces %>
+</td>
+
+<td align="center">
+  <%= format_fecha(cultivo_laguna.fecha_siembra) %>
+</td>
+
+<td align="center">
+  <%= format_fecha(cultivo_laguna.fecha_cosecha)%>
+</td>
+
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+    :url => {:controller => 'cultivo_laguna', :action => :edit, :id => @visitas.id, :id_cultivo_laguna => cultivo_laguna.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()', :loaded => 'image_unload()',  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'cultivo_laguna', :action => :delete, :id => @visitas.id, :id_cultivo_laguna => cultivo_laguna.id}) if vlink 'delete' -%>
+</td>
+

@@ -1,0 +1,50 @@
+<div id ="testigos">
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :generar_NA, :id=>@solicitud_id_na} ) do -%>
+
+<table class="lista" style="width: 700px">
+  <tr>
+    <td style="width: 25%">
+      <label><%=I18n.t('Sistema.Body.General.testigo')%> 1:</label>
+    </td>
+    <td style="width: 75%">
+      <%=I18n.t('Sistema.Body.Vistas.General.nombre')%>: <%= text_field 'testigos', 'nombre1', :class=>'text', :maxlength=>'50', :style=>'width: 250px'  -%> <br></br>
+      <%=I18n.t('Sistema.Body.Vistas.General.cedula')%>: <%= text_field 'testigos', 'cedula1', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  -%> <br></br>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 25%">
+      <label><%=I18n.t('Sistema.Body.General.testigo')%> 2:</label>
+    </td>
+    <td style="width: 75%">
+      <%=I18n.t('Sistema.Body.Vistas.General.nombre')%>: <%= text_field 'testigos', 'nombre2', :class=>'text', :maxlength=>'50', :style=>'width: 250px'  -%> <br></br>
+      <%=I18n.t('Sistema.Body.Vistas.General.cedula')%>: <%= text_field 'testigos', 'cedula2', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  -%> <br></br>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 25%">
+      <label><%=I18n.t('Sistema.Body.General.testigo')%> 3:</label>
+    </td>
+    <td style="width: 25%">
+      <%=I18n.t('Sistema.Body.Vistas.General.nombre')%>: <%= text_field 'testigos', 'nombre3', :class=>'text', :maxlength=>'50', :style=>'width: 250px'  -%> <br></br>
+      <%=I18n.t('Sistema.Body.Vistas.General.cedula')%>: <%= text_field 'testigos', 'cedula3', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  -%> <br></br>
+    </td>
+  </tr>
+</table>
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.imprimir')) -%>
+<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>'Imprimir Nota de Autenticación'),
+            { :action => "generar_NA"} -%>
+
+<% end -%>
+	<div align ="center" > 
+	  <table border="1" bordercolor="gray">
+	    <tr>
+		<td align ="center">
+		  <span style="color: blue"><strong><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.recordar_papel')%></strong></span>
+                </td>
+            </tr>
+          </table
+	</div></div>

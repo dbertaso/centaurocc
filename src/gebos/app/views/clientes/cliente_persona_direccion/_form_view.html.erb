@@ -1,0 +1,174 @@
+
+<div class="marco-contenido2">
+<table style="width: 100%">
+    <tr>
+    <td style="width: 20%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.vivienda')}" %></label>
+    </td>
+    <td style="width: 80%">
+        <%= @persona_direccion.tipo_nombre %>
+    </td>
+  </tr>
+<% if @persona_direccion.tipo == 'H' %>
+  <tr>
+    <td style="width: 20%">
+      <label>Tenencia de la Vivienda</label>
+    </td>
+    <td>
+          <% if @persona_direccion.tenencia == 'P' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.propio') %>
+          <% elsif @persona_direccion.tenencia == 'A' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.alquilada') %>
+          <% elsif @persona_direccion.tenencia == 'C' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.comodato') %>
+          <% elsif @persona_direccion.tenencia == 'H' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.hipoteca') %>
+          <% elsif @persona_direccion.tenencia == 'F' %>
+              <%= I18n.t('Sistema.Body.Vistas.General.con_familiar') %>
+        <% end %>
+    </td>
+  </tr>
+<% end %>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.ubicacion')} #{I18n.t('Sistema.Body.Vistas.General.geografica')}" %></label>
+    </td>
+    <td style="width: 80%">
+      <%= @persona_direccion.ubicacion_geografica_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.comunidad')}" %></label>
+    </td>
+    <td style="width: 80%">
+      <%= @persona_direccion.tipo_comunidad_w %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.localidad') %></label>
+    </td>
+    <td style="width: 80%">
+      <% if @persona_direccion.localidad == 'U' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.urbanizacion') %>
+      <% elsif @persona_direccion.localidad == 'B' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.barrio') %>
+      <% elsif @persona_direccion.localidad == 'C' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.comunidad') %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.urbanizacion_barrio_sector') %></label>
+    </td>
+    <td>
+      <%= @persona_direccion.zona %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.avenida_calle_callejon') %></label
+    </td>
+    <td>
+      <%= @persona_direccion.avenida %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.casa_edificio_otro') %></label>
+    </td>
+    <td>
+      <%= @persona_direccion.edificio %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.piso') %></label>
+    </td>
+    <td>
+      <%= @persona_direccion.piso %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.numero_apto_casa') %></label>
+    </td>
+    <td>
+      <%= @persona_direccion.numero %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.punto')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.referencia')}" %></label>
+    </td>
+    <td>
+      <%= @persona_direccion.referencia %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.region') %></label></td>
+    <td>
+      <%= @persona_direccion.municipio.estado.region.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label></td>
+    <td>
+      <%= @persona_direccion.municipio.estado.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label></td>
+    <td>
+      <%= @persona_direccion.municipio.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label></td>
+    <td>
+      <%= @persona_direccion.parroquia.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label></td>
+    <td>
+      <%= @persona_direccion.ciudad.nombre %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.direccion_aplica_envio') %></label>
+    </td>
+    <td>
+      <%= format_bool @persona_direccion.correspondencia -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= format_bool @persona_direccion.activo -%>
+    </td>
+  </tr>
+
+</table>
+</div>

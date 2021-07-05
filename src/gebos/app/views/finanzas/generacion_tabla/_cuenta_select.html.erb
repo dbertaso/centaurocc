@@ -1,0 +1,13 @@
+<% unless @cuenta_select.nil? %> 
+<%= select(
+  'cuenta_matriz', 'id',
+  @cuenta_select.map{|c| [c.numero, c.id]},
+  { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+  { :class=>'select', :onchange=>';inputChange();' } ) %>
+<% else %>
+		<%= select(
+			  'cuenta_matriz', 'id',
+			  [],
+			  { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+			  { :class=>'select', :onchange=>';inputChange();' } ) %>
+<% end %>

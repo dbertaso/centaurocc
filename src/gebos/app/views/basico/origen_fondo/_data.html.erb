@@ -1,0 +1,23 @@
+<% origen_fondo = @origen_fondo if origen_fondo.nil? %>
+<td>
+  <%= origen_fondo.nombre  %>
+</td> 
+<td>
+  <%= origen_fondo.descripcion  %>
+</td> 
+<td style="text-align: center">
+  <%= format_bool(origen_fondo.activo)  %>
+</td> 
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'origen_fondo', :action => :edit, :id => origen_fondo.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'origen_fondo', :action => :delete, :id => origen_fondo.id}) if vlink 'delete' -%>
+</td>

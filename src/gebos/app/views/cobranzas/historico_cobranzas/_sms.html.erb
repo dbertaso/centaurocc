@@ -1,0 +1,21 @@
+  <% texto_mensaje = @texto_mensaje if texto_mensaje.nil? %>
+  <table>
+
+    <tr>
+
+      <td style="text-align: center">
+        <label><%= I18n.t('Sistema.Body.Vistas.Form.texto_sms') %></label>
+      </td>
+    </tr>
+    
+    <tr>
+
+      <td>
+        <%= @gestion.mensaje -%>
+      </td>
+      
+    </tr>
+
+  </table>
+<br>
+<br>

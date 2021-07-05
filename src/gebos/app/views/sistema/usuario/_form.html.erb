@@ -1,0 +1,131 @@
+<table>
+  <% if @mostrar == 1 %>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.General.empresa_sistema') %></label>
+      </td>
+      <td>
+        <%= select(
+          'usuario', 'empresa_sistema_id',
+          @empresa_sistema_list.map{|i| [i.nombre, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.admin_empresa') %></label>
+      </td>
+      <td>
+        <%= check_box 'usuario', 'admin_empresa',
+        { :onchange=>'inputChange();' }, 'true', 'false' %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Controladores.Usuario.FormTitles.form_title_record')%></label>
+    </td>
+    <td style="width: 550px">
+      <%= text_field 'usuario', 'nombre_usuario',
+        :class=>'text', :style=>'width: 180px',
+        :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.primer_nombre')%></label>
+    </td>
+    <td>
+      <%= text_field 'usuario', 'primer_nombre',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label>
+    </td>
+    <td>
+      <%= text_field 'usuario', 'segundo_nombre',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label>
+    </td>
+    <td>
+      <%= text_field 'usuario', 'primer_apellido',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label>
+    </td>
+    <td>
+      <%= text_field 'usuario', 'segundo_apellido',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.cedula_usuario') %></label>
+    </td>
+    <td>
+      <%= text_field 'usuario', 'cedula',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Controladores.Oficina.FormTitles.form_title_record')%></label>
+    </td>
+    <td>
+      <%= select(
+        'usuario', 'oficina_id',
+        @oficinas_select.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.idioma') %></label>
+    </td>
+    <td>
+      <%= select(
+        'usuario', 'lenguaje',
+        [["#{I18n.t('Sistema.Body.Vistas.General.seleccione')}",''],["#{I18n.t('Sistema.Body.Vistas.General.ingles')}",'en'],["#{I18n.t('Sistema.Body.Vistas.General.espanol')}",'es']],
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%=  I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'usuario', 'activo',
+        { :onchange=>'inputChange();' }, 'true', 'false' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.super_usuario') %></label>
+    </td>
+    <td>
+      <%= check_box 'usuario', 'super_usuario',
+        { :onchange=>'inputChange();' }, 'true', 'false' %>
+    </td>
+  </tr>
+</table>

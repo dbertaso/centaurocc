@@ -1,0 +1,36 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 80px" >
+        <%=I18n.t('Sistema.Body.Vistas.General.sector')%>
+      </th>
+      <th style="width: 80px" >
+        <%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%>
+      </th>
+      <th style="width: 80px" >
+        <%=I18n.t('Sistema.Body.Vistas.General.rubro')%>
+      </th>
+      <th style="width: 80px" >
+        <%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('detalle_convenio_silo.actividad_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'detalle_convenio_silo.actividad_id', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('detalle_convenio_silo.tipo_clase_grado') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.tipo_clase_grado'), 'detalle_convenio_silo.tipo_clase_grado', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('detalle_convenio_silo.valor') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.precio_bs_kg'), 'detalle_convenio_silo.valor', 'list' %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for detalle_convenio_silo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row_view', :locals => { :detalle_convenio_silo => detalle_convenio_silo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

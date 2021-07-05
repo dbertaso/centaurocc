@@ -1,0 +1,62 @@
+<table style="width: 100%">
+  <tr>
+    <td>
+      ¿<%= I18n.t('Sistema.Body.Vistas.General.financiamiento_solicitado_viable') %>? 
+      <%= radio_button 'solicitud', 'decision_final', 'true', :class=>'text', :onclick=>"#{remote_function(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :method =>:get,
+      :url=>{:controller=>'decision',
+      :action=>:viable_click },
+      :with=>"'solicitud_id=#{@solicitud.id}&viable='+ this.value" )}; inputChange();" %>Si
+      <%= radio_button 'solicitud', 'decision_final', 'false', :class=>'text', :onclick=>"#{remote_function(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :method =>:get,
+      :url=>{:controller=>'decision',
+      :action=>:viable_click },
+      :with=>"'solicitud_id=#{@solicitud.id}&viable='+ this.value" )}; inputChange();"  -%>No
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <script type="text/javascript">
+
+        function cargar()
+        {
+          document.getElementById("agregar").style.display= 'none';
+          var pars = "&sector_id=" + document.getElementById("sector_id_").value;
+          pars += "&sub_sector_id=" + document.getElementById("sub_sector_id_").value;
+          pars += "&rubro_id=" + document.getElementById("rubro_id_").value;
+          pars += "&cantidad=" + document.getElementById("cantidad_").value;
+          pars += "&solicitud_id=<%= @solicitud.id %>";
+          pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+          var myAjax = new Ajax.Request("/solicitudes/decision/save_new?" + pars, {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}}); return false;
+        }
+
+      </script>
+      <% if @solicitud.decision_final == false %>
+        <div id="view-viable">
+          <%= render :partial => 'view_viable' %>
+        </div>
+      <% else %>
+        <div id="view-viable" style="display: none"></div>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" colspan="2">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.justificacion')} #{I18n.t('Sistema.Body.Vistas.General.tecnica')}" %> </label> <label style="color: red">*</label><br/>
+      <%= text_area 'solicitud', 'justificacion',
+        :class=>'text',
+        :style=>'width: 700px; height: 60px',
+        :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+</table>
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar')) -%>&nbsp;
+<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+  {:action => :index,
+  :controller => '/solicitudes/consulta_evaluacion_credito'} %>

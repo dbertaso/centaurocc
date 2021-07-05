@@ -1,0 +1,53 @@
+      <%if params[:tipo_casa_id].nil? %>      
+        <%if params[:es].nil? %>      
+        <% casa_proveedora_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',               
+            :method=>:get,
+            :url=>{:controller=>'orden_despacho_detalle',
+            :action=>:casa_proveedora_change },
+            :with=>"'id='+value") %>
+         <%else%>
+         <% casa_proveedora_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',               
+            :method=>:get,
+            :url=>{:controller=>'orden_despacho_detalle',
+            :action=>:casa_proveedora_change },
+            :with=>"'id='+value+'&tipo_casa_id='+$('casa_tipo_region_r').checked") %>          
+         <%end%>   
+        <%else%>
+        <% casa_proveedora_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',               
+            :method=>:get,
+            :url=>{:controller=>'orden_despacho_detalle',
+            :action=>:casa_proveedora_change },
+            :with=>"'id='+value+'&tipo_casa_id='+$('casa_tipo_region_r').checked") %>          
+            
+        <%end%>
+        
+        <%valor="<option value='0'>#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}</option>"        
+        @casa_proveedora.each{ |x|
+         #aqui recorreo todos los option y le pongo el style a aquellas que cumplen la condicion
+         #se quito el style style=#{x.tipo}         
+         if params[:casa_id].to_i==x.id.to_i
+            valor+="<option selected value=#{x.id} >#{x.nombre}</option>"
+         else
+            valor+="<option value=#{x.id} style=#{x.tipo}>#{x.nombre}</option>"
+         end
+        }        
+        %>       
+        
+        
+        
+        <%=select_tag(
+              'casa_proveedora_id',
+              valor.html_safe,
+              { :class=>'select', :onchange=>casa_proveedora_onchange + ';inputChange();',:style=>'width:280px' } ) %>
+              <%if params[:tipo_casa_id]=='false'%>
+              <%= hidden_field_tag('tipo_casa_id','false') -%>
+              <!--&nbsp;Casas proveedoras en color <span style="background-color:cadetblue;width:14px;height:14px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> poseen sucursales en el estado de la oficina: <b><%#=Oficina.find(Usuario.find(session[:id]).oficina_id).nombre%> </b>-->
+              <%else%>
+              <%= hidden_field_tag('tipo_casa_id','true') -%>
+              <%end%>

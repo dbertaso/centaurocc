@@ -1,0 +1,31 @@
+	<table class="lista" style="width: 99%" align="center">
+		<thead>
+		<tr>
+			<th style="width: 30%" style="text-align: center">
+				<%= I18n.t('Sistema.Body.Vistas.RiesgoInstitucion.Etiquetas.rango') %>
+ 			</th>
+
+ 			<th style="width: 30%" <%= sort_class_helper('categoria') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.RiesgoInstitucion.Etiquetas.clasificacion'), 'categoria', 'list' %>
+ 			</th style="text-align: center"> 			 			
+
+ 			<th style="width: 30%" <%= sort_class_helper('porcentaje_riesgo') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.RiesgoInstitucion.Etiquetas.porcentaje'), 'porcentaje_riesgo', 'list' %>
+ 			</th>
+
+			<th style="width: 10%" style="text-align: center">
+				<%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for riesgo_sudeban in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :riesgo_sudeban => riesgo_sudeban, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+

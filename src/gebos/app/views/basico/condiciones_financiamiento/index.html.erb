@@ -1,0 +1,106 @@
+
+<%= form_title_search %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) do -%>
+  <table colspan="3">
+    <tr>
+      <td style="width: 100px">
+        <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.programa') %>:</label>
+      </td>
+      <td>
+        <% programa_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method => :get,
+            :url=>{:controller=>'condiciones_financiamiento',
+            :action=>:programa_search },
+            :with=>"'id='+value") %>
+
+        <%= select_tag(
+          'programa_id',
+            options_from_collection_for_select(@programa_list, "id" ,"nombre" ),
+            {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.General.programa')} #{t('Sistema.Body.Vistas.General.social')}",
+             :class=>'select', :onchange=>programa_onchange + ';inputChange();'} ) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.sector') %> </label>
+      </td>
+      <td style="width: 480px">
+        <span id="sector-search">
+            <%= render :partial => 'sector_search' %>
+        </span>
+
+
+      </td>
+      <td>
+      </td>
+    </tr>
+
+    </tr>
+      <td style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.sub_sector') %></label>
+      </td>
+      <td style="width: 480px">
+        <span id="sub-sector-search">
+            <%= render :partial => 'sub_sector_search' %>
+        </span>
+
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.rubro') %></label>
+      </td>
+      <td style="width: 480px">
+        <span id="rubro-search">
+            <%= render :partial => 'rubro_search' %>
+        </span>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.sub_rubro') %></label>
+      </td>
+      <td style="width: 480px">
+        <span id="sub-rubro-search">
+            <%= render :partial => 'sub_rubro_search' %>
+        </span>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.actividad') %></label>
+      </td>
+      <td style="width: 480px">
+        <span id="actividad-search">
+            <%= render :partial => 'actividad_search' %>
+        </span>
+      </td>
+
+
+
+      <td>
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+      </td></tr>
+  </table>
+
+<% end -%>
+
+<%= error %>
+<%= message %>
+
+<div id="list">
+</div>
+

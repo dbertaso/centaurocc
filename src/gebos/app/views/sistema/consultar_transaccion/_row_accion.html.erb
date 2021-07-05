@@ -1,0 +1,13 @@
+<% transaccion_accion = @transaccion_accion if transaccion_accion.nil? 
+color = ''
+if transaccion_accion.tipo == 'M'
+  color = '#fff495'
+elsif transaccion_accion.tipo == 'A'
+  color = '#b2e19a'
+else
+  color = '#ffacac'
+end
+%>
+<tr class="lista<%= even_odd %>" style="background-color: <%= color %>" id="row_accion_<%= transaccion_accion.id %>">
+  <%= render :partial => 'data_accion', :locals => { :transaccion_accion => transaccion_accion, :even_odd => even_odd } -%>
+</tr>

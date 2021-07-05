@@ -1,0 +1,138 @@
+<script language="JavaScript">
+  window.opener.location.reload();
+  <!-- Begin
+  function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+  }
+  function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+  }
+  //  End -->
+</script>
+<table width="1000px" border="0">
+  <tr>
+    <td style="width: 100%" align="center">
+      <font size="+1"><strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.propuesta_renegociacion')%></strong></font>
+    </td>
+  </tr>
+</table>
+<br><br><br>
+<table width="1000" border="1" style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;line-height: 150%">
+  <tr>
+    <td style="width: 25%">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.tramite')%></strong><br>
+
+    </td>
+    <td style="width: 50%">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.solicitante')%></strong>&nbsp;
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+        <%= @cliente.persona.nombre_corto %>
+      <% else %>
+        <%= @cliente.empresa.nombre %>
+      <% end %>
+    </td>
+    <td style="width: 25%">
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+      <strong><%=I18n.t('Sistema.Body.Vistas.General.ci')%></strong> <%= @cliente.persona.cedula_nacionalidad << '-' << @cliente.persona.cedula.to_s %>
+      <% else %>
+        <%= @cliente.empresa.rif %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%" rowspan="2">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.nro_credito')%></strong><%= @cantidad_prestamos %><br>
+      <%= @listado_prestamos %>
+    </td>
+    <td style="width: 50%">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.direccion')%></strong>&nbsp;
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+        <%= PersonaDireccion.direccion(@cliente.persona.id) %>
+      <% else %>
+        <%= EmpresaDireccion.direccion(@cliente.empresa.id) %>
+      <% end %>
+    </td>
+    <td style="width: 25%" rowspan="2">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.telefonos')%></strong>&nbsp;
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+        <%= @cliente.persona.telefonos[0].codigo << '-' << @cliente.persona.telefonos[0].numero if @cliente.persona.telefonos.length > 0 %>
+      <% else %>
+        <%= @cliente.empresa.telefonos[0].codigo << '-' << @cliente.empresa.telefonos[0].numero if @cliente.empresa.telefonos.length > 0 %>
+      <% end %>
+    </td>
+  </tr>
+  <tr> 
+    <td style="width: 50%">
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.monto_renegociado')%></strong>&nbsp;
+      <%= format_fm(@reestructuracion.monto_reestructurado) %>
+    </td>
+  </tr>
+  <tr> 
+    <td colspan=3>
+      <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.rubros_a_reestructurar')%></strong>&nbsp;
+      <%= @listado_rubros %>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+<table width="1000px" border="0" style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;line-height: 200%">
+  <tr>
+    <td align="justify" colspan=3>
+      <% if @cliente.type.to_s == 'ClientePersona' %>
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.print_propuesta_texto_1',       
+        :nombre_completo=>@cliente.persona.nombre_completo, 
+        :nacionalidad=>@cliente.persona.venezolano == true ? 'Venezolana' : 'Extranjera', 
+        :cedula_nacionalidad=>@cliente.persona.cedula_nacionalidad, 
+        :anio_solicitudes=>@anio_solicitudes,
+        :bancos_solicitudes=>@bancos_solicitudes, 
+        :listado_prestamos2=>@listado_prestamos2,
+        :monto_reestructurado=>format_fm(@reestructuracion.monto_reestructurado) ).html_safe %>
+        
+        <% else %>
+
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.print_propuesta_texto_2',
+          :representante_legal=>@cliente.empresa.representante_legal.nombre_completo, 
+          :venezolano=> @cliente.empresa.representante_legal.venezolano == true ? 'Venezolana' : 'Extranjera', 
+          :cedula_nacionalidad=>@cliente.empresa.representante_legal.cedula_nacionalidad, :cedula=>@cliente.empresa.representante_legal.cedula, 
+          :nombre=>@cliente.empresa.nombre, :rif=>@cliente.empresa.rif, :nombre_registro=>@registro_mercantil.nombre_registro, 
+          :estado_nombre=>@registro_mercantil.Estado.nombre, :registro_mercantil=>@registro_mercantil.numero, 
+          :nro_tomo=>@registro_mercantil.nro_tomo, :nro_protocolo=>@registro_mercantil.nro_protocolo, 
+          :fecha_registro=>@fecha_registro, :anio_solicitudes=>@anio_solicitudes, :bancos_solicitudes=>@bancos_solicitudes,
+          :listado_prestamos2=>@listado_prestamos2, :monto_reestructurado=>format_fm(@reestructuracion.monto_reestructurado) ).html_safe %>
+<% end %>
+
+          </td>
+          </tr>
+          <tr>
+            <td width=30 align="left" valign="top">
+            </td>
+            <td width=30 align="left" valign="top">
+              <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.romano_1') %>
+            </td>
+            <td align="justify">
+              <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.print_propuesta_texto_3').html_safe %>
+            </td>
+          </tr>
+
+          <tr>
+            <td width=30 align="left" valign="top">
+            </td>
+            <td width=30 align="left" valign="top">		
+            </td>
+            <td align="justify">
+              <br>
+              <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.print_propuesta_texto_4').html_safe %>
+            </td>
+          </tr>
+          </table>
+
+

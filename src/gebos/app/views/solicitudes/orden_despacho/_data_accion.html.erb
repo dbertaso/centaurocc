@@ -1,0 +1,78 @@
+<% factura = @factura if factura.nil? %>
+<td valign="top" style="text-align: center">
+	<%= factura.numero_factura.to_s %>
+</td>
+
+<td align="center">
+	<%= factura.item_nombre.to_s.strip.upcase unless factura.nil? %>
+</td>	
+
+<td align="center">
+	<%= factura.casa_proveedora.nombre.strip.upcase unless factura.casa_proveedora.nil? unless factura.nil?%>
+</td>	
+<td align="center">
+	<%= factura.sucursal_casa_proveedora.nombre.strip.upcase unless factura.sucursal_casa_proveedora.nil? unless factura.nil?%>
+</td>
+<td align="center">
+	<%= factura.cantidad_factura %>
+</td>
+<td align="center">
+	<%= format_fecha(factura.fecha_factura) %>
+</td>
+<td align="center">
+	<%=format_bool factura.emitida %>
+</td>
+<td align="center">
+	<%=format_bool factura.confirmada %>
+</td>
+
+<td align="center">
+
+<%unless factura.emitida%>
+
+<div id="deshacer_imprimir_individual_<%=factura.id%>" style="visibility:visible;width:20px;">
+
+<%unless factura.casa_proveedora.nil?%>
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir_individual',
+				:popup=>true,  :solicitud_id=>OrdenDespacho.find(factura.orden_despacho_detalle.orden_despacho_id).solicitud_id,:id=>factura.id  }, :onclick=>"esconder_impresion_individual(#{factura.id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+  <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion_individual(#{factura.id});",:title=>'Imprimir la Orden de Despacho'),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir_individual',
+				:popup=>true,  :solicitud_id=>OrdenDespacho.find(factura.orden_despacho_detalle.orden_despacho_id).solicitud_id,:id=>factura.id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+
+<%end%>
+
+  <!-- se quito el deshacer para rails 3 -->
+  
+  <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>'Deshacer la Factura de Orden de Despacho'),
+          :action => :deshacer_individual,
+          :controller => 'orden_despacho_detalle',
+          :id => factura.id) if vlink 'edit' -%>
+</div>
+
+
+<div id="modificar_<%=factura.id%>" style="visibility:visible;width:20px;">
+
+
+	<%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.modificar_factura_despacho')), 
+          :action => :abrir_nueva_factura_individual,
+          :controller => 'orden_despacho_detalle',
+          :id_factura => factura.id, :oid=>factura.orden_despacho_detalle.orden_despacho_id) if vlink 'edit' -%>&nbsp;
+	     
+</div>
+
+
+<%end%>
+
+<%if factura.emitida %>
+
+ <%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.confirmar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.confirmar_factura_emitida')),
+          :action => :confirmar_individual,
+          :controller => 'orden_despacho_detalle',
+          :id => factura.id) if vlink 'edit' -%>
+<%end%>
+
+</td>

@@ -1,0 +1,11 @@
+<% municipio_onchange = remote_function(
+  :loading =>'Element.show("loading")',
+  :loaded => 'Element.hide("loading")',
+  :url=>{:controller=>'agencia_bancaria',
+  :action=>:municipio_change },
+  :with=>"'municipio_id='+value") %>
+<%= select(
+  'agencia_bancaria', 'municipio_id',
+  @municipio_list.map{|e| [e.nombre, e.id]},
+  { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+  { :class=>'select', :onchange=>municipio_onchange + ';inputChange();' } ) %>

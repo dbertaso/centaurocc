@@ -1,0 +1,25 @@
+<% tipo_gasto = @tipo_gasto if tipo_gasto.nil? %>
+
+<td>
+  <%= tipo_gasto.nombre  %>
+</td>	
+<td>
+  <%= tipo_gasto.descripcion  %>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(tipo_gasto.activo)  %>
+</td>	
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'tipo_gasto', :action => :edit, :id => tipo_gasto.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'tipo_gasto', :action => :delete, :id => tipo_gasto.id}) if vlink 'delete' unless tipo_gasto.id == 1-%>
+</td>

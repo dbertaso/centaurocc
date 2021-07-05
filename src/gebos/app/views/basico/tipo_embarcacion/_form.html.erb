@@ -1,0 +1,30 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 300px">
+      <label><%=  I18n.t('Sistema.Body.Controladores.TipoEmbarcacion.FormTitles.form_title_record')%></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 500px">
+      <%= text_field 'tipo_embarcacion', 'tipo', :class=>'text', :style=>'width: 500px', :maxlength=>'50'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 220px">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.descripcion') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 500px">
+      <%= text_field 'tipo_embarcacion', 'descripcion', :class=>'text', :style=>'width: 500px', :maxlength=>'250'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'tipo_embarcacion', 'activo', :checked_value=>"1", :unchecked_value=>"0" -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

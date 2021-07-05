@@ -1,0 +1,31 @@
+<td style="text-align: left">
+  <%= prestamo.numero_solicitud %>
+</td>
+<td style="text-align: left">
+  <%= prestamo.numero %>
+</td>
+<td style="text-align: center">
+   <%= prestamo.identificacion
+    %>
+</td>
+<td style="text-align: center">
+  <%= prestamo.nombre_cliente %>
+</td>
+<td style="text-align: center">
+  <%= prestamo.rubro_nombre %>
+</td>
+<td>
+  <%= estatus_prestamo(prestamo.estatus_p) %>
+</td>
+<td style="text-align: right">
+  <%= format_fm(prestamo.exigible) %>
+</td>
+<td style="text-align: right">
+  <%= format_fm(prestamo.saldo_insoluto) %>
+</td>
+<td>
+  <%= "#{prestamo.moneda_nombre} - #{prestamo.moneda_abreviatura}"  %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.desembolsar'))), :action => 'pagar', :prestamo_id => prestamo.id ) %>
+</td>

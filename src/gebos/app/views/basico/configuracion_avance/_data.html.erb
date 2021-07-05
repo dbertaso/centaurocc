@@ -1,0 +1,48 @@
+<% configuracion_avance = @configuracion_avance if configuracion_avance.nil? %>
+<td>
+	<%= configuracion_avance.programa.nombre  unless configuracion_avance.nil? -%>
+</td>
+<td>
+	<% 
+		begin
+			estatus_origen = Estatus.find(configuracion_avance.estatus_origen_id,:select=>'nombre')
+			nombre_estatus = estatus_origen.nombre
+		rescue
+			nombre_estatus = 'Estatus Eliminado'
+		end
+	-%>
+	<%= nombre_estatus -%>
+</td>	
+<td>
+	<% 
+		begin
+			estatus_destino = Estatus.find(configuracion_avance.estatus_destino_id, :select=>'nombre') 
+			nombre_estatus = estatus_destino.nombre
+		rescue
+			nombre_estatus = 'Estatus Eliminado'
+		end-%>
+	<%= nombre_estatus -%>
+</td>
+<td>
+	<%= configuracion_avance.ruta_primaria -%>
+</td>
+<td>
+	<%= format_bool(configuracion_avance.condicionado) -%>
+</td>
+<td style="text-align: right">
+	
+	
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+    :method =>:get,
+		:url => {:controller => 'configuracion_avance', :action => :edit, :id => configuracion_avance.id} ) if vlink 'edit' -%>
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'configuracion_avance', :action => :delete, :id => configuracion_avance.id}) if vlink 'delete' -%>
+		
+</td>

@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+  <head>
+    <meta http-equiv="REFRESH" content="960" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= I18n.t('Sistema.Body.Vistas.Form.aplicativo')%> - <%= I18n.t('Sistema.Body.Vistas.Form.sistema')%> </title>
+    
+    <%= stylesheet_link_tag  "basic","menu" ,"main", "menuGeBos", "calendar_date_select", :media => "all" %> <!-- "menuGeBos","main", -->
+    <%= javascript_include_tag "application", "stuHover", "menu/jscookmenu", "menu/style", 
+      "prototype", "validation", "effects", "developer","calendar_date_select", 
+      "eforsys" %>  <!-- "stuHover", -->
+
+    <%= calendar_date_select_includes :style => 'default',:locale=> I18n.locale %>
+    <%= csrf_meta_tags %>
+
+  </head>
+
+  <body style="background-image:url(/assets/marcadeagua.png);background-repeat:no-repeat;background-position: 90% 100px;">
+
+    <div id="content">
+
+      <div class="marco" style="width: <%= @width_layout.nil? ? '500' : @width_layout  %>px">
+          <%#= @content_for_layout %>
+          <%= yield%>
+      </div>
+    <br><br><br>
+    </div>
+    
+  </body>
+</html>
+

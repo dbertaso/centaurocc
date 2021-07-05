@@ -1,0 +1,146 @@
+
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+<div class="marco-boton-out" id="button_new">
+
+</div>
+
+
+<div class="marco-contenido">
+	<%=  form_title_search %>
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+
+
+  <%= error %>
+	<%= message %>
+
+	<%= form_remote_tag(
+		:loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method => :get,
+		:url => { :action => :list },
+        :html => {:id => 'form_lista' } ) do -%>
+
+  <table>
+    
+
+
+<tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.orden')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nro_orden', '', :class=>'text', :maxlength=>'20', :style=>'width: 200px'  %>
+        </td>
+      </tr>
+ 
+
+
+        <tr>
+          <td style="width: 150px">
+            <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.Form.envio')%></label>
+          </td>
+          <td>
+              
+              <%= calendar_date_select_tag "fecha_envio_f", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);' %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+
+          </td>
+        </tr>
+
+
+
+        <tr>
+          <td style="width: 150px">
+            <label><%=I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.fecha_llegada')%></label>
+          </td>
+          <td>
+              
+              <%= calendar_date_select_tag "fecha_llegada_f", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);' %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+
+              
+          </td>
+        </tr>
+
+
+<tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.origen')%></label>
+        </td>
+        <td>
+        <%= text_field_tag 'origen', '', :class=>'text', :maxlength=>'100', :style=>'width: 200px'  %>     
+          
+        </td>
+      
+
+      </tr>
+
+<tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.destino')%></label>
+        </td>
+        <td>
+          <select name="destino" class =" select">
+            <option value=""><%=I18n.t('Sistema.Body.Vistas.General.todos')%></option>
+            <option value="F"><%=I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.oficina_asociada')%></option>
+            <option value="U"><%=I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.unidad_produccion_asociada')%></option>
+            <option value="O"><%=I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.otro_destino')%></option>            
+          </select>              
+        </td>
+      
+
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.estatus')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.General.la')%> <%=I18n.t('Sistema.Body.Vistas.General.orden')%></label>
+        </td>
+        <td>
+           
+           <select name="estatus" class =" select">
+            <option value=""><%=I18n.t('Sistema.Body.Vistas.General.todos')%></option>
+            <option value="E"><%=I18n.t('Sistema.Body.Vistas.General.elaborada')%></option>
+            <option value="T"><%=I18n.t('Sistema.Body.Vistas.General.en_transito')%></option>
+            <option value="R"><%=I18n.t('Sistema.Body.Vistas.General.recibida')%></option>            
+          </select>
+
+        </td>
+      </tr>
+
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label>
+
+         
+        </td>
+        <td> <select name="tipo" class =" select">
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.venezolano') %> "><%= I18n.t('Sistema.Body.General.TipoDocumento.venezolano') %></option>
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.extranjero') %> "><%= I18n.t('Sistema.Body.General.TipoDocumento.extranjero') %></option>
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.juridico') %>-"><%= I18n.t('Sistema.Body.General.TipoDocumento.juridico') %></option>
+            <option value="<%= I18n.t('Sistema.Body.General.TipoDocumento.gobierno') %>-"><%= I18n.t('Sistema.Body.General.TipoDocumento.gobierno') %></option>
+          </select>
+		<%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'12', :style=>'width: 100px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}"%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'beneficiario', '', :class=>'text', :maxlength=>'50', :style=>'width: 200px'  %>&emsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'),:onclick=>'javascript:varEnviado=false;') -%>
+        </td>
+      
+
+      </tr>
+
+   </table>
+  	<% end %>
+<br/>
+	
+<br/>
+	<div id="list">
+	</div>
+</div>

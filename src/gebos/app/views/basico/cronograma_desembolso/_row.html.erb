@@ -1,0 +1,6 @@
+<% cronograma_desembolso = @cronograma_desembolso if cronograma_desembolso.nil? %>
+    
+<tr class="lista<%= even_odd %>" id="row_<%= cronograma_desembolso.id %>">
+
+	<%= render :partial => 'data', :locals => { :cronograma_desembolso => cronograma_desembolso, :even_odd => even_odd } -%>
+</tr>

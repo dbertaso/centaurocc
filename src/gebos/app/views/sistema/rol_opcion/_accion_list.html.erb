@@ -1,0 +1,22 @@
+<% if @accion_list %>
+  <table style="width: 100%">
+    <tbody>
+      <% 
+      for opcion_accion in @accion_list        
+      %>
+        <tr>
+          <td>
+            <% if edit %>
+              <%= render :partial=>'accion_check_edit', :locals=>{:opcion_accion=>opcion_accion} %>
+            <% else %>
+              <%= render :partial=>'accion_check_new', :locals=>{:opcion_accion=>opcion_accion} %>
+            <% end %>
+            <%= opcion_accion.accion.nombre %>
+          </td>
+        </tr>
+      <% 
+      end
+    %>
+    </tbody>
+  </table>
+<% end %>

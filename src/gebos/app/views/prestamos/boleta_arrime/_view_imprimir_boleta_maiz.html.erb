@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <title>Documento sin t&iacute;tulo</title>
+  </head>
+
+  <body>
+    <table width="950" border="1">
+      <tr>
+        <td colspan="8"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_de_laboratorio')%> </label></div></td>
+      </tr>
+      <tr>
+        <td width="128"><div align="center"><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.parentesis_maiz')%></label></div></td>
+        <td width="60"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+        <td width="80"><div align="center"></div></td>
+        <td width="153"><div align="center"></div></td>
+        <td width="60"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+        <td width="80"><div align="center"></div></td>
+        <td width="150"><div align="center"></div></td>
+        <td width="60"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.humedad)%>
+          <%end%>
+        </td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_germinados_danados')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.germinados_danados)%>
+          <%end%>
+        </td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_cristalizados')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.cristalizados)%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.impureza)%>
+          <%end%>
+        </td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_danados_insectos')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.danados_insectos)%>
+          <%end%>
+        </td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_amilaceos')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.amilaceos)%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.mezcla_color')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.mezcla_color)%>
+          <%end%>
+        </td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_quemados')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.quemados)%>
+          <%end%>
+        </td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_infectados')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.infectados)%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.luv')%></label></td>
+        <td> <%unless @laboratorio_maiz.nil? %>
+            <% if @laboratorio_maiz.luv == 'A'%>
+              <%=I18n.t('Sistema.Body.General.no_aplica')%>
+            <%elsif @laboratorio_maiz.luv == 'P'%>
+              <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.positivo')%>
+            <%elsif @laboratorio_maiz.luv == 'N'%>
+              <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.negativo')%>
+            <%end%>
+          <%end%></td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_microorganismos')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.danados_microorganismos)%>
+          <%end%>
+        </td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_total')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.danados_total)%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.olor')%></label></td>
+        <td><%= @laboratorio_maiz.olor.to_s unless @laboratorio_maiz.nil? %></td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_partidos')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.partidos)%>
+          <%end%>
+        </td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.semillas_objetables')%></label></td>
+        <td><%unless @laboratorio_maiz.nil? %>
+            <%= format_fm(@laboratorio_maiz.semillas_objetables)%>
+          <%end%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.aspecto')%></label></td>
+        <td><%= @laboratorio_maiz.aspecto.to_s unless @laboratorio_maiz.nil? %></td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_calor')%></label></td>
+        <td><% unless @laboratorio_maiz.danados_calor.nil? %>
+            <%= format_fm(@laboratorio_maiz.danados_calor)%>
+          <%end%></td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.aflatoxina')%></label></td>
+        <td><%= @laboratorio_maiz.aflatoxina unless @laboratorio_maiz.nil? %></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.sensorial')%></label></td>
+        <td><% unless @laboratorio_maiz.sensorial.nil? %>
+            <%= format_fm(@laboratorio_maiz.sensorial)%>
+          <%end%></td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_por_hongos')%></label></td>
+        <td><% unless @laboratorio_maiz.hongos.nil? %>
+            <%= format_fm(@laboratorio_maiz.hongos)%>
+          <%end%></td>
+        <td></td>
+        <td><label><%= I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.hibrido')%></label></td>
+        <td><% unless @laboratorio_maiz.hibrido.nil? %>
+            <%= format_fm(@laboratorio_maiz.hibrido)%>
+          <%end%></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.remolque')%></label></td>
+        <td><% unless @laboratorio_maiz.remolque.nil? %>
+            <%= format_fm(@laboratorio_maiz.remolque)%>
+          <%end%></td>
+        <td></td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.motriz')%></label></td>
+        <td><% unless @laboratorio_maiz.motriz.nil? %>
+            <%= format_fm(@laboratorio_maiz.motriz)%>
+          <%end%></td>
+        <td></td>
+        <td colspan="2"><label>&nbsp;</label></td>
+
+      </tr>
+
+
+    </table>
+  </body>
+</html>

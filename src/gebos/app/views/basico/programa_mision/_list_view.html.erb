@@ -1,0 +1,34 @@
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+		<th style="width: 260px" <%= sort_class_helper('mision.nombre') %>>
+			<%= sort_link_helper 'Nombre', 'mision.nombre', 'mision_list' %>
+			</th>
+		<th style="width: 285px" <%= sort_class_helper('mision.descripcion') %>>
+			<%= sort_link_helper 'Descripción', 'mision.descripcion', 'mision_list' %>
+			</th>
+	</tr>
+	</thead>
+
+	<tbody id="list_body">
+		<%  
+			even_odd = 1
+			for mision in @list
+				even_odd = 1 - even_odd %>
+
+			<% mision = @mision if mision.nil? %>
+            <%if !mision.nil? %>
+              <tr class="lista<%= even_odd %>" id="row_<%= mision.id %>">
+                  <td>
+                      <%= mision.nombre  %>
+                  </td>
+                  <td>
+                      <%= mision.descripcion %>
+                  </td>
+              </tr>
+            <% end %>
+		<% end %>
+	</tbody>
+</table>
+
+<%= form_pagination %>

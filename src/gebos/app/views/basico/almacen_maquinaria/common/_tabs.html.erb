@@ -1,0 +1,36 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='almacen_maquinaria'
+    %>
+      <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.basico') %></a></div></li>
+    <% 
+    else 
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.basico'), :controller => 'almacen_maquinaria', :action => 'edit', :id => @almacen_maquinaria.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.basico'), :controller => 'almacen_maquinaria', :action => 'view', :id => @almacen_maquinaria.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view') %>		      
+        </div></li>
+    <% 
+    end
+
+    if !@almacen_maquinaria.new_record?
+      if controller_name=='almacen_maquinaria_sucursal'
+      %>
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.sucursales') %></a></div></li>
+      <% 
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.sucursales'), :controller => 'almacen_maquinaria_sucursal', :action => 'index', :almacen_maquinaria_id => @almacen_maquinaria.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.sucursales'), :controller => 'almacen_maquinaria_sucursal', :action => 'view', :@almacen_maquinaria_id => @almacen_maquinaria.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view') %>			     
+          </div></li>
+      <% 
+      end 
+    end
+      
+  %>
+  </ul>
+</div>

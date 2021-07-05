@@ -1,0 +1,74 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+	<tr>
+		<td style="width: 250px">
+			<label>
+				<%=I18n.t('Sistema.Body.Vistas.General.programa') -%>
+			</label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+		</td>
+		<td style="width: 620px">
+       <%= select(
+          'configuracion_reverso', 'programa_id',
+           @programa.map{|i| [i.nombre, i.id]},
+              {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.General.programa')}"},
+              { :class=>'select' })%>		</td>
+	</tr>
+	<tr>
+		<td style="width: 250px">
+			<label>
+				<%="#{I18n.t('Sistema.Body.Vistas.Form.estatus')} #{I18n.t('Sistema.Body.Vistas.General.origen')}" %>
+			</label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+		</td>
+		<td style="width: 620px">
+       <%= select(
+          'configuracion_reverso', 'estatus_origen_id',
+           @estatus_origen.map{|i| [i.nombre, i.id]},
+              {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.Form.estatus')}"},
+              { :class=>'select' })%>	
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 250px">
+			<label>
+				<%="#{I18n.t('Sistema.Body.Vistas.Form.estatus')} #{I18n.t('Sistema.Body.Vistas.Form.destino')}"%>
+			</label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+		</td>
+		<td style="width: 620px">
+       <%= select(
+          'configuracion_reverso', 'estatus_destino_id',
+           @estatus_destino.map{|i| [i.nombre, i.id]},
+              {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.Form.estatus')}"},
+              { :class=>'select' })%>
+	</tr>
+	<tr>
+		<td>
+			<label>
+				<%=I18n.t('Sistema.Body.Vistas.Form.main_form') %>
+			</label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+		</td>
+		<td style="width: 620px">
+       <%= select(
+          'configuracion_reverso', 'ruta_primaria',
+           @ruta.map{|i| [i.nombre, i.ruta]},
+              {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.Form.main_form')}"},
+              { :class=>'select' })%>		
+		</td>
+	</tr>
+    <tr>
+	   <td>
+	     <label><%=I18n.t('Sistema.Body.Vistas.General.condicionado')%></label>
+	   </td>
+	   <td>
+			<%= check_box 'configuracion_reverso', 'condicionado',
+					:checked_value=>"1", 
+					:unchecked_value=>"0"
+      -%>
+	    </td>
+    </tr>
+	<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;};", :id=>'button_save') -%>&nbsp;

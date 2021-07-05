@@ -1,0 +1,28 @@
+<% sub_rubro = @sub_rubro if sub_rubro.nil? %>
+<td>
+  <%= sub_rubro.rubro.codigo unless sub_rubro.nil? %>
+</td>
+<td>
+  <%= sub_rubro.rubro.nombre unless sub_rubro.nil? %>
+</td>
+<td>
+  <%= sub_rubro.codigo unless sub_rubro.nil?%>
+</td>
+<td>
+  <%= sub_rubro.nombre unless sub_rubro.nil?%>
+</td>
+<td>
+  <%= sub_rubro.descripcion unless sub_rubro.nil? %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(sub_rubro.activo) unless sub_rubro.nil? %>
+</td>
+<td style="text-align: right">
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), :action => 'edit', :rubro_id => @rubro.id, :popup=>params[:popup], :id => sub_rubro.id ) if vlink 'edit' %>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+        :url => {:controller => 'sub_rubro', :action => :delete, :id => sub_rubro.id}) if vlink 'delete' -%>
+</td>
+

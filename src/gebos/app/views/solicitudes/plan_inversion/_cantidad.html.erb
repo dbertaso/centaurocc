@@ -1,0 +1,7 @@
+<label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} #{I18n.t('Sistema.Body.Vistas.General.recomendada')}" %> </label> <label style="color: red">*</label>
+    <%= text_field_tag 'cantidad', cantidad,
+        :class=>'text', :maxlength=>'14', :style=>'width: 100px, align: left',
+        :onkeyup=>"ValidarNumero('cantidad'); formatCurrency1(this.value, 'cantidad'); 'inputChange();'",
+        :onkeypress=>'inputChange();' -%>
+<%= display_number cantidad, 'cantidad' %>
+<label><%= I18n.t('Sistema.Body.Vistas.General.hectareas') %></label>

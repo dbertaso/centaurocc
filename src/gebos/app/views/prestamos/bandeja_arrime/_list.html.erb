@@ -1,0 +1,57 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 70px" <%= sort_class_helper('boleta_arrime.numero_tramite') %>>
+        <%= sort_link_helper 'Nro. Trámite','view_bandeja_arrime.numero_tramite', 'list' %>
+      </th>
+      <th style="width: 200px" <%= sort_class_helper('boleta_arrime.nombre_beneficiario') %>>
+        <%= sort_link_helper 'Beneficiario','view_bandeja_arrime.nombre_beneficiario', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('boleta_arrime.nombre_silo') %>>
+        <%= sort_link_helper 'Silo','view_bandeja_arrime.nombre_silo', 'list' %>
+      </th>
+      <th style="width: 70px" <%= sort_class_helper('boleta_arrime.numero_ticket') %>>
+        <%= sort_link_helper 'Nro. Ticket','view_bandeja_arrime.numero_ticket', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('boleta_arrime.guia_movilizacion') %>>
+        <%= sort_link_helper 'Guia Movil.','view_bandeja_arrime.guia_movilizacion', 'list' %>
+      </th>
+      <th style="width: 60px" <%= sort_class_helper('boleta_arrime.estatus') %>>
+        <%= sort_link_helper 'Estatus','view_bandeja_arrime.estatus', 'list' %>
+      </th>
+      <th style="width: 250px" <%= sort_class_helper('boleta_arrime.sector') %>>
+        <%= sort_link_helper 'Sector','view_bandeja_arrime.sector', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('boleta_arrime.sub_sector') %>>
+        <%= sort_link_helper 'Sub Sector','view_bandeja_arrime.sub_sector', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('boleta_arrime.rubro') %>>
+        <%= sort_link_helper 'Rubro','view_bandeja_arrime.rubro', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('boleta_arrime.sub_rubro') %>>
+        <%= sort_link_helper 'Sub Rubro','view_bandeja_arrime.sub_rubro', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('boleta_arrime.actividad') %>>
+        <%= sort_link_helper 'Actividad','view_bandeja_arrime.actividad', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('boleta_arrime.valor_arrime') %>>
+        <%= sort_link_helper 'Valor Arrime', 'boleta_arrime', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('boleta_arrime.arrime_conjunto') %>>
+        <%= sort_link_helper 'Arrime Conj.', 'boleta_arrime', 'list' %>
+      </th>                       
+      <th style="width: 70px"><%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%  
+    even_odd = 1
+    for boleta_arrime in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :boleta_arrime => boleta_arrime, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

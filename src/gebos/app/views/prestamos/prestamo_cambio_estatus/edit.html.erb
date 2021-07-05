@@ -1,0 +1,30 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+    Trámite <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span>
+  </div></div></div>
+
+  <div class="marco-contenido2">
+
+        <%= error %>
+    <%= message %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id=>@prestamo.id, :popup=>params[:popup] } ) do -%>
+
+          <%= render 'form' %>
+
+      <div id="buttons_edit" style="display: none">
+        <%= form_buttons_edit :popup=>params[:popup] %>
+      </div>
+
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :action => :index },
+        { :id=>'button_close' } ) -%>
+
+    <% end %>
+
+  </div>
+</div>

@@ -1,0 +1,367 @@
+<%= error %>
+<%= message %>
+<div id="encabezado-boleta-algodon">
+<table style="width: 100%">
+  <td class="separador" valign="bottom" colspan="4">
+    <span><%=I18n.t('Sistema.Body.Vistas.EmpleadosSilo.Etiquetas.datos_personales')%></span>
+  </td>
+  </table>
+<br/>
+<br/>
+  <table align="center" border="1">
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.Form.silo')%></label></td>
+      <td>
+
+        <%=@boleta_arrime.silo.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td> <label><%=I18n.t('Sistema.Body.Vistas.General.rif')%></label></td>
+      <td>
+
+        <%=@boleta_arrime.silo.rif %>
+      </td>
+    </tr>
+    <tr>
+      <td> <label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.asociacion')%></label> </td>
+      <td><%=I18n.t('Sistema.Body.General.banco_origen')%> </td>
+    </tr>
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%> </label></td>
+      <td>
+        <%=@boleta_arrime.rubro.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%> </label></td>
+      <td>
+        <%=@boleta_arrime.actividad.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.ciclo')%> </label></td>
+      <td>
+        <%= @boleta_arrime.ciclo_productivo.nombre unless @boleta_arrime.ciclo_productivo.nil? %>
+      </td>
+    </tr>
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.hora_registro')%> </label></td>
+      <td>
+        <%= @boleta_arrime.hora_registro_f unless @boleta_arrime.nil? %>
+      </td>
+    </tr>
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.hora_entrada')%> </label></td>
+      <td>
+        <%= @boleta_arrime.hora_entrada_silo_f unless @boleta_arrime.nil? %>
+      </td>
+    </tr>
+  </table>
+
+<br/>
+<br/>
+<table align="center" border="1" width="60%">
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento')%></label></td>
+    <td>
+        <%= @boleta_arrime.solicitud.numero%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.numero_boleta')%></label></td>
+    <td><%=@boleta_arrime.numero_ticket unless @boleta_arrime.nil?%></td>
+  </tr>
+
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.doc_beneficiario')%></label></td>
+    <td>
+      <%= @view_boleta_arrime.cedula_rif %>
+    </td>
+
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.beneficiario')%></label></td>
+    <td>
+      <%= @view_boleta_arrime.productor%>
+    </td>
+
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.placa_vehiculo')%></label></td>
+
+    <td>
+      <%= @boleta_arrime.placa_vehiculo unless @boleta_arrime.nil?%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.guia')%></label></td>
+    <td><%= @boleta_arrime.guia_movilizacion unless @boleta_arrime.nil?%></td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.cedula_conductor')%></label></td>
+    <td><%= @boleta_arrime.cedula_conductor unless @boleta_arrime.nil?%></td>
+
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nombre_conductor')%></label></td>
+    <td><%= @boleta_arrime.nombre_conductor unless @boleta_arrime.nil? %></td>
+  </tr>
+</table>
+</br>
+</div>
+
+<br/>
+
+<div id="laboratorio-algodon">
+  <% 
+      if params[:action].to_s == "view"
+        @boleta_laboratorio_algodon = BoletaLaboratorioAlgodon.find_by_boleta_arrime_id(@boleta_arrime.id)
+      end
+    %>
+
+      <% unless @boleta_laboratorio_algodon.nil? %>
+        <%= render :partial => 'boleta_laboratorio_algodon_view' %>
+      <%end%>
+</div>
+
+<div id="operacion-boleta">
+<table style="width: 100%">
+
+  <td class="separador" valign="bottom" colspan="4">
+    <span>><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_del_peso')%></span>
+  </td>
+</table>
+<br/>
+
+<table align="center" border="1" width="60%">
+  <tr align="center" >
+    <td><%=I18n.t('Sistema.Body.Vistas.General.items')%></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.fecha')%></label></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.hora')%></label></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.vehiculo')%></label></td>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.remolque')%></label></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.total')%></label></td>
+
+  </tr>
+
+  <tr align="center" >
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.entrada')%></label></td>
+
+    <td><%= format_fecha(@boleta_arrime.fecha_entrada) unless @boleta_arrime.nil?%></td>
+    <td><%= @boleta_arrime.hora_entrada_peso_f unless @boleta_arrime.nil?%></td>
+    <td>
+         <%unless @boleta_arrime.nil?%>
+         <%= format_fm(@boleta_arrime.peso_vehiculo)%>
+         <%end%>
+    </td>
+    <td>
+         <%unless @boleta_arrime.nil?%>
+         <%= format_fm(@boleta_arrime.peso_remolque)%>
+         <%end%>
+    </td>
+    <td>
+        <%unless @boleta_arrime.nil?%>
+        <%= format_fm(@boleta_arrime.valor_total_entrada)%>
+        <%end%>
+    </td>
+  </tr>
+
+  <tr align="center" >
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.salida')%></label></td>
+    <td><%= format_fecha(@boleta_arrime.fecha_salida) unless @boleta_arrime.nil? %></td>
+    <td><%= @boleta_arrime.hora_salida_peso_f unless @boleta_arrime.nil?%></td>
+    <td>
+        <%unless @boleta_arrime.nil?%>
+        <%= format_fm(@boleta_arrime.peso_vehiculo)%>
+        <%end%>
+    </td>
+    <td>
+        <%unless @boleta_arrime.nil?%>
+        <%= format_fm(@boleta_arrime.peso_remolque)%>
+        <%end%>
+    </td>
+    <td>
+        <%unless @boleta_arrime.nil?%>
+        <%= format_fm(@boleta_arrime.valor_total_salida)%>
+        <%end%>
+    </td>
+  </tr>
+        <tr>
+          <td colspan="5"><div align="right"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.peso_sin_descuento')%></label> </div></td>
+          <td colspan="2"><div align="center">
+              <%unless @boleta_arrime.nil?%>
+              <%= format_fm(@boleta_arrime.peso_bruto)%>
+              <%end%> &nbsp;
+            </div></td>
+        </tr>
+</table>
+<br>
+<table align="center" border="1" width="60%">
+      <tr align="center">
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.sacos')%></label></td>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.unidad')%></label></td>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje_aplica')%></label></td>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.valor_kg')%></label></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.secos')%></label></td>
+        <td><%= @boleta_arrime.secos unless @boleta_arrime.nil?%> &nbsp;</td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.porcentaje_aplicado_seco)%>
+             <%end%> &nbsp;</td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.total_secos)%>
+             <%end%> &nbsp;</td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.titulo_humedo') %></label></td>
+        <td><%= @boleta_arrime.humedos unless @boleta_arrime.nil?%> &nbsp;</td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= formaat_fm(@boleta_arrime.porcentaje_aplicado_humedo)%>
+             <%end%> &nbsp;</td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.total_humedos)%>
+             <%end%> &nbsp;</td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.titulo_mojado')%></label></td>
+        <td><%= @boleta_arrime.mojados unless @boleta_arrime.nil?%> &nbsp;</td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.porcentaje_aplicado_mojado)%>
+             <%end%> &nbsp;</td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.total_mojados)%>
+             <%end%> &nbsp;</td>
+      </tr>
+      <tr>
+        <td align="right"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.total_sacos')%></label></td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.total_sacos)%>
+             <%end%> &nbsp;</td>
+        <td align="right"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.total_kg')%></label></td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.total_kg)%>
+             <%end%> &nbsp;</td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_bruto_ajustado')%></label></td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.peso_neto)%>
+             <%end%> &nbsp;</td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_neto')%></label></td>
+        <td><%unless @boleta_arrime.nil?%>
+             <%= format_fm(@boleta_arrime.peso_acondicionado)%>
+             <%end%> &nbsp; </td>
+      </tr>
+    </table>
+
+</br>
+
+
+<br/>
+
+<table align="center" border="1" width="30%">
+  <tr align="center" >
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nro_acta')%></label></td>
+    <td> <%= @boleta_arrime.numero_acta unless @boleta_arrime.nil?-%></td>
+  </tr>
+  <tr align="center" >
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.resultado')%></label></td>
+    <td>
+      <%unless @boleta_arrime.nil?%>
+          <% if  @boleta_arrime.resultado == 'A' %>
+             <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%>
+          <% elsif @boleta_arrime.resultado == 'R' %>
+            <%=I18n.t('Sistema.Body.General.rechazado')%>
+          <%end%>
+      <%end%>
+    </td>
+  </tr>
+ 
+ <% if @boleta_arrime.resultado =='A' %>
+
+     <tr align="center" >
+      <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.tipo_clase')%></label></td>
+      <td>
+        <%unless @view_precio_gaceta.nil?%>
+          <% unless @view_boleta_arrime.nil? || @view_boleta_arrime.to_s.empty? %>
+            
+                <% if @view_precio_gaceta.tipo_clase == 'A' %>
+                <%=I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.grado_a')%>
+              <% elsif @view_precio_gaceta.tipo_clase == 'B' %>
+                <%=I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.grado_b')%>
+              <% elsif @view_precio_gaceta.tipo_clase == 'C' %>
+                <%=I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.grado_c')%>
+              <% elsif @view_precio_gaceta.tipo_clase == 'D' %>
+                <%=I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.grado_d')%>
+              <%end%>
+                
+          <%end%>
+        <%end%>
+      </td>
+    </tr>
+    <%  unless @referencia.nil? %>
+    <tr align="center" >
+      <td><font color="red"><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.referencia_gaceta')%> </font></td>
+      <td>
+        <%= format_fm(@referencia.valor)%>
+      </td>
+    </tr>
+    <%end%>
+    <tr align="center" >
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.precio')%></label></td>
+      <td>
+        <%unless @view_precio_gaceta.nil?%>
+            <%= format_fm(@view_precio_gaceta.valor)%>
+        <%end%>
+      </td>
+    </tr>
+
+    <tr align="center">
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.monto_arrime')%></label></td>
+      <td>
+        <% unless @boleta_arrime.nil? %>
+            <%= format_fm(@boleta_arrime.valor_arrime)%>
+        <%end%>
+      </td>
+    </tr><tr align="center" >
+    </tr>
+    
+    <tr align="center" >
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.observacion')%></label></td>
+      <td align="center">
+        <%= @boleta_arrime.causa unless @boleta_arrime.nil? -%>
+      </td>
+      <%end%>
+       <% if @boleta_arrime.resultado =='R' %>
+    <tr align="center" >
+      <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nro_acta_rechazo')%></label></td>
+      <td> <%= @boleta_arrime.nro_acta_rechazo unless @boleta_arrime.nil? -%> </td>
+    </tr>
+  </tr>
+  
+  <tr align="center" width="25px">
+    <td><label><%= I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.causa')%></label></td>
+    <td align="center" width="25px">
+      <%= @boleta_arrime.causa_rechazo unless @boleta_arrime.nil? -%>
+    </td>
+
+    <%end%>
+  </tr>
+  
+
+<table>
+    <%unless @boleta_arrime.nil?%>
+        <%  if  @boleta_arrime.arrime_conjunto == true%>
+        <div>
+          <%= render :partial => 'arrime_conjunto_view' %>
+        </div>
+        <%end%>
+    <%end%>
+</table>
+<br/>
+<br/>
+<br/>
+</table>
+</div>
+<%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+  { :action => :index, :solicitud_id => @boleta_arrime.solicitud_id,},
+  { :id=>'button_close' } ) -%>
+

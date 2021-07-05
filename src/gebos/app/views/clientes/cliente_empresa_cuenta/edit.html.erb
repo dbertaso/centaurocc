@@ -1,0 +1,60 @@
+<script language="JavaScript" type="text/javascript">
+
+  function pulsar(e) {
+    tecla = (document.all) ? e.keyCode : e.which;
+    return (tecla != 13);
+  }
+
+  function muestra(){
+    $('papa').style.display='block';
+    $('papa1').style.display='block';
+    $('papa_upa').style.display='block';
+    $('buttons_edit').style.display='block';
+    $('button_save').style.display='block';
+  }
+
+  function borro_contenido(){
+    $('cuenta_bancaria_activo').checked='';
+    $('cuenta_bancaria_fecha_apertura_f').value='';
+    $('cuenta_bancaria_numero').value='';
+    $('cuenta_bancaria_tipo_c').checked=false;
+    $('cuenta_bancaria_tipo_a').checked=false;
+    $('papa').style.display='none';
+    $('papa1').style.display='none';
+    $('papa_upa').style.display='none';
+    $('papa_upa').value='';
+    $('button_save').style.display='none';
+  }
+
+</script>
+
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando') %> <%= "#{I18n.t('Sistema.Body.General.beneficiario')} #{I18n.t('Sistema.Body.Vistas.General.juridico')}" %> <span class="titulo_modificar">'<%= @empresa.alias %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'clientes/cliente_empresa/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= form_title_edit @cuenta_bancaria.tipo_w %>
+
+  <%= error  %>
+  <%= message  %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :popup=>params[:popup], :empresa_id => @empresa.id, :id => @cuenta_bancaria.id },
+    :html => {:onkeypress => "return pulsar(event)" } ) do -%>
+
+  <%= render :partial => 'form' %>
+
+  <div id="buttons_edit" style="display: none">
+    <%= form_buttons_edit :empresa_id => @empresa.id, :popup=>params[:popup] %>
+  </div>
+
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index, :popup=>params[:popup], :empresa_id => @empresa.id },
+    { :id=>'button_close', } ) -%>
+
+  <% end -%>
+</div>

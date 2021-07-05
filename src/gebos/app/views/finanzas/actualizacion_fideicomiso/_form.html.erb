@@ -1,0 +1,160 @@
+<script language="javascript">varEnviado = false;</script>
+<%= form_remote_tag(
+	:loading =>'image_load()',
+	:loaded => 'image_unload()',
+  :url => { :action => :save_new } ) do -%>
+
+
+<table width="100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+     <span><%=I18n.t('Sistema.Body.Modelos.TransaccionFideicomiso.Mensajes.datos_fideicomiso')%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 &nbsp;&nbsp;&nbsp;
+      <%= link_to(I18n.t('Sistema.Body.Modelos.TransaccionFideicomiso.Mensajes.ver_movimientos'), {:controller=>'consulta_disponibilidad_fideicomiso', :action=>'list', :nro_fideicomiso=>@fideicomiso.id, :popup=>true }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>@fideicomiso.id) + "',
+'height=1100px,width=screen.width,resizable=false,top=0,left=0'); return false;")  %>
+
+<%#= link_to 'Ver Movimientos', {:controller => 'consulta_disponibilidad_fideicomiso', :action => 'list', :nro_fideicomiso => @fideicomiso.id, :popup=>true},:popup => ['Movimientos del Fideicomiso', 'height=400,width=1000, scrollbars=yes, resizable=false'] %> </span>
+     <br/>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+      </div>
+    </td>
+  </tr>
+      <tr>
+
+        <td style="width: 40%">
+          <label>&nbsp;&nbsp;&nbsp;&nbsp;<%= I18n.t('Sistema.Body.Vistas.ReglaContable.Etiquetas.tipo_movimiento') %></label>&nbsp;<font color="red">*</font>
+        </td>
+        <td style="width: 60%">
+               <% tipo_m_onchange = remote_function(
+                       :loading =>'image_load()',
+                       :loaded => 'image_unload()',
+                       :method=>:get,
+                       :url=>{:controller=>'actualizacion_fideicomiso',
+                       :action=>:tipo_m_change },
+                       :with=>"'tipo_movimiento_fideicomiso_id='+value" ) %>
+              <%= select(
+                'movimiento_fideicomiso','tipo_movimiento_id',
+                @tipo_movimiento_manual_list.map{|e| [e.tipo_movimiento_manual, e.id]},
+                { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                { :class=>'select', :onchange=>tipo_m_onchange + ';inputChange();' } ) %>
+        </td>
+
+      </tr>
+  <tr>
+    <td>
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label>&nbsp;<font color="red">*</font>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'referencia', :class=>'text', :maxlength=>'20', :style=>'width: 300px'  %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.justificacion')%></label>&nbsp;<font color="red">*</font>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'justificacion', :class=>'text', :style=>'width: 300px'  %>
+      <%= text_field 'movimiento_fideicomiso', 'fideicomiso_id', :class=>'text', :hidden=>true, :value=> @fideicomiso.id %>
+      <input type="hidden" id="formulaf" name="formulaf"/>
+      <input type="hidden" id="afecta_d" name="afecta_d"/>
+      <input type="hidden" id="afecta_c" name="afecta_c"/>
+      <input type="hidden" id="monto_disponible_actual" name="monto_disponible_actual" value="<%=@fideicomiso.monto_disponible%>"/>
+      <input type="hidden" id="afecta_sub_cuentas" name="afecta_sub_cuentas" value="S" />
+   </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.saldo') << " " << I18n.t('Sistema.Body.Vistas.General.disponible')%></label>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'saldo_disponible_antes', :class=>'text', :maxlength=>'17', :value=>(@fideicomiso.monto_disponible.nil? ? 0 : @fideicomiso.monto_disponible ), :readonly=>true ,
+                  :style=>'width: 150px;text-align:right' -%>
+                        <span id="saldo_disponible_antes_moneda"></span>
+                        <%= display_number (@fideicomiso.monto_disponible.nil? ? 0 : @fideicomiso.monto_disponible ), 'saldo_disponible_antes' %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Vistas.General.operacion')%></label>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'monto_operacion', :class=>'text', :maxlength=>'17', :disabled=>true, :value=> '', :style=>'width: 150px;text-align:right' , :onkeyup=>"formula(" << @fideicomiso.porcentaje.to_s << ");formatCurrency(this.value, this.id);" %>
+                         <span id="movimiento_fideicomiso_monto_operacion_moneda"></span>
+                       <%= display_number 0, 'movimiento_fideicomiso_monto_operacion' %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.sub_cuenta')%> <%=I18n.t('Sistema.Body.Vistas.General.banco')%></label>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'monto_banco', :class=>'text', :maxlength=>'17', :disabled=>true, :value=> '', :style=>'width: 150px;text-align:right' , :onkeyup=>"formula(" << @fideicomiso.porcentaje.to_s << ");formatCurrency(this.value, this.id);" %>
+                         <span id="movimiento_fideicomiso_monto_banco_moneda"></span>
+                       <%= display_number 0, 'movimiento_fideicomiso_monto_banco' %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.sub_cuenta')%> <%= I18n.t('Sistema.Body.Vistas.General.insumos')%></label>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'monto_insumos', :class=>'text', :maxlength=>'17', :disabled=>true, :value=> '', :style=>'width: 150px;text-align:right' , :onkeyup=>"formula(" << @fideicomiso.porcentaje.to_s << ");formatCurrency(this.value, this.id);" %>
+                         <span id="movimiento_fideicomiso_monto_insumos_moneda"></span>
+                       <%= display_number 0, 'movimiento_fideicomiso_monto_insumos' %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.sub_cuenta')%> <%= I18n.t('Sistema.Body.Vistas.General.gastos')%></label>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'monto_gastos', :class=>'text', :maxlength=>'17', :disabled=>true, :value=> '', :style=>'width: 150px;text-align:right' , :onkeyup=>"formula(" << @fideicomiso.porcentaje.to_s << ");formatCurrency(this.value, this.id);" %>
+                         <span id="movimiento_fideicomiso_monto_gastos_moneda"></span>
+                       <%= display_number 0, 'movimiento_fideicomiso_monto_gastos' %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.sub_cuenta')%> <%=I18n.t('Sistema.Body.Vistas.General.sras')%></label>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'monto_sras', :class=>'text', :maxlength=>'17', :disabled=>true, :value=> '', :style=>'width: 150px;text-align:right' , :onkeyup=>"formula(" << @fideicomiso.porcentaje.to_s << ");formatCurrency(this.value, this.id);" %>
+                         <span id="movimiento_fideicomiso_monto_sras_moneda"></span>
+                       <%= display_number 0, 'movimiento_fideicomiso_monto_sras' %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.comision')%></label>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'comision', :class=>'text', :readonly=>true, :disabled=>true, :value=> '0', :maxlength=>'17', :style=>'width: 150px;text-align:right'  %>
+                        <span id="movimiento_fideicomiso_comision_moneda"></span>
+                       <%= display_number 0, 'movimiento_fideicomiso_comision' %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <label>&nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Modelos.TransaccionFideicomiso.Mensajes.saldo_despues_ajuste')%></label>
+    </td>
+    <td>
+      <%= text_field 'movimiento_fideicomiso', 'saldo_disponible_despues', :class=>'text', :readonly=>true, :maxlength=>'17',  :value=>@fideicomiso.monto_disponible,:style=>'width: 150px;text-align:right', :onchange=>'formatCurrency(this.value, "movimiento_fideicomiso_saldo_disponible_despues");' %>
+                         <span id="saldo_disponible_despues_moneda"></span>
+                       <%= display_number @fideicomiso.monto_disponible, 'movimiento_fideicomiso_saldo_disponible_despues' %>
+    </td>
+  </tr>
+	<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+              <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+                { :controller=> 'actualizacion_fideicomiso', :action => :index },
+                { :id=>'button_cancel' } ) -%>
+  <%end %>

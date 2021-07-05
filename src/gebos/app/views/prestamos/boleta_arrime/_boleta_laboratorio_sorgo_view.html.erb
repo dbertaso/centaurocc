@@ -1,0 +1,144 @@
+<table style="width: 100%">
+
+<td class="separador" valign="bottom" colspan="4">
+     <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_de_laboratorio')%></span>
+</td>
+
+  </table>
+
+  <br/>
+
+  <table align="center" border="1" width="60%">
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.parentesis_sorgo')%></label></td>
+      <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+      <td></td>
+      <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+      <td></td>
+      <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+    </tr>
+
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.humedad)%>
+          <%#valor = sprintf('%01.2f', @boleta_laboratorio_sorgo.humedad ).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_germinados_danados')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.germinados_danados)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.germinados_danados ).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_cristalizados')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.cristalizados)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.cristalizados).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.impureza)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.impureza ).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_danados_insectos')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.danados_insectos)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.danados_insectos ).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_amilaceos')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.amilaceos)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.amilaceos).sub('.', ',') %>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.mezcla_color')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.mezcla_color)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.mezcla_color).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_quemados')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.quemados)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.quemados ).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_infectados')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.infectados)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.infectados ).sub('.', ',') %>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.luv')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <% if @boleta_laboratorio_sorgo.luv == 'A'%>
+          <%=I18n.t('Sistema.Body.General.no_aplica')%>
+        <%elsif @boleta_laboratorio_sorgo.luv == 'P'%>
+          <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.positivo')%>
+        <%elsif @boleta_laboratorio_sorgo.luv == 'N'%>
+          <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.negativo')%>
+        <%end%>
+      <%end%></td>
+
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_microorganismos')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.danados_microorganismos)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.danados_microorganismos).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_total')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.danados_total)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.danados_total).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_partidos')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.partidos)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.partidos).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+       <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.semillas_objetables')%></label></td>
+      <td><%unless @boleta_laboratorio_sorgo.nil? %>
+        <%= valor = format_fm(@boleta_laboratorio_sorgo.semillas_objetables)%>
+          <%#valor = sprintf('%01.2f',@boleta_laboratorio_sorgo.semillas_objetables).sub('.', ',')%>
+          <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+        <%end%>
+      </td>
+    </tr>
+
+    
+  </table>
+
+ <br/>

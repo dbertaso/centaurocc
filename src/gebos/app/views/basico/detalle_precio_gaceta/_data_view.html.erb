@@ -1,0 +1,14 @@
+<% detalle_precio_gaceta = @detalle_precio_gaceta if detalle_precio_gaceta.nil? %>
+<td>
+  <%= detalle_precio_gaceta.actividad.nombre unless detalle_precio_gaceta.nil? %>
+</td>
+<td>
+  <%unless detalle_precio_gaceta.nil? %>
+    <%= detalle_precio_gaceta.tipo_clase -%>
+  <%end%>
+</td> 
+<td>
+  <%= detalle_precio_gaceta.valor.to_f -%>
+</td> 
+
+

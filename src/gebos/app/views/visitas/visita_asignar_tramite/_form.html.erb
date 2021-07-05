@@ -1,0 +1,27 @@
+<table style="width: 100%">
+
+  <tr>
+    <td><label>Técnico a Asignar:</label></td>
+    <td>
+      <%= select(
+          'control_asignacion', 'usuario_id',
+          @usuario_select.map{|e| [e.primer_nombre + ' ' + e.primer_apellido, e.id]},
+          { :include_blank=>true },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Observaciones</label>
+    </td>
+    <td>
+      <%= text_area 'control_asignacion', 'observacion',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+
+</table>

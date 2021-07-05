@@ -1,0 +1,39 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 8%" <%= sort_class_helper('numero_guia') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.orden'), 'numero_guia', 'list' %>
+      </th>
+      <th style="width: 8%" <%= sort_class_helper('fecha_emision') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.Form.envio'), 'fecha_emision', 'list' %>
+      </th>
+      <th style="width: 8%" <%= sort_class_helper('fecha_estimada') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.fecha_llegada'), 'fecha_estimada', 'list' %>
+      </th>
+      <th style="width: 8%" <%= sort_class_helper('nombre_destino') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.destino'), 'nombre_destino', 'list' %>
+      </th>
+      <th style="width: 8%" <%= sort_class_helper('cedula_rif') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+      </th>
+      <th style="width: 20%" <%= sort_class_helper('productor') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'productor', 'list' %>
+      </th>
+      <th style="width: 12%" <%= sort_class_helper('estatus') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'estatus', 'list' %>
+      </th>
+      <th style="width: 8%"><%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%  
+    even_odd = 1
+    for guia in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :guia => guia, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

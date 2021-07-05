@@ -1,0 +1,143 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+  
+  <table style="width: 100%">
+    <tr>
+      <td style="text-align: right">
+        <%= link_to("Consulta de Existencia", :controller => "consulta_stock" , :action => 'index', :popup=>params[:popup] ) %>
+        <br/><br/>
+      </td>
+    </tr>
+  </table>
+
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+  <table>
+    <tr>
+      <td style="width: 30%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Form.convenio') %>:</label>
+      </td>
+      <td style="width: 65%">    
+      <%= select(
+          'contrato_maquinaria_equipo_id','',
+          @contrato_maquinaria_equipo.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();'})
+      %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label>
+      </td>
+      <td>
+        <% clase_onchange =  %>
+        
+        <%= select(
+          'tipo_maquinaria_id','',
+          @tipo_maquinaria.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method=>:get,
+            :url=>{:controller=>'consulta_inventario',
+            :action=>:clase_search },
+            :with=>"'id='+ this.value")};inputChange();"})
+      %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      </td>
+      <td>
+        <div id="clase-search">
+          <%=select(
+            'clase_id','',
+            [],
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();'}) %>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %>:</label>
+      </td>
+      <td>
+        <%=select(
+          'marca_id','',
+          @marca.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();'}) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %>:</label>
+      </td>
+      <td>
+        <%=select(
+          'modelo_id','',
+          @modelo.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();'}) %>
+      </td>
+
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %>:</label>
+      </td>
+      <td>
+        <%= text_field 'serial', '', :class=>'text', :style=>'width: 230px', :maxlength=>'250'  -%>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %>:</label>
+      </td>
+      <td>
+        <%= text_field 'chasis', '', :class=>'text', :style=>'width: 230px', :maxlength=>'250'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.factura')}" %>:</label>
+      </td>
+      <td>
+        <%= text_field 'numero_factura', '', :class=>'text', :style=>'width: 230px', :maxlength=>'20'  -%>
+      </td>
+      
+      <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.Form.estatus') %>:</label>
+      </td>
+      <td>
+        <%=select(
+          'estatus','',
+          [[I18n.t('Sistema.Body.Vistas.General.entregado'),'E'],[I18n.t('Sistema.Body.Vistas.General.libre'),'L'],['Reservado','R']],
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();'}) %>&emsp;<%= image_submit_tag('boton_buscar.gif') -%>
+      </td>
+    </tr>
+
+  </table>
+  <% end %>
+  <br/>
+  <%= error %>
+  <%= message %>
+  <br/>
+  <div id="list">
+  </div>
+</div>

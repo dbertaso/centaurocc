@@ -1,0 +1,10 @@
+<!--width="1116px"-->
+<table class="lista" style="table-layout:fixed;width: 935px">
+  <tr>
+    <td colspan="4"> &nbsp; </td>
+    <td style="background-color:#D7D7D7; width: 16%"> <b>Total:</b> </td>
+    <td style="word-wrap: break-word;background-color:#D7D7D7; width: 16%; text-align: right"><b>
+        <%=sprintf('%01.2f', @prestamo.monto_inventario).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @prestamo.nil? || @prestamo.monto_inventario.nil? -%>
+      </b></td>
+  </tr>
+</table>

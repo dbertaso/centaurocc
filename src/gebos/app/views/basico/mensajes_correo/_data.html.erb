@@ -1,0 +1,24 @@
+<% mensajes_correo = @mensajes_correo if mensajes_correo.nil? %>
+
+<td>
+  <%= mensajes_correo.nombre  %>
+</td>
+<td>
+  <%= mensajes_correo.descripcion  %>
+</td>
+<td align="center">
+  <%= format_bool(mensajes_correo.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'mensajes_correo', :action => :edit, :id => mensajes_correo.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'mensajes_correo', :action => :delete, :id => mensajes_correo.id}) if vlink 'delete' -%>
+</td>

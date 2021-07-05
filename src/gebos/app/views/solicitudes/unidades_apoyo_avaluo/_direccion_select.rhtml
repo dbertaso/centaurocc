@@ -1,0 +1,101 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 20%">
+      <label>Urbanización / Barrio / Sector:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo', 'urbanizacion',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Calle / Avenida / Callejón:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'calle',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Casa / Edificio / Galpón:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'casa',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Número Apto / Casa:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'numero_apta',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+  <td>
+    <label>Piso:</label>
+  </td>
+  <td>
+    <%= text_field 'solicitud_avaluo', 'piso',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+  </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Punto de Referencia:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'punto_referencia',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Estado:</label></td>
+    <td>
+      <span id="estado-select">
+        <%= render :partial => 'estado_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Municipio:</label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Parroquia:</label></td>
+    <td>
+      <span id="parroquia-select">
+        <%= render :partial => 'parroquia_select' %>
+      </span>
+    </td>
+  </tr>
+</table>
+<br></br>

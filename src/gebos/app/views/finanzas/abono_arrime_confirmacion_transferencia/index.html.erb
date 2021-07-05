@@ -1,0 +1,44 @@
+<%= form_title_search %>
+<%= render :partial=>'finanzas/abono_arrime_confirmacion_transferencia/common/tabs' %>
+<div class="marco-contenido2">
+	<br>
+	
+    <%= form_for(:upload, :url => { :action => "consulta_transferencias", :accion=>0}, :html => {:multipart => true}) do %>    
+    
+	<table>
+		<tr>
+			<td>
+				<label for="upload_file"><%=I18n.t('Sistema.Body.General.seleccione_archivo_procesar')%></label>
+			</td>
+			<td>
+				<%= file_field 'upload', 'datafile', :onchange=>'document.getElementById("image").style.display = "";' %>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<label><%=I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_liquidacion')%></label>
+			</td>
+			<td>				
+            <%= calendar_date_select_tag "fecha[]", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+			</td>
+		</tr>
+	</table>
+	<br><br>
+	
+    
+    <div id="image" style="display: none">
+     <%#= submit_tag I18n.t('Sistema.Body.Imagenes.procesar'), :onclick=> "this.disabled=true;if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save' %>
+     <%=image_submit_tag(I18n.t('Sistema.Body.Imagenes.procesar'), :disabled => false)%>
+     <%#= image_submit_tag(I18n.t('Sistema.Body.Imagenes.procesar'),:onclick=> "if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>          
+    </div>
+	<% end %>
+		
+
+<center>
+	
+	<div>
+	<%= @feedback %>
+  </div>
+</center>
+</div>

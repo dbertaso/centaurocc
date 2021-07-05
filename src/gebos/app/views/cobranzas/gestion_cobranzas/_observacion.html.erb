@@ -1,0 +1,14 @@
+<table>
+  <tr>
+
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observacion')%></label>
+    </td>
+
+    <td>
+      <%= text_area 'telecobranzas', 'observacion',
+         :class=>'text', :size=>'40x10', :onkeypress=>'inputChange();'  -%>
+    </td>
+
+  </tr>
+</table>

@@ -1,0 +1,94 @@
+<% faenas_pesca = @faenas_pesca if faenas_pesca.nil? %>
+<td colspan="2" align="right">
+  <table width="96%">
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+            
+      <span>Faenas de Pesca (Canal de Comercialización / Destino de la Captura):<br>  <label style="color: red"><%= faenas_pesca.destino_captura  unless faenas_pesca.destino_captura.nil? %></label></span>
+    </td>
+</tr>
+ 
+<tr>
+    <td style="width: 300px">
+            <label>Especie Capturada:</label>
+    </td>
+    <td style="width: 650px">
+      <% tipo_especie= TipoEspecieAcuicultura.find(faenas_pesca.tipo_especie_id) %>
+      <%= tipo_especie.nombre  unless faenas_pesca.tipo_especie_id.nil? %>
+    </td>
+</tr>
+
+<tr>
+    <td>
+            <label>Costo por Unidad:</label>
+    </td>
+    <td>
+      <%= faenas_pesca.gasto_por_unidad_f  unless faenas_pesca.gasto_por_unidad.nil? %>
+    </td>
+</tr>
+
+<tr>
+    <td>
+            <label>Ganacia por Unidad:</label>
+    </td>
+    <td>
+      <%= faenas_pesca.ganancia_por_unidad_f  unless faenas_pesca.ganancia_por_unidad.nil? %>
+
+    </td>
+</tr>
+
+<tr>
+    <td>
+            <label>Tiempo de Expiración:</label>
+    </td>
+    <td>
+      <%= faenas_pesca.tiempo_expiracion  unless faenas_pesca.tiempo_expiracion.nil? %>
+    </td>
+</tr>
+
+  <tr>
+      <td colspan="2">
+        <label style="color: red">Nuevas Especificaciones:</label>
+      </td>
+  </tr>
+<tr>
+      <td>
+              <label>Número de Campañas:</label>
+      </td>
+      <td>
+        <%= faenas_pesca.faenas_mensual  unless faenas_pesca.faenas_mensual.nil? %>
+      </td>
+</tr>
+
+<tr>
+      <td>
+              <label>Nro por Campañas / Faenas de Pesca:</label>
+      </td>
+      <td>
+                <%= faenas_pesca.captura_campana_f  unless faenas_pesca.captura_campana.nil? %> Kg
+
+      </td>
+</tr>
+
+<tr>
+      <td>
+              <label>Captura Estimada:</label>
+      </td>
+      <td>
+              <%= faenas_pesca.captura_estimada_f  unless faenas_pesca.captura_estimada.nil? %> Kg
+
+      </td>
+</tr>
+
+
+</table>
+</td>
+
+
+ 
+
+
+
+
+
+

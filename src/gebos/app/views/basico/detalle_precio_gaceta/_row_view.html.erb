@@ -1,0 +1,4 @@
+<% detalle_precio_gaceta = @detalle_precio_gaceta if detalle_precio_gaceta.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= detalle_precio_gaceta.id unless detalle_precio_gaceta.nil? %>">
+	<%= render :partial => 'data_view', :locals => { :detalle_precio_gaceta => detalle_precio_gaceta, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,28 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+
+
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_visita/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%= error %>
+    <%= message %>
+    <% unless @contador > 0 %>
+      <%= render :partial => 'form1' %>
+
+    <% else %>
+      <%= render :partial => 'form2' %>
+
+    <% end %>
+    <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+      {:action => :index,
+      :controller => '/solicitudes/consulta_evaluacion_credito'} %>
+    </td>
+    </tr>
+    </table>
+  </div>
+</div>

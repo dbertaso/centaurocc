@@ -1,0 +1,50 @@
+<%= form_title_view @cuenta_bcv.numero %>
+		
+<div class="marco-contenido2">
+
+	<table>
+		<tr>
+			<td style="width: 20%">
+				<label><%=I18n.t('Sistema.Body.Controladores.EntidadFinanciera.FormTitles.form_title_record')%>: </label>
+			</td>
+			<td style="width: 80%">
+				<%= @cuenta_bcv.entidad_financiera.nombre -%>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label><%=I18n.t('Sistema.Body.Vistas.General.numero') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.cuenta') %>: </label>
+			</td>
+			<td>
+				<%= @cuenta_bcv.numero -%>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label><%=I18n.t('Sistema.Body.Vistas.General.tipo') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.cuenta') %>: </label>
+			</td>
+			<td>
+				<%= @cuenta_bcv.tipo_w -%>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label><%= I18n.t('Sistema.Body.Vistas.General.recaudadora')%>: </label>
+			</td>
+			<td>
+				<%= format_bool(@cuenta_bcv.recaudador) -%>
+			</td>
+		</tr>	
+  </table>
+		
+	<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.boton_modificar'))),
+		:action => :edit,
+		:id => @cuenta_bcv.id,
+		:html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+		
+	<%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+		{ :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+</div>

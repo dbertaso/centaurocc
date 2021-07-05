@@ -1,0 +1,32 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 260px" <%= sort_class_helper('tipo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.tipo'), 'tipo', 'list' %>
+      </th>
+      <th style="width: 285px" <%= sort_class_helper('email') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.correo_electronico'), 'email', 'list' %>
+      </th>
+
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for persona_email in @list
+      even_odd = 1 - even_odd %>
+
+      <% persona_email = @persona_email if persona_email.nil? %>
+      <tr class="lista<%= even_odd %>" id="row_<%= persona_email.id %>">
+        <td>
+          <%= persona_email.tipo_nombre  %>
+        </td>
+        <td>
+          <%= persona_email.email %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

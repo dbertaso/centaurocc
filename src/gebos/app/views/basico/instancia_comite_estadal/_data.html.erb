@@ -1,0 +1,40 @@
+<%
+comite = @comite if comite.nil?
+
+total=comite.cantidad_solicitudes('e', session)
+vigente = true
+if !comite.vigente && (total[:total].to_i==total[:total_con_decision].to_i )
+  vigente = false
+end
+%>
+<td align="center">
+  <%= comite.numero  %>
+</td>	
+<td align="center">
+  <%=comite.get_instancia_tipo(comite.instancia_tipo_id)%>
+</td>
+<td align="center">
+  <%=comite.fecha_apertura_f %>
+</td>
+<td align="center">
+  <%=total[:total] %>
+</td>
+<td align="center">
+  <%=total[:total_con_decision] %>
+</td>		
+<td align="right">
+  <%=comite.monto_solicitudes('N') %>
+</td>
+<td align="right">
+  <%=comite.monto_solicitudes('I') %>
+</td>
+<td align="center">
+  <%=format_bool vigente %>
+</td>		
+<td style="text-align: center">
+  <% if vigente == true %>    
+    <%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.modificar')),:action => :edit, :id => comite.id)%>&nbsp;
+  <% else %>        
+    <%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),:action => :view, :id => comite.id)%>&nbsp;
+  <% end %>
+</td>

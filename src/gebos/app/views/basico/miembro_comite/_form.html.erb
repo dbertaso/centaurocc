@@ -1,0 +1,44 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'miembro', 'nombre', :class=>'text', :style=>'width: 240px', :maxlength=>'60'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.apellido')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'miembro', 'apellido', :class=>'text', :style=>'width: 240px', :maxlength=>'60'  -%>
+    </td>
+  </tr> 
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cedula')%></label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'miembro', 'cedula', :class=>'text', :style=>'width: 240px', :maxlength=>'60'  -%>
+    </td>
+  </tr>
+<!--
+  <tr>
+    <td>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.firma')} #{I18n.t('Sistema.Body.Vistas.General.en')} #{I18n.t('Sistema.Body.Vistas.General.comite')}" %>
+        <%= " #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.reestructuracion')}" %> 
+        </label>
+    </td>
+    <td style="width: 620px">
+      <%= check_box 'miembro', 'comite_reestructuracion',
+        :checked_value=>"1",
+        :unchecked_value=>"0" -%>
+    </td>
+  </tr>
+-->
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

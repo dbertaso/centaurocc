@@ -1,0 +1,53 @@
+<%
+
+aprobadas =ComiteResumen.solicitudes_detalle(@tipo_comite,'A',@comite_id,solicitud.rubro_id, solicitud.sector_id, solicitud.subsector_id,solicitud.estado_id)
+rechazadas=ComiteResumen.solicitudes_detalle(@tipo_comite,'R',@comite_id,solicitud.rubro_id, solicitud.sector_id, solicitud.subsector_id,solicitud.estado_id)
+diferidas =ComiteResumen.solicitudes_detalle(@tipo_comite,'D',@comite_id,solicitud.rubro_id, solicitud.sector_id, solicitud.subsector_id,solicitud.estado_id)
+
+if !aprobadas[:total_decision].nil?
+  @total_aprobadas = @total_aprobadas + aprobadas[:total_decision].to_i
+  @monto_aprobadas = @monto_aprobadas + aprobadas[:total_monto].to_f
+end
+if !rechazadas[:total_decision].nil?
+  @total_rechazadas = @total_rechazadas + rechazadas[:total_decision].to_i
+  @monto_rechazadas = @monto_rechazadas + rechazadas[:total_monto].to_f
+end
+if !diferidas[:total_decision].nil?
+  @total_diferidas = @total_diferidas + diferidas[:total_decision].to_i
+  @monto_diferidas = @monto_diferidas + diferidas[:total_monto].to_f
+end
+%>
+
+<td><%=solicitud.estado_nombre%></td>
+
+<td><%=solicitud.sector_nombre %></td>
+
+<td><%=solicitud.subsector_nombre%></td>
+
+<td><%=solicitud.rubro_nombre%></td>
+<td align="center">
+  <%=aprobadas[:total_decision] if aprobadas[:total_decision]!=0  %>
+</td>
+
+<td align="right">
+  <%=format_fm(aprobadas[:total_monto]) if aprobadas[:total_monto]!=0
+  %>
+</td>
+
+<td align="center">
+  <%=rechazadas[:total_decision] if rechazadas[:total_decision]!=0%>
+</td>
+
+<td align="right">
+  <%=format_fm(rechazadas[:total_monto]) if rechazadas[:total_monto]!=0
+  %>
+</td>
+
+<td align="center">
+  <%=diferidas[:total_decision] if diferidas[:total_decision]!=0%>
+</td>
+
+<td align="right">
+  <%=format_fm(diferidas[:total_monto]) if diferidas[:total_monto]!=0
+  %>
+</td>

@@ -1,0 +1,28 @@
+<% transaccion_fideicomiso = @transaccion_fideicomiso if transaccion_fideicomiso.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= transaccion_fideicomiso.id %>">
+	<%= render :partial => 'data', :locals => { :transaccion_fideicomiso => transaccion_fideicomiso, :even_odd => even_odd } -%>
+</tr>
+<tr class="lista<%= even_odd %>" id="grupo_<%= transaccion_fideicomiso.id %>" name="grupo_<%= transaccion_fideicomiso.id %>"  style="display:none; width:97%; text-align:left" >
+
+	<td colspan="8" align="left">
+
+			<strong><%=I18n.t('Sistema.Body.Controladores.ParametroGeneral.Separadores.solicitudes')%>: </strong>
+			<% ids = transaccion_fideicomiso.solicitud_id.tr("'","") %>			
+            <% separador = "" %>
+			<% @solicitud = Solicitud.find(:all, :conditions=>"id in (#{ids})")  %>
+			<% @solicitud.each do |solicitud| %>
+				<%= separador %>
+				<% if separador == "" 
+                 separador = ', ' 
+                 end %>
+			
+				<%= link_to(solicitud.numero, {:controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>solicitud.id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>solicitud.numero) + "',
+'height=600,width=1000, scrollbars=yes, resizable=yes,top=200,left=140'); return false;")  %>
+   			
+  			<% end  %>
+			
+			<br><br>
+			<a href="javascript:ocultar_lista(<%= transaccion_fideicomiso.id %>,2)"> [<%==I18n.t('Sistema.Body.Vistas.General.ocultar')%>]</a>
+
+	</td>
+</tr>

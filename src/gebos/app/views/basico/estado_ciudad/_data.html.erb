@@ -1,0 +1,17 @@
+<td>
+	<%= ciudad.nombre  %>
+</td>
+<td style="text-align: center">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=>:get,
+		:url => {:action => :edit, :estado_id => @estado.id, :id => ciudad.id}) -%>
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:action => :delete, :estado_id => @estado.id, :id => ciudad.id}) -%>
+</td>

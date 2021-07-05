@@ -1,0 +1,72 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    controller_top = params[:controlador]
+
+    if controller_name=='gestionar_garantia' && (action_name == 'edit_informe')
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Modelos.PrecioGaceta.Estatus.vigente')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Modelos.PrecioGaceta.Estatus.vigente'), :controller => 'gestionar_garantia', :action => 'edit_informe', :solicitud_id => @solicitud.id, :id=> @solicitud_tipo_garantia_id, :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail') %>
+        </div></li>
+    <%
+    end
+
+    if controller_name=='gestionar_garantia' && (action_name == 'view' || action_name == 'view_detail')
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.historico')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.historico'), :controller => 'gestionar_garantia', :action => 'view', :solicitud_tipo_garantia_id => @solicitud_tipo_garantia_id, :popup=>params[:popup]) if (action_name == 'edit_informe') %>
+        </div></li>
+    <%
+    end
+    if @estatus.to_s == "C"
+      if controller_name=='gestionar_garantia' && (action_name == 'view_garantia')
+      %>
+        <li id="actual"><div><a href="#"> <%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.datos_garantia')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.datos_garantia'), :controller => 'gestionar_garantia', :action => 'view_garantia', :solicitud_tipo_garantia_id => @solicitud_tipo_garantia_id, :popup=>params[:popup]) if (action_name=='view_constitucion' || action_name=='view_detalle' || action_name=='view_detalle_especifico') %>
+          </div></li>
+      <%
+      end
+
+      if controller_name=='gestionar_garantia' && (action_name == 'view_constitucion')
+      %>
+        <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.constitucion')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.constitucion'), :controller => 'gestionar_garantia', :action => 'view_constitucion', :solicitud_id => @solicitud.id, :solicitud_tipo_garantia_id => @solicitud_tipo_garantia_id, :popup=>params[:popup]) if (action_name == 'view_garantia' || action_name=='view_detalle' || action_name=='view_detalle_especifico') %>
+          </div></li>
+      <%
+      end  
+      
+      if controller_name=='gestionar_garantia' && (action_name == 'view_detalle' || action_name == 'view_detalle_especifico')
+      %>
+
+        <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.historico')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.historico'), :controller => 'gestionar_garantia', :action => 'view_detalle', :solicitud_id => @solicitud.id, :solicitud_tipo_garantia_id => @solicitud_tipo_garantia_id, :popup=>params[:popup]) %>
+          </div></li>
+      <%
+      end  
+    end
+  %>
+
+  </ul>
+</div>

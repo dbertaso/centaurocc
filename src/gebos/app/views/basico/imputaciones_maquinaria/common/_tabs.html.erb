@@ -1,0 +1,31 @@
+<div id="tabs">
+  <ul>
+    <%
+      controller_name = controller.controller_name
+
+      if controller_name=='imputaciones_maquinaria'
+    %>
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.nacional') %></a></div></li>
+    <%
+      else
+    %>
+        <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.nacional'), :controller => 'imputaciones_maquinaria', :action => 'index') %>
+        </div></li>
+    <%
+      end
+        if controller_name=='imputaciones_internacional'
+    %>
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.internacional') %></a></div></li>
+    <%
+        else
+    %>
+          <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.internacional'), :controller => 'imputaciones_internacional', :action => 'index') %>
+          </div></li>
+    <%
+      end
+      
+    %>
+  </ul>
+</div>

@@ -1,0 +1,31 @@
+<div id="cantidad" style="width:40%; float:left">
+  <% if @plan_inversion[0].solicitud.rubro.paquetizado %>
+    <%= render :partial => 'cantidad' -%>
+  <%end%>
+</div>
+
+<div id="condiciones" style="width:30% float:right" >
+    <%= render :partial => 'condiciones_financiamiento' -%>
+</div>
+
+<br/>
+<div id="plan-inversion">
+  <% if @plan_inversion[0].solicitud.sub_sector.nemonico == 'VE' %>
+    <%= render :partial => 'plan_inversion_vegetal' -%>
+  <% else
+     logger.debug "plan-inversion-animal-inicial"
+     logger.debug "ED ========> " << @ed.to_s
+     if @plan_inversion.empty? || @ed == 1%>
+
+
+      <div id="plan-inversion-animal-inicial">
+        <%= render :partial => 'plan_inversion_animal' -%>
+      </div>
+     <%else%>
+      <div id="plan-inversion-animal-actualizado">
+        <%= render :partial => 'plan_inversion_animal_view' -%>
+      </div>
+     <%end%>
+  <% end %>
+</div>
+

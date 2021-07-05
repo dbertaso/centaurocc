@@ -1,0 +1,39 @@
+<%= error %>
+<%= message %>
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td style="width: 60px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cargo')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td style="width: 620px">
+      <%= select(
+      'firma_autorizada', 'cargo_id',
+      @cargo_list.map{|e| [e.descripcion, e.id]},
+      { },
+      { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_field 'firma_autorizada', 'nombre', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'120', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_field 'firma_autorizada', 'cedula', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  
+</table>

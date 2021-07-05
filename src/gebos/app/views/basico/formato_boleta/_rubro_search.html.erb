@@ -1,0 +1,10 @@
+<% rubro_onchange = remote_function(
+	:method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+	:url=>{:controller=>'formato_boleta',
+	:action=>:rubro_change },
+	:with=>"'rubro_id='+value") %>
+<%= select(
+  'formato_boleta', 'rubro_id',
+  @rubro_list.map{|e| [e.nombre, e.id]},
+  {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+  { :class=>'select', :onchange=>rubro_onchange + ';inputChange();' } ) %>

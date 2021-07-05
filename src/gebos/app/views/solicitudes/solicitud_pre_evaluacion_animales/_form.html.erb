@@ -1,0 +1,137 @@
+
+
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" colspan="2" valign="bottom">
+      <span><%= I18n.t('Sistema.Body.Vistas.General.inventario_animales_presentes_visita') %></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td width="80px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.bovinos') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_bovinos',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.bufalinos') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_bufalinos',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.equinos') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_equinos',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.porcinos') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_porcinos',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.caprinos') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_caprinos',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.aves') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_aves',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ovinos') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_ovinos',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.piscicolas') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_piscicolas',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.otros') %></label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_inventario_animales', 'cantidad_otros',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'6', :onkeypress=>'inputChange();', :onchange=>'if (!this.value){this.value = 0}'  -%>
+    </td>
+  </tr>
+
+  <tr><td colspan="2" height="10"></td></tr>  
+
+  <tr>
+    <td colspan=2>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.descripcion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.lo').downcase} #{I18n.t('Sistema.Body.Vistas.General.observado').downcase}" %>:</label>(<%= I18n.t('Sistema.Body.Vistas.General.incluir_grupos_animales') %>)
+      <br>
+      <%= text_area 'unidad_produccion_inventario_animales', 'observaciones',
+        :class=>'text', :style=>'width: 100%; height: 70px;',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>  
+</table></td></tr>
+
+</table>
+<script>
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_bovinos").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_bovinos").value = 0}
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_bufalinos").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_bufalinos").value = 0}
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_equinos").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_equinos").value = 0}
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_porcinos").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_porcinos").value = 0}
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_caprinos").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_caprinos").value = 0}
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_aves").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_aves").value = 0}
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_ovinos").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_ovinos").value = 0}
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_otros").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_otros").value = 0}
+  if(!document.getElementById("unidad_produccion_inventario_animales_cantidad_piscicolas").value){document.getElementById("unidad_produccion_inventario_animales_cantidad_piscicolas").value = 0}
+	
+</script>
+<br>

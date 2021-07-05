@@ -1,0 +1,21 @@
+<% region = @region if region.nil? %>
+<td>
+	<%= region.nombre  %>
+</td>	
+<td align="center">
+	<%= region.pais.nombre  %>
+</td>	
+<td style="text-align: center">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=>:get,
+		:url => {:controller => 'region', :action => :edit, :id => region.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'region', :action => :delete, :id => region.id}) if vlink 'delete' -%>
+</td>

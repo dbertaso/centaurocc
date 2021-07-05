@@ -1,0 +1,5 @@
+<%= select(
+  'tecnico_campo', 'parroquia_id',
+  @parroquia_list.map{|m| [m.nombre, m.id]},
+  { :prompt =>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

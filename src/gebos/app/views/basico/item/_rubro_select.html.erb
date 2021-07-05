@@ -1,0 +1,11 @@
+
+<%= select(
+'item', 'rubro_id',
+@rubro_select.map{|i| [i.nombre, i.id]},
+{:prompt=>'Seleccione un Rubro'},
+{ :class=>'select',  :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+  :loaded => 'Element.hide("loading")',
+  :method => :get, :url=>{:controller=>'item',
+  :action=>:rubro_change }, :with => "'id='+value")}; inputChange();"}) %>
+
+

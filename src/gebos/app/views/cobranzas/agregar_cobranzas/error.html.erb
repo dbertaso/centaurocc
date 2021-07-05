@@ -1,0 +1,13 @@
+<div class="marco-contenido">
+  <%= form_title_search %>
+  
+    
+    <div id="errorExplanation" class="errorExplanation" >
+      <h2><%= I18n.t('Sistema.Body.Vistas.Form.error_general') %> </h2>
+      <ul>
+        <li><%= @error %></li>
+      </ul>
+    </div>
+  
+    <%= link_to(I18n.t('Sistema.Body.Controladores.Accion.agregar_gestion'), {:controller => 'agregar_cobranzas', :action => 'index'},{:class=>'myButton'}) %>
+</div>

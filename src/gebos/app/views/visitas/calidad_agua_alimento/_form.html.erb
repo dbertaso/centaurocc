@@ -1,0 +1,66 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.VisitaCultivoLaguna.Etiquetas.favor_introdusca_datos')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CalidadAguaAlimento.Columnas.temperatura')%></label>
+    </td>
+    <td>
+      <%= text_field 'calidad_agua_alimento', 'temperatura_f', :class=>'text', :style=>'width: 90px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Vistas.VisitaCalidadAguaAlimento.Etiquetas.grados_centigrados')%>
+    </td>
+  </tr>	
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CalidadAguaAlimento.Columnas.ph')%></label>
+    </td>
+    <td>
+      <%= text_field 'calidad_agua_alimento', 'ph_f', :class=>'text', :style=>'width: 90px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CalidadAguaAlimento.Columnas.oxigeno_disuelto')%></label>
+    </td>
+    <td>
+      <%= text_field 'calidad_agua_alimento', 'oxigeno_disuelto_f', :class=>'text', :style=>'width: 90px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CalidadAguaAlimento.Columnas.alimento_disponible')%></label>
+    </td>
+    <td>
+      <%= text_field 'calidad_agua_alimento', 'alimento_disponible', :class=>'text', :style=>'width: 100px',
+        :maxlength=>'120', :onkeypress=>'inputChange();'  -%> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CalidadAguaAlimento.Columnas.consumo_diario')%></label>
+    </td>
+    <td>
+      <%= text_field 'calidad_agua_alimento', 'consumo_diario', :class=>'text', :style=>'width: 100px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Vistas.General.toneladas')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CalidadAguaAlimento.Columnas.dias_duracion')%></label>
+    </td>
+    <td>
+      <%= text_field 'calidad_agua_alimento', 'dias_duracion', :class=>'text', :style=>'width: 100px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Vistas.General.dias')%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;
+

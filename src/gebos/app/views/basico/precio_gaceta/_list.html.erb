@@ -1,0 +1,27 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+    <th style="width: 80px" <%= sort_class_helper('precio_gaceta.fecha_vigencia') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.gaceta')}", 'precio_gaceta.fecha_vigencia', 'list' %>
+    </th>
+    <th style="width: 80px" <%= sort_class_helper('precio_gaceta.gaceta_oficial') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.gaceta')}", 'precio_gaceta.gaceta_oficial', 'list' %>
+    </th>
+    <th style="width: 50px" <%= sort_class_helper('precio_gaceta.status') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'precio_gaceta.status', 'list' %>
+    </th>
+    <th style="width: 10px">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+    </th>
+  </tr>
+</thead>
+<tbody id="list_body">
+  <%
+  even_odd = 1
+  for precio_gaceta in @list
+    even_odd = 1 - even_odd %>
+    <%= render :partial => 'row', :locals => { :precio_gaceta => precio_gaceta, :even_odd => even_odd } -%>
+  <% end %>
+</tbody>
+</table>
+<%= form_pagination %>

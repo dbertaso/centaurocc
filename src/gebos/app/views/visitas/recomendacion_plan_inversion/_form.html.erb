@@ -1,0 +1,26 @@
+<div class="marco-contenido2">
+  <div id="cantidad" style="width:30%; float:left">
+    <% if @plan_inversion[0].solicitud.sector.nombre =~ /VEGETAL/ &&
+       @plan_inversion[0].solicitud.rubro.paquetizado %>
+      <%= render :partial => 'cantidad' -%>
+    <%end%>
+  </div>
+  
+  <div id="condiciones" style="width:20% float:right" >
+      <%= render :partial => 'condiciones_financiamiento' -%>
+  </div>  
+
+  <br/>
+  <div id="plan-inversion">
+    <% if @plan_inversion[0].Solicitud.sector.nombre =~ /VEGETAL/ %>
+      <%= render :partial => 'plan_inversion_vegetal' -%>
+    <% else %>
+      <%= render :partial => 'plan_inversion_animal' -%>
+    <% end %>
+  </div>
+</div>
+
+<table>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"this.disabled=true;if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

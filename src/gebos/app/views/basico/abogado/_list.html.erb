@@ -1,0 +1,90 @@
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :list } ) do -%>
+
+<table>
+  <tr>
+        <td style="width: 60px"><label><%=I18n.t('Sistema.Body.Vistas.Filtros.oficina')%></label></td>
+        <td align="left" style="width: 300px">
+          <%= select(
+              'oficina_id','',
+              @oficina.map{|e| [e.nombre, e.id]},
+              { :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+              { :class=>'select', :onchange=>'inputChange();'})
+          %>
+        </td>
+
+  </tr>
+  <tr>
+        <td style="width: 60px"><label><%=I18n.t('Sistema.Body.Vistas.Abogado.inpreabogado')%>:</label></td>
+          <td align="left" style="width: 300px">
+            <%= text_field_tag 'impreabogado', '', :class=>'text', :maxlength=>'30', :style=>'width: 300px'  %>
+          </td>
+
+  </tr>
+  <tr>
+        <td style="width: 60px"><label><%=I18n.t('Sistema.Body.Vistas.Filtros.nombre')%></label></td>
+          <td align="left" style="width: 300px">
+            <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'50', :style=>'width: 300px'  %>
+          </td>
+        <td>
+          <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+        </td>
+  </tr>
+
+</table>
+<% end %>
+<br/>
+<table class="lista" style="width: 99%">
+  <thead>
+    <tr>
+      <th style="width: 20%" style="text-align: center" <%= sort_class_helper('nombre') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre') <<
+                                   ' ' <<
+                                   I18n.t('Sistema.Body.Vistas.General.y') <<
+                                   ' ' <<
+                                   I18n.t('Sistema.Body.Vistas.General.apellido'), 
+              'nombre', 'list' %>
+      </th>
+
+      <th style="width: 20%" style="text-align: center" <%= sort_class_helper('impreabogado') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.numero') <<
+                                   ' ' <<
+                                   I18n.t('Sistema.Body.Vistas.General.de') <<
+                                   ' ' <<
+                                   I18n.t('Sistema.Body.Vistas.Abogado.inpreabogado'), 'impreabogado', 'list' %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('cedula') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cedula'), 'cedula', 'list' %>
+      </th>
+
+      <th style="width: 20%" style="text-align: center" <%= sort_class_helper('abogado.oficina.nombre') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.oficina'), 'oficina.nombre', 'list' %>
+      </th>
+
+      <th style="width: 20%" style="text-align: center" <%= sort_class_helper('telefono') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.telefono'), 'telefono', 'list' %>
+      </th>
+
+      
+      <th style="width: 20%" style="text-align: center" <%= sort_class_helper('activo') %>>
+              <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'activo', 'list' %>
+      </th>      
+
+      <th style="width: 8%" style="text-align: center">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%  even_odd = 1
+        for item in @list
+                  even_odd = 1 - even_odd %>
+          <%= render :partial => 'row', :locals => { :item => item, :even_odd => even_odd } -%>
+        <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

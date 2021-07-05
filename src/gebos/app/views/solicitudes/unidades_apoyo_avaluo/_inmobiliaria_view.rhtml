@@ -1,0 +1,306 @@
+<script type="text/javascript">
+
+  onload = function()
+  {
+    <% if @solicitud_avaluo_inmobiliario.clasificacion %>
+        showTipo('<%= @solicitud_avaluo_inmobiliario.clasificacion %>');
+    <% end %>
+  }
+
+  function showTipo(value)
+  {
+    if (value == 'C' ){
+        document.getElementById("div_construccion").style.display="";
+    }else{
+        document.getElementById("div_construccion").style.display="none";
+    }
+  }
+
+</script>
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Avalúo Bandes</span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 20%">
+      <label>Nombre del Perito:</label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_inmobiliario.nombre_perito %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha Avalúo:</label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.fecha_avaluo_inmobiliario_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Número Sudeban:</label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_inmobiliario.numero_sudeban_inmobiliario %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Valor Avalúo:</label>
+    </td>
+    <td>
+      <%= display_number @solicitud_avaluo_inmobiliario.valor_avaluo_inmobiliario, '' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Inmobiliaria</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Clasificación Inmobiliaria:</label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.clasificacion_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Terreno</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Espacio:</label>
+    </td>
+    <td>
+      <%= display_number @solicitud_avaluo_inmobiliario.espacio, '' %> M2
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Ubicación:</label>
+    </td>
+    <td align="justify">
+      <%= @solicitud_avaluo_inmobiliario.ubicacion.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.ubicacion.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Descripción del Bien:</label>
+    </td>
+    <td align="justify">
+      <%= @solicitud_avaluo_inmobiliario.descripcion.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.descripcion.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label>Linderos:</label></td>
+    <td>
+      <table border="0" style="width: 100%">
+        <tr>
+          <td style="width: 10%">
+            <label>Norte</label>
+          </td>
+          <td style="width: 90%">
+            <%= @solicitud_avaluo_inmobiliario.lindero_norte %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Sur</label>
+          </td>
+          <td>
+            <%= @solicitud_avaluo_inmobiliario.lindero_sur %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Este</label>
+          </td>
+          <td>
+            <%= @solicitud_avaluo_inmobiliario.lindero_este %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>Oeste</label>
+          </td>
+          <td>
+            <%= @solicitud_avaluo_inmobiliario.lindero_oeste %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="bottom" colspan="2">
+      <label>Registro Protocolización del Bien</label>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Registro:</label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.nombre_registro %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label>Estado:</label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_inmobiliario.estado_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha:</label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.fecha_registro_f %> 
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Número de Registro:</label></td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.numero_registro %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Tomo:</label></td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.tomo_registro %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Protocolo:</label></td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.protocolo_registro %>
+    </td>
+  </tr>
+</table>
+
+<div id="div_construccion">
+<table style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span>Construcción</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label>Tipo de Construcción:</label>
+      </td>
+      <td align="justify">
+        <%= @solicitud_avaluo_inmobiliario.tipo_construccion.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.nil? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Espacio:</label>
+      </td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.espacio_construccion %> M2
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label>Ubicación:</label>
+      </td>
+      <td align="justify">
+        <%= @solicitud_avaluo_inmobiliario.ubicacion_construccion.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.ubicacion_construccion.nil? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="bottom" colspan="2">
+        <label>Registro Protocolización del Bien</label>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label>Registro:</label>
+      </td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.nombre_registro_constrccion %>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top" style="width: 20%">
+        <label>Estado:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @solicitud_avaluo_inmobiliario.estado_constrccion_w %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Fecha:</label>
+      </td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.fecha_registro_constrccion_f %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Número de Registro:</label></td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.numero_registro_constrccion %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Tomo:</label></td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.tomo_registro_constrccion %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label>Protocolo:</label></td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.protocolo_registro_constrccion %>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" align="justify">
+        <label>Sistema Constructivo:</label><br/>
+        <%= @solicitud_avaluo_inmobiliario.sistema_construtivo.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.sistema_construtivo.nil? %>
+      </td>
+    </tr>
+</table>
+</div>

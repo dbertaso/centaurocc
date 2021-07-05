@@ -1,0 +1,41 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 170px" <%= sort_class_helper('silo.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Silo.Etiquetas.nombre_silo'), 'silo.nombre', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('silo.direccion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Silo.Etiquetas.direccion_silo'), 'silo.direccion', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('silo.estado.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'silo.estado.nombre', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('silo.ciudad.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.ciudad'), 'silo.ciudad.nombre', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('silo.municipio.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.municipio'), 'silo.municipio.nombre', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('silo.persona_contacto') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.persona')} #{I18n.t('Sistema.Body.Vistas.General.contacto')}", 'silo.persona_contacto', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('silo.telefono') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.telefono'), 'silo.telefono', 'list' %>
+      </th>
+      <th style="width: 80px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for silo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :silo => silo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

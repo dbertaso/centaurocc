@@ -1,0 +1,177 @@
+<script type="text/javascript">
+
+  function cargar()
+  {
+    document.getElementById("agregar").style.display= 'none';
+   var pars = "solicitud_avaluo_prenda_semoviente[monto_f]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_monto_f").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[cantidad]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_cantidad").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[peso]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_peso").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[tipos_semovientes_id]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_tipos_semovientes_id").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[raza]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_raza").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[edad]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_edad").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[unidad_edad]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_unidad_edad").value;
+   pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+   pars += "&solicitud_tipo_garantia_id=<%= @solicitud_tipo_garantia_id %>"
+   var myAjax = new Ajax.Request("/solicitudes/gestionar_garantia/save_new_semoviente?" + pars, {asynchronous:true, evalScripts:true, method: 'get', onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}}); return false;
+  }
+
+</script>
+<table style="width: 100%">
+    <tr>
+      <td style="width: 20%">
+        <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoPrendaSemoviente.Errores.tipo_semoviente')%></label> <label style="color: red"> (*)</label>
+      </td>
+      <td style="width: 80%">
+        <%= select(
+            'solicitud_avaluo_prenda_semoviente', 'tipos_semovientes_id',
+            @semoviente_list.map{|e| [e.nombre, e.id]},
+            {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_prenda_semoviente', 'cantidad',
+            :class=>'text',
+            :style=>'width: 100px',
+            :maxlength=>'7', :onkeypress=>'inputChange();', :value=>'1'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.peso_unitario')%></label> <label style="color: red"> (*)</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_prenda_semoviente', 'peso',
+            :class=>'text',
+            :style=>'width: 100px',
+            :maxlength=>'7', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.raza')%></label> <label style="color: red"> (*)</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_prenda_semoviente', 'raza',
+            :class=>'text',
+            :style=>'width: 100px',
+            :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.edad')%></label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_prenda_semoviente', 'edad',
+            :class=>'text',
+            :style=>'width: 40px',
+            :maxlength=>'2', :onkeypress=>'inputChange();'  -%> <%= select(
+            'solicitud_avaluo_prenda_semoviente', 'unidad_edad',
+            [[I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.ano_s'),'Año(s)'],[I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.mes_es'),'Mes(es)']],
+            {:include_blank=>true},
+            { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.monto')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda_semoviente', 'monto_f',
+          :class=>'text', :style=>'width: 100px', :maxlength=>'10',
+          :onkeypress=>'return NumberDoubleKey(event); montosolicitud(); inputChange();',
+          :onchange=>'inputChange();',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_prenda_semoviente_monto'); "  -%>
+      <%= display_number 0, 'solicitud_avaluo_prenda_semoviente_monto' %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+      <samp id="agregar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.agregar'),:title=>'Agregar', :onclick=>"javascript:cargar();", :OnMouseOver=>"style.cursor='pointer'" ) %></samp>
+    </td>
+  </tr>
+</table>
+<br/>
+<table class="lista" style="width: 90%">
+  <tr>
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoPrendaSemoviente.Errores.tipo_semoviente')%></label>
+    </th>
+
+    <th style="width: 50px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></label>
+    </th>
+
+    <th style="width: 80px">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.peso_unitario')%></label>
+    </th>
+
+    <th style="width: 110px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.raza')%></label>
+    </th>
+
+    <th style="width: 50px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.edad')%></label>
+    </th>
+
+    <th style="width: 110px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{@solicitud.moneda.abreviatura.to_s}"%></label>
+    </th>
+
+    <th style="width: 20px"></th>
+  </tr>
+<%  unless @prenda_semoviente_list.nil?
+    clase = "lista0"
+    @prenda_semoviente_list.each { |semoviente| %>
+  <tr id="sem_<%= semoviente.id %>" class='<%= clase %>'>
+    <td>
+      <%= semoviente.tipos_semovientes.nombre %>
+    </td>
+
+    <td>
+      <%= semoviente.cantidad %>
+    </td>
+
+    <td>
+      <%= semoviente.peso %>
+    </td>
+
+    <td>
+      <%= semoviente.raza %>
+    </td>
+
+    <td>
+      <%= semoviente.edad.to_s %> <%= semoviente.unidad_edad %>
+    </td>
+
+    <td align="left">
+      <%= display_number semoviente.monto, '' %>
+    </td>
+
+    <td align="center">
+      <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+          :id=>"button_enviar",
+          :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+          :url => {:action => :delete_semoviente, :id => semoviente.id, :solicitud_tipo_garantia_id=>semoviente.solicitud_tipo_garantia_id}) -%>
+    </td>
+  </tr>
+
+<% if clase == 'lista0'
+    clase = 'lista1'
+  else
+    clase = 'lista0'
+  end
+}
+  end %>
+
+</table>
+<br/>

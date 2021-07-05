@@ -1,0 +1,195 @@
+<script type="text/javascript">
+  
+    
+  function cList() {
+    var p = document.getElementById("programa_id_").value;
+    var e = document.getElementById("estado_id_").value;
+    var s = document.getElementById("sector_id_").value;
+    var st = document.getElementById("sub_sector_id_").value;
+    var r = document.getElementById("rubro_id_").value;
+    var sr = document.getElementById("sub_rubro_id_").value;
+    var a = document.getElementById("actividad_id_").value;
+    
+    var n = document.getElementById("numero").value;
+    var ci = document.getElementById("cedula_rif").value;
+    var b = document.getElementById("productor").value;
+    var cond = " ";
+    cond = p+","+e+","+s+","+st+","+r+","+sr+","+a+","+n+","+ci+","+b;
+    document.getElementById("condition").value=cond;
+      
+
+  }
+</script>
+
+
+<div class="marco-contenido">
+	<%= form_title_search %>
+
+	<%= form_remote_tag(
+	      :loading =>'image_load()',
+	      :loaded => 'image_unload()',
+	      :method => :get,
+	      :url => { :action => :list } ) do-%>
+<table>
+
+    <tr>
+      <td style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.programa')%></label>
+      </td>
+      <td>
+        <%= select(
+          'programa_id', '',
+          @programa_list.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:style=>'width:250px',:onchange=>'inputChange(); cList(); document.getElementById(\'errorExplanation\').style.display = \'none\';' } ) %>
+      </td>
+    </tr>
+
+            <tr>
+				<td style="width: 100px">
+					<label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+				</td>
+				<td>
+				<%= select(
+			  		'estado_id','',
+			  		@estado.map{|i| [i.nombre, i.id]},
+			   		{ :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+			 		{ :class=>'select', :onchange=>'inputChange();cList();document.getElementById(\'errorExplanation\').style.display = \'none\';' } ) %>
+			 		
+				</td>
+				<td></td>
+			</tr>
+			
+			<tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+    </td>
+    <td>
+        <% sector_onchange = remote_function(
+                :loading =>'image_load()',
+                :loaded => 'image_unload()',
+                :method=>:get,
+                :url=>{:controller=>'consulta_certificacion_presupuestaria',
+                :action=>:sector_change },
+                :with=>"'sector_id='+value" ) %>
+        <%= select(
+          'sector_id', '',
+          @sector_list.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select', :style=>'width:250px', :onchange=>sector_onchange + ';inputChange(); cList();document.getElementById(\'errorExplanation\').style.display = \'none\';' } ) %>
+    </td>
+  </tr>
+
+        <tr>
+          <td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+		</td>
+		<td>
+        <span id="sub-sector-search">
+          <%= render :partial=>'sub_sector_search' %>
+        </span>
+                </td>
+        </tr>
+
+        <tr>
+          <td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+		</td>
+		<td>
+        <span id="rubro-search">
+          <%= render :partial=>'rubro_search' %>
+        </span>
+                </td>
+        </tr>
+
+
+        <tr>
+          <td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+		</td>
+		<td>
+                  <span id="sub-rubro-search">
+          <%= render :partial=>'sub_rubro_search' %>
+        </span>
+                </td>
+        </tr>
+
+        <tr>
+          <td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+		</td>
+		<td>
+                  <span id="actividad-search">
+          <%= render :partial=>'actividad_search' %>
+        </span>
+                </td>
+        </tr>
+
+        <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px',:onclick=>'document.getElementById(\'errorExplanation\').style.display = \'none\';', :onchange=>'inputChange(); cList(); '%>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.cedula')%> / <%=I18n.t('Sistema.Body.Vistas.General.rif')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'cedula_rif', '', :class=>'text', :maxlength=>'12', :style=>'width: 100px',:onclick=>'document.getElementById(\'errorExplanation\').style.display = \'none\';',:onchange=>'inputChange(); cList(); '%> <%= I18n.t('Sistema.Body.General.ejemplo_documento_completo')%>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.General.beneficiario')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'productor', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px',:onclick=>'document.getElementById(\'errorExplanation\').style.display = \'none\';', :onchange=>'inputChange(); cList();document.getElementById(\'errorExplanation\').style.display = \'none\'; '%>&emsp;
+      </td>
+    </tr>
+	<tr>
+	<td style="width: 150px">
+	
+	</td>
+	<td>
+	
+	</td>
+	<td><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'),:onclick=>'document.getElementById(\'errorExplanation\').style.display = \'none\';') -%></td>
+	</tr>
+        <tr> 	
+      <td style="width: 150px">
+
+      </td>
+      <td>
+      </td>
+      <td> </td>
+      </tr>
+ 
+			
+		</table>
+	<% end %>
+<br>	
+
+  <div id="mensaje" style="display: none"><%= @mensaje %></div>
+  <div id="errores" style="display: none"><%= @feedback %></div>
+	<%= error %>
+	<%= message %>
+  <div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+<br>	
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :onchange=>'cList();',
+    :url => { :action => :liberar } ) do -%>
+    
+  <input id="condition" type="hidden" name="condition" />
+  <div id="list">  </div>
+  <% end %>
+</div>

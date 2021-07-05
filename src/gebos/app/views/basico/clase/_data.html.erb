@@ -1,0 +1,41 @@
+<% item = @clase if item.nil? %>
+<td>
+  <%= item.id %>
+</td>
+
+<td style="text-align: center">
+  <%=item.nombre %>
+</td>
+
+<td style="text-align: center">
+  <%=item.tipo_maquinaria.nombre%>
+</td>
+
+<td style="text-align: center">
+  <%= item.descripcion %>
+</td>
+
+<td align="center">
+  <% if item.activo == true %>
+    <%= image_tag('activo.gif',:title=>'Avanzar') %>
+  <% elsif item.activo == false %>
+    <%= image_tag('inactivo.gif',:title=>'Devolver') %>
+  <% end %>
+</td>
+
+<td style="text-align: center">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => {:controller => 'clase', :action => :edit, :id => item.id}) if vlink 'edit'
+  -%>
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'clase', :action => :delete, :id => item.id}) if vlink 'delete'
+  -%>
+</td>

@@ -1,0 +1,176 @@
+<table style="width: 100%" border=0>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.vivienda') %></label>
+    </td>
+    <td style="width: 10%">
+      <%= radio_button 'servicios_basicos', 'vivienda', 'true',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'servicios_basicos', 'vivienda', 'false',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+    <td style="width: 10%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.electricidad') %></label>
+    </td>
+    <td style="width: 60%" valign="top">
+      <%= text_field 'servicios_basicos', 'observaciones_vivienda',
+        :class=>'text',
+        :style=>'width: 100%',
+        :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.electricidad') %></label>
+    </td>
+    <td>
+      <%= radio_button 'servicios_basicos', 'electricidad', 'true',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'servicios_basicos', 'electricidad', 'false',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label>
+    </td>
+    <td>
+      <%= text_field 'servicios_basicos', 'observaciones_electricidad',
+        :class=>'text',
+        :style=>'width: 100%',
+        :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td valign="top">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.transporte')} #{I18n.t('Sistema.Body.Vistas.General.publico')}" %></label>
+    </td>
+    <td>
+      <%= radio_button 'servicios_basicos', 'transporte_publico', 'true',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'servicios_basicos', 'transporte_publico', 'false',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label>
+    </td>
+    <td>
+      <%= text_field 'servicios_basicos', 'observaciones_transporte',
+        :class=>'text',
+        :style=>'width: 100%',
+        :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %></label> 
+    </td>
+    <td>
+      <%= radio_button 'servicios_basicos', 'telefono', 'true',
+      :class=>'text', :onclick=>'bloquear_telefonos(1);inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'servicios_basicos', 'telefono', 'false',
+      :class=>'text', :onclick=>'bloquear_telefonos(0);inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>  
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %> 1</label>
+    </td>
+    <td>
+      <%= text_field 'servicios_basicos', 'observaciones_telefono1',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'12', :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan= 2></td>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %> 2</label>
+    </td>
+    <td>
+      <%= text_field 'servicios_basicos', 'observaciones_telefono2',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'12', :onclick=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    
+    <td colspan="2" ></td>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %> 3</label>
+    </td>
+    <td>
+      <%= text_field 'servicios_basicos', 'observaciones_telefono3',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'12', :onclick=>'inputChange();' -%><br><br>
+ 
+
+    </td>
+  </tr>  
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.gas') %></label> 
+    </td>
+    <td>
+      <%= radio_button 'servicios_basicos', 'gas', 'true',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'servicios_basicos', 'gas', 'false',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label>
+    </td>
+    <td>
+      <%= text_field 'servicios_basicos', 'observaciones_gas',
+        :class=>'text',
+        :style=>'width: 100%',
+        :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.aguas_blancas') %></label> 
+    </td>
+    <td>
+      <%= radio_button 'servicios_basicos', 'aguas_blancas', 'true',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'servicios_basicos', 'aguas_blancas', 'false',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label>
+    </td>
+    <td>
+      <%= text_field 'servicios_basicos', 'observaciones_aguas_blancas',
+        :class=>'text',
+        :style=>'width: 100%',
+        :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.aguas_servidas') %></label> 
+    </td>
+    <td>
+      <%= radio_button 'servicios_basicos', 'aguas_servidas', 'true',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'servicios_basicos', 'aguas_servidas', 'false',
+      :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label>
+    </td>
+    <td>
+      <%= text_field 'servicios_basicos', 'observaciones_aguas_servidas',
+        :class=>'text',
+        :style=>'width: 100%',
+        :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+</table>

@@ -1,0 +1,60 @@
+<div class="marco-titulo"><div><div>
+  <%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.listado_archivos_enviados_desde_banco')%>
+</div></div></div>
+<%= render :partial=>'finanzas/abono_arrime_confirmacion_transferencia/common/tabs' %>
+<div class="marco-contenido">
+
+  <center>
+    <div id="mensaje"><%= @mensaje %></div>
+    <div id="errores"><%= @feedback %></div>
+    <%= message %>
+  </center>
+
+<br>
+  <table class="lista" style="width: 90%">
+    <thead>
+    <tr>
+          <th  style="width: 60px" ><%=I18n.t('Sistema.Body.Vistas.General.fecha_generacion')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.archivo')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.monto')%></th>
+          <th><%= I18n.t('Sistema.Body.Vistas.Form.estatus') %></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+     </tr>
+     </thead>
+     <tbody id="list_body">
+
+          <% even_odd = 1
+            if !@mostrar_archivo.nil?
+              @mostrar_archivo.each do |archivo|
+              even_odd = 1 - even_odd %>
+              <% if (archivo.estatus == 1 ||archivo.estatus == 2 || archivo.estatus == 3) %>  <!-- SOLO SE MOSTRARAN LOS QUE TENGAN ESTATUS 2 Y 3 -->
+
+                <tr class="lista<%= 1 - even_odd %>" >
+
+
+
+                  <td align="center"><%= format_fecha(archivo.fecha) %><br></td>
+                  <td align="center"><%= archivo.archivo %></td>
+                  <td align="center"><%= archivo.numero_procesado %></td>
+                  <td align="center"><%=format_fm(archivo.monto_procesado) %></td>
+
+                  <td align="center"><%=
+                    case archivo.estatus
+                        when 2
+                          I18n.t('Sistema.Body.General.archivo_generado')
+                    end -%>
+                  </td>
+                  <td align="center"><a target='_blank' href='<%="#{request.protocol}#{request.host.to_s}"%>:<%="#{request.port.to_s}"%>/documentos/finanzas/confirmacion_abono_exedente/<%="#{archivo.archivo}"%>' ><%=I18n.t('Sistema.Body.General.descargue_aqui')%></a></td>                                  
+                </tr>
+
+              <%end%>
+            <%end%>
+          <%end%>
+
+     </tbody>
+  </table>
+  <br>  
+  <div id="list"></div>
+
+</div>

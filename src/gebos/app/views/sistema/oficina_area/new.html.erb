@@ -1,0 +1,16 @@
+<%= form_title_new %>
+<%= render :partial=>'sistema/oficina/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= error %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_new, :oficina_id => @oficina.id, :popup=>params[:popup] } ) do -%>
+  <%= render :partial => 'form' %>
+  <%= form_buttons_edit :oficina_id => @oficina.id, :popup=>params[:popup] %>
+
+  <%end%>
+
+</div>

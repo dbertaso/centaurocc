@@ -1,0 +1,34 @@
+
+<table class="lista" style="width: 100%">
+		<thead>
+		<tr id="row_title">
+ 			 <th style="width: 10%" <%= sort_class_helper('gebos_contabilidad_dataload.nombre_archivo') %>>
+				<%= sort_link_helper 'Nombre del Archivo', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+			<th style="width: 10%" <%= sort_class_helper('gebos_contabilidad_dataload.tipo_archivo') %>>
+				<%= sort_link_helper 'Tipo Movimiento', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+ 			 <th style="width: 10%" <%= sort_class_helper('gebos_contabilidad_dataload.fecha_creacion') %>>
+				<%= sort_link_helper 'Fecha Creación', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+ 			 <th style="width: 10%" <%= sort_class_helper('gebos_contabilidad_dataload.numero_filas') %>>
+				<%= sort_link_helper 'N.   filas', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+ 			 			 <th style="width: 5%" <%= sort_class_helper('gebos_contabilidad_dataload.numero_filas') %>>
+				<%= sort_link_helper '', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+		</tr>
+		</thead>
+  <tbody>
+
+<%
+	even_odd = 1
+	for gebos_contabilidad_dataload in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :gebos_contabilidad_dataload => gebos_contabilidad_dataload, :even_odd => even_odd } -%>
+<% end %>
+    </tbody>
+  </table>
+
+<%= form_pagination %>
+

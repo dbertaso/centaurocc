@@ -1,0 +1,48 @@
+<script language="JavaScript">
+  function verifico(){
+    if (document.getElementById('embarcacion_es_propia_').checked == true){
+      //es a solicitar
+      document.getElementById('embarcacion_matricula').style.display = 'none';
+      document.getElementById('embarcacion_matricula').value = '***No-aplica***'; 
+    }else{
+      document.getElementById('embarcacion_matricula').style.display = 'block';
+      document.getElementById('embarcacion_matricula').value = '';
+    }
+  }
+</script>
+
+<div class="marco-titulo"><div><div>
+      <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.modificando_informacion_visita')%><span style="color: #FF0000">'<%= @full_info %>'</span>
+    </div></div></div>
+<div id="contenedor_principal">
+  <%= render :partial=>'visitas/control_visitas_pesca/embarcacion/common/tabs' %>
+
+  <div class="marco-contenido2">
+
+    <%
+    begin
+      controller.method(:new)
+    %>
+      <div class="marco-boton-out" id="button_new">
+      </div>
+    <%
+    rescue NameError
+    end
+  %>
+
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+
+    <div id="list">
+
+      <div id="list">
+        <%= render :partial => 'list' -%>
+      </div>
+
+      <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')), visitas_visita_seguimiento_path,
+        { :popup=>params[:popup], :id => @visitas.solicitud.id },  { :id=>'button_close' } ) -%>
+    </div>
+  </div>

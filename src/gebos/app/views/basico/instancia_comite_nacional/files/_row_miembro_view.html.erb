@@ -1,0 +1,19 @@
+<% miembro = @miembro if miembro.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= miembro.id %>">
+	<td align="right">
+		<%= miembro.cedula  %>
+	</td>	
+	<td align="left">
+		<%= miembro.nombre %> <%= miembro.apellido %>
+	</td>
+	<td align="left">
+		<%= miembro.area %>
+	</td>		
+	<td align="left">
+		<%= miembro.rol %>
+	</td>		
+	<td align="center">
+		<%=format_bool miembro.firma %>        
+	</td>
+
+</tr>

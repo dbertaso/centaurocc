@@ -1,0 +1,50 @@
+<table>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <%= radio_button 'empresa_email', 'tipo', 'P',
+        :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.principal') %><br />
+      <%= radio_button 'empresa_email', 'tipo', 'A',
+        :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.administrativo') %><br />
+      <%= radio_button 'empresa_email', 'tipo', 'T',
+        :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.otro') %><br />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.correo_electronico') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_email', 'email',
+        :class=>'text',
+        :style=>'width: 450px',
+        :maxlength=>'80'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.facebook') %> </label>
+    </td>
+    <td>
+      <%= text_field 'empresa_email', 'facebook',
+        :class=>'text',
+        :style=>'width: 450px',
+        :maxlength=>'80'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.twitter') %> </label>
+    </td>
+    <td>
+      <%= text_field 'empresa_email', 'twitter',
+        :class=>'text',
+        :style=>'width: 450px',
+        :maxlength=>'80'  -%>(@fondas)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

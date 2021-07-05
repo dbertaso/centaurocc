@@ -1,0 +1,32 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando') %> <%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Header.form_title')%><span class="titulo_modificar">
+      </span> &ensp;<label style="color: red">"<%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%> <%= @view_envio_maquinaria.nro_tramite unless @view_envio_maquinaria.nil? %>"
+        &ensp; "<%=I18n.t('Sistema.Body.Vistas.General.productor')%> <%= @view_envio_maquinaria.productor unless @view_envio_maquinaria.nil? %>" </label>
+    </div>
+  </div>
+</div>
+
+<%= error  %>
+<%= message  %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :save_edit, :id=>@guia_movilizacion_maquinaria.id} ) do-%>
+<%= render :partial => 'form' %>
+
+<div id="buttons_edit" style="display: none">
+  <%= form_buttons_edit :id => @guia_movilizacion_maquinaria.id, :solicitud_id=>@guia_movilizacion_maquinaria.solicitud_id,
+    :productor=>@view_envio_maquinaria.productor, :popup=>params[:popup] %>
+
+</div>
+<br/>
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+{ :action => :index, :solicitud_id => @guia_movilizacion_maquinaria.solicitud_id,
+  :productor=>@view_envio_maquinaria.productor},
+{ :id=>'button_close' } ) -%>
+
+<% end -%>
+

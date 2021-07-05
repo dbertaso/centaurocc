@@ -1,0 +1,33 @@
+<% persona_telefono = @persona_telefono if persona_telefono.nil? %>
+<td>
+  <%= persona_telefono.tipo_nombre  %>
+</td>
+<td>
+  <% if persona_telefono.persona_direccion %>
+    <%= persona_telefono.persona_direccion.ciudad.nombre  %>
+  <% end %>
+</td>
+<td>
+  <%= persona_telefono.codigo %>
+</td>
+<td>
+  <%= persona_telefono.numero %>
+</td>
+<td>
+  <%= format_bool persona_telefono.fax %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title =>'Editar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:action => :edit, :id => persona_telefono.id}) -%>
+
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title =>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :id => persona_telefono.id}) -%>
+</td>

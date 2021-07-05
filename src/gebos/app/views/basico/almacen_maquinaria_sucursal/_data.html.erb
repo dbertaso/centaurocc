@@ -1,0 +1,28 @@
+<% almacen_maquinaria_sucursal = @almacen_maquinaria_sucursal if almacen_maquinaria_sucursal.nil? %>
+<td>
+  <%= almacen_maquinaria_sucursal.nombre  %>
+</td>
+<td>
+  <%= almacen_maquinaria_sucursal.estado.nombre %>
+</td>
+<td>
+  <%= almacen_maquinaria_sucursal.municipio.nombre %>
+</td>
+<td>
+  <%= almacen_maquinaria_sucursal.ciudad.nombre %>
+</td>
+<td>
+  <%= almacen_maquinaria_sucursal.persona_contacto  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title =>'Editar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload(); eva();',
+    :method =>:get,
+    :url => {:action => :edit, :almacen_maquinaria_id => @almacen_maquinaria.id, :id => almacen_maquinaria_sucursal.id}) -%>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title =>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => "¿Está usted seguro que desea eliminar este registro?",
+    :url => {:action => :delete, :almacen_maquinaria => @almacen_maquinaria.id, :id => almacen_maquinaria_sucursal.id}) -%>
+</td>

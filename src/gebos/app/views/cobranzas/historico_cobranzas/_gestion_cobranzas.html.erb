@@ -1,0 +1,62 @@
+
+<div style="width: 100%">
+
+  <table class="lista" style="width: 75%">
+
+    <thead>
+
+      <tr>
+
+        <th style="width: 1%">
+          
+        </th>
+        <th>
+          <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+        </th>
+
+         <th>
+          <%= I18n.t('Sistema.Body.Vistas.Form.fecha') %>
+        </th>
+
+         <th>
+          <%= I18n.t('Sistema.Body.Vistas.General.hora') %>
+        </th>
+
+      </tr>
+
+    </thead>
+
+    <% even_odd = 1
+      for gestion in @gestion_cobranzas
+      even_odd = 1 - even_odd %>
+
+      <tr class="lista<%= even_odd %>" id="row_<%= gestion.id %>">
+
+        <td style="text-align: center">
+          <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.img_expandir'), :title=>I18n.t('Sistema.Body.Vistas.General.expandir')),
+          :method => :get,
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :url => {:controller => :historico_cobranzas, :action => :expand, :gestion_id => gestion.id}) -%>
+        </td> 
+       <td style="text-align: center">
+        <% tipo_gestion = TipoGestionCobranzas.find(gestion.tipo_gestion_cobranza_id) %>
+        <%= tipo_gestion.descripcion unless tipo_gestion.nil? %>
+       </td>
+
+       <td style="text-align: center">
+        <%= format_fecha(gestion.fecha_confirmacion) unless gestion.nil? %>
+       </td>
+
+       <td style="text-align: center">
+        <%= format_hora(gestion.hora_confirmacion) unless gestion.nil? %>
+       </td>
+
+
+      </tr>
+
+    <% end %>
+
+  </table>
+
+</div>

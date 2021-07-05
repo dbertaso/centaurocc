@@ -1,0 +1,1189 @@
+<script type="text/javascript">
+
+function formatCurrency2(num) {
+   
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    //$(name + '_display').innerHTML = numero;
+    return numero;
+}
+
+function formatCurrency3(num) {
+    //alert("numero entrante "+num);   
+    aux=num.toString().split('.');
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*1000+0.50000000001);
+
+    //cents = num%100;
+    if (aux.length > 1){  
+    cents = aux[1].toString();
+    }else{
+    cents ="00";
+    }
+    //alert("numero centimos "+cents);
+    num = Math.floor(num/1000).toString();
+
+    //if(cents<10)
+        //cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    //alert("numero final "+numero);
+    //$(name + '_display').innerHTML = numero;
+    //alert("numero saliente "+numero);   
+    return numero;
+}
+
+
+
+
+function trunco_a_2_decimales(numero) { 
+    
+     /*var nume=numero.toString();
+     var pot=nume.split('.');     
+     if (pot.length>1){
+     return (pot[0].toString()+'.'+pot[1].toString().substring(0,2));
+     }else{
+     return numero;
+     }*/
+     pot = Math.pow(10,2); 
+     return (numero * pot).toFixed(0) / pot; 
+} 
+
+function trunco_a_3_decimales(numero) { 
+    
+     pot = Math.pow(10,3); 
+     return (numero * pot).toFixed(0) / pot; 
+} 
+
+
+
+
+function replaceAll(text, search, newstring ){
+    /*while (text.toString().indexOf(search) != -1)
+        text = text.toString().replace(search,newstring);
+    return text;*/
+    //solo funciona con cadenas donde el reemplazo sea de tamaño uno
+    var i=0;
+    var text_aux='';
+    while (i<text.toString().length){
+     if (search==text.toString().charAt(i)){
+      text_aux+= text.toString().charAt(i).replace(search,newstring);
+     }else{
+      text_aux+= text.toString().charAt(i);
+     }
+     i++;
+    }
+return text_aux;
+}
+
+
+
+function ValidarNumero2(nombre)
+ {
+  var campo =  $(nombre);
+
+//range = /^\d{1,12}(\.{1}\d{1,2})?$/;
+//range = /^[0-9]*.[0-9]{1,2}$/;
+
+//hundred = /^100$/;
+var myStr;
+var strLen;
+
+
+//if(!(range.test(campo.value) ))alert('Introdujo caracteres no númericos '+myStr);//campo.value='';
+
+
+
+   if( isNaN(campo.value) ){
+   myStr = campo.value;
+   strLen = myStr.length;
+   myStr = myStr.slice(strLen-1,strLen); 
+   
+   //alert('Los valores soportados son solo numéricos el caracter '+myStr+' no es soportado');
+   
+   alert('<%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Errores.caracteres_no_soportados')%>'+myStr);
+   campo.value = campo.value.slice(0,(strLen-1));
+//   campo.value = campo.value.replace(myStr,'');
+   //campo.value = campo.value.replace(/[a-zA-Z,+.]/,'');
+   }else{
+      //verifico si el numero posee decimales, si es asi veo si tiene 3 decimales
+    aux=campo.value.toString().split('.');
+    if (aux.length > 1){  
+     if (aux[1].toString().length>2) {
+         alert('<%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Errores.maximo_2_decimales')%>');
+         campo.value = campo.value.slice(0,(strLen-1));
+      }
+    
+    }
+ 
+
+
+   } 
+ 
+
+ }
+
+
+function substr_count(string,substring,start,length)
+{
+ var c = 0;
+ if(start) { string = string.substr(start); }
+ if(length) { string = string.substr(0,length); }
+ for (var i=0;i<string.length;i++)
+ {
+  if(substring == string.substr(i,substring.length))
+  c++;
+ }
+ return c;
+}
+
+
+function suma(){
+// se recorre todos los textfield y se pone el resultado en el div resultado_suma
+
+var form=$('principal_form');
+var contador=0.0;
+
+//for (i=0;i<document.form.elements.length;i++){
+
+for (i=0;i<form.elements.length;i++){
+
+if (form.elements[i].type=='text'){
+if (substr_count(form.elements[i].name,"monto_cantidad_facturada_")!=0 ){
+if(form.elements[i].value!=''){
+//alert("resultado 1 "+contador);
+contador=parseFloat(contador) + parseFloat(form.elements[i].value);
+//alert("resultado 2 "+trunco_a_2_decimales(655.05));
+}
+
+}
+
+}
+
+//sAux += "NOMBRE: " + frm.elements[i].name;
+//sAux += “TIPO : ” + frm.elements[i].type;
+//sAux += “VALOR: ” + frm.elements[i].value + “\n” ;
+}
+
+
+$('resultado_suma').innerHTML = formatCurrency2(trunco_a_2_decimales(contador));
+//$('resultado_suma').innerHTML = contador.toFixed(2).toString().replace('.',',');
+}
+
+function actualiza_span(plan,costo){
+//funcion que actualiza los span de los saldos a favor
+
+
+var un_monto;
+var para1='monto_cantidad_faltante_'+plan;
+//var para2='saldo_favor_'+plan+'_'+costo;
+
+
+var auxuu=""+costo;
+auxiliar=auxuu.split(".");
+
+if ((auxiliar.length) > 1) {
+var para2='saldo_favor_'+plan+'_'+costo;
+}else{
+var para2='saldo_favor_'+plan+'_'+costo+'.0';
+}
+
+//alert('entre span '+$('cantidad_faltante_'+plan).innerHTML);
+
+//esto es para imprimir el saldo a favor
+
+if ($('monto_cantidad_facturada_'+plan).value!=''){
+
+if ($(para1).value!=''){
+
+if ($('monto_cantidad_facturada_'+plan).value!=''){
+un_monto=parseFloat($('monto_cantidad_facturada_'+plan).value) - ((parseFloat($(para1).value))*(parseFloat(costo)));
+}else{
+un_monto=parseFloat('0') - ((parseFloat($(para1).value))*(parseFloat(costo)));
+
+}
+
+//alert("monto "+un_monto);
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+//alert($(para2).innerHTML);
+
+
+
+}else{
+
+un_monto=trunco_a_2_decimales($('monto_cantidad_facturada_'+plan).value);
+//alert("monto "+un_monto);
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//alert($(para2).innerHTML);
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+
+}
+
+
+
+}else{ //caso en donde es vacia el monto de la factura
+
+
+if ($(para1).value!=''){
+
+if (parseFloat($(para1).value)>0){
+un_monto=((parseFloat($(para1).value))*(parseFloat(costo)));
+//alert("monto "+un_monto);
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+//alert($(para2).innerHTML);
+}else{
+
+$(para2).innerHTML=formatCurrency2('0');
+$('resultado_suma_divs').value='0';
+}
+
+}else{
+
+$(para2).innerHTML=formatCurrency2('0');
+$('resultado_suma_divs').value='0';
+}
+
+
+}
+
+//fin de la impresion
+
+
+
+
+
+}
+
+
+// nueva funcion para la conversion de las cantidades, solicitado por el fondas 14/06/2013
+
+function actualiza_span_conversion(plan,costo,unitario){
+//funcion que actualiza los span de los saldos a favor
+
+
+var un_monto;
+
+var para='cantidad_faltante_'+plan;
+var para1='monto_cantidad_faltante_'+plan;
+
+var auxuu=""+costo;
+auxiliar=auxuu.split(".");
+
+if ((auxiliar.length) > 1) {
+var para2='saldo_favor_'+plan+'_'+costo;
+}else{
+var para2='saldo_favor_'+plan+'_'+costo+'.0';
+}
+
+//esto es para imprimir el saldo a favor
+
+if ($('monto_cantidad_facturada_'+plan).value!=''){
+
+if ($(para1).value!=''){
+
+if ($('monto_cantidad_facturada_'+plan).value!=''){
+un_monto=parseFloat(costo) - parseFloat($('monto_cantidad_facturada_'+plan).value);
+if ($('monto_cantidad_facturada_'+plan).value!="0"){
+
+
+un_monto_ultimo=parseFloat($('monto_cantidad_facturada_'+plan).value);
+if (un_monto_ultimo>parseFloat(costo)){
+
+$('etiqueta_cantidad_faltante_'+plan).innerHTML ="";
+$(para2).innerHTML ="";
+$(para).innerHTML = formatCurrency2(parseFloat($('escondido_'+plan).value));
+un_monto_ultimo=parseFloat($('monto_cantidad_facturada_'+plan).value);
+$('monto_cantidad_facturada_'+plan).value='0';
+$('monto_cantidad_faltante_'+plan).value='0';
+$('monto_cantidad_facturada_'+plan).onfocus;
+un_monto="";
+$('resultado_suma').innerHTML=formatCurrency2("0");
+alert('<%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Errores.monto_factura_no_mayor_precio_total')%>');
+}else{
+
+
+monto_cantidad=parseFloat($('monto_cantidad_facturada_'+plan).value) / parseFloat(unitario);
+
+un_monto_ultimo=parseFloat($('monto_cantidad_facturada_'+plan).value);
+
+monto_faltante=parseFloat($('escondido_'+plan).value);
+monto_faltante_actual=monto_cantidad;
+valor_real=parseFloat(monto_faltante) - parseFloat(monto_faltante_actual);
+//alert(valor_real);
+//alert("resultado ="+monto_faltante+"-"+monto_faltante_actual+"="+trunco_a_2_decimales(valor_real));
+$(para).innerHTML=formatCurrency2(trunco_a_2_decimales(valor_real));
+if (parseFloat(trunco_a_2_decimales(valor_real)) <=0){
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2(trunco_a_2_decimales(monto_faltante));
+$(para2).innerHTML =formatCurrency2("0");
+$(para).innerHTML =formatCurrency2("0");
+}else{
+if (parseFloat(costo)==parseFloat($('monto_cantidad_facturada_'+plan).value)){
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2(trunco_a_2_decimales(monto_faltante));
+$(para1).value =trunco_a_2_decimales(monto_faltante);
+$(para).innerHTML =formatCurrency2("0");
+}else{
+
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2(trunco_a_2_decimales(monto_cantidad));
+}
+
+}
+
+
+}
+
+}else{
+monto_cantidad="0";
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2("0");
+}
+}else{
+un_monto=parseFloat('0') - (parseFloat(costo));
+monto_cantidad= parseFloat(unitario);
+}
+
+
+if (parseFloat(un_monto_ultimo)<=parseFloat(costo)){
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+if (parseFloat(trunco_a_2_decimales(valor_real)) <=0){
+$(para1).value=trunco_a_2_decimales(monto_faltante);
+$(para2).innerHTML =formatCurrency2("0");
+$(para).innerHTML =formatCurrency2("0");
+}else{
+if (parseFloat(costo)==parseFloat($('monto_cantidad_facturada_'+plan).value)){
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2(trunco_a_2_decimales(monto_faltante));
+$(para1).value =trunco_a_2_decimales(monto_faltante);
+$(para).innerHTML =formatCurrency2("0");
+}else{
+$(para1).value=trunco_a_2_decimales(monto_cantidad);
+}
+
+//$(para1).value=trunco_a_2_decimales(monto_cantidad);
+}
+
+//$(para1).value=trunco_a_2_decimales(monto_cantidad);
+}else{
+un_monto_ultimo="0";
+$(para2).innerHTML="";$(para1).value="0";}
+
+
+
+}else{
+
+un_monto=trunco_a_2_decimales(parseFloat(costo));
+monto_cantidad= parseFloat(unitario);
+monto_faltante=parseFloat($('escondido_'+plan).value);
+
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+
+if (parseFloat(trunco_a_2_decimales(valor_real)) <=0){
+$(para1).value=trunco_a_2_decimales(monto_faltante);
+$(para2).innerHTML =formatCurrency2("0");
+$(para).innerHTML =formatCurrency2("0");
+}else{
+if (parseFloat(costo)==parseFloat($('monto_cantidad_facturada_'+plan).value)){
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2(trunco_a_2_decimales(monto_faltante));
+$(para1).value =trunco_a_2_decimales(monto_faltante);
+$(para).innerHTML =formatCurrency2("0");
+}else{
+$(para1).value=trunco_a_2_decimales(monto_cantidad);
+}
+//$(para1).value=trunco_a_2_decimales(monto_cantidad);
+}
+
+//$(para1).value=trunco_a_2_decimales(monto_cantidad);
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2(trunco_a_2_decimales(monto_cantidad));
+
+}
+
+
+
+}else{ //caso en donde es vacia el monto de la factura
+
+
+if ($(para1).value!=''){
+
+if (parseFloat($(para1).value)>0){
+un_monto=parseFloat(costo);
+monto_cantidad= parseFloat(unitario);
+
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+$(para1).value='0';
+$(para).innerHTML=formatCurrency2(trunco_a_2_decimales($('escondido_'+plan).value));
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2("0");
+
+}else{
+un_monto=trunco_a_2_decimales(parseFloat(costo));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+$('resultado_suma_divs').value='0';
+$(para1).value='0';
+$(para).innerHTML=formatCurrency2(trunco_a_2_decimales($('escondido_'+plan).value));
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2("0");
+}
+
+}else{
+$(para).innerHTML=formatCurrency2(trunco_a_2_decimales($('escondido_'+plan).value));
+$(para2).innerHTML=formatCurrency2("0");
+$('resultado_suma_divs').value='0';
+$('etiqueta_cantidad_faltante_'+plan).innerHTML=formatCurrency2("0");
+}
+}
+
+//fin de la impresion
+
+}
+
+
+
+// fin nueva funcion para la conversion de las cantidades, solicitado por el fondas 14/06/2013
+
+
+function suma_divs(){
+// se recorre todos los textfield y se pone el resultado en el div resultado_suma
+
+
+var contador=0.0;
+
+var contenido=$('content');
+var capas=contenido.getElementsByTagName('span');
+
+
+for (i=0;i<capas.length;i++){
+
+if (substr_count(capas.item(i).id,"saldo_favor_")!=0 ){
+if(capas.item(i).innerHTML!=''){
+contador=parseFloat(contador) + parseFloat(replaceAll(replaceAll(capas.item(i).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+//alert("este es "+capas.item(i).innerHTML + " otro "+parseFloat((capas.item(i).innerHTML.toString().replace('.','')).toString().replace(',','.'));
+}
+
+}
+
+
+
+//sAux += "NOMBRE: " + frm.elements[i].name;
+//sAux += “TIPO : ” + frm.elements[i].type;
+//sAux += “VALOR: ” + frm.elements[i].value + “\n” ;
+}
+
+$('resultado_suma_divs').innerHTML = formatCurrency2(trunco_a_2_decimales(contador));
+//$('resultado_suma_divs').innerHTML = contador.toFixed(2).toString().replace('.',',');
+}
+
+
+
+function actualizacion_status_orden_despacho(){
+// se recorre todos los textfield y se pone el resultado en el div resultado_suma
+
+
+var contador=0.0;
+
+var contenido=$('content');
+var capas=contenido.getElementsByTagName('label');
+
+
+for (i=0;i<capas.length;i++){
+
+if (substr_count(capas.item(i).id,"cantidad_faltante_")!=0 ){
+if(capas.item(i).innerHTML!=''){
+contador=parseFloat(contador) + parseFloat(replaceAll(replaceAll(capas.item(i).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+}
+
+}
+
+
+
+} //del for
+
+if (contador == 0){
+
+$('confirmar_total_true').disabled = false;
+$('confirmar_total_false').disabled = true;
+
+$('confirmar_total_true').checked = 'checked';
+$('confirmar_total_false').checked = '';
+}else{
+
+$('confirmar_total_false').disabled = false;
+$('confirmar_total_true').disabled = true;
+
+
+$('confirmar_total_false').checked = 'checked';
+$('confirmar_total_true').checked = '';
+}
+
+}
+
+
+
+
+
+
+function actualiza_cantidad_faltante(faltante,costo_real){
+
+var para='cantidad_faltante_'+faltante;
+var para1='monto_cantidad_faltante_'+faltante;
+
+var auxuu=""+costo_real;
+auxiliar=auxuu.split(".");
+
+if ((auxiliar.length) > 1) {
+var para2='saldo_favor_'+faltante+'_'+costo_real;
+}else{
+var para2='saldo_favor_'+faltante+'_'+costo_real+'.0';
+}
+
+
+if ($(para1).value!=''){
+
+var monto_faltante=parseFloat($('escondido_'+faltante).value);
+var monto_cantidad_facturada=$(para1).value;
+var un_monto;
+var valor; 
+
+
+if (parseFloat($(para1).value)==0){ $(para).innerHTML=parseFloat($('escondido_'+faltante).value).toString();}
+
+//alert("cantidad faltante = "+monto_faltante+" cantidad facturada = "+monto_cantidad_facturada);
+
+valor=parseFloat(monto_faltante) - parseFloat(monto_cantidad_facturada);
+
+//alert("el valor es "+monto_cantidad_facturada+" otro valor "+monto_faltante+" resultado "+valor);
+
+
+
+if (valor < 0) {
+
+un_monto=trunco_a_2_decimales($('monto_cantidad_facturada_'+faltante).value);
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+
+
+
+//ojo esta
+$(para2).innerHTML=trunco_a_2_decimales(un_monto);
+
+
+
+
+//).toFixed(2).toString().replace('.',''));
+
+
+
+
+alert('<%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Errores.cantidad_facturada_no_mayor_faltante')%>');
+
+$(para).innerHTML = formatCurrency2(parseFloat($('escondido_'+faltante).value));
+//$(para).innerHTML = parseInt($('escondido_'+faltante).value).toString();
+$(para1).value='0';
+$(para1).onfocus;
+
+}else{
+
+
+//esto es para imprimir el saldo a favor
+
+if ($('monto_cantidad_facturada_'+faltante).value!=''){
+
+if ($(para1).value!=''){
+
+un_monto=parseFloat($('monto_cantidad_facturada_'+faltante).value) - ((parseFloat($(para1).value))*(parseFloat(costo_real)));
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+
+
+//alert($(para2).innerHTML);
+}else{
+
+un_monto=parseFloat($('monto_cantidad_facturada_'+faltante).value);
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//alert($(para2).innerHTML);
+
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+
+}
+
+
+
+}else{
+
+
+if ($(para1).value!=''){
+
+if (parseFloat($(para1).value)>0){
+un_monto=((parseFloat($(para1).value))*(parseFloat(costo_real)));
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+//alert($(para2).innerHTML);
+}
+
+}else{
+
+$(para2).innerHTML='0,00';
+}
+
+
+}
+
+//fin de la impresion
+
+
+$(para).innerHTML =formatCurrency2(parseFloat(valor));
+//$(para).innerHTML = parseInt(valor).toString();
+
+}
+
+
+}else{
+
+
+
+un_monto=parseFloat($('monto_cantidad_facturada_'+faltante).value);
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+//alert($(para2).innerHTML);
+//alert("monto "+un_monto);
+$(para).innerHTML=formatCurrency2(parseFloat($('escondido_'+faltante).value));
+//$(para).innerHTML=parseInt($('escondido_'+faltante).value).toString();
+}
+//alert("monto "+$(para2).innerHTML);
+}
+
+
+// funcion que funciona para lo de los 3 decimales
+
+function actualiza_cantidad_faltante_2(faltante,costo_real){
+
+var para='cantidad_faltante_'+faltante;
+var para1='monto_cantidad_faltante_'+faltante;
+
+var auxuu=""+costo_real;
+auxiliar=auxuu.split(".");
+
+if ((auxiliar.length) > 1) {
+var para2='saldo_favor_'+faltante+'_'+costo_real;
+}else{
+var para2='saldo_favor_'+faltante+'_'+costo_real+'.0';
+}
+
+
+if ($(para1).value!=''){
+
+var monto_faltante=parseFloat($('escondido_'+faltante).value);
+var monto_cantidad_facturada=$(para1).value;
+var un_monto;
+var valor; 
+
+
+if (parseFloat($(para1).value)==0){ $(para).innerHTML=parseFloat($('escondido_'+faltante).value).toString();}
+
+//alert("cantidad faltante = "+monto_faltante+" cantidad facturada = "+monto_cantidad_facturada);
+
+valor=trunco_a_2_decimales(parseFloat(monto_faltante) - parseFloat(monto_cantidad_facturada));
+
+//alert("el valor es "+monto_cantidad_facturada+" otro valor "+monto_faltante+" resultado "+valor);
+
+
+
+if (valor < 0) {
+
+un_monto=trunco_a_2_decimales($('monto_cantidad_facturada_'+faltante).value);
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+
+
+
+//ojo esta
+$(para2).innerHTML=trunco_a_2_decimales(un_monto);
+
+
+
+
+//).toFixed(2).toString().replace('.',''));
+
+
+
+
+alert('<%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Errores.cantidad_facturada_no_mayor_faltante')%>');
+
+$(para).innerHTML = formatCurrency2(trunco_a_2_decimales(parseFloat($('escondido_'+faltante).value)));
+//$(para).innerHTML = parseInt($('escondido_'+faltante).value).toString();
+$(para1).value='0';
+$(para1).onfocus;
+
+}else{
+
+
+//esto es para imprimir el saldo a favor
+
+if ($('monto_cantidad_facturada_'+faltante).value!=''){
+
+if ($(para1).value!=''){
+
+un_monto=parseFloat($('monto_cantidad_facturada_'+faltante).value) - ((parseFloat($(para1).value))*(parseFloat(costo_real)));
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+
+
+//alert($(para2).innerHTML);
+}else{
+
+un_monto=parseFloat($('monto_cantidad_facturada_'+faltante).value);
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//alert($(para2).innerHTML);
+
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+
+}
+
+
+
+}else{
+
+
+if ($(para1).value!=''){
+
+if (parseFloat($(para1).value)>0){
+un_monto=((parseFloat($(para1).value))*(parseFloat(costo_real)));
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+//alert($(para2).innerHTML);
+}
+
+}else{
+
+$(para2).innerHTML=formatCurrency2('0');
+}
+
+
+}
+
+//fin de la impresion
+
+
+$(para).innerHTML =formatCurrency2(trunco_a_2_decimales(parseFloat(valor)));
+//$(para).innerHTML = parseInt(valor).toString();
+
+}
+
+
+}else{
+
+
+
+un_monto=parseFloat($('monto_cantidad_facturada_'+faltante).value);
+//alert(parseFloat(trunco_a_2_decimales(un_monto)));
+$(para2).innerHTML=formatCurrency2(trunco_a_2_decimales(un_monto));
+//$(para2).innerHTML=parseFloat(un_monto).toFixed(2).toString().replace('.',',');
+//alert($(para2).innerHTML);
+//alert("monto "+un_monto);
+$(para).innerHTML=formatCurrency2(trunco_a_2_decimales(parseFloat($('escondido_'+faltante).value)));
+//$(para).innerHTML=parseInt($('escondido_'+faltante).value).toString();
+}
+//alert("monto "+$(para2).innerHTML);
+}
+
+
+
+// fin de la funcion que funciona para los 2 decimales
+
+
+</script>
+
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+	<%=  form_title_search %>
+
+<br>	
+	<%= error %>
+	<%= message %>
+
+
+
+
+<!-- confirmacion para una sola factura-->
+
+<%= form_remote_tag(
+		:loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+		:url => { :action => :save_multiples_confirmar_parciales , :parciales_id => params[:parciales_id] ,:casa_proveedora_id => params[:casa_proveedora_id],:accion=>params[:accion],:oid=>params[:oid],:transacciones => params[:transacciones]},
+	    :html => {:id => 'principal_form' } ) do -%>
+
+
+<%
+    unless params[:parciales_id]=="(0)"
+    @factura_casa_proveedora=FacturaOrdenDespacho.find(:all,:conditions=>"id in #{params[:parciales_id]} and emitida=true")    
+
+   @casa_proveedora_factura=FacturaOrdenDespacho.find_by_sql("select casa_proveedora_id,sucursal_casa_proveedora_id from factura_orden_despacho where id in #{params[:parciales_id]} and emitida=true limit 1;")
+
+ 
+
+    @numero_desembolso=OrdenDespachoDetalle.find(@factura_casa_proveedora[0].orden_despacho_detalle_id).orden_despacho_id
+
+    @orden_despacho=OrdenDespacho.find(@numero_desembolso)
+
+    #nuevo codigo
+    @solicitud1=Solicitud.find(@orden_despacho.solicitud_id)
+    @usuario_auc = Usuario.find(:first, :conditions=>['nombre_usuario = ?',@solicitud1.usuario_pre_evaluacion])
+    @usuario_select1 = Usuario.find(:first, :conditions=>[' cedula in (select cedula from tecnico_campo ) and nombre_usuario = ? ', @solicitud1.usuario_pre_evaluacion], :order=>'primer_nombre, primer_apellido')
+
+    #fin nuevo codigo
+    end
+
+    @condition = " id in #{params[:parciales_id]} and emitida=true"
+
+    @total = FacturaOrdenDespacho.count(:conditions=>@condition)
+    @list  = FacturaOrdenDespacho.find(:all, :conditions => @condition)
+
+
+    
+	@total_saldo_entregar=0
+	@total_precio_total=0
+	cont=0
+	while cont< @total
+	@total_saldo_entregar+=@list[cont].monto_financiamiento
+	@total_precio_total+=@list[cont].monto_factura
+	cont+=1	
+	end
+
+
+%>
+
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+
+
+  <h3><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.informacion_factura')%></h3>
+      
+     <p><label><font color="red" ><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.casa_proveedora') %>:</font></label> <%=CasaProveedora.find(params[:casa_proveedora_id].split("-")[0]).nombre.strip.upcase%> - <label><font color="green"><%= I18n.t('Sistema.Body.Vistas.General.sucursal') %>:</font></label> <%=SucursalCasaProveedora.find(params[:casa_proveedora_id].split("-")[1]).nombre.strip.upcase%></p>
+     
+  
+  <table width="1150">
+          
+    <tr>
+        <td style="width:220px;">
+          <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_factura')%>: </label><%= text_field_tag 'numero_factura', '', :class=>'text', :maxlength=>'8', :style=>'width: 130px',:onclick=>'inputChange();'  %>
+        </td>
+        <td  style="width:180px;">
+          <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_factura') %>: </label>
+          <%= calendar_date_select_tag "fecha_factura_f", @fecha_valor, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> 
+
+          <%#= text_field_tag 'fecha_factura_f', @fecha_valor,
+              :class=>'text', :style=>'width: 80px',
+              :maxlength=>'10', :onkeypress=>'inputChange();',:readonly=>'readonly'  -%>
+              <%#= calendar 'fecha_factura_f', 'calendar_fecha_factura' %>
+        </td>
+        <td  style="width:380px;vertical-align:middle;"  colspan="2">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%>:</label>        
+           <%#= text_field_tag 'observacion', '', :class=>'text', :maxlength=>'208', :style=>'width: 330px;height:40px'  %>
+           <%=  text_area_tag 'observacion', nil, :rows => 1, :cols => 80,:onclick=>'inputChange();' %>
+        
+        
+        </td>
+       </tr>
+       <tr><td colspan="4"><label><%=I18n.t('Sistema.Body.General.nota')%>: </label><%=I18n.t('Sistema.Body.Modelos.General.numero_con_dos_decimales')%></td></tr>
+
+       <%if params[:transacciones].to_s.length>0%> 
+       <tr><td colspan="4"><%= render :partial => 'transacciones' %></td></tr> 
+       <%end%>
+       <tr >
+
+        <td colspan="4">
+          <table width="1150" border="1">
+             <thead> 
+              <tr>
+                <th colspan="5" align="center" style="background-image: url(/assets/titulo_fondo_2.gif);" ><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.contenido_del_despacho')%></th>
+              </tr>
+              <tr >
+              <td><div id="list" >
+   <%#= render :partial => 'list_especial' %>
+
+<!-- empieza el list -->
+
+
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%#= sort_class_helper('@numero_desembolso') %>>
+          <%#= sort_link_helper '# Nro.Desembolso', '@numero_desembolso', 'list' %>
+	<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho')%>
+	</th>
+
+         <th style="width: 120px" <%#= sort_class_helper('item_nombre') %>>
+          <%#= sort_link_helper '# Ítem', 'item_nombre', 'list' %> <%="# #{I18n.t('Sistema.Body.Vistas.General.item')}"%>        
+        </th>
+         <th style="width: 320px" <%#= sort_class_helper('observacion') %>>
+          <%#= sort_link_helper 'Descripción', 'observacion', 'list' %><%=I18n.t('Sistema.Body.General.descripcion')%>
+        </th>
+
+        <th style="width: 50px" <%#= sort_class_helper('unidad_medida_id') %>>
+          <%#= sort_link_helper 'Unidad de Medida', 'unidad_medida_id', 'list' %><%=I18n.t('Sistema.Body.Modelos.UnidadMedida.nombre')%>
+        </th>
+        <th style="width: 50px" <%#= sort_class_helper('cantidad') %>>
+          <%#= sort_link_helper 'Cantidad', 'cantidad', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_a_despachar')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('costo_real') %>>
+          <%#= sort_link_helper 'Precio Unitario', 'costo_real', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.General.unitario')%>
+       </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_financiamiento') %>>
+          <%#= sort_link_helper 'Precio Total', 'monto_financiamiento', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Saldo a Entregar', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_facturado')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_facturado') %>>
+          <%#= sort_link_helper 'Monto Facturado', 'monto_facturado', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_facturada')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Saldo a Favor', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_factura')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Cantidad Facturada', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.diferencia')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Cantidad Faltante', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_faltante')%>
+        </th>
+
+        </tr>
+    </thead>
+	<tbody id="list-body">
+
+
+<%
+	even_odd = 1
+@list.each{ |factura|
+even_odd = 1 - even_odd
+%>
+<tr class="lista<%= even_odd %>" id="row_<%= @list[0].id %>">
+<!-- data -->
+
+<td align="center">
+<%= hidden_field "escondido", "#{factura.id}", :value => "#{factura.cantidad}" -%>
+
+<%=@numero_desembolso%>
+  <%#= OrdenDespachoDetalle.find(orden_despacho_detalle.id).orden_despacho_id %>
+</td>
+<td align="center">
+  <%= factura.item_nombre.strip.upcase  %>
+</td>
+<td align="center">
+<%condi="nombre ='#{factura.item_nombre}'"%>
+
+<%if OrdenDespacho.find(factura.orden_despacho_detalle.orden_despacho_id).casa_proveedora_id.to_s=='' %>
+<%=Item.find_by_nombre(factura.item_nombre).descripcion unless Item.count(:conditions=>condi) == 0 %>  
+<%else%>
+<%=I18n.t('Sistema.Body.Vistas.General.serial')%> <%=I18n.t('Sistema.Body.Vistas.General.motor')%>: <%=factura.orden_despacho_detalle.plan_inversion.serial_motor%> 
+<br><%=I18n.t('Sistema.Body.Vistas.General.serial')%> <%=I18n.t('Sistema.Body.Vistas.General.chasis')%>: <%=factura.orden_despacho_detalle.plan_inversion.serial_chasis%>
+<%end%>
+
+</td>
+<td align="center">
+  <%= factura.unidad_medida.abreviatura.strip.upcase %>
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{factura.cantidad}));"%>
+  <%#= orden_despacho_detalle.cantidad_f %>
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{factura.costo_real}));"%>
+  <%#= orden_despacho_detalle.costo_real_f %>
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{factura.monto_financiamiento}));"%>
+  <%#= orden_despacho_detalle.monto_financiamiento_f %>
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{factura.monto_factura}));"%>
+  <%#= orden_despacho_detalle.monto_facturacion_f %>
+</td>
+<td align="center">
+
+<span style="font-weight: bold" id="etiqueta_cantidad_faltante_<%=factura.id%>"></span>
+
+<%#= text_field_tag "monto_cantidad_faltante_#{factura.id}", 0, 
+            :class=>'text', :maxlength=>'12',:readonly=>true, :style=>'width: 70px; align: right;',
+            :onkeyup=>"ValidarNumero2(this);actualiza_cantidad_faltante_2(#{factura.id},#{factura.costo_real});suma_divs();actualiza_span(#{factura.id},#{factura.costo_real});actualizacion_status_orden_despacho();",:autocomplete=>"off",:onpaste=>"return false" -%>
+
+<%= hidden_field "monto_cantidad_faltante", "#{factura.id}",:name=>"monto_cantidad_faltante_#{factura.id}", :value => "0" -%>
+
+<!-- asi estaba el anterior que solo permitia cantidades sin decimales -->
+<%#= text_field_tag "monto_cantidad_faltante_#{factura.id}", 0, 
+            :class=>'text', :maxlength=>'6', :style=>'width: 70px; align: right;',
+            :onkeyup=>"actualiza_cantidad_faltante(#{factura.id},#{factura.costo_real});suma_divs();actualiza_span(#{factura.id},#{factura.costo_real});actualizacion_status_orden_despacho();",
+	    :onkeypress=>"return NumberKey(event);",:autocomplete=>"off" -%>
+
+</td>
+<td align="right">
+
+
+<!-- agregado el 14/06/2013 -->
+<%= text_field_tag "monto_cantidad_facturada_#{factura.id}", 0, 
+            :class=>'text', :maxlength=>'14', :style=>'width: 70px; align: right;',
+            :onkeyup=>"ValidarNumero2(this); suma();actualiza_span_conversion(#{factura.id},#{factura.monto_financiamiento},#{factura.costo_real});suma_divs();actualizacion_status_orden_despacho();",:autocomplete=>"off",:onpaste=>"return false" -%>
+<!-- fin agregado el 14/06/2013 -->
+
+
+<!--  asi estaba anteriormente -->
+<%#= text_field_tag "monto_cantidad_facturada_#{factura.id}", 0, 
+            :class=>'text', :maxlength=>'14', :style=>'width: 70px; align: right;',
+            :onkeyup=>"ValidarNumero2(this); suma();actualiza_span(#{factura.id},#{factura.costo_real});suma_divs();",:autocomplete=>"off",:onpaste=>"return false" -%>
+
+</td>
+<td align="center">
+
+<%if factura.costo_real==0%>
+<span id="saldo_favor_<%=factura.id%>_0"></span>
+<%else%>
+<!-- agregado el 14/06/2013 -->
+<span id="saldo_favor_<%=factura.id%>_<%=factura.monto_financiamiento%>"></span>
+<!-- fin agregado el 14/06/2013 -->
+<%end%>
+
+
+  <%#= text_field_tag "monto_#{plan.id}", @monto, 
+            :class=>'text', :maxlength=>'8', :style=>'width: 100px, align: left',
+            :value=>"#{plan.costo_real > 0 ? plan.costo_real_fm : 0.00}",
+            :onkeyup=>"ValidarNumero('@monto'); formatCurrency(this.value, 'monto_#{plan.id}');",
+            :onchange=>'inputChange();' -%>
+</td>
+<td align="center">
+<label id="cantidad_faltante_<%=factura.id%>">
+<%=javascript_tag "document.write(formatCurrency2(#{factura.cantidad}));"%>
+
+<%#= factura.cantidad.to_i%></label>
+<%#= text_field_tag "monto_#{plan.id}", @monto, 
+            :class=>'text', :maxlength=>'8', :style=>'width: 100px, align: left',
+            :value=>"#{plan.costo_real > 0 ? plan.costo_real_fm : 0.00}",
+            :onkeyup=>"ValidarNumero('@monto'); formatCurrency(this.value, 'monto_#{plan.id}');",
+            :onchange=>'inputChange();' -%>
+</td>
+
+<!-- fin data -->
+</tr>
+<%}%>
+
+<tr border="1" style="background-color: #888888;">
+<td colspan="6" style="border: solid 1px #000000;" align="right"><strong><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')).upcase%></strong></td>
+<td style="border: solid 1px #000000;" align="right"><strong><%=javascript_tag "document.write(formatCurrency2(trunco_a_3_decimales(parseFloat(#{@total_saldo_entregar}))));"%><%#=sprintf('%01.2f', @total_saldo_entregar).sub('.', ',')%></strong></td>
+<td style="border: solid 1px #000000;" align="right"><strong><%=javascript_tag "document.write(formatCurrency2(trunco_a_3_decimales(parseFloat(#{@total_precio_total}))));"%><%#=sprintf('%01.2f', @total_precio_total).sub('.', ',')%></strong></td>
+
+
+<td style="border: solid 1px #000000;" align="right"></td>
+<td style="border: solid 1px #000000;" align="right"><strong><div id="resultado_suma"></div></strong></td>
+
+
+
+
+<td style="border: solid 1px #000000;" align="right"><strong><div id="resultado_suma_divs"></div></strong></td>
+<td style="border: solid 0px #000000;background-color: #ffffff;" align="right"></td>
+</tr>
+
+
+
+
+<!--  </tr> -->
+
+</tbody>
+</table>
+
+
+
+
+<!-- termina list -->
+	</div></td>
+              </tr>
+                          
+
+            </thead> 
+       </table> 
+        
+          
+        </td>
+
+
+
+
+<tr><td colspan="4"></td></tr>
+<tr border="1" style="background-color: #888888;">
+<td style="border: solid 1px #000000;width: 200px;" align="right" colspan="2"><strong><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.estatus_orden_despacho')%></strong></td>
+<td style="border: solid 1px #000000;width: 180px;" align="right"><strong><%=
+                    radio_button('confirmar','total', 'true',                    
+                	:class=>'text', :disabled=>'disabled')
+                    -%><%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%></strong></td>
+<td style="border: solid 1px #000000;width: 140px;" align="right"><strong><%=
+                    radio_button('confirmar','total', 'false',                    
+                	:class=>'text', :disabled=>'disabled',:checked=>'checked')
+                    -%><%=I18n.t('Sistema.Body.Vistas.General.parcial')%></strong></td>
+</tr>
+
+<%unless @usuario_select1.nil?%>
+      <tr>
+
+<!-- style="width: 230px" -->
+        <td colspan="1">
+          <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.funcionario')%> <%=I18n.t('Sistema.Body.General.cliente_gprotec')%>:</label>
+        </td>
+        <td colspan="3">
+
+<%=@usuario_select1.primer_nombre.to_s.strip.upcase + " " + @usuario_select1.segundo_nombre.to_s.strip.upcase + " " +  @usuario_select1.primer_apellido.to_s.strip.upcase + " " + @usuario_select1.segundo_apellido.to_s.strip.upcase unless @usuario_select1.nil?%>
+
+          
+        </td>
+       </tr>
+<%end%>     
+
+ 
+  </table><br/><br/>
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.agregar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save')  -%>&nbsp;
+
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+               { :controller => 'orden_despacho_detalle', :action =>:cancel_multiple_parcial, :accion => params[:accion], :parciales_id => params[:parciales_id],:oid=>params[:oid],:transacciones => params[:transacciones] },
+               { :id=>'buton_cerrar' } ) -%>
+<%#= form_buttons_edit %>
+	<% end %>
+	
+<br/>
+
+</div>

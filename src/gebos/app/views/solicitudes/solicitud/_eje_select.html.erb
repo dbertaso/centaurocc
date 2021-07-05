@@ -1,0 +1,5 @@
+<%= select(
+          'solicitud', 'eje_id',
+          @eje_select.map{|e| [e.nombre, e.id]},
+          { },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>

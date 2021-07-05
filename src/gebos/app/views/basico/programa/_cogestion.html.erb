@@ -1,0 +1,18 @@
+<table>
+   <tr>
+    <td style="width: 250px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.porcentaje')} #{I18n.t('Sistema.Body.Vistas.General.empresa')}"%></label>
+    </td>
+    <td style="width: 450px">
+      <%= text_field 'programa', 'porcentaje_empresa_f', :class=>'text', :style=>'width: 60px', :maxlength=>'5'  -%>
+    </td>
+   </tr>
+   <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.porcentaje')} #{I18n.t('Sistema.Body.Vistas.General.cooperativa')}"%></label>
+    </td>
+    <td>
+      <%= text_field 'programa', 'porcentaje_cooperativa_f', :class=>'text', :style=>'width: 60px', :maxlength=>'5'  -%>
+    </td>
+   </tr>
+</table>

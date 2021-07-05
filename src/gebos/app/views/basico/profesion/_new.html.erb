@@ -1,0 +1,19 @@
+<%= form_title_new %>
+
+<%= error 'form_new' %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :save_new } ) do -%>
+  <%= render :partial => 'form' -%>
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => { :action => :cancel_new}) -%>
+  </td>
+  </tr>
+  </table>
+<% end -%>

@@ -1,0 +1,4 @@
+<% registro_mercantil = @registro_mercantil if registro_mercantil.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= registro_mercantil.id %>">
+  <%= render :partial => 'data', :locals => { :registro_mercantil => registro_mercantil, :even_odd => even_odd } -%>
+</tr>

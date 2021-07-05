@@ -1,0 +1,201 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label>
+    </td>
+    <td style="width: 80%">
+      <% if @empresa_direccion.tipo == 'P' %>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.sede')} #{I18n.t('Sistema.Body.Vistas.General.principal')}" %>
+      <% elsif @empresa_direccion.tipo == 'S' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.sucursal') %>
+      <% elsif @empresa_direccion.tipo == 'L' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.planta') %>
+      <% elsif @empresa_direccion.tipo == 'D' %>
+        <%= I18n.t('Sistema.Body.Vistas.Form.deposito') %>
+      <%  elsif @empresa_direccion.tipo == 'T' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.otra') %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.urbanizacion_barrio_sector') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.zona %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.avenida_calle_callejon') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.avenida %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.casa_edificio_otro') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.edificio %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.piso') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.piso %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.numero_apto_casa') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.numero %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.postal')}" %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.codigo_postal %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.punto')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.referencia')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= @empresa_direccion.referencia %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.region') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.municipio.estado.region.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.municipio.estado.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.municipio.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.parroquia.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.ciudad.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.espacio')} #{I18n.t('Sistema.Body.Vistas.General.fisico')}" %></label>
+    </td>
+    <td style="width: 80%">
+      <%  if @empresa_direccion.tipo_inmueble == 'L' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.local') %>
+      <% elsif @empresa_direccion.tipo_inmueble == 'H' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.habitacion') %>
+      <% elsif @empresa_direccion.tipo_inmueble == 'G' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.galpon') %>
+      <% elsif @empresa_direccion.tipo_inmueble == 'T' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.terreno') %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.espacio')} #{I18n.t('Sistema.Body.Vistas.General.aprox')}" %> </label>
+    </td>
+    <td>
+      <%= display_number @empresa_direccion.espacio_aproximado_m2, 'empresa_direccion_espacio_aproximado_m2' %> <label>m2</label>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tenencia') %></label>
+    </td>
+    <td style="width: 80%">
+      <% if @empresa_direccion.tenencia == 'P' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.propia') %>
+      <% elsif @empresa_direccion.tenencia == 'A' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.alquilada') %>
+      <% elsif @empresa_direccion.tenencia == 'C' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.comodato') %>
+      <% elsif @empresa_direccion.tenencia == 'H' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.hipoteca') %>
+      <% elsif @empresa_direccion.tenencia == 'F'%>
+        <%= I18n.t('Sistema.Body.Vistas.General.con_familiar') %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.alquiler')} #{I18n.t('Sistema.Body.General.mensual')}" %></label>
+    </td>
+    <td>
+      <%= @empresa_direccion.alquiler_mensual %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.direccion_aplica_envio') %></label>
+    </td>
+    <td>
+      <%= format_bool @empresa_direccion.correspondencia  %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= format_bool @empresa_direccion.activo  %>
+    </td>
+  </tr>
+
+</table>

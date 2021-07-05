@@ -1,0 +1,77 @@
+<% @view = true %>
+<div class="marco-titulo"><div><div>
+		Consultando Trámite <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> del Beneficiario <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span></div>
+</div></div>
+
+<%= render :partial=>'solicitudes/solicitud/common/tabs' %>
+<div class="marco-contenido2">
+<br/>
+<table style="width: 100%">
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.viable') %>:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <%= format_bool @solicitud.consultoria %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%>:</label><br/>
+      <%= @solicitud.observacion %>
+    </td>
+  </tr>
+
+</table>
+  <br/>
+	<div id="list">
+		<table class="lista" style="width: 100%">
+			<thead>
+			<tr>
+				<th style="width: 260px">
+					Nombre de Recaudo
+	 			</th>
+                                <th style="text-align: center; width: 50px">
+                                  Obligatoriedad
+                                </th>
+				<th style="text-align: center; width: 50px">
+					<%= I18n.t('Sistema.Body.Vistas.General.entregado') %>
+	 			</th>
+                                <th style="text-align: center; width: 50px">
+					<%= I18n.t('Sistema.Body.Vistas.General.verificado') %>
+	 			</th>
+			</tr>
+			</thead>
+			<tbody id="list_body">
+				<% 
+					even_odd = 1
+					for solicitud_recaudo in @solicitud_recaudo_list
+						even_odd = 1 - even_odd
+				%>
+				<tr class="lista<%= even_odd %>">
+					<td>
+						<%= solicitud_recaudo.recaudo.nombre  %>
+					</td>
+                                        <td align="center">
+                                          <%= format_bool solicitud_recaudo.recaudo.obligatorio -%>
+                                        </td>
+					<td style="text-align: center;" id="row_<%= solicitud_recaudo.id %>">
+                                          <%= format_bool solicitud_recaudo.entregado -%>
+					</td>
+                                        <td style="text-align: center;" id="row_<%= solicitud_recaudo.id %>">
+                                          <%= format_bool solicitud_recaudo.revisado_consultoria -%>
+                                        </td>
+				</tr>
+				<%
+					end
+				%>
+			</tbody>
+		</table>
+	</div>
+		<br/>
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :controller =>params[:controlador], :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+
+</div>

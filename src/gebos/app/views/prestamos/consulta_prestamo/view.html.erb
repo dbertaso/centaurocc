@@ -1,0 +1,551 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo">
+    <div>
+      <div>
+      <%= I18n.t('Sistema.Body.Vistas.General.prestamo')%>
+          <span class="titulo_modificar">'<%= @prestamo.numero %>
+            <%= " - #{I18n.t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+          </span> <%= "#{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>
+          <span class="titulo_modificar">
+            '<%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @prestamo.cliente.empresa.nombre : @prestamo.cliente.persona.nombre_corto  %>'
+          </span>
+      </div>
+    </div>
+</div>
+
+  <%= render 'prestamos/consulta_prestamo/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <table>
+      <tr>
+        <td class="separador" valign="bottom" colspan="3" style="width: 30%">
+          <span><%= I18n.t('Sistema.Body.General.beneficiario') %></span>
+        </td>
+        <td style="width: 50%">
+        </td>
+        <td style="width: 20%">
+        </td>
+      </tr>
+      <tr>
+        <td >
+          <label>
+            <%= @cliente.class.to_s=='ClienteEmpresa' ? I18n.t('Sistema.Body.Vistas.General.rif') : I18n.t('Sistema.Body.Vistas.General.cedula') %>
+          </label>
+
+        </td>
+
+        <% if @cliente.class.to_s=='ClienteEmpresa' %>
+            <td style="text-align: right">
+                <%= @cliente.empresa.rif %>
+            </td>
+            <td>
+            <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), 
+            {:controller => '/clientes/cliente_empresa', :action => 'view', :id => @cliente.empresa.id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+            </td>
+          <% else %>
+            <td style="text-align: right">
+                <%= @cliente.persona.cedula %>
+            </td>
+            <td>
+             <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), 
+             {:controller => '/clientes/cliente_persona', :action => 'view', :id => @cliente.persona.id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+            </td>
+          <% end %>
+
+      </tr>
+        <tr>
+          <% if @cliente.class.to_s == 'ClienteEmpresa' %>
+            <td>
+              <label>
+                <%= "#{I18n.t('Sistema.Body.General.nombre')}  #{I18n.t('Sistema.Body.General.empresa')}" %>
+                </label>
+            </td>
+            <td>
+              <%= @cliente.empresa.alias %>
+            </td>
+          <% else %> 
+            <td>
+              <label>
+                <%= "#{I18n.t('Sistema.Body.Vistas.General.nombres')}, #{I18n.t('Sistema.Body.Vistas.General.beneficiario')}" %>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @cliente.persona.nombre_corto %>
+            </td>
+          </td>
+          <% end %>      
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td class="separador" valign="bottom" colspan="3">
+            <span>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Separadores.datos_generales')%>
+            </span>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></label>
+          </td>
+          <td style="width: 40%; text-align: right">
+            <%= @prestamo.solicitud.numero -%>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label>
+              <%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}" %>
+            </label>
+          </td>
+          <td style="width: 40%; text-align: right">
+            <b>
+              <span class="titulo_modificar">
+                <%=@prestamo.numero -%>
+              </span>  <%=  " - #{I18n.t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>
+            </b>
+
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.General.programa') %>
+            </label>
+          </td>
+          <td style="text-align: right">
+
+              <%= @prestamo.solicitud.programa.alias %>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td>
+            <label>
+              <%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda')%>
+            </label>
+          </td>
+          <td style="text-align: right">
+
+              <%= @prestamo.solicitud.moneda.nombre << " - " << @prestamo.solicitud.moneda.abreviatura %>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.Form.rubro') %>
+            </label>
+          </td>
+          <td style="text-align: right">
+              <%= @prestamo.solicitud.rubro.nombre %>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td>
+            <label>
+              <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.solicitado')}" %>
+            </label>
+          </td>
+          <td style="text-align: right">
+            <%= format_fm(@prestamo.monto_solicitado) %>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td valign="bottom" colspan="3">
+          <span></span>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        <% unless @prestamo.solicitud.por_inventario %>
+          <tr>
+            <td>
+              <label>
+                <%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.plan_inversion')}"%>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <b><%= format_fm(@prestamo.total_plan_inversion_fm) %></b>
+            </td>
+            <td style="align: left">
+            <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), 
+            {:controller => '/solicitudes/consulta_plan_inversion', :action => 'view', :id =>@prestamo.solicitud_id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.plan_inversion') + "','height=600,width=1000,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.banco')}"%>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%#= format_fm(@prestamo.monto_banco) -%>
+              <%= format_fm(@prestamo.monto_banco) %>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.insumos')}"%>
+              </label>
+            </td>
+            <td style="text-align: right">
+                <%= format_fm(@prestamo.monto_insumos) -%>
+            </td>
+            <tr>
+              <td valign="bottom" colspan="3">
+              <span></span>
+              </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+        <%else%>
+           <tr>
+            <td>
+              <label>
+                <%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.inventario')}"%>
+              </label>
+            </td>
+            <td style="text-align: right">
+                <%= format_fm(@prestamo.monto_inventario) %>
+            </td>
+            <tr>
+              <td valign="bottom" colspan="3">
+              <span></span>
+              </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+        <%end%>
+
+        <tr>
+          <td >
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_sras')%>
+            </label>
+          </td>
+          <td style="text-align: right">
+              <%= format_fm(@prestamo.monto_sras_total) %>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_administrativos')%>
+            </label>
+          </td>
+          <td style="text-align: right">
+              <%= format_fm(@prestamo.monto_gasto_total) %>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.total_financiamiento')%></label>
+          </td>
+          <td style="text-align: right">
+              <b><%= @prestamo.total_financiamiento_fm %></b>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td valign="bottom" colspan="3">
+          <span></span>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        <% unless @prestamo.solicitud.por_inventario %>
+          <tr>
+            <td >
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_despachado')%></label>
+            </td>
+            <td style="text-align: right">
+                <%= format_fm(@prestamo.monto_despachado) %>
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_por_despachar')%></label>
+            </td>
+            <td style="text-align: right">
+                <b><%= format_fm(@prestamo.monto_por_despachar_fm) %></b>
+            </td>
+            <td>
+            </td>
+          </tr>
+        <%end%>
+        <tr>
+          <td valign="bottom" colspan="3">
+          <span></span>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_liquidado')%></label>
+          </td>
+          <td style="text-align: right">
+              <%= format_fm(@prestamo.monto_liquidado) %>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_por_liquidar')%></label>
+            </td>
+            <td style="text-align: right">
+              <b><%= format_fm(@prestamo.monto_por_liquidar) %></b>
+            </td>
+          <td>
+          </td>
+          </tr>
+        <tr>
+          <td>
+            <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.aprobacion')}"%></label>
+          </td>
+          <td style="text-align: right">
+            <%= @prestamo.solicitud.fecha_aprobacion_f %>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.liquidacion')}"%></label>
+          </td>
+          <td style="text-align: right">
+            <%= @prestamo.fecha_liquidacion_f %>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.fecha_ultimo_cierre')%></label>
+          </td>
+          <td style="text-align: right">
+            <%= @prestamo.solicitud.programa.fecha_ultimo_cierre_f %>
+          </td>
+          <td>
+          </td>
+        </tr>
+        <tr>
+
+          <td>
+            <label></label>
+          </td>
+
+            <% if @prestamo.solicitud.estatus_id == 10100 %>
+                <td style="text-align: right">
+                  <label style="color:red"> <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Estatus.por_desembolsar')%> </label>
+                </td>
+            <% end %>
+            <% if @prestamo.solicitud.estatus_id == 10110 %>
+
+              <% if (@prestamo.monto_liquidado + @prestamo.monto_despachado) == @prestamo.monto_solicitado %>
+
+                <td style="text-align: right">
+                  <label style="color:red"> <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Estatus.liquidacion_normal')%> </label>
+                </td>
+              <%else%>
+                <td style="text-align: right">
+                  <label style="color:red"> <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Estatus.efectivamente_liquidado')%> </label>
+                </td>
+              <%end%>
+            <%end%>
+          <td>
+          </td>
+        </tr>
+
+        <% if @prestamo.solicitud.estatus_id = 10110 && ((@prestamo.monto_liquidado + @prestamo.monto_despachado) != @prestamo.monto_solicitado )
+              prestamo_comentario = PrestamoComentario.find_by_prestamo_id(@prestamo.id)
+              if !prestamo_comentario.nil? %>
+
+                <tr>
+                  <td>
+                    <label><%= I18n.t('Sistema.Body.Vistas.General.comentario') %></label>
+                  </td>
+                  <td  style="text-align: right">
+                    <%= prestamo_comentario.comentario %>
+                  </td
+                  <td>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.aplicación')}"%></label>
+                  </td>
+                  <td  style="text-align: right">
+                    <%= prestamo_comentario.fecha_aplicacion.strftime("%d-%m-%Y") %>
+                  </td
+                  <td>
+                  </td>
+                </tr>
+                <% usuario = Usuario.find(prestamo_comentario.usuario_id)
+                   if !usuario.nil? %>
+                    <tr>
+                      <td>
+                        <label><%= I18n.t('Sistema.Body.General.usuario') %></label>
+                      </td>
+                      <td  style="text-align: right">
+                        <%= usuario.primer_nombre << ' ' << usuario.primer_apellido %>
+                      </td
+                      <td>
+                      </td>
+                    </tr>
+                  <%end%>
+              <%end%>
+        <%end%>
+        <% if @prestamo.reestructurado != 'N' %>
+            <tr>
+            <td>
+              <label></label>
+            </td>
+            <td>
+                <label><span class="titulo_modificar"><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.prestamo_destino')%></span></label>
+            </td>
+          <td>
+          </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.cancelado_reestructuracion')%></label>
+            </td>
+            <td>
+        <%= link_to(@prestamo.prestamo_destino.numero, 
+            {:controller => '/prestamos/consulta_prestamo', :action => 'view', :id => @prestamo.prestamo_destino_id, :controlador => 'consulta_prestamo', :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>
+
+
+        <%#= link_to @prestamo.prestamo_destino.numero,
+              { :controller=>'/prestamos/consulta_prestamo',  :controlador => 'consulta_prestamo', :action=>'view', :id=>@prestamo.prestamo_destino_id, :popup=>true },
+              :popup => ['consulta_prestamo', 'height=600,width=1000, scrollbars=yes, resizable=yes'] %>
+
+        <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), 
+            {:controller => '/prestamos/consulta_prestamo', :action => 'view', :id => @prestamo.prestamo_destino_id, :controlador => 'consulta_prestamo', :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>
+
+
+        <%#= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))),
+              { :controller=>'/prestamos/consulta_prestamo',  :controlador => 'consulta_prestamo', :action=>'view', :id=>@prestamo.prestamo_destino_id, :popup=>true },
+            :popup => ['consulta_prestamo', 'height=600,width=1000, scrollbars=yes, resizable=yes'] %>
+            </td>
+          <td>
+          </td>
+          </tr>
+            <% end %>
+
+            <% if @reestructuracion != nil%>
+            <tr>
+            <td>
+              <label></label>
+            </td>
+            <td>
+                <label><span class="titulo_modificar"><%= I18n.t('Sistema.Body.Vistas.General.reestructurado')%></span></label>
+            </td>
+          <td>
+          </td>
+          </tr>
+          <tr valign="top">
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.prestamo_destino')%></label>
+            </td>
+            <td>
+        <% @reestructuracion.reestructuracion_detalle.each do |detalle| %>
+        <% prestamo_origen = Prestamo.find(:first, :conditions=>"solicitud_id = #{detalle.solicitud_origen_id}") %>
+
+        <%= link_to(prestamo_origen.numero, 
+            {:controller => '/prestamos/consulta_prestamo', :action => 'view', :id => prestamo_origen.id, :controlador => 'consulta_prestamo', :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>
+
+
+        <%#= link_to prestamo_origen.numero,
+              { :controller=>'/prestamos/consulta_prestamo',  :controlador => 'consulta_prestamo', :action=>'view', :id=>prestamo_origen.id, :popup=>true },
+              :popup => ['consulta_prestamo', 'height=600,width=1000, scrollbars=yes, resizable=yes'] %>
+
+        <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), 
+            {:controller => '/prestamos/consulta_prestamo', :action => 'view', :id => prestamo_origen.id, :controlador => 'consulta_prestamo', :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=600,width=800,scrollbars=yes,resizable=yes'); return false;")  %>
+
+        <%#= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))),
+              { :controller=>'/prestamos/consulta_prestamo',  :controlador => 'consulta_prestamo', :action=>'view', :id=>prestamo_origen.id, :popup=>true },
+            :popup => ['consulta_prestamo', 'height=600,width=1000, scrollbars=yes, resizable=yes'] %>
+
+          <br>
+        <% end %>
+              <%#= @prestamo.prestamo_origen.numero unless @prestamo.prestamo_origen.nil?%>
+            </td>
+          <td>
+          </td>
+          </tr>
+            <% end %>
+
+          <tr>
+            <td>
+              <span class="titulo_modificar">
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.cambio_tasa')  if @prestamo.tasa_forzada %>
+            </span>
+            </td>
+          <td>
+          </td>
+          </tr>
+    </table>
+
+        <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+          { :action => :index, :popup=>params[:popup] },
+          { :id=>'button_close' } ) -%>
+
+  </div>
+</div>
+

@@ -1,0 +1,9 @@
+<% solicitud = @solicitud if solicitud.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= solicitud.solicitud_id %>">
+	<%= render :partial => 'data', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+</tr>
+<tr>
+  <td colspan="15" style="margin: 0px; padding: 0px">
+    <div id="diferir_<%= solicitud.solicitud_id %>"></div>
+  </td>
+</tr>

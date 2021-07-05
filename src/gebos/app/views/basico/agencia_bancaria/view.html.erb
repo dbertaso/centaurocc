@@ -1,0 +1,34 @@
+<%= form_title_view @agencia_bancaria.codigo %>
+    
+<div class="marco-contenido2">
+
+  <table>
+    <tr>
+      <td style="width: 100px">
+        <label>I18n.t('Sistema.Body.Vistas.General.codigo')</label>
+      </td>
+      <td style="width: 600px">
+        <%= @agencia_bancaria.codigo -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>I18n.t('Sistema.Body.Vistas.Form.nombre')</label>
+      </td>
+      <td>
+        <%= @agencia_bancaria.nombre -%>
+      </td>
+    </tr>
+  </table>
+    
+  <%= link_to( image_tag(image_path("boton_modificar.gif")),
+    :action => :edit,
+    :id => @agencia_bancaria.id,
+    :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+    
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

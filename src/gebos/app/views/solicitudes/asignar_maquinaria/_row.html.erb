@@ -1,0 +1,11 @@
+<% solicitud = @solicitud if solicitud.nil? %>
+<tr <%= "style='background-color: #ef7258'" unless ViewListSolicitud.deshacer(solicitud.solicitud_id) == false %> class="lista<%= even_odd %>" id="row_<%= solicitud.solicitud_id %>">
+	<%= render :partial => 'data', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+</tr>
+<% unless ViewListSolicitud.deshacer(solicitud.solicitud_id) == false %>
+  <tr class="lista<%= even_odd %>">
+    <td style="margin: 0px; padding: 0px;" colspan="10">
+      <div style="display: none" id="error_<%= solicitud.solicitud_id %>"></div>
+    </td>
+  </tr>
+<% end %>

@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-10" />
+</head>
+
+<script language="JavaScript">
+<!-- Begin
+function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+}
+function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+}
+//  End -->
+</script>
+<body>
+<table width="1120px" border="1" aling="center">
+  <tr>
+    <td style="width: 20%; text-align: center">
+      <img src="/images/logo_reporte.gif" alt="logo"/>
+    </td>
+    <td align="center">
+      <label style="font-size: 16px"> INFORMACIÒN DEL PRODUCTOR <br/>
+      </label>
+    </td>
+    <td style="width: 20%; text-align: center"> <!-- AQUI IRA LA FOTOGRAFIA DEL PRODUCTOR-->
+   
+      <img src="/data/<%= 'F_'<< @persona.cedula_nacionalidad << @persona.cedula.to_s << '.jpg'%>" width="200" height="150" />
+    </td>
+  </tr>
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px"  aling="center" >
+  <tr>
+   <th colspan="3" style="background-color: #cee3ba"><label>DATOS BASICOS</label></th>
+  </tr>
+  <tr>
+    <td><label>Nro. Cédula:</label> <%= @persona.cedula_nacionalidad %>-<%= @persona.cedula %></td>
+    <td><label>Nombre:</label>  <%= @persona.primer_nombre %></td>
+    <td><label>Apellido:</label>  <%= @persona.primer_apellido %></td>
+  </tr>
+  <tr>
+    <td><label>Fecha de Nacimiento:</label> <%= @persona.fecha_nacimiento_f %></td>
+    <td><label>Estado Civil:</label> <%= @persona.estado_civil_w %></td>
+    <td><label>Edad:</label> <%= @persona.edad(Time.now, @persona.fecha_nacimiento).to_s << " años" %></td>
+  </tr>
+  <tr>
+    <td><label>Lugar de Nacimiento:</label> <%= @persona.lugar_nacimiento %> </td>
+    <td><label>Pais de Nacimiento:</label> <%= @persona.Pais.nombre if !@persona.Pais.nil? %></td>
+    <td><label>Nacionalidad:</label> <%= @persona.Nacionalidad.masculino %></td>
+  </tr>
+  <tr>
+    <td><label>Sector Económico:</label> <%= @persona.SectorEconomico.descripcion unless @persona.SectorEconomico.nil? %></td>
+    <td><label>Profesión u Oficio:</label> <%= @persona.profesion.nombre unless @persona.profesion.nil?%></td>
+    <td><label>Ocupación:</label>  <%= @persona.ocupacion %></td>
+  </tr>
+  <tr>
+    <td><label>¿Los Beneficiarios se Dedican a la Pesca?:</label>
+        <% if @persona.cliente_persona.es_pescador == true %>
+          <%= image_tag('activo.gif') %>
+        <% elsif @persona.cliente_persona.es_pescador == false %>
+          <%= image_tag('inactivo.gif') %>
+        <% end %>
+    </td>
+  </tr>
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px"  aling="center">
+  <tr>
+    <th colspan="3" style="background-color: #cee3ba"><label>DIRECCION</label></th>
+  </tr>
+  <tr>
+    <td><label>Tipo:</label>  <%= @persona_direccion.tipo_nombre %></td>
+    <td><label>Ubicación Geografica:</label>  <%= @persona_direccion.ubicacion_geografica_w %></td>
+  </tr>
+  <% if @persona_direccion.tipo == 'H' %>
+  <tr>
+    <td>
+      <label>Tenencia de la Vivienda:</label>
+
+          <% if @persona_direccion.tenencia == 'P' %>
+            Propia
+          <% elsif @persona_direccion.tenencia == 'A' %>
+            Alquilada
+          <% elsif @persona_direccion.tenencia == 'C' %>
+            Comodato
+          <% elsif @persona_direccion.tenencia == 'H' %>
+            Hipoteca
+          <% elsif @persona_direccion.tenencia == 'F' %>
+            Con Familiar
+        <% end %>
+    </td>
+    <% end %>
+    <td><label>Tipo de Comunidad:</label> <%= @persona_direccion.tipo_comunidad_w %></td>
+    <td><label>Localidad:</label>
+      <% if @persona_direccion.localidad == 'U' %>
+        Urbanización
+      <% elsif @persona_direccion.localidad == 'B' %>
+        Barrio
+      <% elsif @persona_direccion.localidad == 'C' %>
+        Comunidad
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Urbanización /Barrio /Comunidad:</label> <%= @persona_direccion.zona %></td>
+    <td><label>Calle /Avenida /Callejón:</label> <%= @persona_direccion.avenida %> </td>
+    <td><label>Casa /Edificio /Otro:</label> <%= @persona_direccion.edificio %></td>
+  </tr>
+  <tr>
+    <td><label>Piso:</label> <%= @persona_direccion.piso %></td>
+    <td><label>Número Apto / Casa:</label> <%= @persona_direccion.numero %></td>
+    <td><label>Punto de Referencia:</label> <%= @persona_direccion.referencia %></td>
+  </tr>
+  <tr>
+    <td><label>Región:</label> <%= @persona_direccion.ciudad.estado.region.nombre %></td>
+    <td><label>Estado:</label> <%= @persona_direccion.ciudad.estado.nombre %></td>
+    <td><label>Municipio:</label> <%= @persona_direccion.municipio.nombre %></td>
+  </tr>
+  <tr>
+    <td><label>Parroquia:</label> <%= @persona_direccion.parroquia.nombre %></td>
+    <td><label>Ciudad:</label> <%= @persona_direccion.ciudad.nombre %></td>
+    <td><label>Teléfonos:</label> <%= @persona.telefonos[0].codigo << '-' << @persona.telefonos[0].numero if @persona.telefonos.length > 0 %></td>
+  </tr>
+
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px"  aling="center">
+
+    <tr>
+      <th colspan="3" style="background-color: #cee3ba"><label>DATOS DE LA UNIDAD DE PRODUCCIÓN</label></th>
+    </tr>
+    
+    <tr>
+      <td colspan="3"><label>Nombre de la Unidad de Producción:</label> <%= @UnidadProduccion.nombre %></td>
+    </tr>
+    
+    <tr>
+      <td colspan="3"><label>Dirección de la Unidad de Producción:</label> <%= @UnidadProduccion.direccion %></td>
+    </tr>
+    <tr>
+      <td colspan="3"><label>Como llegar desde el poblado más cercano (Dirección Práctica):</label> <%= @UnidadProduccion.referencia %></td>
+    </tr>
+    <tr>
+      <td><label>Estado:</label> <%= @UnidadProduccion.Municipio.estado.nombre %></td>
+      <td><label>Municipio:</label> <%= @UnidadProduccion.Municipio.nombre %></td>
+      <td><label>Parroquia:</label> <%= @UnidadProduccion.Parroquia.nombre %></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <label>Ciudad:</label> <%= @UnidadProduccion.Ciudad.nombre %>
+      </td>
+    </tr>
+ 
+
+  
+</table>
+
+<table width="1120px" border="1" style="font-size: 16px"  aling="center">
+  <tr>
+      <th colspan="3" style="background-color: #cee3ba"><label>INFORMACION DE CUENTAS</label></th>
+  </tr>
+  <tr>
+  
+    <td><label>Cuenta del Beneficiario:<br/>Tipo: </label>
+        <% if @CuentaBancaria.tipo == 'C' %>
+            Corriente
+        <% else @CuentaBancaria.tipo == 'A' %>
+            Ahorros
+        <%end%>
+
+    </td>
+    <td><br/><label>Número:</label> <%= @CuentaBancaria.numero %></td>
+    <td><br/><label>Banco:</label> <%= @CuentaBancaria.EntidadFinanciera.nombre %></td>
+  </tr>
+ 
+</table>
+<table   width="1120px" border="1" style="font-size: 16px"  aling="center">
+    <tr colspan="3" style="background-color: #cee3ba">
+      <th colspan="3" style="background-color: #cee3ba"><label>INFORMACION</label></th>
+    </tr>
+  <tr>
+     <td style=" text-align: center">
+        <label>Firma:</label> <%= @persona.primer_nombre %>  <%= @persona.primer_apellido %>
+      </td>
+      
+      <td  style=" text-align: center">
+        <label>Huella:</label>
+          <img src="/data/<%= 'H_'<< @persona.cedula.to_s << '.jpg'%>" width="200" height="150" />
+      </td>
+   
+  </tr>
+  </table>
+
+<table width="1120px" >
+  <tr>
+    <td colspan="4">
+      <div style="padding: 6px" align="center">
+        <form>
+          <div id = boton>
+            <input name="print" type="button" value="Imprimir" onclick="varitext()" />
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

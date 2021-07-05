@@ -1,0 +1,11 @@
+<% view_prestamos_reestructurar = @view_prestamos_reestructurar if view_prestamos_reestructurar.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= view_prestamos_reestructurar.cliente_id %>">
+	<%= render :partial => 'data', :locals => { :view_prestamos_reestructurar => view_prestamos_reestructurar, :even_odd => even_odd } -%>
+</tr>
+<tr class="lista<%= even_odd %>" id="row_detalle_<%= view_prestamos_reestructurar.cliente_id %>" style="display:none">
+	<%= render :partial => 'data_detail', :locals => { :view_prestamos_reestructurar => view_prestamos_reestructurar, :even_odd => even_odd } -%>
+</tr>
+
+
+	
+	

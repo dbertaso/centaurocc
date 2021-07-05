@@ -1,0 +1,105 @@
+    <div id="pagos">
+      <table style="width: 100%; margin-bottom: 10px" border="0">
+        <tr>
+          <td class="separador" valign="bottom" colspan="10" style="text-align: center" >
+            <span><%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Separadores.cronograma_pagos')%></span>
+          </td>
+        </tr>
+      </table>
+      
+      <table class="lista" style="width: 100%; margin-bottom: 10px" border="0">
+      
+        <thead>
+          <tr>
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.tipo_cuota')%>
+            </th>
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.numero_cuota')%>
+            </th>      
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_pagar')%>
+            </th>      
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_cuota')%>
+            </th>      
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_cuota')%>
+            </th>    
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.capital_cuota')%>
+            </th>   
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_diferido')%>
+            </th>   
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora')%>
+            </th>    
+            <th>
+              <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.pagar')}" %>
+            </th>
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_deudor')%>
+            </th>
+            <th>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.estatus_cuota')%>
+            </th>
+          </tr>
+        </thead>
+
+        <% numero_cuota = 0
+           monto_interes = 0.00 
+           monto_capital = 0.00
+           monto_interes_diferido = 0.00
+           monto_ordinario = 0.00
+           monto_interes_mora = 0.00%>
+        <% even_odd = 1 %>
+        <% for cronograma in @cronograma_pagos
+
+            monto_interes += cronograma.interes_corriente
+            monto_interes_mora += cronograma.interes_mora
+            monto_interes_diferido += cronograma.interes_diferido
+            monto_capital += cronograma.capital
+            logger.info "cronograma =====> #{cronograma.inspect}"
+            logger.info "Montos =========> #{cronograma.valor_cuota.to_s}, #{cronograma.interes_corriente.to_s}, #{cronograma.capital}, #{cronograma.interes_diferido.to_s}, #{cronograma.interes_mora.to_s}"
+            even_odd = 1 - even_odd %>
+          
+            <tr class="lista<%= even_odd %>" >
+              <td style="text-align: center">
+                <%= cronograma.tipo %>
+              </td>
+              <td style="text-align: center">
+                <%= numero_cuota += 1 %>
+              </td>
+              <td style="text-align: center">
+                <%= cronograma.fecha.strftime("%d/%m/%Y")%>
+              </td>
+              <td style="text-align: right">    
+                <%= format_fm(cronograma.valor_cuota) unless cronograma.nil? %>           
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(cronograma.interes_corriente) unless cronograma.nil? %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(cronograma.capital) unless cronograma.nil?  %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(cronograma.interes_diferido) unless cronograma.nil?  %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(cronograma.interes_mora) unless cronograma.nil?  %>
+              </td>
+              <td style="text-align: right">
+                <%= (cronograma.valor_cuota + cronograma.interes_diferido + cronograma.interes_mora) unless cronograma.nil?  %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(cronograma.saldo_insoluto) unless cronograma.nil?  %>
+              </td>
+              <td style="text-align: center">
+                <%= cronograma.estatus %>
+              </td>
+            </tr>
+          <% end %>
+        
+     </table>
+    </div>

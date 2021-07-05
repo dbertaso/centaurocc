@@ -1,0 +1,135 @@
+<td>
+  <%= solicitud.numero %>
+</td>
+<td>
+  <%= solicitud.cliente.class.to_s=='ClienteEmpresa' ?
+    solicitud.cliente.empresa.rif : solicitud.cliente.persona.cedula_nacionalidad.to_s << " " << solicitud.cliente.persona.cedula.to_s %>
+</td>
+<td>
+  <%= solicitud.cliente.class.to_s=='ClienteEmpresa' ?
+    solicitud.cliente.empresa.nombre : solicitud.cliente.persona.nombre_corto %>
+</td>
+
+<!--<td>
+  <span style="color: #FF0000"><b><%#= solicitud.estatus_w %></b></span>
+</td>-->
+
+<td>
+  <%= solicitud.sector.nombre %>
+</td>
+<td>
+  <%= solicitud.sub_sector.nombre %>
+</td>
+
+<td>
+  <%= solicitud.rubro.nombre %>
+</td>
+<td>
+  <%= solicitud.sub_rubro.nombre %>
+</td>
+
+<td>
+  <%= solicitud.actividad.nombre %>
+</td>
+
+<td>
+  <%= solicitud.moneda.nombre %>
+</td>
+
+<td align="right">
+
+  <%= sprintf('%01.2f',solicitud.monto_aprobado).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+</td>
+
+
+<td align="center">
+  <%= link_to("#{I18n.t('Sistema.Body.Vistas.General.generar')} #{I18n.t('Sistema.Body.Vistas.Form.contrato')}", 
+    {:action => :abogado, :solicitud_id=>solicitud.id, :popup=>true}, 
+    :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.Abogado.FormTitles.form_title') + "',
+  'height=180,width=400, scrollbars=yes, resizable=yes,top=200,left=460'); return false;")  %>
+
+<%#= link_to 'Generar Contrato',
+{ :action => :abogado, :solicitud_id=>solicitud.id, :popup=>true},
+:popup => ['Abogado', 'height=180,width=400, scrollbars=yes, resizable=yes']
+%>
+</td>
+
+<td align="center">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir'))), 
+    {:controller=>'solicitud_testigos', :action=>'index',  :solicitud_id=>solicitud.id, :popup=>true}, 
+    :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',
+      :numero=>solicitud.numero) + "','height=400,width=800, scrollbars=yes, resizable=yes,top=200,left=240'); return false;")  %>
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir')),
+{ :controller=>'solicitud_testigos', :action=>'index',  :id=>solicitud.id, :popup=>true},
+:popup => ['Testigos para la Nota de Autenticación', 'height=400,width=800, scrollbars=yes, resizable=yes']	%>
+
+</td>
+<td align="center">
+  <% if solicitud.estatus_id < 10050 %>
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')),
+        :title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir') << " " << I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.actas_entrega')), 
+      {:action => :fecha_acta, :solicitud_id=>solicitud.id, :popup=>true}, 
+      :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',
+        :numero=>solicitud.numero) + "','height=240,width=580, scrollbars=yes, resizable=yes,top=200,left=370'); return false;")  %>
+
+  <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>'Imprimir Acta de Entrega'),
+  { :action => :fecha_acta, :solicitud_id=>solicitud.id, :popup=>true},
+  :popup => ['Impresión Acta de Entrega', 'height=240,width=580, scrollbars=yes, resizable=yes'] %>
+
+  <% else %>
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')),
+        :title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir') << " " << I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.actas_entrega')), 
+      {:action => :print_acta_entrega, :solicitud_id=>solicitud.id, :popup=>true}, 
+      :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',
+        :numero=>solicitud.numero) + "','height=240,width=580, scrollbars=yes, resizable=yes,top=200,left=370'); return false;")  %>
+
+  <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>'Imprimir Acta de Entrega'),
+  { :action => :print_acta_entrega, :solicitud_id=>solicitud.id, :popup=>true},
+  :popup => ['Impresión Acta de Entrega', 'height=240,width=580, scrollbars=yes, resizable=yes']
+  %>
+  <% end %>
+</td>
+<!--
+<td align="center">
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')),
+    :title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir') << " " << I18n.t('Sistema.Body.Vistas.General.sras')), 
+  {:action => :sras, :solicitud_id=>solicitud.id, :popup=>true}, 
+  :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',
+    :numero=>solicitud.numero) + "','height=600,width=900, scrollbars=yes, resizable=yes,top=200,left=370'); return false;")  %>
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>'Imprimir SRAS'),
+{ :action => :sras, :solicitud_id=>solicitud.id, :popup=>true},
+:popup => ['Impresión Seguro de Riesgo Agrario Socialista (SRAS)', 'height=600,width=900, scrollbars=yes, resizable=yes']
+-%>
+  <br></br>
+<%= link_to("#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones')}", 
+  {:action => :condiciones, :solicitud_id=>solicitud.id, :popup=>true}, 
+  :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.Abogado.FormTitles.form_title') + "',
+  'height=180,width=400, scrollbars=yes, resizable=yes,top=200,left=460'); return false;")  %>
+
+<%#= link_to 'Condiciones',
+{ :action => :condiciones, :solicitud_id=>solicitud.id, :popup=>true},
+:popup => ['Condiciones del SRAS', 'height=180,width=400, scrollbars=yes, resizable=yes']
+%>
+
+</td>
+-->
+<td align="center">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :title=>I18n.t('Sistema.Body.Controladores.Accion.modificar')), 
+  {:action => :suscribir, :solicitud_id=>solicitud.id, :popup=>true}, 
+  :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Header.form_title',
+    :numero=>solicitud.numero) + "','height=600,width=900, scrollbars=yes, resizable=yes,top=200,left=370'); return false;")  %>
+
+  
+  <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.modificar')),
+    {:action=>:suscribir, :id=>solicitud.id, :accion=>'vista',
+    :controlador=>'solicitud_consultoria_juridica'} -%>
+
+  <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Suscripción de Contrato'),
+    { :action => :suscribir, :solicitud_id=>solicitud.id, :popup=>true},
+    :popup => ['Suscripción de Contrato', 'height=300,width=520, scrollbars=yes, resizable=yes']
+  -%>
+</td>
+

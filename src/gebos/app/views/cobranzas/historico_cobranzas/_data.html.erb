@@ -1,0 +1,25 @@
+<td align="center">
+  <%= prestamo.numero unless prestamo.nil?%>
+</td>
+
+<td align="center">
+  <%= prestamo.identificacion unless prestamo.nil? %>
+</td>
+
+<td align="center">
+  <%= prestamo.nombre_cliente unless prestamo.nil? %>
+</td>
+
+<td style="text-align: center">
+  <%= prestamo.moneda_nombre + " - " + prestamo.moneda_abreviatura unless prestamo.nil?%>
+</td>
+
+<td style="text-align: right">
+
+ 
+  <%= link_to(image_tag(image_path(t('Sistema.Body.Imagenes.consultar')), :title=>I18n.t('Sistema.Body.Vistas.GestionCobranzas.Enlaces.historico_gestion')),
+      {:action => 'consultar', :controller => 'historico_cobranzas', :origen=> 'H', :id => prestamo.id,
+      :popup => true}, :onclick => "window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.Etiquetas.historico_cobranzas') + "',
+'height=800,width=1000,scrollbars=yes,resizable=yes'); return false;") %>&nbsp;
+
+</td>

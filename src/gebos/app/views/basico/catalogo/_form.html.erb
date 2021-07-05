@@ -1,0 +1,362 @@
+<table style="width: 100%" border="0">
+
+  <% unless @catalogo.new_record? %>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.codigo') %></label>
+      </td>
+      <td>
+        <%= @catalogo.codigo %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.convenio') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'catalogo','contrato_maquinaria_equipo_id',
+        @contrato_maquinaria_equipo.map{|e| [e.nombre, e.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method => :get,
+          :url=>{:controller=>'catalogo',
+          :action=>:contrato_change },
+          :with=>"'contrato_id='+ this.value +'&id=#{@catalogo.id}'")};inputChange();"}) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <%= select(
+        'tipo_maquinaria','id',
+        @tipo_maquinaria_list.map{|e| [e.nombre, e.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar'), :selected =>  @catalogo.clase.nil? ? "" : @catalogo.clase.tipo_maquinaria_id  },
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method => :get,
+          :url=>{:controller=>'catalogo',
+          :action=>:clase_form },
+          :with=>"'id='+ this.value")};inputChange();"}) %>
+    </td>
+  </tr>
+
+  <tr id="tr_clase_search" >
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <div id="clase-form">
+        <%= render :partial => 'clase_form' %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <%= select(
+        'catalogo','marca_maquinaria_id',
+        @marca.map{|e| [e.nombre, e.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();'}) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <%= select(
+        'catalogo','modelo_id',
+        @modelo.map{|e| [e.nombre, e.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();'}) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <%= text_field 'catalogo', 'serial', :class=>'text', :style=>'width: 230px', :maxlength=>'250'  -%> <%= I18n.t('Sistema.Body.Vistas.General.en_caso_no_poseer') %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %>:</label> <span style="color:red">*</span>
+    </td>
+    <td>
+      <%= text_field 'catalogo', 'chasis', :class=>'text', :style=>'width: 230px', :maxlength=>'250'  -%> <%= I18n.t('Sistema.Body.Vistas.General.en_caso_no_poseer') %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.General.descripcion') %>:</label> <span style="color:red">*</span>
+    </td>
+    <td>
+      <%= text_area 'catalogo', 'descripcion',
+        :class=>'text', :style=>'width:500px; height: 50px;',
+        :maxlength=>'240',
+        :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.almacen') %>:</label> <span style="color:red">*</span>
+    </td>
+    <td>
+      <div id="contrato-search">
+        <%= select(
+          'catalogo','almacen_maquinaria_id',
+          @almacen_maquinaria.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method => :get,
+            :url=>{:controller=>'catalogo',
+            :action=>:almacen_search },
+            :with=>"'id='+ this.value")};inputChange();"}) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sucursal_almacen') %>:</label>
+    </td>
+    <td><div id="almacen-search">
+        <%=select(
+          'catalogo','almacen_maquinaria_sucursal_id',
+          @almacen_maquinaria_sucursal.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();'}) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.factura')}" %>:</label> <span style="color:red">*</span>
+    </td>
+    <td>
+      <%= text_field 'catalogo', 'numero_factura', :class=>'text', :style=>'width: 230px', :maxlength=>'20'  -%>
+    </td>
+  </tr>
+
+</table>
+<% if @view_contrato == true %>
+  <div id="contrato-select">
+    <table style="width: 100%" border="0">
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.pais_origen') %>:</label> <span style="color:red">*</span>
+        </td>
+        <td style="width: 80%">
+          <%= select(
+            'catalogo','pais_id',
+            @pais.map{|e| [e.nombre, e.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();'})
+        %>
+        </td>
+      </tr>
+
+      <tr>
+        <td width="200px">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.fecha_llegada') %>:</label> <span style="color:red">*</span>
+        </td>
+        <td>
+          <%= calendar_date_select_tag "catalogo[fecha_llegada_f]", @catalogo.fecha_llegada_f, 
+        :year_range => 80.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.puerto_llegada') %>:</label> <span style="color:red">*</span>
+        </td>
+        <td>
+          <%= text_field 'catalogo', 'puerto_llegada', :class=>'text', :style=>'width: 230px', :maxlength=>'200'  -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.movilizado_a') %>:</label>
+        </td>
+        <td>
+          <%= text_field 'catalogo', 'movilizado', :class=>'text', :style=>'width: 230px', :maxlength=>'250'  -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.nombre_buque') %>:</label> <span style="color:red">*</span>
+        </td>
+        <td>
+          <%= text_field 'catalogo', 'nombre_buque', :class=>'text', :style=>'width: 230px', :maxlength=>'200'  -%>
+        </td>
+      </tr>
+    </table>
+  </div>
+<% else %>
+  <div id="contrato-select" style="display: none"></div>
+<% end %>
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.General.imputaciones') %></span>
+    </td>
+  </tr>
+</table>
+<% if @catalogo.new_record? %>
+  <div id="imputaciones-select" style="display: none"></div>
+<% else %>
+  <div id="imputaciones-select">
+    <table style="width: 100%">
+      <% if @naturaleza == 'N' %>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.costo') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+          </td>
+          <td>
+            <%= text_field 'catalogo', 'monto_real', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_monto_real.value;
+    this.form.catalogo_monto_real.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_nacionales(#{@catalogo.id});", :style=>'width: 230px', :maxlength=>'12'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.seguro')}" %>:</label>
+          </td>
+          <td style="width: 80%">
+            <span id = "seguro_nacional_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.seguro).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+            <%= text_field 'catalogo', 'por_seguro', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_seguro.value;
+    this.form.catalogo_por_seguro.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_nacionales(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.flete')}" %>:</label>
+          </td>
+          <td style="width: 80%">
+            <span id="flete_nacional_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.flete).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+            <%= text_field 'catalogo', 'por_flete', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_flete.value;
+    this.form.catalogo_por_flete.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_nacionales(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+          </td>
+        </tr>
+
+      <% else %>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_dolares') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+          </td>
+          <td style="width: 80%">
+            <%= text_field 'catalogo', 'monto_dolares', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_monto_dolares.value;
+    this.form.catalogo_monto_dolares.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :class=>'text', :style=>'width: 150px', :maxlength=>'12'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_bs') %>.:</label>
+          </td>
+          <td>
+            <span id="monto_bolivar_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.monto_real).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.nil? || @catalogo.monto_real.nil? %></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.gastos_administrativos') %>:</label>
+          </td>
+          <td style="width: 80%">
+            <span id = "gastos_administrativos_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.gastos_administrativos).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+            <%= text_field 'catalogo', 'por_gastos_administrativos', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_gastos_administrativos.value;
+    this.form.catalogo_por_gastos_administrativos.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.seguro')}" %>:</label>
+          </td>
+          <td style="width: 80%">
+            <span id = "seguro_internacional_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.seguro).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+            <%= text_field 'catalogo', 'por_seguro', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_seguro.value;
+    this.form.catalogo_por_seguro.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.flete')}" %>:</label>
+          </td>
+          <td style="width: 80%">
+            <span id = "flete_internacional_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.flete).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+            <%= text_field 'catalogo', 'por_flete', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_flete.value;
+    this.form.catalogo_por_flete.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.nacionalización_impuestos') %>:</label>
+          </td>
+          <td style="width: 80%">
+            <span id = "impuestos_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.impuesto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+            <%= text_field 'catalogo', 'por_nacionalizacion', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_nacionalizacion.value;
+    this.form.catalogo_por_nacionalizacion.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.almacenamiento') %>:</label>
+          </td>
+          <td style="width: 80%">
+            <span id = "almacenamiento_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.almacenamiento).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+            <%= text_field 'catalogo', 'por_almacenamiento', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_almacenamiento.value;
+    this.form.catalogo_por_almacenamiento.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <% unless @catalogo.new_record? %>
+      <input type="hidden" id="naturaleza_<%= @catalogo.id %>" value="<%= @naturaleza %>" />
+    <% end %>
+  </div>
+<% end %>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 20%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.costo')} #{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')}"%></label>
+    </td>
+    <td style="width: 80%">
+      <span id = "monto_total_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.monto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto.nil? %></span>
+    </td>
+  </tr>
+</table>
+  <input type="hidden" name="catalogo[moneda_id]" value="<%= @moneda_activa %>"/>
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>

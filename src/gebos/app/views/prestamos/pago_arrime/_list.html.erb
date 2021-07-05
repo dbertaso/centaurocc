@@ -1,0 +1,94 @@
+<br>
+<div>
+  <%= form_remote_tag(
+        :loading => 'image_load()',
+        :loaded => 'image_unload()',
+        :url => { :action => :instruccion_pago } ) do -%>
+      <%= image_submit_tag('boton_generar_masivo.gif') -%>
+      <input id="cuenta_id1" type="hidden" name="cuenta_id1"/>
+      <input id="cuenta_id2" type="hidden" name="cuenta_id2"/>
+      <input id="cuenta_id" type="hidden" name="cuenta_id"/>
+  <% end %>
+</div>
+<br>
+
+<form>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th align="center">
+        <input type="checkbox" id="todos" name="todos"
+          onClick="checkAll(form.boleta_id,form.todos);" />
+      </th>
+
+      <th style="width: 5%" <%= sort_class_helper('solicitud_numero') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.numero_tramite'), 'solicitud_numero', 'list' %>
+      </th>
+
+      <th style="width: 5%" <%= sort_class_helper('prestamo_numero') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}", 'prestamo_numero', 'list' %>
+      </th>
+
+      <th style="width: 5%" >
+        <%= I18n.t('Sistema.Body.Vistas.Form.estatus') %>
+      </th>
+
+      <th style="width: 10%" <%= sort_class_helper('documento_beneficiario') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.cedula')} / #{I18n.t('Sistema.Body.Vistas.General.rif')}", 'documento_beneficiario', 'list' %>
+      </th>
+
+      <th style="width: 30%" <%= sort_class_helper('nombre_beneficiario') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.apellido_empresa'), 'nombre_beneficiario', 'list' %>
+      </th>
+
+      <th style="width: 10%" <%= sort_class_helper('rubro_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.rubro'), 'rubro_nombre', 'list' %>
+      </th>
+      
+      <th style="width: 10%" <%= sort_class_helper('sub_rubro_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.sub_rubro'), 'sub_rubro_nombre', 'list' %>
+      </th>
+      
+      <th style="width: 10%" <%= sort_class_helper('actividad_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.actividad'), 'actividad_nombre', 'list' %>
+      </th>
+
+      <th style="width: 15%" <%= sort_class_helper('silo_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.silo'), 'silo_nombre', 'list' %>
+      </th>
+
+      <th style="width: 15%" <%= sort_class_helper('fiscal_cosecha') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.fiscal_cosecha'), 'fiscal_cosecha', 'list' %>
+      </th>
+
+      <th style="width: 10%" <%= sort_class_helper('fecha_arrime') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.fecha_arrime'), 'fecha_arrime', 'list' %>
+      </th>
+
+      <th style="width: 10%" <%= sort_class_helper('fecha_confirmacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.fecha_confirmacion'), 'fecha_confirmacion', 'list' %>
+      </th>
+
+      <th style="width: 15%" text-align: "center" <%= sort_class_helper('guia_movilizacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.guia'), 'guia_movilizacion', 'list' %>
+      </th>
+
+      <th style="width: 25%" <%= sort_class_helper('monto_arrime') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.monto_pago'), 'monto_arrime', 'list' %>
+      </th>
+
+    </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for pago_arrime in @list
+    even_odd = 1 - even_odd %>
+    <%= render :partial => 'row', :locals => { :pago_arrime => pago_arrime, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+</form>
+
+<%= form_pagination %>

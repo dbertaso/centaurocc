@@ -1,0 +1,12 @@
+<%
+begin
+  @rol.acciones.find(opcion_accion.id)
+  value = opcion_accion.accion.id
+rescue
+  value = false
+end
+%>
+<%= check_box_tag 'accion_check', 
+  opcion_accion.accion.id, 
+  checked=value, 
+  { :name => "acciones[]", :id => "acciones_#{opcion_accion.accion.id}" }  %>

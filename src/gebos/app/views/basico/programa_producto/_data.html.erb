@@ -1,0 +1,22 @@
+<% producto = @producto if producto.nil? %>
+  <td>
+    <%= producto.nombre_sector %>
+  </td>
+  <td>
+    <%= producto.descripcion_sector %>
+  </td>
+  <td>
+    <%= producto.nombre_sub_sector %>
+  </td>
+<td>
+    <%= producto.descripcion_sub_sector %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :action => 'edit', :method=>:get, :programa_id => @programa.id, :id => producto.id) %>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :programa_id => @programa.id, :id => producto.id}) -%>
+</td>

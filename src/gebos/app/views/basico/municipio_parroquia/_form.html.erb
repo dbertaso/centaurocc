@@ -1,0 +1,16 @@
+<table style="width: 100%">
+  <tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_field 'parroquia', 'nombre',
+				:class=>'text',
+				:style=>'width: 300px',
+				:maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :id=>'button_save') -%>&nbsp;

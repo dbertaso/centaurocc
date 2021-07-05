@@ -1,0 +1,21 @@
+<% unidad_medida = @unidad_medida if unidad_medida.nil? %>
+<td>
+  <%= unidad_medida.nombre  %>
+</td> 
+<td>
+  <%= unidad_medida.abreviatura  %>
+</td> 
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :controller => 'unidad_medida', :action => :edit, :id => unidad_medida.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'unidad_medida', :action => :delete, :id => unidad_medida.id}) if vlink 'delete' -%>
+</td>
+

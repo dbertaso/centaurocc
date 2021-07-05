@@ -1,0 +1,23 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.DetallePrecioGaceta.View.consultar')%>  <span class="titulo_modificar"></span>
+    </div>
+  </div>
+</div>
+<%= render 'basico/precio_gaceta/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render "list_view" %>
+  </div>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :controller=> 'precio_gaceta', :action => :view, :id=>params[:precio_gaceta_id] },
+    { :id=>'button_close' } ) -%>
+</div>

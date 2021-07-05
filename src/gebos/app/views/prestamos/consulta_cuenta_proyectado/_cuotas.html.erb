@@ -1,0 +1,82 @@
+<%
+even_odd = 1
+logger.info cuotas
+@mo_acumulado = 0
+for cuota in cuotas
+    next if cuota.estatus_pago == 'X' or cuota.estatus_pago == 'T'
+  even_odd = 1 - even_odd
+  color = even_odd==0 ? dark : clear
+  color_cuota = nil
+  if cuota.dias_mora > 0 && cuota.estatus_pago == 'N' || cuota.estatus_pago == 'P'
+    color_cuota = "#ffacac"
+  elsif cuota.estatus_pago == 'T'
+    color_cuota = "#94b4fd"
+  end
+-%>
+  <tr id="cuota_<%= cuota.id %>" class="lista<%= even_odd %>" style="background-color: #<%= color %>">
+    <td onclick="click_cuota('<%= cuota.id %>');">
+      <%= image_tag 'desembolso.gif' if cuota.desembolso %>
+      <%= image_tag 'cambio_tasa.gif' if cuota.cambio_tasa %>
+      <%= image_tag 'abono.gif' if cuota.abono_extraordinario %>
+      <%= image_tag 'cancelacion_prestamo.gif' if cuota.cancelacion_prestamo %>
+      <%= image_tag 'BolivarFuerte.gif' if cuota.bolivar_fuerte %>
+
+    </td>
+    <td style="text-align: center">
+      <%= cuota.numero.to_s %>
+    </td>
+    <td style="text-align: center <%= color_cuota ? ';background-color: ' + color_cuota : '' %>">
+      <%= cuota.estatus_pago_w %>
+    </td>
+    <td style="text-align: center">
+      <%= cuota.fecha_f %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.cantidad_dias %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.valor_cuota_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.interes_corriente_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.interes_diferido_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.amortizado_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.saldo_insoluto_fm %>
+    </td>
+    <td style="text-align: center">
+      <%= cuota.dias_mora %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.interes_mora_fm %>
+    </td>
+    <td  style="text-align: right"  >
+      <b> <%=  cuota.dias_mora_proyectado(@fecha, @fecha_limite) %> </b>
+    </td>
+    <td  style="text-align: right"  >
+      <b> <%=  cuota.monto_mora_proyectado_fm(@fecha, @fecha_limite) %> </b>
+    </td>
+    <td  style="text-align: right"  >
+       <b> <%=  cuota.total_dias_mora_proyectado(@fecha, @fecha_limite) %> </b>
+    </td>
+    <td style="text-align: right" >
+      <b> <%=  cuota.total_monto_mora_proyectado_fm(@fecha, @fecha_limite) %> </b>
+    </td>
+    <td  style="text-align: right">
+       <b> <%= cuota.monto_total_proyectado_fm(@fecha, @fecha_limite) %> </b>
+    </td>
+    <td style="text-align: right">
+      <b>  <%= @mo_acumulado = @mo_acumulado + cuota.monto_total_proyectado(@fecha, @fecha_limite)
+               format_fm(@mo_acumulado) %>
+      </b>
+    </td>
+  </tr>
+
+<% end -%>
+
+

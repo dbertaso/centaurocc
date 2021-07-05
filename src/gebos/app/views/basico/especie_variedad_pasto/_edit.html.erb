@@ -1,0 +1,23 @@
+<tr id="row_<%= @especie_variedad_pasto.id %>_edit">
+	  <td class="lista-form" colspan="5">
+
+		  <%= form_title_edit @especie_variedad_pasto.descripcion %>
+	
+		  <%= error "row_#{@especie_variedad_pasto.id}" %>
+
+		  <%= form_remote_tag(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+		    :url => { :action => :save_edit, :id => @especie_variedad_pasto.id } ) do-%>
+					<%= render 'form' %>
+					<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+					  :loading =>'image_load()',
+						:loaded => 'image_unload()',
+						:method=>:get,
+		        :url => { :action => :cancel_edit, :id => @especie_variedad_pasto.id}) -%>
+	    </td>
+      </tr>
+    </table>
+    <% end -%>
+	</td>
+</tr>

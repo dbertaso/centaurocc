@@ -1,0 +1,4 @@
+<% catalogo = @catalogo if catalogo.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= catalogo.id %>">
+	<%= render :partial => 'data', :locals => { :catalogo => catalogo, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,7 @@
+<% detalle = @detalle if detalle.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= detalle.id %>">
+	<%= render :partial => 'data_historial', :locals => { :detalle => detalle, :even_odd => even_odd } -%>
+</tr>
+
+	
+	

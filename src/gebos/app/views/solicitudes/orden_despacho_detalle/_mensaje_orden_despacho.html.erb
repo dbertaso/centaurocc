@@ -1,0 +1,26 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<%
+men=""
+unless @casa.nil?
+if @casa.tipo_pago.to_s=='1'
+men=I18n.t('Sistema.Body.Vistas.General.transferencia')
+else
+men=I18n.t('Sistema.Body.Vistas.General.cheque') unless @casa.nil?
+end
+
+else
+unless params[:casa_id].nil?
+@casa=CasaProveedora.find(params[:casa_id])
+if @casa.tipo_pago.to_s=='1'
+men=I18n.t('Sistema.Body.Vistas.General.transferencia')
+else
+men=I18n.t('Sistema.Body.Vistas.General.cheque') unless @casa.nil?
+end
+
+end
+
+end
+%>
+<%=men%>
+<br/>

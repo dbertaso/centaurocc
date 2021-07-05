@@ -1,0 +1,348 @@
+
+<br/>
+<br/>
+<div id="encabezado">
+  <table>
+
+    <tr style="font-family:verdana;color:blue;font-size:24px;">
+      <td> <%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:  <td>
+      <td> <%= @plan.rubro_nombre %> </td>
+    </tr>
+    <tr style="font-family:verdana;color:blue;font-size:20px;">
+      <td> <%= I18n.t('Sistema.Body.Vistas.General.sub_rubro') %>:  <td>
+      <td> <%= @plan.sub_rubro_nombre %> </td>
+    </tr>
+    <tr style="font-family:verdana;color:blue;font-size:16px;">
+      <td> <%= I18n.t('Sistema.Body.Vistas.General.actividad') %>:  <td>
+      <td> <%= @plan.actividad_nombre %> </td>
+      <td>
+      <td>
+      <td>
+      <td>
+      <td>
+      <td>
+        <%= link_to(
+          image_tag(image_path(I18n.t('Sistema.Body.Imagenes.boton_modificar'))),
+          :action => :edit, :id => @plan.solicitud_id, :ed=>1) if vlink 'edit' -%>
+
+      </td>
+    </tr>
+  </table>
+</div>
+
+<table class="lista">
+
+  <tr>
+    <th style="width:300px"><%= I18n.t('Sistema.Body.Vistas.Form.item') %></th>
+    <th style="width:70px"><%= I18n.t('Sistema.Body.Vistas.General.moneda') %></th>
+    <th style="width:70px"><%= I18n.t('Sistema.Body.Vistas.General.unidad') %></th>
+    <th style="width:120px"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></th>
+    <th style="width:200px"><%= "#{I18n.t('Sistema.Body.Vistas.General.costo')} #{I18n.t('Sistema.Body.Vistas.General.unitario')}" %></th>
+    <th style="width:140px"><%= I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total') %></th>
+    <th style="width:20px"><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.Form.desembolso')}" %></th>
+    <th style="width:20px"><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.Form.item')}" %></th>
+  </tr>
+</thead>
+<tbody id="list_body">
+
+  <% even_odd = 1
+  partida = ""
+  rubro = ""
+  monto_partida = 0.00
+  monto_rubro = 0.00
+  monto_banco = 0.00
+  monto_insumos = 0.00
+  @cantidad = 0.00
+  @monto = 0.00
+  monto_partida = monto_partida.to_d
+  monto_rubro = monto_rubro.to_d
+  monto_banco = monto_banco.to_d
+  monto_insumos = monto_insumos.to_d
+  @cantidad = @cantidad.to_d
+  @monto = @monto.to_d
+  @plan_inversion.each do |plan|
+    even_odd = 1 - even_odd
+  %>
+
+    <% if partida != plan.partida_nombre %>
+
+      <% if monto_partida > 0 %>
+        <tr class="lista<%= 1 - even_odd %>">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{partida}"%></b></td>
+          <td style="text-align: right">
+            <b>  <%=  format_fm(monto_partida) %>
+            </b>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <%end%>
+
+      <% partida = plan.partida_nombre
+      monto_partida = 0.00.to_d %>
+
+      <tr class="lista<%= 1 - even_odd %>">
+        <td><b><%=plan.partida_nombre %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+
+    <% end %>
+
+    <% if rubro.empty?
+      rubro = plan.rubro_nombre
+    end
+  %>
+
+    <tr class="lista<%= even_odd %>">
+
+
+      <td align="left">
+        <%= plan.item_nombre %>
+      </td>
+
+      <td align="left">
+        <%= plan.moneda %>
+      </td>
+
+      <td align="center">
+        <%= plan.unidad_medida.nombre %>
+      </td>
+
+
+      <td align="right">
+        <%= plan.cantidad_fm unless plan.cantidad.nil? && plan.cantidad > 0-%>
+      </td>
+
+      <td align="right">
+        <%= format_fm(plan.costo_real) unless plan.costo_real.nil? && plan.costo_real > 0 %>
+      </td>
+
+      <td align="right">
+        <%= format_fm(plan.monto_financiamiento)  unless plan.monto_financiamiento.nil? %>
+      </td>
+
+      <td align="center">
+        <%= plan.numero_desembolso  unless plan.numero_desembolso.nil? %>
+      </td>
+
+      <td>
+        <% if plan.tipo_item == 'B' %>
+          '<%= I18n.t('Sistema.Body.Vistas.General.banco') %>'
+        <% else %>
+          '<%= I18n.t('Sistema.Body.Vistas.General.insumo') %>'
+        <% end %>
+      </td>
+
+    </tr>
+
+    <% monto_partida += plan.monto_financiamiento
+    monto_rubro += plan.monto_financiamiento
+
+    if plan.tipo_item == 'B'
+      monto_banco += plan.monto_financiamiento
+    end
+
+    if plan.tipo_item == 'I'
+      monto_insumos += plan.monto_financiamiento
+    end
+
+    logger.info "Monto Partida -----> #{monto_partida.to_s}"
+    logger.info "Monto Rubro   -----> #{monto_rubro.to_s}"
+    logger.info "Monto Banco   -----> #{monto_banco.to_s}"
+    logger.info "Monto Insumos -----> #{monto_insumos.to_s}"
+
+    %>
+  <% end %>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{partida}" %></b></td>
+      <td style="text-align: right">
+        <b>  <%=  format_fm(monto_partida) %>
+        </b>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.banco')}" %></b></td>
+      <td style="text-align: right">
+        <b>
+          <%=format_fm(monto_banco) %>
+        </b>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.insumo')}" %></b></td>
+      <td style="text-align: right">
+        <b>
+          <%=format_fm(monto_insumos) %>
+        </b>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style="text-align: right"><b><%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.plan_inversion')}" %></b></td>
+      <td style="text-align: right">
+        <b>
+          <%=format_fm(monto_rubro) %>
+        </b>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <!--- Linea en Blanco para separar los costos financiables -->
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td ></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <!--- Costos financianbles -->
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td>
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.PlanInversion.Header.costos_financiables') %>
+        </label>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td>
+        <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.plan_inversion')}" %>
+        </label>
+      </td>
+      <td style="text-align: right"><b><%= format_fm(@monto_prestamo) %></b></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td>
+        <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.sras')} #{I18n.t('Sistema.Body.General.primer')} #{I18n.t('Sistema.Body.Vistas.General.año')}" %>
+        </label>
+      </td>
+      <td style="text-align: right"><b><%= format_fm(@sras_primer_ano) %></b></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td>
+        <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.sras')} #{I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.anos_subsiguientes')}" %>        
+        </label>
+      </td>
+      <td style="text-align: right"><b><%= format_fm(@sras_anos_siguen) %></b></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td>
+        <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.sras')}" %>        
+        </label>
+      </td>
+      <td style="text-align: right"><b><%= format_fm(@sras_total) %></b></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td>
+        <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.gastos')} #{I18n.t('Sistema.Body.Vistas.General.administrativos')}" %>        
+        </label>
+      </td>
+      <td style="text-align: right"><b><%= format_fm(@monto_gasto_total) %></b></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td>
+        <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}" %>
+        </label>
+      </td>
+      <td style="text-align: right"><b><%= format_fm(@total_financiamiento) %></b></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+  </tbody>
+</table>

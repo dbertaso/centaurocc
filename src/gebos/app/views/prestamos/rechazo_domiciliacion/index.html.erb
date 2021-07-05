@@ -1,0 +1,48 @@
+<script type="text/javascript">
+  function abrir_ventana(){
+    fecha = document.getElementById('_fecha_rechazo').value;
+    window.open("<%= @ruta %>/prestamos/rechazo_domiciliacion/reporte?fecha_rechazo=" + fecha,'popup','height=650,scrollbars=yes,width=1000');
+  }
+</script>
+<div class="marco" style="width: 60%">
+  <div class="marco-titulo"><div><div>
+        <%= @form_title_records %>
+      </div></div></div>
+  <div class="marco-contenido" >
+    <%= errores %>
+    <%= message %>
+    <%= form_remote_tag(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :url => { :action => :reporte } ) do -%>
+
+      <table style="width: 100%">
+
+        <tr>
+          <td style="width: 35%">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.fecha_rechazo') %>:</label>
+          </td>
+          <td style="width: 65%">
+
+            <%= calendar_date_select '', 'fecha_rechazo',
+              :year_range => 110.years.ago..-1.years.ago,
+              :class=>'text',
+              :style=>'width:80px',
+              :maxlength=>'10',
+              :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();' %> &nbsp; 
+            <%= I18n.t('Sistema.Body.General.formato_fecha')%>        
+
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" align="center">
+            <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir_grande')),:title=>I18n.t('Sistema.Body.Vistas.General.imprimir_informe'), :onclick=>"abrir_ventana();") %>
+          </td>
+        </tr>
+      </table>
+
+    <% end %>
+  </div>
+</div>

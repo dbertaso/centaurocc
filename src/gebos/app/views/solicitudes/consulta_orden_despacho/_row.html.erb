@@ -1,0 +1,5 @@
+<% consulta_orden_despacho = @consulta_orden_despacho if consulta_orden_despacho.nil? %>
+
+<tr class="lista<%=even_odd%>" id="row_<%=consulta_orden_despacho.guia_id%>">
+	<%= render :partial => 'data', :locals => { :consulta_orden_despacho => consulta_orden_despacho, :even_odd => even_odd } -%>
+</tr>

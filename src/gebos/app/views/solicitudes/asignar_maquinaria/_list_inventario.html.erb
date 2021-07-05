@@ -1,0 +1,89 @@
+<%
+  unless params[:solicitud_id].nil?
+    joins= " INNER JOIN clase ON clase.id=catalogo.clase_id and clase.tipo_maquinaria_id=#{@tipo_maquinaria_id} "
+    @catalogo = Catalogo.find(:all,:joins=>joins, :conditions=>["solicitud_id=#{params[:solicitud_id]}"] ,:include=>['contrato_maquinaria_equipo','clase'])
+    @prestamo = Prestamo.find_by_solicitud_id(params[:solicitud_id])
+  end
+%>
+
+
+<div class="marco-contenido" style=" background-color:#D7D7D7" align="left">
+  <b><span style="color:black">PLAN DE INVENTARIO : <%= @nombre_tipo_maquinaria  unless @nombre_tipo_maquinaria.nil? %></span></b>
+</div>
+
+<br/>
+
+<%= form_remote_tag(
+  :html=>{:id=>'form_plan_inventario_catalogo'},
+  :loading =>'Element.show("loading")',
+  :loaded => 'Element.hide("loading")',
+  :url => { :action => :list })
+%>
+
+<table class="lista" style="width: 1070px">
+  <thead>
+    <tr>
+      <th style="width: 100px"> Convenio </th>
+      <th style="width: 100px"> Rubro </th>
+      <th style="width: 100px"> Tipo </th>
+      <th style="width: 100px"> Modelo </th>
+      <th style="width: 100px"> Marca </th>
+      <th style="width: 100px"> Serial Motor </th>
+      <th style="width: 100px"> Serial Chasis </th>
+      <th style="width: 100px"> País </th>
+      <th style="width: 100px"> Estatus </th>
+      <th style="width: 110px"> Monto </th>
+      <th style="width: 50px"> </th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%
+        sub_total=0
+        even_odd = 1
+        @catalogo.each { |catalogo|
+        even_odd = 1 - even_odd
+        sub_total = sub_total + catalogo.monto
+    %>
+    
+    <tr class="lista<%= even_odd  %>" id="row_<%= catalogo.id %>">
+        
+        <td> <%= catalogo.contrato_maquinaria_equipo.nombre%> </td>
+        <td width="100px" align="center" style="white-space: nowrap;">  <%= catalogo.clase.tipo_maquinaria.nombre %> </td>
+        <td align="center">  <%= catalogo.clase.nombre %>  </td>
+        <td> <%= catalogo.Modelo.nombre unless catalogo.Modelo.nil? %> </td>
+        <td> <%= catalogo.MarcaMaquinaria.nombre unless catalogo.MarcaMaquinaria.nil? %> </td>
+        <td> <%= catalogo.serial %> </td>
+        <td> <%= catalogo.chasis %> </td>
+        <td> <%= catalogo.pais.nombre unless catalogo.pais.nil? %> </td>
+        <td width="100px" align="center"> <%= catalogo.getstatus %> </td>
+        <td width="110px" align="right"> <%= catalogo.monto_c(params[:solicitud_id]) %>&nbsp; </td>
+        <td width="40px" align="center">
+          <%=link_to_remote(
+            image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :confirm => "¿Está usted seguro que desea eliminar este registro?",
+            :url => {:controller => 'asignar_maquinaria', :action => :delete,:solicitud_id=>catalogo.solicitud_id, :catalogo_id => catalogo.id,:tipo_maquinaria_id=>@tipo_maquinaria_id }) if vlink 'delete'
+          -%>
+        </td>
+    </tr>
+
+    <% } %>
+
+    <tr class="lista1">
+      <td colspan="9"></td>
+      <td align="center" style="background-color:#D7D7D7">Sub-Total</td>
+      <td align="right" style="background-color:#D7D7D7" >
+        <b>
+          <%=sprintf('%01.2f', sub_total).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @prestamo.nil? %>
+        </b>
+      </td>
+      <td></td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+<%= end_form_tag %>

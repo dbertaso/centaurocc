@@ -1,0 +1,26 @@
+<% tipo_drenaje @tipo_drenaje if tipo_drenaje.nil? %>
+
+<td>
+  <%= tipo_drenaje.nombre%>
+</td>	
+<td>
+  <%=tipo_drenaje.descripcion%>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(tipo_drenaje.activo)%>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => {:controller => 'tipo_drenaje', :action => :edit, :id => tipo_drenaje.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'tipo_drenaje', :action => :delete, :id => tipo_drenaje.id}) if vlink 'delete' -%>
+</td>
+

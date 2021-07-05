@@ -1,0 +1,100 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.espejo_agua')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'condiciones_acuicultura', 'espejo_agua_f',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'120', :onkeypress=>'inputChange();'  -%>
+      Mt3
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.espejo_agua_up')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'condiciones_acuicultura', 'espejo_agua_up_f',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();' -%> <%=I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.espejo_agua_produccion')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'condiciones_acuicultura', 'espejo_agua_produccion_f',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.duracion_ciclo')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'condiciones_acuicultura', 'duracion_ciclo',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.General.meses')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.numero_laguna_efectiva')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'condiciones_acuicultura', 'lagunas_efectivas',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.lagunas_totales')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'condiciones_acuicultura', 'lagunas_totales',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.peso_cosecha')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'condiciones_acuicultura', 'peso_cosecha_f',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.parentesis_kg')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.densidad_siembra')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'condiciones_acuicultura', 'densidad_siembra_f',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+      <%=I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.peces_m2')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.especie_cultivada')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'condiciones_acuicultura','tipo_especie_id',
+        @tipo_especie.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select'} ) %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+

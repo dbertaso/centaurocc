@@ -1,0 +1,92 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td style="width: 60px">
+      <label>Entidad Financiera:</label>
+    </td>
+    <td style="width: 620px">
+      <%= select(
+        'agencia_bancaria', 'entidad_financiera_id',
+        @entidad_financiera_list.map{|e| [e.nombre, e.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Nombre</label>
+    </td>
+    <td>
+      <%= text_field 'agencia_bancaria', 'nombre_f', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Código</label>
+    </td>
+    <td>
+      <%= text_field 'agencia_bancaria', 'codigo_f', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Estado </label></td>
+    <td>
+      <% estado_onchange = remote_function(
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'agencia_bancaria',
+          :action=>:estado_change },
+        :with=>"'estado_id='+value") %>
+      <%= select(
+        'agencia_bancaria','estado_id',
+        @estado_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>'Seleccionar '},
+        { :class=>'select', :onchange=>estado_onchange+';inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Municipio </label></td>
+    <td>
+      <span id="municipio-search">
+        <%= render :partial=>'municipio_search' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Ciudad </label></td>
+    <td>
+      <span id="ciudad-search">
+        <%= render :partial=>'ciudad_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Dirección</label>
+    </td>
+    <td>
+      <%= text_area 'agencia_bancaria', 'direccion',
+        :class=>'text',
+        :style=>'width: 580px; height: 60px',
+        :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Activo</label>
+    </td>
+    <td>
+      <%= check_box 'agencia_bancaria', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0",
+        :onchange=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+
+
+</table>

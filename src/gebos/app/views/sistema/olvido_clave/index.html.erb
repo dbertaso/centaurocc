@@ -1,0 +1,87 @@
+<div class="marco-titulo">
+	<div>
+		<div>
+			<%= I18n.t('Sistema.Body.Vistas.UsuarioClave.Titulos.modificar_clave') %>
+			<span style="color: #FF0000">'<%= @usuario.nil? ? 'Olvido de Contrasena' : @usuario.nombre_usuario  %>'</span>
+		</div>
+	</div>
+</div>
+
+<div class="marco-contenido">
+
+	<%= error %>
+	<%= message %>
+
+	<%= form_remote_tag(
+		:loading =>'image_load()',
+		:loaded => 'image_unload()',
+	  :url => { :action => :save_edit } ) do -%>
+
+		<table>
+		  <tr>
+		    <td style="width: 150px">
+		      <label><%=I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.nombre_usuario')%></label>
+		    </td>
+		    <td style="width: 550px">
+		      <%= text_field_tag 'nombre_usuario', '',
+		        :class=>'text', :style=>'width: 250px',
+		        :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+		    </td>
+		  </tr>      
+  		<tr>
+        <td style="width: 180px">
+          <label>
+            <%="#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %>
+          </label>
+        </td>
+        <td>
+
+        <select name="tipo" id="tipo" class="select">
+            <option value="V "><%= I18n.t('Sistema.Body.General.TipoDocumento.venezolano') %></option>
+            <option value="E "><%= I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%></option>
+          </select>
+
+          <%= text_field_tag 'cedula', '', :class=>'text', :maxlength=>'10', :style=>'width: 120px'  %><%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+        </td>
+      </tr>			
+			<tr>
+				<td>
+					<label>
+						<%= I18n.t('Sistema.Body.Vistas.UsuarioClave.Etiquetas.nueva_clave') %>
+					</label>
+				</td>
+				<td>
+					<%= password_field '', 'clave', :class=>'text', :style=>'width: 180px', 
+					   :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>
+						<%= I18n.t('Sistema.Body.Vistas.UsuarioClave.Etiquetas.confirmar_clave') %>
+					</label>
+				</td>
+				<td>
+					<%= password_field '', 'clave_confirmation', :class=>'text', :style=>'width: 180px', 
+					   :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<br>
+
+		<table>
+			<tr>
+				<td class="lista0" style="text-align: right"
+        	<div id="buttons_edit" style="display: none">
+          	<%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :id=>'button_save' )-%>
+          </div>
+            
+            <%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))), root_path
+            		{:id=>'button_close'} ) -%>
+				</td>
+		  </tr>
+		</table>
+		
+	<% end %>
+</div>

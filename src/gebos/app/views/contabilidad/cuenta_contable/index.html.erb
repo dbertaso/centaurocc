@@ -1,0 +1,46 @@
+<%= form_title_search %>
+		
+<%= form_remote_tag(
+	:loading =>'Element.show("loading")',
+	:loaded => 'Element.hide("loading")',
+	:method => :get,
+  :url => { :action => :list } ) do %>
+	<table>
+		<tr>
+			<td style="width: 100px">
+				<label><%= t('Sistema.Body.Vistas.CuentaContable.Etiquetas.codigo') %>:</label>
+			</td>
+			<td>
+				<%= text_field_tag 'codigo', '', :class=>'text', :maxlength=>'25', :style=>'width: 210px'  %>
+			</td>
+			<td>
+				<%= image_submit_tag(image_path(t('Sistema.Body.Imagenes.buscar'))) -%>
+			</td>
+		</tr>
+	</table>
+<% end %>
+<%= form_remote_tag(
+  :loading =>'Element.show("loading")',
+  :loaded => 'Element.hide("loading")',
+  :method => :get,
+  :url => { :action => :list } ) do -%>
+	<table>
+		<tr>
+			<td style="width: 100px">
+				<label><%= t('Sistema.Body.Vistas.CuentaContable.Etiquetas.nombre') %>:</label>
+			</td>
+			<td>
+				<%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'60', :style=>'width: 300px'  %>
+			</td>
+			<td>
+				<%= image_submit_tag(image_path(t('Sistema.Body.Imagenes.buscar'))) -%>
+			</td>
+		</tr>
+	</table>
+<%end %>
+	
+<%= error %>
+<%= message %>
+
+<div id="list">
+</div>

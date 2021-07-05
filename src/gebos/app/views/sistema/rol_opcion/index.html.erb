@@ -1,0 +1,28 @@
+<div class="marco-titulo"><div><div>
+      Modificando Rol <span style="color: #FF0000">'<%= @rol.nombre %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'sistema/rol/common/tabs' %>
+<div class="marco-contenido2">
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.agregar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.agregar')), 
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method=>:get,
+      :url => { :action => :new, :rol_id=>@rol.id })%>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial=>'list' %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :controller=> 'rol', :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

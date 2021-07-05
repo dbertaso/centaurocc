@@ -1,0 +1,641 @@
+<script type="text/javascript">
+function formatCurrency2(num) {
+   
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    //$(name + '_display').innerHTML = numero;
+    return numero;
+}
+
+function formatCurrency3(num) {
+    //alert("numero entrante "+num);   
+    aux=num.toString().split('.');
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*1000+0.50000000001);
+
+    //cents = num%100;
+    if (aux.length > 1){  
+    cents = aux[1].toString();
+    }else{
+    cents ="00";
+    }
+    //alert("numero centimos "+cents);
+    num = Math.floor(num/1000).toString();
+
+    //if(cents<10)
+        //cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    //alert("numero final "+numero);
+    //$(name + '_display').innerHTML = numero;
+    //alert("numero saliente "+numero);   
+    return numero;
+}
+
+
+
+</script>
+
+<%
+  if params[:oid]!=''  
+	 @orden_despacho = OrdenDespacho.find(params[:oid])
+  else
+	 @orden_despacho = OrdenDespacho.find(params[:id])
+  end  
+
+    #nuevo codigo
+    @solicitud1=Solicitud.find(@orden_despacho.solicitud_id)
+    @usuario_auc = Usuario.find(:first, :conditions=>['nombre_usuario = ?',@solicitud1.usuario_pre_evaluacion])
+    @usuario_select1 = Usuario.find(:first, :conditions=>['cedula in (select cedula from tecnico_campo ) and nombre_usuario = ? ', @solicitud1.usuario_pre_evaluacion], :order=>'primer_nombre, primer_apellido')
+
+    #fin nuevo codigo
+
+
+        #llenado de la casa proveedora ojo aqui       
+
+         #@casa_proveedora = CasaProveedora.find(:all,:conditions=>['estado_id = ?',Usuario.find(session[:id]).oficina.ciudad.estado_id])
+
+        @casa_proveedora = CasaProveedora.find(:all,:conditions=>"activo=true",:order=>"nombre")
+
+     	    
+        	@usuario = Usuario.find(session[:id])
+        	@solicitudes  = Solicitud.find(:all, :conditions => ['id = ? ',               @orden_despacho.solicitud_id])
+
+
+        	unless @solicitudes[0].nil?
+      	     if !@solicitudes[0].cliente.persona_id.nil?
+   
+          		  @es_no=1
+          		  @datos_cliente=Persona.find(@solicitudes[0].cliente.persona_id) unless @solicitudes[0].nil?
+       	     else
+          		  @es_no=2
+          		  @datos_cliente=Empresa.find(@solicitudes[0].cliente.empresa_id) unless @solicitudes[0].nil?
+       	    end
+	        end
+
+#list_nueva(params[:oid])
+
+
+    @numero_desembolso=params[:oid]
+    @condition = " orden_despacho_id = #{params[:oid]} and cantidad > 0"
+
+    @ordenes_de_despacho=OrdenDespachoDetalle.find(:all, :conditions=>@condition)
+    unless @ordenes_de_despacho.empty?
+      condi="("
+      @ordenes_de_despacho.each{ |orden|
+        condi+=orden.id.to_s << ","
+        }
+      condi=condi[0,condi.length-1]
+      condi+=")"
+      @facturas_faltantes=FacturaOrdenDespacho.find(:all, :conditions=>"orden_despacho_detalle_id in #{condi} and confirmada='f'")
+      @list=@facturas_faltantes
+      @total=FacturaOrdenDespacho.count(:conditions=>"orden_despacho_detalle_id in #{condi}  and confirmada='f'")
+
+      
+           #codigo nuevo
+           hay_casa=FacturaOrdenDespacho.find(:first,:select=>"casa_proveedora_id,sucursal_casa_proveedora_id",:conditions=>"confirmada='f' and orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id=#{params[:oid]})",:order=>"id desc")
+           unless hay_casa.nil?
+               params[:casa_id]=hay_casa.casa_proveedora_id.nil? ? nil : hay_casa.casa_proveedora_id
+               params[:casa_sucursal_id]=hay_casa.sucursal_casa_proveedora_id.nil? ? nil : hay_casa.sucursal_casa_proveedora_id 
+               
+          else  
+              params[:casa_id]=nil
+              params[:casa_sucursal_id]=nil
+          end
+          
+          @sucursal_casa_proveedora = params[:casa_id].nil? ? [] : SucursalCasaProveedora.find(:all,:conditions=>"casa_proveedora_id=#{params[:casa_id]}")
+          
+          #fin codigo nuevo
+          
+      #aqui tengo todos los id de las facturas que me interesan
+      unless @list.empty?
+        condi2="("
+        @list.each{ |factura|
+          condi2+=factura.id.to_s << ","
+          }
+        condi2=condi2[0,condi2.length-1]
+        condi2+=")"    
+      end 
+    else
+        @facturas_faltantes=[]
+        @total=0    
+        @list=[]
+    end
+  @total_saldo_entregar=0
+	@total_precio_total=0
+	cont=0
+	while cont< @total
+  	@total_saldo_entregar+=@list[cont].monto_financiamiento
+  	@total_precio_total+=(@list[cont].monto_financiamiento - @list[cont].monto_factura)
+  	cont+=1	
+	end
+#factura_orden_despacho.monto_financiamiento - factura_orden_despacho.monto_factura
+
+%>
+
+<div class="marco-contenido">
+	<%=  form_title_search %>
+        <%#= render :partial=>'solicitudes/orden_despacho_detalle/common/tabs' %>
+<br>	
+	<%= error %>
+	<%= message %>
+
+
+<%if params[:una]=="2"%>
+
+<!-- esto es cuando genero todas las facturas que me interesan-->
+<!-- condi2 -->
+
+    <%if params[:parciales].to_s!="1"
+
+    	   urls={ :action => :save_nueva_orden , :id_todas_facturas => condi2, :oid=>params[:oid],:casa_id=>params[:casa_id],:casa_sucursal_id=>params[:casa_sucursal_id] }
+         %>
+
+         <%#= form_remote_tag(
+          		:loading =>'image_load()',
+              :loaded => 'image_unload()',
+          		:url => { :action => :save_nueva_orden , :id_todas_facturas => condi2, :oid=>params[:oid],:casa_id=>params[:casa_id],:casa_sucursal_id=>params[:casa_sucursal_id] },:html => {:id => 'principal_form' } ) do  %>
+
+    <%else
+        urls={ :action => :save_nueva_orden , :id_todas_facturas => params[:parciales_id], :oid=>params[:oid],:casa_id=>params[:casa_id],:casa_sucursal_id=>params[:casa_sucursal_id] }
+
+    %>
+
+    	   <%#= form_remote_tag(
+          		:loading =>'image_load()',
+              :loaded => 'image_unload()',
+          		:url => { :action => :save_nueva_orden , :id_todas_facturas => params[:parciales_id], :oid=>params[:oid],:casa_id=>params[:casa_id],:casa_sucursal_id=>params[:casa_sucursal_id] },:html => {:id => 'principal_form' } ) do  %>
+
+    <%end%>
+
+
+<%else
+    urls={ :action => :save_nueva_factura_individual , :id => params[:id], :oid=>params[:oid],:casa_id=>params[:casa_id],:casa_sucursal_id=>params[:casa_sucursal_id] }
+
+%>
+
+<!-- esto es cuando genero las facturas individualmente-->
+
+	 <%#= form_remote_tag(
+      		:loading =>'image_load()',
+          :loaded => 'image_unload()',
+      		:url => { :action => :save_nueva_factura_individual , :id => params[:id], :oid=>params[:oid],:casa_id=>params[:casa_id],:casa_sucursal_id=>params[:casa_sucursal_id] },:html => {:id => 'principal_form' } ) do %>
+
+<%end%>
+
+
+<%= form_remote_tag(
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :method=>:get,              
+              :url => urls,:html => {:id => 'principal_form' } ) do  -%>
+
+<div id="mensaje" style="width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+
+
+  <h3><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.informacion_financiamiento')%></h3>
+  <table>
+     <tr>
+        <td style="width: 130px">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.programa') %></label>
+        </td>
+        <td>
+          <%= @orden_despacho.solicitud.programa.nombre.strip.upcase  unless @orden_despacho.solicitud.programa.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.solicitud.numero  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.financiamiento')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.prestamo.numero %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Controladores.VisitaSeguimiento.FormTitles.form_title_record')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.seguimiento_visita.fecha_visita_f  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.solicitud.sector.nombre.strip.upcase  unless @orden_despacho.solicitud.sector.nil?  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.solicitud.rubro.nombre.strip.upcase  unless @orden_despacho.solicitud.rubro.nil? %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.solicitud.sub_rubro.nombre.strip.upcase  unless @orden_despacho.solicitud.sub_rubro.nil? %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.solicitud.actividad.nombre.strip.upcase  unless @orden_despacho.solicitud.actividad.nil? %>
+        </td>
+      </tr>
+
+
+
+
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.monto_financiamiento')%></label>
+        </td>
+        <td>
+          <%#=javascript_tag "document.write(formatCurrency2(#{@orden_despacho.monto}));"%>          
+          <%= @orden_despacho.monto_fm %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label>
+        </td>
+        <td>
+<%if @es_no == 1 %>         
+	<%= @datos_cliente.cedula_nacionalidad.strip.upcase + ' ' + @datos_cliente.cedula.to_s  unless @datos_cliente.nil?%>
+
+	<%else%>
+	<%= @datos_cliente.rif unless @datos_cliente.nil? %>
+	<%end%>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.beneficiario')%></label>
+        </td>
+        <td>
+	<%if @es_no == 1 %>         
+	<%= @datos_cliente.primer_nombre.to_s.strip.upcase + ' ' + @datos_cliente.segundo_nombre.to_s.strip.upcase + ' ' + @datos_cliente.primer_apellido.to_s.strip.upcase + ' ' + @datos_cliente.segundo_apellido.to_s.strip.upcase  unless @datos_cliente.nil?%>
+
+	<%else%>
+	<%= @datos_cliente.nombre unless @datos_cliente.nil?%>
+	<%end%>
+
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.ciclo')%></label>
+        </td>
+        <td>
+         <%= CicloProductivo.find(@orden_despacho.solicitud.actividad.ciclo_productivo_id).nombre.strip.upcase  unless @orden_despacho.solicitud.actividad.ciclo_productivo_id.nil?%>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.estado.nombre.strip.upcase  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.solicitud.unidad_produccion.parroquia.nombre.strip.upcase  unless @orden_despacho.solicitud.unidad_produccion.parroquia.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label>
+        </td>
+        <td>
+          <%= @orden_despacho.solicitud.unidad_produccion.municipio.nombre.strip.upcase  unless @orden_despacho.solicitud.unidad_produccion.municipio.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+        </td>
+      </tr><tr>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+      </tr>
+       <tr>
+         <td style="width: 130px" colspan="2">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.datos')%> <%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Mensajes.orden_despacho_insumos') %></label>
+        </td>
+       </tr>
+       <tr>
+         <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.casa_proveedora') %></label>
+        </td>
+        <td>
+           <% casa_proveedora_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'orden_despacho_detalle',
+            :action=>:casa_proveedora_change },
+            :with=>"'id='+value+'&nueva=1'") %>
+          
+              
+         <%valor="<option value='0'>#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}</option>"        
+        @casa_proveedora.each{ |x|
+         #aqui recorreo todos los option y le pongo el style a aquellas que cumplen la condicion
+         if params[:casa_id].to_i==x.id.to_i
+            valor+="<option selected value=#{x.id}>#{x.nombre}</option>"
+         else
+            valor+="<option value=#{x.id} >#{x.nombre}</option>"
+         end
+        }        
+        %>
+        
+        <%=select_tag(
+              'casa_proveedora_id',
+              valor.html_safe,
+              { :class=>'select', :onchange=>casa_proveedora_onchange + ';inputChange();',:style=>'width:280px' } ) %>     
+              
+              
+        </td>
+      </tr>
+       <tr>
+        <td style="width: 130px">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sucursal') %></label>
+        </td>
+        <td>
+          <span id="sucursal-select">
+            <%= render :partial => 'sucursal_select' %>
+          </span>
+        </td>
+       </tr>
+       <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.forma_pago') %></label>
+        </td>
+        <td>
+		<div id="tipo-pago-sucursal"><%= render :partial => 'mensaje_orden_despacho' %></div>
+        </td>
+        </tr>
+        <tr>        
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.estado_sucursal')%></label>
+        </td>
+        <td>
+      		<div id="estado-sucursal"><%= render :partial => 'estado_sucursal' %></div>
+        </td>
+
+       </tr>
+       <tr >
+
+        <td colspan="5">
+          <table width="1100" border="1">
+             <thead> 
+              <tr>
+                <th colspan="5" align="center" style="background-image: url(/assets/titulo_fondo_2.gif);" ><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.contenido_del_despacho')%></th>
+              </tr>
+              <tr >
+              <td>
+<%if params[:una]=="2"%>
+
+  <div id="list" >
+   <%= render :partial => 'list_nueva' %>
+	</div>
+<%else
+	even_odd = 1
+factura_orden_despacho=FacturaOrdenDespacho.find(params[:id])
+
+%>
+
+
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%#= sort_class_helper('@numero_desembolso') %>>
+          <%#= sort_link_helper '# Nro.Desembolso', '@numero_desembolso', 'list' %>
+          <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho')%>        
+        </th>
+
+         <th style="width: 120px" <%#= sort_class_helper('item_nombre') %>>
+          <%#= sort_link_helper '# Ítem', 'item_nombre', 'list' %>
+          <%="# #{I18n.t('Sistema.Body.Vistas.General.item')}"%>        
+        </th>
+         <th style="width: 320px" <%#= sort_class_helper('observacion') %>>
+          <%#= sort_link_helper 'Descripción', 'observacion', 'list' %><%=I18n.t('Sistema.Body.General.descripcion')%>
+        </th>
+
+        <th style="width: 150px" <%#= sort_class_helper('unidad_medida_id') %>>
+          <%#= sort_link_helper 'Unidad de Medida', 'unidad_medida_id', 'list' %><%=I18n.t('Sistema.Body.Modelos.UnidadMedida.nombre')%>
+        </th>
+        <th style="width: 120px" <%#= sort_class_helper('cantidad') %>>
+          <%#= sort_link_helper 'Cantidad', 'cantidad', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%>
+        </th>
+
+        <th style="width: 160px" <%#= sort_class_helper('costo_real') %>>
+          <%#= sort_link_helper 'Precio Unitario', 'costo_real', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.General.unitario')%>
+       </th>
+
+        <th style="width: 160px" <%#= sort_class_helper('monto_financiamiento') %>>
+          <%#= sort_link_helper 'Precio Total', 'monto_financiamiento', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%>
+        </th>
+        <% if @imprimo != '1'%>
+        <th style="width: 60px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Cantidad Entregada', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_entregada')%>
+        </th>
+
+        <th style="width: 60px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Cantidad Pendiente por Entregar', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_pendiente_por_entregar')%>
+        </th>
+        <%end%>
+        <th style="width: 160px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Saldo a Entregar', 'monto_factura', 'list' %>
+          <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.saldo_a_entregar')%>            
+      </th>
+        </tr>
+    </thead>
+	<tbody id="list-body">
+
+
+
+<tr class="lista<%= even_odd %>" id="row_<%= factura_orden_despacho.id %>">
+
+<td align="center">
+<%=@numero_desembolso%>
+  <%#= OrdenDespachoDetalle.find(factura_orden_despacho.id).orden_despacho_id %>
+</td>
+<td align="center">
+  <%= factura_orden_despacho.item_nombre.to_s.strip.upcase  %>
+</td>
+<td align="center">
+<%condi="nombre ='#{factura_orden_despacho.item_nombre}'"%>
+<%=Item.find_by_nombre(factura_orden_despacho.item_nombre).descripcion unless Item.count(:conditions=>condi) == 0 %>  
+<%#= OrdenDespachoDetalle.find(factura_orden_despacho.id).observacion.strip.upcase %>
+</td>
+<td align="center">
+  <%= factura_orden_despacho.unidad_medida.abreviatura.strip.upcase %>
+</td>
+<td align="right">
+
+<%cantidad_orden_total=OrdenDespachoDetalle.find(factura_orden_despacho.orden_despacho_detalle_id).cantidad%>
+
+<%=javascript_tag "document.write(formatCurrency2(#{cantidad_orden_total}));"%> 
+
+  <%#= factura_orden_despacho.cantidad_f %>
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.costo_real}));"%>
+  <%#= factura_orden_despacho.costo_real_f %>
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.monto_financiamiento}));"%>
+  <%#= factura_orden_despacho.monto_financiamiento_f %>
+</td>
+
+
+<td align="center" bgcolor="#CFFFE8">
+<%=javascript_tag "document.write(formatCurrency2(#{(cantidad_orden_total-factura_orden_despacho.cantidad)}));"%>
+</td>
+<td align="center" bgcolor="#FEFF99">
+
+<%=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.cantidad}));"%>
+</td>
+
+
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.monto_factura}));"%>
+</td>
+
+
+</tr>
+
+
+
+
+
+<tr border="1" style="background-color: #888888;">
+
+<td colspan="6" style="border: solid 1px #000000;" align="right"><strong><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')).upcase%></strong></td>
+<td style="border: solid 1px #000000;" align="right"><strong><%=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.monto_financiamiento}));"%><%#=sprintf('%01.2f', @total_saldo_entregar).sub('.', ',')%></strong></td>
+
+        <% if @imprimo != '1'%>
+<td style="border: solid 1px #000000;" align="right" colspan="2"></td>
+<!--<td style="border: solid 1px #000000;" align="right"></td> -->
+        <% end%>
+
+<td style="border: solid 1px #000000;" align="right"><strong><%=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.monto_factura}));"%><%#=sprintf('%01.2f', @total_precio_total).sub('.', ',')%></strong></td>
+</tr>
+
+</tbody>
+</table>
+
+
+
+<%end%>
+      </td>
+              </tr>
+                          
+
+            </thead> 
+       </table> 
+        
+          
+        </td>
+
+
+       </tr>
+      <tr>
+        <td style="width: 230px">
+          <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.funcionario')%> <%=I18n.t('Sistema.Body.General.cliente_gprotec')%>:</label>
+        </td>
+        <td>
+<%=@usuario_select1.primer_nombre.to_s.strip.upcase + " " + @usuario_select1.segundo_nombre.to_s.strip.upcase + " " +  @usuario_select1.primer_apellido.to_s.strip.upcase + " " + @usuario_select1.segundo_apellido.to_s.strip.upcase unless @usuario_select1.nil?%>
+
+          
+        </td>
+       </tr>
+     <!-- </table> -->
+       <!-- </table> -->
+  <table>
+      <tr>
+        <td style="width: 230px">
+          <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Mensajes.orden_despacho_insumos') %></label>
+          <label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.elaborado_por')%>:</label>
+        </td>
+        <td valign="middle">
+         <%= @usuario.nombre_usuario.to_s.strip.upcase + " - " + @usuario.primer_nombre.to_s.strip.upcase + " " + @usuario.primer_apellido.to_s.strip.upcase unless @usuario.nil? %>
+        </td>
+       </tr>
+       <tr>
+         <td> </td>
+         <td></td>
+       </tr>
+  </table><br/><br/>
+
+        
+
+<!-- este es el que estaba anteriormente -->
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :solicitud_id => params[:solicitud_id], :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+               { :controller => 'orden_despacho', :action => 'index' },
+               { :id=>'buton_cerrar' } ) -%>
+
+	<% end %>
+	
+<br/>
+
+
+</div>

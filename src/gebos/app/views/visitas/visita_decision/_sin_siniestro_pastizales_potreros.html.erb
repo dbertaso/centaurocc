@@ -1,0 +1,104 @@
+<div id="tabs">
+
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	if controller_name!='visita_decision'
+%>
+		<li id="actual"><div><a href="#">Evaluación de Pastizales y Potreros</a></div></li>
+<% 
+	else 
+%>
+		<li><div>
+		      <%= link_to('Evaluación de Pastizales y Potreros', :controller => 'visita_pastizales_potreros', :action => 'index', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup])  %>
+		      
+		</div></li>
+
+<% 
+	end
+	
+	
+	  
+       if controller_name!='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Instalaciones y Sanidad Animal</a></div></li>
+<%      
+      else
+%>          
+              <li><div>
+              <%= link_to('Instalaciones y Sanidad Animal', :controller => 'visita_sanidad_animal', :action => 'edit', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup])  %>
+
+          </div></li>
+<% 
+      end
+	
+
+       if controller_name!='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Semovientes</a></div></li>
+<%
+      else
+%>
+              <li><div>
+              <%= link_to('Semovientes', :controller => 'visita_semovientes', :action => 'edit', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup])  %>
+              </div></li>
+<%
+       end
+
+       if controller_name!='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Producci&oacute;n</a></div></li>
+<%
+      else
+%>
+              <li><div>
+              <%= link_to('Producci&oacute;n', :controller => 'visita_produccion_leche_carne', :action => 'edit', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup])  %>
+
+          </div></li>
+<%
+      end
+
+
+
+%>
+<%    
+    #end
+
+      if controller_name=='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Recomendaci&oacute;n</a></div></li>
+<%
+      else
+%>
+              <li><div>
+              <%= link_to('Recomendaci&oacute;n', :controller => 'visita_decision', :action => 'edit', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+
+          </div></li>
+<%
+
+      end
+ 
+      if @visitas.DecisionVisita
+        unless !@visitas.DecisionVisita.recomienda_generar_desembolso
+          if controller_name!='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Recomendaci&oacute;n del Desembolso</a></div></li>
+<%
+          else
+%>
+              <li><div>
+              <%= link_to('Recomendaci&oacute;n del Desembolso', :controller => 'recomendacion_plan_inversion', :action => 'index', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup])  %>
+
+              </div></li><br>
+<%
+          end
+        end
+     end
+%>
+
+
+
+  </ul>
+	
+</div>

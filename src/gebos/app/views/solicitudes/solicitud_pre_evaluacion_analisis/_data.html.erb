@@ -1,0 +1,69 @@
+<td>
+  <%= solicitud.numero %>
+</td>
+
+<td>
+        <%= solicitud.estado %>
+</td>
+
+<td>
+        <%#= solicitud.municipio %>
+</td>
+
+<td>
+  <%= solicitud.cedula_rif %>
+</td>
+
+<td>
+  <%= solicitud.nombre %>
+</td>
+
+<td>
+  <% if solicitud.const_id == 'ST0004'
+      unidades_apoyo = ViewSolicitudPreEvaluacion.mostrar_estatus(solicitud.solicitud_id)
+  end %>
+  <span style="color: #FF0000"><b><%= solicitud.estatus %> <%= unidades_apoyo %></b></span>
+</td>
+
+<td>
+        <%= solicitud.sector %>
+</td>
+
+
+<td>
+        <%= solicitud.unidad_produccion %>
+</td>
+
+<td>
+        
+</td>
+
+<td>
+       
+</td>
+
+<td>
+       
+</td>
+
+<td align="center">
+   
+	<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'), 
+		{:controller => 'solicitud', :action => :view,
+		:id => solicitud.solicitud_id,
+        :controlador => 'solicitud_pre_evaluacion_analisis'} %>
+
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Editar'),
+		{:controller => 'solicitud_pre_evaluacion_analisis', :action => :edit,
+		:id => solicitud.solicitud_id,
+        :controlador => 'solicitud'} %>
+
+        <% s = Solicitud.find(solicitud.solicitud_id)
+           if s.SolicitudAspectosEvaluar.length > 0 && solicitud.const_id == 'ST0003' %>
+              <%= link_to_remote( 'Distribuir',
+                :loading =>'image_load()',
+                :loaded => 'image_unload()',
+                :confirm => "¿Está usted seguro que desea distribuir la Solicitud número #{solicitud.numero}?",
+		:url => {:action => :avanzar, :id => solicitud.solicitud_id}) -%>
+        <% end %>
+</td>

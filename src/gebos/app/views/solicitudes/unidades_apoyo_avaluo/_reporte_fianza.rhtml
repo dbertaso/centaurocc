@@ -1,0 +1,70 @@
+<table width="100%" border="1">
+  <tr>
+    <td colspan="4" align="center" style="background-color: #d9d4d4; font-size: 15px"><label>Fianza Personal</label></td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%; font-size: 14px">
+      Cédula de Identidad: <%= @solicitud_avaluo_fianza.cedula %>
+    </td>
+    <td colspan="3" style="width: 75%; font-size: 14px">
+      Nombre: <%= @solicitud_avaluo_fianza.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="width: 50%; font-size: 14px">
+      Nacionalidad: <%= SolicitudAvaluoFianza.nacionalidad(@solicitud_avaluo_fianza.nacionalidad_id) %>
+    </td>
+    <td colspan="2" style="width: 50%; font-size: 14px">
+      Estado Civil: <%= @solicitud_avaluo_fianza.estado_civil_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify" style="font-size: 14px">
+      Domiciliado en: <%= @solicitud_avaluo_fianza.domicilio.gsub("\n","<br/>") unless @solicitud_avaluo_fianza.domicilio.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4" style="font-size: 14px">
+      Estado: <%= SolicitudAvaluoFianza.estado(@solicitud_avaluo_fianza.estado_id) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="center" style="background-color: #d9d4d4; font-size: 15px"><label>Información del Conyugue</label></td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%; font-size: 14px">
+      Cédula de Identidad: <%= @solicitud_avaluo_fianza.cedula_conyugue %>
+    </td>
+    <td colspan="3" style="width: 75%; font-size: 14px">
+      Nombre: <%= @solicitud_avaluo_fianza.nombre_conyugue %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="width: 50%; font-size: 14px">
+      Nacionalidad: <%= SolicitudAvaluoFianza.nacionalidad(@solicitud_avaluo_fianza.nacionalidad_conyugue_id) %>
+    </td>
+    <td colspan="2" style="width: 50%; font-size: 14px">
+      Estado Civil: <%= @solicitud_avaluo_fianza.estado_civil_conyugue_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="justify" style="font-size: 14px">
+      Domiciliado en: <%= @solicitud_avaluo_fianza.domicilio_conyugue.gsub("\n","<br/>") unless @solicitud_avaluo_fianza.domicilio_conyugue.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4" style="font-size: 14px">
+      Estado: <%= SolicitudAvaluoFianza.estado(@solicitud_avaluo_fianza.estado_conyugue_id) %>
+    </td>
+  </tr>
+
+</table>

@@ -1,0 +1,45 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='boleta_arrime'
+    %>
+      <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Controladores.BoletaArrime.FormTitles.form_title_records')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Controladores.BoletaArrime.FormTitles.form_title_records'), :controller => 'boleta_arrime', :action => 'index', :solicitud_id => @view_boleta_arrime.solicitud_id, :popup=>params[:popup])  if (action_name == 'index') %>
+        </div></li>
+    <%
+    end
+    if @view_boleta_arrime.solicitud_id
+      if controller_name=='desvio_silo'
+      %>
+        <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Vistas.Arrime.HeaderDesvioSilo.form_title')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Arrime.HeaderDesvioSilo.form_title'), :controller => 'desvio_silo', :action => 'index', :solicitud_id => @view_boleta_arrime.solicitud_id, :popup=>params[:popup]) if (action_name == 'index') %>
+          </div></li>
+      <%
+      end
+    end
+    if @view_boleta_arrime.solicitud_id
+      if controller_name=='otro_arrime'
+      %>
+        <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.otros_arrimes')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.otros_arrimes'), :controller => 'otro_arrime', :action => 'index', :solicitud_id => @view_boleta_arrime.solicitud_id, :popup=>params[:popup]) if (action_name == 'index') %>
+          </div></li>
+      <%
+      end
+    end
+  %>
+  </ul>
+</div>

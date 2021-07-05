@@ -1,0 +1,35 @@
+<table>
+	<tr>
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'causa_rechazo', 'nombre', :class=>'text', :style=>'width: 400px', :maxlength=>'80'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_area 'causa_rechazo', 'descripcion', 
+				:class=>'text', 
+				:style=>'width: 580px; height: 60px',
+				:onKeyUp=>'textCounter(this,200)' -%>
+		</td>
+	</tr>	
+    <tr>
+	   <td>
+	       <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+	   </td>
+	   <td>
+			<%= check_box 'causa_rechazo', 'activo',
+			:checked_value=>"1", 
+			:unchecked_value=>"0"
+             -%>
+	    </td>
+    </tr>
+	<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

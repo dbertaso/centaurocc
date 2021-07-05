@@ -1,0 +1,104 @@
+<table class="lista" style="width: 100%">
+    <thead>
+        <tr>
+      		<th style="width: 15%">
+      		    <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.agrupadores') -%>
+       		</th>
+      		<th style="width: 15%" colspan="2">
+      		    <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.vigente') -%>
+       		</th>
+      		<th style="width: 15%" colspan="2">
+      		    <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.vencida') -%>
+       		</th>
+      		<th style="width: 15%" colspan="2">
+      		    Demorada
+       		</th>
+      		<th style="width: 15%" colspan="2">
+      		    <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.litigio') -%>
+       		</th>
+      		<th style="width: 15%" colspan="2">
+      		    <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.reestructurada') -%>
+       		</th>
+      	</tr>
+        <tr>
+      		<th>
+       		</th>
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+          </th>
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+          </th>         
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+          </th>
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+          </th>         
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+          </th>
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+          </th>         
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+          </th>
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+          </th>         
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+          </th>
+          <th>
+            <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+          </th>         
+       		</th>
+      	</tr>
+	</thead>
+	<tbody>
+<% _agrupador = @agrupador if _agrupador.nil? %>    	    	
+<% agrupadores = @agrupadores if agrupadores.nil? %>    	
+    <%  even_odd = 1
+        numero = 0
+    	for agrupador in agrupadores
+    		even_odd = 1 - even_odd
+    		agrupador_contador = Time.now.to_f + numero %>
+            <tr class="lista<%= even_odd %>">
+          		<td style="width: 300px">
+    				<label><%= agrupador[:agrupador].nombre %></label>
+           		</td>
+          		<td>
+    				<%= agrupador[:vigente_cantidad] %>
+           		</td>
+          		<td>
+    				<%= format_fm agrupador[:vigente_monto] %>
+           		</td>
+          		<td>
+    				<%= agrupador[:vencido_cantidad] %>
+           		</td>
+          		<td>
+    				<%= format_fm agrupador[:vencido_monto] %>
+           		</td>
+          		<td>
+    				<%= agrupador[:demorada_cantidad] %>
+           		</td>
+          		<td>
+    				<%= format_fm agrupador[:demorada_monto] %>
+           		</td>
+          		<td>
+    				<%= agrupador[:litigio_cantidad] %>
+           		</td>
+          		<td>
+    				<%= format_fm agrupador[:litigio_monto] %>
+           		</td>
+          		<td>
+    				<%= agrupador[:reestructurado_cantidad] %>
+           		</td>
+          		<td>
+    				<%= format_fm agrupador[:reestructurado_monto] %>
+           		</td>
+          	</tr>
+       <% end %>
+         </tbody>
+     </table>

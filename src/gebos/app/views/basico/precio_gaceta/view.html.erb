@@ -1,0 +1,40 @@
+<%= form_title_view @precio_gaceta.gaceta_oficial %>
+<%= render 'basico/precio_gaceta/common/tabs' %>
+<div class="marco-contenido2">
+  <table>
+    <tr>
+      <td style="width: 150px">
+        <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.gaceta')}"%></label>
+      </td>
+      <td>
+        <%= @precio_gaceta.fecha_vigencia_f unless @precio_gaceta.nil? %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label><%="#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.gaceta')}"%></label>
+      </td>
+      <td>
+        <%= @precio_gaceta.gaceta_oficial.to_s unless @precio_gaceta.nil? %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.Form.estatus')%></label>
+      </td>
+      <td>
+        <%= @precio_gaceta.estatus %>
+      </td>
+    </tr>
+  </table>
+<% unless @precio_gaceta.status == false %>
+  <%= link_to(image_tag(image_path("boton_modificar.gif")),
+    :action => 'edit',
+    :id => @precio_gaceta.id,
+    :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>&ensp;
+<%end%>
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :action => 'index' },
+    { :id=>'button_close' } ) -%>
+
+</div>

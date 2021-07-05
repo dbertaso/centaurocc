@@ -1,0 +1,34 @@
+<table class="lista" style="width: 67%">
+	<thead>
+	<tr>
+		<th style="width: 10%">
+			Fecha
+		</th>
+		<th style="width: 10%">
+			Hora
+		</th>
+		<th style="width: 26%">
+			Motivo
+		</th>
+
+		<th style="width: 26%">
+			Causa de Renuncia / Reestructuración
+		</th>
+		<th style="width: 26%">
+			Observaciones
+		</th>
+		<th style="width: 26%">
+			Acciones
+		</th>
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for detalle in @historial
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_historial', :locals => { :detalle => detalle, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+<br/>
+</table>

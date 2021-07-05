@@ -1,0 +1,27 @@
+<table>
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </td>
+    <td style="width: 200px">
+      <%= text_field 'unidad_medida', 'nombre',
+          :class=>'text', :style=>'width: 150px;',
+          :maxlength=>'30', :onKeyUp=>'textCounter(this,30)',
+          :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Modelos.UnidadMedida.Columnas.abreviatura')%></label>
+    </td>
+    <td style="width: 200px">
+      <%= text_field 'unidad_medida', 'abreviatura',
+          :class=>'text', :style=>'width: 75px;',
+          :maxlength=>'10', :onKeyUp=>'textCounter(this,10)',
+          :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

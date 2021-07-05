@@ -1,0 +1,34 @@
+<td>
+	<%= rechazo_cobranza.fecha.strftime("%Y-%m-%d") if !rechazo_cobranza.fecha.nil? %>
+</td>
+	<%= rechazo_cobranza.usuario if !rechazo_cobranza.usuario.nil? %>
+</td>
+<td>
+	<%= rechazo_cobranza.solicitud_numero if !rechazo_cobranza.solicitud_numero.nil? %>
+</td>
+	<%= rechazo_cobranza.prestamo_numero if !rechazo_cobranza.prestamo_numero.nil? %>
+</td>
+<td>
+	<%= rechazo_cobranza.monto_pago if !rechazo_cobranza.monto_pago.nil? %>
+</td>
+<td>
+	<%= rechazo_cobranza.codigo_error if !rechazo_cobranza.codigo_error.nil? %>
+</td>
+<td>
+	<%= rechazo_cobranza.descripcion_error if !rechazo_cobranza.descripcion_error.nil? %>
+</td>
+
+
+<!-- Descomentar esto para pago proyectado -->
+
+
+<td style="text-align: left">
+   <%= link_to(image_tag('imprimir.gif', :alt=> "Impresión Cobranza Efectuada"), :action => 'index', :controller => 'control_cobranzas', :id => control_cobranza.id )  %>
+    
+</td>
+
+
+<td style="text-align: right">
+   <%= link_to(image_tag('imprimir.gif', :alt=> "Impresión Rechazos Cobranzas"), :action => 'imprimir', :id => control_cobranza.id )  %>&nbsp;
+    
+</td>

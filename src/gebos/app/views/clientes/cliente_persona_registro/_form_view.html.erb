@@ -1,0 +1,152 @@
+<table style="width: 100%">
+  <tr>
+    <% if @persona.cliente_persona.es_pescador == false %>
+      <td><label><%= I18n.t('Sistema.Body.Vistas.General.unidad_produccion') %>:</label></td>
+    <% else %>
+      <td><label><%= I18n.t('Sistema.Body.Vistas.General.puerto_base') %>:</label></td>
+    <% end %>
+    <td>
+      <%= @registro_mercantil.unidad_produccion.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label>
+    </td>
+    <td style="width: 80%">
+      <% if @registro_mercantil.tipo == 'C' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.civil') %>
+      <% elsif @registro_mercantil.tipo == 'M' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.mercantil') %>
+      <% elsif @registro_mercantil.tipo == 'T' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.de_tierras') %>
+      <% elsif @registro_mercantil.tipo == 'H' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.de_hierro') %>
+      <% elsif @registro_mercantil.tipo == 'N' %>
+        <%= I18n.t('Sistema.Body.Vistas.General.naval') %>
+      <% else %>
+        <%= I18n.t('Sistema.Body.Vistas.General.publico') %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.documento_propiedad')}" %>:</label></td>
+    <td>
+      <%= @registro_mercantil.tipo_documento.tipo %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.tenencia_tierra') %>:</label></td>
+    <td>
+      <%= @registro_mercantil.tenencia_unidad_produccion.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')}" %></label>
+    </td>
+    <td>
+      <%= @registro_mercantil.fecha_registro_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')}" %></label>
+    </td>
+    <td>
+      <%= @registro_mercantil.numero %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.tomo')}" %></label>
+    </td>
+    <td>
+      <%= @registro_mercantil.nro_tomo %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.protocolo')}" %></label>
+    </td>
+    <td>
+      <%= @registro_mercantil.nro_protocolo %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}" %></label>
+    </td>
+    <td>
+      <%= @registro_mercantil.nombre_registro %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %>:</label></td>
+    <td>
+      <%= @registro_mercantil.estado.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %>:</label></td>
+    <td>
+      <%= @registro_mercantil.ciudad.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %>:</label>
+    </td>
+    <td>
+      <%= @registro_mercantil.municipio.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.folio_inicial')}" %>l</label>
+    </td>
+    <td>
+      <%= @registro_mercantil.nro_folio_inicial %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.folio_final')}" %></label>
+    </td>
+    <td>
+      <%= @registro_mercantil.nro_folio_final %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.trimestre')}" %></label>
+    </td>
+    <td>
+      <%= @registro_mercantil.nro_trimestre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.año_del_registro')}" %></label>
+    </td>
+    <td>
+      <%= @registro_mercantil.nro_anno %>
+    </td>
+  </tr>
+
+</table>

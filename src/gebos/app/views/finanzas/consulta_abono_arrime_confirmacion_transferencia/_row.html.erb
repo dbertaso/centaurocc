@@ -1,0 +1,4 @@
+<% view_excedente_arrime = @view_excedente_arrime if view_excedente_arrime.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= view_excedente_arrime.orden_abono_excedente_arrime_id %>">
+	<%= render :partial => 'data', :locals => { :view_excedente_arrime => view_excedente_arrime, :even_odd => even_odd } -%>
+</tr>

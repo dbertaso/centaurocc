@@ -1,0 +1,71 @@
+<div style="width: 960px" class="marco-boton-out" id="button_new">
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :check_new, :popup=>params[:popup] } ) do -%>
+  <table align="right" class="tabla-boton-out">
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %></label>
+      </td>
+      <td>
+        <%= text_field_tag 'cedula', '', :class=>'text', :maxlength=>'8', :style=>'width: 70px'  %>
+      </td>
+      <td>
+        <%= image_submit_tag I18n.t('Sistema.Body.Imagenes.agregar'),
+          :id=>'button_add' -%>
+      </td>
+    </tr>
+  </table>
+<% end %>
+</div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list, :popup=>params[:popup] } ) do -%>
+  <table>
+    <tr>
+      <td style="width: 130px">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %></label>
+      </td>
+      <td>
+        <%= text_field_tag 'cedula', '', :class=>'text', :maxlength=>'10', :style=>'width: 60px'  %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 130px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label>
+      </td>
+      <td>
+        <%= text_field_tag 'primer_nombre', '', :class=>'text', :maxlength=>'20', :style=>'width: 120px'  %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 130px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label>
+      </td>
+      <td>
+        <%= text_field_tag 'primer_apellido', '', :class=>'text', :maxlength=>'20', :style=>'width: 120px'  %>
+      </td>
+      <td>
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+      </td>
+    </tr>
+  </table>
+  <% end %>
+
+  <%= error %>
+  <%= message %>
+
+  <div id="list">
+  </div>
+</div>

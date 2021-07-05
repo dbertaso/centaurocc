@@ -1,0 +1,6 @@
+<% catalogo = @catalogo if catalogo.nil? %>
+<tr class="lista<%= even_odd  %>" id="row_<%= catalogo.id %>"
+    onmouseover="this.removeClassName('lista<%=even_odd%>');this.addClassName('tr_over')"
+    onmouseout="this.removeClassName('tr_over');this.addClassName('lista<%=even_odd%>')" >
+  <%= render :partial => 'data', :locals => { :catalogo => catalogo, :even_odd => even_odd } -%>
+</tr>

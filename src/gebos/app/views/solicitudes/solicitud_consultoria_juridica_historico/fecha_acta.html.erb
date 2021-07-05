@@ -1,0 +1,33 @@
+<br></br>
+<div align="center" id ="fecha_acta">
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => { :controller=>"solicitud_consultoria_juridica_historico", :action => :acta_entrega,  :solicitud_id => @solicitud_id_ae } ) do-%>
+    <table class="lista" width="450px">
+      <tr><td colspan="3" height="10px"></td></tr>
+      <tr>
+        <td style="width:40%" align="left"><label><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.fecha_acta_entrega')%></label></td>
+        <td width="50%">
+          <%= calendar_date_select_tag "fecha_ae", @fecha, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', :onkeypress=>'inputChange();' %> 
+          <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+  <%#= text_field_tag 'fecha_ae', '', :class=>'text', :maxlength=>'10', :value =>@fecha,  :style=>'width: 100px'  %>&nbsp;<%#= calendar 'fecha_ae', 'calendar_fecha_ae' %> 
+        </td>
+        <td style="width:5%;align:right"><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.imprimir_grande')) -%></td>
+      </tr>
+      <tr><td colspan="3" >
+          <div align ="center" >
+            <table border="1" bordercolor="gray">
+              <tr>
+                <td align ="center">
+                  <span style="color: blue"><strong><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.recordar_papel')%></strong></span>
+                </td>
+              </tr>
+            </table
+          </div></td></tr>
+
+    </table>
+  <% end %>
+  <br></br>
+</div>

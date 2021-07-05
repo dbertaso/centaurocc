@@ -1,0 +1,38 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title') %>
+      </th>
+      
+      <th style="width: 15%">
+        <%= I18n.t('Sistema.Body.Vistas.General.numero') %>
+      </th>
+
+      <th style="width: 15%">
+        <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.emision')}" %>
+      </th>
+
+      <th style="width: 15%">
+        <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.en')} #{I18n.t('Sistema.Body.Vistas.General.que')} #{I18n.t('Sistema.Body.Vistas.General.caduca')}" %>
+      </th>
+
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.usuario') %>
+      </th>
+
+      <th style="width: 10%">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>	
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for proforma in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :proforma => proforma, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

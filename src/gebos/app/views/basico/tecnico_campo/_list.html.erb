@@ -1,0 +1,41 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 100px" <%= sort_class_helper('tecnico_campo.primer_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'tecnico_campo.primer_nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('tecnico_campo.primer_apellido') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.apellido'), 'tecnico_campo.primer_apellido', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('tecnico_campo.cedula') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cedula'), 'tecnico_campo.cedula', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('tecnico_campo.estado_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'tecnico_campo.estado_id', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('tecnico_campo.oficina_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.oficina'), 'tecnico_campo.oficina_id', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('tecnico_campo.codigo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.codigo'), 'tecnico_campo.codigo', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('tecnico_campo.carga_trabajo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nro_tramites_asignados'), 'tecnico_campo.carga_trabajo', 'list' %>
+      </th>
+
+      <th style="width: 70px" >
+         <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for tecnico_campo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :tecnico_campo =>tecnico_campo, :even_odd => even_odd } -%>
+
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

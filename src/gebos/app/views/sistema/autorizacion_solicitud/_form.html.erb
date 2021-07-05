@@ -1,0 +1,39 @@
+<table>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.AutorizacionSolicitud.Etiquetas.tipo_transaccion')%></label></td>
+    <td>
+      <%= select(
+        'autorizacion', 'opcion_accion_id',
+        @opcion_accion_list.map{|e| [e.autorizacion_nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+  <label id="fechaAct" style="display: none;"> <%= Date.today.year -%> </label>
+  <td><label><%=  I18n.t('Sistema.Body.Vistas.General.monto')%></label></td>
+  <td>
+    <%= text_field 'autorizacion', 'monto_f',
+      :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+      :onkeypress=>'inputChange();',
+      :onchange=>'inputChange();',
+      :onkeyup=>"formatCurrency(this.value, 'autorizacion_monto');"  -%><span id="autorizacion_monto_f_moneda">Bs.</span>
+    <%= display_number @autorizacion.monto, 'autorizacion_monto' %>
+  </td>
+</tr>				
+<tr>
+  <td><label><%= I18n.t('Sistema.Body.Vistas.AutorizacionSolicitud.Etiquetas.prestamo_numero')%></label></td>
+  <td>
+    <%= text_field 'autorizacion', 'prestamo_numero',
+      :class=>'text', :onkeypress=>'inputChange();', :style=>'width: 100px', :maxlength=>'16'  -%>
+  </td>
+</tr>
+<tr>
+  <td colspan="2"><br>
+    <label><font color="red" size="1" ><b><%= I18n.t('Sistema.Body.Vistas.AutorizacionSolicitud.Etiquetas.mensaje')%></b></font></label>
+    <br><br>
+  </td>
+</tr>
+
+</table>
+

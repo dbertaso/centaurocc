@@ -1,0 +1,41 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando') %> <%= "#{I18n.t('Sistema.Body.General.beneficiario')} #{I18n.t('Sistema.Body.Vistas.General.juridico')}" %> <span class="titulo_modificar">'<%= @empresa.alias %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'clientes/cliente_empresa/common/tabs' %>
+<div class="marco-contenido2">
+
+  <div class="marco-boton-in" style="padding-bottom: 26px" id="button_new"> 
+    <%= form_remote_tag(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :url => { :action => :check_new, :empresa_id => @empresa.id, :popup=>params[:popup] } ) do -%>
+      <table align="right" class="tabla-boton-out">
+        <tr>
+          <td>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %></label>
+          </td>
+          <td>
+            <%= text_field_tag 'cedula', '', :class=>'text', :maxlength=>'8', :style=>'width: 60px'  %>
+          </td>
+          <td>
+            <%= image_submit_tag I18n.t('Sistema.Body.Imagenes.agregar'),
+              :id=>'button_add' -%>
+          </td>
+        </tr>
+      </table>
+      <br/>
+    <% end %>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div id="list">
+    <%= render :partial=>"list" %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller => 'cliente_empresa', :action => :index, :popup=>params[:popup] },
+    { :id=>'button_close' } ) -%>
+</div>

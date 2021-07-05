@@ -1,0 +1,84 @@
+<script LANGUAGE="JavaScript">
+function formatCurrency(num, name) {
+   
+    num = num.toString().replace(/\$|\,/g,'.');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'.'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + ',' + cents);
+    $(name + '_display').innerHTML = numero;
+    
+}
+</script>
+<table style="width: 100%">
+
+
+      <tr><td class="separador" valign="bottom" colspan="3">
+			    			<span>
+	  <table style="width: 100%">
+            <tr>
+              <td>
+            <%= I18n.t('Sistema.Body.Vistas.CondicionesAnalisisCredito.Form.desembolsos') %>
+              </td>
+              <td align='right'>
+            
+
+              </td>
+            </tr>
+          </table></span>
+                           
+			    		</td></tr>
+	
+        <tr>
+		
+		<td style="width: 940px" colspan="2">
+			<%= text_area 'condicionamientos_narrativa_libre', 'condicionamientos_financiamiento', :class=>'text', :style=>'width: 950px', :rows => 15, :onkeypress=>'inputChange();' -%>
+                      
+		</td>
+	</tr>
+<tr><td class="separador" valign="bottom" colspan="3">
+			    			<span>
+	  <table style="width: 100%">
+            <tr>
+              <td>
+             <%= I18n.t('Sistema.Body.Vistas.CondicionesAnalisisCredito.Form.financiamiento') %>
+              </td>
+              <td align='right'>
+            
+
+              </td>
+            </tr>
+          </table></span>
+                           
+			    		</td></tr>
+	
+        <tr>
+		
+		<td style="width: 940px" colspan="2">
+			<%= text_area 'condicionamientos_narrativa_libre', 'condicionamientos_desembolso', :class=>'text', :style=>'width: 950px', :rows => 15, :onkeypress=>'inputChange();' -%>
+                      
+		</td>
+	</tr>
+      
+	<tr>
+		<td colspan="2" style="text-align: left">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save', :onkeypress=>'inputChange();') -%>
+			   </td>
+			<td></td>
+			<td></td>
+			<td></td>
+		    </tr>
+		  </table>

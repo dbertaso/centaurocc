@@ -1,0 +1,14 @@
+           <%sub_rubro_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'orden_despacho_consulta',
+            :action=>:sub_rubro_change },
+            :with=>"'id='+value") %>
+
+
+<%= select(
+  'sub_rubro_id', '',
+  @sub_rubro_list.map{|c| [c.nombre, c.id]},
+ {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+  { :class=>'select', :onchange=>sub_rubro_onchange + ';inputChange();' } ) %>

@@ -1,0 +1,59 @@
+<div class="marco-contenido">
+
+    <div class="marco-titulo">
+      <div>
+        <div>
+          <%= t('Sistema.Body.Vistas.General.prestamo')%>
+          <span class="titulo_modificar">'
+            <%= @prestamo.numero %> <%= " - #{t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+          </span> <%= "#{t('Sistema.Body.Vistas.General.del')} #{t('Sistema.Body.General.beneficiario')}" %>
+          <span class="titulo_modificar">'
+            <%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @prestamo.cliente.empresa.nombre : @prestamo.cliente.persona.nombre_corto  %>'
+          </span>
+        </div>
+      </div>
+    </div>
+
+  <%= render 'prestamos/consulta_prestamo/common/tabs' %>
+  <div class="marco-contenido2">
+    
+    <%= render :partial => 'datos_generales' %>
+    
+    &nbsp;&nbsp;&nbsp;
+    
+    <%= render :partial => 'deuda_exigible' %>
+    
+    <% logger.info "facturas_desembolso ======> #{@facturas_desembolso.inspect}" %>
+    <% unless @facturas_desembolso.empty?%>
+    &nbsp;&nbsp;&nbsp;
+    
+      <%= render :partial=>'desembolsos' %>    
+    <%end%>
+
+    <% unless @facturas_pago.nil?%>
+      &nbsp;&nbsp;&nbsp;
+      
+      <%= render :partial=>'pagos' %> 
+    <%end%>
+    
+    &nbsp;&nbsp;&nbsp;
+    
+    <%= render :partial=>'excedente' %>
+    
+    <% unless @cronograma_pagos.nil?%>
+      <%= render :partial=>'cronograma_pagos' %>
+    <%end%>
+  
+    <%= render :partial=>'ordenes_despacho' %>
+
+    &nbsp;&nbsp;&nbsp;
+    <%= render :partial=>'estadisticas' %>
+
+    <br>
+    <%= render :partial=>'botones' %>
+    <br>
+    <br>
+    <br>
+  </div>
+</div>
+

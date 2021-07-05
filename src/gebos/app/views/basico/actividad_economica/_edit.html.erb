@@ -1,0 +1,23 @@
+<tr id="row_<%= @actividad_economica.id %>_edit">
+	<td class="lista-form" colspan="4">
+	
+		<%= form_title_edit @actividad_economica.descripcion %>
+	
+		<%= error "row_#{@actividad_economica.id}" %>
+	
+		<%= form_remote_tag(
+		  :loading =>'image_load()',
+			:loaded => 'image_unload()',
+		  :url => { :action => :save_edit, :id => @actividad_economica.id } ) -%>
+					<%= render :partial => 'form' %>
+					<%= link_to_remote(
+		        image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar'))),
+					  :loading =>'image_load()',
+						:loaded => 'image_unload()',
+		        :url => { :action => :cancel_edit, :id => @actividad_economica.id}) -%>
+			   </td>
+		    </tr>
+		  </table>
+		<%= end_form_tag -%>
+	</td>
+</tr>

@@ -1,0 +1,21 @@
+<div id="tabs">
+  <ul>
+<%
+  action_name = controller.action_name
+  controller_name = controller.controller_name
+  if controller_name=='consulta_prestamo_factura'
+%>
+    <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.eventos_financieros') %></a></div></li>
+<%
+  else
+%>
+    <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.eventos_financieros'), :controller => 'consulta_prestamo_factura', :action => 'edit', :popup=>params[:popup], :id => @prestamo.id) if (action_name == 'index') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.eventos_financieros'), :controller => 'consulta_prestamo_factura', :action => 'view', :popup=>params[:popup], :id => @prestamo.id) if (action_name=='view' || action_name=='view_detail') %>
+    </div></li>
+<%
+  end
+
+%>
+  </ul>
+</div>

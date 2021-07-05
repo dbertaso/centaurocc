@@ -1,0 +1,30 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 200px" <%= sort_class_helper('codigo_visita') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Columnas.visita')}", 'codigo_visita', 'list' %>
+      </th>
+      <th style="width: 200px" <%= sort_class_helper('fecha_visita') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Columnas.visita')}, 'fecha_visita', 'list' %>
+      </th> 	
+      <th style="width: 250px" <%= sort_class_helper('motivo_visita_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Controladores.MotivoVisita.FormTitles.form_title'), 'motivo_visita_id', 'list' %>
+      </th> 			 			
+      <th style="width: 230px">
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sector'), 'sector', 'list' %>
+      </th>
+      <th style="width: 120px">
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for seguimiento_visita in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :seguimiento_visita => seguimiento_visita, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

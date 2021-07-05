@@ -1,0 +1,43 @@
+<table class="lista" style="table-layout:fixed;width: 100%">
+  <thead>
+    <tr>
+      <th colspan="8"><label style="color: red; font-size: 13px"><%= "#{I18n.t('Sistema.Body.Vistas.General.maquinaria')} #{I18n.t('Sistema.Body.Vistas.General.que').downcase} #{I18n.t('Sistema.Body.Vistas.General.posee')} #{I18n.t('Sistema.Body.General.el').downcase} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label></th>
+    </tr>
+    <tr>
+      <th  <%= sort_class_helper('clase') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.clase'), 'clase', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('cantidad') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cantidad'), 'cantidad', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('marca') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.marca'), 'marca', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('modelo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.modelo'), 'modelo', 'list' %>
+      </th> 
+      <th  <%= sort_class_helper('anio') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.año'), 'anio', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('condicion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.condicion'), 'condicion', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('tenencia') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.tenencia'), 'tenencia', 'list' %>
+      </th> 	 	 	 	
+      <th style="width: 44px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for unidad_produccion_maquinaria in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :unidad_produccion_maquinaria => unidad_produccion_maquinaria, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,99 @@
+<table>
+  <tr>
+    <td style="width: 60px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'recaudo', 'nombre', :class=>'text', :style=>'width: 500px'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.General.descripcion') %></label>
+    </td>
+    <td>
+      <%= text_area 'recaudo', 'descripcion',
+        :class=>'text',
+        :style=>'width: 580px; height: 60px',
+        :onKeyUp=>'textCounter(this,1000)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.obligatorio') %></label>
+    </td>
+    <td>
+      <%= check_box 'recaudo', 'obligatorio',
+        :checked_value=>"1",
+        :unchecked_value=>"0"
+      -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'recaudo', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0"
+      -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo_cliente') %></label>
+    </td>
+    <td style="width: 75%">
+      <% @tipo_cliente_list = TipoCliente.find(:all, :order=>'nombre') %>
+      <%= select(
+        'recaudo', 'tipo_cliente_id',
+        @tipo_cliente_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label>
+    </td>
+    <td style="width: 75%">
+
+      <%= select(
+        'recaudo', 'sector_id',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method => :get,
+          :url=>{:controller=>'recaudo',
+          :action=>:sector_change },
+          :with=>"'sector_id='+ this.value" )};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %></label>
+    </td>
+    <td style="width: 75%">
+      <div id="sub-sector-select">
+        <%= select(
+          'recaudo', 'sub_sector_id',
+          @sub_sector_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+

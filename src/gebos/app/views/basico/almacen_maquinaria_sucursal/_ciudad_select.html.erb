@@ -1,0 +1,4 @@
+<%= select('almacen_maquinaria_sucursal', 'ciudad_id', 
+  (@ciudad_select.map{|i| [i.nombre, i.id]}),
+  { :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+  { :class=>'select', :onchange=> 'inputChange();' } ) %>

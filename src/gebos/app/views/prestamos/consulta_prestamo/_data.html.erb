@@ -1,0 +1,52 @@
+<td align="center">
+  <%= prestamo.numero_solicitud %>
+</td>
+<td align="center">
+  <%= prestamo.numero %>
+</td>
+
+<td align="center">
+  <%= prestamo.identificacion %>
+  <%#prestamo.cliente.empresa.rif :
+    prestamo.cliente.persona.cedula_nacionalidad.to_s + " " + prestamo.cliente.persona.cedula.to_s %>
+</td>
+<td align="center">
+  <%= prestamo.nombre_cliente %>
+  <%#= prestamo.cliente.class.to_s=='ClienteEmpresa' ?
+    prestamo.cliente.empresa.alias : prestamo.cliente.persona.nombre_corto %>
+</td>
+<td align="center">
+  <%= prestamo.rubro_nombre %>
+</td>
+<td align="center">
+  <span style="color: #FF0000">
+    <b><%= estatus_prestamo(prestamo.estatus_p) %></b>
+      <%#= prestamo.estatus_w.to_s + " " + prestamo.solicitud.sufijo_estatus_w.to_s %>
+  </span>
+</td>
+<td align="center">
+  <%=  prestamo.estado_nombre %>
+</td>
+
+<td align="center">
+  <%= prestamo.moneda_nombre + " - " + prestamo.moneda_abreviatura %>
+</td>
+<td align="right">
+  <%= format_fm(prestamo.saldo_insoluto) %>
+</td>
+<td align="right">
+  <%= format_fm(prestamo.deuda) %>
+</td>
+<td style="text-align: center">
+
+   <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), :action => 'view', :id => prestamo.id )  %>&nbsp;
+   <%if prestamo.estatus_p == 'C'%>
+
+<!-- comentado debido a que hay que rectificar las nuevas clases-->
+<%= link_to(I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Enlaces.finiquito'), {:action=>'imprimir', :popup=>true, :id => prestamo.id}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>prestamo.id) + "',
+'height=600,width=1120,left=80,top=200, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+   <%end%>
+
+</td>

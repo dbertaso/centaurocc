@@ -1,0 +1,28 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 5%">
+      </th>
+      <th style="width: 10%">
+        <%= I18n.t('Sistema.Body.Vistas.General.numero')%>
+      </th>
+      <th style="width: 45%">
+        <%= I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.tabla')%>
+      </th>
+      <th style="width: 30%">
+        <%=I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.accion')%>
+      </th>
+      <th style="width: 10%">
+        <%= I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.id_registro')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for transaccion_accion in @transaccion.acciones
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row_accion', :locals => { :transaccion_accion => transaccion_accion, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>

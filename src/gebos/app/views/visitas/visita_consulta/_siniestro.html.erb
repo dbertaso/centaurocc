@@ -1,0 +1,82 @@
+<%
+
+    @seguimiento_visita=SeguimientoVisita.find_by_id(params[:id])
+
+    @siniestro = Siniestro.find_by_seguimiento_visita_id(@seguimiento_visita.id)
+
+    unless @siniestro.nil?
+
+    siniestradas       = 0
+    sembrada_adquirida = 0
+    aprobadas          = 0
+
+   
+      if @seguimiento_visita.Solicitud.sub_sector.nemonico=="AN"
+
+        siniestradas        = @siniestro.hectareas_siniestradas.to_s << " Has " if !@siniestro.hectareas_siniestradas.nil?
+        siniestradas        = siniestradas.to_s << " / " << @siniestro.unidades_siniestradas.to_s << " Unidades " if !@siniestro.unidades_siniestradas.nil?
+
+        pastizales_potreros = PastizalesPotreros.find_by_seguimiento_visita_id(@siniestro.seguimiento_visita_id)
+        sembrada_adquirida  = pastizales_potreros.superficie.to_s << " Has " if !pastizales_potreros.nil?
+
+        semoviente         = Semovientes.find_by_seguimiento_visita_id(@siniestro.seguimiento_visita_id)
+        sembrada_adquirida = sembrada_adquirida << " / " << (semoviente.cant_machos.to_i + semoviente.cant_hembras.to_i).to_s << " Unidades " if !semoviente.nil?
+
+        aprobadas          = @seguimiento_visita.Solicitud.semovientes_recomendados_f << " Unidades "
+        
+      elsif @seguimiento_visita.Solicitud.sub_sector.nemonico=="VE"
+        
+        siniestradas        = @siniestro.hectareas_siniestradas.to_s << " Has "
+        seguimiento_cultivo = SeguimientoCultivo.find_by_seguimiento_visita_id(@siniestro.seguimiento_visita_id)
+        sembrada_adquirida  = seguimiento_cultivo.superficie_sembrada.to_s << " Has " if !seguimiento_cultivo.nil?
+        aprobadas           = @seguimiento_visita.Solicitud.hectareas_recomendadas_f << " Has "
+
+      end
+    
+
+%>
+
+<tr>
+  <td class="separador" valign="bottom" colspan="2">
+    <span>Siniestro</span>
+  </td>
+</tr>
+
+<tr>
+  <td><label>Fecha de Notificaci&oacute;n</label></td>
+  <td><%=@siniestro.fecha_notificacion_f unless @siniestro.nil? %></td>
+</tr>
+
+<% unless @seguimiento_visita.Solicitud.sub_sector.nemonico=="AC" || @seguimiento_visita.Solicitud.sub_sector.nemonico=="PE" %>
+<tr>
+  <td><label>Superficie / Unidades Aprobadas</label></td>
+  <td><%=aprobadas%></td>
+</tr>
+<% end %>
+
+<% unless @seguimiento_visita.Solicitud.sub_sector.nemonico=="AC" || @seguimiento_visita.Solicitud.sub_sector.nemonico=="PE" %>
+<tr>
+  <td><label>Superficie Sembrada / Unidades Adquiridas</label></td>
+  <td><%=sembrada_adquirida%></td>
+</tr>
+<% end %>
+
+<% unless @seguimiento_visita.Solicitud.sub_sector.nemonico=="AC" || @seguimiento_visita.Solicitud.sub_sector.nemonico=="PE" %>
+<tr>
+  <td><label>Superficie / Unidades Siniestrada</label></td>
+  <td><%=siniestradas%></td>
+</tr>
+<% end %>
+
+<tr>
+  <td><label>Causa del Siniestro</label></td>
+  <td><%=CausaSiniestro.find(@siniestro.causa_siniestro_id).descripcion %></td>
+</tr>
+
+<tr>
+  <td><label>Descripci&oacute;n del Siniestro</label></td>
+  <td><%=@siniestro.descripcion_siniestro-%></td>
+</tr>
+
+
+<%  end %>

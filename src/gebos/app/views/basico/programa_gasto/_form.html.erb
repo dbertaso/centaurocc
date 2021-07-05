@@ -1,0 +1,42 @@
+
+<table>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Modelos.ProgramaGasto.Columnas.tipo_gasto')%>:</label>
+    </td>
+    <% if controller.action_name  == 'new' %>
+      <td>
+        <%= select(
+          'programa_tipo_gasto', 'tipo_gasto_id',
+          @tipo_gasto_select.map{|e| [e.nombre, e.id]},
+          { },
+          { :class=>'select'} ) %>
+      </td>
+    <% else %>
+      <td>
+        <%=@programa_tipo_gasto.tipo_gasto.nombre %>
+      </td>
+    <% end %>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ProgramaGasto.Columnas.porcentaje')%>:</label>
+    </td>
+    <td>
+      <%= text_field 'programa_tipo_gasto', 'porcentaje', :class=>'text', :style=>'width: 40px', 
+        :maxlength=>'5' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ProgramaGasto.Columnas.monto_fijo')%>:</label>
+    </td>
+    <td>
+      <%= text_field 'programa_tipo_gasto', 'monto_fijo', :class=>'text', :style=>'width: 100px', :maxlength=>'16', :onkeyup =>"inputChange(); formatCurrency(this.value, 'programa_tipo_gasto_monto_fijo')" -%> Bs.
+      <%= display_number @programa_tipo_gasto.monto_fijo, 'programa_tipo_gasto_monto_fijo' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-10" />
+
+
+  </head>
+  <script type="text/javascript">
+    function imprime(){
+      //desaparece el boton
+      document.getElementById("noprint").style.visibility='hidden';
+      //se imprime la pagina
+      print();
+      setTimeout("showlayer()",2000);
+
+    }
+    function showlayer(){
+      document.getElementById("noprint").style.visibility='visible';
+    }
+
+  </script>
+  <body>
+
+    <br></br>
+
+    <table width="950">
+      <tr>
+        <td width="70" rowspan="3"><img src="<%=image_path('agricultura y tierras.jpg')%>" width="400" height="120" align="right" /></td>
+        <td colspan="6">&nbsp;</td>
+        <td width="70"><img src="<%=image_path('logo_institucion.png')%>" width="200" height="120" align="left" /></td>
+      </tr>
+      <tr>
+        <td width="70" colspan="8" >&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="70" colspan="8">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="8"><div align="center"><font size="5"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.recepcion_producto')%></label></font></div></td>
+      </tr>
+      <tr>
+        <td colspan="8" ><div align="center"><font size="5"><label><%=@boleta_arrime.rubro.nombre %></label></font></p></div></td>
+      </tr>
+      <tr>
+        <td colspan="8" ><div align="center"><font size="5"><label><%=@boleta_arrime.actividad.nombre %></label></font></p></div></td>
+      </tr>
+    </table>
+
+    <br></br>
+    <table width="600" border="1" align="center">
+      <tr>
+        <td width="150"><label><%=I18n.t('Sistema.Body.Vistas.Form.silo')%></label></td>
+        <td width="120"> <%=@boleta_arrime.silo.nombre.to_s %></td>
+        <td width="170"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.numero_boleta')%></label> </td>
+        <td colspan="" width="120"><%=@boleta_arrime.numero_ticket unless @boleta_arrime.nil?%></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.rif')%></label></td>
+        <td> <%=@boleta_arrime.silo.rif %></td>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.ciclo')%></label> </td>
+        <td><%= @boleta_arrime.ciclo_productivo.nombre unless @boleta_arrime.ciclo_productivo.nil?%></td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.hora_registro')%></label></td>
+        <td><%= @boleta_arrime.hora_registro_f unless @boleta_arrime.nil?%></td>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.hora_entrada')%> </label></td>
+        <td><%= @boleta_arrime.hora_entrada_silo_f unless @boleta_arrime.hora_entrada_silo_f.nil?%></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.placa_vehiculo')%></label> </td>
+        <td><%= @boleta_arrime.placa_vehiculo unless @boleta_arrime.nil?%></td>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.guia')%></label></td>
+        <td><%= @boleta_arrime.guia_movilizacion unless @boleta_arrime.nil?%></td>
+      </tr>
+
+    </table>
+    <p>&nbsp;</p>
+    <table width="950" border="1" align="center">
+      <tr>
+        <td width="6"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.asociacion')%></label></td>
+        <td width="20"><%=I18n.t('Sistema.Body.General.banco_origen')%></td>
+        <td width="20"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.cedula_conductor')%></label></td>
+        <td width="20"><%= @boleta_arrime.cedula_conductor unless @boleta_arrime.nil?%></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.doc_beneficiario')%> </label></td>
+        <td><%= @view_boleta_arrime.cedula_rif %></td>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nombre_conductor')%></label></td>
+        <td><%= @boleta_arrime.nombre_conductor unless @boleta_arrime.nil? %></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.beneficiario')%></label></td>
+        <td> <%= @view_boleta_arrime.productor%></td>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.posee_arrime_conjunto')%></label></td>
+        <td>
+          <% unless @boleta_arrime.nil?%>
+            <% if @boleta_arrime.arrime_conjunto == true %>
+              <%= image_tag('activo.gif')%> <%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%>
+            <%elsif @boleta_arrime.arrime_conjunto == false %>
+              <%= image_tag('inactivo.gif') %> <%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%>
+            <%end%>
+          <%end%>
+        </td>
+      </tr>
+    </table>
+
+    <p>&nbsp;</p>
+    <table width="800" border="1" align="center">
+      <tr>
+        <td colspan="7"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_del_peso')%></label></div></td>
+      </tr>
+      <tr>
+        <td width="180">&nbsp;</td>
+        <td width="180"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.fecha')%></label></div></td></td>
+        <td width="200"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.hora')%></label></div></td>
+        <td width="100" colspan="2"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.peso_total_vehiculo')%></label></div></td>
+      </tr>
+      <tr>
+        <td><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.entrada')%></label> </div></td>
+        <td><div align="center"><%= format_fecha(@boleta_arrime.fecha_entrada) unless @boleta_arrime.nil?%></div></td>
+        <td><div align="center"><%= @boleta_arrime.hora_entrada_peso_f unless @boleta_arrime.nil?%></div></td>
+        <td colspan="2"><div align="center">
+            <%unless @boleta_arrime.nil?%>
+              <%= format_fm(@boleta_arrime.valor_total_entrada)%>
+            <%end%> &nbsp;
+          </div></td>
+      </tr>
+      <tr>
+        <td><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.salida')%></label> </div></td>
+        <td><div align="center"><%= format_fecha(@boleta_arrime.fecha_salida) unless @boleta_arrime.nil?%></div></td>
+        <td><div align="center"><%= @boleta_arrime.hora_salida_peso_f unless @boleta_arrime.nil?%></td>
+        <td colspan="2"><div align="center">
+            <%unless @boleta_arrime.nil?%>
+              <%= format_fm(@boleta_arrime.valor_total_salida)%>
+            <%end%> &nbsp;
+          </div></td>
+      </tr>
+      <tr>
+        <td colspan="3"><div align="right"><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_neto')%></label> </div></td>
+        <td colspan="2"><div align="center">
+            <%unless @boleta_arrime.nil?%>
+              <%= format_fm(@boleta_arrime.peso_neto)%>
+            <%end%> &nbsp;
+          </div></td>
+      </tr>
+      <tr>
+        <td><div align="right"><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_acondicionado')%></label> </div></td>
+        <td><div align="center">
+            <%unless @boleta_arrime.nil?%>
+              <%= format_fm(@boleta_arrime.peso_acondicionado)%>
+            <%end%> &nbsp;
+          </div>
+        </td>
+        <td colspan="2"><div align="right"><label><%= I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.peso_acondicionado_liquidar')%></label> </div></td>
+        <td><div align="center">
+            <%unless @boleta_arrime.nil?%>
+              <%= format_fm(@boleta_arrime.peso_acondicionado_liquidar)%>
+            <%end%> &nbsp;
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.precio')%></label> </div></td>
+        <td align="center"><%unless @view_precio_gaceta.nil?%>
+            <%= format_fm(@view_precio_gaceta.valor)%>
+          <%end%>&nbsp;</td>
+        <td><div align="center"><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.monto_arrime')%></label> </td>
+        <td colspan="2" align="center"><%unless @boleta_arrime.nil?%>
+            <%= format_fm(@boleta_arrime.valor_arrime)%>
+          <%end%> &nbsp; </td>
+      </tr>
+    </table>
+    <br/>
+    <br></br>
+    <div id="formulario-laboratorio" align="center">
+      <% 
+      if params[:action].to_s == "imprimir"
+        @laboratorio_arroz = BoletaLaboratorioArroz.find_by_boleta_arrime_id(@boleta_arrime.id)
+      end
+    %>
+
+      <% unless @laboratorio_arroz.nil? %>
+        <%= render :partial => 'view_imprimir_boleta_arroz' %>
+      <%end%>
+    </div>
+
+    <p>&nbsp;</p>
+    <table width="950" border="1" align="center">
+      <tr>
+        <td width="15%"><label><%=I18n.t('Sistema.Body.Vistas.General.resultado')%></label></td>
+        <td width="35%">
+          <%unless @boleta_arrime.nil?%>
+
+            <% if  @boleta_arrime.resultado == 'A' %>
+              <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%>
+
+            <% else  @boleta_arrime.resultado == 'R' %>
+              <%=I18n.t('Sistema.Body.General.rechazado')%>
+
+            <%end%>
+          <%end%> &nbsp;
+        </td>
+
+        <td width="15%"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.tipo_clase')%></label></td>
+        <td width="35%">
+          <%unless @view_precio_gaceta.nil?%>
+            <% unless @view_boleta_arrime.nil? || @view_boleta_arrime.to_s.empty? %>
+              <% if @view_precio_gaceta.tipo_clase == 'A' %>
+                <%=I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.tipo_a')%>
+              <% elsif @view_precio_gaceta.tipo_clase == 'B' %>
+                <%=I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.tipo_b')%>
+              <%end%>
+            <%end%>
+          <%end%> &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td width="25"><label><%=I18n.t('Sistema.Body.Vistas.General.observacion')%></label></td>
+        <td colspan="3" width="75"><p><%=  @boleta_arrime.causa.to_s unless @boleta_arrime.causa.nil? %></p> </td>
+      </tr>
+    </table>
+
+    <br/><br/>
+
+    <table width="950" border="1" align="center">
+      <tr>
+        <td colspan="4" ><p>&nbsp;</p></td>
+        <td colspan="5"><p>&nbsp;</p></td>
+      </tr>
+      <tr>
+        <td colspan="4" width="120"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.firma_casa')%></label></div></td>
+        <td colspan="5"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.firma_conductor')%></label></div></td>
+      </tr>
+
+      <tr>
+        <td colspan="9"><div align="center">
+            <br><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.original_analisis')%></label></br>
+            <br><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.tipo_ticket')%></label></br>
+          </div><div align="center"></div></td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+
+
+    <div id="noprint">
+      <table width="93%" cellpadding="2">
+        <tr align="center">
+          <td><input id="imprimir" name="imprimir" onclick="Javascript:imprime()" type="button" value="Imprimir" /></td>
+        </tr>
+      </table>
+    </div>
+
+  </body>
+
+</html>

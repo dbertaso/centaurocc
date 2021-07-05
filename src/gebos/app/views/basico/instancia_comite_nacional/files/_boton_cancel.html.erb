@@ -1,0 +1,7 @@
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save' ) -%>&nbsp;
+
+	<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+		:loading =>'image_load()',
+		:loaded => 'image_unload()',
+        :method=>:get,
+	    :url => { :action => :cancel_comite, :comite_id => @comite.id}) -%>&nbsp;

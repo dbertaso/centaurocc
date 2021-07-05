@@ -1,0 +1,5 @@
+<%= select(
+      'persona', 'actividad_economica_id',
+      @actividad_economica_select.map{|c| [c.descripcion, c.id]},
+      { :include_blank => true},
+      { :class=>'select', :onchange=>'inputChange();' } ) %>

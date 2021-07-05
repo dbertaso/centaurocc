@@ -1,0 +1,27 @@
+<div class="marco-contenido2">
+
+  <% if flash[:notice]%>
+    <div id="message" class="msg-notice" style="display: block; text-align: center;">
+    <%=flash[:notice]%>
+    </div>
+  <% end %>
+  <%= error %>
+
+
+    <div id='error'>
+      <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>
+    </div>
+    <tr >
+      <td class="lista-form" colspan="2">
+
+        <%= form_remote_tag(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :url => { :action => :save_edit }) do -%>
+
+          <%= render :partial => 'form' %>
+        <% end -%>
+      </td>
+    </tr>
+  </div>
+</div>

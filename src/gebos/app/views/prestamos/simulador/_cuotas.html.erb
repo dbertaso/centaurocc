@@ -1,0 +1,40 @@
+<%
+even_odd = 1
+logger.info "Cuotas =========> #{cuotas.inspect}"
+for cuota in cuotas
+  even_odd = 1 - even_odd
+  color = even_odd==0 ? dark : clear
+-%>
+  <tr id="cuota_<%= cuota.numero %>" class="lista<%= even_odd %>" style="background-color: #<%= color %>"
+    onclick="click_cuota('<%= cuota.numero %>');">
+    <td>
+    </td>
+    <td style="text-align: center">
+      <%= cuota.numero_real %>
+    </td>
+    <td style="text-align: center">
+      <%= cuota.fecha_f %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.monto_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.interes_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.amortizado_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.interes_diferido_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.pago_total_cliente_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.saldo_fm %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.tasa_f %>
+    </td>
+  </tr>
+<% end -%>

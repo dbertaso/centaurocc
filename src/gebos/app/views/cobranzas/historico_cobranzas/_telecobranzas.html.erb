@@ -1,0 +1,104 @@
+    <table id="tele">
+      <tr>
+
+        <td valign="top" style="font-family: verdana; font-size: 14px; background-color: #D7D7D7; font-weight: bold;color: #000; padding-left: 10px; width: 200px; text-align: center" colspan="2">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.telecobranzas') %>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <br>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.General.telefono') %>
+          </label>
+        </td>
+        <td>
+          <%= "#{@telefono.codigo.to_s} - #{@telefono.numero.to_s} - #{@telefono.tipo_nombre.to_s}" %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.resultado_llamada') %>
+          </label>
+        </td>
+        <td>
+          <%= @telecobranzas.llamada_infructuosa.descripcion unless @telecobranzas.llamada_infructuosa.nil? %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.persona_atendio') %>
+          </label>
+
+        </td>
+        <td>
+          <%= @telecobranzas.persona_atendio.descripcion unless @telecobranzas.persona_atendio.nil?%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.motivo_atraso') %>
+          </label>
+        </td>
+        <td>
+          <%= @telecobranzas.motivos_atraso.descripcion unless @telecobranzas.motivos_atraso.nil? %>
+          </td>
+      </tr>
+
+      <tr>
+        <td style="width: 35%" valign="top">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.compromiso')%>:
+          </label>
+        </td>
+        <td colspan="2">
+          <%= format_bool(@telecobranzas.senal_compromiso) unless @telecobranzas.nil? -%>
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.observacion') %></label>
+        </td>
+
+        <td>
+          <%= @telecobranzas.observacion  %>
+        </td>
+
+      </tr>
+
+    </table>
+    <br >
+    <br >
+
+    <% if @telecobranzas.senal_compromiso %>
+      <div id = 'compromiso_pago' style=" width: 100%;">
+
+        <table id="compromiso" style="width: 100%">
+          <tr>
+
+            <td valign="top" style="font-family: verdana; font-size: 14px; background-color: #D7D7D7; font-weight: bold; color: #000; padding-left: 4px; text-align: center" colspan="3">
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.compromiso_pago') %>
+              </label>
+            </td>
+            <td>
+            </td>
+            <td></td>
+          </tr>
+        </table>
+
+        <%= render "compromiso_pago" %>
+      </div>
+    <%end%>

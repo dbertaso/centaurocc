@@ -1,0 +1,30 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 12px">
+      </th>
+      <th style="width: 220px" <%= sort_class_helper('opcion.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'opcion.nombre', 'opcion_list' %>
+      </th>
+      <th style="width: 270px" <%= sort_class_helper('opcion.ruta') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Opcion.Errores.ruta'), 'opcion.ruta', 'opcion_list' %>
+      </th>
+      <th style="width: 130px" <%= sort_class_helper('opcion_grupo.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.grupo'), 'opcion_grupo.nombre', 'opcion_list' %>
+      </th>
+      <th style="width: 44px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for opcion in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :opcion => opcion, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

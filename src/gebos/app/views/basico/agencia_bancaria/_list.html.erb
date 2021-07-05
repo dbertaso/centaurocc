@@ -1,0 +1,39 @@
+  <table class="lista" style="width: 100%">
+    <thead>
+    <tr>
+      <th style="width: 70px" <%= sort_class_helper('agencia_bancaria.codigo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.codigo'), 'agencia_bancaria.codigo', 'list' %>
+      </th>
+      <th style="width: 160px" <%= sort_class_helper('agencia_bancaria.entidad_financiera.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.entidad_financiera'), 'agencia_bancaria.entidad_financiera.nombre', 'list' %>
+      </th>
+      <th style="width: 160px" <%= sort_class_helper('agencia_bancaria.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.AgenciaBancaria.Etiquetas.agencia_bancaria'), 'agencia_bancaria.nombre', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('agencia_bancaria.estado_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'agencia_bancaria.estado_id', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('agencia_bancaria.municipio_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.municipio'), 'agencia_bancaria.municipio_id', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('agencia_bancaria.ciudad_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.ciudad'), 'agencia_bancaria.ciudad_id', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'activo', 'list' %>
+      </th>
+      <th style="width: 50px">
+        I18n.t('Sistema.Body.Vistas.General.acciones')
+      </th>
+    </tr>   
+    </thead>
+    <tbody id="list_body">
+<%  
+  even_odd = 1
+  for agencia_bancaria in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :agencia_bancaria => agencia_bancaria, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

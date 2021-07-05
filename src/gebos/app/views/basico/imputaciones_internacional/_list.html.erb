@@ -1,0 +1,37 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 130px" <%= sort_class_helper('imputaciones_maquinaria.fecha_registro') %>>
+        <%= sort_link_helper 'Fecha Registro', 'imputaciones_maquinaria.fecha_registro', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('imputaciones_maquinaria.gastos_administrativos') %>>
+        <%= sort_link_helper 'Gastos Administrativos', 'imputaciones_maquinaria.gastos_administrativos', 'list' %>
+      </th> 			
+      <th style="width: 150px" <%= sort_class_helper('imputaciones_maquinaria.seguro_internacional') %>>
+        <%= sort_link_helper 'Seguro Internacional', 'imputaciones_maquinaria.seguro_internacional', 'list' %>
+      </th> 	
+      <th style="width: 150px" <%= sort_class_helper('imputaciones_maquinaria.flete_internacional') %>>
+        <%= sort_link_helper 'Flete Internacional', 'imputaciones_maquinaria.flete_internacional', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('imputaciones_maquinaria.nacionalizacion_impuestos') %>>
+        <%= sort_link_helper 'Impuestos Nacionalización', 'imputaciones_maquinaria.nacionalizacion_impuestos', 'list' %>
+      </th> 			
+      <th style="width: 100px" <%= sort_class_helper('imputaciones_maquinaria.almacenamiento') %>>
+        <%= sort_link_helper 'Almacenamiento', 'imputaciones_maquinaria.almacenamiento', 'list' %>
+      </th> 	
+      <th style="width: 30px">
+        Acciones
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for imputaciones_maquinaria in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :imputaciones_maquinaria => imputaciones_maquinaria, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

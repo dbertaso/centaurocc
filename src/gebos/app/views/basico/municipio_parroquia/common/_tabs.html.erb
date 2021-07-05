@@ -1,0 +1,24 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	if controller_name=='municipio_parroquia'
+%>
+		<li ><div><%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'),:controller=>'estado_municipio',:action=>'edit',:id=>@municipio.id,:estado_id=>@estado.id)%></a></div></li>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%></a></div></li>
+
+<%
+	else
+%>
+		<li><div>
+		      <%= link_to(I18n.t('Sistema.Body.Vistas.General.municipio'), :controller => 'estado_municipio', :action => 'edit', :popup=>params[:popup], :estado_id => @estado.id, :id => @municipio.id) if action_name == 'index' %>
+		      <%= link_to(I18n.t('Sistema.Body.Vistas.General.municipio'), :controller => 'estado_municipio', :action => 'view_detail', :popup=>params[:popup], :estado_id => @estado.id, :id => @municipio.id) if (action_name=='view_detail' || action_name=='view')  %>
+		</div></li>
+<%
+	end
+
+%>
+	</ul>
+</div>
+

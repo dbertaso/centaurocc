@@ -1,0 +1,24 @@
+<% sector = @sector if sector.nil? %>
+<td>
+  <%= sector.codigo  unless sector.nil?%>
+</td>
+<td>
+  <%= sector.nombre  unless sector.nil?%>
+</td>
+<td>
+  <%= sector.descripcion unless sector.nil?%>
+</td>
+<td style="text-align: center">
+  <%#= format_bool(sector.activo) unless sector.nil? %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), :action => 'edit', :popup=>params[:popup], :id => sector.id ) if vlink 'edit' %>
+
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'sector', :action => :delete, :id => sector.id}) if vlink 'delete' -%>
+</td>
+

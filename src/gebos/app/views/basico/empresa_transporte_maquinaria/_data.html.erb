@@ -1,0 +1,38 @@
+<% empresa_transporte_maquinaria = @empresa_transporte_maquinaria if empresa_transporte_maquinaria.nil? %>
+
+<td>
+  <%= empresa_transporte_maquinaria.nombre unless empresa_transporte_maquinaria.nombre.nil? %>
+</td>
+<td>
+  <%= empresa_transporte_maquinaria.rif unless empresa_transporte_maquinaria.rif.nil? %>
+</td>
+<td align="center">
+  <%= empresa_transporte_maquinaria.telefono unless empresa_transporte_maquinaria.telefono.nil? %>
+</td>
+<td>
+  <%= empresa_transporte_maquinaria.persona_contacto unless empresa_transporte_maquinaria.persona_contacto.nil? %>
+</td>
+<td align="center">
+  <%= empresa_transporte_maquinaria.estado.nombre unless empresa_transporte_maquinaria.estado.nil? %>
+</td>
+<td align="center">
+  <%= empresa_transporte_maquinaria.municipio.nombre unless empresa_transporte_maquinaria.municipio.nil? %>
+</td>
+<td align="center">
+  <%= empresa_transporte_maquinaria.ciudad.nombre unless empresa_transporte_maquinaria.ciudad.nil? %>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(empresa_transporte_maquinaria.activo)  %>
+</td>
+<td style="text-align: center">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'empresa_transporte_maquinaria', :action => :edit, :id => empresa_transporte_maquinaria.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'empresa_transporte_maquinaria', :action => :delete, :id => empresa_transporte_maquinaria.id}) if vlink 'delete' -%>
+</td>
+

@@ -1,0 +1,4 @@
+<% autorizacion = @autorizacion if autorizacion.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= autorizacion.id %>">
+  <%= render :partial => 'data', :locals => { :autorizacion => autorizacion, :even_odd => even_odd } -%>
+</tr>

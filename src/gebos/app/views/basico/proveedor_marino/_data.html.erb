@@ -1,0 +1,29 @@
+<% proveedor_marino @proveedor_marino if proveedor_marino.nil? %>
+
+<td>
+  <%= proveedor_marino.nombre  %>
+</td>	
+<td>
+  <%= proveedor_marino.direccion  %>
+</td>
+<td>
+  <%= proveedor_marino.rif  %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(proveedor_marino.asociado_fondas)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'proveedor_marino', :action => :edit, :id => proveedor_marino.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'proveedor_marino', :action => :delete, :id => proveedor_marino.id}) if vlink 'delete' -%>
+</td>
+

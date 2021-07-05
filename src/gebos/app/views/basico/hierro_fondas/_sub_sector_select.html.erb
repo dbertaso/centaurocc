@@ -1,0 +1,6 @@
+
+			<%= select(
+		  'rubro', 'sub_sector_id',
+		  (@sub_sector_select.map{|i| [i.nombre, i.id]}),
+		  { :prompt=>'Seleccione un Sub Sector'},
+      { :class=>'select', :onchange=>'inputChange();' } ) %>

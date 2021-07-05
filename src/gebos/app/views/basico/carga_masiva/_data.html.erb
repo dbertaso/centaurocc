@@ -1,0 +1,24 @@
+<td>
+	<%= item.contrato_maquinaria_equipo.nombre %>
+</td>
+<td>
+	<%= item.clase.tipo_maquinaria.nombre %>
+</td>
+<td>
+	<%= item.clase.nombre %>
+</td>
+<td>
+	<%= item.marca_maquinaria.nombre unless item.marca_maquinaria.nil? %>
+</td>
+<td>
+	<%= item.modelo.nombre unless item.modelo.nil? %>
+</td>
+<td>
+	<%= item.serial %>
+</td>
+<td>
+	<%= item.chasis %>
+</td>
+<td style="text-align: center">
+  <%= format_fm(item.monto) %>
+</td>

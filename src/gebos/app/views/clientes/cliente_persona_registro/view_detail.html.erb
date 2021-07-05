@@ -1,0 +1,26 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.consultando') %> <%= Etiquetas.etiqueta(9) %> Natural <span class="titulo_modificar">'<%= @persona.primer_nombre + ' ' + @persona.primer_apellido %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'clientes/cliente_persona/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= form_title_view @registro_mercantil.nombre_registro %>
+
+  <div class="marco-contenido2">
+    <%= error  %>
+    <%= message  %>
+
+
+    <%= render :partial => 'form_view' %>
+
+    <div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit :persona_id => @persona.id, :popup=>params[:popup] %>
+    </div>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :action => :view, :popup=>params[:popup], :persona_id => @persona.id },
+      { :id=>'button_close', } ) -%>
+
+  </div>
+</div>

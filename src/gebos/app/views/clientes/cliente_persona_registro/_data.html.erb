@@ -1,0 +1,34 @@
+<% registro_mercantil = @registro_mercantil if registro_mercantil.nil? %>
+<td>
+  <% if  registro_mercantil.tipo == 'C' %>
+    <%= I18n.t('Sistema.Body.Vistas.General.civil') %>
+  <% elsif registro_mercantil.tipo == 'M' %>
+    <%= I18n.t('Sistema.Body.Vistas.General.mercantil') %>
+  <% elsif registro_mercantil.tipo == 'T' %>
+    <%= I18n.t('Sistema.Body.Vistas.General.de_tierras') %>
+  <% elsif registro_mercantil.tipo == 'H' %>
+    <%= I18n.t('Sistema.Body.Vistas.General.de_hierro') %>
+  <% elsif registro_mercantil.tipo == 'N' %>
+    <%= I18n.t('Sistema.Body.Vistas.General.naval') %>
+  <% else %>
+    <%= I18n.t('Sistema.Body.Vistas.General.publico') %>
+  <% end %>
+</td>
+<td>
+  <%= registro_mercantil.nombre_registro  %>
+</td>
+<td>
+  <%= registro_mercantil.fecha_registro_f %>
+</td>
+<td>
+  <%= registro_mercantil.numero %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title =>'Editar'),
+    :action => 'edit', :popup=>params[:popup], :persona_id => @persona.id, :id => registro_mercantil.id) %>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title =>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :persona_id => @persona.id, :id => registro_mercantil.id}) -%>
+</td>

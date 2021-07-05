@@ -1,0 +1,157 @@
+<script type="text/javascript">
+
+  function cargar_documento()
+  {
+    document.getElementById("agregar-tipo-documento").style.display= 'none';
+    var pars = "solicitud_avaluo_mobiliario_tipos[tipo]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_tipo1").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[modelo]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_modelo1").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[marca]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_marca1").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[serial]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_serial1").value;
+    pars += "&solicitud_avaluo_mobiliario_tipos[hipoteca_f]=" + document.getElementById("solicitud_avaluo_mobiliario_tipo_hipoteca1_f").value;
+    pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+    pars += "&solicitud_tipo_garantia_id=<%= @solicitud_tipo_garantia_id %>"
+    pars += "&solicitud_avaluo_mobiliario_tipos[ubicacion]=D"
+    var myAjax = new Ajax.Request("/solicitudes/gestionar_garantia/save_new_mobiliaria2?" + pars, {asynchronous:true, evalScripts:true, method: 'get', onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}}); return false;
+  }
+
+</script>
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.mobiliaria_documento_oferta')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'tipo1',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label> <label style="color: red"> (*)</label>
+  </td>
+  <td>
+    <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'modelo1',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'marca1',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.serial')%></label> <label style="color: red"> (*)</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'serial1',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.hipoteca')%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'hipoteca1_f',
+        :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+        :onchange=>'inputChange();',
+        :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_mobiliario_tipo_hipoteca1'); "  -%>
+      <%= display_number 0, 'solicitud_avaluo_mobiliario_tipo_hipoteca1' %>&nbsp;<%= @solicitud.moneda.abreviatura.to_s %>
+      <samp id="agregar-tipo-documento"><%= image_tag(I18n.t('Sistema.Body.Imagenes.agregar'),:title=>'Agregar', :onclick=>"javascript:cargar_documento();", :OnMouseOver=>"style.cursor='pointer'" ) %></samp>
+    </td>
+  </tr>
+
+</table>
+<br/>
+<table class="lista" style="width: 90%">
+
+  <tr>
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.hipoteca')} #{@solicitud.moneda.abreviatura.to_s}"%></label>
+    </th>
+
+    <th style="width: 35px">
+
+    </th>
+  </tr>
+
+  <% unless @mobiliario_tipos_documento_list.nil?
+    clase = "lista0"
+    @mobiliario_tipos_documento_list.each { |mobiliaria| %>
+      <tr id="mob_doc_<%= mobiliaria.id %>" class='<%= clase %>'>
+        <td>
+          <%= mobiliaria.tipo %>
+        </td>
+
+        <td>
+          <%= mobiliaria.modelo %>
+        </td>
+
+        <td>
+          <%= mobiliaria.marca %>
+        </td>
+
+        <td>
+          <%= mobiliaria.serial %>
+        </td>
+
+        <td>
+          <%= display_number mobiliaria.hipoteca, '' %>
+        </td>
+
+        <td align="center">
+          <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+            :loading =>'image_load()',  :loaded => 'image_unload()',
+            :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+            :id=>"button_enviar",
+            :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+            :url => {:controller=> :gestionar_garantia, :action => :delete_mobiliaria, :id => mobiliaria.id, :solicitud_tipo_garantia_id=>mobiliaria.solicitud_tipo_garantia_id, :ubicacion=>'D'}) -%>
+        </td>
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+
+</table>
+<br/>
+

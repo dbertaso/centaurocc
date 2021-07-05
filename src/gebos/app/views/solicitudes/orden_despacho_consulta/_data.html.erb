@@ -1,0 +1,246 @@
+<% orden_despacho = @orden_despacho if orden_despacho.nil? %>
+<td align="center">
+  <%= orden_despacho.numero %>
+</td>
+<td align="center">
+  <%= orden_despacho.cedula_rif  %>
+</td>
+<td align="center">
+  <%= orden_despacho.nombre %>
+</td>
+<td align="center"><font color="red"><b>
+  <%= orden_despacho.estatus %></font></b>
+</td>
+<td align="center">
+  <%= orden_despacho.rubro %>
+</td>
+
+<td align="center">
+  <%= SubRubro.find(orden_despacho.sub_rubro_id).nombre %>
+</td>
+
+<td align="center">
+  <%= Actividad.find(orden_despacho.actividad_id).nombre %>
+</td>
+
+<td align="center">
+
+<%
+@las_ordenes=OrdenDespachoDetalle.find(:all, :conditions=>"orden_despacho_id=#{orden_despacho.orden_despacho_id}",:select=>"id")
+
+      condi1="("
+      @las_ordenes.each{ |orden|
+        condi1+=orden.id.to_s << ","
+        }
+      condi1=condi1[0,condi1.length-1]
+      condi1+=")"
+
+fac_num=FacturaOrdenDespacho.count(:conditions=>"orden_despacho_detalle_id in #{condi1}",:select=>"distinct(secuencia)",:group=>"secuencia")
+%>
+
+
+  <%= fac_num.count %>
+</td>
+
+<td align="center">
+<%= OrdenDespacho.find(orden_despacho.orden_despacho_id).seguimiento_visita.codigo_visita %>
+</td>
+<td align="center">
+<%= OrdenDespacho.find(orden_despacho.orden_despacho_id).seguimiento_visita.fecha_visita_f %>
+</td>
+<td align="center">
+
+<%= OrdenDespacho.find(orden_despacho.orden_despacho_id).monto_fm %>
+
+
+
+</td>
+<td align="center"><font color="green"><b>
+<% 
+case OrdenDespacho.find(orden_despacho.orden_despacho_id).estatus_id
+ when 20000 %>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.por_generar_orden_despacho')%>
+ <%when 20010%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.generada_orden_despacho')%>
+  <%when 20020%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.emitida_orden_despacho')%>
+<%when 20030%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.cerrada_manualmente')%>
+<%when 20040%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.cerrada')%>
+<%when 20050%>
+  <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.parcialmente_entregada')%>
+<%when 20060%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.por_liquidar')%>
+<%when 20070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco')%>
+<%when 20080%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+  <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_banco')%>
+<%end%>
+</td></font></b>
+<td align="center">
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho.monto}));"%>
+<%=format_fm(OrdenDespachoDetalle.sum(:monto_facturacion,:conditions=>"orden_despacho_id=#{orden_despacho.orden_despacho_id}")) %>
+<%#= orden_despacho.monto_fm %>
+
+</td>
+
+<%if ((orden_despacho.estatus_id == 20000) || (orden_despacho.estatus_id == 20010)) %>
+<!-- style="text-align: center" -->
+<td  align="center">
+
+<%if orden_despacho.estatus_id != 20010 %>
+&nbsp;
+<%end%>
+
+<%unless OrdenDespachoDetalle.find_by_orden_despacho_id(orden_despacho.orden_despacho_id).nil? %>
+	<%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.consultar_orden_despacho')), 
+          :action => :view,
+          :controller => 'orden_despacho_historico',
+          :id => orden_despacho.orden_despacho_id,
+          :solicitud_id => orden_despacho.solicitud_id,:es_no=>"1") if vlink 'edit' -%>
+<%end%>
+
+  </td>
+<!-- style="text-align: center"  -->
+<td align="center">
+
+<%if orden_despacho.estatus_id == 20010 %>
+<div id="impresion_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:20px;">
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } ",:title=>'Imprimir la Orden de Despacho'),
+				{ :controller=>'orden_despacho_historico', :action=>'imprimir',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_historico', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+
+
+</div>
+
+<%end%>
+
+
+
+</td>
+
+<%else%>
+<!-- estautus 20020 -->
+<td style="text-align: center">
+
+
+<%unless OrdenDespachoDetalle.find_by_orden_despacho_id(orden_despacho.orden_despacho_id).nil? %>
+
+      <%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.consultar_orden_despacho')),
+          :action => :view,
+          :controller => 'orden_despacho_historico',
+          :id => orden_despacho.orden_despacho_id,
+          :solicitud_id => orden_despacho.solicitud_id,:es_no=>"1") if vlink 'edit' -%>&nbsp;
+<%end%>
+
+<!-- aqui -->
+
+<%
+
+
+#verificamos si exiten secuencias para esa factura
+
+    @condition = " orden_despacho_id = #{orden_despacho.orden_despacho_id} "
+
+    @ordenes_de_despacho_aux=OrdenDespachoDetalle.find(:all, :conditions=>@condition)
+
+    unless @ordenes_de_despacho_aux.empty?
+      condi="("
+      @ordenes_de_despacho_aux.each{ |orden|
+        condi+=orden.id.to_s << ","
+        }
+      condi=condi[0,condi.length-1]
+      condi+=")"
+
+      logger.info "wwwwwwwwwwwwwwwwww "<< condi.to_s
+
+
+      @facturas_faltantes_aux=FacturaOrdenDespacho.find(:first, :conditions=>"orden_despacho_detalle_id in #{condi} and length(secuencia)>1 ")
+
+    else
+      @facturas_faltantes_aux=nil
+    end
+
+
+
+
+
+cedula_usuario=Usuario.find(session[:id]).cedula_nacionalidad.to_s.strip.upcase + " " +  Usuario.find(session[:id]).cedula.to_s
+
+cedula_supervisor_asignado=Oficina.find(Usuario.find(session[:id]).oficina_id).cedula_nacionalidad.to_s.strip.upcase + " " + Oficina.find(Usuario.find(session[:id]).oficina_id).cedula_supervisor.to_s
+
+logger.debug "cedula logeado " << cedula_usuario.to_s << "cedula supervisor " << cedula_supervisor_asignado.to_s
+
+if cedula_usuario == cedula_supervisor_asignado %>
+<!-- Proceso de reimpresion para el usuario administrador no debe de verse la marca de agua -->
+
+<%if @facturas_faltantes_aux.nil?%>
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir'))), {:controller=>'orden_despacho_historico', :action=>'imprimir',
+				:popup=>true, :solicitud_id=>orden_despacho.solicitud_id, :id=>orden_despacho.orden_despacho_id,:marca=>0  }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "','height=1100,width=screen.width, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.reimpresion_orden_despacho_supervisor')),
+				{ :controller=>'orden_despacho_historico', :action=>'imprimir',
+				:popup=>true, :solicitud_id=>orden_despacho.solicitud_id, :id=>orden_despacho.orden_despacho_id,:marca=>0 },
+				:popup => ['orden_despacho_historico', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+      
+      <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.imprimir')),
+          :action => :imprimir,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id) if vlink 'edit' -%>
+
+<%end%>
+
+<%else%>
+<!-- Imprimir con marca de agua -->
+
+<%if @facturas_faltantes_aux.nil? %>
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir'))), {:controller=>'orden_despacho_historico', :action=>'imprimir',
+				:popup=>true, :solicitud_id=>orden_despacho.solicitud_id, :id=>orden_despacho.orden_despacho_id,:marca=>1  }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "','height=1100,width=screen.width, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.reimpresion_orden_despacho_consulta')),
+				{ :controller=>'orden_despacho_historico', :action=>'imprimir',
+				:popup=>true, :solicitud_id=>orden_despacho.solicitud_id, :id=>orden_despacho.orden_despacho_id,:marca=>1 },
+				:popup => ['orden_despacho_historico', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+
+
+<!-- codigo para lo del pdf -->
+
+
+         <!-- <a href="#" onclick='location.href="/solicitudes/orden_despacho_historico/generar_planilla_siniestro?solicitud_id=<%=orden_despacho.solicitud_id%>&id=<%#=orden_despacho.orden_despacho_id%>";return false;'>
+            <img title="Exportar a PDF." src="/images/print.png" alt="Print xls" />
+          </a> -->
+
+
+<%end%>
+<%end%>
+
+
+
+  </td>
+<td style="text-align: center">
+
+<!-- aqui van las parciales -->
+
+<%
+
+
+unless @facturas_faltantes_aux.nil?
+
+%>
+<%= link_to_remote(
+        image_tag(I18n.t('Sistema.Body.Imagenes.img_expandir'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.ver_detalle_completo_orden_despacho')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url => {:action => :expand, :orden_id => orden_despacho.orden_despacho_id}) -%>
+<%end%>
+<%end%>
+
+</td>

@@ -1,0 +1,49 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 12px">
+      </th>
+      <th style="width: 220px" <%= sort_class_helper('opcion.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'opcion.nombre', 'opcion_list' %>
+      </th>
+      <th style="width: 270px" <%= sort_class_helper('opcion.ruta') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Opcion.Errores.ruta'), 'opcion.ruta', 'opcion_list' %>
+      </th>
+      <th style="width: 130px" <%= sort_class_helper('opcion_grupo.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.grupo'), 'opcion_grupo.nombre', 'opcion_list' %>
+      </th>
+      <th style="width: 44px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for opcion in @list
+      even_odd = 1 - even_odd %>
+
+      <% opcion = @opcion if opcion.nil? %>
+      <tr class="lista<%= even_odd %>" id="row_<%= opcion.id %>">
+        <td style="text-align: center">
+          <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.img_expandir'), :title=>I18n.t('Sistema.Body.Vistas.General.expandir')),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :url => {:action => :expand, :rol_id => @rol.id, :id => opcion.id}) -%>
+        </td>
+        <td>
+          <%= opcion.nombre  %>
+        </td>
+        <td>
+          <%= opcion.ruta %>
+        </td>
+        <td>
+          <%= opcion.opcion_grupo.nombre  %>
+        </td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,120 @@
+<td>
+  <% sol = Solicitud.find(solicitud.solicitud_id)
+  if ViewListSolicitud.deshacer(solicitud.solicitud_id) == true %>
+    <%= link_to_remote(image_tag('error.gif',:title=>I18n.t('Sistema.Body.Modelos.Solicitud.Errores.ver_observaciones_devolución')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method=>:get,
+      :url => {:action => :ver_observaciones, :id => solicitud.solicitud_id}) -%>
+  <% end %>
+  <%= solicitud.numero %>
+</td>
+
+<td>
+  <%= solicitud.cedula_rif %>
+</td>
+<td>
+  <%= solicitud.nombre %>
+</td>
+<td>
+  <% if sol.sub_sector.nemonico == 'MA' and sol.confirmacion == true
+    if sol.conf_maquinaria ==  true
+      if ViewListSolicitud.deshacer(solicitud.solicitud_id) == true %>
+        <span style="color: white"><b><%= solicitud.estatus %></b></span>
+      <% else %>
+        <span style="color: #FF0000"><b><%= solicitud.estatus %></b></span>
+      <% end
+    else %>
+      <span style="color: #FF0000"><b><%= solicitud.estatus %> - En espera de maquinaria</b></span>
+    <% end
+  else %>
+    <span style="color: #FF0000"><b><%= solicitud.estatus %></b></span>
+  <% end %>
+</td>
+<td>
+  <%= solicitud.sector %>
+</td>
+<td>
+  <%= solicitud.sub_sector %>
+</td>
+<td>
+  <%= solicitud.rubro %>
+</td>
+<td>
+  <%= solicitud.sub_rubro %>
+</td>
+<td>
+  <%= solicitud.actividad %>
+</td>
+<td>
+
+  <%= solicitud.unidad_produccion %>
+</td>
+<td align="center">
+  <%= ControlAsignacion.asignacion(solicitud.solicitud_id) %>
+</td>
+<td align="center">
+  <%= ControlAsignacion.dias_trancurridos(solicitud.solicitud_id) %>
+</td>
+<td align="center">
+  <% if solicitud.decision_final == true %>
+    <%= image_tag('activo.gif') %>
+  <% elsif solicitud.decision_final == false %>
+    <%= image_tag('inactivo.gif') %>
+  <% end %>
+</td>
+<td width="8%" align="center">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=> I18n.t('Sistema.Body.Vistas.General.consultar')),
+    {:action => :view,
+    :id => solicitud.solicitud_id,
+    :controller => '/solicitudes/solicitud',
+    :controlador => 'consulta_evaluacion_credito'} %>
+
+  <% if solicitud.confirmacion == false %>
+
+    <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=> I18n.t('Sistema.Body.Vistas.General.descargar_informe_vacio')), {:action => 'blanco', :solicitud_id=>solicitud.solicitud_id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') + "', 'height=650,scrollbars=yes,width=1150'); return false;")  %>
+
+    <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.modificar')),
+      {:action => :index,
+      :id => solicitud.solicitud_id,
+      :controller => '/visitas/visita_inicial'} %>
+
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.confirmar'),:title=>I18n.t('Sistema.Body.Vistas.General.confirmar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method =>:get,
+      :confirm => "¿#{I18n.t('Sistema.Body.Vistas.General.confirmar_informe')} #{solicitud.numero}?",
+      :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+      :url => {:action => :confirmar, :id => solicitud.solicitud_id}) -%>
+  <% else
+    s = Solicitud.find(solicitud.solicitud_id)
+    if s.por_inventario == true
+      if sol.conf_maquinaria ==  true %>
+        <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>I18n.t('Sistema.Body.Vistas.General.imprimir_informe')), {:action => 'printer', :solicitud_id=>solicitud.solicitud_id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') + "', 'height=650,scrollbars=yes,width=1150'); return false;")  %>
+      <%  end
+    else %>
+      <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'),:title=>I18n.t('Sistema.Body.Vistas.General.imprimir_informe')), {:action => 'printer', :solicitud_id=>solicitud.solicitud_id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') + "', 'height=650,scrollbars=yes,width=1150'); return false;")  %>
+    <% end %>
+    <% if solicitud.decision_final == true
+      if s.por_inventario == true
+        if sol.conf_maquinaria ==  true %>
+          <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'),:title=>I18n.t('Sistema.Body.General.avanzar')),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method =>:get,
+            :confirm => "¿#{I18n.t('Sistema.Body.Vistas.General.avanzar_informe')} número #{solicitud.numero}?",
+            :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+            :url => {:action => :avanzar, :id => solicitud.solicitud_id}) -%>
+        <%    end
+      else %>
+        <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'),:title=>I18n.t('Sistema.Body.General.avanzar')),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method =>:get,
+          :confirm => "¿#{I18n.t('Sistema.Body.Vistas.General.avanzar_informe')} #{solicitud.numero}?",
+          :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+          :url => {:action => :avanzar, :id => solicitud.solicitud_id}) -%>
+      <% end
+    end %>
+  <% end %>
+</td>

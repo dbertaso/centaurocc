@@ -1,0 +1,174 @@
+<div class="marco" style="width: 800px">
+
+  <div class="marco-contenido" style="width: 100%">
+
+    <%= form_title_search %>
+
+
+    <%= form_remote_tag(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :url => { :action => :list } ) do %>
+    <table>
+    
+      <tr>
+        <td style="width: 130px">
+          <label> <%= "#{t('Sistema.Body.Vistas.General.codigo')} #{t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.transaccion')}" %>:</label>
+        </td>
+        <td>
+        <%= select_tag(
+          'transaccion_contable_id',
+            options_from_collection_for_select(@transaccion_contable_select, "id" ,"nombre" ),
+            {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.transaccion')}",
+             :class=>'select'} ) %>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+    </table>
+    
+    <table>
+      <tr>
+        <td style="width: 130px">
+          <label>
+          <%= "#{t('Sistema.Body.Vistas.General.programa')} #{t('Sistema.Body.Vistas.General.social')}" %>
+          </label>
+        </td>
+        <td>
+        <%= select_tag(
+          'programa_id',
+            options_from_collection_for_select(@programa_select, "id" ,"nombre" ),
+            {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.General.programa')} #{t('Sistema.Body.Vistas.General.social')}",
+             :class=>'select'} ) %>
+        </td>
+      </tr>
+    
+    </table>
+    
+    <table>
+      <tr>
+        <td style="width: 130px">
+          <label><%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.prestamo')}" %>:</label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero_prestamo', '', :class=>'text', :maxlength=>'15', :style=>'width: 100px'  %>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+    </table>
+
+
+    <table>
+      <tr>
+        <td style="width: 130px">
+          <label>
+            <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.solicitud')}" %>:
+          </label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero_solicitud', '', :class=>'text', :maxlength=>'15', :style=>'width: 100px'  %>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+    </table>
+
+
+    <table>
+      <tr>
+        <td style="width: 130px">
+          <label>
+            <%= t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif') %>:
+          </label>
+        </td>
+        <td>
+
+        <select name="tipo" id="tipo" class="select">
+            <option value="V "><%= t('Sistema.Body.General.TipoDocumento.venezolano') %></option>
+            <option value="E "><%= t('Sistema.Body.General.TipoDocumento.extranjero') %></option>
+            <option value="J-"><%= t('Sistema.Body.General.TipoDocumento.juridico') %></option>
+            <option value="G-"><%= t('Sistema.Body.General.TipoDocumento.gobierno') %></option>
+          </select>
+
+
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> Ej: J-12345678-9
+        </td>
+        <td>
+
+        </td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td style="width: 130px">
+          <label>
+            <%= t('Sistema.Body.General.beneficiario') %>:
+          </label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+    </table>
+
+
+
+    <table>
+      <tr>
+        <td style="width: 130px">
+          <label>
+            <%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.desde')}" %>:
+          </label>
+        </td>
+        <td>
+          <%= calendar_date_select '', 'fecha_desde',
+                :year_range => 110.years.ago..-1.years.ago,
+                :class=>'text',
+                :style=>'width:80px',
+                :maxlength=>'10',
+                :onkeypress=>'inputChange();',
+                :onchange=>'inputChange();' %> &nbsp; 
+                <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 100px">
+          <label>
+            <%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.desde')}" %>:
+          </label>
+        </td>
+        <td>
+          <%= calendar_date_select '', 'fecha_hasta',
+                :year_range => 110.years.ago..-1.years.ago,
+                :class=>'text',
+                :style=>'width:80px',
+                :maxlength=>'10',
+                :onkeypress=>'inputChange();',
+                :onchange=>'inputChange();' %> &nbsp; 
+                <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+        </td>
+        <td>
+          <%= image_submit_tag(image_path(t('Sistema.Body.Imagenes.buscar'))) -%>
+        </td>
+      </tr>
+    </table>
+    <% end %>
+
+    <%= error %>
+    <%= message %>
+
+    <div id="list" style="padding-top: 10px">
+    </div>
+
+  </div>
+</div>

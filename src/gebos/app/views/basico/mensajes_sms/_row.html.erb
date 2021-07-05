@@ -1,0 +1,4 @@
+<% mensajes_sms = @mensajes_sms if mensajes_sms.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= mensajes_sms.id %>">
+	<%= render :partial => 'data', :locals => { :mensajes_sms => mensajes_sms, :even_odd => even_odd } -%>
+</tr>

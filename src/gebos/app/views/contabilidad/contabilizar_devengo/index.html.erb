@@ -1,0 +1,72 @@
+<script LANGUAGE="JavaScript">
+<!--
+	function confirmar_contabilizacion(tipo,ano,mes,descripcion,transaccion,fecha)
+	{
+
+                alert('Transaccion ' + transaccion)
+		var agree=confirm("La contabilización del Año "+ano+" Mes "+ mes+" para "+descripcion+" ya fue procesada, desea volver a ejecutar la contabilizacion");
+		if (agree) {
+			//$('confirmacion').value = 'true';
+			// $('form_pago').submit();
+			new Ajax.Request('/contabilidad/contabilizar_devengo/ejecutar_contabilizacion?ano=' + ano + '&mes='+ mes + '&tipo=' + tipo + '&transaccion=' + transaccion + '&fecha=' + fecha, {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}, parameters:Form.serialize(document.forms[0])}); return false;
+			// new Ajax.Request("/prestamos/pago/ejecutar_pago?cliente_id=""&amp;prestamo_id="+prestamoid+", {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}, parameters:Form.serialize(document.forms[0])}); return false;
+
+		} else
+		  //$('confirmacion').value = '0';
+			return false ;
+		}
+// -->
+</script>
+
+<div class="marco-titulo"><div><div>
+	<%= @form_title_records %>
+</div></div></div>
+
+<%= errores %>
+<%= message %>
+
+		<%= form_remote_tag(
+			:loading =>'image_load()',
+			:loaded => 'image_unload()',
+                        :url => {:action => :contabilizar}) -%>
+
+<table style="width: 100%">
+
+    <tr>
+        <td>
+          <label>Fecha Devengo:</label>
+        </td>
+        <td>
+          <%= text_field_tag 'fecha_f', @fecha_f,
+                        :class=>'text', :style=>'width: 80px',
+                        :maxlength=>'10'
+                         -%>
+          <%= calendar 'fecha_f', 'calendar_fecha' %>	(dd/mm/aaaa)
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 20%">
+                <label>Tipo de Interés</label>
+        </td>
+        <td style="width: 80%">
+                <%= select_tag(
+                                  'tipo',
+                                   options_for_select([["Seleccione", ""],
+                                                       ["Devengo Intereses Ordinarios", "C"],
+                                                       ["Devengo Intereses Diferidos", "G"],
+                                                       ],@tipo),
+                                   { :class=>'select'}) %>
+
+        </td>
+    </tr>
+    <tr>
+            <td colspan="2" align="center">
+               <%= submit_tag 'Contabilizar' %>
+            </td>
+    </tr>
+
+</table>
+
+ <%= end_form_tag -%>
+

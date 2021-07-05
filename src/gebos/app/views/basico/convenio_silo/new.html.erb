@@ -1,0 +1,15 @@
+<%= form_title_new %>
+
+<%= render :partial=>'basico/silo/common/tabs' %>
+<div class="marco-contenido2">
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()', :loaded => 'image_unload()', :url => { :action => :save_new, :silo_id=>@silo.id, :popup=>params[:popup]}) do -%>
+  </br>
+  <%= render :partial => 'form' %>
+  </br>
+  <%= form_buttons_edit :silo_id=>@silo.id, :popup=>params[:popup] %>
+  <% end -%>
+</div>

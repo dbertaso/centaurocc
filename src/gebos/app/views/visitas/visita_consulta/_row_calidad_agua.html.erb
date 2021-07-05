@@ -1,0 +1,4 @@
+<% calidad_agua = @calidad_agua if calidad_agua.nil? %>
+<tr  id="row_<%= calidad_agua.id %>">
+	<%= render :partial => 'data_calidad_agua', :locals => { :calidad_agua => calidad_agua } -%>
+</tr>

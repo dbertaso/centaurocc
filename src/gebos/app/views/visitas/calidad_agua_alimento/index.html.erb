@@ -1,0 +1,38 @@
+<div class="marco-titulo"><div><div>
+      <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.modificando_informacion_visita')%><span style="color: #FF0000">'<%= @full_info %>'</span>
+    </div></div></div>
+<div id="contenedor_principal">
+  <%= render :partial=>'visitas/condiciones_acuicultura/common/tabs' %>
+
+  <div class="marco-contenido2"> 
+    <%
+    begin
+      controller.method(:new)
+    %>
+      <div class="marco-boton-out" id="button_new">
+
+        <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.agregar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.agregar')),
+          :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+          :url => { :action => :new, :id => @visitas  } ) if vlink 'edit' -%>
+      </div>
+    <%
+    rescue NameError
+    end
+  %>
+    <%= form_title_list %>
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+
+    <div id="list">
+
+      <div id="list">
+        <%= render :partial => 'list' -%>
+      </div>
+      <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+        { :action => :index, :controller => 'visita_seguimiento', :popup=>params[:popup], :id => @visitas.solicitud.id },
+        { :id=>'button_close', } ) -%>
+    </div>
+  </div>

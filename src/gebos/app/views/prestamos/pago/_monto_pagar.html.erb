@@ -1,0 +1,12 @@
+<%= t('Sistema.Body.Vistas.Pago.Etiquetas.monto_pagar') %> (*) 
+    <%= text_field_tag 'monto_pago', @monto_pago, 
+    		:class=>'text', 
+    		:maxlength=>'16', 
+    		:style=>'width: 100px, align: left',
+    		:onkeyup=>"formatCurrency(this.value, 'monto_pago');",
+				:onkeypress=>'inputChange();cambio_etiqueta(_fecha_realizacion.value,this.id);',
+				:onchange=>'inputChange(); cambio_bsf(_fecha_realizacion.value,this.value,this.id);' -%> 
+    
+    <span id="monto_pago_moneda"><%=t('Sistema.Body.General.ab_bolivares')%></span>
+
+<%= display_number @monto_pago, 'monto_pago' %>

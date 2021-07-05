@@ -1,0 +1,77 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<br/>
+<table class="lista" style="width: 100%">
+  <tr>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%> (<%=I18n.t('Sistema.Body.Vistas.General.motor')%> / <%=I18n.t('Sistema.Body.Vistas.General.chasis')%>)</label>
+    </th>
+    <th style="width: 30px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.convenio')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.almacen')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.oficina')%> <%=I18n.t('Sistema.Body.Vistas.Form.destino')%></label>
+    </th>
+    <th style="width: 2px">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+    </th>
+  </tr>
+  <% unless @maquinaria_list.nil?
+    clase = "lista0"
+    @maquinaria_list.each { |maq| %>
+      <tr id="coj_<%= maq.id %>" class='<%= clase %>'>
+        <td>
+          <%= maq.rubro.to_s %> 
+        </td>
+        <td>
+          <%= maq.tipo_clase.to_s %> 
+        </td>
+        <td>
+          <%= maq.marca.to_s %>
+        </td>
+        <td>
+          <%= maq.modelo.to_s %>
+        </td>
+        <td align="center">
+          <%= maq.serial.to_s %>
+        </td>
+        <td>
+          <%= maq.nombre_convenio.to_s %>
+        </td>
+        <td>
+          <%= maq.almacen.to_s %>
+        </td>
+        <td>
+          <%= maq.oficina.to_s %>
+        </td>
+        <td align="center">
+          <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+          {:action => :view_maquinaria,
+            :catalogo_id => maq.catalogo_id,
+            :controller => 'guia_movilizacion_maquinaria'} %>
+        </td>
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+</table>
+<br/>

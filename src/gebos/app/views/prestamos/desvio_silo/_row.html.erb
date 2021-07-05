@@ -1,0 +1,4 @@
+<% desvio_silo = @desvio_silo if desvio_silo.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= desvio_silo.id %>">
+  <%= render :partial => 'data', :locals => { :desvio_silo => desvio_silo, :even_odd => even_odd } -%>
+</tr>

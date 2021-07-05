@@ -1,0 +1,16 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 110px">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.nombre') %></label> <label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 550px">
+      <%= text_field 'tipos_semovientes', 'nombre', :class=>'text', :style=>'width: 500px', :maxlength=>'50'  -%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'),:title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

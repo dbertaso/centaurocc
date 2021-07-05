@@ -1,0 +1,25 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 500px" <%= sort_class_helper('formula.nombre') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'formula.nombre', 'recaudo_list' %>
+      </th>
+  </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+      even_odd = 1
+      for formula in @list
+        even_odd = 1 - even_odd %>
+
+      <% formula = @formula if formula.nil? %>
+      <tr class="lista<%= even_odd %>" id="row_<%= formula.id %>">
+        <td>
+          <%= formula.nombre  %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

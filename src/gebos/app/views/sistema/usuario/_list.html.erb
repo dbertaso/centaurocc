@@ -1,0 +1,35 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 135px" <%= sort_class_helper('usuario.nombre_usuario') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Controladores.Usuario.FormTitles.form_title_record'), 'usuario.nombre_usuario', 'list' %>
+      </th>
+      <th style="width: 140px" <%= sort_class_helper('usuario.primer_nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.primer_nombre'), 'usuario.primer_nombre', 'list' %>
+      </th>
+      <th style="width: 140px" <%= sort_class_helper('usuario.primer_apellido') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.primer_apellido'), 'usuario.primer_apellido', 'list' %>
+      </th>
+      <th style="width: 135px" <%= sort_class_helper('usuario.oficina.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Controladores.Oficina.FormTitles.form_title_record') , 'usuario.oficina.nombre', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('usuario.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'usuario.activo', 'list' %>
+      </th>
+      <th style="text-align: right; width: 70px">
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'), :title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir')), { :action=>'imprimir', :method=>:get, :popup=>true },
+          :popup => ['unidad_apoyo_resguardo', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for usuario in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :usuario => usuario, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,28 @@
+<% detalle_precio_gaceta = @detalle_precio_gaceta if detalle_precio_gaceta.nil? %>
+<td>
+  <%= detalle_precio_gaceta.actividad.nombre unless detalle_precio_gaceta.nil? %>
+</td>
+<td>
+  <%unless detalle_precio_gaceta.nil? %>
+    <%= detalle_precio_gaceta.tipo_clase_f %>
+  <%end%>
+</td> 
+<td>
+  <%= detalle_precio_gaceta.valor_f%>
+</td> 
+
+<td style="text-align: right">
+  <% unless detalle_precio_gaceta.precio_gaceta.status == false %>
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))), 
+        :action => 'edit', 
+        :precio_gaceta_id => @precio_gaceta.id, 
+        :popup=>params[:popup], 
+        :id => detalle_precio_gaceta.id ) if vlink 'edit' %>
+  <%end%>
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'detalle_precio_gaceta', :action => :delete, :id => detalle_precio_gaceta.id}) if vlink 'delete' -%>
+</td>
+

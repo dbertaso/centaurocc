@@ -1,0 +1,18 @@
+<td>
+  <%= oficina.nombre  %>
+</td>	
+<td>
+  <%= oficina.municipio.nombre  %>
+</td>
+<td>
+  <%= oficina.ciudad.nombre  %>
+</td>	
+<td style="text-align: right">
+  <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), :action => 'view', :method => :get, :id => oficina.id %>&nbsp;
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')), :action => 'edit', :method => :get, :id => oficina.id ) if vlink 'edit'%>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'oficina', :action => :delete, :id => oficina.id} ) if vlink 'delete' and oficina.puede_eliminarse? -%>
+</td>

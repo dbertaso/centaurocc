@@ -1,0 +1,65 @@
+<% condiciones_financiamiento = @condiciones_financiamiento if condiciones_financiamiento.nil? %>
+
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.programa.nombre  unless condiciones_financiamiento.programa.nil?%>
+  </td>
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.programa.moneda.nombre  unless condiciones_financiamiento.programa.nil?%>
+  </td>
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.sector.nombre  unless condiciones_financiamiento.nil?%>
+  </td>
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.sub_sector.nombre unless condiciones_financiamiento.nil?  %>
+  </td>
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.rubro.nombre unless condiciones_financiamiento.nil?  %>
+  </td>
+
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.sub_rubro.nombre.to_s unless condiciones_financiamiento.nil?  %>
+  </td>
+
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.actividad.nombre.to_s unless condiciones_financiamiento.nil? %>
+  </td>
+
+
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.frecuencia_pago_w unless condiciones_financiamiento.nil?  %>
+  </td>
+
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.formula.nombre unless condiciones_financiamiento.nil?  %>
+  </td>
+
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.plazo_total unless condiciones_financiamiento.nil? %>
+  </td>
+  
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.plazo unless condiciones_financiamiento.nil? %>
+  </td>
+
+  <td style="text-align: center">
+    <%= condiciones_financiamiento.periodo_gracia unless condiciones_financiamiento.nil? %>
+  </td>
+
+   <td style="text-align: center">
+    <%= format_bool(condiciones_financiamiento.diferir_intereses)  %>
+  </td>
+
+  <td style="text-align: center">
+    <%= format_bool(condiciones_financiamiento.activo)  %>
+  </td>
+
+<td style="text-align: right">
+  <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), :action => 'view', :id => condiciones_financiamiento.id %>&nbsp;
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))), :action => 'edit', :id => condiciones_financiamiento.id) if vlink 'edit' %>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Controladores.Mensaje.esta_seguro'),
+    :url => {:controller => 'condiciones_financiamiento', :action => :delete, :id => condiciones_financiamiento.id}) if vlink 'delete' -%>
+</td>

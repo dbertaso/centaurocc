@@ -1,0 +1,244 @@
+<%= error %>
+<%= message %>
+<table style="width: 100%">
+  <td class="separador" valign="bottom" colspan="4">
+    <span>Datos Personales</span>
+  </td>
+
+  <table align="center" border="1">
+    <tr>
+      <td><label>Silo</label></td>
+      <td>
+
+        <%=@otro_arrime.silo.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td> <label>Rif:</label></td>
+      <td>
+
+        <%=@otro_arrime.silo.rif %>
+      </td>
+    </tr>
+    <tr>
+      <td> <label>Asociacion:</label> </td>
+      <td>FONDAS </td>
+    </tr>
+    <tr>
+      <td><label>Sector: </label></td>
+      <td>
+        <%=@otro_arrime.actividad.sub_rubro.rubro.sub_sector.sector.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Sub Sector: </label></td>
+      <td>
+        <%=@otro_arrime.actividad.sub_rubro.rubro.sub_sector.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Rubro: </label></td>
+      <td>
+        <%=@otro_arrime.actividad.sub_rubro.rubro.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Sub Rubro: </label></td>
+      <td>
+        <%=@otro_arrime.actividad.sub_rubro.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Rubro: </label></td>
+      <td>
+        <%=@otro_arrime.actividad.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Hora Registro: </label></td>
+      <td>
+        <%= @otro_arrime.hora_registro_f unless @otro_arrime.nil? %>
+      </td>
+    </tr>
+  </table>
+</table>
+<br>
+
+<table align="center" border="1" width="60%">
+  <tr>
+    <td><label>Nro Tr&aacute;mite:</label></td>
+    <td>
+      <%= @otro_arrime.solicitud.numero%>
+    </td>
+
+  <br/>
+
+
+  <td><label>Nro Ticket:</label></td>
+  <td><%=@otro_arrime.numero_ticket unless @otro_arrime.nil?%></td>
+</tr>
+<tr>
+  <td><label>Doc.Productor:</label></td>
+  <td>
+    <%= @view_boleta_arrime.cedula_rif %>
+  </td>
+
+  <td><label>Productor:</label></td>
+  <td>
+    <%= @view_boleta_arrime.productor%>
+  </td>
+
+</tr>
+
+<tr>
+  <td><label>Placa del Veh&iacute;culo:</label></td>
+
+  <td>
+    <%= @otro_arrime.placa_vehiculo unless @otro_arrime.nil?%>
+  </td>
+  <td><label>Gu&iacute;a de Movilizaci&oacute;n:</label></td>
+  <td><%= @otro_arrime.guia_movilizacion unless @otro_arrime.nil?%></td>
+</tr>
+
+<tr>
+  <td><label>C&eacute;dula del Conductor:</label></td>
+  <td><%= @otro_arrime.cedula_conductor unless @otro_arrime.nil?%></td>
+
+  <td><label>Conductor:</label></td>
+  <td><%= @otro_arrime.nombre_conductor unless @otro_arrime.nil? %></td>
+</tr>
+</table>
+</br>
+<br/>
+<br/>
+<br/>
+<table style="width: 100%">
+  <td class="separador" valign="bottom" colspan="4">
+    <span>Datos del Peso</span>
+  </td>
+</table>
+<br/>
+<table align="center" border="1" width="60%">
+  <tr align="center" >
+    <td></td>
+    <td><label>Fecha</label></td>
+    <td><label>Veh&iacute;culo</label></td>
+    <td><label>Remolque</label></td>
+    <td><label>Total</label></td>
+  </tr>
+  <tr align="center" >
+    <td><label>Entrada</label></td>
+    <td><%= @otro_arrime.fecha_entrada.strftime("%d/%m/%Y") unless @otro_arrime.nil?%></td>
+    <td>
+      <%unless @otro_arrime.nil?%>
+        <%valor = sprintf('%01.2f', @otro_arrime.peso_vehiculo).sub('.', ',')%>
+        <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      <%end%>
+    </td>
+    <td>
+      <%unless @otro_arrime.nil?%>
+        <%valor = sprintf('%01.2f',  @otro_arrime.peso_remolque).sub('.', ',')%>
+        <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      <%end%>
+    </td>
+    <td>
+      <%unless @otro_arrime.nil?%>
+        <%valor = sprintf('%01.2f',  @otro_arrime.valor_total_entrada).sub('.', ',')%>
+        <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      <%end%>
+    </td>
+  </tr>
+  <tr align="center" >
+    <td><label>Salida</label></td>
+    <td><%= @otro_arrime.fecha_salida.strftime("%d/%m/%Y") unless @otro_arrime.nil? %></td>
+    <td>
+      <%unless @otro_arrime.nil?%>
+        <%valor = sprintf('%01.2f',  @otro_arrime.peso_vehiculo).sub('.', ',')%>
+        <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      <%end%>
+    </td>
+    <td>
+      <%unless @otro_arrime.nil?%>
+        <%valor = sprintf('%01.2f',  @otro_arrime.peso_remolque).sub('.', ',')%>
+        <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      <%end%>
+    </td>
+    <td>
+      <%unless @otro_arrime.nil?%>
+        <%valor = sprintf('%01.2f',  @otro_arrime.valor_total_salida).sub('.', ',')%>
+        <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      <%end%>
+    </td>
+  </tr>
+</table>
+<br>
+<table align="center" border="1" width="70%">
+  <tr>
+    <td style="width: 90px"><label>Peso Neto:</label></td>
+    <td style="width: 100px"> 
+      <%unless @otro_arrime.nil?%>
+        <%valor = sprintf('%01.2f', @otro_arrime.peso_neto).sub('.', ',')%>
+        <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      <%end%>
+    </td>
+    <td style="width: 100px"><label>Peso Acondicionado:</label></td>
+    <td style="width: 90px">
+      <%unless @otro_arrime.nil?%>
+        <%valor = sprintf('%01.2f', @otro_arrime.peso_acondicionado).sub('.', ',')%>
+        <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      <%end%>
+    </td>
+  </tr>
+</table>
+</br>
+<br/>
+<table align="center" border="1" width="30%">
+  <tr align="center" >
+    <td><label>Resultado:</label></td>
+    <td>
+      <%unless @otro_arrime.nil?%>
+        <% if  @otro_arrime.resultado == 'A' %>
+          Aprobado
+        <% elsif @otro_arrime.resultado == 'R' %>
+          Rechazado
+        <%end%>
+      <%end%>
+    </td>
+  </tr>
+  <% if @otro_arrime.resultado =='A' %>
+    <tr align="center" >
+      <td><label>Valor del Arrime:</label></td>
+      <td>
+        <%unless @otro_arrime.nil?%>
+          <%valor = sprintf('%01.2f',@otro_arrime.monto_arrime).sub('.', ',')%>
+          <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+        <%end%>
+      </td>
+    </tr>
+    <tr align="center" >
+      <td><label>Observaci&oacute;n:</label></td>
+      <td align="center">
+        <%= @otro_arrime.observacion.to_s unless @otro_arrime.nil? -%>
+      </td>
+    <%end%>
+    <% if @otro_arrime.resultado =='R' %>
+    <tr align="center" >
+      <td><label>Nro. Acta:</label></td>
+      <td> <%= @otro_arrime.nro_acta_rechazo unless @otro_arrime.nil? -%> </td>
+    </tr>
+  </tr>
+  <tr align="center" >
+    <td><label>Causa:</label></td>
+    <td align="center">
+      <%= @otro_arrime.causa_rechazo.to_s unless @otro_arrime.nil? -%>
+    </td>
+  <%end%>
+</tr>
+<br/>
+<br/>
+<br/>
+</table>
+
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+  { :action => :index, :solicitud_id => @otro_arrime.solicitud_id,},
+  { :id=>'button_close' } ) -%>

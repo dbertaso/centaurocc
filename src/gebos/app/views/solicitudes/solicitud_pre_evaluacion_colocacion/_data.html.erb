@@ -1,0 +1,26 @@
+<% unidad_produccion_colocacion = @unidad_produccion_colocacion if unidad_produccion_colocacion.nil? %>
+
+<td>
+  <%= unidad_produccion_colocacion.sitio_colocacion.sitio unless unidad_produccion_colocacion.sitio_colocacion.nil? %>
+</td>
+<td>
+  <%= unidad_produccion_colocacion.sitio_colocacion.nombre unless unidad_produccion_colocacion.sitio_colocacion.nil? %>
+</td>
+<td>
+  <label><%= "#{I18n.t('Sistema.Body.Vistas.General.ubicada')} #{I18n.t('Sistema.Body.Vistas.General.a')}" %>&nbsp;</label><%= unidad_produccion_colocacion.ubicacion %><label> Km. <%= "#{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')}" %></label>
+</td>
+
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:action => :edit, :seguimiento_visita_id => @seguimiento_visita.id, :id => unidad_produccion_colocacion.id}) -%>
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :seguimiento_visita_id => @seguimiento_visita.id, :id => unidad_produccion_colocacion.id}) -%>
+</td>

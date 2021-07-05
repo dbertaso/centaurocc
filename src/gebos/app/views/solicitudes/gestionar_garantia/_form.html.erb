@@ -1,0 +1,385 @@
+<%= error %>
+<%= message %>
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" colspan="2" style="width: 100%">
+      <span><%=I18n.t('Sistema.Body.Separadores.datos_basicos')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 25%">
+      <label><%=I18n.t('Sistema.Body.General.concepto')%></label>
+    </td>
+    <td valign="top" style="width: 75%">
+      <%= text_field 'solicitud_constitucion_garantia', 'concepto',
+        :class=>'text', :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.General.monto_solicitado')%></label>
+    </td>
+    <td>
+      <%= format_fm(@solicitud.monto_solicitado) %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.indice_garantia')%></label>
+    </td>
+    <td>
+      <%= format_fm(@solicitud_tipo_garantia.relacion_garantia) %>:1
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.monto_garantia')%></label>
+    </td>
+    <td>
+      <%= format_fm(@indice) %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.constitucion')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <%= check_box 'solicitud_constitucion_garantia', 'validacion_futura',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onchange=>'inputChange();'-%> <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.validacion_constitucion_futuro')%></label>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= calendar_date_select_tag "solicitud_constitucion_garantia[fecha_futura_f]", @solicitud_constitucion_garantia.fecha_futura_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text', :style=>'width: 80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date >= (new Date()).stripTime()",:onchange=>'inputChange();' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.autenticacion')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= calendar_date_select_tag "solicitud_constitucion_garantia[fecha_auteticacion_f]", @solicitud_constitucion_garantia.fecha_auteticacion_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text', :style=>'width: 80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.notaria')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'notaria',
+        :class=>'text', :style=>'width: 400px',
+        :maxlength=>'100', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.direccion_notaria')%></label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_constitucion_garantia', 'direccion_notaria',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,250)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td>
+      <% estado_onchange = remote_function(
+        :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+        :url=>{:controller=>'gestionar_garantia',
+          :action=>:estado_list },
+        :with=>"'estado_id='+value") %>
+      <%= select(
+        'solicitud_constitucion_garantia', 'estado_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>estado_onchange + ';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_list' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.numero')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'numero_autenticacion',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.folio')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'folio_autenticacion',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tomo')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'tomo_autenticacion',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_constitucion_garantia', 'observacion_autenticacion',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,1000)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.protocolizacion')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= calendar_date_select_tag "solicitud_constitucion_garantia[fecha_protocolizacion_f]", @solicitud_constitucion_garantia.fecha_protocolizacion_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text', :style=>'width: 80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.registro')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'registro',
+        :class=>'text', :style=>'width: 400px',
+        :maxlength=>'500', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%="#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.registro')}"%></label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_constitucion_garantia', 'direccion_registro',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,250)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.numero')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'numero',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <span id="etiqueta_folio">
+        <% if @solicitud_constitucion_garantia.etiqueta_folio.nil? || @solicitud_constitucion_garantia.etiqueta_folio.empty? %>
+          <label><%= link_to_remote(I18n.t('Sistema.Body.Vistas.General.folio'), :title=>I18n.t('Sistema.Body.Vistas.General.folio'),
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+              :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+              :url => {:action => :etiqueta_folio, :id => 1}) -%></label>
+        <% else %>
+          <%= text_field 'solicitud_constitucion_garantia', 'etiqueta_folio',
+            :class=>'text', :style=>'width: 130px',
+            :maxlength=>'30', :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();'  -%><label>:</label> <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>I18n.t('Sistema.Body.Controladores.Accion.deshacer')),
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+              :id=>'button_enviar', :onclick=>'if (varEnviado) { return false; } else {varEnviado = true;}',
+              :url => {:action => :etiqueta_folio, :id =>2}) -%>
+          <% end %>
+      </span>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'folio',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <span id="etiqueta_tomo">
+        <% if @solicitud_constitucion_garantia.etiqueta_tomo.nil? || @solicitud_constitucion_garantia.etiqueta_tomo.empty? %>
+          <label><%= link_to_remote(I18n.t('Sistema.Body.Vistas.General.tomo'), :title=>I18n.t('Sistema.Body.Vistas.General.tomo'),
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+              :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+              :url => {:action => :etiqueta_folio, :id => 3}) -%></label>
+        <% else %>
+          <%= text_field 'solicitud_constitucion_garantia', 'etiqueta_tomo',
+            :class=>'text', :style=>'width: 130px',
+            :maxlength=>'30', :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();'  -%><label>:</label> <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>I18n.t('Sistema.Body.Controladores.Accion.deshacer')),
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+              :id=>'button_enviar', :onclick=>'if (varEnviado) { return false; } else {varEnviado = true;}',
+              :url => {:action => :etiqueta_folio, :id =>4}) -%>
+          <% end %>
+      </span>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'tomo',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <span id="etiqueta_protocolo">
+        <% if @solicitud_constitucion_garantia.etiqueta_protocolo.nil? || @solicitud_constitucion_garantia.etiqueta_protocolo.empty? %>
+          <label><%= link_to_remote('Protocolo:', :title=>I18n.t('Sistema.Body.Vistas.General.protocolo'),
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+              :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+              :url => {:action => :etiqueta_folio, :id => 5}) -%></label>
+        <% else %>
+          <%= text_field 'solicitud_constitucion_garantia', 'etiqueta_protocolo',
+            :class=>'text', :style=>'width: 130px',
+            :maxlength=>'30', :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();'  -%><label>:</label> <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>I18n.t('Sistema.Body.Controladores.Accion.deshacer')),
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+              :id=>'button_enviar', :onclick=>'if (varEnviado) { return false; } else {varEnviado = true;}',
+              :url => {:action => :etiqueta_folio, :id =>6}) -%>
+          <% end %>
+      </span>
+    </td>
+    <td>
+      <%= text_field 'solicitud_constitucion_garantia', 'protocolo',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.trimestre')%></label>
+    </td>
+    <td>
+      <%= select(
+        'solicitud_constitucion_garantia','trimestre',
+        [[I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.primero'),1],[I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.segundo'),2],[I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.tercero'),3],[I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.cuarto'),4]],
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_constitucion_garantia', 'observacion',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,1000)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.estado_y_comentario')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td>
+      <span style="color: blue"><b><%= @solicitud_tipo_garantia.estatus_w %></b></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.General.comentarios')%></label>
+    </td>
+    <td>
+      <%= text_area 'solicitud_constitucion_garantia', 'comentarios',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,1000)' -%>
+    </td>
+  </tr>
+
+</table>

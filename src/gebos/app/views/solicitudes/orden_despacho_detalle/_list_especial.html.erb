@@ -1,0 +1,83 @@
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%#= sort_class_helper('@numero_desembolso') %>>
+          <%#= sort_link_helper '# Nro.Desembolso', '@numero_desembolso', 'list' %>
+	 <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho')%>  
+	</th>
+
+         <th style="width: 120px" <%#= sort_class_helper('item_nombre') %>>
+          <%#= sort_link_helper '# Ítem', 'item_nombre', 'list' %> <%="# #{I18n.t('Sistema.Body.Vistas.General.item')}"%>
+        </th>
+         <th style="width: 320px" <%#= sort_class_helper('observacion') %>>
+          <%#= sort_link_helper 'Descripción', 'observacion', 'list' %><%=I18n.t('Sistema.Body.General.descripcion')%>
+        </th>
+
+        <th style="width: 50px" <%#= sort_class_helper('unidad_medida_id') %>>
+          <%#= sort_link_helper 'Unidad de Medida', 'unidad_medida_id', 'list' %><%=I18n.t('Sistema.Body.Modelos.UnidadMedida.nombre')%>
+        </th>
+        <th style="width: 50px" <%#= sort_class_helper('cantidad') %>>
+          <%#= sort_link_helper 'Cantidad', 'cantidad', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_a_despachar')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('costo_real') %>>
+          <%#= sort_link_helper 'Precio Unitario', 'costo_real', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.General.unitario')%>
+       </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_financiamiento') %>>
+          <%#= sort_link_helper 'Precio Total', 'monto_financiamiento', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Saldo a Entregar', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_facturado')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_facturado') %>>
+          <%#= sort_link_helper 'Monto Facturado', 'monto_facturado', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_factura')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Saldo a Favor', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_factura')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Cantidad Facturada', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.diferencia')%>
+        </th>
+
+        <th style="width: 80px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Cantidad Faltante', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_faltante')%>
+        </th>
+
+        </tr>
+    </thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for orden_despacho_detalle in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_especial', :locals => { :orden_despacho_detalle => orden_despacho_detalle, :even_odd => even_odd } -%>
+<% end %>
+<tr border="1" style="background-color: #888888;">
+<td colspan="6" style="border: solid 1px #000000;" align="right"><strong><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')).upcase%></strong></td>
+<td style="border: solid 1px #000000;" align="right"><strong><%=javascript_tag "document.write(formatCurrency2(trunco_a_2_decimales(parseFloat(#{@total_saldo_entregar}))));"%></strong></td>
+<td style="border: solid 1px #000000;" align="right"><strong><%=javascript_tag "document.write(formatCurrency2(trunco_a_2_decimales(parseFloat(#{@total_precio_total}))));"%></strong></td>
+
+
+<td style="border: solid 1px #000000;" align="right"></td>
+<td style="border: solid 1px #000000;" align="right"><strong><div id="resultado_suma"></div></strong></td>
+
+
+
+<td style="border: solid 1px #000000;" align="right"><strong><div id="resultado_suma_divs"></div></strong></td>
+<td style="border: solid 0px #000000;background-color: #ffffff;" align="right"></td>
+</tr>
+
+
+
+
+<!--  </tr> -->
+
+</tbody>
+</table>
+
+<%#= form_pagination %>

@@ -1,0 +1,15 @@
+<% item = @solicitud_testigos if item.nil? %>
+<td style="text-align: left">
+	<%= item.nombre_testigo %>
+</td>
+<td style="text-align: center">
+	<%= item.cedula_testigo %>
+</td>
+
+<td style="text-align: center">
+	<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+      :url => {:controller => 'solicitud_testigos', :action => :delete, :id => item.id, :solicitud_id=>item.solicitud_id}) if vlink 'delete' -%>
+</td>

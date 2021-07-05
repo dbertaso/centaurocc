@@ -1,0 +1,31 @@
+<%= form_title_new %>
+
+<%= error 'form_new' %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :save_new, :usuario_id => @usuario.id } ) do %>
+<table>
+  <tr>
+    <td>Rol:</td>
+    <td>
+      <%= select(
+        'rol', 'id',
+        @rol_select.map{|e| [e.id.to_s + ' - ' + e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },  { :class=>'select' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'),
+        :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+      <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url => { :action => :cancel_new}) -%>
+    </td>
+  </tr>
+</table>
+<% end %>

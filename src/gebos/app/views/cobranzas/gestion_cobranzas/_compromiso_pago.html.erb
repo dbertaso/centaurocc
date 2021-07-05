@@ -1,0 +1,102 @@
+    <table id="compromiso" style="width: 100%">
+
+      <tr>
+        <td style="width: 40% text-align: left">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.compromiso')}"%>
+          </label>
+          <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+        </td>
+        <td style="width: 50%">
+          <%= calendar_date_select 'compromiso_pago', 'fecha_pago',
+                :year_range => 110.years.ago..-1.years.ago,
+                :class=>'text',
+                :style=>'width:80px',
+                :maxlength=>'10',
+                :onkeypress=>'inputChange();',
+                :onchange=>"#{remote_function(
+                  :loading =>'image_load()',
+                  :loaded => 'image_unload()',
+                  :url=>{:controller=>'gestion_cobranzas',
+                  :action=>:fecha_limite, :prestamo_id => @prestamo.id},
+                  :with=>"'fecha_limite='+value")}; inputChange();" %> &nbsp; <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+        </td>
+        <tdstyle="width: 10%"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.limite')} #{I18n.t('Sistema.Body.Vistas.General.compromiso')}"%>
+          </label>
+        </td>
+        <td>
+          <span id="fecha_limite">
+            <%= render "fecha_limite" %>
+          </span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td valign="top">
+        <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.monto')}" %>
+        </label>
+        </td>
+        <td colspan="2">
+
+
+          <%= radio_button '', 'exigible',
+                           'true', :class=>'text',
+                            :onclick=>"#{remote_function(:loading =>'image_load()',
+                                      :loaded => 'image_unload()',
+                                      :url=>{:controller=>'gestion_cobranzas',
+                                      :action=>:exigible_change, :prestamo_id=>@prestamo.id }, :with => "'valor='+value")}; inputChange();"  -%>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible')}" %>&nbsp;&nbsp;&nbsp;
+
+
+          <%= radio_button '', 'exigible',
+                           'false', :class=>'text',
+                           :onclick=>"#{remote_function(:loading =>'image_load()',
+                                      :loaded => 'image_unload()',
+                                      :url=>{:controller=>'gestion_cobranzas',
+                                      :action=>:exigible_change, :prestamo_id=>@prestamo.id }, :with => "'valor='+value")}; inputChange();"  -%>
+          <%= "#{I18n.t('Sistema.Body.General.otro')} #{I18n.t('Sistema.Body.Vistas.General.monto')}" %>
+        </td>
+        <td>
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.compromiso')}" %>:
+            <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+          </label>
+
+        </td>
+
+        <td>
+          <span id="monto" style="width: 60px, text-align: right">
+            <%= render "monto_compromiso" %>
+          </span>
+        </td>
+      <td></td>
+      </tr>
+      <br/>
+      <tr>
+
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.observacion')%></label>
+        </td>
+
+        <td>
+          <%= text_area 'compromiso_pago', 'observacion',
+             :class=>'text', :size=>'40x10', :onkeypress=>'inputChange();'  -%>
+        </td>
+
+      </tr>
+      <br/>
+      <br/>
+  </table>

@@ -1,0 +1,13 @@
+  <% rubro_onchange_origen = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'presupuesto_pidan',
+            :action=>:rubro_change_origen },
+            :with=>"'rubro_id='+value+'&estado_id='+presupuesto_transferencia_estado_id_origen.value" ) %>
+
+              <%= select(
+                'presupuesto_transferencia', 'rubro_id_origen',
+                @rubro_list.map{|i| [i.nombre, i.id]},
+                {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                { :class=>'select', :style=>'width:250px', :onchange=>rubro_onchange_origen + ';inputChange();' } ) %>

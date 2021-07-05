@@ -1,0 +1,30 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+	 Lista de Desvios de Silo <span class="titulo_modificar"></span> &ensp;
+         <label style="color: red">"Nro. Tr&aacute;mite <%= @view_boleta_arrime.nro_solicitud unless @view_boleta_arrime.nil? %>" &ensp;
+           "Productor  <%= @view_boleta_arrime.productor unless @view_boleta_arrime.nil? %>"</label>
+    </div>
+  </div>
+</div>
+<%= render :partial=>'prestamos/boleta_arrime/common/tabs' %>
+<div class="marco-contenido2">
+
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.agregar')),
+      :action => 'new', :solicitud_id=>@view_boleta_arrime.solicitud_id, :actividad_id=> @view_boleta_arrime.actividad_id,
+      :cliente_id=>@view_boleta_arrime.cliente_id, :rubro=>@view_boleta_arrime.rubro, :popup=>params[:popup] ) if vlink 'edit' %>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial=>"list" %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller=> 'arrime', :action => :index }, { :id=>'button_close' } ) -%>
+</div>

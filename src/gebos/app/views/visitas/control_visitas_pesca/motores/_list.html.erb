@@ -1,0 +1,30 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 300px" <%= sort_class_helper('modelo_motor') %>>
+        <%= sort_link_helper 'Modelo del Motor', 'modelo_motor', 'list' %>
+      </th>
+      <th align="center" style="width: 300px" <%= sort_class_helper('proveedor_marino_id') %>>
+        <%= sort_link_helper 'Proveedor Marino', 'proveedor_marino_id', 'list' %>
+      </th>
+      <th style="width: 200px" <%= sort_class_helper('ano') %>>
+        <%= sort_link_helper 'Año', 'ano', 'list' %>
+      </th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for motores in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :motores => motores, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))), 
+    visitas_visita_seguimiento_index_path<<"/#{@visitas.solicitud_id.to_s}", {:popup=>params[:popup],:id=>'button_close' } ) -%>
+

@@ -1,0 +1,5 @@
+<% cultivo_laguna = @cultivo_laguna if cultivo_laguna.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= cultivo_laguna.id %>">
+  <%= render :partial => 'data', :locals => { :cultivo_laguna => cultivo_laguna, :even_odd => even_odd } -%>
+</tr>
+

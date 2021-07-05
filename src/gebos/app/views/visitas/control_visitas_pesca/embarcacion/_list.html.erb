@@ -1,0 +1,40 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 320px" <%= sort_class_helper('nombre_embarcacion') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.embarcacion')}", 'nombre_embarcacion', 'list' %>
+      </th>
+      <th style="width: 240px" <%= sort_class_helper('matricula') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.matricula'), 'matricula', 'list' %>
+      </th>
+      <th style="width: 240px" <%= sort_class_helper('tipo_embarcacion_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.tipo_embarcacion'), 'tipo_embarcacion_id', 'list' %>
+      </th>
+      <th style="width: 240px" <%= sort_class_helper('tipo_material_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.tipo_material'), 'tipo_material_id', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('eslora') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.eslora'), 'eslora', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('manga') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.manga'), 'manga', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('puntal') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.puntal'), 'puntal', 'list' %>
+      </th>
+      <th style="width: 160px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for embarcacion in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :embarcacion => embarcacion, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

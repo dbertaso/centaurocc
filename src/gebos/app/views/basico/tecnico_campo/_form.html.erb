@@ -1,0 +1,326 @@
+<script type="text/javascript">
+
+  onload = function()
+  {
+    showVehiculo('<%= @tecnico_campo.posee_vehiculo %>')
+    showTipoVehiculo('<%= @tecnico_campo.tipo_vehiculo %>');
+  }
+
+  function showVehiculo(value)
+  {
+    if (value == 'true'){
+      document.getElementById("vehiculo").style.display="";
+    }else{
+      document.getElementById("vehiculo").style.display="none";
+      document.getElementById("marca_vehiculo").value = "";
+      document.getElementById("modelo_vehiculo").value = "";
+			
+    }
+  }
+
+  function showTipoVehiculo(value)
+  {
+    if (value == 'O'){
+      document.getElementById("vehiculo_tipo_otro").style.display="";
+    }else{
+      document.getElementById("vehiculo_tipo_otro").style.display="none";
+      document.getElementById("tecnico_campo_tipo_vehiculo_otro").value = "";
+    }
+  }
+
+  function opcion(){
+    op = document.getElementById("tecnico_campo_tipo_vehiculo").value;
+    if (op == 'O'){
+      document.getElementById("vehiculo_tipo_otro").style.display="";
+    }
+  }
+
+</script>
+
+<%= error %>
+<%= message %>
+<table border="0" width="100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="4">
+      <span><%= I18n.t('Sistema.Body.Vistas.EmpleadosSilo.Etiquetas.datos_personales') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.codigo_tecnico') %></label></td>
+    <td>
+      <%= @tecnico_campo.codigo %>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.cantidad_visitas') %></label></td>
+    <td>
+      <% if @tecnico_campo.cantidad_visitas.nil?  %>
+        0
+      <% else  %>
+        <%= @tecnico_campo.cantidad_visitas %>
+      <%  end %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 50%">
+      <%= text_field  'tecnico_campo','letra_cedula',
+        :class=>'text', :style=>'width: 10px',
+        :maxlength=>'12', :onkeypress=>'inputChange();', :readonly=>'readonly'  -%>-
+      <%= text_field  'tecnico_campo','cedula',
+        :class=>'text', :style=>'width: 80px',
+        :maxlength=>'12', :onkeypress=>'inputChange();', :readonly=>'readonly'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'tecnico_campo', 'primer_nombre', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label></td>
+    <td>
+      <%= text_field 'tecnico_campo', 'segundo_nombre', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'tecnico_campo', 'primer_apellido', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label></td>
+    <td>
+      <%= text_field 'tecnico_campo', 'segundo_apellido', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Modelos.Errores.sexo') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'tecnico_campo', 'sexo', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.femenino') %><br />
+      <%= radio_button 'tecnico_campo', 'sexo', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.masculino') %><br />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.fecha_nacimiento') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "tecnico_campo[fecha_nacimiento_f]", @tecnico_campo.fecha_nacimiento_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()" %> 
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Modelos.TecnicoCampo.Errores.estado_civil') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'tecnico_campo', 'estado_civil', 'S', :checked => true,
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.soltero') %><br />
+      <%= radio_button 'tecnico_campo', 'estado_civil', 'C',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.casado') %><br />
+      <%= radio_button 'tecnico_campo', 'estado_civil', 'O',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.concubinato') %><br />
+      <%= radio_button 'tecnico_campo', 'estado_civil', 'V',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.viudo') %><br />
+      <%= radio_button 'tecnico_campo', 'estado_civil', 'D',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.divorciado') %><br />
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 130px"><label><%=I18n.t('Sistema.Body.Controladores.Profesion.FormTitles.form_title_record')%></label><label class="requerido"> (*)</label></td>
+    <td style="width: 230px">
+      <%= select(
+        'tecnico_campo','profesion_id',
+        @profesion.map{|i| [i.nombre, i.id]},
+        {:prompt=>'Seleccione una profesión... '},
+        { :class=>'select', :onchange=>'inputChange();' } )
+    %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 130px"><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.oficina_asignacion') %></label><label class="requerido"> (*)</label></td>
+    <td style="width: 230px">
+      <%= select(
+        'tecnico_campo','oficina_id',
+        @oficina.map{|i| [i.nombre, i.id]},
+        {:prompt=>'Seleccione una oficina... '},
+        { :class=>'select', :onchange=>'inputChange();' } )
+    %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=  I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'tecnico_campo', 'activo',
+        { :onchange=>'inputChange();' }, 'true', 'false' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="4">
+      <span><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.direccion_vivienda') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 130px"><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label><label class="requerido"> (*)</label></td>
+    <td style="width: 230px">
+      <%= select('tecnico_campo','estado_id',
+        @estado.map{|i| [i.nombre, i.id]},
+        {:prompt=>'Seleccione un estado... '},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'tecnico_campo',
+          :action=>:estado_change },
+          :with=>"'estado_id='+value")}; inputChange();" } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="municipio-search">
+        <%= render :partial=>'municipio_search' %>
+      </span>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="parroquia-search">
+        <%= render :partial=>'parroquia_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.General.direccion') %></label><label class="requerido"> (*)</label></td>
+    <td>
+      <%= text_area 'tecnico_campo', 'direccion', :class=>'text',
+        :style=>'width: 320px; height: 60px',
+        :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,250)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Modelos.TecnicoCampo.Errores.telefono_habitacion') %></label><label class="requerido"> (*)</label></td>
+    <td>
+      <%= text_field 'tecnico_campo', 'telefono_habitacion', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'200', :onkeypress=>'inputChange(); return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.telefono')} #{I18n.t('Sistema.Body.Vistas.General.celular')}" %></label><label class="requerido"> (*)</label></td>
+    <td>
+      <%= text_field 'tecnico_campo', 'telefono_celular', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'200', :onkeypress=>'inputChange(); return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.email') %></label><label class="requerido"> (*)</label></td>
+    <td>
+      <%= text_field 'tecnico_campo', 'correo_electronico', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="4">
+      <span><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.datos_vehiculo') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.posee_vehiculo') %></label> <label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'tecnico_campo', 'posee_vehiculo', 'true',
+        :class=>'text', :onclick=>'inputChange();showVehiculo("true");' -%><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si') %><br />
+      <%= radio_button 'tecnico_campo', 'posee_vehiculo', 'false',
+        :class=>'text', :onclick=>'inputChange();showVehiculo("false");'  -%><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop') %><br />
+    </td>
+  </tr>
+</table>
+<br/>
+<div id="vehiculo" style="display:block">
+  <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.informacion_vehiculo') %></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 230px"><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.marca_vehiculo') %></label></td>
+      <td>
+        <%= text_field 'tecnico_campo', 'marca_vehiculo', :class=>'text', :style=>'width: 200px',
+          :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 230px"><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.modelo_vehiculo') %></label></td>
+      <td>
+        <%= text_field 'tecnico_campo', 'modelo_vehiculo', :class=>'text', :style=>'width: 200px',
+          :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 230px"><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.placa_vehiculo') %></label></td>
+      <td>
+        <%= text_field 'tecnico_campo', 'placa_vehiculo', :class=>'text', :style=>'width: 200px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 230px">
+        <label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.tipo_vehiculo') %></label>
+      </td>
+      <td>
+        <%= select(
+          'tecnico_campo', 'tipo_vehiculo',
+          [['Motocicleta','M'],['Vehículo Sedan','S'],
+            ['Vehículo Rustico','R'],['Otro','O']],
+          { :prompt =>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          { :class=>'select', :onchange=>'opcion();inputChange();' } ) %>
+      </td>
+    </tr>
+  </table>
+</div>
+<div id="vehiculo_tipo_otro" style="display:none">
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 230px"><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.otro_vehiculo') %></label></td>
+      <td>
+        <%= text_field 'tecnico_campo', 'tipo_vehiculo_otro', :class=>'text', :style=>'width: 200px',
+          :maxlength=>'200', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+  </table>
+</div>
+<br/>
+<br/>
+

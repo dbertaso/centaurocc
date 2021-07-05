@@ -1,0 +1,524 @@
+<% 
+  sql="
+      select distinct cdh.solicitud_id, e.nombre as nombre_estado, cdh.comentario,
+      case when empresa.rif is null then CAST(cedula as varchar) else empresa.rif end as identificacion,
+      case when empresa.nombre is null then
+        case when persona.primer_nombre is null then ' ' else persona.primer_nombre end 
+        || ' ' || 
+        case when persona.primer_apellido is null then ' ' else persona.primer_apellido end
+      else
+        empresa.nombre
+      end AS nombre,
+      r.nombre as nombre_rubro,s.cliente_id,s.numero,s.monto_solicitado,cdh.decision
+      from  
+          comite_decision_historico cdh 
+              inner join comite t on cdh.comite_id = t.id 
+              inner join solicitud s on s.id=cdh.solicitud_id
+              inner join cliente  ON s.cliente_id = cliente.id
+              left join persona ON cliente.persona_id = persona.id
+              left JOIN empresa ON cliente.empresa_id = empresa.id
+              inner join rubro r on r.id=s.rubro_id
+              inner join oficina o on o.id=cdh.oficina_id
+              inner join ciudad c on c.id=o.ciudad_id
+              inner join estado e on e.id=c.estado_id
+      where 
+            cdh.comite_id=#{params[:comite_id]}
+    union
+      select 
+        distinct cdht.solicitud_id, e.nombre as nombre_estado, cdht.comentario,
+      case when empresa.rif is null then CAST(cedula as varchar) else empresa.rif end as identificacion,
+      case when empresa.nombre is null then
+        case when persona.primer_nombre is null then ' ' else persona.primer_nombre end 
+        || ' ' || 
+        case when persona.primer_apellido is null then ' ' else persona.primer_apellido end
+      else
+        empresa.nombre
+      end AS nombre,
+      r.nombre as nombre_rubro,s.cliente_id,s.numero,s.monto_solicitado,cdht.decision
+      from  
+        comite_decision_historico_total cdht 
+          inner join comite t on cdht.comite_id = t.id
+          inner join solicitud s on s.id=cdht.solicitud_id
+          inner join cliente  ON s.cliente_id = cliente.id
+          left join persona ON cliente.persona_id = persona.id
+          left JOIN empresa ON cliente.empresa_id = empresa.id
+          inner join rubro r on r.id=s.rubro_id
+          inner join oficina o on o.id=cdht.oficina_id
+          inner join ciudad c on c.id=o.ciudad_id
+          inner join estado e on e.id=c.estado_id
+      where 
+        cdht.comite_id=#{params[:comite_id]}
+      order by nombre_estado, nombre_rubro
+  "
+  sql_miembro=  "
+    select mc.nombre, mc.apellido
+    from comite_miembro cm, miembro_comite mc
+    where mc.id=cm.miembro_comite_id
+    and firma=true
+    and cm.comite_id=#{params[:comite_id]} "
+    
+  comite=Comite.find params[:comite_id]
+  cdh=ComiteDecisionHistorico.find_by_sql(sql)
+  miembro_list=MiembroComite.find_by_sql(sql_miembro)
+  
+  total = miembro_list.count
+  
+  width=' width="25%" '
+  
+  if total.to_i == 1
+    width=' width="100%" '
+  elsif total.to_i == 2
+    width=' width="50%" '
+  elsif total.to_i == 3
+    width=' width="33%" '
+  elsif total.to_i == 4
+    width=' width="25%" '  
+  end
+  
+  fecha=comite.fecha_apertura.day.to_s << '-' << comite.fecha_apertura.month.to_s << '-' << comite.fecha_apertura.year.to_s
+  cad=''
+  aux=''
+  num_lines=1
+  even_odd =1
+  for miembro in miembro_list        
+     nombre=miembro.nombre  << ' ' << miembro.apellido
+     nombre=nombre
+     aux += '<td ' << width << ' height="50px" valign="top">&nbsp;<font size="1.5px"><b><i>' << nombre.to_s << '</i></b></font></td>'
+     if even_odd==4
+       aux='<tr>' << aux << '</tr>'
+       cad= cad << aux
+       num_lines=num_lines+1
+       even_odd =0
+       aux      =''
+     end
+     even_odd = 1 + even_odd
+  end
+  aux='<tr>' << aux.gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;').gsub('Á','&Aacute;').gsub('É','&Eacute;').gsub('Í','&Íacute;').gsub('Ó','&Óacute;').gsub('Ú','&Uacute;') << '</tr>'
+  cad= cad.html_safe << aux.html_safe  
+%>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="" align="right" width="100%">
+  <tr>
+    <td rowspan="2" align="center" width=""><!--<img src="/assets/logo_fondas_2.png"/>--></td>
+    <td rowspan="2" valign="top" width="100%">
+      <table border="0" width="100%" cellspacing="2" cellpadding="0" >
+        <tr><td>&nbsp;</td></tr>
+        <tr><td align="center" valign=""><font size="2px"><b><%=(I18n.t('Sistema.Body.Vistas.General.sesion') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.aprobacion')).upcase.gsub('á','&Aacute;').gsub('é','&Eacute;').gsub('í','&Iacute;').gsub('ó','&Oacute;').gsub('ú','&Uacute;').html_safe %></b></font></td></tr>
+        <tr><td align="center"><font size="2px"><b><%=(I18n.t('Sistema.Body.Vistas.General.comite')).upcase.gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;').gsub('Á','&Aacute;').gsub('É','&Eacute;').gsub('Í','&Íacute;').gsub('Ó','&Óacute;').gsub('Ú','&Uacute;').html_safe %> <%=params[:tipo_comite]=='e' ? (I18n.t('Sistema.Body.Vistas.General.estadal')).upcase : (I18n.t('Sistema.Body.Vistas.General.nacional')).upcase %> <%=(I18n.t('Sistema.Body.Vistas.General.de')).upcase << " " << (I18n.t('Sistema.Body.Vistas.General.financiamiento')).upcase%></b></font></td></tr>
+        <tr><td align="center" valign="top"><font size="2px"><b><%=(I18n.t('Sistema.Body.Vistas.General.detalle') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.financiamientos')).upcase%></b></font></td></tr>
+      </table>
+    </td>
+    <td height="35px" valign="top">
+      <table border="0">
+        <tr>          
+          <td nowrap width="56px" height="30px" valign="middle"><font size="1px"><b><%=(I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.sesion').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %></b></font></td>
+          <td width="40px" align="right"><font size="1px"><i><%=comite.numero%></i></font></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td height="35px" rowspan="2" valign="top">
+      <table border="0">
+        <tr>          
+          <td width="56px" height="30px" valign="middle"><font size="1px"><b><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%>:</b></font></td>
+          <td width="40px" align="right"><font size="1px"><i><%=fecha%></i></font></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<% 
+  moneda = Moneda.find(ParametroGeneral.first.moneda_id)
+  sql="
+      select distinct cdh.solicitud_id, e.nombre as nombre_estado, cdh.comentario,
+      case when empresa.rif is null then CAST(cedula as varchar) else empresa.rif end as identificacion,
+      case when empresa.nombre is null then
+        case when persona.primer_nombre is null then ' ' else persona.primer_nombre end 
+        || ' ' || 
+        case when persona.primer_apellido is null then ' ' else persona.primer_apellido end
+      else
+        empresa.nombre
+      end AS nombre,
+      r.nombre as nombre_rubro,s.cliente_id,s.numero,s.monto_solicitado,cdh.decision
+      from  
+          comite_decision_historico cdh 
+              inner join comite t on cdh.comite_id = t.id 
+              inner join solicitud s on s.id=cdh.solicitud_id
+              inner join cliente  ON s.cliente_id = cliente.id
+              left join persona ON cliente.persona_id = persona.id
+              left JOIN empresa ON cliente.empresa_id = empresa.id
+              inner join rubro r on r.id=s.rubro_id
+              inner join oficina o on o.id=cdh.oficina_id
+              inner join ciudad c on c.id=o.ciudad_id
+              inner join estado e on e.id=c.estado_id
+      where 
+            cdh.comite_id=#{params[:comite_id]} and s.moneda_id = #{moneda.id}
+    union
+      select 
+        distinct cdht.solicitud_id, e.nombre as nombre_estado, cdht.comentario,
+      case when empresa.rif is null then CAST(cedula as varchar) else empresa.rif end as identificacion,
+      case when empresa.nombre is null then
+        case when persona.primer_nombre is null then ' ' else persona.primer_nombre end 
+        || ' ' || 
+        case when persona.primer_apellido is null then ' ' else persona.primer_apellido end
+      else
+        empresa.nombre
+      end AS nombre,
+      r.nombre as nombre_rubro,s.cliente_id,s.numero,s.monto_solicitado,cdht.decision
+      from  
+        comite_decision_historico_total cdht 
+          inner join comite t on cdht.comite_id = t.id
+          inner join solicitud s on s.id=cdht.solicitud_id
+          inner join cliente  ON s.cliente_id = cliente.id
+          left join persona ON cliente.persona_id = persona.id
+          left JOIN empresa ON cliente.empresa_id = empresa.id
+          inner join rubro r on r.id=s.rubro_id
+          inner join oficina o on o.id=cdht.oficina_id
+          inner join ciudad c on c.id=o.ciudad_id
+          inner join estado e on e.id=c.estado_id
+      where 
+        cdht.comite_id=#{params[:comite_id]} and s.moneda_id = #{moneda.id}
+      order by nombre_estado, nombre_rubro
+  "
+  
+cdh=ComiteDecisionHistorico.find_by_sql(sql)
+  
+%>
+<% if cdh.length > 0 %>
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr><th colspan="10" bgcolor="#8592B5"><font color="white" size="3px"><b><%=(I18n.t('Sistema.Body.Vistas.General.resultado')<<" " << I18n.t('Sistema.Body.Vistas.General.comite')).upcase.gsub('á','&Aacute;').gsub('é','&Eacute;').gsub('í','&Iacute;').gsub('ó','&Oacute;').gsub('ú','&Uacute;').html_safe %> - <%= moneda.nombre %></b></font></th></tr>
+  <tr bgcolor="#E3E3E3">
+    <th rowspan="2" width="9%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.estado')%></b></font></th>
+    <th rowspan="2" width="10%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></b></font></th>
+    <th rowspan="2" width="13%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.General.beneficiario')%></b></font></th>
+    <th rowspan="2" width="8%"><font size="1.5px"><b><%= (I18n.t('Sistema.Body.Vistas.General.cedula').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe << " / " <<I18n.t('Sistema.Body.Vistas.General.rif')%></b></font></th>
+    <th rowspan="2" width="8%"><font size="1.5px"><b><%= (I18n.t('Sistema.Body.Vistas.Form.nro_tramite').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %></b></font></th>
+    <th rowspan="2" width="10%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Vistas.General.solicitado')%></b></font></th>
+    <th colspan="3" width="10%"><font size="1.5px"><b><%= (I18n.t('Sistema.Body.Vistas.General.decision').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %> <%= (I18n.t('Sistema.Body.Vistas.General.comite').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %></b></font></th>
+    <th rowspan="2" width="32%"><font size="1.5px"><b><%= (I18n.t('Sistema.Body.Vistas.General.observacion').gsub('á','&aacute;').gsub('é','&eacute;').gsub('í','&iacute;').gsub('ó','&oacute;').gsub('ú','&uacute;')).html_safe %></b></font></th>
+  </tr>
+  <tr bgcolor="#E3E3E3">
+    <th><font size="1.5px"><%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></font></th>
+    <th><font size="1.5px"><%=I18n.t('Sistema.Body.General.rechazado')%></font></th>
+    <th><font size="1.5px"><%=I18n.t('Sistema.Body.General.diferido')%></font></th>
+  </tr>  
+  <%
+    even=1
+    total_monto=0
+    total_monto_a=0
+    total_monto_r=0
+    total_monto_d=0
+    total_decision=0
+    total_a=0
+    total_r=0
+    total_d=0
+    for solicitud in cdh
+    even=1-even
+    bgcolor= even==1 ? "#f1f1f1".html_safe : "".html_safe
+    #total_monto= total_monto + solicitud.monto_solicitado.to_f
+  %>
+  <tr bgcolor="<%=bgcolor%>">
+    <td><font size="1.5px">&nbsp;<%=solicitud.nombre_estado%></font></td>
+    <td><font size="1.5px">&nbsp;<%=solicitud.nombre_rubro%></font></td>
+    <td><font size="1.5px">&nbsp;<%=solicitud.nombre%></font></td>
+    <td align="right"><font size="1.5px"><%=solicitud.identificacion%>&nbsp;</font></td>
+    <td align="center"><font size="1.5px">&nbsp;<%=solicitud.numero%></font></td>
+    <td align="right">
+      <font size="1.5px">        
+        &nbsp;<%=format_fm(solicitud.monto_solicitado)%>&nbsp;
+      </font>
+    </td>
+    <%
+      decision_a="&nbsp;".html_safe
+      decision_r="&nbsp;".html_safe
+      decision_d="&nbsp;".html_safe
+      if solicitud.decision=="A"
+        decision_a="&radic;".html_safe
+        total_monto_a=total_monto_a + solicitud.monto_solicitado.to_f
+        total_decision=total_decision+1
+        total_a = total_a +1
+        #total_monto = total_monto + total_monto_a
+      elsif solicitud.decision=="R"
+        decision_r="&radic;".html_safe
+        total_monto_r=total_monto_r + solicitud.monto_solicitado.to_f
+        total_decision=total_decision+1
+        total_r = total_r +1
+        #total_monto = total_monto + total_monto_r
+      elsif solicitud.decision=="D"
+        decision_d="&radic;".html_safe
+        total_monto_d=total_monto_d + solicitud.monto_solicitado.to_f
+        total_decision=total_decision+1
+        total_d = total_d +1
+        #total_monto = total_monto + total_monto_d
+      end
+    %>
+    <td align="center"><font color="#0B0B61" size="1px"><%=decision_a%></font></td>
+    <td align="center"><font color="#D50000" size="1px"><%=decision_r%></font></td>
+    <td align="center"><font color="#ff6000" size="1px"><%=decision_d%></font></td>
+    <td>
+      &nbsp;
+      <font size="1.5px"><%=solicitud.comentario%></font>
+    </td>
+  </tr>
+  <% end
+     total_monto = total_monto_a + total_monto_r + total_monto_d
+  %>
+</table>
+
+<%
+  num_lines=num_lines*10
+
+%>
+
+
+<br/>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr>
+    <th width="20%"></th>
+    <th width="40%" bgcolor="#8592B5" valign="middle"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></b></font></th>
+    <th width="40%" bgcolor="#8592B5" valign="middle"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%></b></font></th>
+  </tr>
+  
+  <tr>
+    <th width="20%" bgcolor="#8592B5"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></b></font></th>
+    <td width="40%" align="center">&nbsp;<%=total_a%></td>
+    <td width="40%" align="right">
+      <%=format_fm(total_monto_a)%>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <th width="20%" bgcolor="#8592B5"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.General.rechazado')%></b></font></th>
+    <td width="40%" align="center">&nbsp;<%=total_r%></td>
+    <td width="40%" align="right">
+      <%=format_fm(total_monto_r)%>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <th width="20%" bgcolor="#8592B5"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.General.diferido')%></b></font></th>
+    <td width="40%" align="center">&nbsp;<%=total_d%></td>
+    <td width="40%" align="right">
+      <%=format_fm(total_monto_d)%>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <th width="20%" bgcolor="#E3E3E3" ><font size="3px"><b><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')).upcase%></b></font></th>
+    <td width="40%" bgcolor="#E3E3E3" align="center">&nbsp;<b><%=total_decision%></b></td>
+    <td width="40%" bgcolor="#E3E3E3" align="right">
+      <b><%=format_fm(total_monto)%></b>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+</table>
+<br/>
+<% end %>
+
+<% 
+  tadas_moneda = Moneda.find(:all, :conditions => "id <> #{ParametroGeneral.first.moneda_id}", :order => "nombre")
+  tadas_moneda.each{|moneda|
+  sql="
+      select distinct cdh.solicitud_id, e.nombre as nombre_estado, cdh.comentario,
+      case when empresa.rif is null then CAST(cedula as varchar) else empresa.rif end as identificacion,
+      case when empresa.nombre is null then
+        case when persona.primer_nombre is null then ' ' else persona.primer_nombre end 
+        || ' ' || 
+        case when persona.primer_apellido is null then ' ' else persona.primer_apellido end
+      else
+        empresa.nombre
+      end AS nombre,
+      r.nombre as nombre_rubro,s.cliente_id,s.numero,s.monto_solicitado,cdh.decision
+      from  
+          comite_decision_historico cdh 
+              inner join comite t on cdh.comite_id = t.id 
+              inner join solicitud s on s.id=cdh.solicitud_id
+              inner join cliente  ON s.cliente_id = cliente.id
+              left join persona ON cliente.persona_id = persona.id
+              left JOIN empresa ON cliente.empresa_id = empresa.id
+              inner join rubro r on r.id=s.rubro_id
+              inner join oficina o on o.id=cdh.oficina_id
+              inner join ciudad c on c.id=o.ciudad_id
+              inner join estado e on e.id=c.estado_id
+      where 
+            cdh.comite_id=#{params[:comite_id]} and s.moneda_id = #{moneda.id}
+    union
+      select 
+        distinct cdht.solicitud_id, e.nombre as nombre_estado, cdht.comentario,
+      case when empresa.rif is null then CAST(cedula as varchar) else empresa.rif end as identificacion,
+      case when empresa.nombre is null then
+        case when persona.primer_nombre is null then ' ' else persona.primer_nombre end 
+        || ' ' || 
+        case when persona.primer_apellido is null then ' ' else persona.primer_apellido end
+      else
+        empresa.nombre
+      end AS nombre,
+      r.nombre as nombre_rubro,s.cliente_id,s.numero,s.monto_solicitado,cdht.decision
+      from  
+        comite_decision_historico_total cdht 
+          inner join comite t on cdht.comite_id = t.id
+          inner join solicitud s on s.id=cdht.solicitud_id
+          inner join cliente  ON s.cliente_id = cliente.id
+          left join persona ON cliente.persona_id = persona.id
+          left JOIN empresa ON cliente.empresa_id = empresa.id
+          inner join rubro r on r.id=s.rubro_id
+          inner join oficina o on o.id=cdht.oficina_id
+          inner join ciudad c on c.id=o.ciudad_id
+          inner join estado e on e.id=c.estado_id
+      where 
+        cdht.comite_id=#{params[:comite_id]} and s.moneda_id = #{moneda.id}
+      order by nombre_estado, nombre_rubro
+  "
+  
+cdh=ComiteDecisionHistorico.find_by_sql(sql)
+  
+%>
+<% if cdh.length > 0 %>
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr><th colspan="10" bgcolor="#8592B5"><font color="white" size="3px"><b><%=(I18n.t('Sistema.Body.Vistas.General.resultado')<<" " << I18n.t('Sistema.Body.Vistas.General.comite')).upcase%> - <%= moneda.nombre %></b></font></th></tr>
+  <tr bgcolor="#E3E3E3">
+    <th rowspan="2" width="9%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.estado')%></b></font></th>
+    <th rowspan="2" width="10%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></b></font></th>
+    <th rowspan="2" width="13%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.General.beneficiario')%></b></font></th>
+    <th rowspan="2" width="8%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.cedula') << " / " <<I18n.t('Sistema.Body.Vistas.General.rif')%></b></font></th>
+    <th rowspan="2" width="8%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></b></font></th>
+    <th rowspan="2" width="10%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Vistas.General.solicitado')%></b></font></th>
+    <th colspan="3" width="10%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.decision')%> <%=I18n.t('Sistema.Body.Vistas.General.comite')%></b></font></th>
+    <th rowspan="2" width="32%"><font size="1.5px"><b><%=I18n.t('Sistema.Body.Vistas.General.observacion')%></b></font></th>
+  </tr>
+  <tr bgcolor="#E3E3E3">
+    <th><font size="1.5px"><%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></font></th>
+    <th><font size="1.5px"><%=I18n.t('Sistema.Body.General.rechazado')%></font></th>
+    <th><font size="1.5px"><%=I18n.t('Sistema.Body.General.diferido')%></font></th>
+  </tr>  
+  <%
+    even=1
+    total_monto=0
+    total_monto_a=0
+    total_monto_r=0
+    total_monto_d=0
+    total_decision=0
+    total_a=0
+    total_r=0
+    total_d=0
+    for solicitud in cdh
+    even=1-even
+    bgcolor= even==1 ? "#f1f1f1".html_safe : "".html_safe
+    #total_monto= total_monto + solicitud.monto_solicitado.to_f
+  %>
+  <tr bgcolor="<%=bgcolor%>">
+    <td><font size="1.5px">&nbsp;<%=solicitud.nombre_estado%></font></td>
+    <td><font size="1.5px">&nbsp;<%=solicitud.nombre_rubro%></font></td>
+    <td><font size="1.5px">&nbsp;<%=solicitud.nombre%></font></td>
+    <td align="right"><font size="1.5px"><%=solicitud.identificacion%>&nbsp;</font></td>
+    <td align="center"><font size="1.5px">&nbsp;<%=solicitud.numero%></font></td>
+    <td align="right">
+      <font size="1.5px">        
+        &nbsp;<%=format_fm(solicitud.monto_solicitado)%>&nbsp;
+      </font>
+    </td>
+    <%
+      decision_a="&nbsp;".html_safe
+      decision_r="&nbsp;".html_safe
+      decision_d="&nbsp;".html_safe
+      if solicitud.decision=="A"
+        decision_a="&radic;".html_safe
+        total_monto_a=total_monto_a + solicitud.monto_solicitado.to_f
+        total_decision=total_decision+1
+        total_a = total_a +1
+        #total_monto = total_monto + total_monto_a
+      elsif solicitud.decision=="R"
+        decision_r="&radic;".html_safe
+        total_monto_r=total_monto_r + solicitud.monto_solicitado.to_f
+        total_decision=total_decision+1
+        total_r = total_r +1
+        #total_monto = total_monto + total_monto_r
+      elsif solicitud.decision=="D"
+        decision_d="&radic;".html_safe
+        total_monto_d=total_monto_d + solicitud.monto_solicitado.to_f
+        total_decision=total_decision+1
+        total_d = total_d +1
+        #total_monto = total_monto + total_monto_d
+      end
+    %>
+    <td align="center"><font color="#0B0B61" size="1px"><%=decision_a%></font></td>
+    <td align="center"><font color="#D50000" size="1px"><%=decision_r%></font></td>
+    <td align="center"><font color="#ff6000" size="1px"><%=decision_d%></font></td>
+    <td>
+      &nbsp;
+      <font size="1.5px"><%=solicitud.comentario%></font>
+    </td>
+  </tr>
+  <% end
+     total_monto = total_monto_a + total_monto_r + total_monto_d
+  %>
+</table>
+
+<%
+  num_lines=num_lines*10
+
+%>
+
+
+<br/>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr>
+    <th width="20%"></th>
+    <th width="40%" bgcolor="#8592B5" valign="middle"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></b></font></th>
+    <th width="40%" bgcolor="#8592B5" valign="middle"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%></b></font></th>
+  </tr>
+  
+  <tr>
+    <th width="20%" bgcolor="#8592B5"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></b></font></th>
+    <td width="40%" align="center">&nbsp;<%=total_a%></td>
+    <td width="40%" align="right">
+      <%=format_fm(total_monto_a)%>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <th width="20%" bgcolor="#8592B5"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.General.rechazado')%></b></font></th>
+    <td width="40%" align="center">&nbsp;<%=total_r%></td>
+    <td width="40%" align="right">
+      <%=format_fm(total_monto_r)%>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <th width="20%" bgcolor="#8592B5"><font color="white" size="3px"><b><%=I18n.t('Sistema.Body.General.diferido')%></b></font></th>
+    <td width="40%" align="center">&nbsp;<%=total_d%></td>
+    <td width="40%" align="right">
+      <%=format_fm(total_monto_d)%>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <th width="20%" bgcolor="#E3E3E3" ><font size="3px"><b><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')).upcase%></b></font></th>
+    <td width="40%" bgcolor="#E3E3E3" align="center">&nbsp;<b><%=total_decision%></b></td>
+    <td width="40%" bgcolor="#E3E3E3" align="right">
+      <b><%=format_fm(total_monto)%></b>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+</table>
+<br/>
+<% end
+  } %>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="0" align="right" width="100%">
+  <tr><th colspan="10" bgcolor="#8592B5" valign="middle"><font color="white" size="3px"><b><%=(I18n.t('Sistema.Body.General.representantes')).upcase%></b></font></th></tr>
+</table>
+
+<table border="1" bordercolor="#CCCCCC"  cellspacing="" cellpadding="" align="right" width="100%">
+  <%=cad%>  
+</table>

@@ -1,0 +1,45 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 100px" <%= sort_class_helper('otro_arrime.actividad.nombre') %>>
+        <%= sort_link_helper 'Actividad', 'otro_arrime.actividad.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" >
+        Estado
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('otro_arrime.silo.nombre') %>>
+        <%= sort_link_helper 'Silo', 'otro_arrime.silo.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('otro_arrime.guia_movilizacion') %>>
+        <%= sort_link_helper 'Guia Movilizaci&oacute;n', 'otro_arrime.guia_movilizacion', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('otro_arrime.numero_ticket') %>>
+        <%= sort_link_helper 'N&uacute;mero Ticket', 'otro_arrime.numero_ticket', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('otro_arrime.monto_arrime') %>>
+        <%= sort_link_helper 'Valor Arrime', 'otro_arrime.monto_arrime', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('otro_arrime.fecha_salida') %>>
+        <%= sort_link_helper 'Fecha Arrime', 'otro_arrime.fecha_salida', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('otro_arrime.fecha_confirmacion') %>>
+        <%= sort_link_helper 'Fecha Confirmación', 'otro_arrime.fecha_confirmacion', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('otro_arrime.estatus') %>>
+        <%= sort_link_helper 'Estatus', 'otro_arrime.estatus', 'list' %>
+      </th>
+      <th style="width: 10px">Acci&oacute;n
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%
+    even_odd = 1
+    for otro_arrime in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :otro_arrime => otro_arrime, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

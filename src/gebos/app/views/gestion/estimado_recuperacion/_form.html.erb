@@ -1,0 +1,115 @@
+  <table style="width: 100%">
+  	<tr>
+  		<td class="separador" colspan="2">
+  			<span>
+          <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.recuperacion') %>
+        </span>
+  		</td>
+  	</tr>
+  	<tr>
+  	    <td style="vertical-align: top; width: 70%;" colspan="2">
+
+            <table class="lista" >
+                <thead>
+                    <tr>
+                  		<th style="width: 25%">
+                  		  <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.tiempo') %>
+                   		</th>
+                   		<th style="width: 25%">
+                  		  <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.interes') %>
+                   		</th>                  		
+                   		<th style="width: 25%">
+                  		  <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.capital') %>
+                   		</th>                  		
+                  		<th style="width: 25%">
+                  		  <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.total') %>
+                   		</th>
+                  	</tr>
+            	</thead>
+            	<tbody>
+                    <tr class="lista0">
+                      <td>
+                        <label>
+                          <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.30_dias') %>
+                        </label>
+                      </td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_30diasint %>
+                   		</td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_30diascap %>
+                   		</td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_30dias %>&nbsp;&nbsp;
+                   		</td>
+                   	</tr>
+                   	<tr class="lista1">
+                      <td>
+                        <label>
+                          <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.60_dias') %>
+                        </label>
+                      </td>
+                  		<td style="text-align: right">
+            				    <%= format_fm @_60diasint %>
+                   		</td>
+                  		<td style="text-align: right">
+            				    <%= format_fm @_60diascap %>
+                   		</td>
+                  		<td style="text-align: right">
+            				    <%= format_fm @_60dias %>&nbsp;&nbsp;
+                   		</td>
+                   	</tr>
+                   	<tr class="lista0">
+                      <td>
+                        <label>
+                          <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.90_dias') %>
+                        </label>
+                      </td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_90diasint %>
+                   		</td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_90diascap %>
+                   		</td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_90dias %>&nbsp;&nbsp;
+                   		</td>
+                   	</tr>
+                   	<tr class="lista1">
+                      <td>
+                        <label>
+                          <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.180_dias') %>
+                        </label>
+                      </td>
+                  		<td style="text-align: right">
+            				    <%= format_fm @_180diasint %>
+                   		</td>
+                  		<td style="text-align: right">
+            				    <%= format_fm @_180diascap %>
+                   		</td>
+                  		<td style="text-align: right">
+            				    <%= format_fm @_180dias %>&nbsp;&nbsp;
+                   		</td>
+                   	</tr>
+                   	<tr class="lista0">
+                      <td>
+                        <label>
+                          <%= t('Sistema.Body.Vistas.EstimadoRecuperacion.Etiquetas.resto_anio') %>
+                        </label>
+                      </td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_anioint %>
+                   		</td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_aniocap %>
+                   		</td>
+                  		<td style="text-align: right">
+            				      <%= format_fm @_anio %>&nbsp;&nbsp;
+                   		</td>
+                  	</tr>
+            	</tbody>
+            </table>
+
+  	    </td>
+  	</tr>
+  </table>

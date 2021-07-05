@@ -1,0 +1,21 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	if controller_name=='orden_despacho_detalle'
+%>
+		<li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.datos_basicos') %></a></div></li>
+<%
+	else
+
+%>
+		<li><div>
+		      <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'orden_despacho_detalle', :action => 'edit', :orden_despacho_id => @orden_despacho_detalle.solicitud_id, :popup=>params[:popup])  if (action_name == 'edit' ) %>
+		      <%= link_to(I18n.t('Sistema.Body.Vistas.General.confirmacion'), :controller => 'orden_despacho_detalle', :action => 'confirmar', :orden_despacho_id => @orden_despacho_detalle.solicitud_id, :popup=>params[:popup])  if (action_name == 'confirmar') %>
+		</div></li>
+<%
+	end
+%>
+	</ul>
+</div>

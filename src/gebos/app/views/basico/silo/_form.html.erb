@@ -1,0 +1,129 @@
+<table>
+  <tr>
+    <td>
+      <br/>
+    </td>
+    <td>
+      <br/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'silo', 'nombre', :class=>'text', :style=>'width: 250px', :maxlength=>'50',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.rif')}" %>
+      </label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= select(
+        'silo', 'rif_1',
+        [['J','J'],['G','G'],['V','V'],['E','E'],['P','P']],
+        { :include_blank => true },
+        { :class=>'select', :onchange=>'inputChange();' } ) %> -
+      <%= text_field 'silo', 'rif_2',
+        :class=>'text', :style=>'width: 60px', :maxlength=>'8',:onkeypress=>'inputChange();return NumberKey(event);' %> -
+      <%= text_field 'silo', 'rif_3',
+        :class=>'text', :style=>'width: 10px', :maxlength=>'1', :onkeypress=>'inputChange();return NumberKey(event);' %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 135px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 620px">
+      <%= select('silo', 'estado_id',
+        @estado_select.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")', :method => :get,
+          :url=>{:controller=>'silo', :action=>:estado_change },
+          :with=>"'id='+value")};inputChange();" } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 135px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="ciudad-select">
+        <%= render :partial => 'ciudad_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 135px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.General.direccion') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_area 'silo', 'direccion', :class=>'text',
+        :style=>'width: 600px; height: 100px',
+        :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=  "#{I18n.t('Sistema.Body.Vistas.General.persona')} #{I18n.t('Sistema.Body.Vistas.General.contacto')}"%></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'silo', 'persona_contacto', :class=>'text', :style=>'width: 150px', :maxlength=>'50',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.telefono') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'silo', 'telefono', :class=>'text', :style=>'width: 100px;',
+        :maxlength=>'13', :onKeyUp=>'textCounter(this,13)',
+        :onkeypress=>'inputChange();return NumberKey(event);' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.fax') %></label>
+    </td>
+    <td>
+      <%= text_field 'silo', 'fax', :class=>'text', :style=>'width: 100px;',
+        :maxlength=>'13', :onKeyUp=>'textCounter(this,13)',
+        :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=  I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'silo', 'activo', :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Silo.Etiquetas.posee_convenio')%></label>
+    </td>
+    <td>
+      <%= check_box 'silo', 'convenio',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+</table>

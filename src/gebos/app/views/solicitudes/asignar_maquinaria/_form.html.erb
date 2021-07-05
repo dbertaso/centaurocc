@@ -1,0 +1,127 @@
+<table style="width: 100%">
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_maquinaria.tipo_maquinaria.nombre -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label>
+    </td>
+    <td style="width: 500px">
+      <%= @solicitud_maquinaria.clase.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %></label>
+    </td>
+    <td>
+      <%= @solicitud_maquinaria.marca_maquinaria.descripcion %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %></label>
+    <td>
+      <%= @solicitud_maquinaria.modelo.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %></label>
+    <td>
+      <%= @solicitud_maquinaria.catalogo.serial %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %></label>
+    <td>
+      <%= @solicitud_maquinaria.catalogo.chasis %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.costo')} #{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')}"%></label>
+    <td>
+      <%= @solicitud_maquinaria.catalogo.monto_c(@solicitud_maquinaria.solicitud_id) %>
+    </td>
+  </tr>
+</table>
+<br/>
+<table style="width: 100%" class="lista">
+  <tr>
+    <th colspan="8">
+      <label><%= "#{I18n.t('Sistema.Body.General.sector_maquinarias')} #{I18n.t('Sistema.Body.Vistas.General.posibles_sustitucion')}" %> </label>
+    </th>
+  </tr>
+  <tr>
+    <th style="width: 15%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></label>
+    </th>
+    <th style="width: 15%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label>
+    </th>
+    <th style="width: 15%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %></label>
+    </th>
+    <th style="width: 15%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %></label>
+    </th>
+    <th style="width: 12%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %></label>
+    </th>
+    <th style="width: 12%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %></label>
+    </th>
+    <th style="width: 11%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.costo')} #{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')}"%></label>
+    </th>
+    <th style="width: 5%"></th>
+  </tr>
+  
+  <% lista = 0
+     @catalogo_list.each{|c| %>
+     
+    <tr class="lista<%= lista %>">
+      <td>
+        <%= c.clase.tipo_maquinaria.nombre %>
+      </td>
+      <td>
+        <%= c.clase.nombre %>
+      </td>
+      <td>
+        <%= c.marca_maquinaria.descripcion %>
+      </td>
+      <td>
+        <%= c.modelo.nombre %>
+      </td>
+      <td>
+        <%= c.serial %>
+      </td>
+      <td>
+        <%= c.chasis %>
+      </td>
+      <td>
+        <%= c.monto_c(@solicitud_maquinaria.solicitud_id) %>
+      </td>
+      <td>
+        <input type="radio" name="catalogo_id" value="<%= c.id %>"/>
+      </td>
+    </tr>
+      
+  <% if lista == 0
+       lista = 1
+     else
+       lista = 0
+     end
+     } %>
+  
+</table>

@@ -1,0 +1,18 @@
+<div id="errorInstanciaComiteNacional" style=" display: none; ">
+  <div id="errorExplanation" class="errorExplanation">
+    <h2><%=I18n.t('Sistema.Body.Vistas.ComiteNacional.Mensajes.lista_errores_nacional')%></h2>
+    <p><%=I18n.t('Sistema.Body.Vistas.ComiteNacional.Mensajes.hubo_errores')%></p>
+    <ul id="error_instancia"></ul>
+  </div>
+</div>
+
+<%= content_for :list do %>
+<div id="list">
+<%= render :partial => 'list' -%>
+</div>
+<%end%>
+
+
+<!--<div id='lista'>
+  <%#= render :partial => 'list' -%>
+</div>-->

@@ -1,0 +1,244 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-boton-out" id="button_new">
+  <%= link_to_remote( 
+    image_tag(I18n.t('Sistema.Body.Imagenes.agregar')), 
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :new } ) if vlink 'edit' -%>
+</div>
+
+<div id="form_new" class="lista-form" style="display: none"></div>
+<br/><br/><label></label>
+<div class="marco-contenido">
+  <%= form_title_search %>
+  <div style="width: 100%; text-align: right"> <a href="carga_masiva">Carga Masiva de Maquinarias</a> </div>
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+    <table>
+      <tr>
+        <td style="width: 30%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.convenio') %>:</label>
+        </td>
+        <td style="width: 70%">    
+          <%= select(
+            'contrato_maquinaria_equipo_id','',
+            @contrato_maquinaria_equipo.map{|e| [e.nombre, e.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();'})
+        %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label>
+        </td>
+        <td>
+          <%= select(
+            'tipo_maquinaria_id','',
+            @tipo_maquinaria.map{|e| [e.nombre, e.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>"#{remote_function(
+              :loading =>'Element.show("loading")',
+              :loaded => 'Element.hide("loading")',
+              :method => :get,
+              :url=>{:controller=>'catalogo',
+              :action=>:clase_search },
+              :with=>"'id='+ this.value")};inputChange();"})
+        %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+        </td>
+        <td>
+          <div id="clase-search">
+            <%=select(
+              'clase_id','',
+            [],
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select', :onchange=>'inputChange();'}) %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %>:</label>
+        </td>
+        <td>
+          <%=select(
+            'marca_id','',
+            @marca.map{|e| [e.nombre, e.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();'}) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %>:</label>
+        </td>
+        <td>
+          <%=select(
+            'modelo_id','',
+            @modelo.map{|e| [e.nombre, e.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();'}) %>
+        </td>
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %>:</label>
+        </td>
+        <td>
+          <%= text_field 'serial', '', :class=>'text', :style=>'width: 230px', :maxlength=>'250'  -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %>:</label>
+        </td>
+        <td>
+          <%= text_field 'chasis', '', :class=>'text', :style=>'width: 230px', :maxlength=>'250'  -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.estatus') %>:</label>
+        </td>
+        <td>
+          <%=select(
+            'estatus','',
+            [['Libre','L'],['Reservado','R']],
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();'}) %>&emsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+        </td>
+      </tr>
+
+    </table>
+  <% end %>
+  <br/>
+  <%= error %>
+  <%= message %>
+  <br/>
+  <div id="list">
+<%#= render :partial => 'list' -%>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  function calcular_imputaciones_nacionales(id)
+  {
+    seguro = document.getElementById('catalogo_por_seguro').value / 100;
+    flete = document.getElementById('catalogo_por_flete').value / 100;
+    valor = document.getElementById('catalogo_monto_real').value * 1;
+    valor_seguro = valor * seguro;
+    valor_flete = valor * flete;
+    valor_total = valor_seguro + valor_flete + valor;
+
+    document.getElementById('seguro_nacional_' + id).innerHTML = (parseFloat(valor_seguro)).toFixed(2);
+    document.getElementById('flete_nacional_' + id).innerHTML = (parseFloat(valor_flete)).toFixed(2);
+    document.getElementById('monto_total_' + id).innerHTML = (parseFloat(valor_total)).toFixed(2);
+  }
+  
+  function calcular_imputaciones_internacional(id)
+  {
+    seguro = document.getElementById('catalogo_por_seguro').value / 100;
+    flete = document.getElementById('catalogo_por_flete').value / 100;
+    admin = document.getElementById('catalogo_por_gastos_administrativos').value / 100;
+    nac = document.getElementById('catalogo_por_nacionalizacion').value / 100;
+    alma = document.getElementById('catalogo_por_almacenamiento').value / 100;
+    valor = document.getElementById('catalogo_monto_dolares').value * <%= @dolar %>;
+    valor_seguro = valor * seguro;
+    valor_flete = valor * flete;
+    valor_admin = valor * admin;
+    valor_nac = valor * nac;
+    valor_alma = valor * alma;
+    valor_total = valor_seguro + valor_flete + valor_admin + valor_nac + valor_alma + valor;
+    
+    document.getElementById('gastos_administrativos_' + id).innerHTML = (parseFloat(valor_admin)).toFixed(2);
+    document.getElementById('seguro_internacional_' + id).innerHTML = (parseFloat(valor_seguro)).toFixed(2);
+    document.getElementById('flete_internacional_' + id).innerHTML = (parseFloat(valor_flete)).toFixed(2);
+    document.getElementById('impuestos_' + id).innerHTML = (parseFloat(valor_nac)).toFixed(2);
+    document.getElementById('almacenamiento_' + id).innerHTML = (parseFloat(valor_alma)).toFixed(2);
+    document.getElementById('monto_bolivar_' + id).innerHTML = (parseFloat(valor)).toFixed(2);    
+    document.getElementById('monto_total_' + id).innerHTML = (parseFloat(valor_total)).toFixed(2);
+  }
+  
+  //Mas en: http://javascript.espaciolatino.com/
+  //Objeto oNumero
+  function oNumero(numero)
+  {
+    
+    //Propiedades
+    this.valor = numero || 0
+    this.dec = -1;
+    //Métodos
+    this.formato = numFormat;
+    this.ponValor = ponValor;
+    //Definición de los métodos
+    function ponValor(cad)
+    {
+      if (cad =='-' || cad=='+') return
+      if (cad.length ==0) return
+      if (cad.indexOf('.') >=0)
+        this.valor = parseFloat(cad);
+      else
+        this.valor = parseInt(cad);
+      
+      alert(this.valor);
+    }
+    function numFormat(dec, miles)
+    {
+      var num = this.valor, signo=3, expr;
+      var cad = ""+this.valor;
+      var ceros = "", pos, pdec, i;
+      for (i=0; i < dec; i++)
+        ceros += '0';
+      pos = cad.indexOf('.')
+      if (pos < 0)
+        cad = cad+"."+ceros;
+      else
+      {
+        pdec = cad.length - pos -1;
+        if (pdec <= dec)
+        {
+          for (i=0; i< (dec-pdec); i++)
+            cad += '0';
+        }
+        else
+        {
+          num = num*Math.pow(10, dec);
+          num = Math.round(num);
+          num = num/Math.pow(10, dec);
+          cad = new String(num);
+          alert(cad);
+        }
+      }
+      pos = cad.indexOf('.')
+      if (pos < 0) pos = cad.lentgh
+      if (cad.substr(0,1)=='-' || cad.substr(0,1) == '+')
+        signo = 4;
+      if (miles && pos > signo)
+        do{
+          expr = /([+-]?\d)(\d{3}[\.\,]\d*)/
+          cad.match(expr)
+          cad=cad.replace(expr, RegExp.$1+','+RegExp.$2)
+        }
+      while (cad.indexOf(',') > signo)
+        if (dec<0) cad = cad.replace(/\./,'')
+      return cad;
+    }
+  }//Fin del objeto oNumero:
+  
+</script>

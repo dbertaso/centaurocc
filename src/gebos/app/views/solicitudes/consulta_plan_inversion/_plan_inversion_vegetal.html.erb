@@ -1,0 +1,316 @@
+<br/>
+<br/>
+<br/>
+
+<div id="encabezado">
+ <table>
+
+   <tr style="font-family:verdana;color:blue;font-size:24px;">
+      <td> <%= t('Sistema.Body.Vistas.General.rubro') %>  <td>
+      <td> <%= @plan.rubro_nombre %> </td>
+   </tr>
+   <tr style="font-family:verdana;color:blue;font-size:24px;">
+      <td> <%= t('Sistema.Body.Vistas.General.sub_rubro') %> <td>
+      <td> <%= @plan.sub_rubro_nombre %> </td>
+   </tr>
+   <tr style="font-family:verdana;color:blue;font-size:24px;">
+      <td> <%= t('Sistema.Body.Vistas.General.actividad') %>  <td>
+      <td> <%= @plan.actividad_nombre %> </td>
+   </tr>
+ </table>
+</div>
+
+<table class="lista">
+
+ <tr>
+    <th style="width:0px"></th>
+    <th style="width:300px"><%= t('Sistema.Body.Vistas.General.item') -%></th>
+    <th style="width:70px"><%= t('Sistema.Body.Vistas.General.moneda') -%></th>
+    <th style="width:70px"><%= t('Sistema.Body.Vistas.General.unidad') -%></th>
+    <th style="width:120px"><%= t('Sistema.Body.Vistas.General.cantidad') -%></th>
+    <th style="width:200px"><%="#{t('Sistema.Body.Vistas.General.costo')} #{t('Sistema.Body.Vistas.General.unitario')}" -%></th>
+    <th style="width:140px"><%= t('Sistema.Body.Vistas.Helpers.Mensajes.total') -%></th>
+    <th style="width:140px"><%="#{t('Sistema.Body.General.liquidado')}/#{t('Sistema.Body.General.despachado')}" -%></th>
+    <th style="width:140px"><%="#{t('Sistema.Body.Vistas.General.por_liquidar')}/#{t('Sistema.Body.Vistas.General.por_despachar')}" -%></th>
+    <th style="width:20px"><%="#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.desembolso')}" -%></th>
+    <th style="width:20px"><%="#{t('Sistema.Body.Vistas.General.tipo')} #{t('Sistema.Body.Vistas.General.item')}" -%></th>
+ </tr>
+ </thead>
+<tbody id="list_body">
+
+<% even_odd = 1
+   partida = ""
+   rubro = ""
+   monto_partida = 0.00
+   monto_rubro = 0.00
+   monto_banco = 0.00
+   monto_insumos = 0.00
+   monto_liquidado = 0.00
+   monto_despachado = 0.00
+   monto_por_liquidar = 0.00
+   monto_por_despachar = 0.00
+   monto_partida = monto_partida.to_d
+   monto_rubro = monto_rubro.to_d
+   monto_banco = monto_banco.to_d
+   monto_insumos = monto_insumos.to_d
+   monto_liquidado = monto_liquidado.to_d
+   monto_despachado = monto_despachado.to_d
+   monto_por_liquidar = monto_por_liquidar.to_d
+   monto_por_despachar = monto_por_despachar.to_d
+
+   @plan_inversion.each do |plan|
+   even_odd = 1 - even_odd
+%>
+
+  <% if partida != plan.partida_nombre %>
+
+    <% if monto_partida.to_f > 0%>
+      <tr class="lista<%= 1 - even_odd %>">
+        <td style="width: 0px"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="text-align: right"><b><%= "#{t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{partida}"%></b></td>
+        <td style="text-align: right">
+          <b>  <%=  format_fm(monto_partida) -%>
+          </b>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+     </tr>
+    <%end%>
+
+    <% partida = plan.partida_nombre
+       monto_partida = 0.00 %>
+
+    <tr class="lista<%= 1 - even_odd %>">
+      <td style="width: 0px"></td>
+      <td><b><%=plan.partida_nombre %></b></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   </tr>
+
+
+  <% end %>
+
+
+    <% if rubro.empty?
+       rubro = plan.rubro_nombre
+     end
+    %>
+
+    <tr class="lista<%= even_odd %>">
+      <td align="left">
+        <%= hidden_field_tag "id_#{plan.id}", plan.id %>
+      </td>
+
+      <td align="left">
+        <%= plan.item_nombre %>
+      </td>
+
+      <td align="left">
+        <%= plan.moneda %>
+      </td>
+
+      <td align="center">
+        <%= plan.unidad_medida.nombre unless plan.unidad_medida.nil?%>
+      </td>
+
+      <td align="right">
+        <%= format_fm(plan.cantidad) unless plan.cantidad.nil? -%>
+      </td>
+
+       <td align="right">
+        <%= format_fm(plan.costo_real) %>
+      </td>
+
+      <td align="right">
+        <%= format_fm(plan.monto_financiamiento)  unless plan.monto_financiamiento.nil? %>
+      </td>
+
+      <td align="right">
+        <%= format_fm(plan.monto_desembolsado)  unless plan.monto_desembolsado.nil? %>
+      </td>
+
+      <td align="right">
+        <%= format_fm(plan.monto_por_desembolsar_fm) %>
+      </td>
+
+      <td align="center">
+        <%= plan.numero_desembolso  unless plan.numero_desembolso.nil? %>
+      </td>
+
+      <td align="center">
+        <%= if plan.tipo_item == 'B'
+          t('Sistema.Body.Vistas.General.banco') 
+        else
+          t('Sistema.Body.Vistas.General.insumo') 
+        end -%>
+
+      </td>
+
+  </tr>
+
+
+
+   <% monto_partida += plan.monto_financiamiento
+      monto_rubro += plan.monto_financiamiento
+
+
+      if plan.tipo_item == 'B'
+
+        monto_por_liquidar += plan.monto_financiamiento - plan.monto_desembolsado
+      end
+
+      if plan.tipo_item == 'I'
+        monto_por_despachar += plan.monto_financiamiento - plan.monto_desembolsado
+      end
+
+      if plan.tipo_item == 'B'
+         monto_banco += plan.monto_financiamiento
+         monto_liquidado += plan.monto_desembolsado
+      end
+
+      if plan.tipo_item == 'I'
+         monto_insumos += plan.monto_financiamiento
+         monto_despachado += plan.monto_desembolsado
+      end%>
+
+ <%end%>
+
+
+  <tr class="lista<%= 1 - even_odd %>">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: right"><b><%= "#{t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{partida}" %></b></td>
+    <td style="text-align: right">
+      <b>  <%=  format_fm(monto_partida)%>
+      </b>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+ <tr class="lista<%= 1 - even_odd %>">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="text-align: right"><b><%=t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_banco') -%></b></td>
+  <td style="text-align: right">
+    <b>
+      <%=format_fm(monto_banco) %>
+    </b>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+
+ <tr class="lista<%= 1 - even_odd %>">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="text-align: right"><b><b><%=t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_insumos') -%></b></td>
+  <td style="text-align: right">
+    <b>
+      <%=format_fm(monto_insumos) %>
+    </b>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+
+ <tr class="lista<%= 1 - even_odd %>">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="text-align: right"><b><%="#{t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{t('Sistema.Body.Vistas.General.plan_inversion')}" -%></b></td>
+  <td style="text-align: right">
+    <b>
+      <%=format_fm(monto_rubro) -%>
+    </b>
+  </td>
+  <td style="text-align: right">
+    <b><%="#{t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{t('Sistema.Body.Vistas.General.desembolsado')}/#{t('Sistema.Body.Vistas.General.despachado')}" -%></b>
+  </td>
+  <td style="text-align: right">
+    <b><%="#{t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{t('Sistema.Body.Vistas.General.por_liquidar')}/#{t('Sistema.Body.Vistas.General.por_despachar')}" -%><b>
+  </td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr class="lista<%= 1 - even_odd %>">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td
+  </td>
+  <td style="text-align: right">
+  </td>
+  <td style="text-align: right">
+   <b>
+      <%= format_fm(monto_liquidado) -%>
+    </b>
+  </td>
+  <td style="text-align: right">
+    <b>
+      <%= format_fm(monto_por_liquidar) %>
+    </b>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+
+ <tr class="lista<%= 1 - even_odd %>">
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="text-align: right"></td>
+  <td style="text-align: right">
+
+  </td>
+  <td style="text-align: right">
+    <b>
+      <%= format_fm(monto_despachado) %>
+    </b>
+  </td>
+  <td style="text-align: right">
+    <b>
+      <%= format_fm(monto_por_despachar) -%>
+    </b>
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+
+
+ </tbody>
+</table>
+<br/>

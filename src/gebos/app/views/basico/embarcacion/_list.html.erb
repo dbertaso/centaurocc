@@ -1,0 +1,29 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 260px" <%= sort_class_helper('nombre_embarcacion') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title')}", 'nombre_embarcacion', 'list' %>
+      </th>
+      <th align="center" style="width: 160px" <%= sort_class_helper('es_propia') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.propia'), 'es_propia', 'list' %>
+      </th>
+
+      <th style="width: 240px" <%= sort_class_helper('matricula') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.matricula'), 'matricula', 'list' %>
+      </th>
+
+      <th style="width: 120px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for embarcacion in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :embarcacion => embarcacion, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

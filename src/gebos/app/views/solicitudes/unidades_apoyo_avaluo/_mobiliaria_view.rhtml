@@ -1,0 +1,251 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Avalúo Bandes</span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 20%">
+      <label>Nombre del Perito:</label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_mobiliario.nombre_perito %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha Avalúo:</label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.fecha_avaluo_mobiliario_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Número Sudeban:</label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_mobiliario.numero_sudeban_mobiliario %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Valor Avalúo:</label>
+    </td>
+    <td>
+      <%= display_number @solicitud_avaluo_mobiliario.valor_avaluo_mobiliario, '' %>
+    </td>
+  </tr>
+</table>
+
+<br/>
+<table class="lista" style="width: 90%">
+
+  <tr>
+    <th style="width: 100px">
+      <label>Tipo</label>
+    </th>
+
+    <th style="width: 100px">
+      <label>Modelo</label>
+    </th>
+
+    <th style="width: 100px">
+      <label>Marca</label>
+    </th>
+
+    <th style="width: 100px">
+      <label>Serial</label>
+    </th>
+
+    <th style="width: 100px">
+      <label>Hipoteca</label>
+    </th>
+
+  </tr>
+
+  <% unless @mobiliario_tipos_mobiliario_list.nil?
+        clase = "lista0"
+        @mobiliario_tipos_mobiliario_list.each { |mobiliaria| %>
+          <tr id="mob_<%= mobiliaria.id %>" class='<%= clase %>'>
+              <td>
+                <%= mobiliaria.tipo %>
+              </td>
+
+              <td>
+                <%= mobiliaria.modelo %>
+              </td>
+
+              <td>
+                <%= mobiliaria.marca %>
+              </td>
+
+              <td>
+                <%= mobiliaria.serial %>
+              </td>
+
+              <td>
+                <%= display_number mobiliaria.hipoteca, '' %>
+              </td>
+
+          </tr>
+    <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+      }
+     end %>
+
+</table>
+<br/>
+
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Documento de Oferta</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label>Tipo de Documento de Oferta:</label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_mobiliario.tipo_documento_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Referencia:</label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.referencia_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha Documento:</label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.fecha_documento_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Empresa Documento:</label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.empresa_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Rif Empresa:</label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.rif_empresa_documento %>
+    </td>
+  </tr>
+</table>
+<br/>
+<table class="lista" style="width: 90%">
+
+  <tr>
+    <th style="width: 100px">
+      <label>Tipo</label>
+    </th>
+
+    <th style="width: 100px">
+      <label>Modelo</label>
+    </th>
+
+    <th style="width: 100px">
+      <label>Marca</label>
+    </th>
+
+    <th style="width: 100px">
+      <label>Serial</label>
+    </th>
+
+    <th style="width: 100px">
+      <label>Hipoteca</label>
+    </th>
+  </tr>
+
+  <% unless @mobiliario_tipos_documento_list.nil?
+        clase = "lista0"
+        @mobiliario_tipos_documento_list.each { |mobiliaria| %>
+          <tr id="mob_<%= mobiliaria.id %>" class='<%= clase %>'>
+              <td>
+                <%= mobiliaria.tipo %>
+              </td>
+
+              <td>
+                <%= mobiliaria.modelo %>
+              </td>
+
+              <td>
+                <%= mobiliaria.marca %>
+              </td>
+
+              <td>
+                <%= mobiliaria.serial %>
+              </td>
+
+              <td>
+                <%= display_number mobiliaria.hipoteca, '' %>
+              </td>
+          </tr>
+    <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+      }
+     end %>
+
+</table>
+<br/>
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Documento Definitivo</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Referencia:</label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_mobiliario.referencia_definitivo %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Fecha Factura:</label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.fecha_factura_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Empresa Factura:</label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.empresa_factura %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Rif Empresa:</label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.rif_empresa_difinitivo %>
+    </td>
+  </tr>
+  
+</table>

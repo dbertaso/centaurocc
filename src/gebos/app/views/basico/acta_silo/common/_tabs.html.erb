@@ -1,0 +1,34 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	if controller_name=='acta_silo'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.acta_silo')%></a></div></li>
+<% 
+	else 
+%>
+		<li><div>
+		      <%= link_to(I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.acta_silo'), :controller => 'acta_silo', :action => 'index', :silo_id => @silo.id, :id =>@acta_silo.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+		</div></li>
+<% 
+	end
+	if @acta_silo.id
+          if @acta_silo.actividad.nombre.downcase.match('algodon').to_s.length > 0
+            if controller_name=='condicion_sacos' 
+%>
+                    <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.Arrime.HeaderCondicionSaco.form_title_records')%></a></div></li>
+<% 
+            else
+%>
+                    <li><div>
+                         <%= link_to(I18n.t('Sistema.Body.Vistas.Arrime.HeaderCondicionSaco.form_title_records'), :controller => 'condicion_sacos', :action => 'index', :silo_id => @silo.id, :acta_silo_id =>@acta_silo.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+                    </div></li>
+<% 
+            end
+          end
+	end
+%>
+	</ul>
+</div>

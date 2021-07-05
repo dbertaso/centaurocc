@@ -1,0 +1,5 @@
+<%= select(
+  'embarcacion','proveedor_marino_id',
+  @proveedor_marino.map{|i| [i.nombre, i.id]},
+  {:prompt=>'Seleccione un proveedor marino... '},
+  { :class=>'select'} ) %>

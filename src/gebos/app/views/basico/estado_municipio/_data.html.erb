@@ -1,0 +1,18 @@
+<% municipio = @municipio if municipio.nil? %>
+<td>
+	<%= municipio.nombre  %>
+</td>
+<td style="text-align: left">
+	<%= municipio.eje.nombre  %>
+</td>
+<td style="text-align: center">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+		:action => 'edit', :estado_id => @estado.id, :id => municipio.id, :popup=>params[:popup]) %>&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:action => :delete, :estado_id => @estado.id, :id => municipio.id}) -%>
+</td>
+

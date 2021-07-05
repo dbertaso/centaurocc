@@ -1,0 +1,4 @@
+<% faenas_pesca = @faenas_pesca if faenas_pesca.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= faenas_pesca.id %>">
+  <%= render :partial => 'data', :locals => { :faenas_pesca => faenas_pesca, :even_odd => even_odd } -%>
+</tr>

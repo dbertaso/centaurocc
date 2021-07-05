@@ -1,0 +1,31 @@
+<td>
+  <%= stock.rubro %>
+</td>
+
+<td>
+  <%= stock.tipo %>
+</td>
+
+<td>
+  <%= stock.marca %>
+</td>
+
+<td>
+  <%= stock.modelo %>
+</td>
+
+<td align ="center">
+  <%= stock.minimo %>
+</td>
+
+<td align ="center">
+  <%= stock.maximo %>
+</td>
+
+<td align ="center">
+  <b><%= "#{ViewStockMaquinaria.existencia(stock.tipo_id, stock.marca_id, stock.modelo_id)}".html_safe %></b>
+</td>
+
+<td align ="center">
+  <b><%= "#{ViewStockMaquinaria.reposicion(stock.tipo_id, stock.marca_id, stock.modelo_id)}".html_safe %></b>
+</td>

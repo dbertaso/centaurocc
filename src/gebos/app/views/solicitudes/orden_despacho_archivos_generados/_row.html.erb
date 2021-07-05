@@ -1,0 +1,5 @@
+<% orden_despacho_archivos_generados = @orden_despacho_archivos_generados if orden_despacho_archivos_generados.nil? %>
+
+<tr class="lista<%=even_odd%>" id="row_<%=orden_despacho_archivos_generados.id%>">
+	<%= render :partial => 'data', :locals => { :orden_despacho_archivos_generados => orden_despacho_archivos_generados, :even_odd => even_odd } -%>
+</tr>

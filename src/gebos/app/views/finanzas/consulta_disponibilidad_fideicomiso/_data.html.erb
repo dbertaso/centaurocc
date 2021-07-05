@@ -1,0 +1,73 @@
+<td align="center">
+  <%= fideicomiso_movimientos.fecha_movimiento.strftime("#{I18n.t('time.formats.gebos_short')} #{I18n.t('time.formats.hora_corta')}") %>
+</td>
+<td>
+  <%= fideicomiso_movimientos.referencia %>
+</td>
+<td>
+  <%= fideicomiso_movimientos.justificacion %>
+</td>
+
+<td align="center">
+  <%= fideicomiso_movimientos.usuario %>
+</td>
+
+<td align="center">
+  <%= fideicomiso_movimientos.nro_lote %>
+</td>
+
+<td align="center">
+  <%= fideicomiso_movimientos.tipo_movimiento %>
+</td>
+<td align="center">
+  <%= fideicomiso_movimientos.modo_nota %>
+</td>
+
+<td align="right">
+
+  <%= format_fm(fideicomiso_movimientos.monto_operacion) %>
+</td>
+
+<td align="right">
+
+  <%= format_fm(fideicomiso_movimientos.saldo_disponible_antes) %>
+</td>
+<td align="right">
+
+  <%= format_fm((fideicomiso_movimientos.monto_banco.nil? ? 0 : fideicomiso_movimientos.monto_banco)) %>
+</td>
+<td align="right">
+
+  <%= format_fm((fideicomiso_movimientos.monto_insumos.nil? ? 0 : fideicomiso_movimientos.monto_insumos)) %>
+</td>
+<td align="right">
+
+  <%= format_fm((fideicomiso_movimientos.monto_gastos.nil? ? 0 : fideicomiso_movimientos.monto_gastos)) %>
+</td>
+<td align="right">
+
+  <%= format_fm((fideicomiso_movimientos.monto_sras.nil? ? 0 : fideicomiso_movimientos.monto_sras)) %>
+</td>
+<td align="right">
+
+  <%= format_fm((fideicomiso_movimientos.comision.nil? ? 0 : fideicomiso_movimientos.comision)) %>
+</td>
+<td align="right">
+
+  <%= format_fm(fideicomiso_movimientos.saldo_disponible_despues) %>
+</td>
+
+<td width="6%" align="center">
+
+  <%= image_tag(I18n.t('Sistema.Body.Imagenes.consultar'))  -%>
+  
+  	<%#= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'consulta_disponibilidad', :action => :delete, :nro_mov => fideicomiso_movimientos.id, :nro_fideicomiso => fideicomiso.id}) -%>
+
+
+  
+</td>

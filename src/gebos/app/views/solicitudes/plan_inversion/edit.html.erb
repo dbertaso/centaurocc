@@ -1,0 +1,224 @@
+<div class="marco-titulo"><div><div>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.modificando')} #{I18n.t('Sistema.Body.Vistas.General.plan_inversion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %> <span class="titulo_modificar">'<%=  @solicitud.numero.to_s %>'</span>
+      <%= I18n.t('Sistema.Body.Vistas.General.beneficiario') %>
+      <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> -
+      <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+    </div></div></div>
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+  <% unless @solicitud.sub_sector.nemonico == 'MA' %>
+    <!-- Plan de inversión -->
+    <%#= render :partial=>'solicitudes/plan_inversion/common/tabs' %>
+    <div class="marco-contenido2">
+
+      <%= error %>
+      <%= message %>
+      <!--<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">-->
+      <%= form_remote_tag(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :url => { :action => :actualiza_plan, :id=>@plan.solicitud_id } ) do -%>
+        <%= render :partial => 'form' %>
+
+        <div id="buttons_edit" style="display: none">
+          <%= form_buttons_edit :controller=>'consulta_evaluacion_credito', :action => :index %>
+        </div>
+
+      <% end -%>
+    </div>
+    
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller=>'consulta_evaluacion_credito', :action => :index },
+    { :id=>'button_close1' } ) -%>
+    
+  <% else %>
+
+    <div class="marco-titulo"><div><div>
+          <%= I18n.t('Sistema.Body.Vistas.General.tramite_maquinaria_implemento_equipo') %>
+        </div></div></div>
+    <%= error %>
+    <%= message %>
+    <!-- Plan de inventanrio -->
+    <%= form_remote_tag(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :url => { :action => :save_maquinaria }) do
+      -%>
+
+      <table border="0">
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+            <%= select(
+              'solicitud_maquinaria','tipo_maquinaria_id',
+              @tipo_maquinaria.map{|e| [e.nombre, e.id]},
+              { :prompt=>'Seleccione...' },
+              #{ :include_blank => true },
+              { :class=>'select', :onchange=>"#{remote_function(
+                :loading =>'Element.show("loading")',
+                :loaded => 'Element.hide("loading")',
+                :method => :get,
+                :url=>{:controller=>'plan_inversion',
+                :action=>:clase_search },
+                :with=>"'id='+ this.value")}"})
+          %>
+          </td>
+        </tr>
+
+        <tr id="tr_clase_search" >
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label> <span style="color:red">*</span>
+          </td>
+          <td>
+            <div id="clase-search">
+              <%= render :partial => 'clase_search' %>
+            </div>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+            <%= select(
+              'solicitud_maquinaria','marca_maquinaria_id',
+              @marca_maquinaria_list.map{|e| [e.nombre, e.id]},
+              { :prompt=>'Seleccione...' },
+              { :class=>'select' })
+          %>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+            <%= select(
+              'solicitud_maquinaria','modelo_id',
+              @modelo_list.map{|e| [e.nombre, e.id]},
+              { :prompt=>'Seleccione...' },
+              { :class=>'select' })
+          %>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 150px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label>
+          </td>
+          <td>
+            <%= text_field 'solicitud_maquinaria', 'cantidad', :class=>'text', :style=>'width: 200px', :maxlength=>'4'  -%>
+          </td>
+        </tr>
+
+        <tr>
+          <td> </td>
+          <td>
+            <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'),{:onclick=>"$('catalogo_id').value='';"}) -%>
+          </td>
+        </tr>
+
+      </table>
+
+      <input type="hidden" name="solicitud_id" value="<%=params[:id]%>" />
+
+      <br/>
+      <div id="message_catalogo" class="msg-notice" style="display:none; text-align: center">
+      </div>
+
+      <div id="list">
+        <%= render :partial => 'list' %>
+      </div>
+      
+      <div id="list_confirmado">
+        <%= render :partial => 'list_confirmado' %>
+      </div>
+
+      <%= error %>
+
+      <%= message %>
+
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :controller=>'consulta_evaluacion_credito', :action => :index },
+        { :id=>'button_close1' } ) -%>
+      
+      <%= link_to_remote(image_tag('boton_confirmar.gif',:title =>'Conformar'),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method => :get,
+          :confirm => I18n.t('Sistema.Body.Vistas.General.usted_seguro_confimar'),
+          :url => {:action => :confirmar, :solicitud_id => @solicitud.id }) %>
+      
+      <%= link_to(image_tag('boton_proforma.gif'), {:controller => 'pro_forma', :action => 'index', :solicitud_id => @solicitud.id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.solicitudes') + "', 'height=650,width=1150'); return false;")  %>
+      
+    <% end %>
+
+
+    <script type="text/javascript">
+      function limpiar_datos(){
+        alert("prueba");
+      }
+      
+      function checkbox_select(this_,field){
+        if(this_.checked) {
+          var temp       = $(field).value;
+          temp          += ','+ this_.value;
+          $(field).value = temp.replace(/^,+/,'').replace(/,+$/,'');
+        }
+        else{
+          var array_solicitud = $(field).value.split(",");
+          array_solicitud     = array_solicitud.without(""," ",this_.value);
+          $(field).value      = array_solicitud.toArray();
+        }
+      }
+
+      function addClassTr(this_){
+        var row     = "row_" + this_.value;
+        var element = $(row);
+        var clase = $(row).classNames();
+      }
+
+      function enviar_catalogo_inventario(){
+        var parametro="solicitud_id="+$('solicitud_id').value+"&catalogo_id="+$('catalogo_id').value+"&tipo_maquinaria_id="+<%=@tipo_maquinaria_id%>;
+
+        if ($('catalogo_id').value.length==0){
+          alert('Debe seleccionar un producto del catálogo');
+          return false;
+        }
+
+        if (confirm('¿Está usted seguro que desea asociar el item al trámite?')) {
+          
+
+          new Ajax.Request('/solicitudes/plan_inversion/asignar_catalogo',
+          {
+            asynchronous:true,
+            evalScripts:true,
+            parameters:parametro,
+            onComplete: function(transport, element) {  },
+            onFailure: function(transport) {
+              alert("Error communicating with the server Plan Inventario: " + transport.responseText.stripTags());
+            },
+            onLoaded:function(request){
+              image_unload();
+              return false;
+            },
+            onLoading:function(request){image_load()}
+          }
+        );
+        }
+        return;
+      }
+
+      Event.observe(window, 'load', function() {
+
+      });
+
+    </script>
+
+  <% end %>
+</div>

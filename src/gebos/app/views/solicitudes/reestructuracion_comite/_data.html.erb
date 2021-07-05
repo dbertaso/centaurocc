@@ -1,0 +1,37 @@
+<td>
+  <%= view_prestamos_reestructurar.beneficiario %>
+</td>
+
+<td align="right">
+  <%= view_prestamos_reestructurar.cedula_rif %>
+</td>
+<td align="center">
+  <%= view_prestamos_reestructurar.contador_prestamos %>
+</td>
+<td align="right">
+  <% if  view_prestamos_reestructurar.saldo_deudor == nil ; view_prestamos_reestructurar.saldo_deudor = 0 end %>
+  <%= format_fm(view_prestamos_reestructurar.saldo_deudor) %>
+</td>
+<td align="right">
+  <% if  view_prestamos_reestructurar.deuda == nil ; view_prestamos_reestructurar.deuda = 0 end %>
+  <%= format_fm(view_prestamos_reestructurar.deuda) %>
+</td>
+<td></td>
+<td width="8%" align="center">
+  <a title="<%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.vista_rapida')%>" href="#row_<%= view_prestamos_reestructurar.cliente_id %>" onclick="fila_detalle(<%= view_prestamos_reestructurar.cliente_id %>)">
+    <img id="imagen_fila_<%= view_prestamos_reestructurar.cliente_id %>" src="/assets/expandir.gif" alt="<%= I18n.t('Sistema.Body.Vistas.General.expandir')%>"/></a>
+
+  <% if view_prestamos_reestructurar.estatus_reestructuracion == 2 %>
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title => I18n.t('Sistema.Body.Controladores.Accion.modificar')), 
+      :action => 'edit', :reestructuracion_id => view_prestamos_reestructurar.reestructuracion_id )   %>
+  <% end %>
+  <% if view_prestamos_reestructurar.estatus_reestructuracion > 2 %>
+    <% if view_prestamos_reestructurar.estatus_reestructuracion > 4 %>	
+      <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), 
+        :action => 'view', :reestructuracion_id => view_prestamos_reestructurar.reestructuracion_id )  %>
+    <% else %>
+      <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title => I18n.t('Sistema.Body.Controladores.Accion.modificar')), 
+        :action => 'view', :reestructuracion_id => view_prestamos_reestructurar.reestructuracion_id )  %>
+    <% end %>
+  <% end %>		
+</td>

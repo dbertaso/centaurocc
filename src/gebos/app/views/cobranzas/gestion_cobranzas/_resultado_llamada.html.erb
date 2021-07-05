@@ -1,0 +1,20 @@
+
+
+<table>
+  <tr>
+    <td style="width: 180px">
+      <label>
+        <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.resultado_llamada') %>
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+      </label>
+    </td>
+    <td>
+      <%= select(
+      'telecobranzas', 'llamada_infructuosa_id',
+      @llamada.map{|c| [c.descripcion, c.id]},
+      { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+      { :class=>'select', :onchange=>'inputChange(); limpiar_campos_persona_atendio(); mostrar_atencion(); ' } ) %>
+      </td>
+  </tr>
+</table>

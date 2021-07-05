@@ -1,0 +1,44 @@
+<%= render :partial=>'solicitudes/orden_despacho_archivos_generados/common/tabs' %>
+
+<div class="marco-contenido">  
+       <%= error %>
+       <%= message %>  
+ <%= form_title_search %>
+
+	<%= form_remote_tag(
+		:loading =>'image_load()',
+        :loaded => 'image_unload()',
+		:url => {:controller=>'orden_despacho_archivos_generados', :action => :list } ) do-%>
+
+ <%= hidden_field 'tipo','',:value => "archivo ~* '_'" %>
+      <table   >
+        <tr>
+          <td style="width: 100px">
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_desde')%></label>
+          </td>
+          <td>              
+              <%= calendar_date_select_tag "fecha_desde", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 100px">
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_hasta')%></label>
+          </td>
+          <td>              
+              
+              <%= calendar_date_select_tag "fecha_hasta", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date > (new Date()).stripTime()-1" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+              
+          </td>
+        </tr>
+        <tr>
+      <td><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'))   -%></td>
+        </tr>
+      </table>
+
+  	<% end %>
+
+<br>
+<div id="list">
+</div>
+</div></div>

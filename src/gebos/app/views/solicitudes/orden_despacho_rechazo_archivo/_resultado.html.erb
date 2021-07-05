@@ -1,0 +1,201 @@
+<%
+@bue=session[:buenos]
+@mal=session[:malos]
+
+arreglo_buenos =[]
+arreglo_malos =[]
+%>
+
+<%
+  arreglo_buenos = ViewListOrdenDespachoInsumo.find(:all,:conditions=>"identificador in (#{@bue})") unless session[:buenos].nil?
+  arreglo_malos = ViewListOrdenDespachoInsumo.find(:all,:conditions=>"identificador in (#{@mal})") unless session[:malos].nil?
+
+session[:buenos]=nil
+session[:malos]=nil
+
+%>
+
+
+<%= form_remote_tag(
+		:loading =>'image_load()',
+        :loaded => 'image_unload()',   
+        :method=>:get,
+		:url => { :action => :rectificar } ) do-%>
+
+<% unless arreglo_buenos.empty?%>
+<h1 align="center" class="separador"><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.se_localizaron_algunas_facturas_aprobadas')%></h1>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.Form.solicitud')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.numero')%> <%=I18n.t('Sistema.Body.Vistas.General.factura')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.General.beneficiario')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.rubro')%>
+      </th>      
+      <th style="width: 20%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.programa')%>
+      </th>
+      <th style="width: 12%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Vistas.General.factura')%>
+      </th>     
+      <th style="width: 12%" >
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>      
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%  
+    even_odd = 1
+    arreglo_buenos.each{|buenos|
+    even_odd = 1 - even_odd %>
+    <tr class="lista<%= even_odd %>" id="row_<%= buenos.identificador %>">
+		<td align ="center">
+		<%= buenos.numero unless buenos.nil? %>
+		</td>		
+		<td align ="center">
+		<%= OrdenDespacho.find(buenos.orden_despacho_id).numero unless buenos.nil? %>
+		</td>
+		<td align ="center">
+		<%= buenos.numero_factura unless buenos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= buenos.nombre unless buenos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= buenos.cedula_rif unless buenos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= buenos.rubro unless buenos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= buenos.programa unless buenos.nil? %>
+		</td>
+		<td align ="center">
+		<%= buenos.monto_total_factura_fm unless buenos.nil? %>
+		</td>
+		<td align ="center">
+		<%= radio_button 'buenos', "identificador", "#{buenos.identificador}", :class=>'text' -%>		
+		</td>        
+    </tr>
+    <%
+    }    
+     %>
+  </tbody>
+</table>
+
+<%end%>
+
+<%unless arreglo_malos.empty?%>
+<h1 align="center" class="separador"><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.se_localizaron_algunas_facturas_rechazadas')%></h1>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.Form.solicitud')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.numero')%> <%=I18n.t('Sistema.Body.Vistas.General.factura')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.General.beneficiario')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%>
+      </th>
+      <th style="width: 8%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.rubro')%>
+      </th>      
+      <th style="width: 20%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.programa')%>
+      </th>
+      <th style="width: 12%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Vistas.General.factura')%>
+      </th>     
+      <th style="width: 12%" >
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>      
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%  
+    even_odd = 1
+    arreglo_malos.each{|malos|
+    even_odd = 1 - even_odd %>
+    <tr class="lista<%= even_odd %>" id="row_<%= malos.identificador %>">		
+		<td align ="center">
+		<%= malos.numero unless malos.nil? %>
+		</td>		
+		<td align ="center">
+		<%= OrdenDespacho.find(malos.orden_despacho_id).numero unless malos.nil? %>
+		</td>
+		<td align ="center">
+		<%= malos.numero_factura unless malos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= malos.nombre unless malos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= malos.cedula_rif unless malos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= malos.rubro unless malos.nil? %>
+		</td>    
+		<td align ="center">
+		<%= malos.programa unless malos.nil? %>
+		</td>
+		<td align ="center">
+		<%= malos.monto_total_factura_fm unless malos.nil? %>
+		</td>
+		<td align ="center">
+		<%= radio_button 'malos', "identificador", "#{malos.identificador}", :class=>'text' -%>		
+		
+		</td>        
+    </tr>
+   <% } %>
+  </tbody>
+</table>
+<%end%>
+<br>
+
+<script>
+function verificador_malos(){
+malos=document.getElementsByName('malos[identificador]')
+for (i=0; i < malos.length; i++){
+if (malos[i].checked){return true;}
+}
+return false;
+}
+
+function verificador_buenos(){
+buenos=document.getElementsByName('malos[identificador]')
+for (i=0; i < buenos.length; i++){
+if (buenos[i].checked){return true;}
+}
+return false;
+}
+
+</script>
+
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.aplicar'),:onclick=>"if ( !verificador_malos()  ){alert('#{I18n.t('Sistema.Body.General.Excepciones.debe_selecionar')} #{I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')}');return false;}") if (arreglo_buenos.empty? && !arreglo_malos.empty?)-%>
+
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.aplicar'),:onclick=>"if ( !verificador_buenos() ){alert('#{I18n.t('Sistema.Body.General.Excepciones.debe_selecionar')} #{I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')}');return false;}") if (!arreglo_buenos.empty? && arreglo_malos.empty?)-%>
+
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.aplicar'),:onclick=>"if ( !verificador_malos() || !verificador_buenos() ){alert('#{I18n.t('Sistema.Body.General.Excepciones.debe_selecionar')} #{I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')}');return false;}") if (!arreglo_buenos.empty? && !arreglo_malos.empty?)-%>
+
+<% end %>

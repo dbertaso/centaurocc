@@ -1,0 +1,19 @@
+<td>
+	<%= solicitud.numero_solicitud %>
+</td>
+<td>
+	<%= solicitud.numero %>
+</td>
+<td>
+	<%= solicitud.identificacion %>
+</td>
+<td>
+	<%= solicitud.nombre_cliente %>
+</td>
+<td>
+  <%= Prestamo.estatus_prestamo("#{solicitud.estatus_p}") %>
+</td>
+<td style="text-align: right">
+       
+   <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), :action => 'edit', :id => solicitud.id )%>&nbsp;
+</td>

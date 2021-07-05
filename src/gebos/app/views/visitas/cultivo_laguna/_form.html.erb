@@ -1,0 +1,82 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.VisitaCultivoLaguna.Etiquetas.favor_introdusca_datos')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CultivoLaguna.Columnas.numero_laguna')%></label>
+    </td>
+    <td>
+      <%= text_field 'cultivo_laguna', 'numero_laguna', :class=>'text', :style=>'width: 140px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>	
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaCultivoLaguna.Etiquetas.area_espejo_agua')%></label>
+    </td>
+    <td>
+      <%= text_field 'cultivo_laguna', 'espejo_agua_f', :class=>'text', :style=>'width: 90px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Vistas.General.mts2')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CultivoLaguna.Columnas.cantidad_peces')%></label>
+    </td>
+    <td>
+      <%= text_field 'cultivo_laguna', 'cantidad_peces', :class=>'text', :style=>'width: 90px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CultivoLaguna.Columnas.peso_promedio')%></label>
+    </td>
+    <td>
+      <%= text_field 'cultivo_laguna', 'peso_promedio_f', :class=>'text', :style=>'width: 90px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Vistas.General.toneladas')%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.fecha_siembra')%></label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "cultivo_laguna[fecha_siembra_f]", @cultivo_laguna.fecha_siembra_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %>&nbsp;<%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaCultivoLaguna.Etiquetas.fecha_cosecha')%></label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "cultivo_laguna[fecha_cosecha_f]", @cultivo_laguna.fecha_cosecha_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %>&nbsp;<%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaCultivoLaguna.Etiquetas.kilogramo_por_cosechar_cosechados')%></label>
+    </td>
+    <td>
+      <%= text_field 'cultivo_laguna', 'kilo_cosechado_f', :class=>'text', :style=>'width: 90px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%> <%=I18n.t('Sistema.Body.Vistas.General.kg')%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;
+

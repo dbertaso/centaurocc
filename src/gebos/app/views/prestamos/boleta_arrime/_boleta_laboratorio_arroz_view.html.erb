@@ -1,0 +1,153 @@
+<table style="width: 100%">
+
+
+  <td class="separador" valign="bottom" colspan="4">
+    <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_de_laboratorio')%></span>
+  </td>
+
+</table>
+
+<br/>
+
+<table align="center" border="1" width="60%">
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.parentesis_arroz')%></label></td>
+    <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+    <td></td>
+    <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+    <td></td>
+    <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+  </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+          <%=format_fm(@boleta_laboratorio_arroz.humedad)%>
+          <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_enteros')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+            <%= format_fm(@boleta_laboratorio_arroz.enteros )%>
+          <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_verdes')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+            <%=format_fm(@boleta_laboratorio_arroz.verdes)%>
+        <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+            <%=format_fm(@boleta_laboratorio_arroz.impureza)%>
+        <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_yesosos')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+           <%=format_fm(@boleta_laboratorio_arroz.yesosos )%>
+        <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_sin_cascaras')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+            <%= format_fm(@boleta_laboratorio_arroz.sin_cascara )%>
+        <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.blanco_total')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+            <%= format_fm(@boleta_laboratorio_arroz.blanco_total )%>
+          <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_panza_blanca')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.panza_blanca )%>
+        <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_manchados')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.manchados )%>
+        <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.luv')%></label></td>
+      <td>
+        <%unless @boleta_laboratorio_arroz.nil? %>
+          <% if @boleta_laboratorio_arroz.luv == 'A'%>
+            <%=I18n.t('Sistema.Body.General.no_aplica')%>
+          <%elsif @boleta_laboratorio_arroz.luv == 'P'%>
+            <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.positivo')%>
+          <%elsif @boleta_laboratorio_arroz.luv == 'N'%>
+            <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.negativo')%>
+          <%end%>
+        <%end%>
+      </td>
+
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_punta_negra')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+           <%= format_fm(@boleta_laboratorio_arroz.punta_negra)%>
+         <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_infectados')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.infectados)%>
+        <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.olor')%></label></td>
+      <td><%= @boleta_laboratorio_arroz.olor.to_s unless @boleta_laboratorio_arroz.nil?%></td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_danados')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+           <%= format_fm(@boleta_laboratorio_arroz.danados)%>
+        <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.semillas_objetables')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.semillas_objetables )%>
+          <%end%>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.aspecto')%></label></td>
+      <td><%= @boleta_laboratorio_arroz.aspecto.to_s unless @boleta_laboratorio_arroz.nil?%></td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_rojos')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.rojos )%>
+      <%end%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.rendimiento')%></label></td>
+      <td><%unless @boleta_laboratorio_arroz.rendimiento.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.rendimiento) %>
+      <%end%></td>
+    </tr>
+    <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_partidos')%></label></td>
+        <td> <%unless @boleta_laboratorio_arroz.partidos.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.partidos )%>
+        <%end%>
+        </td>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.peso_especifico')%></label></td>
+        <td><%unless @boleta_laboratorio_arroz.peso_especifico.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.peso_especifico )%>
+        <%end%>
+        </td>
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center"><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.yesosos_mas_panza_blanca')%></label></td>
+        <td colspan="3"><%unless @boleta_laboratorio_arroz.yesosos_panza_blanca.nil? %>
+          <%= format_fm(@boleta_laboratorio_arroz.yesosos_panza_blanca)%>
+        <%end%>
+        </td>
+      </tr>
+
+</table>
+
+<br/>

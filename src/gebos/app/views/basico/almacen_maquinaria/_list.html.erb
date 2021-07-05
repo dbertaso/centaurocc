@@ -1,0 +1,45 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width:10%" style="text-align: center" <%= sort_class_helper('id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.id') + ' ' + I18n.t('Sistema.Body.Vistas.General.registro'), 'id', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('almacen_maquinaria.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre') + ' ' + I18n.t('Sistema.Body.Vistas.General.almacen'), 'almacen_maquinaria.nombre', 'list' %>
+      </th> 			
+      <th style="width: 80px" <%= sort_class_helper('almacen_maquinaria.rif') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rif'), 'almacen_maquinaria.rif', 'list' %>
+      </th> 
+      <th style="width: 30px" <%= sort_class_helper('almacen_maquinaria.telefono_1') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.telefono'), 'almacen_maquinaria.telefono_1', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('almacen_maquinaria.persona_contacto') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.persona') + ' ' + I18n.t('Sistema.Body.Vistas.General.contacto'), 'almacen_maquinaria.persona_contacto', 'list' %>
+      </th> 
+      <th style="width: 80px" <%= sort_class_helper('almacen_maquinaria.estado_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'almacen_maquinaria.estado_id', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('almacen_maquinaria.municipio_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.municipio'), 'almacen_maquinaria.municipio_id', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('almacen_maquinaria.ciudad_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.ciudad'), 'almacen_maquinaria.ciudad_id', 'list' %>
+      </th>
+      <th style="width: 10px" <%= sort_class_helper('almacen_maquinaria.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'almacen_maquinaria.activo', 'list' %>
+      </th> 			 			
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for almacen_maquinaria in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :almacen_maquinaria => almacen_maquinaria, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

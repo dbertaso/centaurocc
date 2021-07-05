@@ -1,0 +1,70 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+<%= form_title_search %>
+  <%= form_remote_tag(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url => { :action => :list } ) do -%>
+     <table>
+     <tr>
+        <td style="width: 150px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="width: 150px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}/#{I18n.t('Sistema.Body.Vistas.General.rif')}" %></label>
+        </td>
+        <td>
+        <select name="tipo" id="tipo" class="select">
+            <option value="V ">V</option>
+            <option value="E ">E</option>
+            <option value="J-">J</option>
+            <option value="G-">G</option>
+          </select>
+
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> Ej: J-12345678-9
+        </td>
+        <td></td>
+      </tr>
+        <tr>
+          <td style="width: 150px">
+            <label><%= I18n.t('Sistema.Body.General.beneficiario') %></label>
+          </td>
+          <td>
+            <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+          </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td style="width: 150px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.fecha_desde') %>:</label>
+          </td>
+          <td>
+            <%= calendar_date_select_tag "dfecha", nil, 
+                :year_range => 10.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+                :onkeypress=>'inputChange();',:onchange=>'inputChange();' %> (dd/mm/aaaa)
+          <td> </td>
+        </tr>
+        <tr>
+          <td style="width: 150px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.fecha_hasta') %>:</label>
+          </td>
+          <td>
+            <%= calendar_date_select_tag "hfecha", nil, 
+                :year_range => 10.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+                :onkeypress=>'inputChange();',:onchange=>'inputChange();' %> (dd/mm/aaaa)&nbsp;&nbsp;&nbsp;&nbsp;<%= image_submit_tag('boton_buscar.gif') -%>
+          </td>
+          <td> </td>
+        </tr>
+     </table>
+	<% end %>
+<br/>
+	<%= error %>
+	<%= message %>
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+	<div id="list"></div>

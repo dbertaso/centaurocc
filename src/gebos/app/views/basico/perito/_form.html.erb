@@ -1,0 +1,44 @@
+<table>
+	<tr>
+		<td style="width: 30%">
+			<label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %></label>
+		</td>
+		<td style="width: 70%">
+			<%= text_field 'perito', 'cedula', :class=>'text', :style=>'width: 70px', :maxlength=>'8'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label>
+		</td>
+		<td>
+			<%= text_field 'perito', 'primer_nombre', :class=>'text', :style=>'width: 150px', :maxlength=>'20'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label>
+		</td>
+		<td>
+			<%= text_field 'perito', 'segundo_nombre', :class=>'text', :style=>'width: 150px', :maxlength=>'20'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label>
+		</td>
+		<td>
+			<%= text_field 'perito', 'primer_apellido', :class=>'text', :style=>'width: 150px', :maxlength=>'20'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label>
+		</td>
+		<td>
+			<%= text_field 'perito', 'segundo_apellido', :class=>'text', :style=>'width: 150px', :maxlength=>'20'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

@@ -1,0 +1,111 @@
+
+<table>
+  <tr>
+    <td style="width: 135px">
+      <label>Silo de Origen</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <% silo_origen_onchange = remote_function(
+        :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+        :url=>{:controller=>'desvio_silo', :action=>:silo_origen_change }, :with=>"'id='+value+'&actividad_id='+#{params[:actividad_id].to_s}") %>
+      <%= select(
+        'desvio_silo','silo_origen_id',
+        @silo_list.map{|i| [i.nombre, i.id]},
+        { :prompt =>'Seleccionar'},
+        { :class=>'select', :onchange =>silo_origen_onchange+';inputChange();' }) %>
+    </td>
+  </tr>
+  <tr>
+    <td> <label>Rif Silo Origen</label></td>
+    <td>
+      <div id="rif-silo-origen">
+        <%= render :partial => 'rif_silo_origen' %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 135px">
+      <label> Actividad </label>
+    </td>
+    <td>
+      <%= @desvio_silo.actividad.nombre.to_s unless @desvio_silo.actividad_id.nil? %>
+      <%= hidden_field 'desvio_silo', 'actividad_id', :value=>"#{@desvio_silo.actividad_id}"%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 135px">
+      <label>Silo de Desvio </label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <span id="silo-destino">
+        <%= render :partial=>'silo_destino' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td> <label>Rif Silo Desvio</label></td>
+    <td>
+      <div id="rif-silo-destino">
+        <%= render :partial => 'rif_silo_destino' %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label>C&eacute;dula del Conductor </label> <label style="color: red">*</label></td>
+    <td>
+      <%= select(
+        'desvio_silo', 'letra_cedula_conductor',
+        [['V','V'],['E','E']],
+        { :include_blank => true },
+        { :class=>'select', :onchange=>';inputChange();' } ) %>
+      <%= text_field 'desvio_silo', 'cedula_conductor',
+        :class=>'text', :maxlength=>'12', :style=>'width: 135px', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label>Nombre Conductor </label> <label style="color: red">*</label></td>
+    <td>
+      <%= text_field 'desvio_silo', 'nombre_conductor',
+        :class=>'text', :maxlength=>'60', :style=>'width: 250px', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label>Placa del Veh&iacute;culo </label> <label style="color: red">*</label></td>
+    <td>
+      <%= text_field 'desvio_silo', 'placa_vehiculo',
+        :class=>'text', :style=>'width: 250px', :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label>Gu&iacute;a de Movilizaci&oacute;n </label> <label style="color: red">*</label></td>
+    <td>
+      <%= text_field 'desvio_silo', 'guia_movilizacion',
+        :class=>'text', :maxlength=>'12', :style=>'width: 250px', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Fecha Desvio </label> <label style="color: red">*</label></td>
+    <td>
+      <%= calendar_date_select_tag "desvio_silo[fecha_desvio_f]", @desvio_silo.fecha_desvio_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 160px"><label>Nro. Acta Desvio </label> <label style="color: red">*</label></td>
+    <td>
+      <%= text_field 'desvio_silo', 'numero_acta_desvio',
+        :class=>'text', :style=>'width: 250px', :maxlength=>'15', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 160px"><label>Causa Desvio </label> <label style="color: red">*</label></td>
+    <td>
+      <%= text_area 'desvio_silo', 'causa_desvio', :class=>'text',
+        :style=>'width: 250px; height: 100px', :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>

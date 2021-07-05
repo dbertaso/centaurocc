@@ -1,0 +1,121 @@
+<table style="width: 100%">
+  <% if @naturaleza == 'N' 
+      @catalogo.por_seguro = @imputaciones.seguro_nacional
+      @catalogo.por_flete = @imputaciones.flete_nacional %>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.costo') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+      </td>
+      <td>
+        <%= text_field 'catalogo', 'monto_real', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_monto_real.value;
+         this.form.catalogo_monto_real.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_nacionales(#{@catalogo.id});", :style=>'width: 230px', :maxlength=>'12'  -%>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_seguro') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <span id = "seguro_nacional_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.seguro).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+          <%= text_field 'catalogo', 'por_seguro', :value => @catalogo.por_seguro, :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_seguro.value;
+            this.form.catalogo_por_seguro.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_nacionales(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_flete') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <span id="flete_nacional_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.flete).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+          <%= text_field 'catalogo', 'por_flete', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_flete.value;
+            this.form.catalogo_por_flete.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_nacionales(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+      </td>
+    </tr>
+
+  <% else 
+      @catalogo.por_seguro = @imputaciones.seguro_internacional
+      @catalogo.por_flete = @imputaciones.flete_internacional
+      @catalogo.por_gastos_administrativos = @imputaciones.gastos_administrativos
+      @catalogo.por_nacionalizacion = @imputaciones.nacionalizacion_impuestos
+      @catalogo.por_almacenamiento = @imputaciones.almacenamiento %>
+
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_dolares') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+      </td>
+      <td style="width: 80%">
+        <%= text_field 'catalogo', 'monto_dolares', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_monto_dolares.value;
+         this.form.catalogo_monto_dolares.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :class=>'text', :style=>'width: 150px', :maxlength=>'12'  -%>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.en')}" %> <%= @catalogo.moneda_f %>:</label>
+      </td>
+      <td>
+        <span id="monto_bolivar_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.monto_real).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.nil? || @catalogo.monto_real.nil? %></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.gastos_administrativos') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <span id = "gastos_administrativos_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.gastos_administrativos).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+          <%= text_field 'catalogo', 'por_gastos_administrativos', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_gastos_administrativos.value;
+            this.form.catalogo_por_gastos_administrativos.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_seguro') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <span id = "seguro_internacional_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.seguro).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+          <%= text_field 'catalogo', 'por_seguro', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_seguro.value;
+            this.form.catalogo_por_seguro.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_flete') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <span id = "flete_internacional_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.flete).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+          <%= text_field 'catalogo', 'por_flete', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_flete.value;
+            this.form.catalogo_por_flete.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.almacenamiento') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <span id = "impuestos_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.impuesto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+          <%= text_field 'catalogo', 'por_nacionalizacion', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_nacionalizacion.value;
+            this.form.catalogo_por_nacionalizacion.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.almacenamiento') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <span id = "almacenamiento_<%= @catalogo.id %>"><%= sprintf('%01.2f',@catalogo.almacenamiento).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></span> - 
+          <%= text_field 'catalogo', 'por_almacenamiento', :class=>'text', :onkeypress=>"return NumberDoubleKey(event);", :onchange => "paa=this.form.catalogo_por_almacenamiento.value;
+            this.form.catalogo_por_almacenamiento.value=(parseFloat(paa)).toFixed(2); calcular_imputaciones_internacional(#{@catalogo.id});", :style=>'width: 50px', :maxlength=>'6'  -%> %
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<input type="hidden" id="naturaleza_<%= @catalogo.id %>" value="<%= @naturaleza %>" />

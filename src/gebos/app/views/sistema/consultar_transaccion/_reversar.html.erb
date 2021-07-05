@@ -1,0 +1,3 @@
+<%= alink('sistema/consultar_transaccion', 
+  'reversar', transaccion.id, transaccion.descripcion, 
+  {:action => :reversar, :transaccion_id => transaccion.id}) if !transaccion.reversada %>

@@ -1,0 +1,97 @@
+
+<table style="width: 100%">
+<tr>
+<td class="separador" valign="bottom" colspan="2">
+      <span>Datos del Tramite</span>
+
+</td>
+</tr>
+
+ <tr>
+    <td style="width: 10%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%>:</label>
+    </td>
+    <td style="width: 100%">
+      <%= @boleta_arrime.nro_solicitud.to_s %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 10%">
+      <label>Nombre del Proyecto:</label>
+    </td>
+    <td style="width: 100%">
+      <%= @boleta_arrime_tabla.Solicitud.objetivo_proyecto.to_s %>
+    </td>
+  </tr>
+
+
+</table>
+
+
+ <table style="width: 100%">
+
+<td class="separador" valign="bottom" colspan="4">
+      <span>Datos del Productor</span>
+
+ <tr>
+    <td style="width: 10%">
+      <label>Cedula/Rif:</label>
+    </td>
+    <td>
+        <%= @boleta_arrime.cedula_rif  %>
+      </td>
+  </tr>
+
+ <tr>
+    <td style="width: 10%">
+      <label>Nombre del Productor:</label>
+    </td>
+    <td>
+    
+        <%= @boleta_arrime.productor %>
+      </td>
+  </tr>
+
+<tr>
+    <td style="width: 10%">
+      <label>Unidad de Produccion:</label>
+    </td>
+    <td>
+
+        <%= @boleta_arrime.unidad_produccion %>
+      </td>
+  </tr>
+
+ <tr>
+    <td style="width: 10%">
+      <label>Estado:</label>
+    </td>
+    <td>
+
+        <%= @boleta_arrime.estado %>
+      </td>
+  </tr>
+
+  <tr>
+    <td style="width: 10%">
+      <label>Rubro:</label>
+    </td>
+    <td>
+        <%= @boleta_arrime.rubro %>
+      </td>
+  </tr>
+
+ </td>
+
+  <tr>
+      <td></td>
+        
+  </tr>
+
+    </table>
+
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+			{ :action => :index },
+			{ :id=>'button_close' } ) -%>
+

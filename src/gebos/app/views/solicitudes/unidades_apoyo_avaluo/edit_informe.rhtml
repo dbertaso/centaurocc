@@ -1,0 +1,42 @@
+<div class="marco-contenido">
+  <div class="marco-titulo"><div><div>
+          Revisión de la solicitud número <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+  </div></div></div>
+  
+  <%= render :partial=>'solicitudes/unidades_apoyo_avaluo/common/tabs' %>
+  
+  <div class="marco-contenido2">
+    
+    <%= error %>
+    <%= message %>
+
+    <% unless @editar == 0 %>
+          <%= form_remote_tag(
+                  :loading =>'image_load()',
+                  :loaded => 'image_unload()',
+                  :url => { :action => :save_informe_edit, :id=>@solicitud_avaluo.id } ) -%>
+        <% else %>
+          <%= form_remote_tag(
+                  :loading =>'image_load()',
+                  :loaded => 'image_unload()',
+                  :url => { :action => :save_informe_new, :solicitud_tipo_garantia_id=>@solicitud_tipo_garantia_id, :solicitud_id=>@solicitud.id } ) -%>
+        <% end %>
+                  <%= render :partial => 'form_avaluo' %>
+                  <br/>
+                  <div id="buttons_edit" style="display: none">
+                          <%= form_buttons_edit :action => :informe, :solicitud_id => @solicitud.id %>
+                  </div>
+
+                  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+                          { :action => :informe, :solicitud_id => @solicitud.id },
+                          { :id=>'button_close' } ) -%>
+
+          <%= end_form_tag -%>
+
+      <div id="archivo">
+          <%= render :partial => 'archivo' %>
+      </div>
+    
+  </div>
+
+</div>

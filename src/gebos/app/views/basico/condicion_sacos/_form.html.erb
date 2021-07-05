@@ -1,0 +1,34 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+  <tr><td colspan="2">&ensp;</td></tr>
+
+  <tr>
+    <td style="width: 110px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.condicion')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= select(
+        'condicion_saco', 'nombre',
+        [[I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.humedo'), 'HUMEDO'],[I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.mojado'),'MOJADO'],[I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.seco'), 'SECO']],
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>';inputChange();' } ) %>
+      </td>
+  </tr>
+  <tr>
+    <td style="width: 110px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.porcentaje')%></label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'condicion_saco', 'porcentaje_f', :class=>'text', :style=>'width: 500px', :maxlength=>'5', :onchange=>';inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'condicion_saco', 'activo', :checked_value=>"1", :unchecked_value=>"0", :onchange=>';inputChange();' -%>
+    </td>
+  </tr>
+</table>
+<br/>

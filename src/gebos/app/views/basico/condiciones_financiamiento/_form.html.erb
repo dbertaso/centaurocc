@@ -1,0 +1,276 @@
+<script language="javascript">
+
+  function calcular_plazo() {
+  
+    var plazo = 0;
+    var gracia = 0;
+    
+    if ($('plazo_total').value !='') plazo = parseInt($('plazo_total').value);
+    if ($('condiciones_financiamiento_periodo_gracia').value!='') gracia = parseInt($('condiciones_financiamiento_periodo_gracia').value);
+    
+    if (gracia >= plazo) {
+    
+      alert("<%= I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Mensajes.plazo_total_no_puede_ser_menor_que_gracia') %>");
+      plazo_real = 0;
+    }
+    else {
+      plazo_real = plazo - gracia;
+    }
+    
+    $('condiciones_financiamiento_plazo').value = plazo_real;
+    if ($('condiciones_financiamiento_periodo_gracia').value=='') $('condiciones_financiamiento_periodo_gracia').value=0;
+    if ($('plazo_total').value =='') $('plazo_total').value=0;
+  
+  }
+  
+</script>
+  
+<table width="100%" border="0">
+
+  <tr>
+    <td style="width: 25%">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.programa') %>:</label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+
+    <td style="width: 75%" colspan="4">
+    <% programa_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'condiciones_financiamiento',
+          :action=>:programa_change },
+          :with=>"'id='+value") %>
+      <%= select('condiciones_financiamiento', 'programa_id',
+           @programa_list.map{|i| [i.id.to_s + ' ' + i.nombre, i.id]},
+              {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.General.programa')} #{t('Sistema.Body.Vistas.General.social')}"},
+              { :class=>'select', :onchange=>programa_onchange + ';inputChange();' })%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label>
+        <%=I18n.t('Sistema.Body.Vistas.Form.sector') %>
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td style="width: 75%">
+        <span id="sector-select">
+          <%= render :partial => 'sector_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.sub_sector') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="sub-sector-select">
+          <%= render :partial => 'sub_sector_select' %>
+      </span>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.rubro') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="rubro-select">
+          <%= render :partial => 'rubro_select' %>
+      </span>
+
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.sub_rubro') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="sub-rubro-select">
+          <%= render :partial => 'sub_rubro_select' %>
+      </span>
+
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.actividad') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="actividad-select">
+          <%= render :partial => 'actividad_select' %>
+      </span>
+
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.metodo_amortizacion') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td>
+
+      <%= select(
+        'condiciones_financiamiento', 'formula_id',
+        options_from_collection_for_select(@formula_list, "id" ,"nombre" ),
+        { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.PlanPago.Columnas.frecuencia_pago') %> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= select( 'condiciones_financiamiento', 'frecuencia_pago',
+        [[I18n.t('Sistema.Body.Vistas.Form.seleccionar'),""],
+         [I18n.t('Sistema.Body.General.Periodos.pago_unico'), 0],
+         [I18n.t('Sistema.Body.General.Periodos.mensual'), 1],
+         [I18n.t('Sistema.Body.General.Periodos.bimestral'), 2],
+         [I18n.t('Sistema.Body.General.Periodos.trimestral'), 3],
+         [I18n.t('Sistema.Body.General.Periodos.pentamestral'), 5],
+         [I18n.t('Sistema.Body.General.Periodos.semestral'),6],
+         [I18n.t('Sistema.Body.General.Periodos.anual'),12]
+        ],
+        { },
+        { :class=>'select', :onchange=>'inputChange();' } )
+      %>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>
+        <%= I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Separadores.determinacion_plazos') %>
+      </span>
+    </td>
+    <td></td>
+
+  </tr>    
+
+  <tr>
+      <td>
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.plazo_total') %>:
+        </label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)</label>
+      </td>
+      <td>
+        <%= text_field_tag 'plazo_total', @plazo_total,
+          {:class=>'text',
+           :label=>I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.digite_plazo'),
+          :style=>'width: 100px padding-left: 4px;', 
+          :maxlength=>'4',
+          :onchange => 'calcular_plazo();', 
+          :onkeypress=>"return NumberKey(event);",
+          :onclick=>'inputChange();'}  -%>
+      </td>
+  </tr>
+
+
+  <table border="0">
+    <tr>
+      <td class="separador" valign="bottom" colspan="4">
+        <span>
+          <%= I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Separadores.determinacion_plazos') %>
+        </span>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+    </tr>    
+
+    <tr >
+      <td style="width: 25%">
+        <label>
+          <%= t('Sistema.Body.General.periodo_gracia') %>
+        </label>
+      </td>
+      <td style="width: 30%">
+          <%= text_field 'condiciones_financiamiento', 'periodo_gracia', 
+            :class=>'text', 
+            :style=>'width: 100px;', 
+            :maxlength=>'4', 
+            :onchange => 'calcular_plazo();', 
+            :onkeypress=>"return NumberKey(event);",
+            :onclick=>'inputChange();'  -%>
+      </td>
+
+      <td style="width: 15%">
+        <label>
+          <%= "#{I18n.t('Sistema.Body.General.diferir')} #{I18n.t('Sistema.Body.Vistas.General.intereses')}"%>
+        </label>
+      </td>
+      <td style="width: 30%"> 
+        <%= check_box 'condiciones_financiamiento', 'diferir_intereses', 
+          :checked_value=>"1",  
+          :unchecked_value=>"0", 
+          :onclick=>'inputChange();'-%>
+      </td>
+
+    </tr>
+
+  </table>
+
+  <table style="width: 100%" border="0">
+
+    <tr>
+      <td style="width: 25%" valign="bottom" colspan="4">
+        <label>
+           <%= I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.plazo') %>
+        </label>
+      </td>
+      <td style="width: 30%">
+          <%= text_field 'condiciones_financiamiento', 'plazo',
+            :class=>'text',
+            :style=>'width: 100px', 
+            :maxlength=>'4',
+            :readonly=>'readonly',
+            :onclick=>'inputChange();'  -%>
+      </td>
+      <td style="width: 15%"></td>
+      <td style="width: 30%"></td>
+    </tr>
+
+  </table>
+
+  <table width="100%" border="0">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2" style="width: 30%">
+        <span></span>
+      </td>
+      <td style="width: 70%"></td>
+
+    <tr>
+      <td style="width: 30%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+      </td>
+        <td style="width: 70%">
+          <%= check_box 'condiciones_financiamiento', 'activo',
+              :checked_value=>"1",
+              :unchecked_value=>"0",
+              :onclick=>'inputChange();'-%>
+      </td>
+    </tr>
+
+  </table>
+

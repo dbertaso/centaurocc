@@ -1,0 +1,235 @@
+<% arte_pesca = @arte_pesca if arte_pesca.nil? %>
+<td colspan="2" align="right">
+  <table width="96%">
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+
+      <span>Artes de Pesca:  <label style="color: red"><%= arte_pesca.nombre_arte_pesca %></label></span>
+    </td>
+</tr>
+  <tr>
+        <td style="width: 300px">
+              <label>Tipo de Artes de Pesca:</label>
+        </td>
+        <td  style="width: 650px">
+            <%  tipo_arte_pesca = TipoArtePesca.find(arte_pesca.tipo_arte_pesca_id) %>
+           <%=  tipo_arte_pesca.tipo unless arte_pesca.tipo_arte_pesca_id.nil? %>
+        </td>
+  </tr>
+    <tr>
+          <td>
+             <label>Es propio:</label>
+          </td>
+          <td>
+             <%=format_bool arte_pesca.es_propia unless arte_pesca.es_propia.nil? %>
+          </td>
+  </tr>
+
+  <tr>
+        <td>
+              <label>Cantidad:</label>
+        </td>
+        <td>
+            <%=  arte_pesca.cantidad unless arte_pesca.cantidad.nil? %>
+        </td>
+  </tr>
+
+<% if tipo_arte_pesca.grupo.upcase == "REDES" %>
+<tr>
+        <td>
+                <label>Tipo de Nylon</label>
+        </td>
+        <td>
+           <%  tipo_nylon = TipoNylon.find(arte_pesca.tipo_nylon_id) %>
+           <%=  tipo_nylon.tipo unless arte_pesca.tipo_nylon_id.nil? %>
+
+        </td>
+</tr>
+
+<tr>
+        <td>
+                <label>Largo</label>
+        </td>
+        <td>
+          <%=  arte_pesca.largo_f unless arte_pesca.largo.nil? %> (Mts)
+        </td>
+    </tr>
+
+  <tr>
+        <td>
+                <label>Ancho</label>
+        </td>
+        <td>
+          <%=  arte_pesca.ancho_f unless arte_pesca.ancho.nil? %> (Mts)
+        </td>
+      </tr>
+    <tr>
+        <td>
+               <label>Luz de Maya</label>
+        </td>
+        <td>
+          <%=  arte_pesca.luz_maya unless arte_pesca.luz_maya.nil? %>
+
+        </td>
+    </tr>
+<% end %>
+<% if tipo_arte_pesca.grupo.upcase == "PALANGRES" %>
+    <tr>
+        <td>
+                <label>Material Linea Madre</label>
+        </td>
+        <td>
+           <%=  arte_pesca.material_linea_madre unless arte_pesca.material_linea_madre.nil? %>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+                <label>Largo</label> <label style="color: red">*</label>
+        </td>
+        <td>
+          <%=  arte_pesca.largo_f unless arte_pesca.largo.nil? %> (Mts)
+	</td>
+	</tr>
+
+    <tr>
+          <td>
+              <label>Número del Anzuelo</label>
+          </td>
+          <td>
+            <%=  arte_pesca.nro_anzuelo unless arte_pesca.nro_anzuelo.nil? %>
+
+          </td>
+  </tr>
+
+<tr>
+        <td>
+            <label>Cantidad de Anzuelos</label> <label style="color: red">*</label>
+        </td>
+        <td>
+           <%=  arte_pesca.cantidad_anzuelos unless arte_pesca.cantidad_anzuelos.nil? %>
+
+        </td>
+</tr>
+
+<% end %>
+<% if tipo_arte_pesca.grupo.upcase == "NASAS" %>
+<tr>
+    <td>
+            <label>Material</label>
+    </td>
+    <td>
+        <%=  arte_pesca.material unless arte_pesca.material.nil? %>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <label>Largo</label> 
+    </td>
+    <td>
+        <%=  arte_pesca.largo_f unless arte_pesca.largo.nil? %> (Mts)
+
+    </td>
+</tr>
+
+<tr>
+    <td>
+            <label>Ancho</label>
+    </td>
+    <td>
+        <%=  arte_pesca.ancho_f unless arte_pesca.ancho.nil? %> (Mts)
+
+    </td>
+</tr>
+
+<tr>
+    <td>
+            <label>Alto</label>
+    </td>
+    <td>
+        <%=  arte_pesca.alto_f unless arte_pesca.alto.nil? %> (Mts)
+    </td>
+</tr>
+<% end %>
+<% if tipo_arte_pesca.grupo.upcase == "CORDELES" %>
+<tr>
+    <td>
+            <label>Cantidad de Anzuelos</label>
+    </td>
+    <td>
+        <%=  arte_pesca.cantidad_anzuelos unless arte_pesca.cantidad_anzuelos.nil? %>
+    </td>
+</tr>
+
+<tr>
+    <td>
+            <label>Número del Anzuelo</label> 
+    </td>
+    <td>
+        <%=  arte_pesca.nro_anzuelo unless arte_pesca.nro_anzuelo.nil? %>
+    </td>
+</tr>
+
+<tr>
+    <td>
+            <label>Tipo de Cordel</label>
+    </td>
+    <td>
+      <%=  arte_pesca.tipo_cordel unless arte_pesca.tipo_cordel.nil? %>
+    </td>
+</tr>
+
+<tr>
+    <td>
+            <label>Número de Cordel</label>
+    </td>
+    <td>
+      <%=  arte_pesca.nro_cordel unless arte_pesca.nro_cordel.nil? %>
+
+    </td>
+</tr>
+<% end %>
+<% if tipo_arte_pesca.grupo.upcase == "ATARRAYAS" %>
+<tr>
+    <td>
+            <label>Luz de Maya</label>
+    </td>
+    <td>
+          <%=  arte_pesca.luz_maya unless arte_pesca.luz_maya.nil? %>
+
+
+    </td>
+</tr>
+
+
+<% end %>
+<tr>
+      <td colspan="2">
+        <label style="color: red">Nuevas Especificaciones:</label>
+      </td>
+  </tr>
+  <tr>
+      <td>
+              <label>Condiciones</label>
+      </td>
+      <td>
+           <%=  arte_pesca.condicion unless arte_pesca.condicion.nil? %>
+      </td>
+  </tr>
+
+
+
+
+</table>
+</td>
+
+
+ 
+
+
+
+
+
+

@@ -1,0 +1,194 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+        Consultando Solicitud <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+      </div></div></div>
+
+  <%= render :partial=>'solicitudes/consulta_solicitud/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <table>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= Etiquetas.etiqueta(9) %></span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 40%">
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Rif' : 'Cédula' %></label>
+        </td>
+        <td style="width: 60%">
+          <% if @cliente.class.to_s=='ClienteEmpresa' %>
+            <%= @cliente.empresa.rif %>
+            <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), 
+              { :controller=>'/clientes/cliente_empresa', :action=>'view', :id=>@cliente.empresa.id, :popup=>true },
+              :popup => ['cliente_empresa', 'height=600,width=800, scrollbars=yes, resizable=yes']	%>		
+          <% else %>
+            <%= @cliente.persona.cedula %>
+            <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), 
+              { :controller=>'/clientes/cliente_persona', :action=>'view', :id=>@cliente.persona.id, :popup=>true },
+              :popup => ['cliente_persona', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Nombre' : 'Nombre, Apellido' %></label>
+        </td>
+        <td>
+          <%= @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.alias : @cliente.persona.nombre_corto %> 
+
+          <% unless @cliente.tipo_cliente_id.nil? %>
+            <% @tipo_cliente = TipoCliente.find(@cliente.tipo_cliente_id) %>
+            (<%= @tipo_cliente.nombre %>)
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Número '+ Etiquetas.etiqueta(9) + ' Jurídico' : 'Número Grupo' %></label>
+
+        </td>
+        <td>
+          <% if @cliente.class.to_s=='ClienteEmpresa' %>
+            <%= @cliente.empresa.numero %>	  
+          <% elsif @cliente.persona.GrupoIntegrante[0] != nil %>
+            <%= @cliente.persona.GrupoIntegrante[0].Grupo.numero  %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span>Datos Básicos del Microcrédito</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Solicita Microcrédito por Primera Vez</label>
+        </td>
+        <td><% if @solicitud.recredito == true -%> No</td></tr><% else -%>Sí</td></tr><% end -%></td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>Número</label>
+        </td>
+        <td>
+          <%= @solicitud.numero -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Promotora</label>
+        </td>
+        <td>
+          <%  @promotora = Promotora.find(@solicitud.promotora_id) %>
+          <%=	@promotora.nombre -%> <%=	@promotora.apellido-%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>Programa Social </label>
+        </td>
+        <td>
+          <%  @programa = Programa.find(@solicitud.programa_id) %>
+          <%=	@programa.alias -%>    		
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 200px">
+          <label>Fecha Solicitud</label>
+        </td>
+        <td style="width: 500px">
+          <%= @solicitud.fecha_solicitud.strftime('%d/%m/%Y') %>
+        </td>
+      </tr>	
+      <tr>
+        <td>
+          <label>Monto Solicitado</label>
+        </td>
+        <td>
+          <%= sprintf('%01.2f',@solicitud.monto_cliente).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Monto Aprobado</label>
+        </td>
+        <td>
+          <%= sprintf('%01.2f',@solicitud.monto_solicitado).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Origen de Fondo</label></td>
+        <td>
+          <%  @origen = OrigenFondo.find(@solicitud.origen_fondo_id) %>
+          <%= @origen.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label>Destino</label>
+        </td>
+        <td>
+          <%= @solicitud.objetivo_proyecto %>
+        </td>
+      </tr>
+      <tr>
+      <tr><% if @cliente.class.to_s !='ClienteEmpresa' %>
+          <td>
+            <label>Microcrédito Asociado a un Grupo</label>
+          </td>
+          <td><% if @solicitud.numero_grupo == 0 || @solicitud.numero_grupo.nil? -%> <%= image_tag 'inactivo.gif' %></td></tr><% else -%> <%= image_tag 'activo.gif'%></td></tr><% end -%></td>
+        </tr>
+      <%end%>
+
+      <td class="separador" valign="bottom" colspan="2">
+        <span>Ubicación del Crédito</span>
+      </td>
+      </tr>
+      <tr>
+        <td><label>Estado:</label></td>
+        <td>
+          <%= @solicitud.ciudad.estado.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Ciudad:</label></td>
+        <td>
+          <%= @solicitud.ciudad.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Municipio:</label></td>
+        <td>
+          <%= @solicitud.municipio.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Parroquia:</label></td>
+        <td>
+          <%= @solicitud.parroquia.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label>Observaciones</label>
+        </td>
+        <td>
+          <%= @solicitud.observacion -%>
+        </td>
+      </tr>
+
+      <tr height=10><td colspan="2"></td></tr>
+
+    </table>		
+    <% if @accion == nil  %>
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :controller => params[:controlador], :action => :index },
+        { :id=>'button_close' } ) -%>
+    <% end%>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<script type="text/javascript">
+  function abrir_ventana(){
+    //fecha_desde = document.getElementById('_fecha_desde').value;
+    //fecha_hasta = document.getElementById('_fecha_hasta').value;
+    //moneda = document.getElementById('moneda_id').value;
+    var pars = "fecha_desde=" + document.getElementById('_fecha_desde').value;
+    pars += "&fecha_hasta=" + document.getElementById('_fecha_hasta').value;
+    pars += "&moneda_id=" + document.getElementById('moneda_id_').value;
+    window.open("<%= @ruta %>/prestamos/reporte_cobranza/reporte?" + pars,'popup','height=650,scrollbars=yes,width=1000');
+  }
+</script>
+<div class="marco" style="width: 60%">
+  <div class="marco-titulo"><div><div>
+        <%= @form_title_records %>
+      </div></div></div>
+  <div class="marco-contenido" >
+    <%= errores %>
+    <%= message %>
+    <%= form_remote_tag(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :url => { :action => :reporte } ) do -%>
+
+      <table style="width: 100%">
+
+        <tr>
+          <td style="width: 35%">
+            <label><%= I18n.t('Sistema.Body.Controladores.Contabilidad.ConsultarComprobante.FormSearch.fecha_desde') %>:</label>
+          </td>
+          <td style="width: 65%">
+
+            <%= calendar_date_select '', 'fecha_desde',
+              :year_range => 110.years.ago..-1.years.ago,
+              :class=>'text',
+              :style=>'width:80px',
+              :maxlength=>'10',
+              :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();' %> &nbsp; 
+            <%= I18n.t('Sistema.Body.General.formato_fecha')%>        
+
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 35%">
+            <label><%= I18n.t('Sistema.Body.Controladores.Contabilidad.ConsultarComprobante.FormSearch.fecha_hasta') %>:</label>
+          </td>
+          <td style="width: 65%">
+
+            <%= calendar_date_select '', 'fecha_hasta',
+              :year_range => 110.years.ago..-1.years.ago,
+              :class=>'text',
+              :style=>'width:80px',
+              :maxlength=>'10',
+              :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();' %> &nbsp; 
+            <%= I18n.t('Sistema.Body.General.formato_fecha')%>        
+
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 35%">
+            <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>:</label>
+          </td>
+          <td><%= select(
+              'moneda_id', '',
+              options_from_collection_for_select(@moneda_list, 'id', 'nombre'),
+              {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+              {:class=>'select', :onchange=>'inputChange();'} ) %>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" align="center">
+            <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir_grande')),:title=>I18n.t('Sistema.Body.Vistas.General.imprimir_informe'), :onclick=>"abrir_ventana();") %>
+          </td>
+        </tr>
+      </table>
+
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<table width="100%">
+
+  <% lista = 'lista0'
+  @tipo_vialidad.each { |i| %>
+
+    <tr>
+      <td>
+        <%= check_box 'recaudo_check',
+        i.id,
+        {:checked=>i.marcado, :onchange=>"inputChange();#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>"solicitud_pre_evaluacion_caracterizacion",
+          :action=>:save_vialidad },
+          :with=>"'id=#{i.id}&unidad_produccion_caracterizacion_id=#{@unidad_produccion_caracterizacion.id}&chequado= this.checked'")}", :name => "caracterizacion_vialidad[]", :id => "tipo_vialidad_#{i.id}" }  %>
+      </td>
+      <td>
+        <%= i.nombre %>
+      </td>
+    </tr>
+
+    <% if i.nombre == '[Otro]' %>
+      <tr><td></td>
+        <td>
+          <%= text_field 'i', 'descripcion_otro_vialidad',
+          :value=>i.descripcion_otro,
+          :class=>'text',
+          :style=>'width: 150px',
+          :onchange=>"document.getElementById('tipo_vialidad_#{i.id}').checked = 'checked'; new Ajax.Request('/solicitudes/solicitud_pre_evaluacion_caracterizacion/save_vialidad', {asynchronous:true, evalScripts:true, onLoaded:function(request){Element.hide(&quot;loading&quot;)}, onLoading:function(request){Element.show(&quot;loading&quot;)}, parameters:'id=#{i.id}&unidad_produccion_caracterizacion_id=#{@unidad_produccion_caracterizacion.id}&actualizar='+this.value})",
+          :onkeypress=>'inputChange();'  -%>
+        </td>
+      </tr>
+    <% end %>
+  <%  
+  } %>
+
+</table>
+<br/>

@@ -1,0 +1,59 @@
+<td align="center">
+  <%=
+    comite=Comite.find_by_numero_and_instancia_tipo_id(solicitud.numero_comite_estadal,4)
+    check_box_tag 'checkbox_solicitud_id', solicitud.id,false,:onClick=>'checkbox_select(this,"decision_solicitud_id");',
+                  :disabled => !comite.nil? && !comite.vigente ? false : true
+  %>
+</td>
+<td>
+  <%= solicitud.numero %>
+</td>
+<td align="right">
+  <%= solicitud.cliente.class.to_s=='ClienteEmpresa' ? solicitud.cliente.empresa.rif : solicitud.cliente.persona.cedula  %>
+</td>
+<td align="right">
+  <%= solicitud.cliente.class.to_s=='ClienteEmpresa' ? solicitud.cliente.empresa.nombre : solicitud.cliente.persona.nombre_corto  %>
+</td>
+<td align='center'>
+  <span style="color: #FF0000">
+    <b>
+      <%=
+        estatus = ""
+        estatus = "-#{I18n.t('Sistema.Body.General.diferido')}" if solicitud.decision_comite_estadal=='D'
+        (solicitud.estatus.nombre + '<span style="color:#ff6000">'+estatus+'</span>').html_safe
+      -%>
+    </b>
+  </span>
+</td>
+<td align="center">
+  <%= solicitud.moneda.nombre %>
+</td>
+<td align="right">
+  <%= solicitud.monto_solicitado_fm%>
+</td>
+<td align="center">
+  <%= solicitud.sector.nombre %>
+</td>
+<td align="center">
+  <%= solicitud.sub_sector.nombre %>
+</td>
+<td align="center">
+  <%= solicitud.rubro.nombre %>
+</td>
+<td align="center">
+  <%= solicitud.sub_rubro.nombre %>
+</td>
+<td align="center">
+  <%= solicitud.actividad.nombre %>
+</td>
+<td align='center'>
+  <%=  format_bool !solicitud.numero_comite_estadal.nil?  %>
+</td>
+<td align='center'>
+  <%= solicitud.numero_comite_estadal -%>
+</td>
+<td align="center">  
+ <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), {:controller=>'/solicitudes/comite_estadal', :action=>'resumen_comite_solicitud', :method=>:get,:solicitud_id=>solicitud.id, :popup=>true }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>solicitud.numero) + "',
+'height=600,width=1040, scrollbars=yes, resizable=yes,top=200,left=100'); return false;")  %>
+ 
+</td>

@@ -1,0 +1,4 @@
+<% empleado_silo = @empleado_silo if empleado_silo.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= empleado_silo.id unless empleado_silo.nil? %>">
+	<%= render :partial => 'data', :locals => { :empleado_silo => empleado_silo, :even_odd => even_odd } -%>
+</tr>

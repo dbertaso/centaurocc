@@ -1,0 +1,35 @@
+<div id="tabs">
+  <ul>
+    <%
+      action_name = controller.action_name
+      controller_name = controller.controller_name
+      controller_top = params[:controlador]
+
+      if controller_name=='unidades_apoyo_avaluo' && (action_name == 'edit' || action_name == 'view')
+    %>
+        <li id="actual"><div><a href="#">Lista de Chequeo</a></div></li>
+    <%
+      else
+    %>
+        <li><div>
+          <%= link_to('Lista de Chequeo', :controller => 'unidades_apoyo_avaluo', :action => 'edit', :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='informe' || action_name=='edit_informe') %>
+          <%= link_to('Lista de Chequeo', :controller => 'unidades_apoyo_avaluo', :action => 'view', :solicitud_id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='informe_view' || action_name=='edit_view') %>
+        </div></li>
+    <%
+      end
+
+        if controller_name=='unidades_apoyo_avaluo' && (action_name == 'informe' || action_name == 'edit_informe' || action_name == 'informe_view' || action_name=='edit_view')
+    %>
+        <li id="actual"><div><a href="#">&nbsp;&nbsp;Informe&nbsp;&nbsp;</a></div></li>
+    <%
+        else
+    %>
+          <li><div>
+            <%= link_to('&nbsp;&nbsp;Informe&nbsp;&nbsp;', :controller => 'unidades_apoyo_avaluo', :action => 'informe', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup]) if (action_name == 'edit') %>
+            <%= link_to('&nbsp;&nbsp;Informe&nbsp;&nbsp;', :controller => 'unidades_apoyo_avaluo', :action => 'informe_view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view') %>
+          </div></li>
+    <%
+        end
+    %>
+  </ul>
+</div>

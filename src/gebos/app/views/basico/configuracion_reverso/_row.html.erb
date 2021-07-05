@@ -1,0 +1,4 @@
+<% configuracion_reverso = @configuracion_reverso if configuracion_reverso.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= configuracion_reverso.id %>">
+	<%= render :partial => 'data', :locals => { :configuracion_reverso => configuracion_reverso, :even_odd => even_odd } -%>
+</tr>

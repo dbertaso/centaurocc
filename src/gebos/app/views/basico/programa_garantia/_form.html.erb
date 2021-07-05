@@ -1,0 +1,42 @@
+<table style="width: 100%">
+  <tr>
+    <td >
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.garantia')}"%>:
+      </label>
+    </td>
+
+
+    <td style="width: 75%">
+      <% if controller.action_name  == 'new' %>
+        <%= select(
+          'programa_tipo_garantia', 'tipo_garantia_id',
+          @tipo_garantia_select.map{|e| [e.nombre, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select'} ) %>
+
+      <% else %>
+        <%= @programa_tipo_garantia.tipo_garantia.nombre %>
+      <% end %>
+    </td>
+  </tr>
+ <!--  <tr>
+    <td valign="bottom" colspan="2" style="width: 100%">
+      <label><%#= "#{I18n.t('Sistema.Body.Vistas.General.indice')} #{I18n.t('Sistema.Body.Vistas.General.garantia')}"%></label>
+    </td>
+  </tr> -->
+  <tr>
+    <td style="width: 25%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.relacion')%></label>
+    </td>
+    <td >
+      <%= text_field 'programa_tipo_garantia', 'relacion_garantia_f',
+        :class=>'text', :style=>'width: 30px',
+        :maxlength=>'4', :onkeypress=>'inputChange();'  -%> : 1
+    </td>
+  </tr>
+  <tr><td colspan="2">&ensp;&ensp;</td></tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: left">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+ 

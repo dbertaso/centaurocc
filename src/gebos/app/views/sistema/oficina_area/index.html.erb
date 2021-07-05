@@ -1,0 +1,22 @@
+<%= render :partial=>'sistema/oficina/common/tabs' %>
+<div class="marco-contenido2">
+
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.agregar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.agregar')),
+      :action => 'new', :oficina_id => @oficina.id, :popup=>params[:popup] ) if vlink 'edit' %>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+    <div id="list">
+      <%= render :partial => 'list' -%>
+    </div>
+
+
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+    { :controller => 'oficina', :action => :index, :popup=>params[:popup] },
+    { :id=>'button_close' } ) -%>
+
+</div>
+  <%#end%>

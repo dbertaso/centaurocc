@@ -1,0 +1,178 @@
+<script type="text/javascript">
+
+  function cargar()
+  {
+    document.getElementById("agregar").style.display= 'none';
+   var pars = "solicitud_avaluo_prenda_semoviente[monto_f]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_monto_f").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[cantidad]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_cantidad").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[peso]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_peso").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[tipos_semovientes_id]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_tipos_semovientes_id").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[raza]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_raza").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[edad]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_edad").value;
+   pars += "&solicitud_avaluo_prenda_semoviente[unidad_edad]=" + document.getElementById("solicitud_avaluo_prenda_semoviente_unidad_edad").value;
+   pars += "&solicitud_tipo_garantia_id=<%= @solicitud_tipo_garantia_id %>"
+   var myAjax = new Ajax.Request("/solicitudes/unidades_apoyo_avaluo/save_new_semoviente?" + pars, {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}}); return false;
+  }
+
+</script>
+<table style="width: 100%">
+    <tr>
+      <td style="width: 20%">
+        <label>Tipo de Semoviente:</label> <label style="color: red">*</label>
+      </td>
+      <td style="width: 80%">
+        <%= select(
+            'solicitud_avaluo_prenda_semoviente', 'tipos_semovientes_id',
+            @semoviente_list.map{|e| [e.nombre, e.id]},
+            { },
+            { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Cantidad:</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_prenda_semoviente', 'cantidad',
+            :class=>'text',
+            :style=>'width: 100px',
+            :maxlength=>'7', :onkeypress=>'inputChange();', :value=>'1'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Peso Unitario:</label> <label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_prenda_semoviente', 'peso',
+            :class=>'text',:style=>'width: 100px', :maxlength=>'7',
+            :onkeypress=>'montosolicitud(); inputChange();',
+            :onchange=>'inputChange();',
+            :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_prenda_semoviente_peso'); "  -%>
+      <%= display_number 0, 'solicitud_avaluo_prenda_semoviente_peso' %> kg&emsp;
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Raza:</label> <label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_prenda_semoviente', 'raza',
+            :class=>'text',
+            :style=>'width: 100px',
+            :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Edad:</label>
+      </td>
+      <td>
+        <%= text_field 'solicitud_avaluo_prenda_semoviente', 'edad',
+            :class=>'text',
+            :style=>'width: 40px',
+            :maxlength=>'2', :onkeypress=>'inputChange();'  -%> <%= select(
+            'solicitud_avaluo_prenda_semoviente', 'unidad_edad',
+            [['Año(s)','Año(s)'],['Mes(es)','Mes(es)']],
+            {:include_blank=>true },
+            { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+    <td>
+      <label>Monto total:</label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda_semoviente', 'monto_f',
+          :class=>'text', :style=>'width: 100px', :maxlength=>'10',
+          :onkeypress=>'montosolicitud(); inputChange();',
+          :onchange=>'inputChange();',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_prenda_semoviente_monto'); "  -%>
+      <%= display_number 0, 'solicitud_avaluo_prenda_semoviente_monto' %>&emsp;
+      <samp id="agregar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.agregar'),:title=>'Agregar', :onclick=>"javascript:cargar();", :OnMouseOver=>"style.cursor='pointer'" ) %></samp>
+    </td>
+  </tr>
+</table>
+<br/>
+<table class="lista" style="width: 90%">
+  <tr>
+    <th style="width: 100px">
+      <label>Tipo de Semoviente</label>
+    </th>
+
+    <th style="width: 50px">
+      <label>Cantidad</label>
+    </th>
+
+    <th style="width: 80px">
+      <label>Peso</label>
+    </th>
+
+    <th style="width: 110px">
+      <label>Raza</label>
+    </th>
+
+    <th style="width: 50px">
+      <label>Edad</label>
+    </th>
+
+    <th style="width: 110px">
+      <label>Monto total</label>
+    </th>
+
+    <th style="width: 20px"></th>
+  </tr>
+<%  unless @prenda_semoviente_list.nil?
+    clase = "lista0"
+    @prenda_semoviente_list.each { |semoviente| %>
+  <tr id="sem_<%= semoviente.id %>" class='<%= clase %>'>
+    <td>
+      <%= semoviente.TiposSemovientes.nombre %>
+    </td>
+
+    <td>
+      <%= semoviente.cantidad %>
+    </td>
+
+    <td>
+      <%= semoviente.peso %> kg
+    </td>
+
+    <td>
+      <%= semoviente.raza %>
+    </td>
+
+    <td>
+      <%= semoviente.edad.to_s %> <%= semoviente.unidad_edad %>
+    </td>
+
+    <td align="left">
+      <%= display_number semoviente.monto, '' %>
+    </td>
+
+    <td align="center">
+      <%= link_to_remote (image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Avanzar'),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :confirm => "¿Está usted seguro que desea eliminar el registro seleccionado?",
+          :id=>"button_enviar",
+          :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+          :url => {:action => :delete_semoviente, :id => semoviente.id, :solicitud_tipo_garantia_id=>semoviente.solicitud_tipo_garantia_id}) -%>
+    </td>
+  </tr>
+
+<% if clase == 'lista0'
+    clase = 'lista1'
+  else
+    clase = 'lista0'
+  end
+}
+  end %>
+
+</table>
+<br/>

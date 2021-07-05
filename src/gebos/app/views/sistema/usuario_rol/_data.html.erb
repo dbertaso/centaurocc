@@ -1,0 +1,14 @@
+<% rol = @rol if rol.nil? %>
+<td>
+  <%= rol.id.to_s + ' - ' + rol.nombre  %>
+</td>
+<td>
+  <%= rol.descripcion %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm =>I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :usuario_id => @usuario.id, :id => rol.id}) -%>
+</td>

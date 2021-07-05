@@ -1,0 +1,32 @@
+<div class="marco-titulo"><div><div>
+	<%= I18n.t('Sistema.Body.Vistas.General.modificando') %> <%= "#{I18n.t('Sistema.Body.General.beneficiario')} #{I18n.t('Sistema.Body.Vistas.General.juridico')}" %> <span class="titulo_modificar">'<%= @empresa.alias %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'clientes/cliente_empresa/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= form_title_edit @empresa_direccion.tipo_nombre %>
+
+  <%= render :partial=>'clientes/cliente_empresa_direccion/common/tabs' %>
+  <div class="marco-contenido2">
+    <%= error  %>
+    <%= message  %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :popup=>params[:popup], :empresa_id => @empresa.id, :id => @empresa_direccion.id } ) do -%>
+
+    <%= render :partial => 'form' %>
+
+    <div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit :empresa_id => @empresa.id, :popup=>params[:popup] %>
+    </div>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :action => :index, :popup=>params[:popup], :empresa_id => @empresa.id },
+      { :id=>'button_close', } ) -%>
+
+    <% end -%>
+  </div>
+</div>

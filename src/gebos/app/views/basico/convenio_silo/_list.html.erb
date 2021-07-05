@@ -1,0 +1,30 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+    <th style="width: 80px" <%= sort_class_helper('convenio_silo.fecha_memorandum') %>>
+      <%= sort_link_helper  I18n.t('Sistema.Body.Vistas.General.fecha'), 'convenio_silo.fecha_memorandum', 'list' %>
+    </th>
+    <th style="width: 80px" <%= sort_class_helper('convenio_silo.numero_memorandum') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.numero_memorandum'), 'convenio_silo.numero_memorandum', 'list' %>
+    </th>
+    <th style="width: 80px" <%= sort_class_helper('convenio_silo.ciclo_productivo_id') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.ciclo_productivo'), 'convenio_silo.ciclo_productivo_id', 'list' %>
+    </th>
+    <th style="width: 50px" <%= sort_class_helper('convenio_silo.status') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.status'), 'convenio_silo.status', 'list' %>
+    </th>
+    <th style="width: 10px">
+      <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+    </th>
+  </tr>
+</thead>
+<tbody id="list_body">
+  <%
+  even_odd = 1
+  for convenio_silo in @list
+    even_odd = 1 - even_odd %>
+    <%= render :partial => 'row', :locals => { :convenio_silo => convenio_silo, :even_odd => even_odd } -%>
+  <% end %>
+</tbody>
+</table>
+<%= form_pagination %>

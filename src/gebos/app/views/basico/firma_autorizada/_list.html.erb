@@ -1,0 +1,27 @@
+<table class="lista" style="width: 100%">
+    <thead>
+    <tr>
+      <th style="width: 290px" <%= sort_class_helper('firma_autorizada.cargo.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cargo'), 'firma_autorizada.cargo.descripcion', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('firma_autorizada.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'firma_autorizada.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('firma_autorizada.cedula') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cedula'), 'firma_autorizada.cedula', 'list' %>
+      </th> 
+      <th style="width: 70px">
+      <%= I18n.t('Sistema.Body.Vistas.General.cedula')%>
+      </th>
+    </tr>   
+    </thead>
+    <tbody id="list_body">
+<%  
+  even_odd = 1
+  for firma_autorizada in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :firma_autorizada => firma_autorizada, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

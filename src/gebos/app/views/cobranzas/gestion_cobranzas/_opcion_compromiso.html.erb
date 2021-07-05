@@ -1,0 +1,44 @@
+
+  <table>
+
+    <tr>
+      <td style="width: 180px">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.motivo_atraso') %>
+        </label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+        </label>
+      </td>
+      <td>
+        <%= select(
+        'telecobranzas', 'motivos_atraso_id',
+        @motivo_atraso.map{|c| [c.descripcion, c.id]},
+        { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+        </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 35%" valign="top">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.compromiso')%>:
+          <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+        </label>
+      </td>
+      <td colspan="2">
+        <%= radio_button 'telecobranzas', 'senal_compromiso',
+                         'true', :class=>'text',
+                          :onclick=>'inputChange(); mostrar_compromisos(); limpiar_compromiso_pagos();'  -%>
+        <%= I18n.t('Sistema.Body.General.si') %>
+        <br />
+
+        <%= radio_button 'telecobranzas', 'senal_compromiso',
+                         'false', :class=>'text',
+                         :onclick=>'inputChange(); mostrar_compromisos(); limpiar_compromiso_pagos();'  -%>
+        <%= I18n.t('Sistema.Body.General.negacion') %>
+      </td>
+
+    </tr>
+  </table>
+

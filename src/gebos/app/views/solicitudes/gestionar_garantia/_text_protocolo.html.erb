@@ -1,0 +1,9 @@
+<%= text_field 'solicitud_constitucion_garantia', 'etiqueta_protocolo',
+  :class=>'text', :style=>'width: 130px',
+  :maxlength=>'30', :onkeypress=>'inputChange();',
+  :onchange=>'inputChange();'  -%><label>:</label> <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>I18n.t('Sistema.Body.Controladores.Accion.deshacer')),
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :id=>'button_enviar',
+  :onclick=>'if (varEnviado) { return false; } else {varEnviado = true;}',
+  :url => {:action => :etiqueta_folio, :id =>6}) -%>

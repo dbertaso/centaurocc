@@ -1,0 +1,27 @@
+<div class="marco-titulo"><div><div>
+      <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.modificando_informacion_visita')%> <span style="color: #FF0000">'<%= @full_info %>'</span>
+    </div></div></div>
+<div id="contenedor_principal">
+  <%= render :partial=>'visitas/visita_pastizales_potreros/common/tabs' %>
+  <div class="marco-contenido">
+    <%= error  %>
+    <%= message  %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :popup=>params[:popup], :id => @visitas.id } ) do -%>
+
+      <%= render :partial => 'form' %>
+
+      <div id="buttons_edit" style="display: none">
+        <%= form_buttons_edit :action => :index, :controller => 'visita_seguimiento', :popup=>params[:popup], :id => @visitas.solicitud.id %>
+      </div>
+
+      <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+        { :action => :index, :controller => 'visita_seguimiento', :popup=>params[:popup], :id => @visitas.solicitud.id },
+        { :id=>'button_close', } ) -%>
+
+    <% end -%>
+  </div>
+
+</div>

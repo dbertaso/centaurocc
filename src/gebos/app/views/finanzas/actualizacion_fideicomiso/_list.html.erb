@@ -1,0 +1,38 @@
+ <table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 160px" <%= sort_class_helper('tipo_nota_text') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.nota'), 'tipo_nota_text', 'list' %>
+      </th>
+    </tr>
+    <tr>
+      <th style="width: 100px" <%= sort_class_helper('modo_nota') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.modo'), 'modo_nota', 'list' %>
+      </th>
+    
+      <th style="width: 100px" <%= sort_class_helper('motivo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.motivo'), 'motivo', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('sub_cuenta_banco') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.banco'), 'sub_cuenta_banco', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('sub_cuenta_insumos') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.insumos'), 'sub_cuenta_insumos', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('sub_cuenta_gastos') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.gastos'), 'sub_cuenta_gastos', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('sub_cuenta_sras') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sras'), 'sub_cuenta_sras', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('comision') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.comision'), 'comision', 'list' %>
+      </th>
+      <th style="width: 40px">
+        <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+ </table>
+
+<%= form_pagination %>

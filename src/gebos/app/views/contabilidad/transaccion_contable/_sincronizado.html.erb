@@ -1,0 +1,9 @@
+<%= format_bool @transaccion_contable.sincronizado -%>
+<% if !@transaccion_contable.sincronizado %>
+	<%= link_to_remote(
+		image_tag('sincronizar.gif'),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	  :confirm => "¿Está usted seguro que desea sincronizar esta transacción?",
+		:url => {:action => :sincronizar, :id => @transaccion_contable.id}) -%>
+<% end %>

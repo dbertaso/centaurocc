@@ -1,0 +1,5 @@
+<%= select(
+  'unidad_produccion', 'parroquia_id',
+  @parroquia_list.map{|m| [m.nombre, m.id]},
+  { },
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

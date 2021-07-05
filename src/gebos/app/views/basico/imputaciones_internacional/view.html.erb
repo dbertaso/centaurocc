@@ -1,0 +1,74 @@
+<%= render :partial=>'basico/imputaciones_maquinaria/common/tabs' %>
+<br/>
+<%= form_title_view @imputaciones_maquinaria.fecha_registro_f %>
+<br/>
+<div class="marco-contenido">
+  <table style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span>Maquinaria Internacional </span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Gastos Administrativos</label>
+      </td>
+      <td>
+        <%gastAd = sprintf('%01.2f', @imputaciones_maquinaria.gastos_administrativos).sub('.', ',')%> <%=gastAd.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Seguro Internacional</label>
+      </td>
+      <td>
+        <%segInt = sprintf('%01.2f', @imputaciones_maquinaria.seguro_internacional).sub('.', ',')%> <%=segInt.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Flete Internancional</label>
+      </td>
+      <td>
+        <%fletInt = sprintf('%01.2f', @imputaciones_maquinaria.flete_internacional).sub('.', ',')%> <%=fletInt.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Impuestos de Nacionalizaci&oacute;n</label>
+      </td>
+      <td>
+        <%nacImp = sprintf('%01.2f', @imputaciones_maquinaria.nacionalizacion_impuestos).sub('.', ',')%> <%=nacImp.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Almacenamiento</label>
+      </td>
+      <td>
+        <%almace = sprintf('%01.2f', @imputaciones_maquinaria.almacenamiento).sub('.', ',')%> <%=almace.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Observaci&oacute;n</label>
+      </td>
+      <td>
+        <%= text_area 'imputaciones_maquinaria', 'observacion', :class=>'text', :style=>'width: 320px; height: 60px', 
+          :readonly=>'true' -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Fecha Reg&iacute;stro</label>
+      </td>
+      <td>
+        <%= @imputaciones_maquinaria.fecha_registro_f unless @imputaciones_maquinaria.fecha_registro_f.nil? -%>
+      </td>
+    </tr>
+  </table>
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => 'index' },
+    { :id=>'button_close' } ) -%>
+
+</div>

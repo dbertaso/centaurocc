@@ -1,0 +1,24 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 550px" <%= sort_class_helper('tipo_garantia.nombre') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre', 'tipo_garantia.nombre', 'recaudo_list' %>
+    </th>
+  </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+      even_odd = 1
+      for programa_tipo_garantia in @list
+        even_odd = 1 - even_odd %>
+
+        <tr class="lista<%= even_odd %>" id="row_<%= programa_tipo_garantia.id %>">
+                  <td>
+                    <%= programa_tipo_garantia.tipo_garantia.nombre  %>
+                  </td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

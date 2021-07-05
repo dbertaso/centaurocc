@@ -1,0 +1,175 @@
+<% pastizales_potreros = @pastizales_potreros if pastizales_potreros.nil? %>
+<td colspan="2">
+<table>
+  <tr>
+    <td colspan="2" align="center">
+      <label style="color: red"> *** ***
+    <td>  
+  </tr>
+  <tr>
+          <td style="width: 300px">
+             <label>Nro Lote </label>
+          </td>
+          <td style="width: 650px">
+
+            <label style="color: red"><%= pastizales_potreros.nro_lote unless pastizales_potreros.nro_lote.nil? %></b></label>
+
+
+          </td>
+	</tr>
+    <tr>
+          <td>
+             <label>Tipo de Pasto Forraje </label>
+          </td>
+          <td>
+
+            <%= pastizales_potreros.TipoPastoForraje.descripcion unless pastizales_potreros.TipoPastoForraje.descripcion.nil? %>
+
+
+          </td>
+	</tr>
+    <tr>
+        <td>
+            <label>Superficie </label>
+        </td>
+        <td>
+
+              <%= pastizales_potreros.superficie unless pastizales_potreros.superficie.nil? %> (Ha)
+        </td>
+    </tr>
+
+
+    <tr>
+          <td>
+             <label>Especie y/o Variedades de Pasto </label>
+          </td>
+          <td>
+
+            <%= pastizales_potreros.EspecieVariedadPasto.descripcion unless pastizales_potreros.EspecieVariedadPasto.descripcion.nil? %>
+
+          </td>
+	</tr>
+ <!--   <tr>
+          <td>
+             <label>El Lote posee Sistema de Riego?</label>
+          </td>
+        <td>
+          <%= pastizales_potreros.sistema_riego_w unless pastizales_potreros.sistema_riego_w.nil? %>
+
+        </td>
+	</tr> -->
+    <tr>
+          <td>
+             <label>Fecha de Siembra </label>
+          </td>
+          <td >
+              <%= pastizales_potreros.fecha_siembra_f unless pastizales_potreros.fecha_siembra_f.nil? %>
+          </td>
+    </tr>
+    <tr>
+          <td>
+             <label>Fecha de Corte </label>
+          </td>
+          <td>
+              <%= pastizales_potreros.fecha_corte_f unless pastizales_potreros.fecha_corte_f.nil?  %>
+          </td>
+    </tr>
+    <tr>
+          <td>
+             <label>Condiciones de los Pastos</label>
+          </td>
+          <td>
+            <%= pastizales_potreros.condicion_pasto_w unless pastizales_potreros.condicion_pasto_w.nil? %>
+
+        </td>
+
+    </tr>
+    <tr>
+          <td>
+             <label>Nro. de Potreros con Cerca Eléctrica</label>
+          </td>
+          <td>
+            <%= pastizales_potreros.nro_potrero_cerca_electrica unless pastizales_potreros.nro_potrero_cerca_electrica.nil? -%>
+          </td>
+    </tr>
+    <tr>
+          <td>
+             <label>Nro. de Potreros con Cerca Tradicional</label>
+          </td>
+          <td>
+             <%= pastizales_potreros.nro_potrero_cerca_tradicional unless pastizales_potreros.nro_potrero_cerca_tradicional.nil? -%>
+          </td>
+	</tr>
+      <tr>
+    <tr>
+          <td>
+             <label>Cantidad de Potreros Asociados</label>
+          </td>
+          <td>
+              <%= pastizales_potreros.cantidad_potreros unless pastizales_potreros.cantidad_potreros.nil? -%>
+          </td>
+	</tr>
+
+    <tr>
+          <td>
+             <label>Cuantos Potreros con Cerca Eléctrica poseen Sistema de Riego?</label>
+          </td>
+          <td>
+            <%= pastizales_potreros.nro_potrero_cerca_electrica_sist_riego -%>
+          </td>
+    </tr>
+    <tr>
+          <td>
+             <label>Cuantos Potreros con Cerca Tradicional poseen Sistema de Riego?</label>
+          </td>
+          <td>
+             <%= pastizales_potreros.nro_potrero_cerca_tradicional_sist_riego -%>
+          </td>
+	</tr>
+
+    <tr>
+          <td>
+             <label>Total Potreros con Sistema de Riego</label>
+          </td>
+          <td>
+              <%= (pastizales_potreros.nro_potrero_cerca_electrica_sist_riego.to_i + pastizales_potreros.nro_potrero_cerca_tradicional_sist_riego.to_i) -%>
+          </td>
+	</tr>
+
+    <tr>
+        <td>
+             <label>El Productor Realiza Fertilización?</label>
+          </td>
+        <td>
+           <%= pastizales_potreros.fertilizacion_w unless pastizales_potreros.fertilizacion_w.nil? %>
+        </td>
+	</tr>
+    <tr>
+          <td>
+             <label>Tipo de Fertilización </label>
+          </td>
+          <td>
+            <%= pastizales_potreros.tipo_fertilizacion_w unless pastizales_potreros.tipo_fertilizacion_w.nil? %>
+          </td>
+	</tr>
+
+  <tr>
+    <td valign="top">
+        <label>Descripción de la Fertilización</label>
+    </td>
+
+    <td>
+          <%= pastizales_potreros.descripcion_fertilizacion unless pastizales_potreros.descripcion_fertilizacion.nil? -%>
+      </td>
+  </tr>
+  <tr>
+    <td valign="top">
+        <label>Descripción de lo Observado</label>
+    </td>
+
+    <td>
+          <%=  pastizales_potreros.descripcion_observado unless pastizales_potreros.descripcion_observado.nil? -%>
+      </td>
+  </tr>
+ </table>
+</td>

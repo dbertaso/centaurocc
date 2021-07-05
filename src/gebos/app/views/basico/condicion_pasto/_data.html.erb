@@ -1,0 +1,23 @@
+<% condicion_pasto= @condicion_pasto if condicion_pasto.nil? %>
+
+<td>
+	<%= condicion_pasto.nombre  %>
+</td>	
+<td>
+	<%= condicion_pasto.descripcion  %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(condicion_pasto.activo)  %>
+</td>
+<td style="text-align: right">
+	<%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title => I18n.t('Sistema.Body.Controladores.Accion.modificar')),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method =>:get,
+            :url => {:controller => 'condicion_pasto', :action => :edit, :id => condicion_pasto.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title => I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+            :loading =>'image_load()', :loaded => 'image_unload()',
+            :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+            :url => {:controller => 'condicion_pasto', :action => :delete, :id => condicion_pasto.id}) if vlink 'delete' -%>
+</td>
+

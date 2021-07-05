@@ -1,0 +1,50 @@
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+		<th style="width: 100px" <%= sort_class_helper('persona.cedula') %>>
+				<%= sort_link_helper 'Cédula', 'persona.cedula', 'list' %>
+			</th>
+			<th style="width: 215px" <%= sort_class_helper('persona.primer_nombre') %>>
+				<%= sort_link_helper 'Primer Nombre', 'persona.primer_nombre', 'list' %>
+			</th>
+			<th style="width: 215px" <%= sort_class_helper('persona.primer_apellido') %>>
+				<%= sort_link_helper 'Primer Apellido', 'persona.primer_apellido', 'list' %>
+			</th>
+			<th style="width: 90px" <%= sort_class_helper('empresa_integrante_tipo.tipo') %>>
+				<%= sort_link_helper 'Tipo', 'empresa_integrante_tipo.tipo', 'list' %>
+			</th>
+			<th style="width: 70px">
+			</th>
+
+	</tr>
+	</thead>
+	<tbody id="list_body">
+		<%  
+			even_odd = 1
+			for empresa_integrante_tipo in @list
+				even_odd = 1 - even_odd %>
+
+			<% empresa_integrante_tipo = @empresa_integrante_tipo if empresa_integrante_tipo.nil? %>
+			<tr class="lista<%= even_odd %>" id="row_<%= empresa_integrante_tipo.id %>">
+				<td>
+                	<%= empresa_integrante_tipo.empresa_integrante.persona.cedula %>
+                </td>
+                <td>
+                	<%= empresa_integrante_tipo.empresa_integrante.persona.primer_nombre %>
+                </td>
+                <td>
+                	<%= empresa_integrante_tipo.empresa_integrante.persona.primer_apellido %>
+                </td>
+                <td>
+                	<%= empresa_integrante_tipo.tipo_nombre %>
+                </td>
+                <td style="text-align: right">
+                	<%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), 
+                		:action => 'view_detail', :popup=>params[:popup], :empresa_id => @empresa.id, :id => empresa_integrante_tipo.id) %>&nbsp;
+                </td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<%= form_pagination %>

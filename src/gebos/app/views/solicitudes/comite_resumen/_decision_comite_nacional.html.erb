@@ -1,0 +1,60 @@
+<style type="text/css">
+  .decision_comite_aprobado{ color: #0B0B61;font-weight:bold; }
+  .decision_comite_rechazado{ color:#D50000;font-weight:bold; }
+  .decision_comite_diferido{ color:#ff6000;font-weight:bold; }
+</style>
+
+<div class="marco-contenido">
+<%= error %>
+  <%= message %>
+<div id="error_decision_comite" style=" display: none; ">
+  <div id="errorExplanation" class="errorExplanation">
+    <h2>I18n.t('Sistema.Body.Vistas.ComiteNacional.Mensajes.lista_errores_nacional')%></h2>
+    <p><%=I18n.t('Sistema.Body.Vistas.ComiteNacional.Mensajes.hubo_errores')%></p>
+    <ul>      
+      <li id="error_solicitud"  style="display:none"><%=I18n.t('Sistema.Body.Vistas.ComiteNacional.Errores.error_solicitudes')%></li>
+      <li id="error_tipo_decision" style="display:none"><%=I18n.t('Sistema.Body.Vistas.ComiteNacional.Errores.error_decision')%></li>
+    </ul>
+  </div>
+</div>
+
+  <form id="form_decision_comite">
+    <table width="100%" border="0">
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.decision')%></label></td>
+        <td>
+          <table border="0" width="100%">
+            <tr>
+              <td width="5%">
+                <%=radio_button_tag('tipo_decision', "A",false, {:onclick=>'addClassDecision(this);'})-%>
+              </td>
+              <td width="20%"><span id="decision_aprobado"><%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></span></td>
+              <td width="5%">
+                <%=radio_button_tag('tipo_decision', "R",false, {:onclick=>'addClassDecision(this);'})-%>
+              </td>
+              <td width="20%"><span id="decision_rechazado"><%=I18n.t('Sistema.Body.General.rechazado')%></span></td>
+              <td width="5%">
+                <%=radio_button_tag('tipo_decision', "D",false, {:onclick=>'addClassDecision(this);'})-%>
+              </td>
+              <td width="20%"><span id="decision_diferido"><%=I18n.t('Sistema.Body.General.diferido')%></span></td>
+              <td width="25%"></td>
+          </tr>
+          </table>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.General.comentario')%></label></td>
+        <td>
+          <%= text_field_tag( 'comentario', nil,{:class=>'text', :maxlength=>'',:style=>'width: 500px'} ) -%>
+        </td>
+        <td>
+          <%= image_tag(I18n.t('Sistema.Body.Imagenes.aplicar'),:onclick=>"inputChange();enviar_decision_comite('n','#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro_enviar_tramite')}','#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.se_enviaron_tramite_con_exito')}');") -%>
+        </td>
+      </tr>
+    </table>
+    <input id="decision_solicitud_id" name="decision_solicitud_id" type="hidden" />
+  </form>
+</div>
+
+<br/>

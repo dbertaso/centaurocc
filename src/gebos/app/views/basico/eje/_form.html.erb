@@ -1,0 +1,16 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+	<tr>
+		<td style="width: 110px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'eje', 'nombre', :class=>'text', :style=>'width: 500px', :maxlength=>'50'  -%>
+                      
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2" style="text-align: left">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>

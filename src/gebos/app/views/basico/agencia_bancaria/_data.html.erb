@@ -1,0 +1,32 @@
+<% agencia_bancaria = @agencia_bancaria if agencia_bancaria.nil? %>
+<td>
+  <%= agencia_bancaria.codigo  %>
+</td>
+<td>
+  <%= agencia_bancaria.entidad_financiera.nombre  %>
+</td>
+<td>
+  <%= agencia_bancaria.nombre  %>
+</td>
+<td>
+  <%= agencia_bancaria.Estado.nombre unless agencia_bancaria.estado_id.nil? %>
+</td>
+<td>
+  <%= agencia_bancaria.Municipio.nombre unless agencia_bancaria.municipio_id.nil? %>
+</td>
+<td>
+  <%= agencia_bancaria.Ciudad.nombre unless agencia_bancaria.ciudad_id.nil? %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(agencia_bancaria.activo)  %>
+</td> 
+<td style="text-align: right">
+  <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), :action => 'view', :id => agencia_bancaria.id %>&nbsp;
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))), :action => 'edit', :id => agencia_bancaria.id) if vlink 'edit' %>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'agencia_bancaria', :action => :delete, :id => agencia_bancaria.id}) if vlink 'delete' -%>
+</td>

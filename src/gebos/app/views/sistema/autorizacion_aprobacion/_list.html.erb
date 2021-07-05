@@ -1,0 +1,44 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 10%" <%= sort_class_helper('creacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.solicitado'), 'creacion', 'list' %>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('vencimiento') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.vence'), 'creacion', 'list' %>
+      </th>
+      <th style="width: 20%" <%= sort_class_helper('accion.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.accion'), 'accion.nombre', 'list' %>
+      </th>
+      <th style="width: 20%" <%= sort_class_helper('descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'descripcion', 'list' %>
+      </th>
+      <th style="width: 10%">
+        <%=  I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.nombre_cliente')%>
+      </th>
+      <th style="width: 10%">
+        <%=  I18n.t('Sistema.Body.Vistas.General.monto')%>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('usuario.nombre_usuario') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.usuario_solicitante'), 'usuario.nombre_usuario', 'list' %>
+      </th>
+      <th style="width: 5%">
+        <%=  I18n.t('Sistema.Body.Vistas.General.estado')%>
+      </th>
+      <th style="width: 5%">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for autorizacion in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :autorizacion => autorizacion, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

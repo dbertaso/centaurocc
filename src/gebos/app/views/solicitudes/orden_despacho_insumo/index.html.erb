@@ -1,0 +1,668 @@
+<script type="text/javascript">
+  //var global;
+  var total1="234434";
+  var totalizo=0;
+  function total_registros()
+  {
+    
+    var condicion="solicitud_id > 0 and tipo_pago_casa_proveedora='1'";
+    var estado = document.getElementById("estado_id_").value;
+    var oficina = document.getElementById("oficina_id_").value;
+    var casa = document.getElementById("casa_proveedora_id_").value;
+    var cuenta = document.getElementById("cuenta_bcv_fondas_otro_").value;
+    var numero = document.getElementById("numero").value;
+    var estatus_orden = document.getElementById("estatus_orden_id_").value;
+    var fecha_desde= document.getElementById("fecha_desde").value;
+    var fecha_hasta= document.getElementById("fecha_hasta").value;
+    var entidad_financiera_id = document.getElementById("id_entidad_financiera_").value;
+
+
+    if (estado!='') {
+      condicion+=" and estado_id="+estado;
+
+    }
+    if (oficina!='') {
+      condicion+=" and oficina_id="+oficina;
+
+    }
+     if (casa!='') {
+      condicion+=" and casa_proveedora="+casa;
+
+    }
+
+
+    if (estatus_orden!='') {
+      condicion+=" and orden_despacho_id=°"+estatus_orden+"°";
+
+    }
+
+     if ((fecha_desde!='') && (fecha_hasta!='')) {
+      
+    <%
+        if I18n.locale.to_s=="es" || I18n.locale.to_s=="fr" || I18n.locale.to_s=="ar" || I18n.locale.to_s=="cs" || I18n.locale.to_s=="da" || I18n.locale.to_s=="de" || I18n.locale.to_s=="fi" || I18n.locale.to_s=="hu" || I18n.locale.to_s=="it" || I18n.locale.to_s=="ru" ||  I18n.locale.to_s=="nl" || I18n.locale.to_s=="pl" || I18n.locale.to_s=="pt" || I18n.locale.to_s=="sl" || I18n.locale.to_s=="sv"%>
+        
+          fecha_desde = fecha_desde.substr(6,4) + '-' + fecha_desde.substr(3,2) + '-' + fecha_desde.substr(0,2);
+
+          fecha_hasta = fecha_hasta.substr(6,4) + '-' + fecha_hasta.substr(3,2) + '-' + fecha_hasta.substr(0,2);
+
+
+        <%elsif I18n.locale.to_s=="ja"        %>
+          
+          fecha_desde = fecha_desde.substr(0,4) + '-' + fecha_desde.substr(5,2) + '-' + fecha_desde.substr(8,2);
+
+          fecha_hasta = fecha_hasta.substr(0,4) + '-' + fecha_hasta.substr(5,2) + '-' + fecha_hasta.substr(8,2);             
+        
+        <%else%>
+          
+          fecha_desde = fecha_desde.substr(6,4) + '-' + fecha_desde.substr(0,2) + '-' + fecha_desde.substr(3,2);
+
+          fecha_hasta = fecha_hasta.substr(6,4) + '-' + fecha_hasta.substr(0,2) + '-' + fecha_hasta.substr(3,2);             
+        
+        <%end             %>
+
+      condicion+=" and ( fecha_factura between '"+fecha_desde+"' and '"+fecha_hasta+"')";
+
+    }
+
+    if ((fecha_desde=='') && (fecha_hasta!='')) {
+      
+      <%
+        if I18n.locale.to_s=="es" || I18n.locale.to_s=="fr" || I18n.locale.to_s=="ar" || I18n.locale.to_s=="cs" || I18n.locale.to_s=="da" || I18n.locale.to_s=="de" || I18n.locale.to_s=="fi" || I18n.locale.to_s=="hu" || I18n.locale.to_s=="it" || I18n.locale.to_s=="ru" ||  I18n.locale.to_s=="nl" || I18n.locale.to_s=="pl" || I18n.locale.to_s=="pt" || I18n.locale.to_s=="sl" || I18n.locale.to_s=="sv"%>
+        
+          
+          fecha_hasta = fecha_hasta.substr(6,4) + '-' + fecha_hasta.substr(3,2) + '-' + fecha_hasta.substr(0,2);
+
+
+        <%elsif I18n.locale.to_s=="ja"        %>
+          
+          
+          fecha_hasta = fecha_hasta.substr(0,4) + '-' + fecha_hasta.substr(5,2) + '-' + fecha_hasta.substr(8,2);             
+        
+        <%else%>
+          
+          
+          fecha_hasta = fecha_hasta.substr(6,4) + '-' + fecha_hasta.substr(0,2) + '-' + fecha_hasta.substr(3,2);             
+        
+        <%end             %>
+    
+
+
+      condicion+=" and ( fecha_factura <='"+fecha_hasta+"')";
+
+    }
+
+
+    if ((fecha_desde!='') && (fecha_hasta=='')) {
+      
+      <%
+        if I18n.locale.to_s=="es" || I18n.locale.to_s=="fr" || I18n.locale.to_s=="ar" || I18n.locale.to_s=="cs" || I18n.locale.to_s=="da" || I18n.locale.to_s=="de" || I18n.locale.to_s=="fi" || I18n.locale.to_s=="hu" || I18n.locale.to_s=="it" || I18n.locale.to_s=="ru" ||  I18n.locale.to_s=="nl" || I18n.locale.to_s=="pl" || I18n.locale.to_s=="pt" || I18n.locale.to_s=="sl" || I18n.locale.to_s=="sv"%>
+        
+          fecha_desde = fecha_desde.substr(6,4) + '-' + fecha_desde.substr(3,2) + '-' + fecha_desde.substr(0,2);
+          
+
+        <%elsif I18n.locale.to_s=="ja"        %>
+          
+          fecha_desde = fecha_desde.substr(0,4) + '-' + fecha_desde.substr(5,2) + '-' + fecha_desde.substr(8,2);
+          
+        <%else%>
+          
+          fecha_desde = fecha_desde.substr(6,4) + '-' + fecha_desde.substr(0,2) + '-' + fecha_desde.substr(3,2);
+          
+        <%end             %>
+    
+
+      condicion+=" and ( fecha_factura >= '"+fecha_desde+"')";
+
+    }
+
+    if (numero!='') {
+      condicion+=" and numero=·"+numero+"·";
+
+    }
+
+
+    document.getElementById("escon").value=condicion;    
+     document.getElementById("parametros_div").value = condicion;
+     //document.getElementById("total_registros").innerHTML="  ";
+
+    return condicion;
+  }
+
+
+
+function validacion(){
+
+var mensaje="<%=I18n.t('Sistema.Body.Modelos.Desembolso.Errores.posee_errores_en_los_siguientes_campos')%>: \n\n";
+var errores=true;
+
+if (document.getElementById("id_entidad_financiera_").value==''){
+errores=false;
+mensaje+="<%=I18n.t('Sistema.Body.Modelos.Desembolso.Errores.no_ha_seleecionado_entidad_financiera')%> \n";
+}
+if (document.getElementById("cuenta_bcv_fondas_otro_").value==''){
+errores=false;
+mensaje+="<%=I18n.t('Sistema.Body.Modelos.Desembolso.Errores.no_ha_seleecionado_cuenta_fondas')%> \n";
+}
+
+if (document.getElementById("fecha_valor").value==''){
+errores=false;
+mensaje+="<%=I18n.t('Sistema.Body.Modelos.Desembolso.Errores.no_ha_seleecionado_fecha_valor')%> \n";
+}
+
+
+
+if (!errores){
+alert(mensaje);
+}else{
+
+document.getElementById('segundo_form').onsubmit="new Ajax.Request('/solicitudes/orden_despacho_insumo/preparar_transferencia', {asynchronous:true, evalScripts:true, onLoaded:function(request){Element.hide('loading')}, onLoading:function(request){Element.show('loading')}, parameters:Form.serialize(this)}); return false;";
+
+document.getElementById('segundo_form').action="/solicitudes/orden_despacho_insumo/preparar_transferencia";
+
+document.getElementById('segundo_form').submit();
+
+}
+
+return errores;
+}
+
+
+function muestro(){
+
+var seleccionados=0,contador=0;
+
+var arreglo=(document.getElementById('cuenta_id1').value).split(',');
+
+while(seleccionados<arreglo.length){
+if (arreglo[seleccionados]!=''){
+contador=contador+1;
+}
+seleccionados=seleccionados+1;
+}
+
+if (contador!=0){
+document.getElementById('boton_seleccion').style.visibility="visible";
+}else{
+document.getElementById('boton_seleccion').style.visibility="hidden";
+document.getElementById('cuenta_id').value='';
+document.getElementById('cuenta_id1').value='';
+}
+
+document.getElementById("segun_seleccionado").innerHTML=contador;
+
+
+}
+   
+
+
+
+
+function formatCurrency2(num) {
+   
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+   
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+    
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+"<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>"+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + "<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>" + cents);
+    //$(name + '_display').innerHTML = numero;
+    
+    return numero;
+}
+
+
+function substr_count(string,substring,start,length)
+{
+ var c = 0;
+ if(start) { string = string.substr(start); }
+ if(length) { string = string.substr(0,length); }
+ for (var i=0;i<string.length;i++)
+ {
+  if(substring == string.substr(i,substring.length))
+  c++;
+ }
+ return c;
+}
+
+
+
+function suma_divs(){
+// se recorre todos los textfield y se pone el resultado en el div resultado_suma
+
+totalizo=0;
+var contador=0.0;
+
+
+if ($('todos').checked){
+var contenido=$('content');
+var capas=contenido.getElementsByTagName('span');
+
+
+for (i=0;i<capas.length;i++){
+
+if (substr_count(capas.item(i).id,"monto_factura_tabla_")!=0 ){
+if(capas.item(i).innerHTML!=''){
+
+
+
+contador=parseFloat(contador) + parseFloat(replaceAll(replaceAll(capas.item(i).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+}
+
+}
+
+
+
+//sAux += "NOMBRE: " + frm.elements[i].name;
+//sAux += “TIPO : ” + frm.elements[i].type;
+//sAux += “VALOR: ” + frm.elements[i].value + “\n” ;
+}
+
+$('resultado_suma').innerHTML = formatCurrency2(contador);
+//$('resultado_suma_divs').innerHTML = contador.toFixed(2).toString().replace('.',',');
+}else{
+
+$('resultado_suma').innerHTML = formatCurrency2(0);//"0,00";
+}
+
+}
+
+
+function replaceAll(text, search, newstring ){
+    /*while (text.toString().indexOf(search) != -1)
+        text = text.toString().replace(search,newstring);
+    return text;*/
+    //solo funciona con cadenas donde el reemplazo sea de tamaño uno
+    var i=0;
+    var text_aux='';
+    while (i<text.toString().length){
+     if (search==text.toString().charAt(i)){
+      text_aux+= text.toString().charAt(i).replace(search,newstring);
+     }else{
+      text_aux+= text.toString().charAt(i);
+     }
+     i++;
+    }
+return text_aux;
+}
+
+
+function suma_monto_facturado_uno(elemento,lo){
+var valor;
+
+
+if ($('todos').checked){
+
+
+if ( elemento.checked){
+
+valor=parseFloat(replaceAll(replaceAll($('resultado_suma').innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+valor=valor+parseFloat(replaceAll(replaceAll(document.getElementById('monto_factura_tabla_'+lo).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+//totalizo+=valor;
+
+//$('resultado_suma').innerHTML = formatCurrency2(totalizo);
+$('resultado_suma').innerHTML = formatCurrency2(valor);
+
+}else{
+
+valor=parseFloat(replaceAll(replaceAll($('resultado_suma').innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+valor=valor-parseFloat(replaceAll(replaceAll(document.getElementById('monto_factura_tabla_'+lo).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+//totalizo-=valor;
+
+//$('resultado_suma').innerHTML = formatCurrency2(totalizo);
+$('resultado_suma').innerHTML = formatCurrency2(valor);
+
+
+}
+
+
+
+}else{
+
+if ( elemento.checked){
+
+if (($('resultado_suma').innerHTML==formatCurrency2(0)/*"0,00"*/) || ($('resultado_suma').innerHTML=="")){
+
+
+
+valor=parseFloat(replaceAll(replaceAll(document.getElementById('monto_factura_tabla_'+lo).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+
+}else{
+valor=parseFloat(replaceAll(replaceAll($('resultado_suma').innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+valor=valor+parseFloat(replaceAll(replaceAll(document.getElementById('monto_factura_tabla_'+lo).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+}
+
+//valor=parseFloat(replaceAll(replaceAll(document.getElementById('monto_factura_tabla_'+lo).innerHTML,'.',''),',','.'));
+
+//totalizo+=valor;
+
+//$('resultado_suma').innerHTML = formatCurrency2(totalizo);
+$('resultado_suma').innerHTML = formatCurrency2(valor);
+
+}else{
+
+if (($('resultado_suma').innerHTML==formatCurrency2(0)/*"0,00"*/) || ($('resultado_suma').innerHTML=="")){
+valor=parseFloat(replaceAll(replaceAll(document.getElementById('monto_factura_tabla_'+lo).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+
+}else{
+valor=parseFloat(replaceAll(replaceAll($('resultado_suma').innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+valor=valor-parseFloat(replaceAll(replaceAll(document.getElementById('monto_factura_tabla_'+lo).innerHTML,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>',''),'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>','.'));
+}
+
+//valor=parseFloat(replaceAll(replaceAll(document.getElementById('monto_factura_tabla_'+lo).innerHTML,'.',''),',','.'));
+
+//totalizo-=valor;
+
+//$('resultado_suma').innerHTML = formatCurrency2(totalizo);
+$('resultado_suma').innerHTML = formatCurrency2(valor);
+
+}
+
+}//if de todos.checked
+
+}
+
+</script>
+
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+
+<div class="marco-contenido">
+
+  
+       <%= error %>
+       <%= message %>
+  
+  
+<%= form_title_search %>
+ 
+   <div  id="generar_archivo" style="width: 100%;" > 
+
+
+
+     <%= form_remote_tag(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method => :get,
+          :url => { :action => :list },
+          :html => {:id => 'segundo_form' } ) do-%>
+
+      <table   >
+<tr><td class="separador" valign="bottom" colspan="2"><span><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.filtros_para_desembolso')%></span></td></tr>
+        <%= hidden_field_tag 'parametros_div',''%>
+        <%= hidden_field_tag 'escon',''%>
+        <%= hidden_field_tag 'otra_condicion'," and tipo_pago_casa_proveedora='1'"%>
+        <tr>
+          <td style="width: 280px">
+            <label><%="#{I18n.t('Sistema.Body.Vistas.General.seleccione')} #{I18n.t('Sistema.Body.Vistas.General.banco')}"%> (<%=(I18n.t('Sistema.Body.General.fondas')).upcase%>)</label>
+          </td>
+          <td>
+             <% entidad_financiera_onchange = remote_function(
+               :loading =>'image_load()',
+               :loaded => 'image_unload()',
+               :method=>:get,
+               :url=>{:controller=>'orden_despacho_insumo',
+               :action=>:entidad_financiera_change },
+               :with=>"'id='+value") %>
+
+               <%= select('id_entidad_financiera', '',
+                      @entidad_financiera_select.map{|i| [i.nombre, i.id]},
+                      { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                      { :class=>'select',:onchange=>entidad_financiera_onchange + ';inputChange();' } ) %>             
+               
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 150px">
+            <label><%="#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.General.fondas')}"%></label>
+          </td>
+          <td>
+            
+            <div id="cuenta_bcv-select">
+           <%= render :partial => 'cuenta_bcv_select' %>
+            </div>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="width: 150px">
+            <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.valor')}"%></label>
+          </td>
+          <td>              
+              <%= calendar_date_select_tag "fecha_valor", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date > (new Date()).stripTime()-1" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+          </td>
+        </tr>
+<tr><td class="separador" valign="bottom" colspan="2"><span><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.filtros_para_orden_despacho')%></span></td></tr>
+
+       <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+        <td>
+
+             <% estado_onchange = remote_function(
+               :loading =>'image_load()',
+               :loaded => 'image_unload()',
+               :method=>:get,
+               :url=>{:controller=>'orden_despacho_insumo',
+               :action=>:estado_change },
+               :with=>"'id='+value+'&tipo_p=1'") %>
+
+                <%= select('estado_id', '',
+                      @estado.map{|i| [i.nombre, i.id]},
+                      { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                      { :class=>'select',:onchange=>estado_onchange + ';inputChange();' } ) %>
+ 
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.oficina')%></label>
+        </td>
+
+  
+        <td>
+            <div id="oficina-select">
+           <%= render :partial => 'oficina_select', :locals => {:tipo=>params[:tipo]} %>
+            </div> 
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 60px">
+          <label> <%=I18n.t('Sistema.Body.Vistas.Form.estatus')%> <%=I18n.t('Sistema.Body.ModalidadPago.orden_despacho')%></label>
+	</td>
+	<td>
+           <%= select(
+                  'estatus_orden_id', '',
+                  @estatus_list.map{|c| [c.nombre, c.id]},
+                 {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                  { :class=>'select',:style=>'width:240px', :onchange=> 'inputChange();' } ) %>
+
+        </td>
+      </tr>
+      
+      
+      <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title')%></label>
+        </td>
+
+  
+        <td>
+            <div id="casa-proveedora-select">
+           <%= render :partial => 'casa_proveedora_select', :locals => {:tipo=>params[:tipo]} %>
+            </div>
+
+            
+        </td>
+        <td></td>
+      </tr>
+
+
+      <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cuenta_bancaria_casa_proveedora')%></label>
+        </td>
+  
+        <td>
+            <div id="cuenta-casa-proveedora-select">
+           <%= render :partial => 'cuenta_casa_proveedora_select' %>
+            </div>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 150px">
+          <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.banco_cuenta_bancaria_casa_proveedora')%></label>
+        </td>
+  
+        <td>
+            <div id="banco-cuenta-casa-proveedora-select">
+           <%= render :partial => 'banco_cuenta_casa_proveedora_select' %>
+            </div>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px',:onkeypress=>' return NumberKey(event);'  %>
+        </td>
+      </tr>
+
+
+        <tr>
+          <td style="width: 150px">
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_desde')%></label>
+          </td>
+          <td>              
+              
+              <%= calendar_date_select_tag "fecha_desde", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+          </td>
+        </tr>
+
+
+
+        <tr>
+          <td style="width: 150px">
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_hasta')%></label>
+          </td>
+          <td>              
+              
+              <%= calendar_date_select_tag "fecha_hasta", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date > (new Date()).stripTime()-1" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+              
+          </td>
+        </tr>
+
+
+
+        <tr>
+          <td style="width: 150px">
+            <label><%="#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.archivo')}"%></label>
+          </td>
+          <td>
+
+            <input type="radio" name="txt" value="txt" checked="checked"><%=I18n.t('Sistema.Body.Vistas.General.generar')%> .TXT
+            <input type="radio" name="txt" value="excel"> <%=I18n.t('Sistema.Body.Vistas.General.generar')%> Excel (.CSV)
+
+                   
+          </td>
+
+        </tr>
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Modelos.Desembolso.Estatus.total_registro_segun_filtros')%></label>
+          </td>
+          <td>
+		<div id="orden_cantidad_total_filtro">
+		  <%= render :partial => 'cantidad_total_filtro' %>
+		</div>
+
+            <div id="total_registros"></div>
+         <input id="cuenta_id" name="items_id" type="hidden" value="" />
+	<input id="cuenta_id1" name="items_id1" type="hidden" value="" />
+
+
+          </td>
+        </tr> 
+        <tr>
+          <td >
+            <label><%=I18n.t('Sistema.Body.Modelos.Desembolso.Estatus.total_registro_segun_seleccion')%></label>
+          </td>
+          <td><div id="segun_seleccionado"></div></td>
+        </tr>
+
+        <tr>
+          <td >
+            <label><%=I18n.t('Sistema.Body.Vistas.ConsultaCuentaProyectado.Etiquetas.monto_total')%> <%=I18n.t('Sistema.Body.Vistas.General.facturado')%></label>
+          </td>
+          <td> <div id="resultado_suma"></div> </td>
+        </tr>
+
+
+<tr>
+<td><p></p></td>
+</tr>
+        <tr>
+        <% total_filter = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'orden_despacho_insumo',
+            :action=>:total_filtro },
+            :with=>"'consulta='+escon.value") %>
+            
+            
+      <td><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'), :onclick=> "document.getElementById('segun_seleccionado').innerHTML='';document.getElementById('resultado_suma').innerHTML='';document.getElementById('boton_filtro_mayor').style.visibility='visible';total_registros();"+total_filter)   -%></td>
+
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+
+          <td align="center" id="boton_filtro_mayor" style="visibility:hidden">
+       
+                <%= image_tag(I18n.t('Sistema.Body.Imagenes.boton_generar_filtro'),:onclick=>'javascript:if (validacion()){total_registros();}') %>
+
+          </td>
+          <td align="center" id="boton_seleccion" style="visibility:hidden">
+            <%= image_tag(I18n.t('Sistema.Body.Imagenes.boton_generar_seleccion'),:onclick=>'javascript:if (validacion()){total_registros();}') %>
+          </td>
+
+        </tr>
+      </table>
+<br><br>
+      <div id="list"></div>
+       <% end %>
+      </div> 
+
+   </div>
+</div>

@@ -1,0 +1,42 @@
+<% list = @list if list.nil? %>
+<div class="marco-contenido">
+
+	<%= form_remote_tag(
+                :confirm => 'Esta Seguro que desea cerrar el mes seleccionado? \n En caso de que se haya ejecutado un cierre previo, este será reemplazado por el nuevo cierre.',
+		:loading =>'Element.show("loading")',
+		:loaded => 'Element.hide("loading")',
+		  :url => { :action => :list } ) -%>
+			<table>
+			<tr>
+				<td style="width: 80px">
+					<label>Periodo</label>
+				</td>
+				<td style="width: 80px">
+				<%= select(
+			  		'mes_cierre_id','',
+			  		@meses_cierre_select,
+			   		{ :include_blank => false },
+			 		{ :class=>'select', :onchange=>'inputChange();' } ) %>
+				</td>
+				<td><%= image_submit_tag('boton_cerrar.gif', :title => 'Generar Cierre Financiero') -%></td>
+			</tr>
+		</table>
+	<%= end_form_tag %>
+        <div id='error'>
+  	  <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>
+        </div>
+        <%= error %>
+	<%= message %>
+<br>	
+	
+	
+	<div id="list">
+	<%= render :partial => 'list', :locals => {:list => list} -%>
+        </div>
+
+
+</div>
+<br></br>
+<div class="marco-contenido">
+
+</div> 

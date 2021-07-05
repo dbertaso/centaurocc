@@ -1,0 +1,47 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<%= message %>
+<%#= end_form_tag %>
+<%= form_remote_tag(
+	:loading =>'image_load()',
+	:loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.ComiteResumen.Mensajes.pregunta_regresar'),
+	:url => { :controller => 'consulta_visado', :action => :reversar, :id=>@solicitud.id } ) do-%>
+
+<div class="marco-contenido2">	
+	<table style="width: 100%">
+		<tr>
+			<td class="form-titulo" valign="bottom" colspan="2">
+				<span><%=I18n.t('Sistema.Body.Vistas.ComiteResumen.Mensajes.remitiendo_a_consideracion')%></span>
+				
+			</td>
+		</tr>
+	</table>
+	<table style="width: 100%">	
+		<tr>
+			<td style="width: 20%"><label><%=I18n.t('Sistema.Body.Vistas.General.observacion')%></label></td>
+			<td>
+				<%= text_area 'control_solicitud', 'comentario', 
+						:class=>'text', :style=>'width: 500px', :rows => 5,
+						:onkeypress=>'inputChange();' -%>
+	
+			</td>
+		</tr>	
+		<tr>
+			<td colspan="2" align="left">
+				<div id="botones1" ><br>
+					<%= image_submit_tag I18n.t('Sistema.Body.Imagenes.guardar'),
+					:id=>'button_save' -%>
+										
+					<%= link_to_remote(
+						image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+					  :loading =>'image_load()',
+				 	  :loaded => 'image_unload()',
+						:url => {:controller => 'consulta_visado', :action => :hide_no_visado, :id => @solicitud.id}) -%>&nbsp;	
+								
+				</div>	
+			</td>
+		</tr>
+	</table>
+</div>	
+	<% end -%>

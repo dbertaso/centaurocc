@@ -1,0 +1,46 @@
+<td align="center">
+	<%= view_liquidacion.numero_solicitud %>
+</td>
+<td align="center">
+	<%= view_liquidacion.numero_prestamo %>
+</td>
+<td align="center">
+	<%= view_liquidacion.numero_grupo %>
+</td>
+<td align="center">
+	<%= view_liquidacion.numero_coop %>
+</td>
+<td align="center">
+	<%= view_liquidacion.nombre %>
+</td>
+<td align="center">
+	<%= view_liquidacion.programa %>
+</td>
+<td align="center">
+	<%= view_liquidacion.origen_fondo %>
+</td>
+<td align="center">
+	<%= view_liquidacion.entidad_financiera %>
+</td>
+<td align="center">
+	<%= view_liquidacion.cuenta_bancaria %>
+</td>
+<td align="right">
+	<%= format_fm(view_liquidacion.monto_solicitado) %>
+</td>
+<td align="center">
+	<%= view_liquidacion.cuenta_matriz %>
+</td>
+<td align="center">
+	<%= image_tag('activo.gif') %>
+</td>
+<td style="text-align: right">
+   
+    <%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.reversar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+		:url => {:controller => '/solicitudes/diferimiento_renuncia', :action => :new_diferir, :id => view_liquidacion.solicitud_id}) if vlink 'Reversar' -%>
+    
+</td>
+<td align="center"><%= check_box_tag 'solicitud_id', view_liquidacion.solicitud_id, checked=false, :onClick=>'checkOne(this,form.todos);' %></td>

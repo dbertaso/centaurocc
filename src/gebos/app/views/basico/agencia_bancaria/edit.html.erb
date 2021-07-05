@@ -1,0 +1,23 @@
+<%= form_title_edit @agencia_bancaria.nombre %>
+    
+<div class="marco-contenido2">
+
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id=>@agencia_bancaria.id } ) -%>
+    <%= render :partial => 'form' %>
+    
+    <div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit %>
+    </div>
+    
+    <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+      { :action => :index },
+      { :id=>'button_close' } ) -%>
+    
+  <%= end_form_tag -%>
+</div>

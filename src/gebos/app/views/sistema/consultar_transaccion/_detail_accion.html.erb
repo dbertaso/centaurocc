@@ -1,0 +1,54 @@
+<tr id="row_accion_<%= @transaccion_accion.id %>_view">
+  <td valign="top" style="text-align: center">
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.img_colapsar')), :title=>I18n.t('Sistema.Body.Vistas.General.colapsar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => {:action => :collapse_accion, :transaccion_accion_id => @transaccion_accion.id}) -%>
+  </td>
+  <td colspan="4" style="padding-bottom: 10px">
+    <table class="lista" style="width: 100%">
+      <thead>
+        <tr>
+          <td colspan="2">
+            <label><%=I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.antes')%></label>
+          </td>
+          <td colspan="2">
+            <label><%=I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.despues')%></label>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <%  
+        even_odd = 1
+        if @antes.count > 0
+          for i in 0..(@antes.num_fields.to_i - 1)
+            even_odd = 1 - even_odd
+            modificado = false
+            unless @antes[0].blank? || @despues[0].blank?
+              if @antes[0][i] != @despues[0][i]
+                modificado = true
+              end
+            end
+          %>
+            <tr class="lista<%= even_odd %>" style="<%= 'background-color: #fffcaf' if modificado %>">
+              <td style="width: 25%">
+                <label><%= @antes.fname(i) unless @antes[0].blank? %></label>
+              </td>
+              <td style="width: 25%">
+                <%= @antes[0][i] unless @antes[0].blank?  %>
+              </td>
+              <td style="width: 25%">
+                <label><%= @despues.fname(i) unless @despues[0].blank?  %></label>
+              </td>
+              <td style="width: 25%">
+                <%= @despues[0][i] unless @despues[0].blank?  %>
+              </td>
+            </tr>
+          <%
+          end
+        end
+      %>
+      </tbody>
+    </table>
+  </td>
+</tr>

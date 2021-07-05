@@ -1,0 +1,47 @@
+<% boleta = @boleta_arrime if boleta.nil? %>
+
+<td align ="center">
+  <%= boleta.nro_solicitud %>
+</td>
+<td>
+  <%= boleta.nro_prestamo unless boleta.nro_prestamo.nil?  %>
+</td>
+<td>
+  <%= boleta.estado  %>
+</td>
+<td>
+  <%=boleta.municipio  %>
+</td>
+<td>
+  <%= boleta.cedula_rif  %>
+</td>
+<td>
+  <%= boleta.productor %>
+</td>
+<td>
+  <%= boleta.rubro %>
+</td>
+
+<td>
+  <%= boleta.actividad %>
+</td>
+
+<td>
+  <%= boleta.unidad_produccion %>
+</td>
+<td>
+  <% prestamo = Prestamo.find_by_numero(boleta.nro_prestamo) %>
+  <%= prestamo.estatus_w unless prestamo.nil? %>
+</td>
+<td style="text-align: center">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+    {:action => :view, :solicitud_id => boleta.solicitud_id, :controller => 'arrime'} )%>
+
+  <%#= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Editar'),
+    {:action => :index, :solicitud_id => boleta.solicitud_id, :productor => boleta.productor, :rubro_id => boleta.rubro_id,
+      :cliente_id => boleta.cliente_id, :nro_solicitud => boleta.nro_solicitud, :controller => 'boleta_arrime'} )%>
+<%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')),:title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :method=>:get, :url => {:controller => 'arrime', :action => :check, :solicitud_id => boleta.solicitud_id, 
+      :productor => boleta.productor, :rubro_id => boleta.rubro_id, :actividad_id => boleta.actividad_id, :cliente_id => boleta.cliente_id, 
+    :nro_solicitud => boleta.nro_solicitud}) if vlink 'edit' -%>
+</td>

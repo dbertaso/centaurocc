@@ -1,0 +1,23 @@
+<table>
+	<tr>
+		<td style="width: 60px">
+			<label><%= t('Sistema.Body.Vistas.CuentaContable.Etiquetas.codigo') %></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'cuenta_contable', 'codigo',
+			 :class=>'text', :style=>'width: 210px', :maxlength=>'25',
+			 :onkeypress=>'inputChange();' -%>
+		 <%= hidden_field 'cuenta_contable1', 'codigo_anterior',
+			 :value=>@cuenta_contable.codigo -%>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 60px">
+			<label><%= t('Sistema.Body.Vistas.CuentaContable.Etiquetas.nombre') %></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'cuenta_contable', 'nombre', :class=>'text', :style=>'width: 620px', :maxlength=>'255',
+			  :onkeypress=>'inputChange();' -%>
+		</td>
+	</tr>
+</table>

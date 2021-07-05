@@ -1,0 +1,6 @@
+<input type="hidden" name="solicitud_constitucion_garantia[etiqueta_tomo]" />
+<label><%= link_to_remote(I18n.t('Sistema.Body.Vistas.General.tomo'),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+          :url => {:action => :etiqueta_folio, :id => 3}) -%></label>

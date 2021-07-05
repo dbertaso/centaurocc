@@ -1,0 +1,275 @@
+<script>
+  var a = <%= @mostrar %>
+  a = a * 1
+  if (a != 0){
+    if (a == 1){
+      alert("<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Messages.fecha_cobranza') %>");
+      window.close();
+    }
+    if (a == 2){
+      alert("<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Messages.formato_fecha_incorrecto') %>");
+      window.close();
+    }
+    if (a == 4){
+      alert("<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Messages.no_hay_registro') %>");
+      window.close();
+    }
+    if (a == 5){
+      alert("<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Messages.fecha_igual') %>");
+      window.close();
+    }
+  
+  }
+  
+  function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+  }
+  function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+  }
+</script>
+<div text-align:center;>
+     <br/><br/>
+  <table align="center" width="1180px" border="1">
+    <tr>
+      <td style="width: 100%">
+        <table width="100%" border="0">
+          <tr>
+            <td style="width: 20%; text-align: left">
+              <%= image_tag('logo_reporte.gif') %>
+            </td>
+            <td align="center">
+              <label style="font-size: 16px"> <%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.FormTitles.form_title_records') %>
+              </label>
+            </td>
+            <td style="width: 28%; text-align: right" valign="top">
+              <label><%= I18n.t('Sistema.Body.Controladores.Contabilidad.ConsultarComprobante.FormSearch.fecha_desde') %>:</label> <%= @fecha_desde %> <br/> 
+              <label><%= I18n.t('Sistema.Body.Controladores.Contabilidad.ConsultarComprobante.FormSearch.fecha_hasta') %>:</label> <%= @fecha_hasta %>
+              <!-- <label><%#= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.nombre_archivo') %>:</label> <%#= @control_cobranza.archivo unless @control_cobranza.nil?%> -->
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <% unless @control.nil? 
+    @control.each { |control| %>
+
+      <br/><br/><br/><br/>
+      <table class="lista" align="center" style="width: 90%">
+
+        <tr class="lista0">
+          <th colspan="14">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.encabezado_tabla',
+                :banco=>control.entidad_financiera.alias, :nro_cuente=>control.numero_cuenta, :fecha=>format_fecha(control.fecha_cierre),
+                :archivo=>control.archivo).html_safe %></label>
+          </th>
+        </tr>
+        <tr>
+
+          <th style="width: 10px">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numeral') %></label> &ensp;
+          </th>
+
+          <th style="width: 10px">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.fecha_valor') %></label>
+          </th>
+
+          <th style="width: 140px">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.fecha_contable') %></label>
+          </th>
+
+          <th style="width: 70px">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numero_prestamo') %></label>
+          </th>
+
+          <th style="width: 140px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.cliente') %></label>
+          </th>
+
+          <th style="width: 60px">
+            <label><%=  I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif') %></label>
+          </th>
+
+          <th style="width: 100px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.monto')%></label>
+          </th>
+
+          <th style="width: 100px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.capital')%></label>
+          </th>
+
+          <th style="width: 100px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.intereses')%></label>
+          </th>
+
+          <th style="width: 100px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.mora')%></label>
+          </th>
+
+          <th style="width: 100px">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.abono')} #{I18n.t('Sistema.Body.Vistas.General.a')} #{I18n.t('Sistema.Body.Vistas.General.capital')}" %></label>
+          </th>
+
+          <th style="width: 100px">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.saldo_favor') %></label>
+          </th>
+
+          <th style="width: 100px">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numero_cuenta') %></label>
+          </th>
+
+          <th style="width: 200px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.banco') %></label>
+          </th>
+
+        </tr>
+
+        <%       
+        @cobranza_aplicada = nil
+        @cobranza_aplicada = ViewCobranzaAplicadaEfectiva.find(:all, :conditions=> "fecha_contable = '#{control.fecha_cierre}' and entidad_financiera_id = #{control.entidad_financiera_id}", :order=>"fecha_valor")
+
+        unless @cobranza_aplicada.nil?
+
+          clase = "lista0"
+          nro = 0
+          total = 0.00
+          total_capital = 0.00
+          total_interes = 0.00
+          total_mora = 0.00
+          total_remanente = 0.00
+          total_favor = 0.00
+          moneda = ""
+          @cobranza_aplicada.each { |cobranza| %>
+            <tr id="cob_<%= cobranza.pago_cliente_id %>" class='<%= clase %>'>
+              <td><%= nro = nro + 1 %></td>
+
+              <td>
+                <%= cobranza.fecha_valor %>
+              </td>
+
+              <td>
+                <%= cobranza.fecha_contable %>
+              </td>
+
+              <td>
+                <%= cobranza.numero_prestamo %>
+              </td>
+
+              <td>
+                <%= cobranza.nombre_cliente %>
+              </td>
+
+              <td align="center">
+                <%= cobranza.cedula_rif %>
+              </td>
+
+              <td align="right">
+                <%= format_fm(cobranza.monto) %>
+              </td>
+
+              <td align="right">
+                <%= format_fm(cobranza.capital) %>
+              </td>
+
+              <td align="right">
+                <% cobranza.interes_corriente.nil? ? cobranza.interes_corriente = 0.00 : cobranza.interes_corriente 
+                cobranza.interes_diferido.nil? ? cobranza.interes_diferido = 0.00 : cobranza.interes_diferido %>
+                <%= format_fm(cobranza.interes_corriente + cobranza.interes_diferido) %>
+              </td>
+
+              <td align="right">
+                <%= format_fm(cobranza.interes_mora) %>
+              </td>
+
+              <td align="right">
+                <%= format_fm(cobranza.abono_capital) %>
+              </td>
+
+              <td align="right">
+                <%= format_fm(cobranza.saldo_favor) %>
+              </td>
+
+              <td align="center">
+                <%= cobranza.numero_cuenta %>
+              </td>
+
+              <td>
+                <%= cobranza.entidad_financiera %>
+              </td>
+
+            </tr>
+            <% if clase == 'lista0'
+              clase = 'lista1'
+            else
+              clase = 'lista0'
+            end
+            total = total + cobranza.monto
+            total_capital = total_capital + cobranza.capital
+            total_interes = (total_interes + (cobranza.interes_corriente + cobranza.interes_diferido))
+            total_mora = total_mora + cobranza.interes_mora
+            total_remanente = total_remanente + cobranza.abono_capital
+            total_favor = total_favor + cobranza.saldo_favor.to_f
+            # looger.info"XXXXXXXX-total_remanente-XXXXXXXXXX"<<total_remanente.inspect
+
+            moneda = cobranza.moneda
+          }
+        end %>
+        <tr class='<%= clase %>'>
+          <td colspan="6" align="left">
+            <label><%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.total_registro') %> <%= nro %></label>
+          </td>
+          <td align="right">
+            <label><%= format_fm(total)%> </label>
+          </td>
+          <td align="right">
+            <label><%= format_fm(total_capital)%> </label>
+          </td>
+          <td align="right">
+            <label><%= format_fm(total_interes)%> </label>
+          </td>
+          <td align="right">
+            <label> <%= format_fm(total_mora)%> </label>
+          </td>
+          <td  align="right">
+            <label><%= format_fm(total_remanente)%> </label>
+          </td>
+          <td  align="right">
+            <label><%= format_fm(total_favor)%> </label>
+          </td>
+          <td colspan="2" align="center">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.moneda')} #{moneda}"%></label>
+          </td>
+
+        </tr>
+
+
+      </table>
+    <% 
+    }
+  end 
+%>
+  <br/><br/><br/><br/><br/>
+  <br/><br/><br/><br/><br/>
+
+  <table align="center" width="1120px" >
+    <tr>
+      <td colspan="4">
+        <div style="padding: 6px" align="center">
+          <form>
+            <div id = boton>
+              <input name="print" type="button" value="<%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.boton_imprimir') %>" onclick="varitext()" />
+            </div>
+          </form>
+        </div>
+      </td>
+    </tr>
+  </table>
+

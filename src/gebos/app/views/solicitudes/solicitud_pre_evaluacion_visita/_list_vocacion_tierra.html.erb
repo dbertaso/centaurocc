@@ -1,0 +1,29 @@
+<div class="msg-notice" id="message" style="display: none; text-align: center"></div>
+<table width="100%">
+  <% lista = 'lista0'
+  @vocacion_tierra.each { |i| %>
+
+    <tr>
+      <td width="30px">
+        <%= check_box 'recaudo_check',
+        i.id,
+        {:checked=>i.marcado, :onclick => "#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>"solicitud_pre_evaluacion_visita",
+          :action=>:save_vocacion },
+          :with=>"'id=#{i.id}&solicitud_id=#{@solicitud.id}&sv_id=#{params[:seguimiento_visita_id]}'")}", :name => "unidad_produccion_vocacion_tierra[]", :id => "vocacion_tierra_#{i.id}" }  %>
+
+        &nbsp;
+      </td>
+
+      <td>	
+        <%= i.nombre %>
+      </td>
+    </tr>
+
+  <%  
+  } %>
+
+  <br/>

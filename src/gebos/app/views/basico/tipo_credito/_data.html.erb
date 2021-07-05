@@ -1,0 +1,18 @@
+<% tipo_credito = @tipo_credito if tipo_credito.nil? %>
+<td>
+  <%= tipo_credito.nombre  %>
+</td>	
+<td>
+  <%= tipo_credito.descripcion  %>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(tipo_credito.activo)  %>
+</td>	
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'tipo_credito', :action => :edit, :id => tipo_credito.id}) if vlink 'edit' -%>&nbsp;
+</td>

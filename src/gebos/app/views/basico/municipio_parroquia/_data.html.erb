@@ -1,0 +1,19 @@
+<% parroquias = @parroquia if parroquias.nil? %>
+<td>
+	<%= parroquias.nombre  %>
+</td>
+
+<td style="text-align: center">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=>:get,
+		:url => {:action => :edit, :municipio_id => params[:municipio_id], :id => parroquias.id}) -%>
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:action => :delete, :municipio_id => params[:municipio_id], :id => parroquias.id}) -%>
+</td>

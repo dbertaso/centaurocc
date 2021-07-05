@@ -1,0 +1,70 @@
+<%= form_title_search %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) do -%>
+  <table>
+    <tr>
+      <td style="width: 60px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></label>
+      </td>
+      <td>
+        <%= select(
+            'cargo','',
+            @cargo_list.map{|e| [e.descripcion, e.id]},
+            { :include_blank => false },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+      <td>
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+      </td>
+    </tr>
+  </table>
+<% end %>
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) do -%>
+  <table>
+    <tr>
+      <td style="width: 60px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'50', :style=>'width: 300px'  %>
+      </td>
+      <td>
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+      </td>
+    </tr>
+  </table>
+<%end %>
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) do-%>
+  <table>
+    <tr>
+      <td style="width: 60px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'cedula', '', :class=>'text', :maxlength=>'50', :style=>'width: 300px'  %>
+      </td>
+      <td>
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+      </td>
+    </tr>
+  </table>
+<%end %>
+
+<%= error %>
+<%= message %>
+
+<div id="list">
+</div>
+

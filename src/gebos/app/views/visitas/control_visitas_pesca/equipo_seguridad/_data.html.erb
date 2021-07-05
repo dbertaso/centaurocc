@@ -1,0 +1,32 @@
+<% equipo_seguridad = @equipo_seguridad if equipo_seguridad.nil? %>
+
+<td align="center">
+  <%= format_bool equipo_seguridad.es_propio  %>
+</td>
+<td align="center">
+  <%= TipoEquipoSeguridad.find(equipo_seguridad.tipo_equipo_id).tipo  %>
+</td>
+
+<td align="center">
+  <%= equipo_seguridad.modelo %>
+</td>
+
+<td align="center">
+  <%= equipo_seguridad.cantidad %>
+</td>
+
+
+
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :method=>:get,
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'equipo_seguridad', :action => :edit, :id_equipo=>equipo_seguridad.id, :id =>@visita}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'equipo_seguridad', :action => :delete, :id_equipo=>equipo_seguridad.id, :id =>@visita}) if vlink 'delete' -%>
+</td>
+

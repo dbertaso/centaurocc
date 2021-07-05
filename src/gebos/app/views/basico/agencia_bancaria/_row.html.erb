@@ -1,0 +1,4 @@
+<% agencia_bancaria = @agencia_bancaria if agencia_bancaria.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= agencia_bancaria.id %>">
+	<%= render :partial => 'data', :locals => { :agencia_bancaria => agencia_bancaria, :even_odd => even_odd } -%>
+</tr>

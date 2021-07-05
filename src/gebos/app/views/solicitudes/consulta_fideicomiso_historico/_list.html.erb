@@ -1,0 +1,51 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th></th>
+      <th style="" colspan=3>
+        <%=I18n.t('Sistema.Body.Vistas.General.fideicomiso')%>
+      </th>
+      <th style="" colspan=4 ><%=I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%></th>
+      <th style=""  ></th>
+    </tr>
+    <tr>
+      <th style="text-align: center; width: 100px" >
+        <%=I18n.t('Sistema.Body.Vistas.General.registro')%>
+      </th>
+      <th style="width: 80px" ><%= I18n.t('Sistema.Body.Vistas.General.moneda') %></th>
+      <th style="text-align: center; width: 50px">
+        <%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.banco')}"%>
+      </th>
+      <th style="text-align: center; width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_insumos')%>
+      </th>
+      <th style="text-align: center; width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.monto_sras')%>
+      </th>
+      <th style="text-align: center; width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_administrativos')%>
+      </th>
+
+      <th style="text-align: center; width: 80px">
+        # <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%>
+      </th>
+      <th style="text-align: center; width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.ConsultaCuentaProyectado.Etiquetas.monto_total')%>
+      </th>
+      <th style="text-align: center; width: 50px">
+        <%=I18n.t('Sistema.Body.General.exportar')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%
+    even_odd = 1
+    for transaccion_fideicomiso in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :transaccion_fideicomiso => transaccion_fideicomiso, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

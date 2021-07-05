@@ -1,0 +1,63 @@
+<script language="text/javascript">varEnviado = false;</script>
+
+<table style="width: 100%">
+  <% unless @clase.new_record? %>
+    <tr>
+        <td width="150px">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.id')} #{I18n.t('Sistema.Body.Vistas.General.registro')}" %>:</label>
+        </td>
+        <td style="width: 580px">
+            <%= @clase.id %>
+        </td>
+    </tr>
+  <% end %>
+    
+  <tr>
+    <td width="110px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %> <span style="color:red">*</span></label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'clase', 'nombre', :class=>'text', :style=>'width: 480px', :maxlength=>'250'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td width="150px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>&nbsp;<span style="color:red">*</span></label>
+    </td>
+    <td style="width: 580px">
+      <%= select(
+        'clase','tipo_maquinaria_id',
+        @tipo_maquinaria.map{|e| [e.nombre, e.id]},
+        { :prompt=>'Seleccione...'},
+        { :class=>'select', :onchange=>'inputChange();'})
+      %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.General.descripcion') %><span style="color:red">*</span></label></td>
+    <td>
+      <%= text_area 'clase', 'descripcion',
+        :class=>'text', :style=>'width:100%; height: 50px;',
+        :maxlength=>'240',
+        :onkeypress=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'clase', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>

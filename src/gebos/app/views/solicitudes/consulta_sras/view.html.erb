@@ -1,0 +1,73 @@
+
+<div class="marco-titulo"><div><div>
+       <%= t('Sistema.Body.Vistas.PlanInversion.Header.plan_inversion')%>
+      <span class="titulo_modificar">'<%=  @solicitud.numero.to_s %>'</span>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>
+      <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> -
+      <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+</div></div></div>
+<%= render :partial=>'solicitudes/solicitud/common/tabs' %>
+<div class="marco-contenido2">
+<%= render :partial=>'solicitudes/consulta_plan_inversion/common/tabs' %>
+<div class="marco-contenido2">
+
+  </br>
+  </br>
+  </br>
+  <table>
+    <tr>
+      <td style="width: 200px">
+        <label><%="#{t('Sistema.Body.Vistas.General.monto')} #{t('Sistema.Body.Vistas.General.plan_inversion')}" -%></label>
+      </td>
+      <td style="width: 100px; text-align: right">
+        <%= format_fm(@prestamo.monto_solicitado) -%>
+      </td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td>
+        <label><%= t('Sistema.Body.Vistas.ConsultaSRAS.Etiquetas.sras_primer')%></label>
+      </td>
+      <td style="width: 100px; text-align: right">
+        <%= format_fm(@prestamo.monto_sras_primer_ano) -%>
+      </td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td>
+        <label><%= t('Sistema.Body.Vistas.ConsultaSRAS.Etiquetas.sras_subsiguientes')%></label>
+      </td>
+      <td style="width: 100px; text-align: right">
+        <%= format_fm(@prestamo.monto_sras_anos_subsiguientes) -%>
+      </td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td>
+        <label><%= t('Sistema.Body.Vistas.ConsultaSRAS.Etiquetas.total_sras')%></label>
+      </td>
+      <td style="width: 100px; text-align: right">
+        <%= format_fm(@prestamo.monto_sras_total) -%>
+      </td>
+   </tr>
+    <tr>
+      <td>
+        <label><%= t('Sistema.Body.Vistas.ConsultaSRAS.Etiquetas.monto_gastos')%></label>
+      </td>
+      <td style="width: 100px; text-align: right">
+        <%= format_fm(@prestamo.monto_gasto_total) %>
+      </td>
+     </tr>
+    <tr>
+      <td>
+        <label><%= t('Sistema.Body.Vistas.ConsultaSRAS.Etiquetas.total_financiamiento')%></label>
+      </td>
+      <td style="width: 100px; text-align: right">
+        <%= @prestamo.total_financiamiento_fm -%>
+      </td>
+    </tr>
+  </table>
+
+
+</div>
+</div>

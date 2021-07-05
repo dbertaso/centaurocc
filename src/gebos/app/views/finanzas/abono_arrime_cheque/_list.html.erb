@@ -1,0 +1,60 @@
+
+<form>
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th align="center">
+			<input type="checkbox" id="todos" name="todos" onClick="checkAll(form.orden_abono_excedente_arrime_id,form.todos); muestro();" />
+		</th>
+        <th  <%= sort_class_helper('beneficiario') %>>
+  			<%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.General.beneficiario')}", 'beneficiario', 'list' %>
+        </th>
+
+        <th <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+  </th>
+
+        <th  <%= sort_class_helper('nro_tramite') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'nro_tramite', 'list' %>
+        </th>
+
+
+        <th  <%= sort_class_helper('estado') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'estado', 'list' %>
+  </th>
+
+        <th  <%= sort_class_helper('sector') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector', 'list' %>
+        </th>
+
+        <th  <%= sort_class_helper('actividad') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad', 'list' %>
+        </th>
+
+        <th <%= sort_class_helper('monto_abono') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Pago.Etiquetas.monto_pagar'), 'monto_abono', 'list' %>
+        </th>
+
+
+
+        <th style="width: 60px">
+          <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+        </th>
+
+
+      </tr>
+
+  </thead>
+  <tbody id="list-body">
+<%
+  #logger.debug "TOTAL" << @total.to_s
+        even_odd = 1
+  for desembolso in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => {:total=>@total, :desembolso => desembolso, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>
+</form>

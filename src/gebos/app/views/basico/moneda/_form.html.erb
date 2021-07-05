@@ -1,0 +1,42 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+	<tr>
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'moneda', 'nombre', :class=>'text', :style=>'width: 580px;', :maxlength=>'255' -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.abreviatura')%></label>
+			<label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+		</td>
+		<td>
+			<%= text_field 'moneda', 'abreviatura', :class=>'text', :style=>'width: 580px;', :maxlength=>'5' -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.General.ruta_icono')%></label> 
+		</td>
+		<td>
+			<%= text_field 'moneda', 'ruta_icono', :class=>'text', :style=>'width: 580px;' -%>
+		</td>
+	</tr>  
+	<tr>
+   <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+   </td>
+   <td>
+		<%= check_box 'moneda', 'activo',
+		:checked_value=>"1", 
+		:unchecked_value=>"0"
+     -%>
+    </td>
+  </tr>
+	<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

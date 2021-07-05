@@ -1,0 +1,789 @@
+<script>
+  function resetear(id){
+
+    switch(id){
+      case "semovientes_cantidad_becerra": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_becerra').value="";
+            document.getElementById('semovientes_peso_promedio_becerra_f').value=0;
+            document.getElementById('semovientes_cantidad_porcinos').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_becerra').value="";
+          document.getElementById('semovientes_peso_promedio_becerra_f').value=0;
+          document.getElementById('semovientes_cantidad_porcinos').value=0;
+      
+        }
+        break;
+      case "semovientes_cantidad_becerro": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_becerro').value="";
+            document.getElementById('semovientes_peso_promedio_becerro_f').value=0;
+            document.getElementById('semovientes_cantidad_conejos').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_becerro').value="";
+          document.getElementById('semovientes_peso_promedio_becerro_f').value=0;
+          document.getElementById('semovientes_cantidad_conejos').value=0;
+
+        }
+        break;
+
+      case "semovientes_cantidad_maute": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_maute').value="";
+            document.getElementById('semovientes_peso_promedio_maute_f').value=0;
+            document.getElementById('semovientes_cantidad_caballos').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_maute').value="";
+          document.getElementById('semovientes_peso_promedio_maute_f').value=0;
+          document.getElementById('semovientes_cantidad_caballos').value=0;
+
+        }
+        break;
+
+      case "semovientes_cantidad_mauta": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_mauta').value="";
+            document.getElementById('semovientes_peso_promedio_mauta_f').value=0;
+            document.getElementById('semovientes_cantidad_aves').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_mauta').value="";
+          document.getElementById('semovientes_peso_promedio_mauta_f').value=0;
+          document.getElementById('semovientes_cantidad_aves').value=0;
+
+        }
+        break;
+
+      case "semovientes_cantidad_novillo": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_novillo').value="";
+            document.getElementById('semovientes_peso_promedio_novillo_f').value=0;
+            document.getElementById('semovientes_cantidad_burro').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_novillo').value="";
+          document.getElementById('semovientes_peso_promedio_novillo_f').value=0;
+          document.getElementById('semovientes_cantidad_burro').value=0;
+
+        }
+        break;
+
+      case "semovientes_cantidad_novilla": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_novilla').value="";
+            document.getElementById('semovientes_peso_promedio_novilla_f').value=0;
+            document.getElementById('semovientes_cantidad_mula').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_novilla').value="";
+          document.getElementById('semovientes_peso_promedio_novilla_f').value=0;
+          document.getElementById('semovientes_cantidad_mula').value=0;
+
+        }
+        break;
+
+      case "semovientes_cantidad_retajo": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_retajo').value="";
+            document.getElementById('semovientes_peso_promedio_retajo_f').value=0;
+            document.getElementById('semovientes_cantidad_ovino').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_retajo').value="";
+          document.getElementById('semovientes_peso_promedio_retajo_f').value=0;
+          document.getElementById('semovientes_cantidad_ovino').value=0;
+
+        }
+        break;
+
+      case "semovientes_cantidad_toro": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_toro').value="";
+            document.getElementById('semovientes_peso_promedio_toro_f').value=0;
+            document.getElementById('semovientes_cantidad_caprino').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_toro').value="";
+          document.getElementById('semovientes_peso_promedio_toro_f').value=0;
+          document.getElementById('semovientes_cantidad_caprino').value=0;
+
+        }
+        break;
+
+      case "semovientes_cantidad_vaca_seca": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_vaca_seca').value="";
+            document.getElementById('semovientes_peso_promedio_vaca_seca_f').value=0;
+            document.getElementById('semovientes_cantidad_caninos').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_vaca_seca').value="";
+          document.getElementById('semovientes_peso_promedio_vaca_seca_f').value=0;
+          document.getElementById('semovientes_cantidad_caninos').value=0;
+
+        }
+        break;
+
+      case "semovientes_cantidad_vaca_ordenio": 
+        if (document.getElementById(id).value != "" ){
+          if (parseInt(document.getElementById(id).value)==0){
+            document.getElementById('semovientes_condicion_corporal_vaca_ordenio').value="";
+            document.getElementById('semovientes_peso_promedio_vaca_ordenio_f').value=0;
+            document.getElementById('semovientes_cantidad_felinos').value=0;
+
+          }
+        }else{
+          document.getElementById('semovientes_condicion_corporal_vaca_ordenio').value="";
+          document.getElementById('semovientes_peso_promedio_vaca_ordenio_f').value=0;
+          document.getElementById('semovientes_cantidad_felinos').value=0;
+
+        }
+        break;
+
+    } //del select
+
+  }
+varEnviado = false;
+
+</script>
+
+
+<br>
+<center>
+  <table class="lista" style="width: 90%">
+    <thead>
+      <tr>
+        <th style="width: 100px"><%="#{I18n.t('Sistema.Body.Vistas.General.grupo')} #{I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.etareo')}"%></th>
+        <th style="width: 100px"><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></th>
+        <th style="width: 100px"><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.condicion_corporal')%></th>
+        <th style="width: 100px"><%="#{I18n.t('Sistema.Body.Modelos.CultivoLaguna.Columnas.peso_promedio')} #{I18n.t('Sistema.Body.Vistas.General.kg')}"%></th>
+        <th style="width: 5px"></th>
+        <th style="width: 100px"><%= I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.otras_especies') %></th>
+        <th style="width: 100px"><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></th>
+      </tr>
+    </thead>
+    <tr class="lista0">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.becerra')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_becerra',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get,  :loading =>'Element.show("loading")',  :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes', :action=>:total_inventario_onchange, :id=>@visitas.id }, :with=>"'cantidad_becerra='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")};inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+      <td>
+        <%= select('semovientes', 'condicion_corporal_becerra',
+          ([["1", "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_becerra_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.porcinos')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_porcinos',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+    </tr>
+    <tr class="lista1">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.becerro')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_becerro',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get, :loading =>'Element.show("loading")', :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes', :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_becerro='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")};inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+
+      <td>
+        <%= select('semovientes', 'condicion_corporal_becerro',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_becerro_f',
+          :class=>'text',:style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.conejos')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_conejos',
+          :class=>'text',:style=>'width: 100px',:onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+    </tr>
+
+    <tr class="lista0">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.maute')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_maute',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get,
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_maute='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")};inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+
+      <td>
+        <%= select('semovientes', 'condicion_corporal_maute',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_maute_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.caballos')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_caballos',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+    </tr>
+
+    </tr>
+    <tr class="lista1">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.mauta')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_mauta',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get,
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_mauta='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")}; inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+
+      <td>
+        <%= select('semovientes', 'condicion_corporal_mauta',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_mauta_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.aves')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_aves',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+
+    </tr>
+    <tr class="lista0">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.novillo')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_novillo',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get, :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_novillo='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")}; inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+
+      <td>
+        <%= select('semovientes', 'condicion_corporal_novillo',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_novillo_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.burro')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_burro',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+    </tr>
+    <tr class="lista1">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.novilla')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_novilla',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get, :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_novilla='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")}; inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+      <td>
+        <%= select('semovientes', 'condicion_corporal_novilla',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_novilla_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.mula')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_mula',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+
+    </tr>
+    <tr class="lista0">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.retajo')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_retajo',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get, :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_retajo='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")}; inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+
+      <td>
+        <%= select('semovientes', 'condicion_corporal_retajo',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_retajo_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.ovino')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_ovino',
+          :class=>'text', :style=>'width: 100px',:onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+
+    </tr>
+    <tr class="lista1">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.toro')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_toro',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get, :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_toro='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value")}; inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+
+      <td>
+        <%= select('semovientes', 'condicion_corporal_toro',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_toro_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.caprino')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_caprino',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+
+    </tr>
+    <tr class="lista0">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.vaca_seca')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_vaca_seca',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get, :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_vacas_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_vaca_seca='+value+'&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value")}; #{remote_function(
+        :method=>:get, :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_vaca_seca='+value+
+        '&cantidad_vaca_ordenio='+document.getElementById('semovientes_cantidad_vaca_ordenio').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")}; inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+
+      <td>
+        <%= select('semovientes', 'condicion_corporal_vaca_seca',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_vaca_seca_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.caninos')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_caninos',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+
+    </tr>
+    <tr class="lista1">
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.vaca_ordenio')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_vaca_ordenio',
+          :class=>'text',:onchange=>"#{remote_function(
+        :method=>:get,:loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_vacas_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_vaca_ordenio='+value+'&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value")}; #{remote_function(
+        :method=>:get,:loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_semovientes',
+        :action=>:total_inventario_onchange, :id=>@visitas.id },
+        :with=>"'cantidad_vaca_ordenio='+value+
+        '&cantidad_vaca_seca='+document.getElementById('semovientes_cantidad_vaca_seca').value+
+        '&cantidad_becerra='+document.getElementById('semovientes_cantidad_becerra').value+
+        '&cantidad_becerro='+document.getElementById('semovientes_cantidad_becerro').value+
+        '&cantidad_maute='+document.getElementById('semovientes_cantidad_maute').value+
+        '&cantidad_mauta='+document.getElementById('semovientes_cantidad_mauta').value+
+        '&cantidad_novillo='+document.getElementById('semovientes_cantidad_novillo').value+
+        '&cantidad_novilla='+document.getElementById('semovientes_cantidad_novilla').value+
+        '&cantidad_retajo='+document.getElementById('semovientes_cantidad_retajo').value+
+        '&cantidad_toro='+document.getElementById('semovientes_cantidad_toro').value")}; inputChange();",
+          :style=>'width: 100px', :onkeypress=>'inputChange();', :onkeyup=>'resetear(this.id);', :maxlength=>'100' -%>
+      </td>
+
+      <td>
+        <%= select('semovientes', 'condicion_corporal_vaca_ordenio',
+          ([["1",  "1"],["1,5", "1,5"],["2", "2"],["2,5","2,5"],
+              ["3","3"],["3,5","3,5"],["4","4"],["4,5","4,5"],["5","5"]]),
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          {:class=>'select',:onchange=>'inputChange();' }) %>
+      </td>
+      <td>
+        <%= text_field 'semovientes','peso_promedio_vaca_ordenio_f',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      <td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.felinos')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_felinos',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+    </tr>
+    <tr class="lista0">
+      <td></td> <td></td><td></td>
+      <td></td><td></td>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.otros')%></label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cantidad_otra_especie',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+    </tr>
+
+  </table>
+  <br>
+  <div class="lista-form" style="width: 89%">
+    <table width="100%" border="0">
+      <tr>
+        <td style="width: 500px">
+          <label><%=I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.total_vacas')%></label>
+        </td>
+        <td style="width: 455px">
+          <div id="total_vacas_label">
+            <label><b><%= @total_vacas -%></b></label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td >
+          <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.porcentaje_hembras_ordenio')%> </label>
+        </td>
+        <td >
+          <div id="total_vacas_ordenio_label">
+            <label><b><%=  @total_vacas_ordenio %> (%)</b></label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td >
+          <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.porcentaje_preniez')%></label>
+        </td>
+        <td >
+          <%= text_field 'semovientes','porcentaje_preniez_f',
+            :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+            :maxlength=>'100' -%> (%)
+        </td>
+      </tr>
+      <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.dias_intervalo_partos')%></label><label class="requerido"> (*)</label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','dias_intervalo_partos',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%> <%=I18n.t('Sistema.Body.Vistas.General.dias')%>
+      </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="requerido"><%=I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.animales_aprobados')%></label>
+        </td>
+        <td>
+          <label class="requerido"><b><%=  format_f(@visitas.solicitud.semovientes_recomendados)-%> </b></label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.cant_animales_adquiridos')%></label>
+        </td>
+        <td>
+          <div id="total_inventario_label">
+            <label><b><%=  @total_inventario %></b></label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%="#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.hembras')}"%></label>
+        </td>
+        <td>
+          <div id="total_hembras_label">
+            <label><b><%=  @total_hembras %></b></label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%="#{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.machos')}"%></label>
+        </td>
+        <td>
+          <div id="total_machos_label">
+            <label><b><%=  @total_machos %></b></label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.fecha_adquisicion_semovientes')%></label><label class="requerido"> (*)</label>
+        </td>
+        <td>
+          <%= calendar_date_select_tag "semovientes[fecha_adquisicion_semovientes_f]", @semovientes.fecha_adquisicion_semovientes_f, 
+            :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+            :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+        </td>
+      </tr>
+      <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.cant_animales_marcados_hierro_fondas')%></label><label style="color: red"> *</label>
+      </td>
+      <td>
+        <%= text_field 'semovientes','cant_animales_marcados_hierro_fondas',
+          :class=>'text', :style=>'width: 100px', :onkeypress=>'inputChange();',
+          :maxlength=>'100' -%>
+      </td>
+      </tr>
+      <tr>
+      <td valign="top">
+        <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.anamnesis_diagnostico')%></label><label class="requerido"> (*)</label>
+      </td>
+
+      <td>
+        <%= text_area 'semovientes', 'anamnesis_diagnostico',
+          :class=>'text',:style=>'width: 450px; height: 120px', :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,5000)' -%>
+      </td>
+      </tr>
+    </table>    
+  </div>
+</center>
+<br><br><br>
+

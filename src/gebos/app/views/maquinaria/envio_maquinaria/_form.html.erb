@@ -1,0 +1,281 @@
+<div class="marco-contenido">
+
+  <%= form_title_edit %>
+  <%= error %>
+  <%= message %>
+
+
+
+  <table align="center" border="1">
+
+    <tr>
+
+      <td>Silo</td>
+      <td>
+
+        <%= select(
+          'boleta_arrime','silo_id',
+          @silo.map{|i| [i.direccion, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange =>'inputchange' } ) %>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td> Rif/Cedula:</td>
+      <td>
+        <%
+        action_name = controller.action_name %>
+        <%
+        if action_name=='edit' %>
+          <% unless @boleta_arrime.cliente.persona_id.nil? || @boleta_arrime.cliente.persona_id.to_s.empty?%>
+            <%= @boleta_arrime.cliente.persona.cedula_nacionalidad.to_s %> - <%= @boleta_arrime.cliente.persona.cedula.to_s%>
+          <%  else %>
+            <%= @boleta_arrime.cliente.empresa.rif.to_s%>
+          <%  end %>
+        <%  else %>
+          <% if action_name=='new' %>
+            <%unless @view_boleta_arrime.nil? || @view_boleta_arrime.to_s.empty? %>
+              <%= @view_boleta_arrime.cedula_rif %>
+            <%end%>
+          <%end%>
+        <%end%>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td> Asociacion: </td>
+      <td>FONDAS </td>
+    </tr>
+
+    <tr>
+      <td> Rubro: </td>
+      <td>
+        <%= text_field 'boleta_arrime', 'rubro_id',
+          :class=>'text', :style=>'width: 90px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+
+      </td>
+
+    </tr>
+
+  </table>
+
+  <br>
+
+  <table align="center" border="1" width="60%">
+    <tr>
+      <td>Nro Solicitud:</td>
+      <td>
+<%#= @boleta_arrime.solicitud.numero.to_s%>
+      </td>
+
+
+      <td>Nro Ticket:</td>
+      <td>sfferfsfsdfsdfdsfdsf</td>
+    </tr>
+
+    <tr>
+      <td>Hora de Entrada:</td>
+      <td><%= text_field 'boleta_arrime', 'hora_entrada',
+          :class=>'text', :style=>'width: 90px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%></td>
+    </tr>
+
+    <tr>
+      <td>Doc. Productor:</td>
+      <td><%= @boleta_arrime.cliente.persona.cedula unless controller.action_name !='edit'%></td>
+
+      <td>Productor:</td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>Placa del Vehiculo:</td>
+
+      <td>
+        <%= text_field 'boleta_arrime', 'placa_vehiculo',
+          :class=>'text', :style=>'width: 90px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>Cedula del Conductor:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+      <td>Conductor:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+    </tr>
+  </table>
+  </br>
+
+
+
+  <br/>
+
+  <table align="center" border="1" width="100%">
+    <tr background="/images/titulo_fondo_2.gif">
+      <th align="left" height="25">Datos de Laboratorio</th>
+    </tr>
+  </table>
+
+  <br/>
+
+
+  <table align="center" border="1" width="60%">
+    <tr>
+      <td>(Arroz)</td>
+      <td>%</td>
+      <td></td>
+      <td>%</td>
+      <td></td>
+      <td>%</td>
+    </tr>
+
+    <tr>
+      <td>Humedad:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Blanco Total:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Rojos:</td>
+      <td<%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+    </tr>
+
+    <tr>
+      <td>Impureza:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Enteros:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Verdes:</td>
+      <td<%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+    </tr>
+
+    <tr>
+      <td>Olor:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Yesosos:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos sin Cascara:</td>
+      <td<%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+    </tr>
+
+    <tr>
+      <td>Aspecto Sensoriales:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Panza Blanca:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Semillas Objetables:</td>
+      <td<%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Punta Negra:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Infectados:</td>
+      <td<%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Dañados:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+      <td>Granos Manchados:</td>
+      <td<%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 50px'  %></td>
+    </tr>
+
+  </table>
+
+
+  <br/>
+
+  <table align="center" border="1" width="100%">
+    <tr background="/images/titulo_fondo_2.gif">
+      <th align="left" height="25">Datos del Peso</th>
+    </tr>
+  </table>
+
+  <br/>
+
+  <table align="center" border="1" width="60%">
+    <tr align="center" >
+      <td></td>
+      <td>Fecha - Hora</td>
+      <td>Vehiculo</td>
+      <td>Remolque</td>
+      <td>Total</td>
+
+    </tr>
+
+    <tr>
+      <td>Entrada</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+
+    </tr>
+
+    <tr>
+      <td>Salida</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+
+    </tr>
+  </table>
+
+  <br>
+
+  <table align="center" border="1" width="60%">
+    <tr>
+      <td>Peso Neto:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+      <td>Peso Acond.:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 120px'  %></td>
+    </tr>
+  </table>
+  </br>
+
+
+  <br>
+
+  <table align="center" border="1" width="30%">
+    <tr align="center" >
+
+      <td>Resultado:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 200px'  %></td>
+    </tr>
+    <tr>
+      <td>Nro. Acta:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 200px'  %></td>
+    </tr>
+
+    <tr>
+
+      <td>Causa:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 200px'  %></td>
+    </tr>
+
+    <tr>
+      <td>Tipo de Clase:</td>
+      <td><%#= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 200px'  %></td>
+    </tr>
+
+  </table>
+  </br>
+
+
+
+</div>
+
+
+<%= end_form_tag -%>
+

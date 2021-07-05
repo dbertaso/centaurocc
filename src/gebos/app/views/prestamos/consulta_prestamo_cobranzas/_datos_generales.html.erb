@@ -1,0 +1,235 @@
+
+
+    <div id='datos_cliente'>
+      <table style="width: 100%"> 
+          <tr>
+            <td>
+              <label> 
+                <%= t('Sistema.Body.Vistas.VistaSolicitud.Etiquetas.cedula_rif') %>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.cliente.cedula_rif unless @prestamo.cliente.nil? %>
+            </td>
+            <td>
+              <label> <%= t('Sistema.Body.Vistas.General.beneficiario') %> </label>:
+            </td>
+            <td>              
+              <%= @prestamo.cliente.nombre unless @prestamo.cliente.nil? %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label> 
+                <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.financiamiento')}"%>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.numero unless @prestamo.nil? %>
+            </td>
+            <td>
+              <label> <%= t('Sistema.Body.Vistas.Form.numero_tramite') %> </label>:
+            </td>
+            <td>              
+              <%= @prestamo.solicitud.numero unless @prestamo.solicitud.nil? %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label> 
+                <%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.liquidacion')}"%>:
+              </label>
+            </td>
+            <td>
+              <%= format_fecha(@prestamo.fecha_liquidacion) unless @prestamo.nil? %>
+            </td>
+            <td>
+              <label> <%= t('Sistema.Body.Vistas.Form.estatus') %> </label>:
+            </td>
+            <td>              
+              <%= @prestamo.estatus_w unless @prestamo.nil? %>
+            </td>
+          </tr>
+
+      </table>
+    </div>
+
+    <div id="datos_generales" style="position: relative; height: 280px; width: 100%">
+    
+      <div style="width: 50%; position: absolute; left: 0; top:0; height: 260px" align="center">
+      
+        <table style="width: 100%">
+        
+          <tr>
+            <td class="separador" valign="bottom" colspan="4" style="text-align: center">
+              <span> 
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamo.Separadores.comportamiento_morosidad') %>
+              </span>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <p>
+
+               <br/>
+
+            </p>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.cantidad_veces_mora') %>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.cantidad_veces_mora unless @prestamo.nil? %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.porcentaje_veces_mora')%>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.porcentaje_veces_mora unless @prestamo.nil? %>
+            </td>
+          </tr>          
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.maximo_dias_mora') %>:
+              </label>
+            </td>
+            <td>
+              <%= format_sep(@prestamo.cantidad_dias_mora_acumulados.to_s) unless @prestamo.nil? %>
+            </td>        
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.porcentaje_maximo_dias_mora')%>:
+              </label>
+            </td>
+            <td >
+              <%= format_fm(@prestamo.porcentaje_dias_mora) unless @prestamo.nil? -%> <b>%</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.dias_atraso_promedio')%>:
+              </label>
+            </td>
+            <td >
+              <%= format_fm(@prestamo.dias_atraso_promedio) unless @prestamo.nil? -%>
+            </td>
+          </tr>        
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.indice_morosidad')%>:
+              </label>
+            </td>
+            <td>
+              <%= format_fm(@prestamo.indice_morosidad) unless @prestamo.nil? -%> <b>%</b>
+            </td> 
+          </tr>
+        </table>
+      </div>
+        
+      <div style="width: 50%;  position: absolute; left: 50%; top: 0; height: 260px" align="center">
+        <table style="width: 100%">
+          <tr>
+            <td class="separador" valign="bottom" colspan="4" style="text-align: center">
+              <span>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamo.Separadores.comportamiento_recuperacion') %>
+              </span>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <p>
+
+               <br>
+
+            </p>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.porcentaje_recuperacion_real_capital') %>:
+              </label>
+            </td>
+            <td>
+              <%= format_fm(@prestamo.porcentaje_recuperacion_real_capital) unless @prestamo.nil? -%> <b>%</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.porcentaje_recuperacion_esperada_capital') %>:
+              </label>
+            </td>
+            <td>
+              <%=  format_fm(@prestamo.porcentaje_recuperacion_esperada_capital) unless @prestamo.nil? %> <b>%</b>
+            </td>
+          </tr>          
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.desviacion_recuperacion_capital') %>:
+              </label>
+            </td>
+            <td>
+              <%= format_fm(@prestamo.desviacion_recuperacion_capital) unless @prestamo.nil? %> <b>%</b>
+            </td>        
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.porcentaje_recuperacion_real_intereses') %>:
+              </label>
+            </td>
+            <td >
+              <%= format_fm(@prestamo.porcentaje_recuperacion_real_intereses) unless @prestamo.nil? -%> <b>%</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.porcentaje_recuperacion_esperada_intereses') %>:
+              </label>
+            </td>
+            <td >
+              <%= format_fm(@prestamo.porcentaje_recuperacion_esperado_intereses) unless @prestamo.nil? -%> <b>%</b>
+            </td>
+          </tr>        
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Etiquetas.desviacion_recuperacion_intereses') %>:
+              </label>
+            </td>
+            <td>
+              <%= format_fm(@prestamo.desviacion_recuperacion_intereses) unless @prestamo.nil? -%> <b>%</b>
+            </td> 
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_incumplidas') %>:
+              </label>
+            </td>
+            <td>
+              <% perfor = PerformanceCobranzas.find_by_prestamo_id_and_cliente_id(@prestamo.id, @prestamo.cliente_id) %>
+              <%= format_fm(@perfor.porcentaje_promesas_pago_incumplidas) unless @perfor.nil? -%> <b>%</b>
+            </td> 
+          </tr>
+        </table>
+      </div>
+    </div>

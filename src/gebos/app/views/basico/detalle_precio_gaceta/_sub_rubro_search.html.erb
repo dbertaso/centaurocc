@@ -1,0 +1,9 @@
+
+<%= select(
+  'sub_rubro_id', '',
+  @sub_rubro_list.map{|e| [e.nombre, e.id]},
+    {:prompt=>'Seleccionar '},
+    { :class=>'select', :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :method => :get, :url=>{:controller=>'detalle_precio_gaceta',
+      :action=>:sub_rubro_change }, :with => "'sub_rubro_id=' + this.value")};inputChange();" } ) %>

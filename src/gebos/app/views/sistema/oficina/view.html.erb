@@ -1,0 +1,103 @@
+<%= form_title_view @oficina.nombre %>
+
+<%= message %>
+
+<table>
+  <tr>
+    <td style="width: 150px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label>
+    </td>
+    <td>
+      <%= @oficina.nombre -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label></td>
+    <td>
+      <%= @oficina.ciudad.estado.nombre if @oficina.ciudad -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label></td>
+    <td>
+      <%= @oficina.ciudad.nombre if @oficina.ciudad -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label></td>
+    <td>
+      <%= @oficina.municipio.nombre if @oficina.municipio -%>
+    </td>
+  </tr>
+  <!-- -->
+  <tr>
+    <td valign="top" colspan="2"><label><%= I18n.t('Sistema.Body.Vistas.Oficina.Etiquetas.datos_coord') %></label></td>
+  </tr>
+  <tr>
+    <td style="width: 60px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %></label>
+    </td>
+    <td>
+      <%= @oficina.cedula_nacionalidad.to_s -%> - <%= @oficina.cedula_supervisor.to_i %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 60px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label>
+    </td>
+    <td>
+      <%= @oficina.primer_nombre_supervisor -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label></td>
+    <td>
+      <%= @oficina.segundo_nombre_supervisor -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label></td>
+    <td>
+      <%= @oficina.primer_apellido_supervisor -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label></td>
+    <td>
+      <%= @oficina.segundo_apellido_supervisor -%>
+    </td>
+  </tr>
+  <!-- -->
+  <tr>
+    <td valign="top"><label><%= I18n.t('Sistema.Body.Vistas.Oficina.Etiquetas.departamentos') %></label></td>
+    <td>
+      <table>
+        <tbody>
+          <%
+          even_odd = 1
+          for departamento in @departamento_list
+            even_odd = 1 - even_odd
+          %>
+            <tr>
+              <td>
+                <%= departamento.nombre %>
+              </td>
+              <td style="text-align: right">
+                <%= format_bool @oficina.departamentos.find_by_departamento_id_and_oficina_id(departamento.id, @oficina.id) -%>
+              </td>
+            </tr>
+          <%
+          end
+        %>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<%#= link_to( image_tag("boton_modificar.gif", :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+  :action => :edit,  :id => @oficina.id,
+  :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),  :action => :index,
+  :html_options => { :id=>'button_close' } -%>

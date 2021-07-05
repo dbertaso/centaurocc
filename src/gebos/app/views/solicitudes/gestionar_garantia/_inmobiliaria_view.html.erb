@@ -1,0 +1,307 @@
+<script type="text/javascript">
+
+  onload = function()
+  {
+    <% if @solicitud_avaluo_inmobiliario.clasificacion %>
+        showTipo('<%= @solicitud_avaluo_inmobiliario.clasificacion %>');
+    <% end %>
+  }
+
+  function showTipo(value)
+  {
+    if (value == 'C' ){
+        document.getElementById("div_construccion").style.display="";
+        document.getElementById("div_construccion").style.display="none";
+    }else{
+        document.getElementById("div_construccion").style.display="none";
+    }
+  }
+
+</script>
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.avaluo_institucion')%></span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluo.Errores.nombre_perito')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_inmobiliario.nombre_perito %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.fecha_avaluo_mobiliario')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.fecha_avaluo_inmobiliario_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_sudeban')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_inmobiliario.numero_sudeban_inmobiliario %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.valor_avaluo')%></label>
+    </td>
+    <td>
+      <%= display_number @solicitud_avaluo_inmobiliario.valor_avaluo_inmobiliario, '' %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.inmobiliaria')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoInmobiliario.Errores.clasificacion')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.clasificacion_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.terreno')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.espacio')%></label>
+    </td>
+    <td>
+      <%= display_number @solicitud_avaluo_inmobiliario.espacio, '' %> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.parentesis_metros_cuadrados')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.ubicacion')%></label>
+    </td>
+    <td align="justify">
+      <%= @solicitud_avaluo_inmobiliario.ubicacion.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.ubicacion.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.descripcion_del_bien')%></label>
+    </td>
+    <td align="justify">
+      <%= @solicitud_avaluo_inmobiliario.descripcion.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.descripcion.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label><%=I18n.t('Sistema.Body.Vistas.General.linderos')%></label></td>
+    <td>
+      <table border="0" style="width: 100%">
+        <tr>
+          <td style="width: 10%">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.norte')%></label>
+          </td>
+          <td style="width: 90%">
+            <%= @solicitud_avaluo_inmobiliario.lindero_norte %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.General.sur')%></label>
+          </td>
+          <td>
+            <%= @solicitud_avaluo_inmobiliario.lindero_sur %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.General.este')%></label>
+          </td>
+          <td>
+            <%= @solicitud_avaluo_inmobiliario.lindero_este %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.General.oeste')%></label>
+          </td>
+          <td>
+            <%= @solicitud_avaluo_inmobiliario.lindero_oeste %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="bottom" colspan="2">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.registro_protocolizacion_bien')%></label>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.registro')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.nombre_registro %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_inmobiliario.estado_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.fecha')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.fecha_registro_f %> 
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_de_registro')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.numero_registro %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.tomo')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.tomo_registro %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.protocolo')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_inmobiliario.protocolo_registro %>
+    </td>
+  </tr>
+</table>
+
+<div id="div_construccion">
+<table style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%=I18n.t('Sistema.Body.Vistas.General.construccion')%></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.tipo_de_construccion')%></label>
+      </td>
+      <td align="justify">
+        <%= @solicitud_avaluo_inmobiliario.tipo_construccion.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.nil? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.espacio')%></label>
+      </td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.espacio_construccion %> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.parentesis_metros_cuadrados')%>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.ubicacion')%></label>
+      </td>
+      <td align="justify">
+        <%= @solicitud_avaluo_inmobiliario.ubicacion_construccion.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.ubicacion_construccion.nil? %>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="bottom" colspan="2">
+        <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.registro_protocolizacion_bien')%></label>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.registro')%></label>
+      </td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.nombre_registro_constrccion %>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top" style="width: 20%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+      </td>
+      <td style="width: 80%">
+        <%= @solicitud_avaluo_inmobiliario.estado_constrccion_w %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%></label>
+      </td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.fecha_registro_constrccion_f %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_de_registro')%></label></td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.numero_registro_constrccion %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.tomo')%></label></td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.tomo_registro_constrccion %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.protocolo')%></label></td>
+      <td>
+        <%= @solicitud_avaluo_inmobiliario.protocolo_registro_constrccion %>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" align="justify">
+        <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.sistema_constructivo')%></label><br/>
+        <%= @solicitud_avaluo_inmobiliario.sistema_construtivo.gsub("\n","<br/>") unless @solicitud_avaluo_inmobiliario.sistema_construtivo.nil? %>
+      </td>
+    </tr>
+</table>
+</div>

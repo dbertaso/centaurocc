@@ -1,0 +1,188 @@
+<%
+even_odd = 1
+@mo_cuotas = 0
+@mo_interes = 0
+@mo_capital = 0
+@mo_diferido = 0
+@mo_cuota_extra = 0
+@mo_pago_total_cliente = 0
+
+for cuota in cuotas
+  even_odd = 1 - even_odd
+  color = even_odd==0 ? dark : clear
+  color_cuota = nil
+  if cuota.tipo_cuota == 'G' && cuota.estatus_pago == 'N' || cuota.estatus_pago == 'P'
+     color_cuota = "#ffacac"
+  end
+  if cuota.vencida == true && cuota.estatus_pago == 'N' || cuota.estatus_pago == 'P'
+    color_cuota = "#ffacac"
+  elsif cuota.estatus_pago == 'T'
+    color_cuota = "#94b4fd"
+  end
+
+  cuota.interes_corriente.nil? ? @mo_interes = @mo_interes + 0 : @mo_interes = @mo_interes + cuota.interes_corriente
+  cuota.valor_cuota.nil? ? @mo_cuotas  = @mo_cuotas + 0 : @mo_cuotas  = @mo_cuotas + cuota.valor_cuota
+  cuota.amortizado.nil? ? @mo_capital = @mo_capital + 0 : @mo_capital = @mo_capital + cuota.amortizado
+  cuota.interes_diferido.nil? ? @mo_diferido = @mo_diferido + 0 : cuota.estatus_pago_w != 'DI' ? @mo_diferido = @mo_diferido + cuota.interes_diferido : @mo_diferido = @mo_diferido + 0
+  cuota.cuota_extra.nil? ? @mo_cuota_extra += 0 : @mo_cuota_extra += cuota.cuota_extra
+  cuota.pago_total_cliente.nil? ? @mo_pago_total_cliente += 0 : cuota.estatus_pago_w != 'DI' ? @mo_pago_total_cliente += cuota.pago_total_cliente : @mo_pago_total_cliente += 0
+-%>
+
+  <tr id="cuota_<%= cuota.id %>" class="lista<%= even_odd %>" style="background-color: #<%= color %>">
+    <td onclick="click_cuota('<%= cuota.id %>');">
+      <%= image_tag 'desembolso.gif' if cuota.desembolso %>
+      <%= image_tag 'cambio_tasa.gif' if cuota.cambio_tasa %>
+      <%= image_tag 'abono.gif' if cuota.abono_extraordinario %>
+      <%#= image_tag 'cancelacion_prestamo.gif' if cuota.cancelacion_prestamo %>
+      <%= image_tag 'BolivarFuerte.gif' if cuota.bolivar_fuerte %>
+
+    </td>
+    <td style="text-align: center">
+      <%= cuota.numero %>
+    </td>
+    <% cuota.estatus_pago_w %>
+    <td style="text-align: center <%= color_cuota ? ';background-color: ' + color_cuota : '' %>">
+      <%= cuota.estatus_pago_w %>
+    </td>
+    <td style="text-align: center">
+      <%= cuota.fecha_f %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.cantidad_dias %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.valor_cuota) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.interes_corriente) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.interes_corriente_acumulado) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.interes_diferido) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.amortizado) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.amortizado_acumulado)%>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.cuota_extra) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.pago_total_cliente) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.saldo_insoluto) %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.tasa_periodo_f %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.tasa_nominal_anual_f %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.causado_no_devengado) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.monto_desembolso) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.monto_abono) %>
+    </td>
+    <td style="text-align: center">
+      <%= cuota.dias_mora %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.interes_mora) %>
+    </td>
+    <td style="text-align: right">
+      <%= cuota.fecha_ultimo_pago_mora_f %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.pago_interes_diferido) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.pago_cuota_extra) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.pago_interes_mora) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.pago_interes_corriente) %>
+    </td>
+    <td style="text-align: right">
+      <%= format_fm(cuota.pago_capital) %>
+    </td>
+    <!---<td style="text-align: right">
+      <%= cuota.mora_exonerada_fm %>
+    </td> --->
+  </tr>
+<% end -%>
+
+  <tr id="Total %>" class="lista<%= even_odd %>" style="background-color: <%= color %>">
+    <td style="text-align: center">
+    </td>
+    <td style="text-align: center <%= color_cuota ? ';background-color: ' + color_cuota : '' %>">
+    </td>
+    <td style="text-align: center">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+      <b> <%= format_fm(@mo_cuotas) %> </b>
+    </td>
+    <td style="text-align: right">
+      <b> <%= format_fm(@mo_interes) %> </b>
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+
+      <b> <%= format_fm(@mo_diferido) %></b>
+    </td>
+    <td style="text-align: right">
+      <b> <%= format_fm(@mo_capital) %> </b>
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+      <b> <%= format_fm(@mo_cuota_extra) %> </b>
+    </td>
+    <td style="text-align: right">
+      <b> <%= format_fm(@mo_pago_total_cliente) %> </b>
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+    <td style="text-align: right">
+    </td>
+  </tr>
+

@@ -1,0 +1,21 @@
+<tr>
+    <td>
+       <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_administrativos')%></label>
+    </td>
+    <td style="text-align: right">
+    <%
+    unless @gastos.nil?
+        if @gastos.porcentaje > 0
+            monto = ((@prestamo.monto_banco + @prestamo.monto_insumos)*(@gastos.porcentaje/100))
+        else
+            monto = @gastos.monto_fijo
+        end
+    else
+        monto = 0.00
+    end
+    %>
+        <%= monto = format_fm(monto) -%>
+    </td>
+    <td></td>
+</tr>
+

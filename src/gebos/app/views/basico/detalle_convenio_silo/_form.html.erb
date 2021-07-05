@@ -1,0 +1,77 @@
+<script type="text/javascript">
+  varEnviado = false;
+  
+  function fCategoria(campo)
+  {
+    alert(campo.options.text);
+  }
+</script>
+<table>
+  <tr>
+    <td style="width: 120px"><label><%=I18n.t('Sistema.Body.Vistas.General.sector')%> </label></td>
+    <td>
+      <% sector_onchange = remote_function(
+        :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+        :url=>{:controller=>'detalle_convenio_silo',
+          :action=>:sector_change },
+        :with=>"'sector_id='+value") %>
+      <%= select(
+        'solicitud','sector_id',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>sector_onchange+';inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label></td>
+    <td>
+      <span id="sub-sector-search">
+        <%= render :partial=>'sub_sector_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label></td>
+    <td>
+      <span id="rubro-search">
+        <%= render :partial=>'rubro_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label></td>
+    <td>
+      <span id="sub-rubro-search">
+        <%= render :partial=>'sub_rubro_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label></td>
+    <td>
+      <span id="actividad-search">
+        <%= render :partial=>'actividad_search' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 160px"><label><%=I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.tipo_clase_grado')%></label></td>
+
+    <td>
+      <span id="t-gc">
+        <%= render :partial=>'tipo_clase_grado' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 120px">
+      <label><%=I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.precio_bs_kg')%> </label>
+    </td>
+    <td>
+      <%= text_field 'detalle_convenio_silo', 'valor',
+        :class=>'text', :style=>'width: 150px;', :maxlength=>'10', :onKeyUp=>'textCounter(this,150)', :onchange=>'inputChange();',
+        :onkeypress=>'inputChange(); return NumberDoubleKey(event);'  -%>
+    </td>
+  </tr>
+</table>

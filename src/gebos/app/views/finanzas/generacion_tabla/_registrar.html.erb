@@ -1,0 +1,6 @@
+   <%= link_to_remote(
+    		image_tag(I18n.t('Sistema.Body.Imagenes.desembolsar'), :title=>'Registrar préstamo en cartera'),
+                :loading =>'image_load()',
+                :loaded => 'image_unload()',
+                :confirm => "¿Está usted seguro que desea registrar este préstamo en cartera?",
+                :url => {:action => :generar_tabla, :id => prestamo_id}) if (vlink 'avanzar') -%>

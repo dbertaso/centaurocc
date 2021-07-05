@@ -1,0 +1,65 @@
+<table style="width: 100%">
+  <br/>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_arrime_conjunto')%></span>
+    </td>
+  </tr>
+
+</table>
+
+<br> </br>
+
+<table class="lista" style="width: 80%" align="center">
+  <tr>
+    <th style="width: 200px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}"%></label>
+    </th>
+    <th >
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </th>
+    <th >
+      <label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_acondicionado')%></label>
+    </th>
+   
+  </tr>
+  <% unless @arrime_conjunto_boleta_arrime_list.nil?
+    clase = "lista0"
+    @arrime_conjunto_boleta_arrime_list.each { |arrime| %>
+      <tr id="coj_<%= arrime.id %>" class='<%= clase %>'>
+        <td>
+          <%= arrime.letra_cedula.to_s %>-<%= arrime.cedula.to_i %>
+        </td>
+        <td>
+          <%= arrime.primer_nombre.to_s %>-<%= arrime.primer_apellido.to_s %>
+        </td>
+        <td>
+          <%= arrime.peso_condicionado %>
+        </td>
+      
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+</table>
+<br/>
+<table  style="width: 30%">
+  <tr>
+    <th>
+      <label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.total_peso_acondicionado')%> </label>
+    </th>
+    <td align="center">
+      <label><%unless @total_acondicionado.nil? %>
+              <% val = @total_acondicionado.map{|e| e.total_peso_acondicionado}%>
+              <%=  valor = format_fm(val[0])%>
+              <%#valor = sprintf('%01.2f', val[0]).sub('.', ',')%>
+              <%#=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+            <% end%>
+      </label>
+    </td>
+  </tr>
+</table>

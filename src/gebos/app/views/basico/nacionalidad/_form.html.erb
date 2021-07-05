@@ -1,0 +1,23 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td style="width: 180px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.genero')} #{I18n.t('Sistema.Body.Vistas.General.femenino')}"%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'nacionalidad', 'femenino_f', :class=>'text', :style=>'width: 240px', :maxlength=>'100'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.genero')} #{I18n.t('Sistema.Body.Vistas.General.masculino')}"%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'nacionalidad', 'masculino_f', :class=>'text', :style=>'width: 240px', :maxlength=>'100'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

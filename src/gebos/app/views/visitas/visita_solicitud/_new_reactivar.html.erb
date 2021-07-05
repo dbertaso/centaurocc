@@ -1,0 +1,70 @@
+<div id="errorCustomizado_<%=@solicitud.id%>">
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+</div>
+
+<%= message %>
+<%= end_form_tag %>
+<%= form_remote_tag(
+	:loading =>'image_load()',
+	:loaded => 'image_unload()',
+	:confirm => params[:pregunta_confirmacion],
+	:url => { :controller => 'consulta_evaluacion_credito', :action => :activar, :id=>@solicitud.id, :mensaje_exito => "La Solicitud Número #{@solicitud.numero} fue activada."} ) -%>
+
+<div class="marco-contenido2">	
+	<table style="width: 100%">
+		<tr>
+			<td class="form-titulo" valign="bottom" colspan="2">
+				<span><%=params[:titulo_1]%></span>
+				
+			</td>
+		</tr>
+	</table>
+	<table style="width: 100%">	
+                <tr>
+			<td style="width: 20%"><label>Causa de Suspensión</label></td>
+			<td>
+                               <%= @causa%><br>
+	
+				
+	
+			</td>
+                </tr>
+		<tr>
+			<td style="width: 20%"><label><%=params[:titulo_2]%></label></td>
+			<td>
+                              
+				<%= @observaciones%><br>
+	
+			</td>
+                </tr>
+                <tr>
+			<td style="width: 20%"><label>Observaciones de activación</label></td>
+			<td>
+                              
+				<%= text_area_tag 'solicitud_reactivacion_observaciones', '', 
+						:class=>'text', :style=>'width: 500px', :rows => 5,
+						:onkeypress=>'inputChange();' -%>
+	
+			</td>
+                </tr>
+                <input type="hidden" name="codigo" value="<%= @codigo %>"/>
+                <input type="hidden" name="codigo_exitoso" value="<%= @codigo_exitoso %>"/>
+		<tr>
+			<td colspan="2" align="left">
+				<div id="botones1" ><br>
+					<%= image_submit_tag I18n.t('Sistema.Body.Imagenes.guardar'),
+					:id=>'button_save' -%>
+										
+					<%= link_to_remote(
+						image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+					  :loading =>'image_load()',
+				 	  :loaded => 'image_unload()',
+						:url => {:controller => 'consulta_evaluacion_credito', :action => :hide_suspender, :id => @solicitud.id}) -%>&nbsp;	
+								
+				</div>	
+			</td>
+		</tr>
+	</table>
+</div>	
+	<%= end_form_tag -%>

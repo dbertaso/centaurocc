@@ -1,0 +1,11 @@
+<% estado_onchange = remote_function(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url=>{:controller=>'unidades_apoyo_avaluo',
+    :action=>:estado_change },
+    :with=>"'estado_id='+value") %>
+<%= select(
+    'solicitud_avaluo', 'estado_id',
+    @estado_select.map{|e| [e.nombre, e.id]},
+    { },
+    { :class=>'select', :onchange=>estado_onchange + ';inputChange();' } ) %>

@@ -1,0 +1,167 @@
+<div class="marco-titulo"><div><div>
+	<%= "#{I18n.t('Sistema.Body.Vistas.General.buscar')} #{I18n.t('Sistema.Body.Vistas.General.estructura')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.costos')}" %> 
+    </div></div></div>
+
+<div class="marco-boton-in" id="button_new">
+  <%= link_to(image_tag('boton_agregar_modificar.gif'),
+    :action => 'new', :popup=>params[:popup] ) %>
+</div>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) do -%>
+<table>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td><%=  %>
+      <%= select(
+          'configurador', 'moneda_id',
+          options_from_collection_for_select(@moneda, 'id', 'nombre', selected=@meneda_activa),
+          {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+          {:class=>'select', :onchange=>'inputChange();'} ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label>
+    </td>
+    <td>
+      <%= select(
+        'configurador', 'estado_id',
+        @estado_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select',:onchange=> "#{remote_function(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url=>{:controller=>'estructura_costo',
+          :action=>:estado_change },
+        :with=>"'estado_id='+ this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.oficina') %></label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <div id="select-oficina">
+        <%= select(
+          'configurador', 'oficina_id',
+          @oficina_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>'inputChange();' } ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.sector') %></label>
+    </td>
+    <td>
+      <%= select(
+        'configurador', 'sector_id',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select',:onchange=>"#{remote_function(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url=>{:controller=>'estructura_costo',
+          :action=>:sector_list },
+        :with=>"'sector_id='+ this.value" )};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %></label>
+    </td>
+    <td>
+      <div id="sub-sector-select">
+        <%= select(
+          'configurador', 'sub_sector_id',
+          @sub_sector_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>"#{remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'estructura_costo',
+            :action=>:sub_sector_change },
+          :with=>"'sub_sector_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.rubro') %></label>
+    </td>
+    <td>
+      <div id="rubro-select">
+        <%= select(
+          'configurador', 'rubro_id',
+          @rubro_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>"#{remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'estructura_costo',
+            :action=>:rubro_change },
+          :with=>"'rubro_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sub_rubro') %></label>
+    </td>
+    <td>
+      <div id="sub_rubro-select">
+        <%= select(
+          'configurador', 'rubro_id',
+          @sub_rubro_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>"#{remote_function(
+          :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+          :url=>{:controller=>'estructura_costo',
+            :action=>:sub_rubro_list },
+          :with=>"'sub_rubro_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.actividad') %></label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <span id="actividad-select">
+        <%= select(
+          'configurador', 'rubro_id',
+          @actividad_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>'inputChange();' } ) %>
+      </span>&nbsp;&nbsp;&nbsp; <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<%= error %>
+<%= message %>
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+
+<div id="list">
+</div>

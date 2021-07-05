@@ -1,0 +1,33 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 220px">
+      <label><%= I18n.t('Sistema.Body.Controladores.Marca.FormTitles.form_title_record') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'marca', 'nombre', :class=>'text', :style=>'width: 500px', :maxlength=>'50'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 220px">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.descripcion') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'marca', 'descripcion', :class=>'text', :style=>'width: 500px', :maxlength=>'250'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'marca', 'activo', :checked_value=>"1", :unchecked_value=>"0" -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

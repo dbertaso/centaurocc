@@ -1,0 +1,4 @@
+<% identity = identity && !identity.to_s.empty? ? "'#{identity}'" : '' %>
+<div class="marco-titulo"><div><div>
+  Modificando  <%= @form_title_record %> <span style="color: #FF0000"><%= "#{identity.numero.to_s} del Beneficiario #{entity.cliente.nombre}%></span>
+</div></div></div>

@@ -1,0 +1,94 @@
+<%= form_title_edit I18n.t('Idiomas.idioma'+@idioma.id.to_s) %>
+
+<%= form_for(:upload, :url => { :action => "save_edit", :id=>@idioma.id}, :html => {:id=>'primer_form', :multipart => true} ) do %>    
+<script type="text/javascript">
+  varEnviado= false;
+</script>
+
+<%= errores2 %>
+<%= message %>
+<table style="width: 100%">  
+  
+  <tr>
+    <td style="width: 22%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.idioma') %></label>
+      
+    </td>
+    <td >      
+      <%=I18n.t('Idiomas.idioma'+@idioma.id.to_s)  %>      
+    </td>
+  </tr>
+  
+  
+  <tr>
+    <td style="width: 22%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nemonico') %></label>      
+    </td>
+    <td >      
+      <%=@idioma.nemonico.to_s%>      
+    </td>
+  </tr>
+  
+  
+  <tr>
+    <td style="width: 22%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.bandera') %></label>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=image_tag("/assets/paises/#{Idioma.find(params[:id]).bandera}", :height => '15', :width => '23',:style=>"position: relative; top: 3px; left: 0px;")%>
+    </td>
+    <td >      
+      <%= file_field 'upload', 'datafile' %>      
+    </td>
+  </tr>
+   
+  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>      
+    </td>
+    <td>
+      <%= check_box 'idioma', 'activo',
+        :checked_value=>true,
+        :unchecked_value=>false, :onclick=>'inputChange();' %>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.Idioma.Mensajes.archivo_traduccion_yml') %></span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td >
+      <label><%=I18n.t('Sistema.Body.Vistas.Idioma.Mensajes.archivo_yml') %></label>
+      <%if File.exist?(@archivo_yml)%>
+      <%="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=blue><b>#{@archivo_yml.to_s[@archivo_yml.to_s.length-6,6]}</b></font>".html_safe %>
+      <%else%>
+      <%="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=red><b>#{I18n.t('Sistema.Body.Vistas.Idioma.Mensajes.sin_archivo')}</b></font>".html_safe %>
+      <%end%>
+    </td>
+    <td >
+      <%= file_field 'upload2', 'datafile' %>
+    </td>
+  </tr>
+
+
+
+</table>
+
+<table style="width: 100%">
+ 
+  <tr>
+    <td  colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+      
+      
+      <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar'))), :action => 'index' %>
+      </td>
+</tr>
+</table>
+</table>
+      
+      
+<% end -%>      

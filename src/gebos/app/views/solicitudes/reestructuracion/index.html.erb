@@ -1,0 +1,169 @@
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()', :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list } ) do -%>
+    <table>
+      <tr>
+        <td style="width: 130px">
+          <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')}"%></label>
+        </td>
+        <td>
+          <select name="tipo" id="tipo" class="select">
+            <option value="V "><%=I18n.t('Sistema.Body.Vistas.General.v')%></option>
+            <option value="E "><%=I18n.t('Sistema.Body.Vistas.General.e')%></option>
+            <option value="J-"><%=I18n.t('Sistema.Body.Vistas.General.j')%></option>
+            <option value="G-"><%=I18n.t('Sistema.Body.Vistas.General.g')%></option>
+          </select>
+
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.beneficiario')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 100px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+        <td>
+          <%= select(
+            'estado_id','',
+            @estado.map{|i| [i.nombre, i.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select', :onchange=>'inputChange();' } ) %>
+
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+        </td>
+        <td>
+          <% sector_onchange = remote_function(
+            :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+            :url=>{:controller=>'reestructuracion', :action=>:sector_change },
+            :with=>"'sector_id='+value" ) %>
+
+          <%= select(
+            'sector_id', '',
+            @sector.map{|i| ["#{i.nombre} - #{i.descripcion}", i.id]},
+            {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+            { :class=>'select',:style=>'width:500px',:onchange=>sector_onchange + ';inputChange();' } ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+        </td>
+        <td>
+          <div id="sub-sector-select">
+            <% sub_sector_onchange = remote_function(
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+              :url=>{:controller=>'reestructuracion', :action=>:sub_sector_form_change },
+              :with=>"'sub_sector_id='+value") %>
+
+            <%= select(
+              'sub_sector_id', '',
+              @sub_sector_list.map{|i| [i.nombre, i.id]},
+              {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+              { :class=>'select',:style=>'width:500px',:onchange=>sub_sector_onchange + ';inputChange();' } ) %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+        </td>
+        <td>
+          <div id="rubro-select">
+            <%= select(
+              'rubro_id', '',
+              @rubro_list.map{|i| [i.nombre, i.id]},
+              {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+              { :class=>'select',:style=>'width:500px',:onchange=>'inputChange();' } ) %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+        </td>
+        <td>
+          <div id="sub_rubro-select">
+            <%= select_tag("sub_rubro_id", options_from_collection_for_select(@sub_rubro_list, "id", "nombre"), :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar'), :class=>'select', :style=>'width:500px' ) %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+        </td>
+        <td>
+          <div id="actividad-select">
+            <%= select_tag("actividad_id", options_from_collection_for_select(@actividad_list, "id", "nombre"), :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar'), :class=>'select', :style=>'width:500px' ) %>
+          </div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td style="width: 150px">
+
+        </td>
+        <td>
+
+        </td>
+        <td><%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar')), :title=>I18n.t('Sistema.Body.Vistas.General.buscar')) -%></td>
+      </tr>
+      <tr>
+
+        <td style="width: 150px">
+
+        </td>
+        <td>
+
+        </td>
+        <td> </td>
+      </tr>
+
+
+    </table>
+  <% end %>
+  <br>
+
+
+  <%= message %>
+  <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>
+
+
+  <br>
+  <div id="list">
+  </div>
+</div>
+
+<script>
+  function fila_detalle(id){
+	
+    estado = document.getElementById("row_detalle_"+id).style.display;
+    if(estado == 'none'){mostrar = 'table-row', imagen = "/assets/colapsar.gif"}else{mostrar = 'none'; imagen = "/assets/expandir.gif"}
+	
+    document.getElementById("row_detalle_"+id).style.display = mostrar;
+    document.getElementById("imagen_fila_"+id).src = imagen;
+  }
+</script>

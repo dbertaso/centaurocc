@@ -1,0 +1,52 @@
+<table class="lista" style="width: 100%">
+
+  <thead>
+    <tr>
+      <th style="width: 250px" <%= sort_class_helper('sector.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector.nombre', 'producto_list' %>
+      </th>
+      <th style="width: 275px" <%= sort_class_helper('sub_sector.descripcion') %>>
+       <%= sort_link_helper "#{Sistema.Body.Vistas.Form.descripcion} I18n.t('Sistema.Body.Vistas.General.sub_sector')", 'sector.descripcion', 'producto_list' %>
+      </th>
+      <th style="width: 250px" <%= sort_class_helper('sub_sector.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector.nombre', 'producto_list' %>
+      </th>
+      <th style="width: 275px" <%= sort_class_helper('sub_sector.descripcion') %>>
+       <%= sort_link_helper "#{Sistema.Body.Vistas.Form.descripcion} I18n.t('Sistema.Body.Vistas.General.sub_sector')", 'sector.descripcion', 'producto_list' %>
+      </th>
+      <th style="width: 84px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%
+      even_odd = 1
+      for producto in @list
+        even_odd = 1 - even_odd %>
+
+    <% producto = @origen_fondo if producto.nil? %>
+      <tr class="lista<%= even_odd %>" id="row_<%= producto.id %>">
+        <td>
+          <%= producto.sector.nombre  %>
+        </td>
+        <td>
+          <%= producto.sector.descripcion %>
+        </td>
+        <td>
+          <%= producto.sub_sector.nombre  %>
+        </td>
+        <td>
+          <%= producto.sub_sector.descripcion %>
+        </td>
+        <td style="text-align: right">
+          <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))),
+              :action => 'view_detail', :programa_id => @programa.id, :id => producto.id) %>&nbsp;
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

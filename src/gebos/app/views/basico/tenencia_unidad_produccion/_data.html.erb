@@ -1,0 +1,17 @@
+<% tenencia_unidad_produccion = @tenencia_unidad_produccion if tenencia_unidad_produccion.nil? %>
+<td style="text-align: center">
+  <%= tenencia_unidad_produccion.nombre %>
+</td>
+
+<td style="text-align: center">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => {:controller => 'tenencia_unidad_produccion', :action => :edit, :id => tenencia_unidad_produccion.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'tenencia_unidad_produccion', :action => :delete, :id => tenencia_unidad_produccion.id}) if vlink 'delete' -%>
+</td>

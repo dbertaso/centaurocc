@@ -1,0 +1,24 @@
+<div class="marco-titulo"><div><div>
+	<%=I18n.t('Sistema.Body.Vistas.General.modificando') << " " << I18n.t('Sistema.Body.Vistas.General.estado')%> <span class="titulo_modificar">'<%= @estado.nombre %>'</span> - <%=I18n.t('Sistema.Body.Vistas.General.municipio')%> <span class="titulo_modificar">'<%= @municipio.nombre %>'</span>
+</div></div></div>
+
+<div class="marco-contenido2">
+	<div class="marco-boton-in" id="button_new">
+
+	</div>
+
+	<%= error %>
+	<%= message %>
+
+	<div class="lista-form" id="form_new" style="display: none"></div>
+
+	<div id="list">
+		<%= render :partial=>'list_view' %>
+	</div>
+
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :controller=> 'estado_municipio', :action => :view, :estado_id=>@estado.id]  },
+		{ :id=>'button_close' } ) -%>
+
+</div>
+

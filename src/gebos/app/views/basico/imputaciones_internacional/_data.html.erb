@@ -1,0 +1,24 @@
+<% imputaciones_maquinaria= @imputaciones_maquinaria if imputaciones_maquinaria.nil? %>
+
+<td>
+  <%= imputaciones_maquinaria.fecha_registro_f  %>
+</td>
+<td>
+  <%gastAd = sprintf('%01.2f', imputaciones_maquinaria.gastos_administrativos).sub('.', ',')%> <%=gastAd.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+</td>
+<td>
+  <%segInt = sprintf('%01.2f', imputaciones_maquinaria.seguro_internacional).sub('.', ',')%> <%=segInt.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+</td>
+<td>
+  <%fletInt = sprintf('%01.2f', imputaciones_maquinaria.flete_internacional).sub('.', ',')%> <%=fletInt.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+</td>
+<td>
+  <%nacImp = sprintf('%01.2f', imputaciones_maquinaria.nacionalizacion_impuestos).sub('.', ',')%> <%=nacImp.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+</td>
+<td>
+  <%almace = sprintf('%01.2f', imputaciones_maquinaria.almacenamiento).sub('.', ',')%> <%=almace.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+</td>
+
+<td style="text-align: right">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'), :action => 'view', :id => imputaciones_maquinaria.id %> &nbsp;
+</td>

@@ -1,0 +1,213 @@
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.General.identificacion') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %> </label> <label style="color: red">*</label>
+    </td>
+    <td><%= select(
+        'persona', 'cedula_nacionalidad',
+        [['V','V'],['E','E']],
+        { :include_blank => false },
+        { :class=>'select', :onchange=>';inputChange();' } ) %>
+      <%= text_field 'persona', 'cedula',
+        :class=>'text', :style=>'width: 90px',
+        :maxlength=>'15', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'primer_nombre',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'segundo_nombre',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'primer_apellido',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'segundo_apellido',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sexo') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= radio_button 'persona', 'sexo', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.masculino') %><br />
+      <%= radio_button 'persona', 'sexo', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.femenino') %><br />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.estado_civil') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= radio_button 'persona', 'estado_civil', 'S', :checked => true,
+        :class=>'text', :onclick=>'inputChange();'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.soltero')}/#{I18n.t('Sistema.Body.Vistas.General.soltera')}" %><br />
+      <%= radio_button 'persona', 'estado_civil', 'C',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.casado')}/#{I18n.t('Sistema.Body.Vistas.General.casada')}" %><br />
+      <%= radio_button 'persona', 'estado_civil', 'O',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.concubino')}/#{I18n.t('Sistema.Body.Vistas.General.concubina')}" %><br />
+      <%= radio_button 'persona', 'estado_civil', 'V',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.viudo')}/#{I18n.t('Sistema.Body.Vistas.General.viuda')}" %><br />
+      <%= radio_button 'persona', 'estado_civil', 'D',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.divorciado')}/#{I18n.t('Sistema.Body.Vistas.General.divorciada')}" %><br />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.pais')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.nacimiento')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'persona', 'pais_id',
+        @pais_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nacionalidad') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <span id="nacionalidad-select">
+        <%= render :partial => 'nacionalidad_select' %>
+      </span>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.fecha_nacimiento') %></label> <label style="color: red">*</label>
+    </td>
+    <td>      
+      <%= calendar_date_select_tag "persona[fecha_nacimiento_f]", @persona.fecha_nacimiento_f, 
+        :year_range => 80.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.General.profesional') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ocupacion') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'ocupacion',
+        :class=>'text', :style=>'width: 240px',
+        :maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo_dependencia_laboral') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'persona', 'tipo_dependencia_laboral',
+        [['Independiente','Independiente'],['Empleado','Empleado']],
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.salario')} #{I18n.t('Sistema.Body.Vistas.General.mensual')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'monto_salario_f',
+        :class=>'text', :style=>'width: 170px',
+        :maxlength=>'18', :onkeypress=>'inputChange();',
+        :onBlur=>"formatCurrency(this.value, 'persona_monto_salario');",
+        :onkeyup=>"formatCurrency(this.value, 'persona_monto_salario'); "  -%>
+      <%= display_number @persona.monto_salario, 'persona_monto_salario' %>
+    </td>
+  </tr>
+  <input type="hidden" name="persona[sector_economico_id]" value="<%= @empresa.sector_economico_id %>"/>
+  <tr>
+    <td style="width: 30%" valign="top">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.asociado')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 70%">
+      <% if @disa == 1 %>
+        <%= radio_button 'empresa_integrante_tipo', 'tipo', 'R',
+          :class=>'text', :onclick=>'inputChange();', :disabled=>true  -%><%= "#{I18n.t('Sistema.Body.General.representante')} #{I18n.t('Sistema.Body.Vistas.General.legal')}" %><br />
+      <% else %>
+        <%= radio_button 'empresa_integrante_tipo', 'tipo', 'R', :checked => true,
+          :class=>'text', :onclick=>'inputChange();'  -%><%= "#{I18n.t('Sistema.Body.General.representante')} #{I18n.t('Sistema.Body.Vistas.General.legal')}" %><br />
+      <% end %>
+      <%= radio_button 'empresa_integrante_tipo', 'tipo', 'S',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.asociado') %><br />
+      <%= radio_button 'empresa_integrante_tipo', 'tipo', 'V',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.vocero') %><br />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cargo') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_integrante', 'cargo',
+        :class=>'text', :style=>'width: 240px',
+        :maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.persona')} #{I18n.t('Sistema.Body.General.contacto')}" %></label>
+    </td>
+    <td>
+      <%= check_box 'empresa_integrante', 'contacto',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onclick=>'inputChange();'-%>
+    </td>
+  </tr>
+</table>
+<input name="cliente_persona[entidad_financiera_id]" type="hidden" value="1">
+<% if @persona.conyuge_cedula.nil? %>
+  <input name="persona[conyuge_cedula_nacionalidad]" type="hidden" value="V">
+  <input name="persona[conyuge_cedula]" type="hidden" value="1">
+  <input name="persona[conyuge_nombre_apellido]" type="hidden" value="NA">
+  <input name="persona[conyuge_telefono]" type="hidden" value="0">
+<% else %>
+  <input name="persona[conyuge_cedula_nacionalidad]" type="hidden" value="<%= @persona.conyuge_cedula_nacionalidad %>">
+  <input name="persona[conyuge_cedula]" type="hidden" value="<%= @persona.conyuge_cedula %>">
+  <input name="persona[conyuge_nombre_apellido]" type="hidden" value="<%= @persona.conyuge_nombre_apellido %>">
+  <input name="persona[conyuge_telefono]" type="hidden" value="<%= @persona.conyuge_telefono %>">
+<% end %>

@@ -1,0 +1,25 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 360px" <%= sort_class_helper('femenino') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.genero')} #{I18n.t('Sistema.Body.Vistas.General.femenino')}", 'femenino', 'list' %>
+      </th>
+      <th style="width: 360px" <%= sort_class_helper('masculino') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.genero')} #{I18n.t('Sistema.Body.Vistas.General.masculino')}", 'masculino', 'list' %>
+      </th>
+      <th style="width: 50px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for nacionalidad in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :nacionalidad => nacionalidad, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,51 @@
+<script language="javascript">varEnviado = false;</script>
+
+<table style="width: 100%">
+	<tr>
+		<td style="width: 110px">
+			<label>
+				<%= I18n.t('Sistema.Body.Vistas.RiesgoInstitucion.Etiquetas.rango') %>
+			</label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'riesgo_institucion', 'dias_vencidos_cota_inferior', 
+				:class=>'text', :style=>'width: 50px', :maxlength=>'5'  -%> - 
+      <%= text_field 'riesgo_institucion', 'dias_vencidos_cota_superior', 
+        :class=>'text', :style=>'width: 50px', :maxlength=>'5'  -%> <%= "(#{I18n.t('Sistema.Body.Vistas.General.dias')})" -%>
+		</td>
+		<td></td>
+		<td></td>
+		 
+	</tr>
+	<tr>
+		<td style="width: 60px">
+			<label>
+				<%= I18n.t('Sistema.Body.Vistas.RiesgoInstitucion.Etiquetas.clasificacion')  %>
+			</label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'riesgo_institucion', 'categoria', 
+					:class=>'text', :style=>'width: 20px', :maxlength=>'1'  -%>
+                      
+		</td>
+<td></td>
+		<td></td>
+		 
+	<tr>
+		<td style="width: 60px">
+			<label>
+				<%= I18n.t('Sistema.Body.Vistas.RiesgoInstitucion.Etiquetas.porcentaje')  %>
+			</label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'riesgo_institucion', 'porcentaje_riesgo', :class=>'text', :style=>'width: 70px', :maxlength=>'9'  -%> %
+                      
+		</td>
+<td></td>
+		<td></td>
+	</tr>
+	
+	<tr>
+		<td colspan="2" style="text-align: left">
+			<%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+		

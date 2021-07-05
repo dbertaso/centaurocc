@@ -1,0 +1,24 @@
+<% programa_tipo_gasto = @programa_tipo_gasto if programa_tipo_gasto.nil? %>
+<td>
+  <%= programa_tipo_gasto.tipo_gasto.nombre  %>
+</td>
+<td>
+  <%= number_with_precision(programa_tipo_gasto.porcentaje_f, :precision => 2, :separator => '.', :delimiter => ',') %>
+</td>
+<td>
+  <%= number_with_precision(programa_tipo_gasto.monto_fijo_f, :precision => 2, :separator => '.', :delimiter => ',') %>
+</td>
+<td>
+  <%= programa_tipo_gasto.forma_cobro_w %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => {:action => :edit, :id => programa_tipo_gasto.id, :programa_id => @programa.id}) -%>
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :programa_id => @programa.id, :id => programa_tipo_gasto.id}) -%>
+</td>

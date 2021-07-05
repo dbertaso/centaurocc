@@ -1,0 +1,29 @@
+<% faenas_pesca = @faenas_pesca if faenas_pesca.nil? 
+una_embarcacion=Embarcacion.find(faenas_pesca.embarcacion_id)
+emb=TipoEmbarcacion.find(una_embarcacion.tipo_embarcacion_id)
+%>
+<td align="center">
+  <%= una_embarcacion.nombre_embarcacion  %>
+</td>
+<td align="center">
+  <%= una_embarcacion.matricula  %>
+</td>
+<td align="center">
+  <%= emb.tipo %>
+</td>
+<td align="right">
+  <%= una_embarcacion.uab_fm %>
+</td>
+
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :method=>:get, :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'faenas_pesca', :action => :edit, :id_faena => faenas_pesca.id, :id => @visita}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'faenas_pesca', :action => :delete, :id_faena => faenas_pesca.id, :id => @visita}) if vlink 'delete' -%>
+</td>
+

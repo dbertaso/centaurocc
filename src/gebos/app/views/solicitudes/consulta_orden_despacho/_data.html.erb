@@ -1,0 +1,65 @@
+<% consulta_orden_despacho = @consulta_orden_despacho if consulta_orden_despacho.nil? %>
+
+
+<td align="center">
+  <%= consulta_orden_despacho.numero_guia %>
+</td>
+<td align="center">
+  <%= consulta_orden_despacho.fecha_envio_f  %>
+</td>
+<td align="center">
+  <%= consulta_orden_despacho.fecha_llegada_f %>
+</td>
+<td align="center">
+  <%= consulta_orden_despacho.origen.strip %>
+</td>
+
+<td align="center">
+  <%  case consulta_orden_despacho.destino.strip
+		when 'F' 
+			
+			destinoi ="#{I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.oficina_asociada')} (#{consulta_orden_despacho.oficina.nombre})" unless consulta_orden_despacho.oficina.nil?
+		when 'U'
+			
+			destinoi ="#{I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.unidad_produccion_asociada')} (#{consulta_orden_despacho.unidad_produccion.nombre})" unless consulta_orden_despacho.unidad_produccion.nil?
+		else
+			destinoi =consulta_orden_despacho.direccion_destino.strip
+			#destinoi ="#{I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.otro_destino')}"
+	  end%>    
+  
+  <%= destinoi %>
+</td>
+
+<td align="center">
+  <%= consulta_orden_despacho.cedula_rif %>
+</td>
+
+
+<td align="center">
+<%= consulta_orden_despacho.beneficiario.strip %>
+</td>
+<td align="center">
+
+<font color="red"><b>
+
+<% 
+case consulta_orden_despacho.estatus.strip
+ when 'E' %>
+   <%=I18n.t('Sistema.Body.Vistas.General.elaborada')%>
+ <%when 'T'%>
+   <%=I18n.t('Sistema.Body.Vistas.General.en_transito')%>  
+<%else%>
+  <%=I18n.t('Sistema.Body.Vistas.General.recibida')%>
+<%end%></b></font>
+&nbsp;
+(<%=consulta_orden_despacho.conforme ? "<b>#{I18n.t('Sistema.Body.Vistas.General.conforme')}</b>".html_safe : "<b>#{I18n.t('Sistema.Body.Vistas.General.inconforme')}</b>".html_safe %>)
+</td>
+<td align="center">
+
+<%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.consultar_orden_despacho_maquinaria')), 
+          :action => :view,
+          :controller => 'consulta_orden_despacho',
+          :id => consulta_orden_despacho.guia_id,          
+          :solicitud_id => consulta_orden_despacho.solicitud_id) if vlink 'edit' -%>
+
+</td>

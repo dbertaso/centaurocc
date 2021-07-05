@@ -1,0 +1,19 @@
+<tr id="row_<%= @comite.id %>_view">
+	<td class="lista-form" colspan="7">
+		<div class="form-titulo">
+			<%=I18n.t('Sistema.Body.Vistas.General.consultando')%> <%= @form_title_record %> <span style="color: #FF0000">'<%= @comite.numero %>'</span>
+		</div>
+	
+		<%= error "row_#{@comite.id}" %>
+	
+		<%= render :partial => 'form_view' %>
+		<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		:loading =>'image_load()',
+		:loaded => 'image_unload()',
+		:url => { :action => :cancel_view, :id => @comite.id}) -%>
+	</td>
+</tr>
+</table>
+<br>
+	</td>
+</tr>

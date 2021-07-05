@@ -1,0 +1,6 @@
+<%= select_tag('partida_id',
+		          [options_for_select([["Seleccione una partida", "0"]]),options_for_select(@partida_select.map{|i| [i.nombre, i.id]})],
+              { :class=>'select', :onchange=>'inputChange();'} ) %>
+
+
+

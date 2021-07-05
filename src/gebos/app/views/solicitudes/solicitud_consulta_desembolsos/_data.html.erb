@@ -1,0 +1,31 @@
+<td>
+  <%= solicitud.numero_solicitud unless solicitud.nil? %>
+</td>
+<td>
+
+  <%= solicitud.numero unless solicitud.nil? %>
+</td>
+<td>
+  <%= solicitud.identificacion unless solicitud.nil? %>
+</td>
+<td>
+  <%= solicitud.nombre_cliente unless solicitud.nil? %>
+</td>
+<td>
+  <%= solicitud.rubro_nombre unless solicitud.nil?%>
+</td>
+<td>
+  <%= solicitud.estado_nombre unless solicitud.nil? %>
+</td>
+<td>
+  <%= estatus_prestamo(solicitud.estatus_p) unless solicitud.nil? %>
+</td>
+<td>
+  <%= solicitud.moneda_nombre + ' - ' + solicitud.moneda_abreviatura unless solicitud.nil? %>
+</td>
+<!-- Descomentar esto para pago proyectado -->
+
+<td style="text-align: right">
+   <%= link_to(image_tag('consultar.gif'),:action=>'view',:id=>solicitud.id) %>&nbsp;
+
+</td>

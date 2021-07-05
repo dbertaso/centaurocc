@@ -1,0 +1,35 @@
+<%= form_title_view @cuenta_contable.codigo + ' - ' + @cuenta_contable.nombre %>
+
+<%= render :partial=>'contabilidad/cuenta_contable/common/tabs' %>
+<div class="marco-contenido2">
+
+	<table>
+    	<tr>
+    		<td style="width: 150px">
+    			<label><%= t('Sistema.Body.Vistas.CuentaContable.Etiquetas.codigo') %>:</label>
+    		</td>
+    		<td style="width: 550px">
+    			<%= @cuenta_contable.codigo -%>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			<label><%= t('Sistema.Body.Vistas.CuentaContable.Etiquetas.nombre') %>:</label>
+    		</td>
+    		<td>
+        		<%= @cuenta_contable.nombre -%>
+    		</td>
+    	</tr>
+	</table>
+		
+	<%= link_to( image_tag(image_path(t('Sistema.Body.Imagenes.modificar'))),
+		:action => :edit,
+		:id => @cuenta_contable.id,
+		:html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+		
+	<%= link_to( image_tag(image_path(t('Sistema.Body.Imagenes.cerrar'))),
+		{ :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+</div>

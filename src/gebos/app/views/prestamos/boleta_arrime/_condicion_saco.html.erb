@@ -1,0 +1,85 @@
+<table align="center" border="1" width="60%">
+  <% unless @condicion_saco_list.nil?
+    seco = 0.00
+    mojado = 0.00
+    humedo = 0.00
+    if @condicion_saco_list.length > 1
+      @condicion_saco_list.each{|a|
+        if a.nombre == "SECO" ; seco = a.porcentaje_f end
+        if a.nombre == "MOJADO" ; mojado = a.porcentaje_f end
+        if a.nombre == "HUMEDO" ; humedo = a.porcentaje_f end
+      }
+    elsif @condicion_saco_list.length == 1
+      if @condicion_saco_list[0].nombre == "SECO"
+        seco = @condicion_saco_list[0].porcentaje_f
+        mojado = 0.00
+        humedo = 0.00
+      elsif @condicion_saco_list[0].nombre == "MOJADO"
+        mojado = @condicion_saco_list[0].porcentaje_f
+        seco = 0.00
+        humedo = 0.00
+      elsif @condicion_saco_list[0].nombre == "HUMEDO"
+        humedo = @condicion_saco_list[0].porcentaje_f
+        seco = 0.00
+        mojado = 0.00
+      end
+    else
+      seco = 0.00
+      mojado = 0.00
+      humedo = 0.00
+    end
+  end
+%>
+  <tr align="center">
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.sacos')%></label></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.unidad')%></label></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje_aplica')%></label></td>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.valor_kg')%></label></td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.secos')%></label></td>
+    <td><%= text_field 'boleta_arrime', 'secos', :class=>'text', :maxlength=>'12', :style=>'width: 120px',
+        :onkeypress=>'return NumberKey(event);', :onchange=>';inputChange(); calKg();' -%></td>
+    <td><%= text_field 'boleta_arrime', 'porcentaje_aplicado_seco', :value=>"#{seco}", :class=>'text', :maxlength=>'5',
+        :style=>'width: 120px; text-align: right;',  :readonly=> 'readonly'  -%></td>
+    <td><%= text_field 'boleta_arrime', 'total_secos_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px',  :readonly=> 'readonly'  -%></td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.titulo_humedo') %></label></td>
+    <td><%= text_field 'boleta_arrime', 'humedos', :class=>'text', :maxlength=>'12', :style=>'width: 120px',
+        :onkeypress=>'return NumberKey(event);', :onchange=>';inputChange(); calKg();' -%></td>
+    <td><%= text_field 'boleta_arrime', 'porcentaje_aplicado_humedo', :value=>"#{humedo}", :class=>'text', :maxlength=>'5',
+        :style=>'width: 120px; text-align: right;',  :readonly=> 'readonly'  -%></td>
+    <td><%= text_field 'boleta_arrime', 'total_humedos_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px',  :readonly=> 'readonly'  -%></td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.titulo_mojado')%></label></td>
+    <td><%= text_field 'boleta_arrime', 'mojados', :class=>'text', :maxlength=>'12', :style=>'width: 120px',
+        :onkeypress=>'return NumberKey(event);', :onchange=>';inputChange(); calKg();' -%></td>
+    <td><%= text_field 'boleta_arrime', 'porcentaje_aplicado_mojado', :value=>"#{mojado}", :class=>'text', :maxlength=>'5',
+        :style=>"width: 120px; text-align: right;",  :readonly=> 'readonly'  -%></td>
+    <td><%= text_field 'boleta_arrime', 'total_mojados_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px',  :readonly=> 'readonly'  -%></td>
+  </tr>
+  <tr>
+    <td align="right"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.total_sacos')%></label></td>
+    <td><%= text_field 'boleta_arrime', 'total_sacos', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px',  :readonly=> 'readonly'  -%></td>
+    <td align="right"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.total_kg')%></label></td>
+    <td><%= text_field 'boleta_arrime', 'total_kg_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px',  :readonly=> 'readonly'  -%></td>
+  </tr>
+ 
+</tr>
+<tr>
+  <td><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_bruto_ajustado')%></label></td>
+  <td><%= text_field 'boleta_arrime', 'peso_neto_f', :class=>'text', :maxlength=>'12',
+      :style=>'width: 120px', :readonly=> 'readonly' -%>
+   </td>
+  <td><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_neto')%></label></td>
+  <td><%= text_field 'boleta_arrime', 'peso_acondicionado_f', :class=>'text', :maxlength=>'12', :style=>'width: 120px',  :readonly=> 'readonly' -%>
+  </td>
+</tr>
+</table>

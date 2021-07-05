@@ -1,0 +1,285 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.consultando')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.Vistas.General.de') %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%#= @solicitud.estatus_w -%></span>
+      </div></div></div>
+
+  <%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.datos')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}" %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <% unless @solicitud.numero.nil? -%><label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></label><% end -%>
+        </td>
+        <td>
+          <%= @solicitud.numero -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></label>
+        </td>
+        <td style="width: 500px">
+          <%= @solicitud.fecha_solicitud_f %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.programa') %></label></td>
+        <td>
+          <%= @solicitud.programa.alias %>
+        </td>
+      </tr>  
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label></td>
+        <td>
+          <div id="modalidad-select">
+            <%= @solicitud.sector_id>0 ? @solicitud.sector.nombre : '' %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %></label>
+        </td>
+        <td style="text-align: justify">
+          <%= @solicitud.sub_sector_id>0 ? @solicitud.sub_sector.nombre : ''  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></label>
+        </td>
+        <td style="text-align: justify">
+          <%= @solicitud.rubro_id>0 ? @solicitud.rubro.nombre : ''  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.hectareas')} #{I18n.t('Sistema.Body.Vistas.General.solicitadas')}" %></label>
+        </td>
+        <td style="text-align: justify">
+          <%= @solicitud.unidad_produccion.total_hectareas  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.General.monto_solicitado') %></label>
+        </td>
+        <td style="text-align: justify">
+          <%= @solicitud.monto_solicitado  %> <%= I18n.t('Sistema.Body.General.ab_bolivares') %>
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.datos')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.General.beneficiario') %></label>
+        </td>
+        <td>
+          <%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.alias : @solicitud.cliente.persona.nombre_corto %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 30%">
+          <label><%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? I18n.t('Sistema.Body.Vistas.General.rif') : I18n.t('Sistema.Body.Vistas.General.cedula') %></label>
+        </td>
+        <td style="width: 70%">
+          <% if @solicitud.cliente.class.to_s=='ClienteEmpresa' %>
+            <%= @solicitud.cliente.empresa.rif %>
+            <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+              { :controller=>'/clientes/cliente_empresa', :action=>'view', :id=>@solicitud.cliente.empresa.id, :popup=>true },
+              :popup => ['cliente_empresa', 'height=600,width=800, scrollbars=yes, resizable=yes']	%>
+          <% else %>
+            <%= @solicitud.cliente.persona.cedula %>
+            <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+              { :controller=>'/clientes/cliente_persona', :action=>'view', :id=>@solicitud.cliente.persona.id, :popup=>true },
+              :popup => ['cliente_persona', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+          <% end %>
+        </td>
+      </tr>
+
+      <% if @solicitud.cliente.class.to_s=='ClientePersona' %>
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.sexo') %></label>
+          </td>
+          <td>
+            <%= @solicitud.cliente.persona.sexo_w %>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label><%= I18n.t('Sistema.Body.Vistas.General.edad') %></label></td>
+          <td>
+            <%= if @solicitud.cliente.persona.fecha_nacimiento.nil?
+              @solicitud.cliente.persona.edad(Time.now, Time.now)
+            else
+              @solicitud.cliente.persona.edad(Time.now, @solicitud.cliente.persona.fecha_nacimiento)
+            end
+          %>
+          </td>
+        </tr> 
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.estado_civil') %></label>
+          </td>
+          <td>
+            <%= @solicitud.cliente.persona.estado_civil.to_s == 'S' ? I18n.t('Sistema.Body.Vistas.General.soltero') : '' %>
+            <%= @solicitud.cliente.persona.estado_civil.to_s == 'C' ? I18n.t('Sistema.Body.Vistas.General.casado') : '' %>
+            <%= @solicitud.cliente.persona.estado_civil.to_s == 'V' ? I18n.t('Sistema.Body.Vistas.General.viudo') : '' %>
+            <%= @solicitud.cliente.persona.estado_civil.to_s == 'D' ? I18n.t('Sistema.Body.Vistas.General.divorciado') : '' %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.numero_hijos') %></label>
+          </td>
+          <td>
+            <%= @solicitud.cliente.persona.cantidad_total_hijos %>
+          </td>
+        </tr>
+
+        <% if @solicitud.cliente.persona.estado_civil == 'C' %>
+          <tr>
+            <td class="separador" valign="bottom" colspan="2">
+              <span><%= "#{I18n.t('Sistema.Body.Vistas.General.informacion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}" %></label></td>
+            <td>
+              <%= @solicitud.cliente.persona.conyuge_nombre_apellido == '' ? '' : @solicitud.cliente.persona.conyuge_nombre_apellido %>
+            </td>
+          </tr> 
+
+          <tr>
+            <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %></label></td>
+            <td>
+              <% if @solicitud.cliente.persona.conyuge_nombre_apellido != '' %>
+                <%= @solicitud.cliente.persona.conyuge_cedula_nacionalidad %>-<%= @solicitud.cliente.persona.conyuge_cedula %>
+              <% end %>
+            </td>
+          </tr> 
+
+          <tr>
+            <td><label><%= I18n.t('Sistema.Body.Vistas.General.sexo') %></label></td>
+            <td>
+              <% if @solicitud.cliente.persona.conyuge_nombre_apellido != '' %>
+                <%= @solicitud.cliente.persona.sexo == false ? 'Masculino' : 'Femenino' %>
+              <% end %>
+            </td>
+          </tr> 
+
+          <tr>
+            <td valign="top"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.telefonos')}" %></label></td>
+            <td>
+              <%= @solicitud.cliente.persona.conyuge_telefono %><br />
+              <%= @solicitud.cliente.persona.conyuge_celular %> 
+            </td>
+          </tr> 
+        <% end %>
+      <% end %>
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.datos')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')}" %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label></td>
+        <td>
+          <%= @solicitud.unidad_produccion.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.General.direccion') %></label></td>
+        <td>
+          <%= @solicitud.unidad_produccion.direccion %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= "#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.practica')}" %></label></td>
+        <td>
+          <%= @solicitud.unidad_produccion.referencia %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.estado')}/#{I18n.t('Sistema.Body.Vistas.General.municipio')}/#{I18n.t('Sistema.Body.Vistas.General.parroquia')}" %></label></td>
+        <td>
+          <%= @solicitud.unidad_produccion.municipio.estado.nombre %> / <%= @solicitud.unidad_produccion.municipio.nombre %> / <%= @solicitud.unidad_produccion.parroquia.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label></td>
+        <td>
+          <%= @solicitud.unidad_produccion.sector %>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.General.tenencia_tierra') %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan=2>
+          <%=  @tenencia.nombre %>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.documento_propiedad')}" %></span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td colspan=2>
+          <%=  @documento.tipo %>
+        </td>
+      </tr>
+
+
+      <tr height=10><td colspan="2"></td></tr>
+
+    </table>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :action => :index,:controller=>'consulta_evaluacion_credito' },
+      { :id=>'button_close' } ) -%>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="marco">
+<div class="marco-contenido">
+	<%= form_title_search %>
+	<%= form_remote_tag(
+	:loading =>'Element.show("loading")',
+	:loaded => 'Element.hide("loading")',
+  :url => { :action => :procesar } ) -%>
+	      <table border='0'>
+          <tr>
+            <td style="width: 130px">
+              <label>Fecha</label>
+            </td>
+            <td>
+              <%= fecha_procesar_dataload('tipo','fecha') %>
+            </td>
+          </tr>
+          <tr id='div_tipo_transaccion'>
+            <td style="width: 130px">
+              <label>Tipo Transacción</label>
+            </td>
+            <td> <label>Seleccione una fecha:</label></td>
+            <td><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.procesar')) -%></td>
+          </tr>
+        </table>
+
+<%= end_form_tag %>
+<%= error %>
+<%= message %>
+
+<div id="lista_oculta" style="display:none">
+
+<table class="lista" style="width: 100%">
+		<thead>
+		<tr id="row_title">
+ 			 <th style="width: 10%" <%= sort_class_helper('gebos_contabilidad_dataload.nombre_archivo') %>>
+				<%= sort_link_helper 'Nombre del Archivo', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+			<th style="width: 10%" <%= sort_class_helper('gebos_contabilidad_dataload.tipo_archivo') %>>
+				<%= sort_link_helper 'Tipo Movimiento', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+ 			 <th style="width: 10%" <%= sort_class_helper('gebos_contabilidad_dataload.fecha_creacion') %>>
+				<%= sort_link_helper 'Fecha Creación', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+ 			 <th style="width: 10%" <%= sort_class_helper('gebos_contabilidad_dataload.numero_filas') %>>
+				<%= sort_link_helper 'N.   filas', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+ 			 			 <th style="width: 5%" <%= sort_class_helper('gebos_contabilidad_dataload.numero_filas') %>>
+				<%= sort_link_helper '', 'gebos_contabilidad_dataload', 'list' %>
+ 			</th>
+		</tr>
+		</thead>
+  <tbody>
+  <tr id="row_0" class="lista0" style="font-weight:bold"></tr>
+  </tbody>
+</table>
+</div>
+	<div id="list_form">
+	</div>
+</div>
+

@@ -1,0 +1,28 @@
+<%= form_title %>
+<div class="marco-contenido2">
+	<br>
+
+	<table>
+		<tr>
+			<td>
+				<label align="center" style="color:red;font-style:oblique;font-bold:true;font-size:20px">
+
+					<%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.proceso_aplicacion_finalizado') %>:   
+				</label>
+			</td>
+	</table>
+  <br><br><br><br>
+  <div id="regresar">
+  <%= link_to(I18n.t('Sistema.Body.Menu.menu883'),
+				{ :action => :index},
+				{ :id=>'button_close',:class=>'myButton'} ) -%>
+  </div>
+		
+
+<center>
+	
+	<div>
+	<%= @feedback %>
+	</div>
+</center>
+</div>

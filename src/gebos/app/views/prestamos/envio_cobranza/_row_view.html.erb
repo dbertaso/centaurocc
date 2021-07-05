@@ -1,0 +1,4 @@
+<% control_envio_cobranza = @control_envio_cobranza if control_envio_cobranza.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= control_envio_cobranza.id %>">
+	<%= render :partial => 'data_view', :locals => { :control_envio_cobranza => control_envio_cobranza, :even_odd => even_odd } -%>
+</tr>

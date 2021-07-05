@@ -1,0 +1,9 @@
+<ul class="clientes">
+<% for cliente in @clientes do -%>
+	<% if cliente.class.to_s=='ClienteEmpresa' %>
+		<li id="<%= cliente.empresa.rif %>"><%=h cliente.empresa.nombre %></li>
+	<% else %>
+		<li id="<%= cliente.persona.cedula %>"><%=h cliente.persona.nombre_corto %></li>
+	<% end %>
+<% end -%>
+</ul>

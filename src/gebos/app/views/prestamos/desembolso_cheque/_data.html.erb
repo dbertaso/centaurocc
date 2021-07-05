@@ -1,0 +1,63 @@
+<td checked=false, align="center"><%= check_box_tag 'desembolso_id', desembolso.desembolso_id, checked=false, :onClick=>'checkOne(this,form.todos);muestro();' %></td>
+
+<td align="right">
+  <%= desembolso.beneficiario %>
+</td>
+
+<td align="center">
+  <%= desembolso.cedula_rif %>
+</td>
+
+<td align="center">
+  <%=  desembolso.nro_tramite  %>
+</td>
+
+<td align="center">
+  <%= desembolso.estado %>
+</td>
+
+<td align="center">
+  <%= desembolso.municipio %>
+</td>
+
+<td align="center">
+  <%= desembolso.sector %>
+</td>
+<td align="center">
+  <%= desembolso.actividad %>
+</td>
+
+<td align="center">
+  <%= desembolso.nombre %>
+</td>
+
+<td align="center">
+  <%= desembolso.numero_desembolso %>
+</td>
+
+<td align="center">
+  <%= desembolso.moneda %>
+</td>
+
+<td align="right">
+  <%= desembolso.monto_liquidar_fm %>
+</td>
+
+<td align="right">
+  <%= desembolso.monto_banco_fm %>
+</td>
+
+<td align="right">
+  <%= desembolso.monto_liquidado_fm %>
+</td>
+
+<td align="right">
+  <%= desembolso.monto_por_liquidar_fm %>
+</td>
+
+
+<td style="text-align: center">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), {:controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>desembolso.solicitud_id, :popup=>true  }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>desembolso.solicitud_id) + "','height=600,width=1100, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>
+</td>
+
+

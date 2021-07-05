@@ -1,0 +1,57 @@
+<table class="lista" style="width: 99%">
+  <thead>
+    <tr>
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('contrato_maquinaria_equipo_id') %>>
+        <%=sort_link_helper I18n.t('Sistema.Body.Vistas.Form.convenio'), 'contrato_maquinaria_equipo_id', 'list' %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center">
+        <%= I18n.t('Sistema.Body.Vistas.General.rubro') %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('clase.nombre') %>>
+        <%=sort_link_helper I18n.t('Sistema.Body.Vistas.General.tipo'), 'clase.nombre', 'list' %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('marca_maquinaria.nombre') %>>
+        <%=sort_link_helper I18n.t('Sistema.Body.Vistas.General.marca'), 'marca_maquinaria.nombre', 'list' %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('Modelo.nombre') %>>
+        <%=sort_link_helper I18n.t('Sistema.Body.Vistas.General.modelo'), 'Modelo.nombre', 'list' %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('serial') %>>
+        <%=sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}", 'serial', 'list' %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('chasis') %>>
+        <%=sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}", 'chasis', 'list' %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('monto') %>>
+        <%=sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto'), 'monto', 'list' %>
+      </th>
+
+      <th style="width: 10%" style="text-align: center" <%= sort_class_helper('estatus') %>>
+        <%=sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'estatus', 'list' %>
+      </th>
+
+      <th style="width: 5%" style="text-align: center">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for catalogo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :catalogo => catalogo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

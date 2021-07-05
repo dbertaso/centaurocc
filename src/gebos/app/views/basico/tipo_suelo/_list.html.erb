@@ -1,0 +1,28 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 200px" <%= sort_class_helper('tipo_suelo.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nombre'), 'tipo_suelo.nombre', 'list' %>
+      </th> 			
+      <th style="width: 200px" <%= sort_class_helper('tipo_suelo.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.descripcion'), 'tipo_suelo.descripcion', 'list' %>
+      </th> 	
+      <th style="width: 15px" <%= sort_class_helper('tipo_suelo.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'tipo_suelo.activo', 'list' %>
+      </th> 			 			
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for tipo_suelo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :tipo_suelo => tipo_suelo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

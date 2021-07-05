@@ -1,0 +1,238 @@
+<br/>
+<br/>
+<div id="encabezado">
+  <table>
+
+    <tr style="font-family:verdana;color:blue;font-size:20px;">
+      <td> <%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.rubro')%>  <td>
+      <td> <%= @plan.rubro_nombre %> </td>
+    </tr>
+    <tr style="font-family:verdana;color:blue;font-size:20px;">
+      <td> <%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.sub_rubro')%>  <td>
+      <td> <%= @plan.solicitud.sub_rubro.nombre %> </td>
+    </tr>
+    <tr style="font-family:verdana;color:blue;font-size:20px;">
+      <td> <%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.actividad')%>  <td>
+      <td> <%= @plan.solicitud.actividad.nombre %> </td>
+    </tr>
+  </table>
+</div>
+
+<table class="lista">
+
+  <tr>
+    <th style="width:5px">
+      <input type="checkbox" id="todos" name="todos" onclick="GenericcheckAll(form.item_id,form.todos,'plan_inversion_id')"  title="<%="#{I18n.t('Sistema.Body.Vistas.General.seleccionar')} #{I18n.t('Sistema.Body.Vistas.General.todos')}"%>">
+    </th>
+    <th style="width:260px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.descripcion_item')%></th>
+    <% if @plan.tipo_item == "I"%>
+      <th style="width:40px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.cantidad_recomendada')%></th>
+      <th style="width:100px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.unidad_medida')%></th>
+    <% end %>
+
+    <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_aprobado')%></th>
+    <% if @plan.tipo_item == "B"%>
+      <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_desembolsado')%></th>
+      <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_por_desembolsar')%></th>
+    <%else%>
+      <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_despachado')%></th>
+      <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_por_despachar')%></th>
+    <%end%>
+
+    <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_recomendado')%></th>
+    <% if @plan.tipo_item == "B"%>
+      <th style="width:20px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.numero_desembolso')%></th>
+    <%else%>
+      <th style="width:20px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.numero_despacho')%></th>
+    <%end%>
+  </tr>
+</thead>
+<tbody id="list_body">
+
+  <% even_odd = 1
+  partida = ""
+  rubro = ""
+  monto_partida = 0.00
+  monto_rubro = 0.00
+  monto_banco = 0.00
+  monto_insumos = 0.00
+  monto_desembolsado = 0.00
+  monto_x_desembolsar = 0.00
+  monto_recomendado = 0.00
+  @plan_inversion.each do |plan|
+    even_odd = 1 - even_odd 
+  %>
+
+    <% if partida != plan.partida_nombre
+      unless partida.empty? %>
+
+        <tr class="lista<%= even_odd %>">
+          <td></td>
+          <td style="text-align: left"><b><%= "Total #{partida}"%></b></td>
+          <% if @plan.tipo_item == "I"%>
+            <td></td>
+            <td></td>
+          <% end%>
+          <td style="text-align: right">
+            <b>  <%= format_fm(monto_partida) %>
+            </b>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+          <td></td>
+        </tr>
+      <% end %>
+      <% partida = plan.partida_nombre
+      monto_partida = 0.00 %>
+
+      <tr class="lista<%= 1 - even_odd %>">
+        <td></td>
+        <td><b><%=plan.partida_nombre %></b></td>
+        <% if @plan.tipo_item == "I"%>
+          <td></td>
+          <td></td>
+        <% end%>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
+
+    <% if rubro.empty?
+      rubro = plan.rubro_nombre
+    end    
+  %>
+
+    <tr class="lista<%= even_odd %>">
+      <td align="center">
+        <input type="checkbox" name="item_id" id="item_id"   onClick="GenericcheckOne(this,form.todos,'plan_inversion_id');" value="<%= plan.id %>" <%= plan.marcado unless plan.marcado.nil? %> <%= plan.disponible unless plan.disponible.nil? %> />
+        <% if plan.marcado == 'checked'  %>
+          <script>
+            if (document.getElementById("plan_inversion_id").value == ''){
+              document.getElementById("plan_inversion_id").value = '<%= plan.id %>,';
+            }else{
+              document.getElementById("plan_inversion_id").value = document.getElementById("plan_inversion_id").value + <%= plan.id %> +",";
+            }
+          </script>
+
+        <% end  %>
+
+      </td>
+
+      <td align="left">
+        <%= plan.item_nombre %>
+      </td>
+      <% if @plan.tipo_item == "I"%>
+        <td align="right">
+          <%= format_f3((@visitas.seguimiento_cultivo.superficie_recomendada * plan.cantidad_por_hectarea )) unless @visitas.seguimiento_cultivo.superficie_recomendada.nil? %>
+        </td>
+        <td align="left">
+          <%=  plan.unidad_medida.nombre %>
+        </td>
+      <% end%>
+
+      <td align="right">
+        <%= plan.monto_financiamiento_fm  unless plan.monto_financiamiento.nil? %>
+      </td>
+
+      <td align="right">
+
+        <%= plan.monto_desembolsado_fm  unless plan.monto_desembolsado.nil? %>
+      </td>
+
+      <td align="right">
+        <% montodes = (plan.monto_financiamiento - plan.monto_desembolsado)
+        montoxrec = (@visitas.seguimiento_cultivo.superficie_recomendada * plan.costo_real )
+        if (montodes <= 0)
+          montodes = 0
+          montoxrec = 0
+        elsif (montodes < montoxrec)
+          montoxrec = montodes
+        end
+      %>
+        <%= format_fm(montodes) unless plan.monto_financiamiento.nil? || plan.monto_desembolsado.nil? %>
+
+      </td>
+
+      <td align="right">
+        <%monto_recomendado+=montoxrec%>
+        <%= format_fm(montoxrec) unless @visitas.seguimiento_cultivo.superficie_recomendada.nil? %>
+      </td>
+
+      <td align="center">
+        <%= plan.numero_desembolso  unless plan.numero_desembolso.nil? %>
+      </td>
+
+    </tr>
+
+    <% monto_partida += plan.monto_financiamiento
+    monto_rubro += plan.monto_financiamiento
+
+    if plan.tipo_item == 'B'
+      monto_banco += plan.monto_financiamiento
+    end
+
+    if plan.tipo_item == 'I'
+      monto_insumos += plan.monto_financiamiento
+    end%>
+
+  <%end%>
+
+  <tr class="lista<%= 1 - even_odd %>">
+    <td></td>
+    <td style="text-align: left"><b><%= "Total #{partida}"%></b></td>
+    <% if @plan.tipo_item == "I"%>
+      <td></td>
+      <td></td>
+    <% end%>
+    <td style="text-align: right">
+      <b>  <%= format_fm(monto_partida) %>
+      </b>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr class="lista<%= 1 - even_odd %>">
+    <td></td>
+    <td style="text-align: left"><b><%= "Total General" %></b></td>
+    <% if @plan.tipo_item == "I"%>
+      <td></td>
+      <td></td>
+    <% end %>
+
+    <td style="text-align: right">
+      <b>  <%=  format_fm(monto_rubro) %>
+      </b>
+    </td>
+    <td style="text-align: right">
+      <b>  <%= format_fm(@total_monto_desembolsado) %>
+      </b>
+    </td>
+    <td style="text-align: right">
+      <b>  <%= format_fm(@total_monto_x_desembolsar) %>
+      </b>
+    </td>
+    <td style="text-align: right">
+      <b>  <%= format_fm(monto_recomendado) %>
+      </b>
+    </td>
+    <td></td>
+  </tr>
+
+</tbody>
+</table>
+<br/>
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+<div class="marco-titulo"><div><div>
+	<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.modificando_acta_silo')%> <span class="titulo_modificar">'<%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%= @acta_silo.nro_acta %>'</span>
+</div></div></div>
+
+<%= render :partial=>'basico/silo/common/tabs' %>
+<div class="marco-contenido">
+
+
+  <%= render :partial=>'basico/acta_silo/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <div class="marco-boton-in" id="button_new">
+      <%= link_to(image_tag('boton_agregar.gif'),
+        :action => 'new', :silo_id=>@silo.id, :acta_silo_id=>@acta_silo.id, :popup=>params[:popup] ) if vlink 'edit' %>
+    </div>
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+
+    <div id="list">
+      <%= render :partial=>"list" %>
+    </div>
+    <br/>
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+      { :controller=> 'acta_silo', :action => :index, :silo_id=>@silo.id },
+      { :id=>'button_close' } ) -%>
+  </div>
+</div>

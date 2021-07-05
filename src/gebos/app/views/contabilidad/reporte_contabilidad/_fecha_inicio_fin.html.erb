@@ -1,0 +1,28 @@
+<table>
+<tr>
+    <td style="width: 35%">
+	    <label>Fecha Desde</label>
+    </td>
+    <td style="width: 65%">
+    
+	    <%= text_field_tag 'mes',@mes,
+		  :class=>'text', :style=>'width: 25px',
+		  :maxlength=>'2', :onkeypress=>'inputChange();' -%>
+		 
+		  
+    </td>
+</tr>
+<tr>
+    <td style="width: 35%">
+	    <label>Fecha Hasta</label>
+    </td>
+    <td style="width: 65%">
+    
+	    <%= text_field_tag 'ano',@ano,
+		  :class=>'text', :style=>'width: 50px',
+		  :maxlength=>'4', :onkeypress=>'inputChange();' -%>
+		 
+		  
+    </td>
+</tr>
+</table>

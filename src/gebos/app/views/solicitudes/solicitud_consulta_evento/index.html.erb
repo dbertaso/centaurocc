@@ -1,0 +1,60 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+  <div class="marco-titulo"><div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.datos')} #{I18n.t('Sistema.Body.Vistas.General.datos')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %>
+      </div></div></div>
+
+  <table>
+    <tr>
+      <td style="width: 20%">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></label>
+      </td>
+      <td><%=  @solicitud.numero %></td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.General.beneficiario') %></label>
+      </td>
+      <td><% if @solicitud.cliente.class.name == "ClienteEmpresa" %>
+          <%= @solicitud.cliente.empresa.nombre %>
+        <% else %>
+          <%= @solicitud.cliente.persona.primer_nombre + ' ' + @solicitud.cliente.persona.primer_apellido %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.cedula')} / #{I18n.t('Sistema.Body.Vistas.General.rif')}" %></label>
+      </td>
+      <td><% if @solicitud.cliente.class.name == "ClienteEmpresa" %>
+          <%= @solicitud.cliente.empresa.rif %>
+        <% else %>
+          <%= @solicitud.cliente.persona.cedula_nacionalidad + '-' + @solicitud.cliente.persona.cedula.to_s %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.ultimo')} #{I18n.t('Sistema.Body.Vistas.Form.estatus')}" %></label>
+      </td>
+      <td><%= format_fecha(@solicitud.fecha_actual_estatus) %></td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.estatus')} #{I18n.t('Sistema.Body.Vistas.General.actual')}" %></label>
+      </td>
+      <td>
+        <%= @solicitud.estatus_w %>
+      </td>
+    </tr>
+
+  </table>
+  <br/>
+  <%= error %>
+  <%= message %>
+  <%= render :partial => 'list' %>
+<center><%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+               {  },
+               { :id=>'buton_cerrar',:onclick=>"window.close();return false;" } ) -%></center>
+</div>

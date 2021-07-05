@@ -1,0 +1,74 @@
+<div class="marco-contenido">
+  <div class="marco-titulo">
+      <div><div>
+          <%= "#{I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.modificando_tramite')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.General.beneficiario') %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+        </div></div>
+    </div>
+
+  <%= render :partial=>'solicitudes/gestionar_garantia/common/tabs' %>
+  <div class="marco-contenido2">
+    <div class="marco-titulo">
+      <div><div>
+          <%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.historico_garantia')%>
+        </div></div>
+    </div>
+
+    <br/>
+    
+    <table class="lista" style="width: 70%">
+      <tr>
+        <th style="width: 10%">
+          <%=I18n.t('Sistema.Body.General.version')%>
+        </th>
+        <th style="width: 35%">
+          <%=I18n.t('Sistema.Body.Controladores.TipoGarantia.FormTitles.form_title')%>
+        </th>
+        <th style="width: 25%">
+          <%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.fecha_actualizacion')%>
+        </th>
+        <th style="width: 25%">
+          <%= I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.hora_actualizacion')%>
+        </th>
+        <th style="width: 5%"></th>
+      </tr>
+
+      <% clase = "lista0"
+         version = @solicitud_avaluo.length
+         @solicitud_avaluo.each { |garantia| %>
+        <tr class="<%= clase %>">
+          <td align="center">
+            <%= version %>
+          </td>
+          <td>
+            <%= garantia.solicitud_tipo_garantia.tipo_garantia.nombre %>
+          </td>
+          <td align="center">
+            <%= garantia.fecha_actualizacion_f %>
+          </td>
+          <td align="center">
+            <%= format_fecha(garantia.fecha_actualizacion) %>
+          </td>
+          <td align="center">
+            <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+                {:action => :view_detail,
+                :id => garantia.id} %>
+          </td>
+        </tr>
+      <% if clase == 'lista0'
+          clase = 'lista1'
+        else
+          clase = 'lista0'
+        end
+        version = version - 1
+      } %>
+    </table>
+
+    <br/>
+
+    <%#= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+            { :controller => "gestionar_garantia", :action => :edit, :id => @solicitud.id },
+            { :id=>'button_close' } ) -%>
+
+  </div>
+
+</div>

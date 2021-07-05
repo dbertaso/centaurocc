@@ -1,0 +1,60 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 350px">
+        Nombre de Recaudo
+      </th>
+      <th style="text-align: center; width: 50px">
+        Obligatoriedad
+      </th>
+      <th style="text-align: center; width: 50px">
+        Entregado
+      </th>
+      <th style="text-align: center; width: 50px">
+        Verificado
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for solicitud_recaudo in @solicitud_recaudo_list
+      even_odd = 1 - even_odd
+    %>
+      <tr class="lista<%= even_odd %>" id="row_<%= solicitud_recaudo.id %>">
+        <td>
+          <%= solicitud_recaudo.recaudo.nombre  %>
+        </td>
+        <td align="center">
+          <%= format_bool solicitud_recaudo.recaudo.obligatorio -%>
+        </td>
+        <td style="text-align: center;">
+          <%= check_box_tag "solicitud_recaudo_check_#{solicitud_recaudo.id}",
+            solicitud_recaudo.id,
+            checked=solicitud_recaudo.entregado,
+            { :onchange=> "#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method => :get,
+            :url=>{:controller=>'solicitud_recaudo',
+            :action=>:save },
+            :with=>"'id=#{solicitud_recaudo.id}&entregado='+ this.checked")}", :name => "recaudos[]", :id => "solicitud_recaudo_#{solicitud_recaudo.id}" }  %>
+        </td>
+        <td style="text-align: center;">
+          <%= check_box_tag 'recaudo_check',
+            solicitud_recaudo.id,
+            checked=solicitud_recaudo.revisado_consultoria,
+            { :onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method => :get,
+            :url=>{:controller=>'solicitud_recaudo',
+            :action=>:save_revisado },
+            :with=>"'id=#{solicitud_recaudo.id}&revisado_consultoria='+ this.checked")}", :name => "recaudos[]", :id => "solicitud_recaudo_revisados_#{solicitud_recaudo.id}" }  %>
+        </td>
+      </tr>
+    <%
+    end
+  %>
+  </tbody>
+</table>

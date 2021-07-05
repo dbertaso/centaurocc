@@ -1,0 +1,24 @@
+<script language="javascript">varEnviado = false;</script>
+<table>	
+	<tr>
+		<td style="width: 60px">
+			<label><%= I18n.t('Sistema.Body.Vistas.General.descripcion') %></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'instrumento_financiero', 'descripcion_f', :class=>'text', :style=>'width: 400px', :maxlength=>'25'  -%>
+		</td>
+	</tr>
+    <tr>
+	   <td>
+	      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+	   </td>
+	   <td>
+			<%= check_box 'instrumento_financiero', 'activo',
+			:checked_value=>"1", 
+			:unchecked_value=>"0"
+             -%>
+	    </td>
+    </tr>
+	<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

@@ -1,0 +1,35 @@
+<% actividad = @actividad if actividad.nil? %>
+<td>
+  <%= actividad.sub_rubro.rubro.sector.codigo  %>
+</td> 
+<td>
+  <%= actividad.sub_rubro.rubro.sector.nombre  %>
+</td> 
+<td>
+  <%= actividad.sub_rubro.codigo  %>
+</td>
+<td>
+  <%= actividad.sub_rubro.nombre  %>
+</td>
+<td>
+  <%= actividad.codigo  %>
+</td> 
+<td>
+  <%= actividad.nombre  %>
+</td> 
+<td>
+  <%= actividad.descripcion  %>
+</td> 
+<td style="text-align: center">
+  <%= format_bool(actividad.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :action => 'edit',  :id => actividad.id, :sub_rubro_id =>@sub_rubro.id, :popup=>params[:popup]) %>&nbsp;
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'actividad', :action => :delete, :id => actividad.id}) if vlink 'delete' -%>
+</td>
+

@@ -1,0 +1,38 @@
+<div id="tabs">
+  <ul>
+<%
+  action_name = controller.action_name
+  controller_name = controller.controller_name
+  controller_top = params[:controlador]
+
+  if  @solicitud.monto_solicitado > 0
+    if controller_name=='consulta_plan_inversion'
+
+  %>
+
+    <li id="actual"><div><a href="#"><%= t('Sistema.Body.Vistas.General.plan_inversion') -%></a></div></li>
+  <%
+    else
+  %>
+      <li><div>
+        <%= link_to(t('Sistema.Body.Vistas.General.plan_inversion'), :controller => 'consulta_plan_inversion', :action => 'view', :id => @solicitud.id, :controlador=>controller_top, :popup=>params[:popup]) if action_name=='view'  %>
+      </div></li>
+  <%
+    end
+    if controller_name=='consulta_sras'
+    %>
+          <li id="actual"><div><a href="#"><%= "#{t('Sistema.Body.Vistas.General.costos')} #{t('Sistema.Body.Vistas.General.financiables')}" -%></a></div></li>
+    <%
+        else
+    %>
+          <li><div>
+            <%= link_to("#{t('Sistema.Body.Vistas.General.costos')} #""{t('Sistema.Body.Vistas.General.financiables')}", :controller => 'consulta_sras', :action => 'view', :solicitud_id => @solicitud.id, :controlador=>controller_top, :popup=>params[:popup]) if (action_name=='view')  %>
+            <% link_to("#{t('Sistema.Body.Vistas.General.costos')} #{t('Sistema.Body.Vistas.General.financiables')}", :controller => 'consulta_sras', :action => 'view', :solictud_id => @solicitud.id, :popup=>params[:popup]) if action_name=='view' %>
+          </div></li>
+    <%
+        end
+  end
+
+%>
+  </ul>
+</div>

@@ -1,0 +1,33 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 150px" <%= sort_class_helper('almacen_maquinaria_sucursal.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'almacen_maquinaria_sucursal.nombre', 'list' %>
+      </th>
+      <th style="width: 60px" <%= sort_class_helper('Estado.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'Estado.nombre', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('Municipio.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.municipio'), 'Municipio.nombre', 'list' %>
+      </th> 
+      <th style="width: 50px" <%= sort_class_helper('Ciudad.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.ciudad'), 'Ciudad.nombre', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('almacen_maquinaria_sucursal.persona_contacto') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.persona') + ' ' + I18n.t('Sistema.Body.Vistas.General.contacto'), 'almacen_maquinaria_sucursal.persona_contacto', 'list' %>
+      <th style="width: 30px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for almacen_maquinaria_sucursal in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :almacen_maquinaria_sucursal => almacen_maquinaria_sucursal, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,132 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <%= hidden_field 'faenas_pesca', 'embarcacion_id', :value => "#{@identificador_embarcacion}" %>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Por favor introduzca los datos a continuación</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Embarcación:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%if @es_algo!=1%>
+        <%= select(
+          'faenas_pesca','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          { :class=>'select' }  ) %>
+      <%else%>
+        <%= select(
+          'faenas_pesca','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          { :class=>'select' ,:disabled=>'true'}  ) %>
+      <%end%>
+    </td>
+  </tr>	
+
+  <tr>
+    <td>
+      <label>Destino de la Captura:</label><label style="color: red">(Editable)</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'destino_captura', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Especie Capturada:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'faenas_pesca','tipo_especie_id',
+        @tipo_especie.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select',:disabled=>'disabled'} ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Precio por Kg:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'precio_x_kg', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();',:readonly=>'readonly'  -%> 
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Costo por Unidad:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'gasto_por_unidad', :class=>'text', :style=>'width: 240px',
+        :readonly=>'readonly', :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Ganancia por Unidad:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'ganancia_por_unidad', :class=>'text', :style=>'width: 240px',
+        :readonly=>'readonly', :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Tiempo de Expiración:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'tiempo_expiracion', :class=>'text', :style=>'width: 240px',
+        :readonly=>'readonly', :maxlength=>'5', :onkeypress=>'inputChange();'  -%> (Días)
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Nuevas Especificaciones</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Número de Campañas:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'faenas_mensual', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Nro por Campañas / Faenas de Pesca:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'captura_campana', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%> Kg
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Captura Estimada:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'captura_estimada', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%> Kg
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :tltie=>I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;
+

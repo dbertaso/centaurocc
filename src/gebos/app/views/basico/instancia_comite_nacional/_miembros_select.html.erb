@@ -1,0 +1,58 @@
+<table>
+  <tr>
+    <td style="width: 60px"><label><%=I18n.t('Sistema.Body.General.integrante')%></label><span style="color:red;">&nbsp;*</span></td>
+
+    <td style="width: 220px">
+      
+      <select id="comite_miembro_miembro_comite_id" name="comite_miembro[miembro_comite_id]" class="select" onchange=>"inputChange();">      
+      <option value=""><%=I18n.t('Sistema.Body.Vistas.Form.seleccionar')%></option>      
+
+      <% @miembro_comite_select.each{ |e| %>
+      <option value="<%=e.id%>"><%=e.nombre + ' ' + e.apellido%></option>      
+      <% } %>
+      </select>
+
+    </td >    
+
+<td style="width: 20px"><label><%=I18n.t('Sistema.Body.Controladores.UsuarioRol.FormTitles.form_title_record')%></label><span style="color:red;">&nbsp;*</span></td>
+    <td style="width: 140px">      
+      
+      <select id="rol_comite_id" name="rol_comite[id]" class="select" onchange=>"inputChange();">      
+      <option value=""><%=I18n.t('Sistema.Body.Vistas.Form.seleccionar')%></option>      
+
+      <% @rol_comite.each{ |e| %>
+      <option value="<%=e.id%>"><%=e.nombre%></option>      
+      <% } %>
+      </select>
+      
+    </td>
+    
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.firma')%></label></td>
+    
+    <td style="width: 40px">      
+      <%= check_box 'comite_miembro', 'firma', :checked=>true, :checked_value=>"true",:unchecked_value=>"false",:onclick=>'inputChange();'-%>
+    </td>
+    
+    <td>
+      
+  <a onclick="cambio();" href="#">
+      <img title="<%="#{I18n.t('Sistema.Body.Controladores.Accion.agregar')} #{I18n.t('Sistema.Body.Controladores.MiembroComite.FormTitles.form_title_records')
+} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Vistas.General.comite')}"%>" src="/assets/boton_agregar.gif" />
+    </a>
+
+
+      <%#= link_to_remote(
+            image_tag(I18n.t('Sistema.Body.Imagenes.agregar'), :title=>"#{I18n.t('Sistema.Body.Controladores.Accion.agregar')} #{I18n.t('Sistema.Body.Controladores.MiembroComite.FormTitles.form_title_records')
+} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Vistas.General.comite')}"),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()', 
+            :method=>:get,           
+            :confirm => I18n.t('Sistema.Body.Vistas.ComiteNacional.Mensajes.esta_seguro_agregar_miembro'),    
+            :html => { :id=>'boton_agregar_reseteo' ,:onclick=>"cambio()"},
+            :url => {:controller => 'instancia_comite_estadal', :action => :agregar_miembro },
+            :with=>"'id='+comite_id.value+'&miembro_comite_id='+comite_miembro_miembro_comite_id.value+'&rol_comite_id='+rol_comite_id.value+'&firma='+comite_miembro_firma.checked") -%>  
+
+    </td>
+
+  </tr>
+</table>

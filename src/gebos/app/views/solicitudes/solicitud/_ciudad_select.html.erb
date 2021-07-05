@@ -1,0 +1,5 @@
+<%= select(
+  'solicitud', 'ciudad_id',
+  @ciudad_select.map{|c| [c.nombre, c.id]},
+  { },
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

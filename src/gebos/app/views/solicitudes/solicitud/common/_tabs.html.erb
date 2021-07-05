@@ -1,0 +1,53 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    controller_top = params[:controlador]
+
+    if controller_name=='solicitud'
+    %>
+      <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.datos_basicos') %></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'solicitud', :action => 'edit', :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'solicitud', :action => 'view', :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail' || action_name=='informe_view' || action_name=='edit_view' || action_name=='index_view') %>
+        </div></li>
+    <%
+    end
+
+    if @solicitud.id
+
+      if controller_name=='solicitud_recaudo'
+      %>
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Controladores.Recaudo.FormTitles.form_title_records') %></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Controladores.Recaudo.FormTitles.form_title_records'), :controller => 'solicitud_recaudo', :action => 'index', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+            <%= link_to(I18n.t('Sistema.Body.Controladores.Recaudo.FormTitles.form_title_records'), :controller => 'solicitud_recaudo', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail' || action_name=='informe_view' || action_name=='edit_view' || action_name=='index_view') %>
+          </div></li>
+      <%
+      end
+      if  @solicitud.monto_solicitado > 0
+        if controller_name=='consulta_plan_inversion' || controller_name=="consulta_sras"
+
+        %>
+
+          <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.plan_inversion') %></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.plan_inversion'), :controller => 'consulta_plan_inversion', :action => 'view', :id => @solicitud.id, :controlador=>controller_top, :popup=>params[:popup]) if action_name=='view'  %>
+            </div></li>
+        <%
+        end
+      end
+    end
+  %>
+  </ul>
+</div>

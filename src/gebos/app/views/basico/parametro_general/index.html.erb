@@ -1,0 +1,1041 @@
+<div class="marco-titulo"><div><div>
+  <%= @form_title_records %>
+</div></div></div>
+
+<div id="marco-contenido">
+<%= error %>
+<%= message %>
+
+<table style="width: 100%">
+
+  <!--
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.grupos')%></span>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_grupo_inicial')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.numero_grupo_inicial -%>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.maximo_integrante_grupos')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.max_integrantes_grupo -%>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.minimo_integrante_grupos')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.min_integrantes_grupo -%>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.solvencia_crediticia')%></span>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cantidad_cuotas_vencidas')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.cuotas_credito_solvente -%>
+    </td>
+
+  </tr>
+  -->
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.mora')%></span>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.tasa_maxima_mora')%></label>
+    </td>
+
+    <td style="width: 35%">
+      <%= format_float @parametro_general.tasa_maxima_mora_f -%> %
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.dias_gracia_mora')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.dias_gracia_mora -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.tipo_dia_gracia_mora')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.tipo_dia_gracia_mora_w -%>
+    </td>
+
+  </tr>
+  <!--
+  <tr>
+
+    <td style="width: 65%">
+      <label><%#= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.penalizacion_mora')%></label>
+    </td>
+    <td style="width: 35%">
+      <%#= format_bool @parametro_general.penalizacion_mora -%>
+    </td>
+
+  </tr>
+  -->
+  
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cantidad_cuotas_pase_vencido')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.cuotas_pase_vencido -%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cuotas')%>
+    </td>
+
+  </tr>
+  <tr>
+
+    <td style="width: 100%" colspan=2>
+      
+        <p>
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.advertencia')%></label> 
+        </p>
+      
+    </td>
+  </tr>
+<!--
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.forma_detener_mora')%></span>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.edad_mora')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.detener_mora_edad -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cuotas')}" %></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.detener_mora_cuotas -%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cuotas')%>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.porcentaje_insuficiencia_garantia')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= format_float @parametro_general.detener_mora_garantia_f -%> %
+    </td>
+
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.criterio_creditos_vencidos')%></span>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cantidad_cuotas_vencidas')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= @parametro_general.cuotas_credito_vencido -%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cuotas')%>
+    </td>
+
+  </tr>
+  -->
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.dia_vencimiento_cuota')%></span>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.tipo_dia')%></label>
+    </td>
+
+    <td style="width: 60%">
+      <%= @parametro_general.dia_facturacion_w -%>
+    </td>
+
+  </tr>
+  
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.plazo_maximo_orden_despacho')%></label>
+    </td>
+
+    <td style="width: 60%">
+      <%= @parametro_general.dias_max_vencimiento_ultima_cuota -%> <%=@parametro_general.dias_max_vencimiento_ultima_cuota > 1 ?  I18n.t('Sistema.Body.Vistas.General.dias')  : I18n.t('Sistema.Body.Vistas.General.dia') %>
+    </td>
+
+  </tr>
+
+
+  <% if @parametro_general.dia_facturacion == 'C' %>
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.ciclo_facturacion')%></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.dia_primer_ciclo')%></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.dia_mes_primer_ciclo -%>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.dia_segundo_ciclo')%></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.dia_mes_segundo_ciclo -%>
+      </td>
+
+    </tr>
+
+  <% end %>
+
+  <!--
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.tasas')%></span>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.porcentaje_maximo_tapp') %></label>
+    </td>
+    <td style="width: 35%">
+      <%= format_float @parametro_general.porcentaje_maximo_tapp_f -%>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 65%">
+      <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.porcentaje_minimo_tapp')%></label>
+    </td>
+    <td style="width: 35%">
+      <%= format_float @parametro_general.porcentaje_minimo_tapp_f -%>
+    </td>
+
+  </tr>
+
+  <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.aprobacion_prestamos')%></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_prestamo_comite') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.monto_maximo_aprueba_comite_fm -%> 
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_prestamo_cooperativa') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= display_number @parametro_general.monto_max_credito_integrante_uea, 'parametro_general_monto_max_credito_integrante_uea' %>  
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_prestamo_cooperativa') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= display_number @parametro_general.monto_max_credito_coop, 'parametro_general_monto_max_credito_coop' %>  
+      </td>
+    </tr>
+
+  </table>
+
+  <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.desembolsos') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 40%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.exonerar_interes_desembolso') %></label>
+      </td>
+      <td style="width: 60%">
+        <%= format_bool @parametro_general.exonerar_intereses_desembolso -%>
+      </td>
+    </tr>
+
+  </table>
+  -->
+
+  <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.fianzas_solidarias') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_fianza_solidaria') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.monto_maximo_fianza_solidaria_fm -%> 
+      </td>
+
+    </tr>
+
+  </table>
+
+  <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.porcentaje_sras') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.primer_ano') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.porcentaje_sras_primer_ano_fm -%> %
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.anos_subsiguientes') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.porcentaje_sras_anos_subsiguientes_fm -%> %
+      </td>
+
+    </tr>
+
+  </table>
+
+  <table style="width: 100%">
+
+	  <tr>
+		  <td class="separador" valign="bottom" colspan="2">
+			  <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.porcentaje_sras_maquinaria') %></span>
+		  </td>
+	  </tr>
+
+	  <tr>
+
+		  <td style="width: 65%">
+                    <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.primer_ano') %></label>
+		  </td>
+		  <td style="width: 35%">	
+   		  <%= @parametro_general.porcentaje_sras_maquinaria_primer_anno_fm -%> %.
+		  </td>
+
+	  </tr>	
+
+          	  <tr>
+
+		  <td style="width: 65%">
+                    <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.anos_subsiguientes') %></label>
+		  </td>
+		  <td style="width: 35%">	
+   		  <%= @parametro_general.porcentaje_sras_maquinaria_anno_subsiguientes_fm -%> %.
+		  </td>
+
+	  </tr>	
+
+  </table>
+
+
+
+  <table style="width: 100%">
+
+    <tr>
+
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.seguridad') %></span>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.vigencia_clave') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.dias_vigencia_clave -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+      </td>
+
+    </tr>
+
+  </table>
+
+  <!--
+  <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.solicitudes') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_solicitud_uea') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.numero_solicitud_inicial_uea -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_solicitud_cooperativa') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.numero_solicitud_inicial_coop -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_solicitud_individual') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.numero_solicitud_inicial_indiv -%>
+      </td>
+
+    </tr>
+
+  </table>
+  -->
+
+  <table style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.interfases') %></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 50%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.interfase_integracion') %></label>
+      </td>
+      <td style="width: 50%">
+          <%= format_bool @parametro_general.integracion_administrativo -%>
+      </td>
+    </tr>
+  </table>
+    <table>
+        <div id="ruta_ws">
+          <table style="width: 100%">
+            <tr>
+              <td style="width: 50%">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.ruta_administrativo') %></label>
+              </td>
+              <td style="width: 50%">
+                  <%= @parametro_general.wsdl_administrativo -%>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </table>
+  <table style="width: 100%">
+
+  <!--
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.prestamos') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_prestamo_inicial') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.numero_prestamo_inicial -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.plazo_maximo_reestructurados') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.plazo_maximo_prestamo_reestructurado -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.contratos_actas') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_uea') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.numero_acta_uea -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_cooperativa') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_acta_coop -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_individual') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_acta_indiv -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_liquidacion_uea') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_acta_liq_uea -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_liquidacion_cooperativa') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_acta_liq_coop -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_liquidacion_individual') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_acta_liq_indiv -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_acta_reestructuracion') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_acta_reestructuracion -%>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_contrato_inicial') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_contrato_inicial -%>
+      </td>
+
+    </tr>
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_seguimiento_inicial') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_seguimiento_inicial -%>
+      </td>
+
+    </tr>
+-->
+    <tr>
+
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.comite') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.ano_comite') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.anio_constitucion_comite_vigente -%>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.numero_comite') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.numero_comite_vigente -%>
+      </td>
+
+    </tr>
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.cobranzas') %></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.cantidad_maxima_cuotas_cobro') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.cuotas_envio_cobro -%>
+      </td>
+    </tr>
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.gestion_cobranzas') %></span>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.dias_gracia_compromiso_pago') %></label>
+      </td>
+
+      <td style="width: 35%">
+      <%= @parametro_general.rango_dias_compromiso_pago -%>
+      </td>
+
+    </tr>
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.firmas') %></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.presidente') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.firma_presidente -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.gerencia_cooperacion') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.firma_gerencia_cooperacion_financiamiento_nacional -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.coordinacion_presupuestaria') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.firma_coordinacion_presupuestaria -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.coordinacion_tecnica') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.firma_coordinacion_seguimiento -%>
+      </td>
+    </tr>
+                <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.coordinacion_seguimiento') %></label>
+      </td>
+      <td style="width: 35%">
+          <%= @parametro_general.firma_especialista_seguimiento -%>
+      </td>
+    </tr>
+
+
+             <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.rangos_aprobacion') %></span>
+      </td>
+    </tr>
+
+
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_comite_nacional') %></label>
+      </td>
+
+      <td style="width: 35%">
+        <%=(@parametro_general.banda_inferior_comite_credito.to_i) unless @parametro_general.banda_inferior_comite_credito.nil?%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.expresado_ut') %>
+      </td>
+
+    </tr>
+
+     <tr>
+
+      <td style="width: 65%">
+        <label><%=I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_comite') %></label>
+      </td>
+
+      <td style="width: 35%">
+        <%=@parametro_general.banda_superior_comite_credito.to_i unless @parametro_general.banda_superior_comite_credito.nil?%> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.expresado_ut') %>
+      </td>
+
+    </tr>
+
+         <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_minimo_directorio') %></label>
+      </td>
+
+      <td style="width: 35%">
+        <%= (@parametro_general.banda_inferior_directorio.to_i) unless @parametro_general.banda_inferior_directorio.nil? %> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.expresado_ut') %>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.monto_maximo_directorio') %></label>
+      </td>
+
+      <td style="width: 35%">
+        <%= (@parametro_general.banda_superior_directorio.to_i) unless @parametro_general.banda_superior_directorio.nil? %> <%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.expresado_ut') %>
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.valor_unidad') %></label>
+      </td>
+
+      <td style="width: 35%">
+        <%=@parametro_general.tasa_conversion_unidades_tributarias_fm unless @parametro_general.tasa_conversion_unidades_tributarias_fm.nil?%>
+
+
+      </td>
+
+    </tr>
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.notificaciones') %></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.correo_liquidacion') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.notif_liquidacion -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.correo_tesoreria') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.notif_tesoreria -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.orden_despacho') %></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.caducidad_orden_despacho') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.caducidad_orden_despacho -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.caducidad_casa_proveedora') %></label>
+      </td>
+      <td style="width: 35%">
+        <%= @parametro_general.caducidad_casa_proveedora -%> <%= I18n.t('Sistema.Body.Vistas.General.dias') %>
+      </td>
+    </tr>
+
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.configurar_pagina') %></span>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.margen_derecho') %></label>
+        </td>
+        <td>
+        <%= @parametro_general.margen_derecho -%> <%= I18n.t('Sistema.Body.Vistas.General.cm') %>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.margen_inferior') %></label>
+        </td>
+        <td>
+        <%= @parametro_general.margen_inferior -%> <%= I18n.t('Sistema.Body.Vistas.General.cm') %>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.margen_izquierdo') %></label>
+        </td>
+        <td>
+       <%= @parametro_general.margen_izquierdo -%> <%= I18n.t('Sistema.Body.Vistas.General.cm') %>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+    <tr>
+      <td style="width: 65%">
+        <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.margen_superior') %></label>
+      </td>
+      <td>
+     <%= @parametro_general.margen_superior -%> <%= I18n.t('Sistema.Body.Vistas.General.cm') %>
+      </td>
+    </tr>
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.fuente') %></label>
+        </td>
+        <td>
+          <%= @parametro_general.tipo_fuente -%>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.tamano_fuente') %></label>
+        </td>
+        <td>
+          <%= @parametro_general.tamano_fuente -%> <%= I18n.t('Sistema.Body.Vistas.General.pt') %>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.interlineado') %></label>
+        </td>
+        <td>
+       <%= @parametro_general.interlineado -%> <%= I18n.t('Sistema.Body.Vistas.General.mm') %>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.divisas') %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.moneda_por_defecto') %></label>
+        </td>
+        <td style="width: 35%">
+          <%= @parametro_general.moneda.nombre.to_s << " - " << @parametro_general.moneda.abreviatura.to_s unless @parametro_general.moneda.nil?%>
+        </td>
+      </tr>
+
+      <!---
+      <tr>
+        <td style="width: 65%">
+          <label><%#= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.valor_dolar') %></label>
+        </td>
+        <td style="width: 35%">
+          <%#= format_fm(@parametro_general.valor_dolar) %>
+        </td>
+      </tr>
+      -->
+
+
+    </table>
+
+    <table style="width: 100%">
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.reestructuracion') %></span>
+        </td>
+      </tr>
+
+      <tr>
+
+        <td style="width: 65%">
+          <label><%= I18n.t('Sistema.Body.Vistas.ParametroGeneral.Labels.porcentaje_arrime_reestructuracion') %></label>
+        </td>
+        <td style="width: 35%">
+          <%= @parametro_general.porcentaje_arrime_reestructuracion_f -%> %.
+        </td>
+
+      </tr>
+
+    </table>
+
+<p></p>
+
+<%= link_to(
+  image_tag('boton_modificar.gif'),
+  :action => :edit, :id => @parametro_general.id, :dia_facturacion => @parametro_general.dia_facturacion) if vlink 'edit' -%>
+</div><br><br><br><br>

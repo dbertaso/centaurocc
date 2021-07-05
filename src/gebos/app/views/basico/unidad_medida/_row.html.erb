@@ -1,0 +1,4 @@
+<% unidad_medida = @unidad_medida if unidad_medida.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= unidad_medida.id %>">
+	<%= render :partial => 'data', :locals => { :unidad_medida => unidad_medida, :even_odd => even_odd } -%>
+</tr>

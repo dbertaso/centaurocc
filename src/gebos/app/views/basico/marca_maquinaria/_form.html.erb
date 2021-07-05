@@ -1,0 +1,49 @@
+<table>
+  <% unless @marca_maquinaria.new_record? %>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.id')} #{I18n.t('Sistema.Body.Vistas.General.registro')} "%></label>
+      </td>
+      <td>
+        <%= @marca_maquinaria.id %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_field 'marca_maquinaria', 'nombre',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label> <%= I18n.t('Sistema.Body.Vistas.Form.descripcion') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_area 'marca_maquinaria', 'descripcion',
+        :class=>'text',
+        :style=>'width: 500px; height: 100px',
+        :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'marca_maquinaria', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

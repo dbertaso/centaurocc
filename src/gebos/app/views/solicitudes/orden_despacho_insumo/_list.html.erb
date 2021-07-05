@@ -1,0 +1,74 @@
+
+<form>
+<table class="lista" style="width: 100%"> 
+    <thead>
+      <tr>
+        <th align="center"><input type="checkbox" id="todos" name="todos" onClick="checkAll(form.factura_numero,form.todos); muestro();suma_divs();" /></th>
+        <th style="width:200px" <%= sort_class_helper('solicitud_id') %>>
+        	<%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'solicitud_id', 'list' %>
+        </th>
+
+
+        <th style="width: 70px" <%= sort_class_helper('orden_despacho_id') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho'), 'orden_despacho_id', 'list' %>
+        </th>
+
+        <th style="width: 80px" <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+	</th>
+
+        <th style="width: 80px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title'), 'nombre', 'list' %>
+	</th>
+
+        <th style="width: 80px" <%= sort_class_helper('prestamo') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sucursal'), 'prestamo', 'list' %>
+	    </th>
+
+
+        <th style="width: 90px" <%= sort_class_helper('estatus') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus') << " " << I18n.t('Sistema.Body.Vistas.General.del') << " " << I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b'), 'estatus', 'list' %>
+	</th>
+
+        <th style="width:200px" <%= sort_class_helper('rubro') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('fecha_orden') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.orden'), 'fecha_orden', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('fecha_factura') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.General.factura'), 'fecha_factura', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('num_factura') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.factura'), 'num_factura', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('monto_total_factura') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.factura'), 'monto_total_factura', 'list' %>
+        </th>
+
+
+        <th style="width: 60px" >
+          <%=I18n.t('Sistema.Body.Vistas.Form.estatus') << " " << I18n.t('Sistema.Body.Vistas.General.factura')%>
+        </th>
+
+       
+      </tr>
+
+  </thead>
+	<tbody id="list-body">
+<%
+	
+        even_odd = 1
+	for orden_despacho_insumo in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => {:total=>@total, :orden_despacho_insumo => orden_despacho_insumo, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>
+</form>

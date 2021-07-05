@@ -1,0 +1,64 @@
+<% detalle_convenio_silo = @detalle_convenio_silo if detalle_convenio_silo.nil? %>
+<td>
+  <%= detalle_convenio_silo.actividad.sub_rubro.rubro.sub_sector.sector.nombre unless detalle_convenio_silo.nil? %>
+</td>
+<td>
+  <%= detalle_convenio_silo.actividad.sub_rubro.rubro.sub_sector.nombre unless detalle_convenio_silo.nil? %>
+</td>
+<td>
+  <%= detalle_convenio_silo.actividad.sub_rubro.rubro.nombre unless detalle_convenio_silo.nil? %>
+</td>
+<td>
+  <%= detalle_convenio_silo.actividad.sub_rubro.nombre unless detalle_convenio_silo.nil? %>
+</td>
+<td>
+  <%= detalle_convenio_silo.actividad.nombre unless detalle_convenio_silo.nil? %>
+</td>
+
+<td>
+  <%unless detalle_convenio_silo.nil? || detalle_convenio_silo.to_s.empty? %>
+    <%  if detalle_convenio_silo.actividad.sub_rubro.rubro.nombre.downcase.match('arroz').to_s.length > 0 %>
+      <% if detalle_convenio_silo.tipo_clase_grado == 'A' %>
+        Tipo A
+      <% elsif detalle_convenio_silo.tipo_clase_grado == 'B' %>
+        Tipo B
+      <%end%>
+
+    <% elsif detalle_convenio_silo.actividad.sub_rubro.rubro.nombre.downcase.match('algodon').to_s.length > 0 %>
+      <% if detalle_convenio_silo.tipo_clase_grado == 'A' %>
+        Grado A
+      <% elsif detalle_convenio_silo.tipo_clase_grado == 'B' %>
+        Grado B
+      <% elsif detalle_convenio_silo.tipo_clase_grado == 'C' %>
+        Grado C
+      <% elsif detalle_convenio_silo.tipo_clase_grado == 'D' %>
+        Grado D
+      <%end%>
+
+    <%else%>
+      <% if detalle_convenio_silo.tipo_clase_grado == 'A' %>
+        Clase I
+      <% elsif detalle_convenio_silo.tipo_clase_grado == 'B' %>
+        Clase II
+      <% elsif detalle_convenio_silo.tipo_clase_grado == 'C' %>
+        Clase III
+      <%end%>
+    <%end%>
+  <%end%>
+</td>	
+
+<td>
+  <% detalle_convenio_silo.valor.nil? ? detalle_convenio_silo.valor = 0 : detalle_convenio_silo.valor %>
+  <%= format_f(detalle_convenio_silo.valor) %>
+</td>	
+
+<td style="text-align: right">
+  <% unless detalle_convenio_silo.convenio_silo.status == false %>
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')), :action => 'edit', :convenio_silo_id => @convenio_silo.id, :popup=>params[:popup], :id => detalle_convenio_silo.id ) if vlink 'edit' %>
+  <%end%>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :loading =>'image_load()', :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'detalle_convenio_silo', :action => :delete, :id => detalle_convenio_silo.id}) if vlink 'delete' -%>
+</td>
+

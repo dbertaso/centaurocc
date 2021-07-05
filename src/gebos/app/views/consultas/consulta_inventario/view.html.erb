@@ -1,0 +1,289 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.consulta')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.inventario')}" %>
+      </div></div></div>
+
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.Form.convenio') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.contrato_maquinaria_equipo.nombre %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.clase.tipo_maquinaria.descripcion %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.clase.nombre %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.marca_maquinaria.nombre unless @catalogo.marca_maquinaria.nil? %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %>:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.modelo.nombre unless @catalogo.modelo.nil? %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %>:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.serial %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %>:</label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.chasis %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.General.descripcion') %>:</label>
+      </td>
+      <td style="width: 80%; text-align: justify">
+        <%= @catalogo.descripcion %>
+      </td>
+    </tr>
+    
+    <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.almacen') %>:</label> <span style="color:red">*</span>
+    </td>
+    <td>
+      <div id="contrato-search">
+        <%= @catalogo.almacen_maquinaria.nombre unless @catalogo.almacen_maquinaria.nil? %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sucursal_almacen') %>:</label>
+    </td>
+    <td>
+        <%= @catalogo.almacen_maquinaria_sucursal.nombre unless @catalogo.almacen_maquinaria_sucursal.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.factura')}" %>:</label> <span style="color:red">*</span>
+    </td>
+    <td>
+      <%= @catalogo.numero_factura -%>
+    </td>
+  </tr>
+    
+    <% if @catalogo.contrato_maquinaria_equipo.naturaleza == 'I' %>
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.pais_origen') %>:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.pais.nombre %>
+        </td>
+      </tr> 
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.fecha_llegada') %>:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.fecha_llegada_f %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.puerto_llegada') %>:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.puerto_llegada %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.movilizado_a') %>:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.movilizado %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.nombre_buque') %>:</label>
+        </td>
+        <td style="width: 80%">
+          <%= @catalogo.nombre_buque %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.General.imputaciones') %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_dolares') %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.monto_dolares).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto_dolares.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.monto_bs') %>.:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.monto_real).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto_real.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.gastos_administrativos') %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.gastos_administrativos).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.gastos_administrativos.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.seguro')}" %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.seguro).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.seguro.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.flete')}" %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.flete).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.flete.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.nacionalización_impuestos') %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.impuesto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.impuesto.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.almacenamiento') %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.almacenamiento).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.almacenamiento.nil? %>
+        </td>
+      </tr>
+    <% else %>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.General.imputaciones') %></span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.costo') %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.monto_real).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto_real.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.seguro')}" %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.seguro).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.seguro.nil? %>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.flete')}" %>:</label>
+        </td>
+        <td style="width: 80%; text-align: justify">
+          <%= sprintf('%01.2f',@catalogo.flete).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.flete.nil? %>
+        </td>
+      </tr>
+    <% end %>
+      
+    <tr>
+      <td style="width: 20%">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.costo')} #{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')}"%></label>
+      </td>
+      <td style="width: 80%">
+        <%= sprintf('%01.2f',@catalogo.monto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @catalogo.monto.nil? %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.ultimo_usuario_modificar_item') %></label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.usuario_f(@catalogo.usuario_ultima_actualizacion_id) unless @catalogo.usuario_ultima_actualizacion_id.nil? %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 20%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.ultimo_usuario_asignar_item') %></label>
+      </td>
+      <td style="width: 80%">
+        <%= @catalogo.usuario_f(@catalogo.usuario_asignacion_id) unless @catalogo.usuario_asignacion_id.nil? %>
+      </td>
+    </tr>
+    
+  </table><br/>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index } ) -%>		
+</div>

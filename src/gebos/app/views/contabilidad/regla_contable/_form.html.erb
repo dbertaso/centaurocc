@@ -1,0 +1,229 @@
+
+<table>
+
+  <tr>
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.transaccion_contable') %>:</label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+
+    <td style="width: 100px" colspan="4">
+      <%= select('regla_contable', 'transaccion_contable_id',
+           @transaccion_contable_list.map{|i| [i.id.to_s + ' ' + i.nombre, i.id]},
+              {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.ReglaContable.Etiquetas.transaccion_contable')}"},
+              { :class=>'select' })%>
+    </td>
+  </tr>
+
+    <tr>
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.programa') %>:</label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+
+    <td style="width: 100px" colspan="4">
+      <%= select('regla_contable', 'programa_id',
+           @programa_list.map{|i| [i.id.to_s + ' ' + i.nombre, i.id]},
+              {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.General.programa')} #{t('Sistema.Body.Vistas.General.social')}"},
+              { :class=>'select' })%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.plazo_ciclo') %>:</label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td style="width: 60px" colspan="4">
+      <%= select('regla_contable', 'plazos',
+                                ([[t('Sistema.Body.TipoPlazo.corto'), 'C'],
+                                  [t('Sistema.Body.TipoPlazo.largo'), 'L']]),
+                    {:prompt=>t('Sistema.Body.TipoPlazo.seleccione_plazo')},
+                    { :class=>'select' }) %>
+    </td>
+
+  </tr>
+    
+  <tr>
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.institucion_origen') %>:</label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td style="width: 60px" colspan="4">
+      <%= select('regla_contable', 'fuente_recursos_id',
+                                ([[t('Sistema.Body.Institucion.agro'), 2],
+                                  [t('Sistema.Body.Institucion.fondafa'), 3],
+                                  [t('Sistema.Body.Institucion.fondas'), 1]]),
+                    {:prompt=>t('Sistema.Body.Institucion.seleccione_institucion')},
+                    { :class=>'select' }) %>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.tipo_financiamiento') %>:</label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+
+    <td style="width: 150px" colspan="4">
+            <%= select('regla_contable', 'reestructurado',
+                  ([[t('Sistema.Body.TipoFinanciamiento.seleccione_tipo'),"0"],
+                    [t('Sistema.Body.TipoFinanciamiento.normal'), "N"],
+                    [t('Sistema.Body.TipoFinanciamiento.reestructurado'), "F"]
+                   ]),
+              {},
+              { :class=>'select' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.estatus_financiamiento') %>:</label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+
+    <td style="width: 100px" colspan="4">
+            <%= select('regla_contable', 'estatus',
+                  ([[t('Sistema.Body.EstatusPrestamo.seleccione_estatus'),"X"],
+                    [t('Sistema.Body.EstatusPrestamo.cambio_estatus'), "P"],
+                    [t('Sistema.Body.EstatusPrestamo.cancelado'), "C"],
+                    [t('Sistema.Body.EstatusPrestamo.castigado'), "K"],
+                    [t('Sistema.Body.EstatusPrestamo.litigio'), "L"],
+                    [t('Sistema.Body.EstatusPrestamo.vencido'), "E"],
+                    [t('Sistema.Body.EstatusPrestamo.vigente'), "V"],
+                  ]),
+          {},
+          { :class=>'select' } ) %>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 180px">
+       <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.secuencia') %>:</label> 
+       <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+
+    <td style="width: 60px" colspan="4">
+       <%= text_field 'regla_contable', 'secuencia', :class=>'text', :style=>'width: 75px', :maxlength=>'5'  -%>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.tipo_movimiento') %>:</label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+
+    <td style="width: 150px" colspan="4">
+            <%= select('regla_contable', 'tipo_movimiento',
+                  ([[t('Sistema.Body.TipoMovimiento.seleccione_tipo_movimiento'),"0"],
+                    [t('Sistema.Body.TipoMovimiento.debe'), "D"],
+                    [t('Sistema.Body.TipoMovimiento.haber'), "H"]
+                   ]),
+              { :prompt=>'Seleccione Tipo Movimiento'},
+              { :class=>'select' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+
+   <td style="width: 180px">
+
+     <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.codigo_contable') %>:</label> 
+     <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+   </td>
+     
+    <td>
+       <%= select(
+              'regla_contable', 'codigo_contable',
+              @cuenta_contable_list.map{|cc| [cc.nombre, cc.codigo]},
+              {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.ReglaContable.Etiquetas.codigo_contable')}"},
+              { :class=>'select' })-%>
+    </td>
+
+  </tr>
+
+  <tr>
+   <td style="width: 180px">
+
+     <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.auxiliar_contable') %>:</label>
+   </td>
+     
+    <td>
+      <%= text_field 'regla_contable', 'auxiliar_contable', :class=>'text', :style=>'width: 75px', :maxlength=>'7'  -%>
+    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.monto_contabilizar') %>:</label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+
+    <td style="width: 60px" colspan="4">
+            <%= select('regla_contable', 'tipo_monto',
+              ([[t('Sistema.Body.Montos.seleccione_monto'),"0"],
+                [t('Sistema.Body.Montos.capital'), "MC"],
+                [t('Sistema.Body.Montos.interes_diferido'), "ID"],
+                [t('Sistema.Body.Montos.interes_mora'), "IM"],
+                [t('Sistema.Body.Montos.interes_ordinario'), "IO"],
+                [t('Sistema.Body.Montos.monto_boleta'), "MB"],
+                [t('Sistema.Body.Montos.monto_excedente'), "ME"],
+                [t('Sistema.Body.Montos.monto_total'), "MP"]]),
+              {},
+              { :class=>'select' } ) %>
+    </td>
+  </tr>
+
+    <tr>
+
+    <td style="width: 180px">
+      <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.modalidad_pago') %>:</label>
+    </td>
+
+    <td style="width: 60px" colspan="4">
+      <%= select('regla_contable', 'modalidad_pago',
+                        ([[t('Sistema.Body.ModalidadPago.seleccione_modalidad'), 'X'],
+                          [t('Sistema.Body.ModalidadPago.arrime'), "A"],
+                          [t('Sistema.Body.ModalidadPago.deposito'), "R"],
+                          [t('Sistema.Body.ModalidadPago.devengo'), "Z"],
+                          [t('Sistema.Body.ModalidadPago.domicializacion'), "D"],
+                          [t('Sistema.Body.ModalidadPago.taquilla'), "O"]]),
+                {},
+                { :class=>'select' }) -%>
+    </td>
+
+  </tr>
+</table>
+
+<div id="banco">
+
+  <table>
+    <tr>
+
+      <td style="width: 180px">
+        <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.entidad_financiera') %>:</label>
+      </td>
+      
+      <td style="width: 60px" colspan="4">
+      <%= select('regla_contable', 'entidad_financiera_id',
+           @entidad_financiera_select.map{|i| [i.nombre, i.id]},
+              { :include_blank=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.Filtros.entidad_financiera').gsub!(":","")}"},
+              { :class=>'select' })%>
+
+
+      </td>
+    </tr>
+  </table>
+
+</div>
+

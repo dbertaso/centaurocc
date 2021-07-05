@@ -1,0 +1,445 @@
+<script>
+  var suma_suelos = 0;
+  var suma_topografia = 0;
+  var suelo_aux = 0;
+  var vegetacion_aux = 0;
+  var topografia_aux = 0;
+	
+</script>
+
+<table width="100%" border="0">
+  <tr>
+    <td width="40%"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.caracteristicas')} #{I18n.t('Sistema.Body.Vistas.General.generales')}" %></span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} #{I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')} (#{I18n.t('Sistema.Body.Vistas.General.ha')})" %>:</label>
+    </td>
+    <td colspan="3">
+      <%= text_field 'unidad_produccion_caracterizacion', 'superficie_total',
+        :class=>'text',
+        :style=>'width: 100px', :readonly=>true,
+        :maxlength=>'12', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} #{I18n.t('Sistema.Body.Vistas.General.aprovechable')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')} (#{I18n.t('Sistema.Body.Vistas.General.ha').downcase})" %>:</label>
+    </td>
+    <td colspan="3">
+      <%= text_field 'unidad_produccion_caracterizacion', 'superficie_aprovechable',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'12', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4" align="center">
+      <table border="1" width="97%" class="lista">
+        <thead>
+          <tr>
+            <th><%= I18n.t('Sistema.Body.Vistas.General.vialidad') %></th>
+            <th><%= I18n.t('Sistema.Body.Vistas.General.suelos') %></th>
+            <th><%= I18n.t('Sistema.Body.Vistas.General.vegetacion') %></th>
+            <th><%= I18n.t('Sistema.Body.Vistas.General.topografia') %></th>
+          </tr>
+        </thead>
+        <tbody id="list-body">
+          <tr>
+            <td width="30%">
+              <%= render :partial => 'list_tipo_vialidad' %>
+              <label><%= I18n.t('Sistema.Body.Vistas.General.distancia') %> (<%= I18n.t('Sistema.Body.Vistas.General.km') %>):</label>
+              <%= text_field 'unidad_produccion_caracterizacion', 'vialidad_distancia',
+                :class=>'text',
+                :style=>'width: 100px',
+                :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+
+              <p><label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label></p>
+              <%= radio_button 'unidad_produccion_caracterizacion', 'vialidad_condicion', 'E',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.excelente') %>
+              <%= radio_button 'unidad_produccion_caracterizacion', 'vialidad_condicion', 'B',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.buena') %>
+              <%= radio_button 'unidad_produccion_caracterizacion', 'vialidad_condicion', 'R',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.regular') %>
+              <%= radio_button 'unidad_produccion_caracterizacion', 'vialidad_condicion', 'M',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.mala') %>               
+            </td>
+            <td valign="top" width="20%">
+
+              <%= render :partial => 'list_tipo_suelo' %>
+              <br><br>
+              <label><%= I18n.t('Sistema.Body.Vistas.General.ph') %>:</label>
+              <%= select(
+                'unidad_produccion_caracterizacion', 'suelo_ph',
+                [[1,1],[1.5, 1.5],[2, 2],[2.5, 2.5],[3, 3],[3.5, 3.5],[4, 4],[4.5, 4.5],[5, 5],[5.5, 5.5],
+                  [6, 6],[6.5, 6.5],[7, 7],[7.5, 7.5],[8, 8],[8.5, 8.5],[9, 9],[9.5, 9.5],[10, 10],
+                  [10.5, 10.5],[11, 11],[11.5, 11.5],[12, 12],[12.5, 12.5],[13, 13],[13.5, 13.5],[14, 14]],
+                { :include_blank => true },
+                {:class=>'select',:onchange=>'inputChange();' } ) %>
+            </td>
+            <td valign="top" width="20%">
+              <table width="100%">
+                <tr><td colspan=2 height="15"></td></tr>
+                <tr>
+                  <td width="50"><%= I18n.t('Sistema.Body.Vistas.General.baja') %>:</td>
+                  <td>
+                    <%= text_field 'unidad_produccion_caracterizacion', 'porcentaje_vegetacion_baja',
+                      :class=>'text',
+                      :style=>'width: 50px',
+                      :maxlength=>'20', :onkeypress=>'inputChange();', :onchange=>'validar_vegetacion(this)'  -%> %
+                  </td>
+                </tr>
+                <tr>
+                  <td width="50"><%= I18n.t('Sistema.Body.Vistas.General.media') %>:</td>
+                  <td>
+                    <%= text_field 'unidad_produccion_caracterizacion', 'porcentaje_vegetacion_media',
+                      :class=>'text',
+                      :style=>'width: 50px',
+                      :maxlength=>'20', :onkeypress=>'inputChange();', :onchange=>'validar_vegetacion(this)'  -%> %
+                  </td>
+                </tr>
+                <tr>
+                  <td width="50"><%= I18n.t('Sistema.Body.Vistas.General.alta') %>:</td>
+                  <td>
+                    <%= text_field 'unidad_produccion_caracterizacion', 'porcentaje_vegetacion_alta',
+                      :class=>'text',
+                      :style=>'width: 50px',
+                      :maxlength=>'20', :onkeypress=>'inputChange();', :onchange=>'validar_vegetacion(this)'  -%> %
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+            <td valign="top" width="30%">
+              <br>
+              <%= render :partial => 'list_tipo_topografia' %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan=4>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.describa')} #{I18n.t('Sistema.Body.Vistas.General.las')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones')} #{I18n.t('Sistema.Body.Vistas.General.climaticas').downcase}" %>:</label><br>     
+      <%= text_area 'unidad_produccion_caracterizacion', 'condiciones_climaticas',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>
+
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.hidricos')} #{I18n.t('Sistema.Body.Vistas.General.hidricos')}" %></span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4" style="width:100%">
+      <%= render :partial => 'list_tipo_fuente_agua' %> 
+    </td>
+  </tr>   
+  <tr>
+    <td colspan="4"><label>¿<%= I18n.t('Sistema.Body.Vistas.General.el_beneficiario_posee_permisologia_recursos_hidricos') %>?</label> 
+      <%= radio_button 'unidad_produccion_caracterizacion', 'permisologia_agua', 'true',
+        :class=>'text', :onclick=>"inputChange();document.getElementById('unidad_produccion_caracterizacion_observaciones_permisologia').disabled=false"  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'unidad_produccion_caracterizacion', 'permisologia_agua', 'false',
+        :class=>'text', :onclick=>"inputChange();document.getElementById('unidad_produccion_caracterizacion_observaciones_permisologia').value='';document.getElementById('unidad_produccion_caracterizacion_observaciones_permisologia').disabled=true"  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.observaciones')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.permisologia')}" %></label><br>
+      <%= text_area 'unidad_produccion_caracterizacion', 'observaciones_permisologia',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+
+  <tr>
+    <td colspan="4">
+      <label>¿<%= "#{I18n.t('Sistema.Body.Vistas.General.tiene')} #{I18n.t('Sistema.Body.Vistas.General.sistema_riego')}" %>?</label>
+      <%= radio_button 'unidad_produccion_caracterizacion', 'riego_actual', 'true',
+        :class=>'text', :onclick=>'custom_mostrar_div("riego_actual");inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'unidad_produccion_caracterizacion', 'riego_actual', 'false',
+        :class=>'text', :onclick=>'custom_limpiar_ocultar_div("riego_actual");inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+  </tr>
+
+  <tr id="riego_actual_1">
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.sistema_riego')} #{I18n.t('Sistema.Body.General.actual')}" %></span>
+    </td>
+  </tr>
+
+  <tr id="riego_actual_2">
+    <td colspan="4">
+      <table width="500px" >
+        <div >
+          <tr>
+            <td width="120px">
+              <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+            </td>
+            <td>
+              <%= select(
+                'unidad_produccion_caracterizacion', 'tipo_riego_actual_id',
+                @tipo_riego_list.map{|i| [i.nombre, i.id]},
+                { :include_blank => true },
+                {:class=>'select',:onchange=>'inputChange();' } ) %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} (#{I18n.t('Sistema.Body.Vistas.General.ha')})" %>:</label>&nbsp;
+            </td>
+            <td>
+              <%= text_field 'unidad_produccion_caracterizacion', 'superficie_riego_actual',
+                :class=>'text',
+                :style=>'width: 70px',
+                :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label>&nbsp;
+            </td>
+            <td>
+              <%= radio_button 'unidad_produccion_caracterizacion', 'condicion_riego_actual', 'E',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.excelente') %>
+              <%= radio_button 'unidad_produccion_caracterizacion', 'condicion_riego_actual', 'B',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.buena') %>
+              <%= radio_button 'unidad_produccion_caracterizacion', 'condicion_riego_actual', 'R',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.regular') %>
+              <%= radio_button 'unidad_produccion_caracterizacion', 'condicion_riego_actual', 'M',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.mala') %>  
+            </td>
+          </tr>
+        </div>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td colspan="4">
+      <label>¿<%= "#{I18n.t('Sistema.Body.Vistas.General.se')} #{I18n.t('Sistema.Body.Vistas.General.requiere')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.un')} #{I18n.t('Sistema.Body.Vistas.General.sistema_riego')} " %>?</label>
+      <%= radio_button 'unidad_produccion_caracterizacion', 'requiere_riego', 'true',
+        :class=>'text', :onclick=>'custom_mostrar_div("riego_propuesto");inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'unidad_produccion_caracterizacion', 'requiere_riego', 'false',
+        :class=>'text', :onclick=>'custom_limpiar_ocultar_div("riego_propuesto");inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+    </td>
+  </tr>
+
+  <tr id="riego_propuesto_1">
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.sistema_riego')} #{I18n.t('Sistema.Body.Vistas.General.propuesto')}" %></span>
+    </td>
+  </tr>
+
+  <tr id="riego_propuesto_2">
+    <td colspan="4">
+      <table width="500px">
+        <tr>
+          <td width="120px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+          </td>
+          <td>
+            <%= select(
+              'unidad_produccion_caracterizacion', 'tipo_riego_requerido_id',
+              @tipo_riego_list.map{|i| [i.nombre, i.id]},
+              { :include_blank => true },
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} (#{I18n.t('Sistema.Body.Vistas.General.ha')})" %>:</label>&nbsp;
+          </td>
+          <td>
+            <%= text_field 'unidad_produccion_caracterizacion', 'superficie_riego_propuesto',
+              :class=>'text',
+              :style=>'width: 70px',
+              :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <label>¿<%= "#{I18n.t('Sistema.Body.Vistas.General.tiene')} #{I18n.t('Sistema.Body.Vistas.General.sistema_drenaje')}" %>?:</label>
+      <%= radio_button 'unidad_produccion_caracterizacion', 'posee_drenaje', 'true',
+        :class=>'text', :onclick=>'custom_mostrar_div("drenaje_actual");inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'unidad_produccion_caracterizacion', 'posee_drenaje', 'false',
+        :class=>'text', :onclick=>'custom_limpiar_ocultar_div("drenaje_actual");inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+
+    </td>
+  </tr>
+  <tr id="drenaje_actual_1">
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.sistema_drenaje')} #{I18n.t('Sistema.Body.General.actual')}" %></span>
+    </td>
+  </tr>
+  <tr id="drenaje_actual_2">
+    <td colspan="4">
+      <table width="500px">
+        <tr>
+          <td width="120px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+          </td>
+          <td>
+            <%= select(
+              'unidad_produccion_caracterizacion', 'tipo_drenaje_id',
+              @tipo_drenaje_list.map{|i| [i.nombre, i.id]},
+              { :include_blank => true },
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} (#{I18n.t('Sistema.Body.Vistas.General.ha')})" %>:&nbsp;</label>
+          </td>
+          <td>
+
+            <%= text_field 'unidad_produccion_caracterizacion', 'superficie_drenaje',
+              :class=>'text',
+              :style=>'width: 70px',
+              :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label>&nbsp;
+          </td>
+          <td>
+            <%= radio_button 'unidad_produccion_caracterizacion', 'condicion_drenaje', 'E',
+              :class=>'text', :onclick=>'inputChange();'  -%>Excelente
+            <%= radio_button 'unidad_produccion_caracterizacion', 'condicion_drenaje', 'B',
+              :class=>'text', :onclick=>'inputChange();'  -%>Buena
+            <%= radio_button 'unidad_produccion_caracterizacion', 'condicion_drenaje', 'R',
+              :class=>'text', :onclick=>'inputChange();'  -%>Regular
+            <%= radio_button 'unidad_produccion_caracterizacion', 'condicion_drenaje', 'M',
+              :class=>'text', :onclick=>'inputChange();'  -%>Mala  
+          </td>
+        </tr>
+      </table> 
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.rubros')} #{I18n.t('Sistema.Body.Vistas.General.actuales')}" %></span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.rubros')} #{I18n.t('Sistema.Body.Vistas.General.vegetales')}" %></label><br />
+      <%= text_area 'unidad_produccion_caracterizacion', 'rubros_vegetales',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>   
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.rubros')} #{I18n.t('Sistema.Body.Vistas.General.animales')}" %></label><br />
+      <%= text_area 'unidad_produccion_caracterizacion', 'rubros_animales',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+</table>
+
+<script>
+  function actualizar_topografia(id){
+    if(document.getElementById("tipo_topografia_"+id).checked == true){
+      document.getElementById("mensaje_porcentaje_topografias").style.display = 'block';
+		
+    }else{
+      new Ajax.Request('/solicitudes/solicitud_pre_evaluacion_caracterizacion/save_topografias', 
+      {asynchronous:true, evalScripts:true, onLoaded:function(request){Element.hide('loading')}, 
+        onLoading:function(request){Element.show('loading')}, 
+        parameters:'id='+id+'&accion=eliminar&unidad_produccion_caracterizacion_id=<%= @unidad_produccion_caracterizacion.id %>&porcentaje='+document.getElementById("caracterizacion_tipo_topografia_porcentaje_"+id).value}) + "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+      document.getElementById("caracterizacion_tipo_topografia_porcentaje_"+id).value = '';
+    }	
+  }
+
+  function actualizar_suelo(id){
+    if (document.getElementById("tipo_suelo_"+id).checked == true){
+      document.getElementById("mensaje_porcentaje_suelos").style.display = 'block';
+      document.getElementById("caracterizacion_tipo_suelo_porcentaje_"+id).focus;
+    } else {
+      new Ajax.Request('/solicitudes/solicitud_pre_evaluacion_caracterizacion/save_suelos', 
+      {asynchronous:true, evalScripts:true, onLoaded:function(request){Element.hide('loading')}, 
+        onLoading:function(request){Element.show('loading')}, 
+        parameters:'authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>') + '&id='+id+'&accion=eliminar&unidad_produccion_caracterizacion_id=<%= @unidad_produccion_caracterizacion.id %>&porcentaje='+document.getElementById("caracterizacion_tipo_suelo_porcentaje_"+id).value});
+      document.getElementById("caracterizacion_tipo_suelo_porcentaje_"+id).value = '';
+    }	
+  }
+
+
+  function custom_limpiar_ocultar_div(div){
+    document.getElementById(div+"_1").innerHTML = '';
+    document.getElementById(div+"_2").style.display = 'none';
+  }
+
+  function custom_mostrar_div(div){
+    if(div == "riego_actual"){
+      document.getElementById(div+"_1").innerHTML = '<td class="separador" colspan="4" valign="bottom"><span>Sistema de Riego Actual</span></td>';
+      document.getElementById(div+"_2").style.display = 'block';
+    }
+    if(div == "riego_propuesto"){
+      document.getElementById(div+"_1").innerHTML = '<td class="separador" colspan="4" valign="bottom"><span>Sistema de Riego Propuesto</span></td>';
+      document.getElementById(div+"_2").style.display = 'block';
+    }
+    if(div == "drenaje_actual"){
+      document.getElementById(div+"_1").innerHTML = '<td class="separador" colspan="4" valign="bottom"><span>Sistema de Drenaje Actual</span></td>';
+      document.getElementById(div+"_2").style.display = 'block';		
+    }
+  }
+
+  function validar_vegetacion(objeto){
+    var vegetacion = 
+      document.getElementById('unidad_produccion_caracterizacion_porcentaje_vegetacion_alta').value/1 + 
+      document.getElementById('unidad_produccion_caracterizacion_porcentaje_vegetacion_media').value/1 + 
+      document.getElementById('unidad_produccion_caracterizacion_porcentaje_vegetacion_baja').value/1;
+    if(vegetacion > 100){objeto.value = 0;alert("Valor inv\u00e1lido: <%= I18n.t('Sistema.Body.Vistas.General.Verifique_suma_porcentajes_vegetacion') %>");}
+	
+  }
+  document.getElementById("unidad_produccion_caracterizacion_suelo_ph").value = '<%= @unidad_produccion_caracterizacion.suelo_ph %>';
+<%= @mostrar %>
+
+</script>

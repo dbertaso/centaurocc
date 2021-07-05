@@ -1,0 +1,37 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>      
+      <th style="width: 200px" <%= sort_class_helper('canal_comercializacion') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.destino')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.captura')}", 'canal_comercializacion', 'list' %>
+      </th>
+      <th style="width: 200px" <%= sort_class_helper('tipo_especie_id') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.especie')} #{I18n.t('Sistema.Body.Vistas.General.capturada')}", 'tipo_especie_id', 'list' %>
+      </th>
+
+      <th style="width: 100px" <%= sort_class_helper('gasto_por_unidad') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.campañas')}", 'faenas_mensual', 'list' %>
+      </th>
+
+      <th style="width: 100px" <%= sort_class_helper('ganancia_por_unidad') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.capturas')} #{I18n.t('Sistema.Body.Vistas.General.por')} #{I18n.t('Sistema.Body.Vistas.General.campañas')}", 'captura_campana', 'list' %>
+      </th>
+
+      <th style="width: 100px" <%= sort_class_helper('tiempo_expiracion') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.capturas')} #{I18n.t('Sistema.Body.Vistas.Form.estimada')}", 'captura_estimada', 'list' %>
+      </th>
+
+      <th style="width: 60px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for faenas_pesca in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :faenas_pesca => faenas_pesca, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

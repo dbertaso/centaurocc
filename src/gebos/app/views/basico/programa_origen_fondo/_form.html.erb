@@ -1,0 +1,65 @@
+<script type="text/javascript">
+  varEnviado= false;
+</script>
+
+<table>
+  <tr>
+    <td>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.origen')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.fondo')}"%>:
+      </label>
+    </td>
+    <td>
+    <%= select(
+      'programa_origen_fondo', 'origen_fondo_id',
+      @origen_fondo_select.map{|e| [e.nombre, e.id]},
+      { },
+      { :class=>'select'} ) %>
+    </td>
+  </tr>
+  <!--
+  <tr>
+    <td>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.contable')} #{I18n.t('Sistema.Body.Vistas.General.ingreso')} #{I18n.t('Sistema.Body.Vistas.General.intereses')}"%>:
+      </label>
+    </td>
+    <td>
+    <%= select(
+      'programa_origen_fondo', 'cuenta_contable_ingreso_interes_id',
+      @cuenta_contable_ingreso_interes_select.map{|e| [e.nombre, e.id]},
+      { },
+      { :class=>'select'} ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.contable')}  #{I18n.t('Sistema.Body.Vistas.General.capital')}"%>:
+      </label>
+    </td>
+    <td>
+    <%= select(
+      'programa_origen_fondo', 'cuenta_contable_capital_id',
+      @cuenta_contable_capital_select.map{|e| [e.nombre, e.id]},
+      { },
+      { :class=>'select'} ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.contable')} #{I18n.t('Sistema.Body.Vistas.General.capital')} #{I18n.t('Sistema.Body.Vistas.General.vencido')}"%>:
+      </label>
+    </td>
+    <td>
+    <%= select(
+      'programa_origen_fondo', 'cuenta_contable_capital_vencido_id',
+      @cuenta_contable_capital_vencido_select.map{|e| [e.nombre, e.id]},
+      { },
+      { :class=>'select'} ) %>
+    </td>-->
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

@@ -1,0 +1,26 @@
+<%= form_title_edit @cuenta_contable.codigo + ' - ' +@cuenta_contable.nombre %>
+	
+<%= render :partial=>'contabilidad/cuenta_contable/common/tabs' %>
+
+<div class="marco-contenido2">		
+
+	<%= error %>
+	<%= message %>
+	
+	<%= form_remote_tag(
+		:loading =>'image_load()',
+		:loaded => 'image_unload()',
+	  :url => { :action => :save_edit, :id=>@cuenta_contable.id } ) do -%>
+	  
+		<%= render :partial => "form", :local => {:cuenta_contable => @cuenta_contable} %>
+		
+		<div id="buttons_edit" style="display: none">
+			<%= form_buttons_edit %>
+		</div>
+
+		<%= link_to(image_tag(image_path(t('Sistema.Body.Imagenes.cerrar'))),
+			{ :action => :index },
+			{ :id=>'button_close' } ) -%>
+		
+	<% end %>
+</div>

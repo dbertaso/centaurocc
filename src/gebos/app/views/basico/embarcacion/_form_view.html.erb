@@ -1,0 +1,105 @@
+<table>
+
+  <tr>
+    <td style="width: 200px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title')}" %> </label>
+    </td>
+    <td style="width: 300px">
+
+      <%= @embarcacion.nombre_embarcacion %>
+
+
+    </td>
+  </tr>	
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.matricula') %> </label>
+    </td>
+    <td>
+
+      <%= @embarcacion.matricula %> 
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title')}" %> </label>
+    </td>
+    <td>
+      <%= @embarcacion.tipo_embarcacion.tipo %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.material')}" %></label>
+    </td>
+    <td>
+      <%= @embarcacion.TipoMaterial.tipo %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.eslora') %> </label>
+    </td>
+    <td style="width: 500px">
+      <%= @embarcacion.eslora  %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.manga') %></label>
+    </td>
+    <td>
+      <%= @embarcacion.manga %>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.puntal') %></label>
+    </td>
+    <td>
+      <%= @embarcacion.puntal -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.u_a_b') %></label>
+    </td>
+    <td>
+      <%= @embarcacion.uab -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.cantidad_tripulante') %></label>
+    </td>
+    <td>
+      <%= @embarcacion.cantidad_tripulantes -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.autonomia_pesca') %></label>
+    </td>
+    <td>
+      <%= @embarcacion.autonomia_pesca %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Motores.Columnas.proveedor_marino') %> </label>
+    </td>
+    <td style="width: 500px">
+      <%= @embarcacion.proveedor_marino.nombre  %>
+    </td>
+  </tr>
+  <br>
+  <tr>

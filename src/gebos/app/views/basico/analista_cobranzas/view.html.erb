@@ -1,0 +1,90 @@
+<div class="marco-contenido">
+  <%= form_title_view @analista_cobranzas.analista %>
+  <div class="marco-contenido2">
+
+    <table border="0" width="100%">
+      <tr>
+        <td style="width: 110px"><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.cantidad_visitas') %></label></td>
+        <td style="width: 310px">
+          <% if @analista_cobranzas.cantidad_cobranzas.nil? %>
+            0
+          <%  else %>
+            <%= @analista_cobranzas.cantidad_cobranzas %>
+          <%end%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %></label>
+        </td>
+        <td>
+          <%= @analista_cobranzas.letra_cedula  -%>-<%= @analista_cobranzas.cedula %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label>
+        </td>
+        <td>
+          <%= @analista_cobranzas.primer_nombre  -%>
+        </td>
+      </tr>  
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label>
+        </td>
+        <td>
+          <%= @analista_cobranzas.segundo_nombre -%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label></td>
+        <td>
+          <%= @analista_cobranzas.primer_apellido -%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label></td>
+        <td>
+          <%= @analista_cobranzas.segundo_apellido -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.sector') %></label>
+        </td>
+        <td>
+          <%= @analista_cobranzas.sector.nombre unless @analista_cobranzas.sector.nil? %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.Form.sub_sector') %></label></td>
+        <td>
+          <%= @analista_cobranzas.sub_sector.nombre unless @analista_cobranzas.sub_sector.nil?-%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.Form.estatus') %></label></td>
+        <td>
+          <%= @analista_cobranzas.estatus_nombre unless @analista_cobranzas.nil?-%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.supervisor') %></label></td>
+        <td>
+          <%= format_bool(@analista_cobranzas.senal_supervisor) unless @analista_cobranzas.nil?-%>
+        </td>
+      </tr>
+    </table>
+
+    <%= link_to( image_tag("boton_modificar.gif", :title => I18n.t('Sistema.Body.Controladores.Accion.modificar')), :action => :edit, :method => :get,
+      :id => @analista_cobranzas.id, :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+      { :action => :index },
+      { :id=>'button_close' } ) -%>
+
+  </div>
+</div>

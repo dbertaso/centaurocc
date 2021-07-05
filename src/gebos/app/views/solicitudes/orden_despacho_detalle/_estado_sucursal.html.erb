@@ -1,0 +1,15 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<%
+men=""
+unless @sucursal_estado.nil?
+men= @sucursal_estado.ciudad.estado.nombre.to_s
+else
+unless params[:casa_sucursal_id].nil?
+@sucursal_estado=SucursalCasaProveedora.find(params[:casa_sucursal_id])
+men= @sucursal_estado.ciudad.estado.nombre.to_s
+end
+end
+%>
+<%=men%>
+<br/>

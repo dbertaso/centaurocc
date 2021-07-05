@@ -1,0 +1,25 @@
+<table class="lista" style="width: 100%">
+    <thead>
+      
+    <tr>
+          <th <%= sort_class_helper('fecha') %>><%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.fecha_generacion'), 'fecha', 'list' %></th>
+          <th <%= sort_class_helper('archivo') %>><%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.archivo'), 'archivo', 'list' %></th>
+          <th style="width: 60px" <%= sort_class_helper('numero_procesado') %>><%= sort_link_helper I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_ordenes_procesadas'), 'numero_procesado', 'list' %></th>
+          <th <%= sort_class_helper('monto_procesado') %>><%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto'), 'monto_procesado', 'list' %></th>
+          <th <%= sort_class_helper('entidad_financiera.nombre') %>><%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.entidad_financiera'), 'entidad_financiera.nombre', 'list' %></th>
+          <th <%= sort_class_helper('estatus') %>><%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'estatus', 'list' %></th>
+          <th><%= I18n.t('Sistema.Body.Vistas.General.acciones') %></th>
+     </tr>
+
+  </thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for orden_despacho_archivos_generados in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :orden_despacho_archivos_generados => orden_despacho_archivos_generados, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

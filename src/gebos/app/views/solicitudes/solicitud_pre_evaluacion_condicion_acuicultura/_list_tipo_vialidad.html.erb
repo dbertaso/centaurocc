@@ -1,0 +1,39 @@
+<table width="100%">
+
+
+    <% lista = 'lista0'
+       @tipo_vialidad.each { |i| %>
+
+		<tr>
+			<td>
+
+		<% entregado_onchange = remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>"solicitud_pre_evaluacion_condicion_acuicultura",
+            :action=>:save_vialidad },
+            :with=>"'id=#{i.id}&unidad_produccion_condicion_acuicultura_id=#{@unidad_produccion_condicion_acuicultura.id}'") %>
+
+       <%= check_box 'recaudo_check',
+            i.id,
+            {:checked=>i.marcado, :onchange=>'inputChange();'<< entregado_onchange, :name => "condiciones_vialidad[]", :id => "tipo_vialidad_#{i.id}" }  %>
+        
+        	&nbsp;
+       		</td>
+
+			<td>     	
+        		<%= i.nombre %>
+ 			</td>
+
+  				<% if i.nombre == '[Otro]' %>
+					<tr><td></td>
+					<td>
+					</td>
+					</tr>
+				<% end %>
+		    <%  
+		    } %>
+
+		</table>
+		<br/>

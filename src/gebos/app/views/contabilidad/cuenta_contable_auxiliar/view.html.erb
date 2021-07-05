@@ -1,0 +1,19 @@
+<% @view = true %>
+<div class="marco-titulo"><div><div>
+	Consultando Cuenta Contable <span class="titulo_modificar">'<%= @cuenta_contable.codigo + ' - ' + @cuenta_contable.nombre %>'</span>
+</div></div></div>
+
+<%= render :partial=>'contabilidad/cuenta_contable/common/tabs' %>
+
+<div class="marco-contenido2">
+
+	<div id="list">
+		<%= render :partial=>"list_view"  %>
+	</div>
+		
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :controller => 'cuenta_contable', :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+
+</div>

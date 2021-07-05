@@ -1,0 +1,413 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+<script type="text/javascript">
+  onload = function()
+  {
+    checkOption();
+  }
+
+  function totalEntrada()
+  {
+    var num = 0.00;
+    var entV = document.getElementById("otro_arrime_peso_vehiculo_f").value;
+    var entR = document.getElementById("otro_arrime_peso_remolque_f").value;
+    eV = false;
+    eR = false;
+    eV = checkDecimals(entV);
+    if (entR > 0){
+      entR = document.getElementById("otro_arrime_peso_remolque_f").value=(parseFloat(entR)).toFixed(2);
+      eR = checkDecimals(entR);
+
+      if (eV == true && eR == true){
+        entV = document.getElementById("otro_arrime_peso_vehiculo_f").value=(parseFloat(entV)).toFixed(2);
+        entR = document.getElementById("otro_arrime_peso_remolque_f").value=(parseFloat(entR)).toFixed(2);
+        var totalE = 0.00;
+        totalE = (parseFloat(entV) + parseFloat(entR));
+        totalE = totalE*100;
+        totalE = Math.floor(totalE);
+        totalE = totalE/100;
+        totalE = totalE.toFixed(2);
+        document.getElementById("otro_arrime_valor_total_entrada_f").value = " ";
+        document.getElementById("otro_arrime_valor_total_entrada_f").value = totalE;
+
+        toS = document.getElementById("otro_arrime_valor_total_salida_f").value;
+        if(toS > 0){
+          totalSalida();
+        }
+      }
+    } else {
+      if (eV == true){
+        entV = document.getElementById("otro_arrime_peso_vehiculo_f").value=(parseFloat(entV)).toFixed(2);
+        var totalE = 0.00;
+        totalE = (parseFloat(entV));
+        totalE = totalE*100;
+        totalE = Math.floor(totalE);
+        totalE = totalE/100;
+        totalE = totalE.toFixed(2);
+        document.getElementById("otro_arrime_valor_total_entrada_f").value = " ";
+        document.getElementById("otro_arrime_valor_total_entrada_f").value = totalE;
+
+        toS = document.getElementById("otro_arrime_valor_total_salida_f").value;
+        if(toS > 0){
+          totalSalida();
+        }
+      }
+    }
+   
+    
+  }
+  function totalSalida()
+  {
+    var nums = 0.00;
+    var salV = document.getElementById("otro_arrime_peso_vehiculo_salida_f").value;
+    var salR = document.getElementById("otro_arrime_peso_remolque_salida_f").value;
+    sV = false;
+    sR = false;
+    var toE = 0.00;
+    var toS = 0.00;
+    sV = checkDecimals(salV);
+    if (salR > 0 ){
+      salR = document.getElementById("otro_arrime_peso_remolque_salida_f").value=(parseFloat(salR)).toFixed(2);
+      sR = checkDecimals(salR);
+
+      if (sV == true && sR == true){
+        salV = document.getElementById("otro_arrime_peso_vehiculo_salida_f").value=(parseFloat(salV)).toFixed(2);
+        salR = document.getElementById("otro_arrime_peso_remolque_salida_f").value=(parseFloat(salR)).toFixed(2);
+        var totalS = 0.00;
+        totalS = (parseFloat(salV) + parseFloat(salR));
+        totalS = totalS.toFixed(2);
+        totalS = totalS*100;
+        totalS = Math.floor(totalS);
+        totalS = totalS/100;
+        totalS = parseFloat(totalS).toFixed(2);
+        document.getElementById("otro_arrime_valor_total_salida_f").value = " ";
+        document.getElementById("otro_arrime_valor_total_salida_f").value = totalS;
+      }
+    } else{
+      if (sV == true){
+        salV = document.getElementById("otro_arrime_peso_vehiculo_salida_f").value=(parseFloat(salV)).toFixed(2);
+        var totalS = 0.00;
+        totalS = (parseFloat(salV));
+        totalS = totalS.toFixed(2);
+        totalS = totalS*100;
+        totalS = Math.floor(totalS);
+        totalS = totalS/100;
+        totalS = totalS.toFixed(2);
+        document.getElementById("otro_arrime_valor_total_salida_f").value = " ";
+        document.getElementById("otro_arrime_valor_total_salida_f").value = totalS;
+      }
+    }
+    toE = document.getElementById("otro_arrime_valor_total_entrada_f").value;
+    toS = document.getElementById("otro_arrime_valor_total_salida_f").value;
+    if (totalS > 0){
+      if(parseFloat(toS) < parseFloat(toE)){
+        var neto = 0.00;
+        toE = document.getElementById("otro_arrime_valor_total_entrada_f").value;
+        toS = document.getElementById("otro_arrime_valor_total_salida_f").value;
+        neto = (parseFloat(toE) - parseFloat(toS));
+        neto = neto.toFixed(2);
+        neto = neto*100;
+        neto = Math.floor(neto);
+        neto = neto/100;
+        neto = parseFloat(neto).toFixed(2);
+        document.getElementById("otro_arrime_peso_neto_f").value = " ";
+        document.getElementById("otro_arrime_peso_neto_f").value = neto;
+      }else{
+        alert("El Valor total de Salida debe ser menor al valor total de entrada");
+      }
+    }
+  }
+
+  function checkDecimals(fieldValue) {
+    decallowed = 2;
+    if (isNaN(fieldValue) || fieldValue == "") {
+      alert("Debe ingresar solo números");
+    }
+    else {
+      if (fieldValue.indexOf('.') == -1) fieldValue += ".";
+      dectext = fieldValue.substring(fieldValue.indexOf('.')+1, fieldValue.length);
+
+      if (dectext.length > decallowed)
+      {
+        alert ("Por favor, Ingresar solo " + decallowed + " decimales.");
+      }
+      else {
+        return true
+      }
+    }
+  }
+
+  function checkOption(){
+    var op = "";
+    op = document.getElementById("otro_arrime_resultado").value;
+    if (op == 'A'){
+      document.getElementById("resultado-rechazado").style.display="none";
+      document.getElementById("resultado-aprobado").style.display="";
+    } else if(op == 'R'){
+      document.getElementById("resultado-aprobado").style.display="none";
+      document.getElementById("resultado-rechazado").style.display="";
+    }
+  }
+  
+</script>
+
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="4">
+      <span>Datos Personales</span>
+    </td>
+  </tr>
+  <br/>
+  <tr>
+    <td align="center">
+      <table border="1">
+        <br/>
+        <tr>
+          <td><label>Silo: </label></td>
+          <td>
+            <% silo_onchange = remote_function(
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+              :url=>{:controller=>'otro_arrime', :action=>:silo_change }, :with=>"'id='+value") %>
+            <%= select(
+              'otro_arrime','silo_id',
+              @silo_list.map{|i| [i.nombre, i.id]},
+              { :prompt =>'Seleccionar'},
+              { :class=>'select', :onchange =>silo_onchange+';inputChange();' } ) %>
+          </td>
+        </tr>
+        <tr>
+          <td> <label>Rif: </label></td>
+          <td>
+            <div id="rif-silo">
+              <%= render :partial => 'rif_silo' %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td> <label>Asociacion: </label></td>
+          <td>FONDAS </td>
+        </tr>
+
+        <tr>
+          <td><label>Sector </label></td>
+          <td>
+            <% sector_onchange = remote_function(
+              :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',              
+              :url=>{:controller=>'otro_arrime', :action=>:sector_change }, :with=>"'sector_id='+value+'&actividad_id='+#{@view_boleta_arrime.actividad_id.to_s}") %>
+            <%= select(
+              'solicitud','sector_id',
+              @sector_list.map{|i| [i.nombre, i.id]},
+              {:prompt=>'Seleccionar '},
+              { :class=>'select', :onchange=>sector_onchange+';inputChange();' } ) %>
+          </td>
+        </tr>
+        <tr>
+          <td><label>Sub Sector </label></td>
+          <td>
+            <span id="sub-sector-search">
+              <%= render :partial=>'sub_sector_search' %>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><label>Rubro </label></td>
+          <td>
+            <span id="rubro-search">
+              <%= render :partial=>'rubro_search' %>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><label>Sub Rubro </label></td>
+          <td>
+            <span id="sub-rubro-search">
+              <%= render :partial=>'sub_rubro_search' %>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><label>Actividad </label></td>
+          <td>
+            <span id="actividad-search">
+              <%= render :partial=>'actividad_search' %>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><label>Hora Registro: </label></td>
+          <td>
+            <%= text_field'otro_arrime', 'hora_registro_f', :class=>'text', :maxlength=>'12',
+              :style=>'width: 170px', :readonly=> 'readonly' -%>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+<br/>
+<table align="center" border="1" width="68%">
+  <tr>
+    <td style="width: 170px"><label>Nro Tr&aacute;mite: </label></td>
+    <td><%= @view_boleta_arrime.nro_solicitud.to_s%></td>
+    <td style="width: 170px"><label>Nro Ticket:</label></td>
+    <td><%= text_field'otro_arrime', 'numero_ticket',
+        :class=>'text', :maxlength=>'12', :style=>'width: 170px', :onkeypress=>'inputChange();' -%></td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label>Doc.Beneficiario:</label></td>
+    <td>
+      <% action_name = controller.action_name %>
+      <%if action_name=='edit' %>
+        <% unless @otro_arrime.cliente.persona_id.blank? || @otro_arrime.cliente.persona_id.to_s.empty?%>
+          <%= @otro_arrime.cliente.persona.cedula_nacionalidad.to_s %> - <%= @otro_arrime.cliente.persona.cedula.to_s%>
+        <%  else %>
+          <%= @otro_arrime.cliente.empresa.rif.to_s%>
+        <%  end %>
+
+      <%  else %>
+        <% if action_name=='new' %>
+          <%unless @view_boleta_arrime.blank? || @view_boleta_arrime.to_s.empty? %>
+            <%= @view_boleta_arrime.cedula_rif %>
+          <%end%>
+        <%end%>
+      <%end%>
+    </td>
+
+    <td style="width: 170px"><label>Beneficiario:</label></td>
+    <td>
+      <%= @view_boleta_arrime.productor%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label>Placa del Veh&iacute;culo:</label></td>
+    <td>
+      <%= text_field 'otro_arrime', 'placa_vehiculo', :class=>'text', :style=>'width: 170px',
+        :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+    </td>
+    <td style="width: 170px"><label>Gu&iacute;a de Movilizaci&oacute;n:</label></td>
+    <td><%= text_field 'otro_arrime', 'guia_movilizacion',
+        :class=>'text', :maxlength=>'12', :style=>'width: 170px', :onkeypress=>'inputChange();' -%></td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label>C&eacute;dula del Conductor:</label></td>
+    <td>
+      <%= select(
+        'otro_arrime', 'letra_cedula_conductor',
+        [['V','V'],['E','E']],
+        { :include_blank => true },
+        { :class=>'select', :onchange=>';inputChange();' } ) %>
+      <%= text_field 'otro_arrime', 'cedula_conductor',
+        :class=>'text', :maxlength=>'12', :style=>'width: 135px', :onkeypress=>'inputChange();' -%></td>
+    <td style="width: 170px"><label>Nombre Conductor:</label></td>
+    <td><%= text_field 'otro_arrime', 'nombre_conductor',
+        :class=>'text', :maxlength=>'60', :style=>'width: 170px', :onkeypress=>'inputChange();' -%></td>
+  </tr>
+</table>
+<br/>
+<table style="width: 100%">
+  <td class="separador" valign="bottom" colspan="4">
+    <span>Datos del Peso</span>
+  </td>
+</table>
+<br/>
+<table align="center" border="1" width="70%">
+  <tr align="center" >
+    <td><label>Items</label></td>
+    <td style="width: 250px"><label>Fecha</label></td>
+    <td><label>Veh&iacute;culo</label></td>
+    <td><label>Remolque</label></td>
+    <td><label>Total</label></td>
+  </tr>
+  <tr>
+    <td><label>Entrada</label></td>
+    <td>
+<%= calendar_date_select_tag "otro_arrime[fecha_entrada_f]", @otro_arrime.fecha_entrada_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+    <td><%= text_field 'otro_arrime', 'peso_vehiculo_f', :class=>'text', :maxlength=>'12', :style=>'width: 120px',
+        :onchange=>'inputChange();totalEntrada();' -%></td>
+    <td><%= text_field 'otro_arrime', 'peso_remolque_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px', :onchange=>'inputChange();totalEntrada();' -%></td>
+    <td><%= text_field 'otro_arrime', 'valor_total_entrada_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px', :readonly=> 'readonly' -%></td>
+  </tr>
+  <tr>
+    <td><label>Salida</label></td>
+    <td style="width: 250px">
+<%= calendar_date_select_tag "otro_arrime[fecha_salida_f]", @otro_arrime.fecha_salida_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+    <td><%= text_field 'otro_arrime', 'peso_vehiculo_salida_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px', :onchange=>'inputChange();totalSalida();' -%></td>
+    <td><%= text_field 'otro_arrime', 'peso_remolque_salida_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px', :onchange=>'inputChange();totalSalida();' -%></td>
+    <td><%= text_field 'otro_arrime', 'valor_total_salida_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px',  :readonly=> 'readonly'  -%></td>
+  </tr>
+</table>
+<br/>
+<table align="center" border="1" width="55%">
+  <tr>
+    <td><label>Peso Neto:</label></td>
+    <td><%= text_field 'otro_arrime', 'peso_neto_f', :class=>'text', :maxlength=>'12',
+        :style=>'width: 120px', :readonly=> 'readonly' -%></td>
+    <td><label>Peso Acondicionado:</label></td>
+    <td><%= text_field 'otro_arrime', 'peso_acondicionado_f', :class=>'text', :maxlength=>'12', :style=>'width: 120px',
+        :onchange=>"pa=this.form.otro_arrime_peso_acondicionado_f.value;
+this.form.otro_arrime_peso_acondicionado_f.value=(parseFloat(pa)).toFixed(2);inputChange();" -%></td>
+  </tr>
+</table>
+<br/>
+<br/>
+<table align="center" border="1" width="35%">
+  <tr>
+    <td style="width: 130px"><label>Resultado:</label></td>
+    <td>
+      <%= select(
+        'otro_arrime', 'resultado',
+        [['Aprobado','A'],['Rechazado','R']],
+        { :prompt => 'Seleccionar...' },
+        { :class=>'select', :onchange=>'inputChange();checkOption();' } ) %>
+    </td>
+  </tr>
+</table>
+<br/>
+<div id="resultado-aprobado" style="display:none">
+  <table align="center" border="1" width="35%">
+    <tr>
+      <td style="width: 130px"><label>Monto Arrime:</label></td>
+      <td align="center">
+        <%= text_field 'otro_arrime', 'monto_arrime_f', :class=>'text', :maxlength=>'12', :style=>'width: 180px',
+          :onchange=>"pa=this.form.otro_arrime_monto_arrime_f.value;
+this.form.otro_arrime_monto_arrime_f.value=(parseFloat(pa)).toFixed(2);inputChange();" -%></td>
+    </tr>
+    <tr>
+      <td><label>Observaci&oacute;n:</label></td>
+      <td align="center">
+        <%= text_area 'otro_arrime', 'observacion',
+          :class=>'text',:style=>'width: 180px; height: 100px',
+          :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%></td>
+    </tr>
+  </table>
+</div>
+<div id="resultado-rechazado" style="display:none">
+  <table align="center" border="1" width="35%">
+    <tr>
+      <td style="width: 130px"><label>Nro. Acta Rechazo:</label></td>
+      <td align="center">
+        <%= text_field 'otro_arrime', 'nro_acta_rechazo',
+          :class=>'text', :style=>'width: 180px', :maxlength=>'15', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Causa:</label></td>
+      <td align="center">
+        <%= text_area 'otro_arrime', 'causa_rechazo',
+          :class=>'text', :style=>'width: 180px; height: 100px',
+          :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%></td>
+    </tr>
+  </table>
+</div>

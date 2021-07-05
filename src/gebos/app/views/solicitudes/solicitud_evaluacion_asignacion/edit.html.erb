@@ -1,0 +1,18 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+	<%= "#{I18n.t('Sistema.Body.Vistas.General.asignando')} #{I18n.t('Sistema.Body.Vistas.General.tecnico')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %>
+</div></div></div>
+
+      <%= render :partial => 'form_detalle' %>
+  <br></br>
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+			{ :action => :index },
+			{ :id=>'button_close' } ) -%>
+
+    <%= error %>
+    <div class="msg-notice" id="message" style="display: block; text-align: center">
+      <%= I18n.t('Sistema.Body.Vistas.General.asignado_tecino_tramite') %>
+    </div>
+
+</div>

@@ -1,0 +1,66 @@
+<% regla_contable = @regla_contable if regla_contable.nil? %>
+<td >
+	<%= regla_contable.programa.nombre unless regla_contable.programa.nil? -%>
+</td>
+<td>
+  <%= regla_contable.programa.moneda.nombre unless regla_contable.programa.nil? -%>
+</td>
+<td style="text-align: center">
+	<%= regla_contable.transaccion_contable.nombre unless regla_contable.transaccion_contable.nil? %>
+</td>	
+<td style="text-align: center">
+	<%= fuente_recursos_helper(regla_contable.fuente_recursos_id)  unless regla_contable.nil?%>
+</td>
+
+<td style="text-align: center">
+	<%= nombre_reestructurado_helper(regla_contable.reestructurado) unless regla_contable.nil?  %>
+</td>
+<td style="text-align: center">
+	<%= estatus_prestamo(regla_contable.estatus) unless regla_contable.nil? %>
+</td>
+<td style="text-align: center">
+	<%= nombre_plazo_helper(regla_contable.plazos) unless regla_contable.nil? %>
+</td>	
+<td style="text-align: center">
+	<%= regla_contable.secuencia unless regla_contable.nil? %>
+</td>
+<td style="text-align: center">
+	<%= modalidad_pago_helper(regla_contable.modalidad_pago) unless regla_contable.nil? %>
+</td>
+
+<td style="text-align: center">
+	<%= regla_contable.codigo_contable unless regla_contable.nil? %>
+</td>
+
+
+<td style="text-align: left">
+	<%= unless regla_contable.nil?
+        if regla_contable.tipo_movimiento == 'D'
+          nombre_monto_helper(regla_contable.tipo_monto) unless regla_contable.nil? 
+        else  
+          ''
+        end
+      end
+        %>
+</td>
+<td>
+	<%= unless regla_contable.nil?
+  
+        if regla_contable.tipo_movimiento == 'H'
+          nombre_monto_helper(regla_contable.tipo_monto) unless regla_contable.nil? 
+        else
+          '' 
+        end  
+      end %>
+</td>
+<td style="text-align: right width: 150px">
+	<%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+		:url => {:controller => 'regla_contable', :action => :edit, :id => regla_contable.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+    :confirm => t('Sistema.Body.Controladores.Mensaje.esta_seguro'),
+		:url => {:controller => 'regla_contable', :action => :delete, :id => regla_contable.id}) if vlink 'delete' -%>
+</td>

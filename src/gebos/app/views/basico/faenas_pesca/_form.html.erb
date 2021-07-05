@@ -1,0 +1,154 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+
+  <%= hidden_field 'faenas_pesca', 'embarcacion_id',
+    :value => "#{@identificador_embarcacion}" %>
+
+
+  <!-- Caso especial -->
+
+  <%if @fa1==0%>
+  <%#= hidden_field 'faenas_pesca', 'faenas_mensual',
+  :value => "1" %>
+  <%end%>
+
+  <%if @fa2==0%>
+  <%#= hidden_field 'faenas_pesca', 'captura_campana',
+  :value => "0" %>
+  <%end%>
+
+  <%if @fa3==0%>
+  <%#= hidden_field 'faenas_pesca', 'captura_estimada',
+  :value => "0" %>
+  <%end%>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%if @es_algo!=1%>
+
+        <%= select(
+          'faenas_pesca','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=> I18n.t('Sistema.Body.Vistas.General.seleccione')},
+          { :class=>'select' }  ) %>
+
+      <%else%>
+        <%= select(
+          'faenas_pesca','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=> I18n.t('Sistema.Body.Vistas.General.seleccione')},
+          { :class=>'select' ,:disabled=>'true'}  ) %>
+      <%end%>
+
+<%#= select(
+'faenas_pesca','embarcacion_id',
+@embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+{:prompt=>'Seleccione una embarcación... '},
+{ :class=>'select'} ) %>
+    </td>
+  </tr>	
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.campañas')} / #{I18n.t('Sistema.Body.Controladores.FaenasPesca.FormTitles.form_title_records')}" %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'faenas_mensual', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.capturas')} #{I18n.t('Sistema.Body.Vistas.General.por')} #{I18n.t('Sistema.Body.Vistas.General.campañas')} / #{I18n.t('Sistema.Body.Controladores.FaenasPesca.FormTitles.form_title_records')}" %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'captura_campana', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.toneladas') %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.capturas')} #{I18n.t('Sistema.Body.Vistas.Form.estimada')}" %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'captura_estimada', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%> <%= I18n.t('Sistema.Body.Vistas.General.toneladas') %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.destino')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.captura')}" %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'destino_captura', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.especie')} #{I18n.t('Sistema.Body.Vistas.General.capturada')}" %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= select(
+        'faenas_pesca','tipo_especie_id',
+        @tipo_especie.map{|i| [i.nombre, i.id]},
+        {:prompt=> I18n.t('Sistema.Body.Vistas.General.seleccione')},
+        { :class=>'select'} ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.FaenasPesca.Columnas.precio_x_kg') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'precio_x_kg', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%> 
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.FaenasPesca.Columnas.gasto_por_unidad') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'gasto_por_unidad_f', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.FaenasPesca.Columnas.ganancia_por_unidad') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'ganancia_por_unidad_f', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.FaenasPesca.Columnas.tiempo_expiracion') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'faenas_pesca', 'tiempo_expiracion', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'5', :onkeypress=>'inputChange();'  -%> (<%= I18n.t('Sistema.Body.Vistas.General.dias') %>)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;
+

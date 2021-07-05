@@ -1,0 +1,22 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th <%= sort_class_helper('sector_tecnico.Sector.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector_tecnico.Sector.nombre', 'list' %>
+      </th>
+      <th style="width: 15px">
+         <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for sector_tecnico in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :sector_tecnico => sector_tecnico, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

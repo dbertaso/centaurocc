@@ -1,0 +1,80 @@
+<%= render :partial=>'finanzas/liquidacion/common/tabs' %>
+<div class="marco-contenido2">
+
+<br>
+<div>
+	<table><tr><td>
+		<%= form_remote_tag(
+				:loading =>'Element.show("loading")',
+				:loaded => 'Element.hide("loading")',
+			  :url => { :action => :generar_seleccion } ) -%>
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.boton_generar_seleccion')) -%>
+			<input id="cuenta_id1" type="hidden" name="cuenta_id1"/>
+			<input id="cuenta_id2" type="hidden" name="cuenta_id2"/>
+			<input id="cuenta_id" type="hidden" name="cuenta_id"/>
+		<%= end_form_tag %>
+	</td></tr></table>
+</div>
+<br>
+<form>
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+		<th style="width: 50px">
+			Solicitud
+		</th>
+		<th style="width: 50px">
+			Préstamo
+		</th>
+		<th style="width: 40px">
+			Grupo
+		</th>
+		<th style="width: 30px">
+			Coop
+		</th>
+		<th style="width: 100px">
+			Usuaria / Cooperativa
+		</th>
+		<th style="width: 40px">
+			Programa
+		</th>
+		<th style="width: 40px">
+			Origen de los Fondos
+		</th>
+		<th style="width: 100px">
+			Banco Usuaria / Liquidador
+		</th>
+		<th style="width: 30px">
+			Cuenta Usuaria
+		</th>
+		<th style="width: 30px">
+			Monto Solicitud
+		</th>
+		<th style="width: 30px">
+			Cuenta Matriz
+		</th>
+		<th style="width: 10px">
+			Sol Proc
+		</th>
+		<th style="width: 10px">
+		</th>
+		<th style="width: 40px">
+			Seleccionar todos <br><input type="checkbox" id="todos" name="todos" onClick="checkAll(form.solicitud_id,form.todos)">
+		</th>
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for view_liquidacion in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_view', :locals => { :view_liquidacion => view_liquidacion, :even_odd => even_odd } -%>
+<% end %>
+
+</tbody>
+</table>
+</form>
+<%= form_pagination %>
+
+
+</div>

@@ -1,0 +1,28 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 150px" <%= sort_class_helper('programa.alias') %>>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.corto')}", 'programa.alias', 'list' %>
+      </th>
+    <th style="width: 250px" <%= sort_class_helper('programa.nombre') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'programa.nombre', 'list' %>
+      </th>
+    <th style="width: 250px" <%= sort_class_helper('programa.descripcion') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'programa.descripcion', 'list' %>
+      </th>
+    <th style="width: 70px">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+    </th>
+  </tr>
+  </thead>
+  <tbody id="list-body">
+  <%
+    even_odd = 1
+    for programa in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :programa => programa, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

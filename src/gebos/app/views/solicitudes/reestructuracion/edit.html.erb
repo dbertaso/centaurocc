@@ -1,0 +1,34 @@
+<div class="marco-contenido">
+  <%= form_title_edit @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.nombre : @cliente.persona.nombre_corto %>
+<%#= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>
+
+  <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+
+  </div>
+  <%= message %>
+
+  <%= render :partial => 'form' %>
+
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :action => :index }, { :id=>'button_close' } ) -%>
+
+
+<%#= form_remote_tag(image_tag('boton_comite_reestructuracion.gif',:title=>'Avanzar'),
+:loading =>'image_load()',
+:loaded => 'image_load()',
+:url => { :action => :avanzar_reestructuracion, :cliente_id=>@cliente.id, :popup=>params[:popup] } ) -%>
+
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.boton_reestructuracion')),:title=>I18n.t('Sistema.Body.Vistas.General.enviar_al_comite_reestructuracion')),
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+    :url => { :controller=>'solicitudes/reestructuracion', :action =>:avanzar_reestructuracion, :cliente_id=>@cliente.id, :popup=>params[:popup]} ) -%>	
+
+
+
+
+
+
+<%#= link_to( image_tag("boton_comite_reestructuracion.gif"),
+{ :controller=>'solicitudes/reestructuracion', :action=>:avanzar_reestructuracion, :cliente_id=>@params[:cliente_id]})%>
+
+<%#= end_form_tag -%>
+</div>

@@ -1,0 +1,256 @@
+
+    
+    <div id="deuda" style="position: relative; height: 200px; width: 100%">
+    
+      <div style="width: 50%; position: absolute; left: 0; top:0; height: 180px" align="center">
+        <table style="width: 97%">
+
+          <tr>
+            <td class="separador" valign="bottom" colspan="2" style="text-align: center">
+              <span><%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Separadores.deuda')%>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </td>
+            <td></td>
+          </tr>
+
+          <tr>
+
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_deudor') %>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.saldo_insoluto_total_fm -%>
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td >
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.intereses')%>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.interes_vencido_fm %>
+            </td>
+
+          </tr>
+          
+          <tr>
+            
+            <td >
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_diferido')%>
+              </label>
+            </td>
+            <td style="text-align: right">
+                <%= @prestamo.interes_diferido_por_vencer_fm %>
+            </td>
+          </tr>
+
+          <tr>
+
+            <td >
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora')%>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_mora_fm %>
+            </td>
+
+
+          </tr>
+
+          <tr>
+
+            <% if @prestamo.intermediado %> 
+              <td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_propio')%>
+                </label>
+              </td>
+              <td style="text-align: right">
+                <%= @prestamo.interes_foncrei_fm %>
+              </td>
+
+            <% end%>
+
+          </tr>
+
+          <tr>
+            <% if @prestamo.intermediado %>
+              <td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_intermediario')%>
+                </label>
+              </td>
+              <td style="text-align: right">
+                <%= @prestamo.interes_intermediario_fm %>
+              </td>
+            <% end%>
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_devengado') %>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.causado_no_devengado_fm %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                (-) <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_favor')%>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.remanente_por_aplicar_fm %>
+    
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.deuda')}"%>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <b><%= @prestamo.total_deuda_fm %></b>
+            </td>
+          </tr>
+        </table>
+      </div>
+      
+      <div style="width: 50%;  position: absolute; left: 50%; top: 0; height: 180px" align="center">
+        <table style="width: 97%">
+      
+          <tr>
+            <td class="separador" valign="bottom" colspan="2" style="text-align: center">
+              <span>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible') %>
+              </span>
+            </td>
+            <td></td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.capital_vencido') %>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.capital_vencido_fm -%>
+            </td>
+          </tr>
+
+          <tr>
+            <% if @prestamo.intermediado %>
+              <td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_propio') %>
+                </label>
+              </td>
+              <td style="text-align: right">
+                <%= @prestamo.interes_foncrei_fm %>
+              </td>
+            <% end%>
+          </tr>
+
+          <tr>
+            <% if @prestamo.intermediado %>
+              <td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_intermediario') %>
+                </label>
+              </td>
+              <td style="text-align: right">
+                <%= @prestamo.interes_intermediario_fm %>
+              </td>
+            <% end%>
+          </tr>
+
+          <tr>
+
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.intereses_vencidos')%>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.interes_vencido_fm %>
+            </td>
+
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_diferido')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.vencido')}"%>
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.interes_diferido_vencido_fm %>
+            </td>
+
+
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora')%>
+
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_mora_fm -%>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>(-) <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_favor')%></label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.remanente_por_aplicar_fm %>
+            </td>
+          </tr>
+          
+          <tr> 
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_estado_cuenta') %> 
+
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.solicitud.programa.fecha_ultimo_cierre_f %>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td>
+              <label>
+                <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible')}"%>
+
+              </label>
+            </td>
+            <td style="text-align: right">
+              <b><%= @prestamo.exigible_fm %></b>
+            </td>
+          </tr>
+      
+        </table>
+      </div>
+    </div>
+    

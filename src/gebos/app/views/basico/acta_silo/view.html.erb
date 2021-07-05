@@ -1,0 +1,14 @@
+<%= form_title_edit @silo.nombre %>
+<%= render :partial=>'basico/silo/common/tabs' %>
+<div class="marco-contenido">
+   <%= error  %>
+  <%= message  %>
+
+  <%= render 'view_form' %>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :action => :index, :silo_id => @silo.id, },
+    { :id=>'button_close' } ) -%>
+
+  <% form_tag -%>
+</div>

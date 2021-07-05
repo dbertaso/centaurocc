@@ -1,0 +1,20 @@
+<table>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+
+    <td>
+      <%= text_field 'vacuna', 'descripcion',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">      
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'),  :id=>'button_save') -%>&nbsp;
+      

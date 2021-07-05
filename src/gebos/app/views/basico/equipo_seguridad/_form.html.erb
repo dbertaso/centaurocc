@@ -1,0 +1,169 @@
+<script language="javascript">varEnviado = false;</script> 
+<table>
+
+  <%= hidden_field 'equipo_seguridad', 'embarcacion_id',
+    :value => "#{@identificador_embarcacion}" %>
+
+
+  <!-- Caso especial -->
+
+  <%if @eq1==0%>
+    <%= hidden_field 'equipo_seguridad', 'condicion',
+      :value => "***No-aplica***" %>
+  <%end%>
+  <%if @eq2==0%>
+    <%= hidden_field 'equipo_seguridad', 'descripcion',
+      :value => "***No-aplica***" %>
+  <%end%>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%if @es_algo!=1%>
+
+        <%= select(
+          'equipo_seguridad','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=>'Seleccione una embarcación... '},
+          { :class=>'select' }  ) %>
+
+      <%else%>
+        <%= select(
+          'equipo_seguridad','embarcacion_id',
+          @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+          {:prompt=>'Seleccione una embarcación... '},
+          { :class=>'select' ,:disabled=>'true'}  ) %>
+      <%end%>
+
+<%#= select(
+'equipo_seguridad','embarcacion_id',
+@embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+{:prompt=>'Seleccione una embarcación... '},
+{ :class=>'select'} ) %>
+    </td>
+  </tr>	
+
+
+  <tr>
+    <td style="width: 25%">
+      <label><%= "#{I18n.t('Sistema.Body.General.es').capitalize} #{I18n.t('Sistema.Body.Vistas.General.propia')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+      <%if @estoy_editando!="1" %>             
+
+        <%=
+        radio_button 'equipo_seguridad','es_propio', 'true',
+          :class=>'text', :onclick=> 'verifico();inputChange();'
+        -%> &nbsp;
+
+        <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+        <%=
+        radio_button 'equipo_seguridad','es_propio', 'false',
+          :class=>'text', :onclick=> 'verifico();inputChange();'
+        -%> &nbsp;
+      <%else%>
+        <%=
+        radio_button 'equipo_seguridad','es_propio', 'true',
+          :class=>'text', :onclick=> 'verifico2();inputChange();'
+        -%> &nbsp;
+
+        <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+        <%=
+        radio_button 'equipo_seguridad','es_propio', 'false',
+          :class=>'text', :onclick=> 'verifico2();inputChange();'
+        -%> &nbsp;
+      <%end%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'equipo_seguridad', 'cantidad', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Controladores.TipoEquipoSeguridad.FormTitles.form_title') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+
+
+      <%= select(
+        'equipo_seguridad','tipo_equipo_id',
+        @tipo_equipo_seguridad.map{|i| [i.tipo, i.id]},
+        {:prompt=>'Seleccione un equipo de seguridad... '},
+        { :class=>'select'} ) %>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.año') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'equipo_seguridad', 'ano', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %> / <%= I18n.t('Sistema.Body.Vistas.General.modelo') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'equipo_seguridad', 'modelo', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.serial') %>:</label><label style="color: red">*</label>
+    </td>
+    <td>
+      <% if @es_propia!="1" %>
+        <%= text_field 'equipo_seguridad', 'numero_serial', :class=>'text', :style=>'width: 240px',
+          :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+      <%else%>
+        <%= text_field 'equipo_seguridad', 'numero_serial', :class=>'text', :style=>'width: 240px',
+          :maxlength=>'160', :onkeypress=>'inputChange();',:readonly=>'readonly'  -%>
+
+      <%end%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>¿<%= "#{I18n.t('Sistema.Body.Vistas.General.posee')} #{I18n.t('Sistema.Body.Vistas.General.gps')}" %>?:</label><label style="color: red">*</label>
+    </td>
+    <td><%= I18n.t('Sistema.Body.General.si') %>:
+      <%=
+      radio_button 'equipo_seguridad','con_gps', 'true',
+        :class=>'text', :onclick=> 'inputChange();'
+      -%> &nbsp;
+
+      <%= I18n.t('Sistema.Body.General.negacion') %>:
+
+      <%=
+      radio_button 'equipo_seguridad','con_gps', 'false',
+        :class=>'text', :onclick=> 'inputChange();'
+      -%> &nbsp;
+
+    </td>
+  </tr> 
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"javascript:actualizo(); if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;

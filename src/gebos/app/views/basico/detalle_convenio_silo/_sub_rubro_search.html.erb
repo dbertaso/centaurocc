@@ -1,0 +1,10 @@
+<% sub_rubro_onchange = remote_function(
+	:method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+	:url=>{:controller=>'detalle_convenio_silo',
+	:action=>:sub_rubro_change },
+	:with=>"'sub_rubro_id='+value") %>
+<%= select(
+  'solicitud', 'sub_rubro_id',
+  @sub_rubro_list.map{|e| [e.nombre, e.id]},
+  {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+  { :class=>'select', :onchange=>sub_rubro_onchange + ';inputChange();' } ) %>

@@ -1,0 +1,170 @@
+<tr id="row_<%=params[:orden_id] %>_view">
+
+	<td colspan="14" style="padding-bottom: 10px">
+
+<%
+
+ben_todo=ViewListOrdenDespacho.find_by_orden_despacho_id(params[:orden_id])
+
+%>
+
+
+<center><h2><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.detalle_completo_orden_despacho')%> <%=OrdenDespacho.find(params[:orden_id]).numero%></h2></center>
+
+<table style="width: 100%" border="0">
+
+
+<tr>
+
+
+<td ><label>
+<%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}"%></label>
+</td>
+<td align="left">
+<%=ben_todo.numero%>
+</td>
+
+
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.Form.estatus') << " " << I18n.t('Sistema.Body.Vistas.General.del') << " " << I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%> </label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).solicitud.estatus.nombre.to_s.strip.upcase%>
+</td>
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).solicitud.rubro.nombre.to_s.strip.upcase%>
+</td>
+
+
+</tr>
+
+<tr>
+<td ><label>
+<%=I18n.t('Sistema.Body.General.beneficiario')%></label>
+</td>
+<td align="left">
+<%=ben_todo.nombre.to_s.strip.upcase -%>
+</td>
+
+
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label>
+</td>
+<td align="left">
+<%=ben_todo.cedula_rif -%>
+</td>
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.orden_despacho')%></label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).monto_fm%>
+</td>
+</tr>
+<tr>
+
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.Form.estatus') << " " << I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.orden_despacho')%></label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).estatus.nombre.to_s.strip.upcase%>
+</td>
+
+
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.facturado')%></label>
+</td>
+<td align="left">
+<%
+monto_facturado=OrdenDespachoDetalle.sum(:monto_facturacion,:conditions=>"orden_despacho_id=#{params[:orden_id]}")    
+%>
+
+<%=format_fm(monto_facturado)%>
+</td>
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label>
+</td>
+<td align="left">
+<%unless OrdenDespacho.find(params[:orden_id]).observacion_cerrado.nil?%>
+
+<%=OrdenDespacho.find(params[:orden_id]).observacion_cerrado.to_s.strip.upcase%>
+<%else%>
+<%=OrdenDespacho.find(params[:orden_id]).observacion.to_s.strip.upcase%>
+<%end%>
+</td>
+
+
+</tr>
+
+
+
+<tr><td colspan="6" align="center" style="color:green"> <h2><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.impresion_detalle_facturas')%></h2></td></tr>
+
+<tr><td colspan="6" align="center" > 
+
+<%
+
+
+#verificamos si exiten secuencias para esa factura
+
+    @condition = " orden_despacho_id = #{params[:orden_id]} "
+
+    @ordenes_de_despacho_aux=OrdenDespachoDetalle.find(:all, :conditions=>@condition)
+
+    unless @ordenes_de_despacho_aux.empty?
+      condi="("
+      @ordenes_de_despacho_aux.each{ |orden|
+        condi+=orden.id.to_s << ","
+        }
+      condi=condi[0,condi.length-1] 
+      condi+=")"
+
+      logger.info "wwwwwwwwwwwwwwwwww "<< condi.to_s
+
+
+      #@facturas_faltantes_aux=FacturaOrdenDespacho.find(:first, :conditions=>"orden_despacho_detalle_id in #{condi} and length(secuencia)>1 and confirmada=false")
+
+
+      @facturas_faltantes_aux=FacturaOrdenDespacho.find(:all, :conditions=>"orden_despacho_detalle_id in #{condi} and length(secuencia)>1 ")
+
+      unless @facturas_faltantes_aux.empty?
+      condi2="("
+      @facturas_faltantes_aux.each{ |facturat|
+        condi2+=facturat.id.to_s << ","
+        }
+      condi2=condi2[0,condi2.length-1] 
+      condi2+=")"
+      end
+
+      logger.info "eeeeeeeeeee " << condi2.to_s
+    end
+
+%>
+
+
+
+      <!-- Se elimino -->
+    <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir_grande'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } ",:title=>'Imprimir el Detalle de las Ordenes de Despacho Parciales'),{ :controller=>'orden_despacho_historico', :action=>'imprimir_todo',
+				:popup=>true,  :parciales_id=>condi },
+				:popup => ['orden_despacho_historico', 'height=600,width=1030, scrollbars=yes, resizable=false'] -%>
+
+ </td></tr> 
+</table>
+<br>
+
+     <%@mega_condi=condi%> 
+		<%= render :partial=>"list_accion", :locals=>{:parciales_id=>@mega_condi} %>
+
+	</td>
+
+	<td valign="top" style="text-align: center">
+		<%= link_to_remote(
+			image_tag(I18n.t('Sistema.Body.Imagenes.img_colapsar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cerrar_tabla_desplegable')),
+		  :loading =>'image_load()',
+	 	  :loaded => 'image_unload()',
+          :method=>:get,
+			:url => {:action => :collapse, :orden_id => params[:orden_id]}) -%>
+	</td>
+</tr>

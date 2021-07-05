@@ -1,0 +1,27 @@
+<%= form_title_search %>
+		
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method => :get,
+  :url => { :action => :list } ) do -%> 
+	<table>
+		<tr>
+			<td style="width: 200px">
+				<label><%= t('Sistema.Body.Vistas.TransaccionContable.Etiquetas.nombre_transaccion_contable')%></label>
+			</td>
+			<td>
+				<%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'50', :style=>'width: 300px'  %>
+			</td>
+			<td>
+				<%= image_submit_tag(image_path(t('Sistema.Body.Imagenes.buscar'))) -%>
+			</td>
+		</tr>
+	</table>
+<% end %>
+	
+<%= error %>
+<%= message %>
+
+<div id="list">
+</div>

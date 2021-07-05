@@ -1,0 +1,43 @@
+<td>
+  <%= prestamo.solicitud.numero %>
+</td>
+
+<td>
+  <%= prestamo.numero %>
+</td>
+
+<td>
+  <%= prestamo.solicitud.cliente.identificador %>
+</td>
+
+<td>
+  <%= prestamo.solicitud.cliente.nombre %>
+</td>
+
+<td>
+  <% if  prestamo.remanente_por_aplicar == nil ;   prestamo.remanente_por_aplicar = 0 end %>
+  <%= format_f(prestamo.remanente_por_aplicar ) %>
+</td>
+
+<td>
+  <%= prestamo.solicitud.sector.nombre %>
+</td>
+
+<td>
+  <%= prestamo.solicitud.rubro.nombre %>
+</td>
+
+<td width="8%" align="center">
+
+  <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+    { :controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>prestamo.solicitud.id, :popup=>true },
+    :popup => ['consulta_solicitud', 'height=600,width=800, scrollbars=yes, resizable=yes']	%>      
+
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.enviar_flecha')),:title=>I18n.t('Sistema.Body.General.avanzar')),
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+    :confirm => "#{I18n.t('Sistema.Body.Vistas.Arrime.Messages.esta_usted_seguro_generar_orden_despacho')} #{prestamo.numero} #{I18n.t('Sistema.Body.Vistas.General.signo_interrogacion_cerrado')}",
+    :id=>"button_enviar",
+    :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+    :url => {:action => :pagar_excedente, :controlador => 'excedente_arrime', :prestamo_id => prestamo.id, :registros => prestamo.id,  :prestamos_consulta => @ids}) -%>	
+
+</td>

@@ -1,0 +1,119 @@
+<script type="text/javascript">
+
+  function cargar_vacunas()
+  {
+    document.getElementById("agregar_vacuna").style.display= 'none';
+    var pars = "vacunacion[vacuna_id]=" + document.getElementById("vacunacion_vacuna_id").value;
+    pars += "&vacunacion[fecha_colocacion]=" + document.getElementById("vacunacion[fecha_colocacion_f]").value;
+    pars += "&sanidad_animal_id=<%= @sanidad_animal.id %>"
+    pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+    var myAjax = new Ajax.Request("/visitas/visita_sanidad_animal/save_new_vacunacion?" + pars, {method: 'get', asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onFailure: function(){ document.getElementById("agregar_vacuna").style.display= 'none'; }, onLoading:function(request){image_load()}}); return false;
+  }
+
+</script>
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+  <table style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Columnas.sanidad_animal')} - #{I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.vacunacion')}"%></span>
+      </td>
+    </tr>
+  </table>
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.tipo_vacuna')%></label>
+      </td>
+      <% unless @sanidad_animal.id.nil? || @sanidad_animal.to_s.empty? %>
+        <td style="width: 70%">
+          <%= select(
+            'vacunacion', 'vacuna_id',@tipo_vacunas_select.map{|i| [i.descripcion, i.id]},
+            {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+            { :class=>'select', :onchange=>'inputChange();' } ) %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">
+          <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.fecha_ultima_vacunacion')%></label>
+        </td>
+        <td style="width: 70%">
+          <%= calendar_date_select_tag "vacunacion[fecha_colocacion_f]", @vacunas.fecha_colocacion_f, 
+            :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+            :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>&nbsp;&nbsp;&nbsp;&nbsp;
+          <samp id="agregar_vacuna">
+            <%= image_tag(I18n.t('Sistema.Body.Imagenes.agregar'), :title=>'Agregar',
+              :onclick=>"javascript:cargar_vacunas();", :OnMouseOver=>"style.cursor='pointer'" ) %>
+          </samp>
+        </td>
+      </tr>
+    <% else %>
+      <td style="width: 70%">
+        <%= select(
+          'vacunacion', 'vacuna_id', @tipo_vacunas_select.map{|i| [i.descripcion, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">
+          <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.fecha_ultima_vacunacion')%></label>
+        </td>
+        <td style="width: 70%">
+          <%= calendar_date_select_tag "vacunacion[fecha_colocacion_f]", @vacunas.fecha_colocacion_f, 
+            :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+            :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()", :disabled => 'true', :onchange=>'inputChange();' %>(dd/mm/aaaa)&nbsp;&nbsp;&nbsp;&nbsp;
+          <samp id="agregar_vacuna">
+            <%= image_tag(I18n.t('Sistema.Body.Imagenes.agregar'), :title=>'Agregar',
+              :onclick=>"javascript:cargar_vacunas();", :OnMouseOver=>"style.cursor='pointer'" ) %>
+          </samp>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"> <label style="color: red">
+            <%= I18n.t('Sistema.Body.Vistas.VisitaSanidadAnimal.Etiquetas.manejo_e_instalaciones') %>
+          </label>
+        </td>
+      </tr>
+    <%end%>
+  </table>
+<br/>
+  <table class="lista" style="width: 50%">
+    <tr>
+      <th style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.tipo_vacuna')%></label>
+      </th>
+      <th style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.fecha_ultima_vacunacion')%></label>
+      </th>
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+    <% unless @vacunacion_list.blank?
+      clase = "lista0"
+      @vacunacion_list.each { |vacuna| %>
+        <tr id="vacuna_<%= vacuna.id %>" class='<%= clase %>'>
+          <td>
+            <%= vacuna.vacuna.descripcion %>
+          </td>
+          <td>
+            <%= vacuna.fecha_colocacion_f %>
+          </td>
+          <td align="center">
+            <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+              :method=>:get,:loading =>'image_load()', :loaded => 'image_unload()', :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+              :id=>"button_enviar", :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+              :url => {:action => :delete_vacunacion, :id => vacuna.id, :sanidad_animal_id=>vacuna.sanidad_animal_id}) -%>
+          </td>
+        </tr>
+        <% if clase == 'lista0'
+          clase = 'lista1'
+        else
+          clase = 'lista0'
+        end
+      }
+    end %>
+  </table>
+<table><tr><td colspan="3">&nbsp;</td></tr></table>
+

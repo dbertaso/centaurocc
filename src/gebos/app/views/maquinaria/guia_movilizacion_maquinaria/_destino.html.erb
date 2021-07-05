@@ -1,0 +1,64 @@
+<%unless @guia_movilizacion_maquinaria.destino.nil?%>
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 160px">
+        <label><% if @guia_movilizacion_maquinaria.destino == 'F' %><%=I18n.t('Sistema.Body.Vistas.General.oficina')%>
+          <% elsif  @guia_movilizacion_maquinaria.destino == 'U' %><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.unidad_produccion')%>
+          <% elsif @guia_movilizacion_maquinaria.destino == 'O' %><%=I18n.t('Sistema.Body.Vistas.Form.evento')%><label style="color: red">*</label> 
+          <%end%></label>
+      </td>
+      <% if @guia_movilizacion_maquinaria.destino == 'F' %>
+        <td style="width: 620px"><%= @view_envio_maquinaria.oficina.nombre.to_s unless @view_envio_maquinaria.oficina.nil? %>
+           <%= hidden_field 'guia_movilizacion_maquinaria', 'oficina_id', :value=>"#{@view_envio_maquinaria.oficina_id}", 
+             :style=>'display:hidden' %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 160px">
+          <label><%=I18n.t('Sistema.Body.General.direccion')%> </label>
+        </td>
+        <td style="width: 620px"><%=I18n.t('Sistema.Body.Vistas.General.estado')%> <%= @view_envio_maquinaria.oficina.municipio.estado.nombre.to_s unless @view_envio_maquinaria.oficina.municipio.estado.nil? %>, Municipio <%= @view_envio_maquinaria.oficina.municipio.nombre.to_s unless @view_envio_maquinaria.oficina.municipio.nil? %>, Ciudad <%= @view_envio_maquinaria.oficina.ciudad.nombre.to_s unless @view_envio_maquinaria.oficina.ciudad.nil? %></td>
+      </tr>
+    <% elsif @guia_movilizacion_maquinaria.destino == 'U' %>
+      <td style="width: 620px"><%= @view_envio_maquinaria.unidad_produccion.to_s %> 
+        <%= hidden_field 'guia_movilizacion_maquinaria', 'unidad_produccion_id', :value=>"#{@view_envio_maquinaria.unidad_produccion_id}", 
+             :style=>'display:hidden' %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 160px">
+        <label><%=I18n.t('Sistema.Body.General.direccion')%> </label>
+      </td>
+      <td style="width: 620px"><%= @view_envio_maquinaria.unidad_produccion_direccion.to_s%></td>
+    </tr>
+    <tr>
+      <td style="width: 160px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> </label>
+      </td>
+      <td style="width: 620px"><%= @view_envio_maquinaria.telefono.to_s%></td>
+    </tr>
+  <% elsif @guia_movilizacion_maquinaria.destino == 'O' %>
+    <td style="width: 620px">
+      <%= text_field 'guia_movilizacion_maquinaria', 'evento', 
+        :class=>'text', :style=>'width: 400px;', :maxlength=>'150',
+        :onKeyUp=>'textCounter(this,60)', :onkeypress=>'inputChange();' -%> </td>
+    </tr>
+    <tr>
+      <td style="width: 160px">
+        <label><%=I18n.t('Sistema.Body.General.direccion')%> </label><label style="color: red">*</label>
+      </td>
+      <td style="width: 620px"><%= text_area 'guia_movilizacion_maquinaria', 'direccion_destino', :class=>'text',
+          :style=>'width: 396px; height: 40px',
+          :onKeyUp=>'textCounter(this,250)', :onkeypress=>'inputChange();' -%></td>
+    </tr>
+    <tr>
+      <td style="width: 160px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> </label><label style="color: red">*</label>
+      </td>
+      <td style="width: 620px"><%= text_field 'guia_movilizacion_maquinaria', 'telefono_destino', 
+          :class=>'text', :style=>'width: 150px;', :maxlength=>'150',
+          :onKeyUp=>'textCounter(this,11)', :onkeypress=>'inputChange();return NumberKey(event);' -%></td>
+    </tr>
+  <%end%>  
+  </table>
+<%end%>

@@ -1,0 +1,173 @@
+  <%= form_title_edit %>
+
+  <table style="width: 100%">
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%=I18n.t('Sistema.Body.General.beneficiario')%></span>
+      </td>
+    </tr>
+  
+    <tr>
+
+      <td><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></td>
+      <td><% if @solicitud.cliente.type.to_s == 'ClientePersona' %>
+            <%= @solicitud.cliente.persona.cedula %>
+          <% else %>
+            <%= @solicitud.cliente.empresa.rif %>
+          <% end %>
+      </td>
+    </tr>
+
+    <tr>
+
+      <td><%=I18n.t('Sistema.Body.General.beneficiario')%>:</td>
+      <td><% if @solicitud.cliente.type.to_s == 'ClientePersona' %>
+            <%= @solicitud.cliente.persona.primer_nombre + ' ' + @solicitud.cliente.persona.primer_apellido %>
+          <% else %>
+            <%= @solicitud.cliente.empresa.nombre %>
+          <% end %>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%=I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%></span>
+      </td>
+    </tr>
+  
+    <tr>
+
+      <td><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%></td>
+      <td>
+        <%= @solicitud.numero %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%>:</td>
+      <td>
+        <%= @solicitud.fecha_solicitud_f %>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.recibido_por')%></span>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></label> <label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'recepcion_maquinaria', 'cedula_receptor',
+          :class=>'text', :style=>'width: 200px;',
+          :maxlength=>'8', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}"%></label> <label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'recepcion_maquinaria', 'nombe_receptor',
+          :class=>'text', :style=>'width: 300px;',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.telefono')%></label> <label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'recepcion_maquinaria', 'telefono_receptor',
+          :class=>'text', :style=>'width: 200px;',
+          :maxlength=>'11', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+      </td>
+    </tr>
+    
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.fecha_real_llegada')%></span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 160px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.fecha_real_llegada')%></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 150px">
+      <%= calendar_date_select_tag "recepcion_maquinaria[fecha_recepcion_f]", @recepcion_maquinaria.fecha_recepcion_f, :class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);' %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.hora_real_llegada')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'recepcion_maquinaria', 'hora_llegada',
+        :class=>'text',
+        :style=>'width: 80px',
+        :maxlength=>'8' -%> 
+      <%= select('recepcion_maquinaria', 'hora_llegada_ampm', { 'am' => 'am', 'pm' => 'pm'}) %> (hh:mm am/pm)
+    </td>
+  </tr>
+    
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%=I18n.t('Sistema.Body.Vistas.General.maquinaria')%> <%=I18n.t('Sistema.Body.Vistas.General.recibida')%></span>
+      </td>
+    </tr>
+
+  </table>
+  <table class="lista" style="width: 100%">
+    <tr>
+      <th style="width: 5%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.conforme')%></label>
+      </th>
+      <th style="width: 5%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.opc_no')%> <%=I18n.t('Sistema.Body.Vistas.General.conforme')%></label>
+      </th>
+      <th style="width: 10%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+      </th>
+      <th style="width: 14%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+      </th>
+      <th style="width: 14%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+      </th>
+      <th style="width: 14%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+      </th>
+      <th style="width: 10%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%> <%=I18n.t('Sistema.Body.Vistas.General.motor')%> </label>
+      </th>
+      <th style="width: 10%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%> <%=I18n.t('Sistema.Body.Vistas.General.chasis')%></label>
+      </th>
+      <th style="width: 19%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.almacen')%></label>
+      </th>
+    </tr>
+    
+    <%= GuiaCatalogo.view_conforme(@catalogo, @guia.id) %>
+  </table>
+<br/>
+  <table style="width: 100%">
+  
+    <tr>
+
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label> <label style="color: red">*</label></td>
+      <td>
+      <%= text_area 'recepcion_maquinaria', 'observaciones', :class=>'text',
+        :style=>'width: 600px; height: 90px', :onkeypress=>'inputChange();' -%>
+    </td>
+    </tr>
+  </table>
+  <br>

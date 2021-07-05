@@ -1,0 +1,33 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 120px" <%= sort_class_helper('cedula') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cedula'), 'cedula', 'list' %>
+ 			</th>
+			<th style="width: 120px" <%= sort_class_helper('primer_nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.primer_nombre'), 'primer_nombre', 'list' %>
+ 			</th>
+ 			<th style="width: 120px" <%= sort_class_helper('segundo_nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.segundo_nombre'), 'segundo_nombre', 'list' %>
+ 			</th> 	
+			<th style="width: 120px" <%= sort_class_helper('primer_apellido') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.primer_apellido'), 'primer_apellido', 'list' %>
+ 			</th>
+ 			<th style="width: 120px" <%= sort_class_helper('segundo_apellido') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.segundo_apellido'), 'segundo_apellido', 'list' %>
+ 			</th> 	
+ 			<th style="width: 40px">
+                          <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for perito in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :perito => perito, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

@@ -1,0 +1,28 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 30%" <%= sort_class_helper('tipo_riego.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nombre'), 'tipo_riego.nombre', 'list' %>
+      </th>
+      <th style="width: 50%" <%= sort_class_helper('tipo_riego.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.descripcion'), 'tipo_riego.descripcion', 'list' %>
+      </th>
+      <th  <%= sort_class_helper('tipo_riego.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'tipo_riego.activo', 'list' %>
+      </th>
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for tipo_riego in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :tipo_riego => tipo_riego, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

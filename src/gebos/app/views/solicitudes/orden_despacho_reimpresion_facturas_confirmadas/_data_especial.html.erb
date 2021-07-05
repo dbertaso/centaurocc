@@ -1,0 +1,91 @@
+<% orden_despacho_detalle = @orden_despacho_detalle if orden_despacho_detalle.nil? %>
+<td align="center">
+<%
+
+case (orden_despacho_detalle.secuencia.strip.split("-")).length
+when 1 
+    vari="red"
+when 2 
+    vari="green"
+when 3 
+    vari="blue"
+when 4 
+    vari="black"
+when 5 
+    vari="orange"
+when 6 
+    vari="purple" 
+when 7 
+    vari="crimson"
+when 8 
+    vari="seagreen"
+when 9 
+    vari="goldenrod"
+when 10 
+    vari="steelblue"
+when 11 
+    vari="sienna"
+when 12 
+    vari="olive" 
+when 13 
+    vari="midnightblue"
+when 14 
+    vari="coral"
+when 15 
+    vari="darkslateblue"
+when 16 
+    vari="hotpink"
+when 17 
+    vari="teal"
+when 18 
+    vari="chocolate" 
+when 19 
+    vari="firebrick"
+when 20 
+    vari="dimgray"
+else
+    vari="cadetblue"
+end
+%>
+
+<font color="<%=vari%>"><b><%=orden_despacho_detalle.numero_factura%></b></font>
+</td>
+<td align="center">
+  <%casa_pr=CasaProveedora.find(orden_despacho_detalle.casa_proveedora_id)%>
+  <%= casa_pr.nombre.strip.upcase unless casa_pr.nil? %><br><br>
+    <b><%= orden_despacho_detalle.rif.strip.upcase %></b>
+</td>
+<td align="center">
+<%sucu_casa_pr=SucursalCasaProveedora.find(orden_despacho_detalle.sucursal_casa_proveedora_id)%>
+<%= sucu_casa_pr.nombre.strip.upcase unless sucu_casa_pr.nil? %>
+</td>
+<td align="center">
+<%=orden_despacho_detalle.tipo_pago=='1' ? "<font color='green'><b>#{(I18n.t('Sistema.Body.Vistas.General.transferencia')).upcase}</b></font>".html_safe : (orden_despacho_detalle.tipo_pago=='' ? "" : "<font color='blue'><b>#{(I18n.t('Sistema.Body.Vistas.General.cheque')).upcase}</b></font>".html_safe) unless orden_despacho_detalle.nil?%>
+</td>
+<td align="center">
+<%=format_fecha(orden_despacho_detalle.fecha_factura) %>
+</td>
+<td align="center">
+<%=format_fecha(orden_despacho_detalle.fecha_emision)%>
+</td>
+<td align="center">
+<%=orden_despacho_detalle.item_nombre%>
+</td>
+<td align="center">
+<%=format_fm(orden_despacho_detalle.cantidad_factura) %>
+</td>
+<td align="right" >
+<%=format_fm(orden_despacho_detalle.monto_factura) %>&nbsp;
+</td>
+<td align="center">
+<%case orden_despacho_detalle.factura_estatus_id 
+  when 0%>
+   <font color='black'><b><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.factura_sin_procesarse_orden_despacho')%></b></font>
+<%when 10057%>
+   <font color='green'><b><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco_orden_despacho')%></b></font>
+<%when 10070%>
+   <font color='blue'><b><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%></b></font>
+<%else%>
+   <font color='red'><b><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_orden_despacho')%></b></font>
+<%end%>
+</td>

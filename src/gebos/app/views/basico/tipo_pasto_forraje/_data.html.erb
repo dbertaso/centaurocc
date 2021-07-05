@@ -1,0 +1,19 @@
+<% tipo_pasto_forraje= @tipo_pasto_forraje if tipo_pasto_forraje.nil? %>
+
+<td>
+  <%= tipo_pasto_forraje.descripcion  %>
+</td>	
+
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+     :method => :get,
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'tipo_pasto_forraje', :action => :edit, :id => tipo_pasto_forraje.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'tipo_pasto_forraje', :action => :delete, :id => tipo_pasto_forraje.id}) if vlink 'delete' -%>
+</td>
+

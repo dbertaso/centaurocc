@@ -1,0 +1,27 @@
+<%= form_title_new %>
+
+<%= error 'form_new' %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :save_new } ) do-%>
+<%= render 'form' -%>
+&nbsp;<%= link_to_remote(
+  image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method =>:get,
+  :url => { :action => :cancel_new}) -%>
+
+
+</td>
+
+</tr>
+</table>
+<br/><br/>
+<script>
+  document.getElementById('div_carga').style.display = 'none';
+  document.getElementById('div_transferencia').style.display = 'none';
+</script>
+<% end -%>

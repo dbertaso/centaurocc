@@ -1,0 +1,211 @@
+
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.General.beneficiario')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label></td>
+    <td ><%= @view_envio_maquinaria.cedula_rif.to_s unless @view_envio_maquinaria.nil? %></td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.General.beneficiario')%></label></td>
+    <td ><%= @view_envio_maquinaria.productor.to_s unless @view_envio_maquinaria.productor.nil? %> </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%> </label></td>
+    <td ><%= @view_envio_maquinaria.nro_tramite.to_s unless @view_envio_maquinaria.nro_tramite.nil? %></td>
+  </tr>
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Form.fecha') << " " <<I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%></label></td>
+    <td> <%= @view_envio_maquinaria.fecha_solicitud_f.to_s unless @view_envio_maquinaria.fecha_solicitud_f.nil? %></td>
+  </tr>
+  
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Header.form_title')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.guia')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @guia_movilizacion_maquinaria.numero_guia %>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.empresa')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.General.transporte')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= select('guia_movilizacion_maquinaria', 'empresa_transporte_maquinaria_id',
+        @empresa_transporte_maquinaria_list.map{|i| [i.nombre, i.id]},
+        {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.General.persona')%> <%=I18n.t('Sistema.Body.Vistas.General.que')%> <%=I18n.t('Sistema.Body.General.recibe')%> </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.responsable')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @view_envio_maquinaria.encargado unless @view_envio_maquinaria.encargado.nil? %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px" colspan="2">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.primer')%> <%= I18n.t('Sistema.Body.Vistas.General.contacto')%> </label>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.cedula')%> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= select(
+        'guia_movilizacion_maquinaria', 'ci_nacionalidad_1',
+        [['V','V'],['E','E']],
+        { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>';inputChange();' } ) %> -
+      <%= text_field 'guia_movilizacion_maquinaria', 'ci_contacto_1',
+        :class=>'text', :style=>'width: 150px;',
+        :maxlength=>'8', :onKeyUp=>'textCounter(this,10)',
+        :onkeypress=>'inputChange();return NumberKey(event);'-%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}"%> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'guia_movilizacion_maquinaria', 'nombre_contacto_1',
+        :class=>'text', :style=>'width: 400px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,60)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.telefono')}"%> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'guia_movilizacion_maquinaria', 'telefono_contacto_1',
+        :class=>'text', :style=>'width: 150px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,11)',
+        :onkeypress=>'inputChange();return NumberKey(event);'-%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px" colspan="2">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.segundo')%> <%= I18n.t('Sistema.Body.Vistas.General.contacto')%> </label>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.cedula')%> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= select(
+        'guia_movilizacion_maquinaria', 'ci_nacionalidad_2',
+        [['V','V'],['E','E']],
+        { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>';inputChange();' } ) %> -
+      <%= text_field 'guia_movilizacion_maquinaria', 'ci_contacto_2',
+        :class=>'text', :style=>'width: 150px;',
+        :maxlength=>'8', :onKeyUp=>'textCounter(this,10)',
+        :onkeypress=>'inputChange();return NumberKey(event);'-%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}"%> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'guia_movilizacion_maquinaria', 'nombre_contacto_2',
+        :class=>'text', :style=>'width: 400px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,60)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 160px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.telefono')}"%> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'guia_movilizacion_maquinaria', 'telefono_contacto_2',
+        :class=>'text', :style=>'width: 150px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,11)',
+        :onkeypress=>'inputChange();return NumberKey(event);'-%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.Form.destino')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.General.la')%> <%=I18n.t('Sistema.Body.Vistas.General.maquinaria')%> </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 160px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.Form.estimada') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.Form.entrega') %> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 150px">
+      <%= calendar_date_select_tag "guia_movilizacion_maquinaria[fecha_estimada]", @guia_movilizacion_maquinaria.fecha_estimada_f, :year_range => 110.years.ago..-2.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);' %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 160px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.destino')%> </label><label style="color: red">*</label>
+    </td>
+    <td style="width: 150px">
+      <% destino_opc_onchange = remote_function(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url=>{:controller=>'guia_movilizacion_maquinaria',
+          :action=>:destino_change },
+        :with=>"'opcion='+value+'&solicitud_id='+#{@view_envio_maquinaria.solicitud_id}") %>
+      <%= select(
+        'guia_movilizacion_maquinaria', 'destino',
+        [['Oficina','F'],['Unidad Producción','U'],['Otra (Evento)','O']],
+        { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>destino_opc_onchange+';inputChange();' } ) %>
+      
+      <%= hidden_field 'guia_movilizacion_maquinaria', 'solicitud_id', :value=>"#{params[:solicitud_id]}", 
+             :style=>'display:hidden' %>
+    </td>
+  </tr>
+</table>
+<div id="destino-maquinaria" >
+  <%= render :partial => 'destino' %>
+</div>
+
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.maquinaria')%> <%=I18n.t('Sistema.Body.Vistas.General.a')%> <%=I18n.t('Sistema.Body.General.movilizar')%></span>
+    </td>
+  </tr>
+</table>
+<div id="movilizar-maquinaria" >
+  &emsp;<%= render :partial => 'movilizar_maquinaria' %>
+</div>
+<br/>

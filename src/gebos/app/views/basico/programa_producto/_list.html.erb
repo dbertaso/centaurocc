@@ -1,0 +1,33 @@
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      
+      <th style="width: 250px" <%= sort_class_helper('nombre_sector') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector', 'list' %>
+      </th>
+      <th style="width: 275px" <%= sort_class_helper('descripcion_sector') %>>
+       <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.descripcion')} #{I18n.t('Sistema.Body.Vistas.General.sector')}", 'descripcion_sector', 'list' %>
+      </th>
+      <th style="width: 250px" <%= sort_class_helper('nombre_sub_sector') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector', 'list' %>
+      </th>
+      <th style="width: 275px" <%= sort_class_helper('descripcion_sub_sector') %>>
+       <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.descripcion')} #{I18n.t('Sistema.Body.Vistas.General.sub_sector')}", 'descripcion_sub_sector', 'list' %>
+      </th>
+      <th style="width: 84px"><%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%
+  even_odd = 1
+  for producto in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :producto => producto, :even_odd => even_odd }
+    -%>
+    <% end %>
+  </tbody>
+ </table>
+
+<%= form_pagination %>

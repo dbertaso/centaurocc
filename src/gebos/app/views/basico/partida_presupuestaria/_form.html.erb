@@ -1,0 +1,143 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 170px">
+      <label><%= I18n.t('Sistema.Body.Vistas.Filtros.nombre') %></label><label style="color: red">*</label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'partida_presupuestaria', 'nombre', :class=>'text', :style=>'width: 300px', :maxlength=>'70'  -%>
+
+    </td>
+  </tr>
+  
+  <!-- nuevo codigo agregado el 21/05/2013, actualizacion para que ahora se registre el programa y el plazo del ciclo -->
+   
+   <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.programa')%> </label><label style="color: red">*</label>
+      </td>
+      <td>
+        <%= select(
+            'partida_presupuestaria', 'programa_id',
+            @programas_list.map{|i| [i.nombre, i.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+
+  <tr>
+
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.ReglaContable.Etiquetas.plazo_ciclo') %> </label><label style="color: red">*</label>
+    </td>
+
+    <td>
+
+      <table>
+
+        <tr>
+
+          <td>
+            <%= radio_button 'partida_presupuestaria', 'plazo_ciclo', "C",
+                             :class=>'text', :onclick=>'inputChange();'  -%>
+          </td>
+
+          <td style="text-align: left">
+            <label><%=I18n.t('Sistema.Body.TipoPlazo.corto')%></label>
+          </td>
+
+        </tr>
+
+        <tr>
+
+          <td>
+            <%= radio_button 'partida_presupuestaria', 'plazo_ciclo', "L",
+                             :class=>'text', :onclick=>'inputChange();'  -%>
+          </td>
+
+          <td style="text-align: left">
+            <label><%=I18n.t('Sistema.Body.TipoPlazo.largo')%></label>
+          </td>
+
+        </tr>
+  </table>
+  
+  </td></tr>
+  <!-- fin nuevo codigo agregado el 21/05/2013, actualizacion para que ahora se registre el programa y el plazo del ciclo -->
+  
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.proyecto_accion_centralizada') %> </label><label style="color: red">*</label>
+
+    </td>
+    <td style="width: 70%" align="left">
+
+      <%= text_field 'partida_presupuestaria', 'proyecto', :class=>'text', :style=>'width: 100px', :maxlength=>'5', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+
+      <label><%= I18n.t('Sistema.Body.Vistas.General.accion_especifica') %> </label><label style="color: red">*</label>
+
+    </td>
+    <td style="width: 70%" align="left">
+
+      <%= text_field 'partida_presupuestaria', 'accion_especifica', :class=>'text', :style=>'width: 100px', :maxlength=>'5', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.partida') %> </label><label style="color: red">*</label>
+
+    </td>
+    <td style="width: 70%" align="left">
+
+      <%= text_field 'partida_presupuestaria', 'partida', :class=>'text', :style=>'width: 100px', :maxlength=>'5', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.generica') %> </label><label style="color: red">*</label>
+
+    </td>
+    <td style="width: 70%" align="left">
+
+      <%= text_field 'partida_presupuestaria', 'generica', :class=>'text', :style=>'width: 100px', :maxlength=>'5', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.especifica') %> </label><label style="color: red">*</label>
+
+    </td>
+    <td style="width: 70%" align="left">
+
+      <%= text_field 'partida_presupuestaria', 'especifica', :class=>'text', :style=>'width: 100px', :maxlength=>'5', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sub_especifica') %> </label><label style="color: red">*</label>
+
+    </td>
+    <td style="width: 70%" align="left">
+
+      <%= text_field 'partida_presupuestaria', 'sub_especifica', :class=>'text', :style=>'width: 100px', :maxlength=>'5', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.denominacion') %> </label><label style="color: red">*</label>
+
+    </td>
+    <td style="width: 70%" align="left">
+
+      <%= text_field 'partida_presupuestaria', 'denominacion', :class=>'text', :style=>'width: 300px', :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

@@ -1,0 +1,49 @@
+<%= render :partial=>'contabilidad/envio_asiento_contable/common/tabs' %>
+ <br>
+ <br>
+ <br>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th><%= I18n.t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.fecha_comprobante') %></th>
+      <th><%= I18n.t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.numero_comprobante') %></th>    
+      <th><%= I18n.t('Sistema.Body.Vistas.General.motivo') %></th>      
+      <th><%= I18n.t('Sistema.Body.Vistas.General.referencia') %></th>
+      <th><%= I18n.t('Sistema.Body.Modelos.ComprobanteContable.Columnas.total_debe') %></th>
+      <th><%= I18n.t('Sistema.Body.Modelos.ComprobanteContable.Columnas.total_haber') %></th>
+      <th><%= I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.nombre_usuario') %></th>
+      <th><%= I18n.t('Sistema.Body.Vistas.ControlEnvioContabilidad.Etiquetas.fecha_proceso') %></th>    
+      </tr>
+  </thead>
+      <% even_odd = 1 %>
+      <% for comprobante in @comprobantes_rechazo
+          even_odd = 1 - even_odd %>
+        <tr class="lista<%= even_odd %>">
+          <td>
+            <%= format_fecha(comprobante.fecha_comprobante) %>
+          </td>
+          <td>
+            <%= comprobante.numero %>
+          </td>
+          <td>
+            <%= comprobante.motivo %>
+          </td>
+          <td>
+            <%= comprobante.referencia %>
+          </td>
+          <td>
+            <%= format_fm(comprobante.total_debe) %>
+          </td>
+          <td>
+            <%= format_fm(comprobante.total_haber) %>
+          </td>
+          <td>
+            <% usuario = Usuario.find(comprobante.usuario_id) %>
+            <%= usuario.nombre_usuario unless usuario.nil? %>
+          </td>
+          <td>
+            <%= format_fecha(comprobante.fecha_proceso) %>
+          </td>
+        </tr>
+    <%end%>
+   </table>

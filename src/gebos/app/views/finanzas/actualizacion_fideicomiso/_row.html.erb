@@ -1,0 +1,4 @@
+<% tipo_movimiento_fideicomiso = @tipo_movimiento_fideicomiso if tipo_movimiento_fideicomiso.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= tipo_movimiento_fideicomiso.id %>">
+	<%= render :partial => 'data', :locals => { :tipo_movimiento_fideicomiso => tipo_movimiento_fideicomiso, :even_odd => even_odd } -%>
+</tr>

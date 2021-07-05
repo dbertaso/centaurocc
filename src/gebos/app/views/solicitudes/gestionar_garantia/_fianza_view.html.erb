@@ -1,0 +1,123 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.fianza_personal')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.cedula_de_identidad')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_fianza.cedula %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_fianza.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nacionalidad')%></label>
+    </td>
+    <td>
+      <%= SolicitudAvaluoFianza.nacionalidad(@solicitud_avaluo_fianza.nacionalidad_id) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Modelos.TecnicoCampo.Errores.estado_civil')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_fianza.estado_civil_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.domiciliado_en')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_fianza.domicilio.gsub("\n","<br/>") unless @solicitud_avaluo_fianza.domicilio.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= SolicitudAvaluoFianza.estado(@solicitud_avaluo_fianza.estado_id) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.informacion_conyugue')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.cedula_de_identidad')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_fianza.cedula_conyugue %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_fianza.nombre_conyugue %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nacionalidad')%></label>
+    </td>
+    <td>
+      <%= SolicitudAvaluoFianza.nacionalidad(@solicitud_avaluo_fianza.nacionalidad_conyugue_id) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Modelos.TecnicoCampo.Errores.estado_civil')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_fianza.estado_civil_conyugue_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.domiciliado_en')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_fianza.domicilio_conyugue.gsub("\n","<br/>") unless @solicitud_avaluo_fianza.domicilio_conyugue.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= SolicitudAvaluoFianza.estado(@solicitud_avaluo_fianza.estado_conyugue_id) %>
+    </td>
+  </tr>
+  
+</table>

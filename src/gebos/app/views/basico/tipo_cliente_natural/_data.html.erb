@@ -1,0 +1,24 @@
+<% tipo_cliente = @tipo_cliente if tipo_cliente.nil? %>
+<td>
+  <%= tipo_cliente.nombre  %>
+</td>	
+<td>
+  <%= tipo_cliente.descripcion  %>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(tipo_cliente.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => {:controller => 'tipo_cliente_natural', :action => :edit, :id => tipo_cliente.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'tipo_cliente_natural', :action => :delete, :id => tipo_cliente.id}) if vlink 'delete' -%>
+</td>

@@ -1,0 +1,68 @@
+<% item = @presupuesto_pidan if item.nil? %>
+
+<td style="text-align: center">
+  <%= item.programa.nombre.to_s unless item.programa.nil?%>
+</td>
+
+
+<td style="text-align: center">
+  <%= item.estado.nombre.to_s %> 
+</td>
+
+
+<td style="text-align: center">
+  <%=item.rubro.sector.nombre unless Rubro.find(:all,:conditions=>"id = #{item.rubro_id}").empty? -%>
+</td>
+
+<td style="text-align: center">
+  <%=item.rubro.sub_sector.nombre unless Rubro.find(:all,:conditions=>"id = #{item.rubro_id}").empty? -%>
+</td>
+
+
+<td style="text-align: center">
+  <%=item.rubro.nombre unless Rubro.find(:all,:conditions=>"id = #{item.rubro_id}").empty? -%>
+</td>	
+
+<td style="text-align: center">
+  <%=item.sub_rubro.nombre unless SubRubro.find(:all,:conditions=>"id = #{item.sub_rubro_id}").empty? unless item.sub_rubro_id.nil? -%>
+</td>	
+
+<td style="text-align: center">
+  <%= item.programa.moneda.nombre.to_s unless item.programa.nil?%>
+</td>
+
+<td style="text-align: right">
+  <%= unless item.presupuesto.nil?
+    format_fm(item.presupuesto)
+  end
+%>
+</td>	
+<td style="text-align: right">
+
+  <%= unless item.compromiso.nil?
+    format_fm(item.compromiso)
+  end
+%>
+</td>	
+<td style="text-align: right">
+  <%= unless item.disponibilidad.nil?
+    format_fm(item.disponibilidad)
+  end
+%>
+</td>	
+
+<td style="text-align: right">
+  <%= unless item.monto_liquidado.nil?
+    format_fm(item.monto_liquidado)
+  end
+%>
+</td>	
+
+<td style="text-align: center">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => {:controller => 'presupuesto_pidan', :action => :edit, :id => item.id}) if vlink 'edit' -%>  
+</td>

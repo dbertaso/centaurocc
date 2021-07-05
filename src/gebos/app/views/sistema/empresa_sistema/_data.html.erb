@@ -1,0 +1,30 @@
+<% empresa_sistema = @empresa_sistema if empresa_sistema.nil? %>
+<td>
+  <%= empresa_sistema.rif %>
+</td>
+<td>
+  <%= empresa_sistema.nombre_corto unless empresa_sistema.nombre_corto.nil? %>
+</td>
+<td>
+  <%= empresa_sistema.nombre unless empresa_sistema.nombre.nil? %>
+</td>
+<td>
+  <%= empresa_sistema.telefono unless empresa_sistema.telefono.nil? %>
+</td>
+<td>
+  <%= empresa_sistema.representante_legal unless empresa_sistema.representante_legal.nil? %>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(empresa_sistema.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), 
+    :loading =>'image_load()', :loaded => 'image_unload()', :method =>:get,
+    :url => {:controller => 'empresa_sistema', :action => :edit, :id => empresa_sistema.id} ) if vlink 'edit' -%>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'empresa_sistema', :action => :delete, :id => empresa_sistema.id}) if vlink 'delete' -%>
+</td>
+

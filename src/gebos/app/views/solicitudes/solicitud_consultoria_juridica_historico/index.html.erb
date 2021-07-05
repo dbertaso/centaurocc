@@ -1,0 +1,166 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+<%= form_title_search %>
+<%= form_remote_tag(
+  :loading =>'image_load()',  :loaded => 'image_unload()',  :method => :get,  :url => { :action => :list } ) do-%>
+  <table>
+    <tr>
+      <td style="width: 30%">
+        <label>Sector</label>
+      </td>
+      <td style="width: 70%">
+        <% sector_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'solicitud_consultoria_juridica',
+            :action=>:sector_form_change },
+          :with=>"'sector_id='+value" ) %>
+        <%= select(
+          'sector_id', '',
+          @sector.map{|i| [i.nombre, i.id]},
+          {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')  } ,
+          { :class=>'select',:onchange=>sector_onchange + ';inputChange();'}) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 30%">
+        <label>Sub-Sector</label>
+      </td>
+      <td style="width: 70%">
+        <% sub_sector_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'solicitud_consultoria_juridica',
+            :action=>:sub_sector_form_change },
+          :with=>"'sub_sector_id='+value" ) %>
+        <div id="sub-sector-select">
+          <%= select(
+            'sub_sector_id', '',
+            @sub_sector_list.map{|i| [i.nombre, i.id]},
+            {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+            { :class=>'select',:onchange=>sub_sector_onchange + ';inputChange();'}) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Rubro</label>
+      </td>
+      <td>
+        <% rubro_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'solicitud_consultoria_juridica',
+            :action=>:rubro_form_change },
+          :with=>"'rubro_id='+value" ) %>
+        <div id="rubro-select">
+          <%= select(
+            'rubro_id', '',
+            @rubro_list.map{|i| [i.nombre, i.id]},
+            {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select',:onchange=>rubro_onchange + ';inputChange();'} ) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 30%">
+        <label>Sub-Rubro</label>
+      </td>
+      <td style="width: 70%">
+        <% sub_rubro_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'solicitud_consultoria_juridica',
+            :action=>:sub_rubro_form_change },
+          :with=>"'sub_rubro_id='+value" ) %>
+        <div id="sub-rubro-select">
+          <%= select(
+            'sub_rubro_id', '',
+            @sub_rubro_list.map{|i| [i.nombre, i.id]},
+            {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+            { :class=>'select',:onchange=>sub_rubro_onchange + ';inputChange();'}) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Actividad</label>
+      </td>
+      <td>
+        <div id="actividad-select">
+          <%= select(
+            'actividad_id', '',
+            @actividad_list.map{|i| [i.nombre, i.id]},
+            {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select',:onchange=>'inputChange();'} ) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label>Nro Trámite</label>
+      </td>
+      <td>
+        <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label>Nro Cédula/Rif</label>
+      </td>
+      <td>
+
+        <select name="tipo" id="tipo" class="select">
+          <option value="V ">V</option>
+          <option value="E ">E</option>
+          <option value="J-">J</option>
+          <option value="G-">G</option>
+        </select>
+
+        <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label>Nombre del Beneficiario</label>
+      </td>
+      <td>
+        <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+      </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>:</label>
+      </td>
+      <td><%= select(
+          'moneda_id', '',
+          options_from_collection_for_select(@moneda_list, 'id', 'nombre'),
+          {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+          {:class=>'select', :onchange=>'inputChange();'} ) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label>Fecha de Acta:</label>
+      </td>
+      <td>
+        <%= calendar_date_select_tag "fecha", "", 
+          :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+          :onkeypress=>'inputChange();', :onchange=>'inputChange();' %>
+  <%#= text_field_tag 'fecha', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px' %>&nbsp;<%#= calendar 'fecha', 'calendar_fecha' %> (dd/mm/aaaa)&nbsp;&nbsp;&nbsp;&nbsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+      </td>
+      <td> </td>
+    </tr>
+  </table>
+<% end%>
+<br/>
+<%= error %>
+<%= message %>
+
+<div id="list"></div>

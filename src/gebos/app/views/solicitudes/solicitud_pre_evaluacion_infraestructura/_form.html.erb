@@ -1,0 +1,90 @@
+<table>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'unidad_produccion_infraestructura', 'tipo_infraestructura_id',
+        @tipo_infraestructura_list.map{|i| [i.nombre, i.id]},
+        { :include_blank => false },
+        { :class=>'select',:onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_infraestructura', 'cantidad', 
+        :class=>'text', 
+        :style=>'width: 100px', 
+        :maxlength=>'8' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.dimension') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_infraestructura', 'dimension', 
+        :class=>'text', 
+        :style=>'width: 100px', 
+        :maxlength=>'10' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.unidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.medida')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'unidad_produccion_infraestructura', 'unidad_medida_id',
+        @unidad_medida_list.map{|i| ["#{i.abreviatura} - #{i.nombre}", i.id]},
+        { :include_blank => false },
+        { :class=>'select',:onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>			
+
+      <label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= radio_button 'unidad_produccion_infraestructura', 'condicion', 'E',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.excelente') %>
+      <%= radio_button 'unidad_produccion_infraestructura', 'condicion', 'B',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.buena') %>
+      <%= radio_button 'unidad_produccion_infraestructura', 'condicion', 'R',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.regular') %>
+      <%= radio_button 'unidad_produccion_infraestructura', 'condicion', 'M',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.mala') %>     
+    </td>
+  </tr>
+  
+  <tr  valign="top">
+    <td > 
+      <label><%= I18n.t('Sistema.Body.Vistas.General.material_construccion') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_area 'unidad_produccion_infraestructura', 'material_construccion',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>
+
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_area 'unidad_produccion_infraestructura', 'observaciones',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>
+
+    </td>
+  </tr>   
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

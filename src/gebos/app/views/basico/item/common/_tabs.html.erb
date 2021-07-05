@@ -1,0 +1,34 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='item'
+
+    %>
+      <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+    <% 
+    else 
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'item', :action => 'edit', :id => @item.id, :partida_id => @partida.id) if (action_name=='index' || action_name=='edit' ||action_name=='new' )  %>
+        </div></li>
+    <% 
+    end
+    if @item.id
+      if controller_name=='item_atributo'
+      %>
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.atributos')%></a></div></li>
+      <% 
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.atributos'), :controller => 'item_atributo', :action => 'index', :item_id => @item.id, :partida_id => @partida.id) if (action_name=='index' || action_name=='edit' ||action_name=='new' )  %>
+          </div></li>
+      <% 
+      end 
+    end
+
+  %>
+  </ul>
+</div>

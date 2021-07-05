@@ -1,0 +1,24 @@
+<tr>
+    <td>
+       <label><%= t('Sistema.Body.Vistas.General.monto_gastos_administrativos') %> </label>
+    </td>
+    <td>
+    <% 
+    unless @gastos.nil?
+        if @gastos.porcentaje > 0
+            unless @solicitud.sub_sector.nemonico == 'MA'
+              monto = ((@prestamo.monto_banco + @prestamo.monto_insumos)*(@gastos.porcentaje/100))
+            else
+              monto = ((@prestamo.monto_inventario + @prestamo.monto_insumos)*(@gastos.porcentaje/100))
+            end
+        else
+            monto = @gastos.monto_fijo 
+        end
+    else
+        monto = 0.00
+    end
+    %>
+        <%= format_fm(monto)-%>
+    </td>
+    <td></td>
+</tr>  

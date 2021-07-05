@@ -1,0 +1,94 @@
+<%#= @ids  %>
+<br>
+<%#= @idsTabla  %>
+<table width="320px" border=0>
+  <tr>
+    <td class="separador" colspan="2" valign="bottom">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.resumen')%></span>
+    </td>
+  </tr>
+  <% if @total > 0 %>
+    <tr>
+      <td width=200 align="right"><strong><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.total_a_pagar')%> </strong></td>
+      <td align="right">
+        <div id="dv_total">
+          <% if  @monto_pagar  == nil ; @monto_pagar  = 0 end %>
+          <%= format_fm(@monto_pagar ) %>
+        </div>
+      </td>
+    </tr>	
+
+    <tr>
+      <td align="right"><strong><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.cantidad_de_financiamientos')%> </strong></td>
+      <td align="right">
+        <div id="dv_cantidad">
+          <%= @total %>
+        </div>
+      </td>
+    </tr>
+  <% end %>	
+</table>
+
+
+<table width="100%">
+  <tr><td align="right">
+      <% if @total > 0 %>
+        <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.avanzar_filtro')),:title=>I18n.t('Sistema.Body.General.avanzar_segun_filtro')),
+          :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+          :confirm => I18n.t('Sistema.Body.Vistas.Arrime.Messages.esta_usted_seguro_avanzar'),
+          :id=>"button_enviar",
+          :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+          :url => {:action => :pagar_excedente, :controlador => 'excedente_arrime', :registros => @idsTabla, :prestamo_id => @ids, :prestamos_consulta => @ids}) -%>
+      <% end %>
+    </td></td>
+</table>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 120px" <%= sort_class_helper('solicitud.numero') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'solicitud.numero', 'list' %>
+      </th>
+
+
+      <th style="width: 150px" <%= sort_class_helper('prestamo.numero') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento'), 'prestamo.numero', 'list' %>
+      </th>
+
+      <th style="width: 110px" <%= sort_class_helper('cliente') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cliente_id', 'list' %>
+      </th>
+
+      <th style="width: 200px" <%= sort_class_helper('cliente_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'cliente_id', 'list' %>
+      </th>
+
+      <th style="width: 150px" <%= sort_class_helper('remanente_por_aplicar') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Pago.Etiquetas.monto_pagar'), 'remanente_por_aplicar', 'list' %>  (Bs.)
+      </th>
+
+      <th style="width: 150px" <%= sort_class_helper('sector_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector_id', 'list' %>
+      </th>
+
+      <th style="width: 150px" <%= sort_class_helper('rubro_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro_id', 'list' %>
+      </th>
+
+      <th style="width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%
+    even_odd = 1
+    for prestamo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :prestamo => prestamo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

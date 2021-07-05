@@ -1,0 +1,11 @@
+<%= select(
+  'solicitud', 'estado_id',
+  @estado_select.map{|e| [e.nombre, e.id]},
+  { },
+  { :class=>'select', :onchange=>"#{remote_function(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :method => :get,
+    :url=>{:controller=>'solicitud',
+    :action=>:estado_change },
+    :with=>"'estado_id='+ this.value")};inputChange();" } ) %>

@@ -1,0 +1,156 @@
+<tr id="row_<%= @presupuesto_pidan.id %>_edit">
+  <td class="lista-form" colspan="11">
+      
+    <%= form_title_edit %>
+    <%= error %>
+      <%= message %>
+
+    <%= error "row_#{@presupuesto_pidan.id}" %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id => @presupuesto_pidan.id } ) do-%>
+
+
+
+    <table  style="width: 100%">
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%>:</label>
+        </td>
+        <td>
+          <div id="rubro-select">
+            <%= @presupuesto_pidan.estado.nombre %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 170px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%>: </label>
+        </td>
+        <td style="">
+          <%= @presupuesto_pidan.rubro.sector.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%>:</label>
+        </td>
+        <td>
+          <div id="rubro-select">
+            <%= @presupuesto_pidan.rubro.nombre %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%>:</label>
+        </td>
+        <td>
+          <div id="sub-rubro-select">
+            <%= @presupuesto_pidan.sub_rubro.nombre unless @presupuesto_pidan.sub_rubro.nil?%>
+          </div>
+        </td>
+      </tr>
+
+
+
+
+      <tr><td height="10"></td></tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%> <%=I18n.t('Sistema.Body.Vistas.Form.presupuestado')%>:</label>
+        </td>
+        <td>
+
+          <span id="aux_disponibilidad_<%= @presupuesto_pidan.id %>_display">
+            <%= unless @presupuesto_pidan.presupuesto.nil?
+              format_fm(@presupuesto_pidan.presupuesto)
+            end
+          %>
+          </span>
+          <span id="disponibilidad_moneda"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%> <%=I18n.t('Sistema.Body.Vistas.Form.comprometido')%>:</label>
+        </td>
+        <td>
+
+          <span id="aux_disponibilidad_<%= @presupuesto_pidan.id %>_display">
+            <%= unless @presupuesto_pidan.compromiso.nil?
+              format_fm(@presupuesto_pidan.compromiso)
+            end
+          %>
+          </span>
+          <span id="disponibilidad_moneda"></span>
+        </td>
+      </tr>
+
+      <tr><td height="10"></td></tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.disponible')%>:</label>
+        </td>
+        <td>
+          <font color="green"><strong>
+              <span id="aux_disponibilidad_<%= @presupuesto_pidan.id %>_display">
+                <%= unless @presupuesto_pidan.disponibilidad.nil?
+                  format_fm(@presupuesto_pidan.disponibilidad)
+                end
+              %>
+              </span>
+              <span id="disponibilidad_moneda"></span>
+            </strong></font>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.aumentar_presupuesto')%>:</label>
+        </td>
+    <td>
+
+    <%= text_field 'presupuesto_carga', 'monto_presupuesto',
+      :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+      :onkeypress=>'inputChange()',
+      :onchange=>"inputChange();",
+      :onkeyup=>"formatCurrency(this.value, 'disponibilidad_#{@presupuesto_pidan.id}');"  -%>
+
+    <span id="disponibilidad_<%= @presupuesto_pidan.id %>_display">
+      <%= unless @presupuesto_carga.monto_presupuesto.nil?
+        format_fm(@presupuesto_carga.monto_presupuesto)
+      end
+    %>
+    </span><br/>
+    <span id="disponibilidad_moneda"></span>
+             <label><%=I18n.t('Sistema.Body.General.nota')%>: </label><%=I18n.t('Sistema.Body.Modelos.General.numero_con_dos_decimales')%>
+  </td>
+</tr>
+
+<tr>
+  <td height="10" colspan="2">
+    <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+    
+    <%= link_to_remote(
+      image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method=>:get,
+      :url => { :action => :cancel_edit, :id => @presupuesto_pidan.id}) -%>
+  </td>
+  <td></td>
+</tr>
+    </table>
+
+<% end -%>
+  </td>
+</tr>
+

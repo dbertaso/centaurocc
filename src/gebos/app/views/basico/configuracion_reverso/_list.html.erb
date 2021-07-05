@@ -1,0 +1,111 @@
+
+<div id="filters">
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+  <table>
+    <tr>
+      <td style="width: 200px">
+        <label><%= t('Sistema.Body.Vistas.General.programa') %>:</label>
+      </td>
+      <td>
+        <%= select_tag(
+          'programa_id',
+            options_from_collection_for_select(@programa, "id" ,"nombre" ),
+            {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.General.programa')}",
+             :class=>'select'} ) %>
+      </td>
+
+    </tr>
+      
+    <tr>
+      <td style="width: 200px">
+        <label>
+        	<%= "#{t('Sistema.Body.Vistas.Form.estatus')} #{t('Sistema.Body.Vistas.General.origen')}" %>:
+        </label>
+      </td>
+      <td>
+        <%= select_tag(
+          'estatus_origen_id',
+           options_from_collection_for_select(@estatus_origen, "id" ,"nombre" ),
+          { :prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.Form.estatus')}",
+            :class=>'select'} ) %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 200px">
+        <label>
+        	<%= "#{t('Sistema.Body.Vistas.Form.estatus')} #{t('Sistema.Body.Vistas.Form.destino')}" %> 
+        </label>
+      </td>
+      <td>
+        <%= select_tag(
+          'estatus_destino_id',
+           options_from_collection_for_select(@estatus_destino, "id" ,"nombre" ),
+          { :prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.Form.estatus')}",
+            :class=>'select'} ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 200px">
+        <label>
+        	<%= t('Sistema.Body.Vistas.Form.main_form') %> 
+        </label>
+      </td>
+      <td>
+        <%= select_tag(
+          'nombre_ruta',
+           options_from_collection_for_select(@ruta, "ruta" ,"nombre" ),
+          { :prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.Form.main_form')}",
+            :class=>'select'} ) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+      </td>
+    </tr>
+
+  </table>
+  <% end %>
+
+</div>	
+
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+ 			<th style="width: 360px" <%= sort_class_helper('programa.nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.programa'), 'programa.nombre', 'list' %>
+ 			</th>
+ 			<th style="width: 360px" <%= sort_class_helper('estatus_origen_id') %>>
+				<%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.estatus')} #{I18n.t('Sistema.Body.Vistas.General.origen')}", 'estatus_origen_id', 'list' %>
+ 			</th> 	
+ 			<th style="width: 360px" <%= sort_class_helper('estatus_destino_id') %>>
+				<%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.estatus')} #{I18n.t('Sistema.Body.Vistas.Form.destino')}", 'estatus_destino_id', 'list' %>
+ 			</th> 	
+ 			 <th style="width: 300px" <%= sort_class_helper('ruta_primaria') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.main_form'), 'ruta_primaria', 'list' %>
+ 			</th>
+ 			<th style="width: 40px">
+ 				<%= I18n.t('Sistema.Body.Vistas.General.condicionado') -%>
+ 			</th> 			
+ 			<th style="width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for configuracion_reverso in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :configuracion_reverso => configuracion_reverso, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>
+
+

@@ -1,0 +1,64 @@
+<div id="filters">
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+  <table>
+	<tr>
+		<td style="width: 60px">
+			<label>
+				<%=I18n.t('Sistema.Body.Vistas.General.nombre')%>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'nombre', nil, :maxlength=>100, :size=>60 -%>
+		</td>
+	</tr>
+    <tr>
+      <td>
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+      </td>
+    </tr>
+
+  </table>
+  <% end %>
+
+</div>	
+
+
+
+
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+ 			<th style="width: 360px" <%= sort_class_helper('nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'nombre', 'list' %>
+ 			</th>
+ 			<th style="width: 360px" <%= sort_class_helper('descripcion') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'descripcion', 'list' %>
+ 			</th> 	
+ 			<th style="width: 360px" <%= sort_class_helper('area') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.area'), 'area', 'list' %>
+ 			</th> 	
+ 			<th style="width: 360px">
+				<%= I18n.t('Sistema.Body.Vistas.General.identificador') %>
+ 			</th> 	
+			<th style="width: 40px">
+				<%= I18n.t('Sistema.Body.Vistas.General.activo') %>
+ 			</th> 			 			
+ 			<th style="width: 50px">
+      	<%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+			<%  
+				even_odd = 1
+				for estatus in @list
+					even_odd = 1 - even_odd %>
+				<%= render :partial => 'row', :locals => { :estatus => estatus, :even_odd => even_odd } -%>
+			<% end %>
+	</tbody>
+</table>
+<%= form_pagination %>
+
+

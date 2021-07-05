@@ -1,0 +1,52 @@
+<script language="JavaScript">
+
+  function Apagar(valor){
+    // alert(document.getElementById('programa_tipo_gasto_monto_fijo_f').value);
+    if (valor == 1) {
+
+      document.getElementById('programa_tipo_gasto_monto_fijo_f').value = "0,00";
+      <% display_number '0.00', 'programa_tipo_gasto_monto_fijo' %>
+    }
+
+    if (valor == 2) {
+      document.getElementById('programa_tipo_gasto_porcentaje_f').value = "0,00";
+    }
+  }
+
+  varEnviado= false;
+
+</script>
+
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.ProgramaGasto.Header.form_title_modificar')%>  <span class="titulo_modificar">'<%= @programa.alias %>'</span>
+    </div>
+  </div>
+</div>
+
+<%= render 'basico/programa/common/tabs' %>
+
+<div class="marco-contenido2">
+
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.agregar'))),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :new, :programa_id=>@programa.id } ) %>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render "list" %>
+  </div>
+
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :controller => 'programa_producto', :action => :index, :programa_id => @programa.id },
+    { :id=>'button_close' } ) -%>
+
+</div>

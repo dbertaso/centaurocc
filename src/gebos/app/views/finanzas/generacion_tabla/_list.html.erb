@@ -1,0 +1,107 @@
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,    
+  :url => { :action => :generar_tabla } ) do-%>
+
+  <input id="prestamos_id" type="hidden" name="prestamos_id"/>
+
+  <div id="registrar">
+    <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.registrar'), :onclick=> "/*this.disabled='true';*/$('errorExplanation').style.display='none';$('message').style.display='none';", :id=>'button_save') -%>
+  </div>
+
+</br>
+</br>
+
+  <table class="lista" style="width: 100%">
+    <thead>
+
+      <tr>
+        <th style="width: 5%">
+            <br><input type="hidden" title="Click para seleccionar todos los registros en la página" id="todos" name="todos" onClick="checkAll(form.prestamo_id,form.todos)" />
+        </th>
+
+        <th style="width: 30%">
+          <%=I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.General.registro')%>
+        </th>
+
+        <th style="width: 10%">
+          <%=I18n.t('Sistema.Body.Vistas.General.numero') << " " << I18n.t('Sistema.Body.Vistas.General.cheque')%>
+        </th>
+
+        <th style="width:  30%" <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+        </th>
+        <th style="width:  70%" <%= sort_class_helper('beneficiario') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'beneficiario', 'list' %>
+        </th>
+        <th style="width:  6%" <%= sort_class_helper('nro_tramite') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'nro_tramite', 'list' %>
+        </th>
+        <th style="width:  10%" <%= sort_class_helper('nro_prestamo') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento'), 'nro_prestamo', 'list' %>
+        </th>
+        <th style="width:  8%" <%= sort_class_helper('oficina_nombre') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.oficina'), 'oficina_nombre', 'list' %>
+        </th>
+        <th style="width:  8%" <%= sort_class_helper('fecha_liquidacion') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_liquidacion'), 'fecha_liquidacion', 'list' %>
+        </th>
+        <th style="width:  7%" <%= sort_class_helper('sector') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector', 'list' %>
+        </th>
+
+        <th style="width:  15%" <%= sort_class_helper('actividad') %>>
+           <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad', 'list' %>
+        </th>
+
+        <th style="width: 5%" <%= sort_class_helper('(select nombre from estatus where id=estatus_id)') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), '(select nombre from estatus where id=estatus_id)', 'list' %>
+          <%=%>
+        </th>
+        
+        <th style="width:5%" <%= sort_class_helper('moneda_id') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.moneda'), 'moneda_id', 'list' %>
+        </th>
+
+        <th style="width: 10% " <%= sort_class_helper('monto_liquidar') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Modelos.PlanPagoCuota.Columnas.monto_desembolso'), 'monto_liquidar', 'list' %>
+        </th>
+
+        <th style="width: 10%">
+          <%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_sras')%>
+        </th>
+
+        <th style="width: 10%" <%= sort_class_helper('monto_insumos') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_insumos'), 'monto_insumos', 'list' %>
+        </th>
+
+        <th style="width: 10%">
+          <%=I18n.t('Sistema.Body.Vistas.General.monto') <<" "<<I18n.t('Sistema.Body.General.tabla_amortizacion')%>
+        </th>
+
+        <th style="width: 10%" <%= sort_class_helper('(monto_banco - monto_liquidado - monto_liquidar)') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_por_liquidar'), '(monto_banco - monto_liquidado - monto_liquidar)', 'list' %>
+        </th>
+
+        <th style="width: 5%">
+          <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+        </th>
+
+    </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for view_generacion_tabla in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :view_generacion_tabla => view_generacion_tabla, :even_odd => even_odd } -%>
+<% end %>
+
+</tbody>
+</table>
+
+
+<%= form_pagination %>
+
+ <% end %>

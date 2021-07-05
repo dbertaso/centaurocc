@@ -1,0 +1,4 @@
+<% programa_origen_fondo = @programa_origen_fondo if programa_origen_fondo.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= programa_origen_fondo.id %>">
+	<%= render :partial => 'data', :locals => { :programa_origen_fondo => programa_origen_fondo, :even_odd => even_odd } -%>
+</tr>

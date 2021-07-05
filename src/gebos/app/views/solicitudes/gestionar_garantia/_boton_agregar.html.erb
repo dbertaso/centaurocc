@@ -1,0 +1,10 @@
+<table style="width: 100%">
+  <tr>
+    <td align="right">
+      <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.boton_agregar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.agregar')),
+        :loading =>'image_load()', :loaded => 'image_unload()', :id=>"button_enviar",
+        :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+        :url => {:action => :new, :id => @solicitud.id}) -%>
+    </td>
+  </tr>
+</table>

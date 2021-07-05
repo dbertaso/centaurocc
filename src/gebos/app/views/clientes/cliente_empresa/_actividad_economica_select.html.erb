@@ -1,0 +1,15 @@
+<% unless @actividad_economica_select.nil? %>
+   <%= select(
+      'empresa', 'actividad_economica_id',
+      @actividad_economica_select.map{|c| [c.ciiu+'-'+c.descripcion, c.id]},
+      { :include_blank => true},
+      { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% else %>
+
+	<%= select(
+	  'empresa', 'actividad_economica_id',
+	  [],
+	  { :include_blank => true },
+	  { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% end %>
+

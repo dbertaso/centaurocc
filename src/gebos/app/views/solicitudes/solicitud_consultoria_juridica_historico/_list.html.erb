@@ -1,0 +1,75 @@
+<center>	
+  <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>	
+  <div id="el_mensaje"></div>
+
+</center>
+<br/>
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 50px" <%= sort_class_helper('numero_helper') %>>
+        <%= sort_link_helper '# Trámite', 'numero_helper', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('identificacion') %>>
+        <%= sort_link_helper 'Cédula/Rif', 'identificacion', 'list' %>
+      </th>
+      <th style="width:200px" <%= sort_class_helper('nombre') %>>
+        <%= sort_link_helper 'Beneficiario', 'nombre', 'list' %>
+      </th>
+      <th style="width: 80px">
+        Sector
+      </th>
+      <th style="width:120px" <%= sort_class_helper('sub_sector') %>>
+        <%= sort_link_helper 'Subsector', 'sub_sector', 'list' %>
+      </th>
+      <th style="width:120px" <%= sort_class_helper('rubro') %>>
+        <%= sort_link_helper 'Rubro', 'rubro', 'list' %>
+      </th>
+      <th style="width:120px" <%= sort_class_helper('sub_rubro') %>>
+        <%= sort_link_helper 'Subrubro', 'sub_rubro', 'list' %>
+      </th>
+      <th style="width:120px" <%= sort_class_helper('actividad') %>>
+        <%= sort_link_helper 'Actividad', 'actividad', 'list' %>
+      </th>
+      <!--<th style="width: 80px">
+              Estatus
+      </th>-->
+      <th style="width:5%" <%= sort_class_helper('moneda_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.moneda'), 'moneda_id', 'list' %>
+      </th>
+      <th style="width: 60px">
+        Monto
+      </th>
+
+      <th  style="width: 20px">
+        Contratos
+      </th>
+      <th  style="width: 20px">
+        Notas de Autenticación
+      </th>
+      <th  style="width: 20px">
+        Actas de Entrega
+      </th>
+      <!--
+              <th  style="width: 20px">
+                      SRAS
+              </th>
+      -->
+      <th  style="width: 20px">
+        Suscribir Contrato
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%  
+    even_odd = 1
+    for solicitud in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+    <% end %>
+  <input type="hidden" id = "cuenta_id" name = "cuenta_id" value=""/>
+</tbody>
+</table>
+<%= form_pagination %>
+

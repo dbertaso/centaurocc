@@ -1,0 +1,4 @@
+<% item = @nemonico if item.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= item.id %>">
+  <%= render :partial => 'data', :locals => { :item => item, :even_odd => even_odd } -%>
+</tr>

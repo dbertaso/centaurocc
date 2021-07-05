@@ -1,0 +1,48 @@
+<td>
+  <%= rechazo.fecha.strftime('%d/%m/%Y') %>
+</td>
+
+<td>
+  <%= rechazo.solicitud_numero %>
+</td>
+
+<td>
+  <%= rechazo.prestamo_numero %>
+</td>
+
+<td>
+  <%= rechazo.identificacion %>
+</td>
+
+<td>
+  <%= rechazo.nombre %>
+</td>
+
+<td>
+  <%= rechazo.archivo %>
+</td>
+
+<td align="right" >
+  <%= format_fm(rechazo.monto_pago) %>
+</td>
+<td align="center" >
+  <%= rechazo.moneda_nombre %>
+</td>
+<td>
+  <%= rechazo.descripcion_error %>
+</td>
+
+<td>
+  <%= rechazo.nombre_entidad %>
+</td>
+
+<td align="center">
+  <%= link_to_remote(image_tag('enviar.gif',:title=>'Avanzar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :confirm => "¿#{I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.avarzar_solicitud')} #{rechazo.solicitud_numero}?",
+    :id=>"button_enviar",
+    :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+    :url => {:action => :avanzar, :id=>rechazo.id, :solicitud_numero => rechazo.solicitud_numero}) -%>
+</td>

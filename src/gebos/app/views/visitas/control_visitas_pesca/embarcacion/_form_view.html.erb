@@ -1,0 +1,92 @@
+<table>
+  <tr>
+    <td style="width: 200px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.embarcacion')}"%></label>
+    </td>
+    <td style="width: 300px">
+      <%= @embarcacion.nombre_embarcacion %>
+    </td>
+  </tr>	
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.matricula')%></label>
+    </td>
+    <td>
+      <%= @embarcacion.matricula %> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.tipo_embarcacion')%></label>
+    </td>
+    <td>
+      <%= @embarcacion.tipo_embarcacion.tipo %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.tipo_material')%></label>
+    </td>
+    <td>
+      <%= @embarcacion.tipo_material.tipo %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.eslora')%></label>
+    </td>
+    <td style="width: 500px">
+      <%= @embarcacion.eslora_fm  %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.manga')%></label>
+    </td>
+    <td>
+      <%= @embarcacion.manga_fm %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.puntal')%></label>
+    </td>
+    <td>
+      <%= @embarcacion.puntal_fm -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.u_a_b')%></label>
+    </td>
+    <td>
+      <%= @embarcacion.uab_fm -%>
+    </td>
+  </tr>
+  <tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.cantidad_tripulante')%></label>
+    </td>
+    <td>
+      <%= @embarcacion.cantidad_tripulantes -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.autonomia_pesca')%></label>
+    </td>
+    <td>
+      <%= @embarcacion.autonomia_pesca %>
+    </td>
+  </tr>  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Motores.Columnas.proveedor_marino')%></label>
+    </td>
+    <td style="width: 500px">
+      <%= @embarcacion.proveedor_marino.nombre  %>
+    </td>
+  </tr>
+  <tr>
+    <td>

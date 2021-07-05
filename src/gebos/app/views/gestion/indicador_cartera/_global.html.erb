@@ -1,0 +1,143 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 15%">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.agrupadores') -%>
+      </th>
+      <th style="width: 15%" colspan="2">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.vigente') -%>
+      </th>
+      <th style="width: 15%" colspan="2">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.vencida') -%>
+      </th>
+      <th style="width: 15%" colspan="2">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.vencida_30_90') -%>
+      </th>
+      <th style="width: 15%" colspan="2">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.vencida_90_180') -%>
+      </th>
+      <th style="width: 15%" colspan="2">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.vencida_180_365') -%>
+      </th>
+      <th style="width: 15%" colspan="2">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.vencida_mas_365') -%>
+      </th>
+      <th style="width: 15%" colspan="2">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.litigio') -%>
+      </th>
+      <th style="width: 15%" colspan="2">
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.reestructurada') -%>
+      </th>
+    </tr>
+    <tr>
+      <th>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.cantidad') -%>
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.monto') -%>
+      </th>
+    </tr>
+  </thead>
+
+    <tbody>
+      <tr class="lista0">
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.indicador') %>
+          </label>
+        </td>
+        <td style="text-align: center">
+          <%= @vigente_cantidad %>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm @vigente_monto %>
+        </td>
+        <td style="text-align: center">
+          <%= @vencido_cantidad %>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm @vencido_monto %>
+        </td>
+        <td style="text-align: center">
+          <%= @demorada_cantidad %>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm @demorada_monto %>
+        </td>
+        <td style="text-align: center">
+          <%= @vencido_90_cantidad %>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm @vencido_90_monto %>
+        </td>
+        <td style="text-align: center">
+          <%= @vencido_180_cantidad %>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm @vencido_180_monto %>
+        </td>
+        <td style="text-align: center">
+          <%= @vencido_365_cantidad %>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm @vencido_365_monto %>
+        </td>
+        <td style="text-align: center">
+          <%= @litigio_cantidad %>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm @litigio_monto %>
+        </td>
+        <td style="text-align: center">
+          <%= @reestructurado_cantidad %>
+        </td>
+        <td style="text-align: right">
+          <%= format_fm @reestructurado_monto %>
+        </td>
+      </tr>
+    </tbody>
+  </table>

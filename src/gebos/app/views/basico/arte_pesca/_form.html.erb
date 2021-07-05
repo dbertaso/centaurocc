@@ -1,0 +1,1916 @@
+<script language="javascript">varEnviado = false;</script>
+
+<table>
+  <!-- Caso especial -->
+
+
+  <%if @ar1==0%>
+    <%= hidden_field 'arte_pesca', 'condicion',
+      :value => "***No-aplica***" %>
+  <%end%>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record') %></label> <label id="arte_pesca_seleccionada" style="color: red">*</label> 
+    </td>
+    <td>
+
+      <%if @es_algo!=1%>
+  <%#= select_tag('',[options_for_select([["Seleccione un arte de pesca... ", ""]]),options_for_select(@item_pesca.map{|i| [i.grupo, i.grupo]})],	 		  { :class=>'select', :onchange=>tipo_arte_pesca_onchange + ';muevo();aparece_guardar();' } ) %>
+        <%= select(
+          'item_arte_pesca','',
+          @item_pesca.map{|i| [i.grupo, i.grupo]},
+          {:prompt=>'Seleccione un arte de pesca... '},
+          { :class=>'select', :onchange=>"#{remote_function(
+            :method =>:get,
+            :url=>{:controller=>'arte_pesca',
+            :action=>:tipo_arte_pesca_change },
+            :with=>"'id='+ this.value")};muevo();aparece_guardar();" }  ) %>
+
+      <%else%>
+  <%#= select_tag('item_arte_pesca',[options_for_select([["Seleccione un arte de pesca... ", ""]]),options_for_select(@item_pesca.map{|i| [i.grupo, i.grupo]})],	 { :class=>'select', :onchange=>'muevo();',:disabled=>'true' } ) %>
+        <%= select(
+          'item_arte_pesca','',
+          @item_pesca.map{|i| [i.grupo, i.grupo]},
+          {:prompt=>'Seleccione un arte de pesca... '},
+          { :class=>'select', :onchange=>'muevo();' ,:disabled=>'true'}  ) %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+
+
+<%if @es_algo==1 %>
+
+  <%= hidden_field 'arte_pesca', 'nombre_arte_pesca',
+    :value => "#{@guardo}" %>
+
+  <%= hidden_field 'arte_pesca', 'embarcacion_id',
+    :value => "#{@identificador_embarcacion}" %> 
+
+
+
+  <%
+  #si estamos editando hacemos esto, no pasa si agregamos uno nuevo
+
+  @que_hacer="style='display:block'"
+
+  case @contenido
+  when 1
+    @que_hacer1="id='tablon' style=''"
+    @que_hacer2="id='tablon2' style='display:none'"
+    @que_hacer3="id='tablon0' style='display:none'"
+    @que_hacer4="id='tablon4' style='display:none'"
+    @que_hacer5="id='tablon5' style='display:none'"
+
+  when 2
+    @que_hacer1="id='tablon' style='display:none'"
+    @que_hacer2="id='tablon2' style=''"
+    @que_hacer3="id='tablon0' style='display:none'"
+    @que_hacer4="id='tablon4' style='display:none'"
+    @que_hacer5="id='tablon5' style='display:none'"
+
+  when 3
+    @que_hacer1="id='tablon' style='display:none'"
+    @que_hacer2="id='tablon2' style='display:none'"
+    @que_hacer3="id='tablon0' style=''"
+    @que_hacer4="id='tablon4' style='display:none'"
+    @que_hacer5="id='tablon5' style='display:none'"
+
+  when 4
+    @que_hacer1="id='tablon' style='display:none'"
+    @que_hacer2="id='tablon2' style='display:none'"
+    @que_hacer3="id='tablon0' style='display:none'"
+    @que_hacer4="id='tablon4' style=''"
+    @que_hacer5="id='tablon5' style='display:none'"
+
+  else 5
+    @que_hacer1="id='tablon' style='display:none'"
+    @que_hacer2="id='tablon2' style='display:none'"
+    @que_hacer3="id='tablon0' style='display:none'"
+    @que_hacer4="id='tablon4' style='display:none'"
+    @que_hacer5="id='tablon5' style=''"
+
+  end
+
+else
+  @que_hacer1="id='tablon' style='display:none'"
+  @que_hacer2="id='tablon2' style='display:none'"
+  @que_hacer3="id='tablon0' style='display:none'"
+  @que_hacer4="id='tablon4' style='display:none'"
+  @que_hacer5="id='tablon5' style='display:none'"
+
+
+
+end 
+
+%>
+
+
+<%
+
+# si estoy editando hago esto
+if @es_algo ==1
+
+
+%>
+  
+  <table <%=@que_hacer1%> >
+
+    <% if @contenido==1 && @es_algo==1%>
+
+      <%= hidden_field 'arte_pesca', 'alto',
+        :value => "1" %>
+
+      <%= hidden_field 'arte_pesca', 'nro_anzuelo',
+        :value => "1" %>
+      <%= hidden_field 'arte_pesca', 'cantidad_anzuelos',
+        :value => "1" %>
+      <%= hidden_field 'arte_pesca', 'material_linea_madre',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'material',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'tipo_cordel',
+        :value => "1" %>
+      <%= hidden_field 'arte_pesca', 'nro_cordel',
+        :value => "1" %>
+
+
+
+      <%
+
+      #case @contenido
+      #  when 1
+      %>
+
+
+
+
+
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record') %> (<%= I18n.t('Sistema.Body.Vistas.General.redes') %>)</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%if @es_algo!=1%>
+
+            <%= select(
+              'arte_pesca','embarcacion_id',
+              @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+              {:prompt=>'Seleccione una embarcación... '},
+              { :class=>'select' }  ) %>
+
+          <%else%>
+            <%= select(
+              'arte_pesca','embarcacion_id',
+              @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+              {:prompt=>'Seleccione una embarcación... '},
+              { :class=>'select' ,:disabled=>'true'}  ) %>
+          <%end%>
+
+
+    <%#= select(
+    'arte_pesca','embarcacion_id',
+    @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+    {:prompt=>'Seleccione una embarcación... '},
+    { :class=>'select'} ) %>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= select(
+            'arte_pesca','tipo_arte_pesca_id',
+            @tipo_arte_pesca.map{|i| [i.tipo, i.id]},
+            {:prompt=>'Seleccione un tipo de arte de pesca... '},
+            { :class=>'select'} ) %>
+
+        </td>
+      </tr>
+
+
+      <tr>
+        <td style="width: 25%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.propia') %></label> <label style="color: red">*</label>
+        </td>
+        <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+          <%=
+          radio_button 'arte_pesca','es_propia', 'true',
+            :class=>'text', :onclick=> 'inputChange();'
+          -%> &nbsp;
+
+          <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+          <%=
+          radio_button 'arte_pesca','es_propia', 'false',
+            :class=>'text', :onclick=> 'inputChange();'
+          -%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'cantidad',
+            :class=>'text', :style=>'width: 120px',
+            :maxlength=>'20', :onkeypress=>'inputChange();',
+            :onchange=>'inputChange();' -%>
+
+        </td>
+      </tr>
+
+      <!-- <tr>
+                      <td>
+                              <label>Proveedor Marino</label> <label style="color: red">*</label>
+                      </td>
+                      <td>
+
+    <%#= select(
+    'arte_pesca','proveedor_marino_id',
+    @proveedor_marino.map{|i| [i.nombre, i.id]},
+    {:prompt=>'Seleccione un proveedor marino... '},
+    { :class=>'select'} ) %>
+
+                      </td>
+              </tr> -->
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Controladores.TipoNylon.FormTitles.form_title_record') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= select(
+            'arte_pesca','tipo_nylon_id',
+            @tipo_nylon.map{|i| [i.tipo, i.id]},
+            {:prompt=>'Seleccione un tipo de nylon... '},
+            { :class=>'select'} ) %>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.Largo') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'largo_f',
+            :class=>'text', :style=>'width: 60px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+          (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'ancho_f',
+            :class=>'text', :style=>'width: 60px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+          (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'luz_maya',
+            :class=>'text', :style=>'width: 100px',
+            :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+
+          (<%= I18n.t('Sistema.Body.Vistas.General.pulg') %>)</td>
+      </tr>
+
+
+    <%end%>
+  </table>
+
+  <%#  when 2 %>
+
+
+
+
+  <table <%=@que_hacer2%> >
+
+    <% if @contenido==2 && @es_algo==1%>
+
+      <%= hidden_field 'arte_pesca', 'alto',
+        :value => "1" %>
+
+      <%= hidden_field 'arte_pesca', 'ancho',
+        :value => "1" %>
+      <%= hidden_field 'arte_pesca', 'luz_maya',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'material',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'tipo_nylon_id',
+        :value => "1" %>
+      <%= hidden_field 'arte_pesca', 'tipo_cordel',
+        :value => "0" %>
+      <%= hidden_field 'arte_pesca', 'nro_cordel',
+        :value => "1" %>
+
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.palangres').downcase.capitalize %>)</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%if @es_algo!=1%>
+
+            <%= select(
+              'arte_pesca','embarcacion_id',
+              @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+              {:prompt=>'Seleccione una embarcación... '},
+              { :class=>'select' }  ) %>
+
+          <%else%>
+            <%= select(
+              'arte_pesca','embarcacion_id',
+              @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+              {:prompt=>'Seleccione una embarcación... '},
+              { :class=>'select' ,:disabled=>'true'}  ) %>
+          <%end%>
+
+    <%#= select(
+    'arte_pesca','embarcacion_id',
+    @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+    {:prompt=>'Seleccione una embarcación... '},
+    { :class=>'select'} ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= select(
+            'arte_pesca','tipo_arte_pesca_id',
+            @tipo_arte_pesca.map{|i| [i.tipo, i.id]},
+            {:prompt=>'Seleccione un tipo de arte de pesca... '},
+            { :class=>'select'} ) %>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 25%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+        </td>
+        <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+          <%=
+          radio_button 'arte_pesca','es_propia', 'true',
+            :class=>'text', :onclick=> 'inputChange();'
+          -%> &nbsp;
+
+          <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+          <%=
+          radio_button 'arte_pesca','es_propia', 'false',
+            :class=>'text', :onclick=> 'inputChange();'
+          -%> &nbsp;
+
+        </td>
+      </tr>
+
+      <!-- <tr>
+                      <td>
+                              <label>Proveedor Marino</label> <label style="color: red">*</label>
+                      </td>
+                      <td>
+
+    <%#= select(
+    'arte_pesca','proveedor_marino_id',
+    @proveedor_marino.map{|i| [i.nombre, i.id]},
+    {:prompt=>'Seleccione un proveedor marino... '},
+    { :class=>'select'} ) %>
+
+                      </td>
+              </tr> -->
+
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material_linea_madre') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'material_linea_madre',
+            :class=>'text', :style=>'width: 120px',
+            :maxlength=>'20', :onkeypress=>'inputChange();',
+            :onchange=>'inputChange();' -%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'cantidad',
+            :class=>'text', :style=>'width: 60px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.numero_anzuelo') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'largo_f',
+            :class=>'text', :style=>'width: 60px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+          <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.numero_anzuelo') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'nro_anzuelo',
+            :class=>'text', :style=>'width: 100px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %> de Anzuelos</label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'cantidad_anzuelos',
+            :class=>'text', :style=>'width: 100px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+        </td>
+      </tr>
+
+    <%end%>
+  </table>
+  <%#  when 3 %>
+
+
+
+  <table <%=@que_hacer3%> >
+
+    <%if @contenido==3 && @es_algo==1 %>
+      <%= hidden_field 'arte_pesca', 'cantidad_anzuelos',
+        :value => "1" %>
+
+      <%= hidden_field 'arte_pesca', 'nro_anzuelo',
+        :value => "0" %>
+      <%= hidden_field 'arte_pesca', 'luz_maya',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'material_linea_madre',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'tipo_nylon_id',
+        :value => "1" %>
+      <%= hidden_field 'arte_pesca', 'tipo_cordel',
+        :value => "0" %>
+      <%= hidden_field 'arte_pesca', 'nro_cordel',
+        :value => "1" %>
+
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.nasas').downcase.capitalize %>)</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%if @es_algo!=1%>
+
+            <%= select(
+              'arte_pesca','embarcacion_id',
+              @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+              {:prompt=>'Seleccione una embarcación... '},
+              { :class=>'select' }  ) %>
+
+          <%else%>
+            <%= select(
+              'arte_pesca','embarcacion_id',
+              @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+              {:prompt=>'Seleccione una embarcación... '},
+              { :class=>'select' ,:disabled=>'true'}  ) %>
+          <%end%>
+
+    <%#= select(
+    'arte_pesca','embarcacion_id',
+    @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+    {:prompt=>'Seleccione una embarcación... '},
+    { :class=>'select'} ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= select(
+            'arte_pesca','tipo_arte_pesca_id',
+            @tipo_arte_pesca.map{|i| [i.tipo, i.id]},
+            {:prompt=>'Seleccione un tipo de arte de pesca... '},
+            { :class=>'select'} ) %>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 25%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+        </td>
+        <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+
+          <%=
+          radio_button 'arte_pesca','es_propia', 'true',
+            :class=>'text', :onclick=> 'inputChange();'
+          -%> &nbsp;
+
+          <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+          <%=
+          radio_button 'arte_pesca','es_propia', 'false',
+            :class=>'text', :onclick=> 'inputChange();'
+          -%> &nbsp;
+
+
+        </td>
+      </tr>
+
+      <!-- <tr>
+                     <td>
+                             <label>Proveedor Marino</label> <label style="color: red">*</label>
+                     </td>
+                     <td>
+
+
+    <%#= select(
+    'arte_pesca','proveedor_marino_id',
+    @proveedor_marino.map{|i| [i.nombre, i.id]},
+    {:prompt=>'Seleccione un proveedor marino... '},
+    { :class=>'select'} ) %>
+
+                     </td>
+             </tr> -->
+
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'material',
+            :class=>'text', :style=>'width: 120px',
+            :maxlength=>'20', :onkeypress=>'inputChange();',
+            :onchange=>'inputChange();' -%>
+
+        </td>
+      </tr>
+
+
+
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'cantidad',
+            :class=>'text', :style=>'width: 60px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.largo') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'largo_f',
+            :class=>'text', :style=>'width: 60px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+          <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'ancho_f',
+            :class=>'text', :style=>'width: 100px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+          <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.alto') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'alto_f',
+            :class=>'text', :style=>'width: 100px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+          <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+      </tr>
+
+    <%end%>
+  </table>
+  <%#  when 4 %>
+
+
+  <table <%=@que_hacer4%> >
+    <% if @contenido==4 && @es_algo==1 %>
+      <%= hidden_field 'arte_pesca', 'largo',
+        :value => "1" %>
+
+      <%= hidden_field 'arte_pesca', 'ancho',
+        :value => "1" %>
+      <%= hidden_field 'arte_pesca', 'alto',
+        :value => "1" %>
+
+      <%= hidden_field 'arte_pesca', 'luz_maya',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'material_linea_madre',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'material',
+        :value => "No-aplica" %>
+      <%= hidden_field 'arte_pesca', 'tipo_nylon_id',
+        :value => "1" %>
+
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.cordeles').downcase.capitalize %>)</span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%if @es_algo!=1%>
+
+            <%= select(
+              'arte_pesca','embarcacion_id',
+              @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+              {:prompt=>'Seleccione una embarcación... '},
+              { :class=>'select' }  ) %>
+
+          <%else%>
+            <%= select(
+              'arte_pesca','embarcacion_id',
+              @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+              {:prompt=>'Seleccione una embarcación... '},
+              { :class=>'select' ,:disabled=>'true'}  ) %>
+          <%end%>
+
+    <%#= select(
+    'arte_pesca','embarcacion_id',
+    @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+    {:prompt=>'Seleccione una embarcación... '},
+    { :class=>'select'} ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= select(
+            'arte_pesca','tipo_arte_pesca_id',
+            @tipo_arte_pesca.map{|i| [i.tipo, i.id]},
+            {:prompt=>'Seleccione un tipo de arte de pesca... '},
+            { :class=>'select'} ) %>
+
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td style="width: 25%">
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+        </td>
+        <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+
+          <%=
+          radio_button 'arte_pesca','es_propia', 'true',
+            :class=>'text', :onclick=> 'inputChange();'
+          -%> &nbsp;
+
+          <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+          <%=
+          radio_button 'arte_pesca','es_propia', 'false',
+            :class=>'text', :onclick=> 'inputChange();'
+          -%> &nbsp;
+
+        </td>
+      </tr>
+
+      <!-- <tr>
+                     <td>
+                             <label>Proveedor Marino</label> <label style="color: red">*</label>
+                     </td>
+                     <td>
+
+
+    <%#= select(
+    'arte_pesca','proveedor_marino_id',
+    @proveedor_marino.map{|i| [i.nombre, i.id]},
+    {:prompt=>'Seleccione un proveedor marino... '},
+    { :class=>'select'} ) %>
+
+
+                     </td>
+             </tr> -->
+
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+          <%= text_field 'arte_pesca', 'cantidad',
+            :class=>'text', :style=>'width: 120px',
+            :maxlength=>'20', :onkeypress=>'inputChange();',
+            :onchange=>'inputChange();' -%>
+
+
+        </td>
+      </tr>
+
+
+
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.cantidad_anzuelos') %>:</label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'cantidad_anzuelos',
+            :class=>'text', :style=>'width: 60px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.numero_anzuelo') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'nro_anzuelo',
+            :class=>'text', :style=>'width: 60px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.tipo_cordel') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'tipo_cordel',
+            :class=>'text', :style=>'width: 100px',
+            :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.numero_cordel') %></label> <label style="color: red">*</label>
+        </td>
+        <td>
+
+
+          <%= text_field 'arte_pesca', 'nro_cordel',
+            :class=>'text', :style=>'width: 100px',
+            :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+        </td>
+      </tr>
+    <%end%>
+  </table>
+  <%#  else  %>
+
+
+    <table <%=@que_hacer5%> >
+      <% if @contenido==5 && @es_algo==1 %>
+        <%= hidden_field 'arte_pesca', 'largo',
+          :value => "1" %>
+
+        <%= hidden_field 'arte_pesca', 'ancho',
+          :value => "1" %>
+        <%= hidden_field 'arte_pesca', 'alto',
+          :value => "1" %>
+
+        <%= hidden_field 'arte_pesca', 'nro_anzuelo',
+          :value => "0" %>
+        <%= hidden_field 'arte_pesca', 'cantidad_anzuelos',
+          :value => "1" %>
+
+        <%= hidden_field 'arte_pesca', 'material_linea_madre',
+          :value => "No-aplica" %>
+        <%= hidden_field 'arte_pesca', 'material',
+          :value => "No-aplica" %>
+        <%= hidden_field 'arte_pesca', 'tipo_cordel',
+          :value => "0" %>
+        <%= hidden_field 'arte_pesca', 'nro_cordel',
+          :value => "1" %>
+
+        <%= hidden_field 'arte_pesca', 'tipo_nylon_id',
+          :value => "1" %>
+
+
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.atarrayas').downcase.capitalize %>)</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%if @es_algo!=1%>
+
+              <%= select(
+                'arte_pesca','embarcacion_id',
+                @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                {:prompt=>'Seleccione una embarcación... '},
+                { :class=>'select' }  ) %>
+
+            <%else%>
+              <%= select(
+                'arte_pesca','embarcacion_id',
+                @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                {:prompt=>'Seleccione una embarcación... '},
+                { :class=>'select' ,:disabled=>'true'}  ) %>
+            <%end%>
+
+    <%#= select(
+    'arte_pesca','embarcacion_id',
+    @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+    {:prompt=>'Seleccione una embarcación... '},
+    { :class=>'select'} ) %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%= select(
+              'arte_pesca','tipo_arte_pesca_id',
+              @tipo_arte_pesca.map{|i| [i.tipo, i.id]},
+              {:prompt=>'Seleccione un tipo de arte de pesca... '},
+              { :class=>'select'} ) %>
+
+          </td>
+        </tr>
+
+
+
+        <tr>
+          <td style="width: 25%">
+            <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+          </td>
+          <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+
+            <%=
+            radio_button 'arte_pesca','es_propia', 'true',
+              :class=>'text', :onclick=> 'inputChange();'
+            -%> &nbsp;
+
+            <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+            <%=
+            radio_button 'arte_pesca','es_propia', 'false',
+              :class=>'text', :onclick=> 'inputChange();'
+            -%> &nbsp;
+
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%= text_field 'arte_pesca', 'cantidad',
+              :class=>'text', :style=>'width: 120px',
+              :maxlength=>'20', :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();' -%>
+
+          </td>
+        </tr>
+
+        <!-- <tr>
+                        <td>
+                                <label>Proveedor Marino</label> <label style="color: red">*</label>
+                        </td>
+                        <td>
+
+
+    <%#= select(
+    'arte_pesca','proveedor_marino_id',
+    @proveedor_marino.map{|i| [i.nombre, i.id]},
+    {:prompt=>'Seleccione un proveedor marino... '},
+    { :class=>'select'} ) %>
+
+                        </td>
+                </tr> -->
+
+
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+
+            <%= text_field 'arte_pesca', 'luz_maya',
+              :class=>'text', :style=>'width: 100px',
+              :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+
+            (<%= I18n.t('Sistema.Body.Vistas.General.pulg') %>)</td>
+        </tr>
+
+      <%end%>
+    </table>
+      <% #end
+
+    %>
+
+
+
+    <%
+
+    else
+
+      #caso en el que no estamos editando
+
+    %>
+
+      <table <%=@que_hacer1%> >
+
+  <%# if @contenido==1 && @es_algo==1%>
+
+        <%= hidden_field 'arte_pesca', 'alto',
+          :value => "1" %>
+
+        <%= hidden_field 'arte_pesca', 'nro_anzuelo',
+          :value => "0" %>
+        <%= hidden_field 'arte_pesca', 'cantidad_anzuelos',
+          :value => "1" %>
+        <%= hidden_field 'arte_pesca', 'material_linea_madre',
+          :value => "No-aplica" %>
+        <%= hidden_field 'arte_pesca', 'material',
+          :value => "No-aplica" %>
+        <%= hidden_field 'arte_pesca', 'tipo_cordel',
+          :value => "0" %>
+        <%= hidden_field 'arte_pesca', 'nro_cordel',
+          :value => "1" %>
+        
+        <%
+
+        #case @contenido
+        #  when 1
+        %>
+
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.redes').downcase.capitalize %>)</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%if @es_algo!=1%>
+
+              <%= select(
+                'arte_pesca','embarcacion_id',
+                @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                {:prompt=>'Seleccione una embarcación... '},
+                { :class=>'select' }  ) %>
+
+            <%else%>
+              <%= select(
+                'arte_pesca','embarcacion_id',
+                @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                {:prompt=>'Seleccione una embarcación... '},
+                { :class=>'select' ,:disabled=>'true'}  ) %>
+            <%end%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %> </label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <span id="tipo-mensaje">
+              <%= render :partial => 'mensaje' %>
+            </span>
+
+          </td>
+        </tr>
+
+
+        <tr>
+          <td style="width: 25%">
+            <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+          </td>
+          <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+            <%=radio_button 'arte_pesca','es_propia', 'true',
+              :class=>'text', :onclick=> 'inputChange();'
+            -%> &nbsp;
+
+            <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+            <%=radio_button 'arte_pesca','es_propia', 'false',
+              :class=>'text', :onclick=> 'inputChange();'
+            -%>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%= text_field 'arte_pesca', 'cantidad',
+              :class=>'text', :style=>'width: 120px',
+              :maxlength=>'20', :onkeypress=>'inputChange();',
+              :onchange=>'inputChange();' -%>
+
+          </td>
+        </tr>
+
+        <!-- <tr>
+                        <td>
+                                <label>Proveedor Marino</label> <label style="color: red">*</label>
+                        </td>
+                        <td>
+
+  <%#= select(
+  'arte_pesca','proveedor_marino_id',
+  @proveedor_marino.map{|i| [i.nombre, i.id]},
+  {:prompt=>'Seleccione un proveedor marino... '},
+  { :class=>'select'} ) %>
+
+                        </td>
+                </tr> -->
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Controladores.TipoNylon.FormTitles.form_title_record') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%= select(
+              'arte_pesca','tipo_nylon_id',
+              @tipo_nylon.map{|i| [i.tipo, i.id]},
+              {:prompt=>'Seleccione un tipo de nylon... '},
+              { :class=>'select'} ) %>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.largo') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%= text_field 'arte_pesca', 'largo_f',
+              :class=>'text', :style=>'width: 60px',
+              :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+            <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%= text_field 'arte_pesca', 'ancho_f',
+              :class=>'text', :style=>'width: 60px',
+              :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+            <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+        </tr>
+
+        <tr>
+          <td>
+            <label<%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %></label> <label style="color: red">*</label>
+          </td>
+          <td>
+
+            <%= text_field 'arte_pesca', 'luz_maya',
+              :class=>'text', :style=>'width: 100px',
+              :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+
+            (<%= I18n.t('Sistema.Body.Vistas.General.pulg') %>)</td>
+        </tr>
+
+
+  <%#end%>
+      </table>
+  <%#  when 2 %>
+
+
+
+
+        <table <%=@que_hacer2%> >
+
+          <% #if @contenido==2 && @es_algo==1%>
+
+          <%= hidden_field 'arte_pesca', 'alto',
+            :value => "1" %>
+
+          <%= hidden_field 'arte_pesca', 'ancho',
+            :value => "1" %>
+          <%= hidden_field 'arte_pesca', 'luz_maya',
+            :value => "No-aplica" %>
+          <%= hidden_field 'arte_pesca', 'material',
+            :value => "No-aplica" %>
+          <%= hidden_field 'arte_pesca', 'tipo_nylon_id',
+            :value => "1" %>
+          <%= hidden_field 'arte_pesca', 'tipo_cordel',
+            :value => "0" %>
+          <%= hidden_field 'arte_pesca', 'nro_cordel',
+            :value => "1" %>
+
+
+          <tr>
+            <td class="separador" valign="bottom" colspan="2">
+              <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.palangres').downcase.capitalize %>)</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+            </td>
+            <td>
+
+              <%if @es_algo!=1%>
+
+                <%= select(
+                  'arte_pesca','embarcacion_id',
+                  @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                  {:prompt=>'Seleccione una embarcación... '},
+                  { :class=>'select' }  ) %>
+
+              <%else%>
+                <%= select(
+                  'arte_pesca','embarcacion_id',
+                  @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                  {:prompt=>'Seleccione una embarcación... '},
+                  { :class=>'select' ,:disabled=>'true'}  ) %>
+              <%end%>
+  
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %> </label> <label style="color: red">*</label>
+            </td>
+            <td>
+
+              <span id="tipo-mensaje">
+                <%= render :partial => 'mensaje' %>
+              </span>
+            </td>
+          </tr>
+
+
+          <tr>
+            <td style="width: 25%">
+              <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+            </td>
+            <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+              <%=radio_button 'arte_pesca','es_propia', 'true',
+                :class=>'text', :onclick=> 'inputChange();'
+              -%> &nbsp;
+
+              <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+              <%=radio_button 'arte_pesca','es_propia', 'false',
+                :class=>'text', :onclick=> 'inputChange();'
+              -%> &nbsp;
+
+            </td>
+          </tr>
+
+          <!-- <tr>
+                          <td>
+                                  <label>Proveedor Marino</label> <label style="color: red">*</label>
+                          </td>
+                          <td>
+
+  <%#= select(
+  'arte_pesca','proveedor_marino_id',
+  @proveedor_marino.map{|i| [i.nombre, i.id]},
+  {:prompt=>'Seleccione un proveedor marino... '},
+  { :class=>'select'} ) %>
+
+                          </td>
+                  </tr> -->
+
+
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material_linea_madre') %></label> <label style="color: red">*</label>
+            </td>
+            <td>
+
+              <%= text_field 'arte_pesca', 'material_linea_madre',
+                :class=>'text', :style=>'width: 120px',
+                :maxlength=>'20', :onkeypress=>'inputChange();',
+                :onchange=>'inputChange();' -%>
+
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+            </td>
+            <td>
+
+              <%= text_field 'arte_pesca', 'cantidad',
+                :class=>'text', :style=>'width: 60px',
+                :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.largo') %></label> <label style="color: red">*</label>
+            </td>
+            <td>
+              <%= text_field 'arte_pesca', 'largo_f',
+                :class=>'text', :style=>'width: 60px',
+                :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+              <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+          </tr>
+
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.numero_anzuelo') %></label> <label style="color: red">*</label>
+            </td>
+            <td>
+
+
+              <%= text_field 'arte_pesca', 'nro_anzuelo',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.cantidad_anzuelos') %></label> <label style="color: red">*</label>
+            </td>
+            <td>
+
+
+              <%= text_field 'arte_pesca', 'cantidad_anzuelos',
+                :class=>'text', :style=>'width: 100px',
+                :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+            </td>
+          </tr>
+        </table>
+        <%# ojo end%>
+        
+<%#  when 3 %>
+
+
+
+        <table <%=@que_hacer3%> >
+
+          <%# ojo if @contenido==3 && @es_algo==1 %>
+            <%= hidden_field 'arte_pesca', 'cantidad_anzuelos',
+              :value => "1" %>
+
+            <%= hidden_field 'arte_pesca', 'nro_anzuelo',
+              :value => "0" %>
+            <%= hidden_field 'arte_pesca', 'luz_maya',
+              :value => "No-aplica" %>
+            <%= hidden_field 'arte_pesca', 'material_linea_madre',
+              :value => "No-aplica" %>
+            <%= hidden_field 'arte_pesca', 'tipo_nylon_id',
+              :value => "1" %>
+            <%= hidden_field 'arte_pesca', 'tipo_cordel',
+              :value => "0" %>
+            <%= hidden_field 'arte_pesca', 'nro_cordel',
+              :value => "1" %>
+
+
+            <tr>
+              <td class="separador" valign="bottom" colspan="2">
+                <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.nasas').downcase.capitalize %>)</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+              </td>
+              <td>
+
+
+                <%if @es_algo!=1%>
+
+                  <%= select(
+                    'arte_pesca','embarcacion_id',
+                    @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                    {:prompt=>'Seleccione una embarcación... '},
+                    { :class=>'select' }  ) %>
+
+                <%else%>
+                  <%= select(
+                    'arte_pesca','embarcacion_id',
+                    @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                    {:prompt=>'Seleccione una embarcación... '},
+                    { :class=>'select' ,:disabled=>'true'}  ) %>
+                <%end%>  
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %> </label> <label style="color: red">*</label>
+              </td>
+              <td>
+
+                <span id="tipo-mensaje">
+                  <%= render :partial => 'mensaje' %>
+                </span>
+              </td>
+            </tr>
+
+
+            <tr>
+              <td style="width: 25%">
+                <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+              </td>
+              <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+
+                <%=radio_button 'arte_pesca','es_propia', 'true',
+                  :class=>'text', :onclick=> 'inputChange();'
+                -%> &nbsp;
+
+                <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+                <%=radio_button 'arte_pesca','es_propia', 'false',
+                  :class=>'text', :onclick=> 'inputChange();'
+                -%> &nbsp;
+
+
+              </td>
+            </tr>
+
+            <!-- <tr>
+                            <td>
+                                    <label>Proveedor Marino</label> <label style="color: red">*</label>
+                            </td>
+                            <td>
+
+
+  <%#= select(
+  'arte_pesca','proveedor_marino_id',
+  @proveedor_marino.map{|i| [i.nombre, i.id]},
+  {:prompt=>'Seleccione un proveedor marino... '},
+  { :class=>'select'} ) %>
+
+                            </td>
+                    </tr> -->
+
+
+            <tr>
+              <td>
+                <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.material') %></label> <label style="color: red">*</label>
+              </td>
+              <td>
+
+                <%= text_field 'arte_pesca', 'material',
+                  :class=>'text', :style=>'width: 120px',
+                  :maxlength=>'20', :onkeypress=>'inputChange();',
+                  :onchange=>'inputChange();' -%>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+              </td>
+              <td>
+
+                <%= text_field 'arte_pesca', 'cantidad',
+                  :class=>'text', :style=>'width: 60px',
+                  :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.largo') %></label> <label style="color: red">*</label>
+              </td>
+              <td>
+
+
+                <%= text_field 'arte_pesca', 'largo_f',
+                  :class=>'text', :style=>'width: 60px',
+                  :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+                <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+            </tr>
+
+            <tr>
+              <td>
+                <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.ancho') %></label> <label style="color: red">*</label>
+              </td>
+              <td>
+
+
+                <%= text_field 'arte_pesca', 'ancho_f',
+                  :class=>'text', :style=>'width: 100px',
+                  :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+                <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+            </tr>
+
+            <tr>
+              <td>
+                <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.alto') %></label> <label style="color: red">*</label>
+              </td>
+              <td>
+
+                <%= text_field 'arte_pesca', 'alto_f',
+                  :class=>'text', :style=>'width: 100px',
+                  :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+                <%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %></td>
+            </tr>
+            </table>
+          <%# ojo end %>
+        
+<%#  when 4 %>
+
+
+          <table <%=@que_hacer4%> >
+            <%# ojo if @contenido==4 && @es_algo==1 %>
+              <%= hidden_field 'arte_pesca', 'largo',
+                :value => "1" %>
+
+              <%= hidden_field 'arte_pesca', 'ancho',
+                :value => "1" %>
+              <%= hidden_field 'arte_pesca', 'alto',
+                :value => "1" %>
+
+              <%= hidden_field 'arte_pesca', 'luz_maya',
+                :value => "No-aplica" %>
+              <%= hidden_field 'arte_pesca', 'material_linea_madre',
+                :value => "No-aplica" %>
+              <%= hidden_field 'arte_pesca', 'material',
+                :value => "No-aplica" %>
+              <%= hidden_field 'arte_pesca', 'tipo_nylon_id',
+                :value => "1" %>
+
+
+              <tr>
+                <td class="separador" valign="bottom" colspan="2">
+                  <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.cordeles').downcase.capitalize %>)</span>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td>
+                  <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+                </td>
+                <td>
+
+
+                  <%if @es_algo!=1%>
+
+                    <%= select(
+                      'arte_pesca','embarcacion_id',
+                      @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                      {:prompt=>'Seleccione una embarcación... '},
+                      { :class=>'select' }  ) %>
+
+                  <%else%>
+                    <%= select(
+                      'arte_pesca','embarcacion_id',
+                      @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                      {:prompt=>'Seleccione una embarcación... '},
+                      { :class=>'select' ,:disabled=>'true'}  ) %>
+                  <%end%>
+  
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %> </label> <label style="color: red">*</label>
+                </td>
+                <td>
+
+                  <span id="tipo-mensaje">
+                    <%= render :partial => 'mensaje' %>
+                  </span>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td style="width: 25%">
+                  <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+                </td>
+                <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+
+                  <%=radio_button 'arte_pesca','es_propia', 'true',
+                    :class=>'text', :onclick=> 'inputChange();'
+                  -%> &nbsp;
+
+                  <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+                  <%=radio_button 'arte_pesca','es_propia', 'false',
+                    :class=>'text', :onclick=> 'inputChange();'
+                  -%> &nbsp;
+
+                </td>
+              </tr>
+
+              <!-- <tr>
+                              <td>
+                                      <label>Proveedor Marino</label> <label style="color: red">*</label>
+                              </td>
+                              <td>
+
+
+  <%#= select(
+  'arte_pesca','proveedor_marino_id',
+  @proveedor_marino.map{|i| [i.nombre, i.id]},
+  {:prompt=>'Seleccione un proveedor marino... '},
+  { :class=>'select'} ) %>
+                  
+  
+                              </td>
+                      </tr> -->
+
+
+              <tr>
+                <td>
+                  <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+                </td>
+                <td>
+
+                  <%= text_field 'arte_pesca', 'cantidad',
+                    :class=>'text', :style=>'width: 120px',
+                    :maxlength=>'20', :onkeypress=>'inputChange();',
+                    :onchange=>'inputChange();' -%>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %> de Anzuelos</label> <label style="color: red">*</label>
+                </td>
+                <td>
+
+
+                  <%= text_field 'arte_pesca', 'cantidad_anzuelos',
+                    :class=>'text', :style=>'width: 60px',
+                    :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.numero_anzuelo') %></label> <label style="color: red">*</label>
+                </td>
+                <td>
+
+
+                  <%= text_field 'arte_pesca', 'nro_anzuelo',
+                    :class=>'text', :style=>'width: 60px',
+                    :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.tipo_cordel') %></label> <label style="color: red">*</label>
+                </td>
+                <td>
+
+
+                  <%= text_field 'arte_pesca', 'tipo_cordel',
+                    :class=>'text', :style=>'width: 100px',
+                    :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label><%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.numero_cordel') %></label> <label style="color: red">*</label>
+                </td>
+                <td>
+
+
+                  <%= text_field 'arte_pesca', 'nro_cordel',
+                    :class=>'text', :style=>'width: 100px',
+                    :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+
+
+                </td>
+              </tr>
+            </table>
+            <%# ojo end%>
+          
+          <%#ojo else  %>
+
+
+            <table <%=@que_hacer5%> >
+              <%#ojo if @contenido==5 && @es_algo==1 %>
+                <%= hidden_field 'arte_pesca', 'largo',
+                  :value => "1" %>
+
+                <%= hidden_field 'arte_pesca', 'ancho',
+                  :value => "1" %>
+                <%= hidden_field 'arte_pesca', 'alto',
+                  :value => "1" %>
+
+                <%= hidden_field 'arte_pesca', 'nro_anzuelo',
+                  :value => "0" %>
+                <%= hidden_field 'arte_pesca', 'cantidad_anzuelos',
+                  :value => "1" %>
+
+                <%= hidden_field 'arte_pesca', 'material_linea_madre',
+                  :value => "No-aplica" %>
+                <%= hidden_field 'arte_pesca', 'material',
+                  :value => "No-aplica" %>
+                <%= hidden_field 'arte_pesca', 'tipo_cordel',
+                  :value => "0" %>
+                <%= hidden_field 'arte_pesca', 'nro_cordel',
+                  :value => "1" %>
+
+                <%= hidden_field 'arte_pesca', 'tipo_nylon_id',
+                  :value => "1" %>
+
+
+
+                <tr>
+                  <td class="separador" valign="bottom" colspan="2">
+                    <span><%= I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')%> (<%= I18n.t('Sistema.Body.Vistas.TipoArtePesca.Tipos.nasas').downcase.capitalize %>)</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+                  </td>
+                  <td>
+
+                    <%if @es_algo!=1%>
+
+                      <%= select(
+                        'arte_pesca','embarcacion_id',
+                        @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                        {:prompt=>'Seleccione una embarcación... '},
+                        { :class=>'select' }  ) %>
+
+                    <%else%>
+                      <%= select(
+                        'arte_pesca','embarcacion_id',
+                        @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                        {:prompt=>'Seleccione una embarcación... '},
+                        { :class=>'select' ,:disabled=>'true'}  ) %>
+                    <%end%>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_record')}" %> </label> <label style="color: red">*</label>
+                  </td>
+                  <td>
+
+                    <span id="tipo-mensaje">
+                      <%= render :partial => 'mensaje' %>
+                    </span>
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td style="width: 25%">
+                    <label><%= I18n.t('Sistema.Body.Vistas.Form.solicitud') %></label> <label style="color: red">*</label>
+                  </td>
+                  <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+
+
+                    <%=radio_button 'arte_pesca','es_propia', 'true',
+                      :class=>'text', :onclick=> 'inputChange();'
+                    -%> &nbsp;
+
+                    <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+                    <%=radio_button 'arte_pesca','es_propia', 'false',
+                      :class=>'text', :onclick=> 'inputChange();'
+                    -%> &nbsp;
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+                  </td>
+                  <td>
+
+                    <%= text_field 'arte_pesca', 'cantidad',
+                      :class=>'text', :style=>'width: 120px',
+                      :maxlength=>'20', :onkeypress=>'inputChange();',
+                      :onchange=>'inputChange();' -%>
+
+                  </td>
+                </tr>
+
+                <!-- <tr>
+                                <td>
+                                        <label>Proveedor Marino</label> <label style="color: red">*</label>
+                                </td>
+                                <td>
+
+
+  <%#= select(
+  'arte_pesca','proveedor_marino_id',
+  @proveedor_marino.map{|i| [i.nombre, i.id]},
+  {:prompt=>'Seleccione un proveedor marino... '},
+  { :class=>'select'} ) %>
+    
+                                </td>
+                        </tr> -->
+                <tr>
+                  <td>
+                    <label<%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.luz_maya') %></label> <label style="color: red">*</label>
+                  </td>
+                  <td>
+
+
+                    <%= text_field 'arte_pesca', 'luz_maya',
+                      :class=>'text', :style=>'width: 100px',
+                      :maxlength=>'160', :onkeypress=>'inputChange();'  -%>
+
+                    (<%= I18n.t('Sistema.Body.Vistas.General.pulg') %>)</td>
+                </tr>
+
+
+                </table>
+
+              <% end%>
+            
+              <table>
+                <tr>
+                  
+                  <td colspan="2" class="lista0" style="text-align: right">
+                    <% if @es_algo!=1 %>                      
+                      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save',:style=>"visibility:hidden") -%>&nbsp;
+                    <% else %>                      
+                      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; }", :id=>'button_save') -%>&nbsp;
+                    <% end %>

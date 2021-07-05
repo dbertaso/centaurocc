@@ -1,0 +1,45 @@
+<table>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <%= select(
+        'solicitud','sector_id',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>'Seleccionar '},
+        { :class=>'select', :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :method => :get, :url=>{:controller=>'garantia_sector',
+          :action=>:sector_change }, :with => "'sector_id=' + this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label> 
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <span id="sub_sector-search">
+        <%= render :partial=>'sub_sector_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.GarantiaSector.Columnas.tipo_garantia')%></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= select(
+        'garantia_sector', 'tipo_garantia_id',
+        @tipo_garantia_list.map{|m| [m.nombre, m.id]},
+        { :prompt => "Seleccionar"},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

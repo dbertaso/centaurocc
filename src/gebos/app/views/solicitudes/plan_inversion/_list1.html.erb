@@ -1,0 +1,30 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 170px" <%= sort_class_helper('sector.codigo') %>>
+				<%= sort_link_helper 'Código', 'sector.codigo', 'list' %>
+ 			</th> 	
+ 			<th style="width: 170px" <%= sort_class_helper('sector.nombre') %>>
+				<%= sort_link_helper 'Nombre', 'sector.nombre', 'list' %>
+ 			</th> 			
+ 			<th style="width: 480px" <%= sort_class_helper('sector.descripcion') %>>
+				<%= sort_link_helper 'Descripción', 'sector.descripcion', 'list' %>
+ 			</th> 	
+ 			<th style="width: 80px" <%= sort_class_helper('sector.activo') %>>
+				<%= sort_link_helper 'Activo', 'sector.activo', 'list' %>
+ 			</th> 			 			
+ 			<th style="width: 100px">
+ 			  Acciones
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for sector in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :sector => sector, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

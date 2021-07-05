@@ -1,0 +1,244 @@
+<div class="marco-contenido">
+  <%= form_title_edit @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.nombre : @cliente.persona.nombre_corto %>
+
+  <div id="error">
+    <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>
+  </div>
+
+
+  <%= form_remote_tag(
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+    :url => { :action => :reestructurar_deuda, :controlador => 'reestructuracion_comite', :reestructuracion_id=>@reestructuracion_detalle[0].reestructuracion_id} ) do -%>
+
+
+
+    <table width="100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= Etiquetas.etiqueta(9) %></span>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Rif' : 'Cédula' %></label>
+        </td>
+        <td style="">
+          <% if @cliente.class.to_s=='ClienteEmpresa' %>
+            <%= @cliente.empresa.rif %>
+            <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=> I18n.t('Sistema.Body.Vistas.General.consultar')), 
+              { :controller=>'/clientes/cliente_empresa', :action=>'view', :id=>@cliente.empresa.id, :popup=>true },
+              :onclick=>"window.open(this.href,'cliente_empresa','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>
+          <% else %>
+            <%= @cliente.persona.cedula %>
+            <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=> I18n.t('Sistema.Body.Vistas.General.consultar')), 
+              { :controller=>'/clientes/cliente_persona', :action=>'view', :id=>@cliente.persona.id, :popup=>true },
+              :onclick=>"window.open(this.href,'cliente_persona','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Nombre' : 'Nombre, Apellido' %></label>
+        </td>
+        <td>
+          <%= @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.alias : @cliente.persona.nombre_corto %>
+        </td>
+      </tr>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.datos_financiamiento')%></span>
+        </td>
+      </tr>
+      <tr class="">
+        <td colspan="2" width='100%'>
+
+          <table class="lista" width="100%" border=1>
+            <thead>
+              <tr>
+                <th><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></th>
+                <th><%=I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento')%></th>
+                <th width="180"><%=I18n.t('Sistema.Body.Vistas.General.origen')%></th>
+                <th><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.ubicacion_clasificacion')%></th>
+                <th width="250"><%=I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones')%></th>
+              </tr>
+            </thead>
+            <tbody id="list-body">
+
+              <% color = 1 %>
+              <% 
+
+              @interes_diferido = 0.0.to_d
+              @interes_ordinarios = 0.0.to_d
+              @interes_moratorio = 0.0.to_d
+              @causado_no_devengado = 0.0.to_d
+
+              @deuda = 0.0.to_d
+              @saldo_insoluto = 0.0.to_d
+
+              @prestamos.each do |prestamo| %>
+                <% @ids << prestamo.solicitud_id.to_s << "," %>
+                <% color == 1 ? color = 0 : color = 1 %>
+
+                <tr class="lista<%= color %>"> 
+
+                  <td>
+                    <%= link_to prestamo.solicitud.numero,
+                      { :controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>prestamo.solicitud_id, :popup=>true },
+                      :onclick=>"window.open(this.href,'consulta_solicitud','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>
+                    <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+                      { :controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>prestamo.solicitud_id, :popup=>true },
+                      :onclick=>"window.open(this.href,'consulta_solicitud','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>
+                  </td>
+                  <td>
+                    <%= link_to prestamo.numero,
+                      { :controller=>'/prestamos/consulta_prestamo',  :controlador => 'consulta_prestamo', :action=>'view', :id=>prestamo.id, :popup=>true },
+                      :onclick=>"window.open(this.href,'consulta_prestamo','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>
+                    <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+                      { :controller=>'/prestamos/consulta_prestamo',  :controlador => 'consulta_prestamo', :action=>'view', :id=>prestamo.id, :popup=>true },
+                      :onclick=>"window.open(this.href,'consulta_prestamo','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>
+
+                  </td>
+                  <td align="left">
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.banco')%></strong>: <%= prestamo.banco_origen %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.programa')%></strong>: <%= prestamo.solicitud.programa.alias %>
+                  </td>
+                  <td align="left">
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.estado')%></strong>: <%= prestamo.solicitud.unidad_produccion.municipio.estado.nombre %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></strong>: <%= prestamo.solicitud.unidad_produccion.municipio.nombre %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%></strong>: <%= prestamo.solicitud.unidad_produccion.parroquia.nombre %><br><br>
+
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.sector')%></strong>: <%= prestamo.solicitud.sector.nombre %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></strong>: <%= prestamo.solicitud.sub_sector.nombre %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></strong>: <%= prestamo.solicitud.rubro.nombre %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></strong>: <%= prestamo.solicitud.sub_rubro.nombre %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></strong>: <%= prestamo.solicitud.actividad.nombre %>
+                  </td>
+                  <td>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.metodo_amortizacion')%></strong>:
+                    <%  @formula = Formula.find(prestamo.formula_id) if !prestamo.nil? %>
+                    <%= @formula.nombre if !@formula.nil?%><br>
+                    <strong><%=I18n.t('Sistema.Body.General.frecuencia_pago')%></strong>: <%= prestamo.frecuencia_pago_w if !prestamo.nil? %><br>
+                    <strong><%=I18n.t('Sistema.Body.General.plazo')%></strong>: <%= prestamo.plazo if !prestamo.nil? -%> <%=I18n.t('Sistema.Body.General.meses')%><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.General.tasa')%></strong>: <%= prestamo.tasa_vigente_fm if !prestamo.nil? -%> %<br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.intereses_diferidos')%></strong>: <%= prestamo.interes_diferido_no_pagado_fm %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.intereses')%></strong>: <%= prestamo.interes_vencido_fm %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.intereses_moratorios')%></strong>: <%= prestamo.monto_mora_fm %><br>
+                    <strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.intereses_causados')%></strong>: <%= prestamo.causado_no_devengado_fm %><br>
+                    <br>
+
+                    <font size="3px"><strong><font color="red"><%=I18n.t('Sistema.Body.General.saldo_deudor')%></font>:</strong> <%= prestamo.saldo_insoluto_fm %></font><br>
+                    <font size="3px"><strong><font color="red"><%=I18n.t('Sistema.Body.Modelos.Prestamo.Columnas.deuda')%></font>:</strong> <%= prestamo.deuda_fm %></font><br>
+                  </td>		
+
+                </tr>
+    <%# @interes_diferido = @interes_diferido + prestamo.interes_diferido_no_pagado %>
+                <% @interes_diferido = @interes_diferido + prestamo.interes_diferido_vencido + prestamo.interes_diferido_por_vencer %>
+                <% @interes_ordinarios = @interes_ordinarios + prestamo.interes_vencido %>
+                <% @interes_moratorio = @interes_moratorio + prestamo.monto_mora %>
+                <% @causado_no_devengado = @causado_no_devengado + prestamo.causado_no_devengado %>
+
+                <% @deuda = @deuda + prestamo.deuda %>
+                <% @saldo_insoluto = @saldo_insoluto + prestamo.saldo_insoluto %>
+              <% end %>
+              <% @total_intereses = @interes_ordinarios +  @interes_diferido + @causado_no_devengado %>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <tr><td colspan=2></td></tr>
+
+
+      <tr>
+        <td  class="separador" valign="bottom" colspan="2" style="width: 30%">
+          <div id ="pprueba"><span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.condiciones_actual_financiamientos')%></span></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td  style="width: 20%"><label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_diferidos')%></label></td>
+        <td style="width: 30%"><%= format_fm(@interes_diferido) %> <%= @moneda %> </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_ordinarios')%></label>
+        </td>
+        <td>
+          <%= format_fm(@interes_ordinarios) %> <%= @moneda %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_moratorios')%></label>
+        </td>
+        <td>
+          <%= format_fm(@interes_moratorio) %> <%= @moneda %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_causados')%></label>
+        </td>
+        <td>
+          <%= format_fm(@causado_no_devengado) %> <%= @moneda %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <font size="3px" color="red"><strong><%=I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.interes_general')%></strong></font>
+        </td>
+        <td>
+          <font size="3px"><strong><%= format_fm(@total_intereses) %> <%= @moneda %> </strong></font>
+        </td>
+      </tr>
+
+      <tr>
+        <td  style="width: 20%"><font size="3px" color="red"><strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_saldo_insoluto')%></strong></font></label></td>
+        <td style="width: 30%"><font size="3px"><strong><%= format_fm(@saldo_insoluto) %> <%= @moneda %></strong></font></td>
+
+      </tr>
+
+      <tr>
+        <td><font size="3px" color="red"><strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_deuda')%></strong></font></td>
+        <td><font size="3px"><strong><%= format_fm(@deuda) %> <%= @moneda %> </strong></font></td>
+      </tr>
+
+      <tr>
+        <td><label></label></td>
+        <td><%#= sprintf('%01.2f', view_prestamos_reestructurar.saldo_deudor).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="center">
+          <%= render :partial => 'view_datos_prestamo' %>
+        </td>
+      </tr>
+
+
+
+    </table>
+
+
+
+    <BR><BR><BR><BR>
+    <%= message %>	
+    <div id="div-botones">		
+      <%= render :partial => 'botones' %>
+    </div>
+    <br><br>
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+      { :action => :index },
+      { :id=>'button_close' } ) -%>
+
+  <% end -%>
+
+</div>
+

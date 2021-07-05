@@ -1,0 +1,186 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Avalúo Bandes</span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 20%">
+      <label>Nombre del Perito:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_prenda', 'nombre_perito',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha Avalúo:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'fecha_avaluo_prenda_f',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      <%= calendar 'solicitud_avaluo_prenda_fecha_avaluo_prenda_f', 'calendar_avaluo_mobiliario_fecha' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Número Sudeban:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_prenda', 'numero_sudeban_prenda',
+          :class=>'text', :style=>'width: 100px',
+          :maxlength=>'20', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Valor Avalúo:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'valor_avaluo_prenda_f',
+          :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+          :onkeypress=>'montosolicitud(); inputChange();',
+          :onchange=>'inputChange();',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_prenda_valor_avaluo_prenda'); "  -%>
+      <%= display_number @solicitud_avaluo_prenda.valor_avaluo_prenda, 'solicitud_avaluo_prenda_valor_avaluo_prenda' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Semovientes</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <div id="semovientes">
+        <%= render :partial=> 'prenda_semoviente' %>
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Documento de Oferta</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Tipo de Documento de Oferta:</label>
+    </td>
+    <td>
+      <%= radio_button 'solicitud_avaluo_prenda', 'tipo_documento', 'P',
+          :class=>'text', :onclick=>'inputChange();'  -%>Presupuesto<br/>
+      <%= radio_button 'solicitud_avaluo_prenda', 'tipo_documento', 'C',
+          :class=>'text', :onclick=>'inputChange();'  -%>Cotización<br/>
+      <%= radio_button 'solicitud_avaluo_prenda', 'tipo_documento', 'F',
+          :class=>'text', :onclick=>'inputChange();'  -%>Factura ProForma<br/>
+      <%= radio_button 'solicitud_avaluo_prenda', 'tipo_documento', 'N',
+          :class=>'text', :onclick=>'inputChange();'  -%>No Aplica
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Referencia:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'referencia_documento',
+          :class=>'text',
+          :style=>'width: 200px',
+          :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha Documento:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'fecha_documento_f',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      <%= calendar 'solicitud_avaluo_prenda_fecha_documento_f', 'calendar_documento_fecha' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Empresa Documento:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'empresa_documento',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Rif Empresa:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'rif_empresa_documento',
+          :class=>'text',
+          :style=>'width: 200px',
+          :maxlength=>'12', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Documento Definitivo</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Referencia:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'referencia_definitivo',
+          :class=>'text',
+          :style=>'width: 200px',
+          :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Fecha Factura:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'fecha_factura_f',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      <%= calendar 'solicitud_avaluo_prenda_fecha_factura_f', 'calendar_factura_fecha' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Empresa Factura:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'empresa_factura',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Rif Empresa:</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_prenda', 'rif_empresa_difinitivo',
+          :class=>'text',
+          :style=>'width: 200px',
+          :maxlength=>'12', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  
+</table>

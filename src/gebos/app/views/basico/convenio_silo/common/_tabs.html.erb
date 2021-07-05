@@ -1,0 +1,34 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='convenio_silo'
+    %>
+      <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.convenio')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.convenio'), :controller => 'convenio_silo', :action => 'edit', :id => @convenio_silo.id, :silo_id => @silo.id, :popup=>params[:popup])  if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.convenio'), :controller => 'convenio_silo', :action => 'view', :id => @convenio_silo.id, :silo_id => @silo.id, :popup=>params[:popup])  if (action_name == 'view') %>
+        </div></li>
+    <%
+    end
+    if @convenio_silo.id
+      if controller_name=='detalle_convenio_silo'
+      %>
+        <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.precio_convenio')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.precio_convenio'), :controller => 'detalle_convenio_silo', :action => 'index', :convenio_silo_id => @convenio_silo.id, :silo_id => @silo.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.precio_convenio'), :controller => 'detalle_convenio_silo', :action => 'view', :convenio_silo_id => @convenio_silo.id, :silo_id => @silo.id, :popup=>params[:popup])  if (action_name == 'view') %>
+          </div></li>
+      <%
+      end
+    end
+  %>
+  </ul>
+</div>

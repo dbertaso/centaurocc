@@ -1,0 +1,332 @@
+<script language="javascript">
+  varEnviado = false;
+</script>
+
+      <%= error %>
+      <%= message %>
+
+<table style="width: 100%">
+  <tr>
+    <td valign="top" colspan=2 >
+      <label><%=I18n.t('Sistema.Body.Vistas.PresupuestoPidan.Header.form_title_seleccionar')%></label>
+      <input class="text" id="tipo_registro_carga" name="tipo_registro" onclick='inputChange();presupuesto("div_carga","div_transferencia")' onchange="document.getElementById('error').style.display = 'none';" value="carga" type="radio"/><%=I18n.t('Sistema.Body.General.carga')%> &nbsp;
+      <input class="text" id="tipo_registro_transferencia" name="tipo_registro" onclick='inputChange();presupuesto("div_transferencia","div_carga")' onchange="document.getElementById('error').style.display = 'none';" value="transferencia" type="radio"/><%=I18n.t('Sistema.Body.Vistas.General.transferencia')%><br/>
+    </td>
+  </tr>
+</table>
+<div id="div_carga" style="display:block">
+  <table style="width: 100%">
+    <tr>
+      <td class="separador" colspan="2" valign="bottom">
+        <span><%=I18n.t('Sistema.Body.General.cargar')%> <%=I18n.t('Sistema.Body.Controladores.PresupuestoPidan.FormTitles.form_title_record')%></span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <table  id="tr_carga" style="display:block" border=0>
+
+           <tr>
+            <td width="160px">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.programa')%> </label><label><font color=red>*</font></label>
+            </td>
+            <td>
+              <%= select(
+                'presupuesto_carga', 'programa_id',
+                @programa_list.map{|i| [i.nombre, i.id]},
+                { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                { :class=>'select',:style=>'width:250px',:onchange=>"#{remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,
+                    :url=>{:controller=>'presupuesto_pidan',
+                    :action=>:programa_change },
+                    :with=>"'valor=1&id='+value" )},inputChange();" } ) %>
+            </td>
+          </tr>
+          
+          <tr>
+            <td width="160px">
+              <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %> </label>
+            </td>
+            <td>
+              <div id="programa-select"></div>
+            </td>
+          </tr>
+
+          <tr>
+            <td width="160px">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%> </label><label><font color=red>*</font></label>
+            </td>
+            <td>
+              <%= select(
+                'presupuesto_carga', 'estado_id',
+                @estado_list.map{|i| [i.nombre, i.id]},
+                { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                { :class=>'select',:style=>'width:250px',:onchange=>'inputChange();seleccionar_estado(this,"carga")' } ) %>
+            </td>
+          </tr>
+          <tr>
+            <td width="80px">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%> </label><label><font color=red>&nbsp;</font></label>
+            </td>
+            <td style="width: 70%">
+              <% sector_onchange = remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,
+                    :url=>{:controller=>'presupuesto_pidan',
+                    :action=>:sector_change },
+                    :with=>"'sector_id='+value+'&estado_id='+presupuesto_carga_estado_id.value" ) %>
+              
+              <%= select(
+                'sector_id', '',
+                @sector_list.map{|i| [i.nombre, i.id]},
+                {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                { :class=>'select', :style=>'width:250px', :onchange=>sector_onchange + ';inputChange();' } ) %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%> </label><label><font color=red>*</font></label>
+            </td>
+            <td>
+              <div id="rubro-select">            
+              <%= render :partial => 'rubro_select' %>
+              </div>
+            </td>
+          </tr>
+
+
+          <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%> </label><label><font color=red>*</font></label>
+            </td>
+            <td>
+              <div id="sub-rubro-select">                
+              <%= render :partial => 'sub_rubro_select' %>
+              </div>
+            </td>
+          </tr>
+
+
+
+
+          <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Controladores.PresupuestoPidan.FormTitles.form_title_records') %> </label><label><font color=red>*</font></label>
+            </td>
+            <td>
+              <%= text_field 'presupuesto_carga', 'monto_presupuesto',
+                :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+                :onkeypress=>'inputChange()',
+                :onchange=>"inputChange();",
+                :onkeyup=>"formatCurrency(this.value, 'monto_presupuesto');"  -%>
+              <%= display_number 0, 'monto_presupuesto' %>
+              <span id="monto_presupuesto_moneda"></span>
+                       <label><%=I18n.t('Sistema.Body.General.nota')%>: </label><%=I18n.t('Sistema.Body.Modelos.General.numero_con_dos_decimales')%>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div id="div_transferencia" style="display:block" >
+  <table  style="width: 100%">
+
+    <tr>
+      <td class="separador" colspan="2" valign="bottom">
+        <span><%=I18n.t('Sistema.Body.Vistas.General.transferencia')%> <%=I18n.t('Sistema.Body.Controladores.PresupuestoPidan.FormTitles.form_title_record')%></span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="bottom">
+        <label><%=I18n.t('Sistema.Body.Vistas.PresupuestoPidan.Header.seleccionar_origen_fondos')%></label>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="160px" align="right">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.programa')%> </label><label><font color=red>*</font></label>
+      </td>
+      <td>
+        <%= select(
+          'presupuesto_transferencia', 'programa_id_origen',
+          @programa_list.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:style=>'width:250px',:onchange=>"#{remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method=>:get,
+                    :url=>{:controller=>'presupuesto_pidan',
+                    :action=>:programa_change },
+                    :with=>"'valor=2&id='+value" )},inputChange();" } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="160px"  align="right">
+        <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>&nbsp;&nbsp;&nbsp; </label>
+      </td>
+      <td>
+        <div id="programa1-select"></div>
+      </td>
+    </tr>
+
+    <tr>
+      <td  align="right">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%> </label><label><font color=red>*</font></label>
+      </td>
+      <td>
+        <%= select(
+          'presupuesto_transferencia', 'estado_id_origen',
+          @estado_list.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:style=>'width:250px',:onchange=>'inputChange();seleccionar_estado(this,"origen")' } ) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 120px" align="right">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%> </label><label><font color=red>&nbsp;</font></label>
+      </td>
+      <td>
+        <% sector_tra_orig_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'presupuesto_pidan',
+            :action=>:sector_tra_orig_change },
+            :with=>"'sector_id='+value+'&estado_id='+presupuesto_transferencia_estado_id_origen.value" ) %>
+        
+        <%= select(
+          'sector_id_origen', '',
+          @sector_list.map{|i| [i.nombre, i.id]},
+          {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          {:class=>'select', :style=>'width:250px',:onchange=>sector_tra_orig_onchange + ';inputChange();' } ) %>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%> </label><label><font color=red>*</font></label>
+      </td>
+      <td>
+        <div id="rubro-select-tra-orig">          
+        <%= render :partial => 'rubro_origen_select' %>
+        </div>
+      </td>
+    </tr>
+
+
+          <tr>
+            <td align="right">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%> </label><label><font color=red>*</font></label>
+            </td>
+            <td>
+              <div id="sub-rubro-select-tra-orig">                
+              <%= render :partial => 'sub_rubro_select_tra_orig' %>
+              </div>
+            </td>
+          </tr>
+
+
+
+    <tr>
+      <td colspan="2" valign="bottom">&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="bottom">
+        <label><%=I18n.t('Sistema.Body.Vistas.PresupuestoPidan.Header.seleccionar_destino_fondos')%></label>
+      </td>
+    </tr>
+    <tr>
+      <td  align="right">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%> </label><label><font color=red>*</font></label>
+      </td>
+      <td>
+        <%= select(
+          'presupuesto_transferencia', 'estado_id_destino',
+          @estado_list.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:style=>'width:250px',:onchange=>'inputChange();seleccionar_estado(this,"destino")' } ) %>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%> </label><label><font color=red>&nbsp;</font></label>
+      </td>
+      <td>
+        <% sector_tra_dest_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'presupuesto_pidan',
+            :action=>:sector_tra_dest_change },
+            :with=>"'sector_id='+value+'&estado_id='+presupuesto_transferencia_estado_id_destino.value" ) %>
+       
+        <%= select(
+          'sector_id_destino', '',
+          @sector_list.map{|i| [i.nombre, i.id]},
+          {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',  :style=>'width:250px',:onchange=>sector_tra_dest_onchange + ';inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="right">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%> </label><label><font color=red>*</font></label>
+      </td>
+      <td>
+        <div id="rubro-select-tra-dest">          
+        <%= render :partial => 'rubro_destino_select' %>
+        </div>
+      </td>
+    </tr>
+
+
+          <tr>
+            <td align="right">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%> </label><label><font color=red>*</font></label>
+            </td>
+            <td>
+              <div id="sub-rubro-select-tra-dest">                
+              <%= render :partial => 'sub_rubro_select_tra_dest' %>
+              </div>
+            </td>
+          </tr>
+
+
+
+    <tr>
+      <td colspan="2" valign="bottom">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.a') << " " <<  I18n.t('Sistema.Body.Vistas.General.transferir')%> </label><label><font color=red>*</font></label>
+      </td>
+      <td >
+        <%= text_field 'presupuesto_transferencia', 'monto_transferencia',
+          :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+          :onkeypress=>'inputChange()',
+          :onchange=>"inputChange();",
+          :onkeyup=>"formatCurrency(this.value, 'monto_transferencia');"  -%>
+        <%= display_number 0, 'monto_transferencia' %>
+        <span id="monto_transferencia_moneda"></span>
+                 <label><%=I18n.t('Sistema.Body.General.nota')%>: </label><%=I18n.t('Sistema.Body.Modelos.General.numero_con_dos_decimales')%>
+      </td>
+    </tr>
+	<tr>
+	    <td align="right" valign="top">
+	        <label><%=I18n.t('Sistema.Body.Vistas.General.justificacion')%> </label><label><font color=red>*</font></label>
+	    </td>
+	    <td >
+	      <%= text_area 'presupuesto_transferencia', 'observaciones_justificacion', :style=>'width: 500px; height: 60px',:class=>'select',
+	        :onkeypress=>'inputChange();' -%>
+	    </td>
+	  </tr>
+  </table>
+</div>
+<br/>
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"", :id=>'button_save',:style=>"visibility:hidden")-%>

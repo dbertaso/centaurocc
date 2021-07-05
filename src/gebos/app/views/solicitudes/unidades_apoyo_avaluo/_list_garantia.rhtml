@@ -1,0 +1,55 @@
+<table class="lista" style="width: 100%">
+  <tr>
+    <th style="width: 30%">
+      <label>Garantía</label>
+    </th>
+    <!--<th style="width: 8%">
+      <label>Área</label>
+    </th>-->
+    <th style="width: 20%">
+      <label>Ubicación</label>
+    </th>
+    <!--<th style="width: 35%">
+      <label>Linderos</label>
+    </th>-->
+    <th style="width: 17%">Acciones</th>
+  </tr>
+  <% formato = 'lista0'
+      @solicitud_tipo_garantia.each { |s| %>
+  <tr id="tipo_<%= s.id %>" class="<%= formato %>">
+    <td align="center">
+      <%= s.TipoGarantia.nombre %>
+    </td>
+    <% unless s.SolicitudAvaluo[0].nil? %>
+         <td>
+            <%= s.SolicitudAvaluo[0].estado_w %>
+          </td>        
+   <% else %>
+       <td></td>
+   <% end %>
+    <td align="center">
+      <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Editar'),
+          {:action => :edit_informe,
+          :id => s.id, :solicitud_id => s.solicitud_id} %>
+
+      <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>'Eliminar'),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :confirm => "¿Está usted seguro que desea eliminar este registro?\n Recuerde que si elimina el registro se perdera la información de la garantia asociada.",
+          :url => {:action => :delete, :id => s.id }) -%>
+
+      <% if SolicitudTipoGarantia.validar_garantia(s.id) %>
+        <%= link_to image_tag('imprimir.gif'),
+                  { :action=>'imprimir', :id=>s.id, :popup=>true },
+                  :popup => ['unidad_apoyo_avaluo', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+      <% end %>
+    </td>
+  </tr>
+  <%  if formato == 'lista0'
+        formato = 'lista1'
+      else
+        formato = 'lista0'
+      end
+    } %>
+</table>
+<br></br>

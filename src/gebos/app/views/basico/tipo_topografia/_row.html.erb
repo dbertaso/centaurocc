@@ -1,0 +1,4 @@
+<% tipo_topografia = @tipo_topografia if tipo_topografia.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= tipo_topografia.id %>">
+	<%= render :partial => 'data', :locals => { :tipo_topografia => tipo_topografia, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,19 @@
+<% @view = true %>
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.UsuarioRol.Etiquetas.consultando_usuario') %>  <span class="titulo_modificar">'<%= @usuario.nombre_usuario %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'sistema/usuario/common/tabs' %>
+
+<div class="marco-contenido2">
+
+  <div id="list">
+    <%= render :partial=>"list_view"  %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :controller => 'usuario', :action => :index },
+    { :id=>'button_close' } ) -%>
+
+
+</div>

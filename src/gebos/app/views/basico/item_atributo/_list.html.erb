@@ -1,0 +1,29 @@
+
+  <table class="lista" style="width: 100%">
+    <thead>
+    <tr>
+      <th style="width: 180px">
+        <%=I18n.t('Sistema.Body.Vistas.General.titulo')%>
+      </th>
+      <th style="width: 400px">
+        <%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%>
+      </th>
+      <th style="width: 50px">
+        <%=I18n.t('Sistema.Body.Vistas.General.activo')%>
+      </th>
+      <th style="width: 80px">
+       <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+    </thead>
+    <tbody id="list_body">
+<%  
+  even_odd = 1
+  for item_atributo in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :item_atributo => item_atributo, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

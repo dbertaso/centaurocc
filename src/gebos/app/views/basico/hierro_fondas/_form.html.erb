@@ -1,0 +1,115 @@
+
+  <table>
+    <tr>
+      <td style="width: 150px">
+        <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.registro')}"%></label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+      </td>
+      <td>
+        <%= text_field 'hierro_fondas', 'nombre_registro',
+            :class=>'text', :style=>'width: 300px;',
+            :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+            :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.estado') %></label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+      </td>
+
+      <td style="width: 620px">
+
+        <%= select(
+        'hierro_fondas', 'estado_id',
+        @estado_select.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method => :get, :url=>{:controller=>'hierro_fondas',
+          :action=>:estado_change }, :with => "'id=' + this.value")};inputChange();" } )%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.ciudad') %></label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+      </td>
+      <td>
+        <span id="ciudad-select">
+          <%= render :partial => 'ciudad_select' %>
+        </span>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.municipio') %></label>
+          <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+      </td>
+      <td>
+        <span id="municipio-select">
+          <%= render :partial => 'municipio_select' %>
+        </span>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')}"%></label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+      </td>
+      <td>
+        <%= calendar_date_select 'hierro_fondas', 'fecha_registro_f', :year_range => 110.years.ago..-1.years.ago,
+        :class=>'text',:style=>'width:80px',:maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();' %> (dd/mm/aaaa)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.registro')}"%></label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+      </td>
+    <td>
+      <%= text_field 'hierro_fondas', 'numero', :class=>'text', :style=>'width: 100px', :maxlength=>'20',
+                    :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tomo') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_field 'hierro_fondas', 'tomo', :class=>'text', :style=>'width: 100px', :maxlength=>'20',
+                      :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.protocolo') %></label>
+    </td>
+    <td>
+      <%= text_field 'hierro_fondas', 'protocolo',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'20',
+        :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'hierro_fondas', 'activo',
+          :checked_value=>"1",
+          :unchecked_value=>"0", :onclick=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+<tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado == true || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

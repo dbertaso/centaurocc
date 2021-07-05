@@ -1,0 +1,20 @@
+
+  <table>
+    <tr>
+      <td style="width: 180px">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.persona_atendio') %>
+        </label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+        </label>
+      </td>
+      <td>
+        <%= select(
+        'telecobranzas', 'persona_atendio_id',
+        @persona_atendio.map{|c| [c.descripcion, c.id]},
+        { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange(); limpiar_campos_motivos_atraso(); mostrar_opcion_compromiso(); ' } ) %>
+        </td>
+    </tr>
+
+  </table>

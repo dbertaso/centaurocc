@@ -1,0 +1,11 @@
+<% region_onchange = remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>'solicitud',
+          :action=>:region_change },
+          :with=>"'region_id='+value") %>
+      <%= select(
+          'solicitud', 'region_id',
+          @region_select.map{|e| [e.nombre, e.id]},
+          { },
+          { :class=>'select', :onchange=>region_onchange + ';inputChange();' } ) %>

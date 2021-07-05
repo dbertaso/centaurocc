@@ -1,0 +1,41 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	logger.debug "Action name" << action_name.to_s
+	logger.debug "Controller name" << controller_name.to_s
+	
+	if controller_name=='casa_proveedora'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title')%></a></div></li>
+<% 
+	else 
+%>
+		<li><div>		
+		<%= link_to(I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title'), :controller => 'casa_proveedora', :action => 'edit',  :id => params[:casa_proveedora_id]) if action_name=='index'  %>
+		<%= link_to(I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title'), :controller => 'casa_proveedora', :action => 'index', :method=>:get, :id => params[:id]) if action_name=='view'  %>
+		</div></li>
+<% 
+	end
+%>	
+
+
+<%	
+	#if params[:id]
+		if controller_name=='sucursal_casa_proveedora'
+%>
+			<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.sucursal')%></a></div></li>
+<% 
+		else
+%>
+			<li><div>		
+		<%= link_to(I18n.t('Sistema.Body.Vistas.General.sucursal'), :controller => 'sucursal_casa_proveedora', :action => 'index', :method=>:get, :casa_proveedora_id => params[:id]) if action_name=='edit'  %>
+		<%= link_to(I18n.t('Sistema.Body.Vistas.General.sucursal'), :controller => 'sucursal_casa_proveedora', :action => 'index', :method=>:get, :casa_proveedora_id => params[:id]) if action_name=='view' %>
+			</div></li>
+<% 
+		end 
+	#end
+%>
+	</ul>
+</div>

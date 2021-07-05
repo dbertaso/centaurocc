@@ -1,0 +1,50 @@
+<td colspan=7 align="center">
+  <br>
+  <table class="" width="95%" border=1>
+    <thead>
+      <tr>
+        <th><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></th>
+        <th><%=I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento')%></th>
+        <th width="100px"><%=I18n.t('Sistema.Body.General.saldo_deudor')%></th>
+        <th width="100px"><%=I18n.t('Sistema.Body.Modelos.Prestamo.Columnas.deuda')%></th>
+
+        <th><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.banco_origen')%></th>
+        <th><%=I18n.t('Sistema.Body.Vistas.General.sector')%></th>
+        <th><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></th>
+        <th><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></th>
+        <th><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></th>
+        <th><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="list-body2">
+
+      <%  @prestamos = [] %>
+      <%  @reestructuracion = Reestructuracion.find(:first, :conditions => "cliente_id = #{view_prestamos_reestructurar.cliente_id.to_s}") %>
+      <%  @reestructuracion.reestructuracion_detalle.each do |detalle| %>
+        <%  @prestamos << Prestamo.find_by_solicitud_id(detalle.solicitud_origen_id) %>
+      <%  end %>
+
+      <%  @prestamos.each do |prestamo| %>
+        <tr> 
+          <td><%= prestamo.solicitud.numero %></td>
+          <td><%= prestamo.numero %></td>
+          <td align="right"><%= prestamo.saldo_insoluto_fm %></td>
+          <td align="right"><%= prestamo.deuda_fm %></td>
+          <td><%= prestamo.banco_origen %></td>
+          <td><%= prestamo.solicitud.sector.nombre %></td>
+          <td><%= prestamo.solicitud.sub_sector.nombre %></td>
+          <td><%= prestamo.solicitud.rubro.nombre %></td>
+          <td><%= prestamo.solicitud.sub_rubro.nombre %></td>
+          <td><%= prestamo.solicitud.actividad.nombre %></td>
+          <td align="right">
+            <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),  :title=>I18n.t('Sistema.Body.Vistas.General.consultar')),
+              { :controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>prestamo.solicitud.id, :popup=>true },
+              :onclick=>"window.open(this.href,'consulta_solicitud','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>            
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br><br>
+</td>

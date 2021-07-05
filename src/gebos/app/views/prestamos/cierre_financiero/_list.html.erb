@@ -1,0 +1,61 @@
+<% list = @list if list.nil? %>
+
+<%= error %>
+<table class="lista" style="width: 80%" align="center">
+	<thead>
+	<tr>
+		<th style="width: 70px">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.mes_ano') -%>
+		</th>
+
+		<th style="width: 80px" align="center">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.saldo') -%>
+		</th>
+		<th style="width: 80px" align="center">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.desembolso') -%>
+		</th>
+
+		<th style="width: 80px" align="center">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.cobranza') -%>
+		</th>
+		<th style="width: 80px" align="center">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.diferencia') -%>
+		</th>
+		<th style="width: 70px">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.cartera') -%>
+		</th>
+    <th style="width: 70px">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.desembolsos') -%>
+		</th>
+    <th style="width: 70px">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.cobranza') -%>
+		</th>
+    <th style="width: 70px">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.sector_estatus') -%>
+		</th>
+   	<th style="width: 70px">
+			<%= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.region_estatus') -%>
+		</th>
+		<!--
+    <th style="width: 70px">
+			<%#= I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.cartera_analista') -%>
+		</th>
+    <th style="width: 70px">
+			<%# I18n.t('Sistema.Body.Vistas.CierreFinancieroInstitucion.Etiquetas.cartera_cliente') -%>
+		</th>
+		-->
+	</tr>
+	</thead>
+	<tbody id="list_body">
+<%  
+	even_odd = 1
+	for list in @list
+		
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :list => list,  :even_odd => even_odd} -%>
+<% end %>
+
+	
+	
+</table>
+

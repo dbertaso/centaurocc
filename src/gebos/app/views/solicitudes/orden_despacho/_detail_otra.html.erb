@@ -1,0 +1,58 @@
+<tr id="row_<%=params[:orden_id] %>_view">
+	<td colspan="12" style="padding-bottom: 10px">
+<table style="width: 100%">
+<tr>
+<td ><label>
+<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho')%></label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).numero%>
+</td>
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).solicitud.numero%>
+</td>
+<td ><label>
+<%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}"%></label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).prestamo.numero%>
+</td>
+</tr>
+<tr><td  ><label>
+<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.fecha_creacion_orden')%></label>
+</td>
+<td  align="left">
+<%=OrdenDespacho.find(params[:orden_id]).fecha_orden_despacho_f%> 
+</td>
+<td  ><label>
+<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.fecha_cierre_orden')%></label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).fecha_cierre_f%>
+</td>
+<td ><label>
+<%=I18n.t('Sistema.Body.Vistas.General.observacion')%> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%= I18n.t('Sistema.Body.Vistas.Form.cerrado') %></label>
+</td>
+<td align="left">
+<%=OrdenDespacho.find(params[:orden_id]).observacion_cerrado%>
+</td>
+</tr>
+</table>
+<br>
+
+		<%= render :partial=>"list_accion_otra" %>
+<br>
+	</td>
+
+	<td valign="top" style="text-align: center">
+		<%= link_to_remote(
+			image_tag(I18n.t('Sistema.Body.Imagenes.img_colapsar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cerrar_tabla_desplegable')),
+		  :loading =>'image_load()',
+	 	  :loaded => 'image_unload()',
+          :method=>:get,
+			:url => {:action => :collapse, :orden_id => params[:orden_id]}) -%>
+	</td>
+</tr>

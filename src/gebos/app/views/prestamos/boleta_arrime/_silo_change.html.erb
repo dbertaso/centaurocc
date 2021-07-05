@@ -1,0 +1,5 @@
+<%=  @view_acta_silo_list.nro_acta unless @view_acta_silo_list.nil? || @view_acta_silo_list.to_s.empty?%>
+<% unless @view_acta_silo_list.nil? %>
+      <%=  hidden_field 'boleta_arrime', 'numero_acta', :value=>"#{@view_acta_silo_list.nro_acta}" %>
+<%end%>
+

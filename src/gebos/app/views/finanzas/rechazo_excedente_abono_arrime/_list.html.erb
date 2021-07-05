@@ -1,0 +1,65 @@
+<center>	
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>	
+<div id="el_mensaje"></div>
+
+</center>
+<br/>
+
+<%= form_tag %>
+<table class="lista" style="width: 100%">
+<thead>
+  <tr>
+    <th style="width: 60px" <%= sort_class_helper('fecha') %>>
+            <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.fecha'), 'fecha', 'list' %>
+    </th>
+
+    <th style="width: 60px" <%= sort_class_helper('solicitud_numero') %>>
+            <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}", 'solicitud_numero', 'list' %>
+    </th>
+
+    <th style="width: 60px" <%= sort_class_helper('prestamo_numero') %>>
+            <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}", 'prestamo_numero', 'list' %>
+    </th>
+
+    <th style="width: 80px" <%= sort_class_helper('identificacion') %>>
+            <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.cedula')} / #{I18n.t('Sistema.Body.Vistas.General.rif')}", 'identificacion', 'list' %>
+    </th>
+
+    <th style="width: 300px" <%= sort_class_helper('nombre') %>>
+            <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'nombre', 'list' %>
+    </th>
+
+    <th style="width: 200px" <%= sort_class_helper('archivo') %>>
+            <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.archivo'), 'archivo', 'list' %>
+    </th>
+
+    <th align="center" style="width: 100px" <%= sort_class_helper('monto_pago') %>>
+            <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.pago')}", 'monto_pago', 'list' %>
+    </th>
+
+    <th style="width: 250px" <%= sort_class_helper('descripcion_error') %>>
+            <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.error'), 'descripcion_error', 'list' %>
+    </th>
+
+    <th style="width: 250px" <%= sort_class_helper('nombre_entidad') %>>
+            <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.banco')} #{I18n.t('Sistema.Body.Vistas.General.liquidador')}", 'nombre_entidad', 'list' %>
+    </th>
+
+    <th style="width: 10px">
+
+    </th>
+  </tr>
+</thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for rechazo in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :rechazo => rechazo, :even_odd => even_odd } -%>
+<% end %>
+
+</tbody>
+
+</table>
+<br/>
+<%= form_pagination %>

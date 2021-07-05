@@ -1,0 +1,38 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+          Revisión de la solicitud número <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+  </div></div></div>
+
+  <%= render :partial=>'solicitudes/unidades_apoyo_avaluo/common/tabs' %>
+  
+  <div class="marco-contenido2">
+
+    <table style="width: 100%">
+      <tr>
+        <td>
+          <% obra_onchange = remote_function(
+              :loading =>'Element.show("loading")',
+              :loaded => 'Element.hide("loading")',
+              :url=>{:controller=>"unidades_apoyo_avaluo",
+              :action=>:generar },
+              :with=>"'id=#{@solicitud.id}&avaluo_obra_civil='+checked") %>
+          <%= check_box 'solicitud', 'avaluo_obra_civil',
+              :checked_value=>"true",
+              :unchecked_value=>"false",:onclick=>obra_onchange -%> <label>Obras Civiles</label>
+        </td>
+      </tr>
+    </table>
+
+    <%= error %>
+    
+    <div id="formulario">
+      <%= render :partial => 'form' %>
+    </div>
+    <div id="list">
+      <%= render :partial => 'lista' %>
+    </div>
+    
+  </div>
+
+</div>

@@ -1,0 +1,87 @@
+<%= form_title_search %>
+<div class="marco-contenido2">
+	<br>
+	<%= form_for(:upload, :url => { :action => "confirmar", :accion=>0}, 
+												:html => {:id=>'primer_form', :multipart => true} ) do %>
+	<table>
+    <tr>
+      <td style="width: 40%">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.entidad_financiera') %>      
+        </label>
+      </td>
+      <td>
+        <% entidad_financiera_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,    
+          :url=>{:controller=>'control_cobranza',
+            :action=>:entidad_financiera_change },
+          :with=>"'id='+value") %>
+
+
+        <%= select(
+          'entidad_financiera','entidad_financiera_id',
+          @entidad_financiera_list.map{|i| [i.nombre, i.id]},
+          { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select',:onchange=>entidad_financiera_onchange + ';inputChange();',:style=>'width:240px'} ) %>
+
+    </tr>
+    <tr>
+      <td>
+        <label><%="#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.General.fondas')}"%></label>
+      </td>
+      <td>
+
+        <div id="cuenta_bcv-select">
+          <%= render :partial => 'cuenta_bcv_select' %>
+        </div>
+      </td>
+    </tr>
+
+		<tr>
+			<td>
+				<label><%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.fecha_valor') %> </label>
+				<label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+			</td>
+			<td>
+        <%= calendar_date_select_tag 'fecha', nil, 
+            :year_range => 5.years.ago..-1.years.ago,
+            :class=>'text',
+            :style=>'width:80px',
+            :maxlength=>'10', 
+            :autocomplete=>'off',
+            :onkeypress=>'inputChange();', 
+            :onchange=>'inputChange()' %> <%= I18n.t('Sistema.Body.General.formato_fecha') %>
+  		</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="upload_file">
+					<%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.seleccione_archivo') %>
+				</label>
+				<label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+			</td>
+			<td>
+				<%= file_field 'upload', 'datafile', :onchange=>'document.getElementById("upload_file").style.display = "";'  %>
+			</td>
+		</tr>
+	</table>
+	<br><br>
+	<%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.aplicar'))) -%></p>
+  <br><br><br><br>
+  <div id="list">
+			<%= render "list" %>
+  </div>
+  <% end %>
+
+  <%= error %>
+  <%= message %>
+
+<center>
+
+	<div>
+	<%= @feedback %>
+	</div>
+</center>
+</div>

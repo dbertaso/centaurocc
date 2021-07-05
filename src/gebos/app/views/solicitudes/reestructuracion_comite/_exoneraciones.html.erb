@@ -1,0 +1,73 @@
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_diferidos')%>  </label></td>
+    <td style="width:80px"><input id="intereses_diferidos_check" type="checkbox" value="true" name="intereses_diferidos_check"  onclick="centro_actualizacion_jvs(this,<%= @interes_diferido %>);"/> 
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.exonerar')%> </td>
+    <td align=left>
+      <div style="width:50%; text-align:right">
+        <%= format_fm(@interes_diferido) %> <%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_ordinarios')%> </label>
+    </td>
+    <td><input id="intereses_ordinarios_check" type="checkbox" value="true" name="intereses_ordinarios_check"  onclick="centro_actualizacion_jvs(this,<%= @interes_ordinarios %>);"/> 
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.exonerar')%></td>
+    <td align=left>
+      <div style="width:50%; text-align:right">
+        <%= format_fm(@interes_ordinarios) %> <%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_causados')%> </label>
+    </td>
+    <td><input id="intereses_causado_check" type="checkbox" value="true" name="intereses_causados_check"  onclick="centro_actualizacion_jvs(this,<%= @causado_no_devengado %>);"/>
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.exonerar')%></td>
+    <td align=left>
+      <div style="width:50%; text-align:right">
+        <%= format_fm(@causado_no_devengado) %> <%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.interes_general')%></label>
+    </td>
+    <td></td>
+    <td  align=left>
+      <div style="width:50%; text-align:right">
+        <%= format_fm(@total_intereses) %> <%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td  align=left colspan=3>
+      <font color=green size="3px">
+      <div style="width:700px; text-align:right">
+        <input style="display:none" readonly type="text" style="width: 100px;" size="14"  name="monto_deuda" id="monto_deuda" class="text" value="<%= @deuda %>"/>
+        <strong>
+          <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_deuda')%> &nbsp;->&nbsp;
+          <span id="monto_deuda_display"><%= format_fm(@deuda) %></span>&nbsp;<%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+      </font>
+    </td>
+  </tr>
+
+        <tr>
+        <td align="right">
+          <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.tipo_cuenta')%>
+        </td>
+        <td style="width: 80%">
+
+          <%= radio_button 'reestructuracion', 'tipo', 'C',
+            :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.corriente')%><br />
+          <%= radio_button 'reestructuracion', 'tipo', 'A',
+            :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.ahorros')%><br/>
+
+        </td>
+      </tr>

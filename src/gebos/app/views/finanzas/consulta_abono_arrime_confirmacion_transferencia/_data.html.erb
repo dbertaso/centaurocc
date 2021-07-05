@@ -1,0 +1,65 @@
+<td>
+  <%= view_excedente_arrime.nro_tramite %>
+</td>
+<td>
+  <%= view_excedente_arrime.nro_prestamo %>
+</td>
+
+<td width="110">
+  <%= view_excedente_arrime.beneficiario %>
+</td>
+<td width="70">
+  <%= view_excedente_arrime.cedula_rif %>
+</td>
+<td width="230" valign="top">
+  <% if view_excedente_arrime.numero_cuenta != nil %>
+    <strong>Transferencia</strong><br>
+    <strong><%= view_excedente_arrime.banco %></strong><br>
+    <% if view_excedente_arrime.tipo.upcase == 'C' %>
+      <strong><%= I18n.t('Sistema.Body.Vistas.General.cta_corriente') %></strong>
+    <% else %>
+      <strong><%= I18n.t('Sistema.Body.Vistas.General.cheque_gerencia') %></strong>
+    <% end %>: <%= view_excedente_arrime.numero_cuenta %>
+  <% else %>
+    <% if view_excedente_arrime.tipo_cheque == 'G' %>
+      <strong><%= I18n.t('Sistema.Body.Vistas.General.cheque_gerencia') %></strong>
+    <% else %>
+      <strong><%= I18n.t('Sistema.Body.Vistas.General.cheque_propio') %></strong>
+    <% end %><br>
+  <%= view_excedente_arrime.referencia %>
+<% end %>
+</td>
+<td align="center" width="90">
+  <% if view_excedente_arrime.fecha_envio_banco != nil %>
+    <%= view_excedente_arrime.fecha_envio_banco.to_s[8,2] << "-" << view_excedente_arrime.fecha_envio_banco.to_s[5,2] << "-" << view_excedente_arrime.fecha_envio_banco.to_s[0,4] %>
+  <% end %>
+</td>
+<td align="center" width="90">
+  <% if view_excedente_arrime.fecha_valor != nil %>
+    <%= view_excedente_arrime.fecha_valor.to_s[8,2] << "-" << view_excedente_arrime.fecha_valor.to_s[5,2] << "-" << view_excedente_arrime.fecha_valor.to_s[0,4] %>
+  <% end %>
+</td>
+<td align="center" width="90">
+  <% if view_excedente_arrime.numero_cuenta != nil %>
+    <% if view_excedente_arrime.fecha_abono_cuenta != nil %>
+      <%= view_excedente_arrime.fecha_abono_cuenta.to_s[8,2] << "-" << view_excedente_arrime.fecha_abono_cuenta.to_s[5,2] << "-" << view_excedente_arrime.fecha_abono_cuenta.to_s[0,4] %>
+    <% end %>
+  <% else %>
+    <% if view_excedente_arrime.fecha_registro_cheque != nil %>
+      <%= view_excedente_arrime.fecha_registro_cheque.to_s[8,2] << "-" << view_excedente_arrime.fecha_registro_cheque.to_s[5,2] << "-" << view_excedente_arrime.fecha_registro_cheque.to_s[0,4] %>
+    <% end %>
+  <% end %>
+</td>
+<td align="right">
+  <%=  valor = sprintf('%01.2f', view_excedente_arrime.monto_abono).sub('.', ',')
+  valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+</td>
+<td width='80px' align="center">
+  <% view_estatus = Estatus.find(view_excedente_arrime.estatus_excedente) %>
+  <font color='<% if view_estatus.id == 30100 or view_estatus.id == 30110 %>
+      green 
+    <% else %>
+      red
+    <% end %>' title='<%= view_estatus.descripcion %>'><strong><%= view_estatus.nombre %></strong></font>
+</td>
+

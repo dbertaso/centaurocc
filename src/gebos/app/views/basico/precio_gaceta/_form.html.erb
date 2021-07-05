@@ -1,0 +1,36 @@
+<table>
+
+  <tr>
+    <td style="width: 150px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.gaceta')}"%> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      
+      <%= calendar_date_select 'precio_gaceta', 'fecha_vigencia_f', :year_range => 110.years.ago..-1.years.ago,
+        :class=>'text',:style=>'width:80px',:maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.gaceta')}"%> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_field 'precio_gaceta', 'gaceta_oficial',
+        :class=>'text', :style=>'width: 150px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.estatus')%> </label>
+    </td>
+    <td>
+      <%= check_box 'precio_gaceta', 'status',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+</table>

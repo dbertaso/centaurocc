@@ -1,0 +1,113 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='embarcacion'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.embarcacion')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.embarcacion'), :controller => '/visitas/control_visitas_pesca/embarcacion', :action => 'index', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked],:popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.embarcacion'), :controller => '/visitas/control_visitas_pesca/embarcacion', :action => 'view', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked],:popup=>params[:popup]) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+        </div>
+      </li>
+    <%
+    end
+    if controller_name=='motores'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.motores')%></a></div></li> 
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.motores'), :controller => '/visitas/control_visitas_pesca/motores', :action => 'index', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.motores'), :controller => '/visitas/control_visitas_pesca/motores', :action => 'view', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+        </div>
+      </li> 
+    <%
+    end
+    if controller_name=='arte_pesca'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_records')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_records'), :controller => '/visitas/control_visitas_pesca/arte_pesca', :action => 'index', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+          <%= link_to(I18n.t('Sistema.Body.Controladores.ArtePesca.FormTitles.form_title_records'), :controller => '/visitas/control_visitas_pesca/arte_pesca', :action => 'view', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+        </div>
+      </li>
+    <%
+    end
+    if controller_name=='equipo_seguridad'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.VisitaEquipoSeguridad.Etiquetas.equipo_seguridad')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaEquipoSeguridad.Etiquetas.equipo_seguridad'), :controller => '/visitas/control_visitas_pesca/equipo_seguridad', :action => 'index', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaEquipoSeguridad.Etiquetas.equipo_seguridad'), :controller => '/visitas/control_visitas_pesca/equipo_seguridad', :action => 'view', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+        </div></li>
+    <%
+    end
+    if controller_name=='faenas_pesca'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.VisitaFaenasPesca.Etiquetas.faenas_pesca')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaFaenasPesca.Etiquetas.faenas_pesca'), :controller => '/visitas/control_visitas_pesca/faenas_pesca', :action => 'index', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaFaenasPesca.Etiquetas.faenas_pesca'), :controller => '/visitas/control_visitas_pesca/faenas_pesca', :action => 'view', :id=>params[:id],:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+        </div>
+      </li>
+    <%
+    end
+    %>
+    <%
+    if controller_name=='visita_decision'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.recomendacion')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.recomendacion'), :controller => '/visitas/visita_decision', :action => 'edit', :id => @visitas.id,:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+
+        </div>
+      </li>
+    <%
+    end
+  %>
+    <% if controller_name=='siniestro' %>
+      <li id="actual"><div><a href="#">Pérdida</a></div></li> 
+    <%elsif params[:siniestro_checked] == "1"%>
+      <li>
+        <div>
+          <%= link_to('Pérdida', :controller => '/solicitudes/siniestro', :action => 'index', :visita_id => @visitas.id,:id=>params[:id],:siniestro_checked=>1, :popup=>params[:popup])  %>
+        </div>
+      </li>
+    <%end%>
+    <%if @visitas.decision_visita
+      unless !@visitas.decision_visita.recomienda_generar_desembolso
+        if controller_name=='recomendacion_plan_inversion'
+        %>
+          <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.recomendacion_desembolso')%></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.recomendacion_desembolso'), :controller => '/visitas/recomendacion_plan_inversion', :action => 'index', :id => @visitas.id,:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup])  %>
+            </div>
+          </li>
+        <%
+        end
+      end
+    end
+  %>
+  </ul>
+</div>

@@ -1,0 +1,4 @@
+<% rechazo_cobranza = @rechazo_cobranza if rechazo_cobranza.nil?%>
+<tr class="lista<%= even_odd %>" id="row_<%= rechazo_cobranza.id %>">
+	<%= render :partial => 'data', :locals => { :rechazo_cobranza => rechazo_cobranza, :even_odd => even_odd } -%>
+</tr>

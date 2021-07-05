@@ -1,0 +1,59 @@
+<tr id="row_<%= @transaccion.id %>_view">
+  <td valign="top" style="text-align: center">
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.img_colapsar')), :title=>I18n.t('Sistema.Body.Vistas.General.colapsar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => {:action => :collapse, :transaccion_id => @transaccion.id}) -%>
+  </td>
+  <td colspan="7" style="padding-bottom: 10px">
+    <table style="width: 100%">
+      <tr>
+        <td style="vertical-align: top">
+          <table>
+            <tr>
+              <td><label><%=I18n.t('Sistema.Body.Vistas.General.numero')%></label></td>
+              <td>
+                <%= @transaccion.id %>
+              </td>
+            </tr>
+            <tr>
+              <td><label><%= I18n.t('Sistema.Body.Vistas.AutorizacionSolicitud.Etiquetas.tipo_transaccion')%></label></td>
+              <td>
+                <%= @transaccion.meta_transaccion.nombre %>
+              </td>
+            </tr>
+            <tr>
+              <td><label><%=I18n.t('Sistema.Body.Vistas.Login.user')%></label></td>
+              <td>
+                <%= @transaccion.usuario.nombre_usuario %>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td style="vertical-align: top">
+          <table>
+            <tr>
+              <td><label><%=I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.fecha_hora')%></label></td>
+              <td>
+                <%= @transaccion.fecha %>
+              </td>
+            </tr>
+            <tr>
+              <td><label><%= I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.prestamo')%></label></td>
+              <td>
+                <%= @transaccion.prestamo.numero unless @transaccion.prestamo.nil?%>
+              </td>
+            </tr>
+            <tr>
+              <td><label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label></td>
+              <td>
+                <%= @transaccion.descripcion %>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <%= render :partial=>"list_accion" %>
+  </td>
+</tr>

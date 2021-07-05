@@ -1,0 +1,251 @@
+
+    <div id='datos_cliente' >
+      <table style="width: 100%"> 
+          <tr>
+            <td>
+              <label> <%= t('Sistema.Body.Vistas.VistaSolicitud.Etiquetas.cedula_rif') %>: </label>
+            </td>
+            <td>
+              <%= @prestamo.cliente.cedula_rif unless @prestamo.cliente.nil? %>
+            </td>
+            <td>
+              <label> <%= t('Sistema.Body.Vistas.General.beneficiario') %>: </label>
+            </td>
+            <td>              
+              <%= @prestamo.cliente.nombre unless @prestamo.cliente.nil? %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label> 
+                <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.financiamiento')}"%> :
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.numero unless @prestamo.nil? %>
+            </td>
+            <td>
+              <label> <%= t('Sistema.Body.Vistas.Form.numero_tramite') %>: </label>
+            </td>
+            <td>              
+              <%= @prestamo.solicitud.numero unless @prestamo.solicitud.nil? %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label> 
+                <%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.liquidacion')}"%>:
+              </label>
+            </td>
+            <td>
+              <%= format_fecha(@prestamo.fecha_liquidacion) unless @prestamo.nil? %>
+            </td>
+            <td>
+              <label> <%= t('Sistema.Body.Vistas.Form.estatus') %>: </label>
+            </td>
+            <td>              
+              <%= @prestamo.estatus_w unless @prestamo.nil? %>
+            </td>
+          </tr>
+
+      </table>
+    </div>
+
+    <div id="datos_generales" style="width: 100%">
+          
+        <table style="width: 100%" >
+        
+          <tr>
+
+            <td class="separador" valign="bottom" colspan="2" style="text-align: center">
+              <span>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Separadores.gestion_cobranza')%>
+              </span>
+            </td>
+
+          </tr>
+          <tr>
+            <p>
+
+               <br/>
+
+            </p>
+          </tr>
+      </table>
+      <table style="width: 50%" align="center">
+          <tr>
+            <td style="width: 500px">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_intentos') %>:
+              </label>
+            </td>
+            <td align="left">
+              <%= format_sep(@performance.cantidad_intentos) unless @performance.nil? %>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_contactos') %>:
+              </label>
+            </td>
+            <td>
+              <%= format_sep(@performance.cantidad_contactos.to_s) unless @performance.nil? %>
+            </td>
+
+          </tr>          
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_contactos_exitosos') %>:
+              </label>
+            </td>
+            <td>
+              <%=  format_sep(@performance.cantidad_contactos_exitosos.to_s) unless @performance.nil? %>
+            </td>        
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_promesas_pago')%>:
+              </label>
+            </td>
+            <td >
+               <%=  format_sep(@performance.cantidad_promesas_pago.to_s) unless @performance.nil? %>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_promesas_cumplidas')%>:
+              </label>
+            </td>
+            <td >
+              <%=  format_sep(@performance.cantidad_promesas_cumplidas) unless @performance.nil? %>
+            </td>
+
+          </tr>        
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_promesas_parcialmente_cumplidas')%>:
+              </label>
+            </td>
+            <td>
+              <%=  format_sep(@performance.cantidad_promesas_cumplidas_parcialmente) unless @performance.nil? %>
+            </td> 
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_promesas_incumplidas')%>:
+              </label>
+            </td>
+            <td>
+              <%=  format_sep(@performance.cantidad_promesas_incumplidas) unless @performance.nil? %>
+            </td> 
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_contactos')%>:
+              </label>
+            </td>
+            <td align="left">
+              <%=  format_fm(@performance.porcentaje_contactos) unless @performance.nil? %> <b>%</b>
+            </td> 
+
+         </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_contactos_exitosos')%>:
+              </label>
+            </td>
+            <td>
+              <%=  format_fm(@performance.porcentaje_contactos_exitosos) unless @performance.nil? %> <b>%</b>
+            </td> 
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_pago')%>:
+              </label>
+            </td>
+            <td>
+              <%=  format_fm(@performance.porcentaje_promesas_pago) unless @performance.nil? %> <b>%</b>
+            </td> 
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_cumplidas')%>:
+              </label>
+            </td>
+            <td>
+              <%=  format_fm(@performance.porcentaje_promesas_pago_cumplidas) unless @performance.nil? %> <b>%</b>
+            </td> 
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_parcialmente_cumplidas')%>:
+              </label>
+            </td>
+            <td>
+              <%=  format_fm(@performance.porcentaje_promesas_pago_parcialmente_cumplidas) unless @performance.nil? %> <b>%</b>
+            </td> 
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.porcentaje_promesas_incumplidas') %>:
+              </label>
+            </td>
+            <td>
+              <%= format_fm(@performance.porcentaje_promesas_pago_incumplidas) unless @performance.nil? -%> <b>%</b>
+            </td> 
+          </tr>   
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_avisos_cobro')%>:
+              </label>
+            </td>
+            <td>
+              <%=  format_sep(@performance.cantidad_email_enviados.to_s) unless @performance.nil? %>
+            </td> 
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoDesempeno.Etiquetas.cantidad_mensajes_texto')%>:
+              </label>
+            </td>
+            <td >
+              <%= format_sep(@performance.cantidad_sms_enviados.to_s) unless @performance.nil? %>
+            </td> 
+
+          </tr>     
+        </table>
+    </div>
+
+<br>
+<br>
+<br>
+<div style="text-align: center">
+  <%= link_to(I18n.t('Sistema.Body.Vistas.GestionCobranzas.Enlaces.historico_gestion'),
+      {:action => 'consultar', :method=> :get, :controller => 'cobranzas/historico_cobranzas',  :id => @prestamo.id,
+      :popup => true}, :onclick => "window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.Etiquetas.historico_cobranzas') + "','height=800,width=1000,scrollbars=yes,resizable=yes'); return false;") %>
+</div>

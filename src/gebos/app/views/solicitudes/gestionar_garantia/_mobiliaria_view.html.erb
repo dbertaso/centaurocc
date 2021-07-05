@@ -1,0 +1,255 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.avaluo_institucion')%></span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluo.Errores.nombre_perito')%></label> 
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_mobiliario.nombre_perito %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.fecha_avaluo_mobiliario')%></label> 
+    </td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.fecha_avaluo_mobiliario_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_sudeban')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_mobiliario.numero_sudeban_mobiliario %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.valor_avaluo')%></label> 
+    </td>
+    <td>
+      <%= display_number @solicitud_avaluo_mobiliario.valor_avaluo_mobiliario, '' %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+    </td>
+  </tr>
+</table>
+
+<br/>
+<table class="lista" style="width: 90%">
+
+<tr>
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.hipoteca')} #{@solicitud.moneda.abreviatura.to_s} "%></label>
+    </th>
+
+  </tr>
+
+  <% unless @mobiliario_tipos_mobiliario_list.nil?
+        clase = "lista0"
+        @mobiliario_tipos_mobiliario_list.each { |mobiliaria| %>
+          <tr id="mob_<%= mobiliaria.id %>" class='<%= clase %>'>
+              <td>
+                <%= mobiliaria.tipo %>
+              </td>
+
+              <td>
+                <%= mobiliaria.modelo %>
+              </td>
+
+              <td>
+                <%= mobiliaria.marca %>
+              </td>
+
+              <td>
+                <%= mobiliaria.serial %>
+              </td>
+
+              <td>
+                <%= display_number mobiliaria.hipoteca, '' %>
+              </td>
+
+          </tr>
+    <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+      }
+     end %>
+
+</table>
+<br/>
+
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.documento_oferta')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.tipo_documento_oferta')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_mobiliario.tipo_documento_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.referencia_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.fecha_documento')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.fecha_documento_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.empresa_documento')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.empresa_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%="#{I18n.t('Sistema.Body.Vistas.General.rif')} #{I18n.t('Sistema.Body.Vistas.General.empresa')}"%></label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.rif_empresa_documento %>
+    </td>
+  </tr>
+</table>
+<br/>
+<table class="lista" style="width: 90%">
+
+  <tr>
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%></label>
+    </th>
+
+    <th style="width: 100px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.hipoteca')} #{@solicitud.moneda.abreviatura.to_s}" %></label>
+    </th>
+
+    <th style="width: 10px">
+
+    </th>
+  </tr>
+
+  <% unless @mobiliario_tipos_documento_list.nil?
+        clase = "lista0"
+        @mobiliario_tipos_documento_list.each { |mobiliaria| %>
+          <tr id="mob_<%= mobiliaria.id %>" class='<%= clase %>'>
+              <td>
+                <%= mobiliaria.tipo %>
+              </td>
+
+              <td>
+                <%= mobiliaria.modelo %>
+              </td>
+
+              <td>
+                <%= mobiliaria.marca %>
+              </td>
+
+              <td>
+                <%= mobiliaria.serial %>
+              </td>
+
+              <td>
+                <%= display_number mobiliaria.hipoteca, '' %>
+              </td>
+          </tr>
+    <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+      }
+     end %>
+
+</table>
+<br/>
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.documento_definitivo')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_mobiliario.referencia_definitivo %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_factura')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.fecha_factura_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.empresa_factura')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.empresa_factura %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%="#{I18n.t('Sistema.Body.Vistas.General.rif')} #{I18n.t('Sistema.Body.Vistas.General.empresa')}"%></label></td>
+    <td>
+      <%= @solicitud_avaluo_mobiliario.rif_empresa_difinitivo %>
+    </td>
+  </tr>
+  
+</table>

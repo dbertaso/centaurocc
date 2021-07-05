@@ -1,0 +1,25 @@
+<tr id="row_<%= @condiciones_acuicultura.id %>_view">
+  <td class="lista-form" colspan="8">
+
+    <%= form_title_view @condiciones_acuicultura.espejo_agua %>
+
+
+    <%= error "row_#{@condiciones_acuicultura.id}" %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => :view, :id => @visitas,:id_condiciones_acuicultura=>@condiciones_acuicultura.id } ) do-%>
+
+      <%= render :partial => 'form_view' %>
+
+      <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar')), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+        :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+        :url => { :action => :cancel_view, :id => @visitas.id, :id_condiciones_acuicultura => @condiciones_acuicultura.id}) -%>
+    </td>
+  </tr>
+  </table>
+
+<% end -%>
+</td>
+</td>
+</tr>

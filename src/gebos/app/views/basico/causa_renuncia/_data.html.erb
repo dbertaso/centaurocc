@@ -1,0 +1,27 @@
+<% causa_renuncia = @causa_renuncia if causa_renuncia.nil? %>
+<td>
+	<%= causa_renuncia.nombre  %>
+</td>
+<td>
+	<%= causa_renuncia.descripcion  %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(causa_renuncia.activo)  %>
+</td>	
+<td style="text-align: right">
+	
+	
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+    :method =>:get,
+		:url => {:controller => 'causa_renuncia', :action => :edit, :id => causa_renuncia.id} ) if vlink 'edit' -%>
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'causa_renuncia', :action => :delete, :id => causa_renuncia.id}) if vlink 'delete' -%>
+		
+</td>

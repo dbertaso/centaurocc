@@ -1,0 +1,24 @@
+<tr id="row_<%= @ciudad.id %>_edit">
+	<td class="lista-form" colspan="4">
+	
+		<%= form_title_edit @ciudad.nombre %>
+	
+		<%= error "row_#{@ciudad.id}" %>
+		
+		<%= form_remote_tag(
+		  :loading =>'image_load()',
+			:loaded => 'image_unload()',
+		  :url => { :action => :save_edit, :estado_id=>@estado.id, :id => @ciudad.id } ) do-%>
+	
+					<%= render 'form' %>
+					<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+					  :loading =>'image_load()',
+					  :loaded => 'image_unload()',
+					  :method=>:get,
+		        :url => { :action => :cancel_edit, :estado_id=>@estado.id, :id => @ciudad.id}) -%>
+			   </td>
+		    </tr>
+		  </table>
+		<% end -%>
+	</td>
+</tr>

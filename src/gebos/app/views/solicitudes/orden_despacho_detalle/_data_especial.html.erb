@@ -1,0 +1,93 @@
+<% orden_despacho_detalle = @orden_despacho_detalle if orden_despacho_detalle.nil? %>
+<td align="center">
+<%= hidden_field "escondido", "#{orden_despacho_detalle.id}",
+  :value => "#{orden_despacho_detalle.cantidad}" %>
+<%=@numero_desembolso%>  
+</td>
+<td align="center">
+  <%= orden_despacho_detalle.item_nombre.strip.upcase  %>
+</td>
+<td align="center">
+<%condi="nombre ='#{orden_despacho_detalle.item_nombre}'"%>
+<%=Item.find_by_nombre(orden_despacho_detalle.item_nombre).descripcion unless Item.count(:conditions=>condi) == 0 %>  
+</td>
+<td align="center">
+  <%= orden_despacho_detalle.unidad_medida.abreviatura.strip.upcase %>
+</td>
+<td align="right">
+<%=format_fm(orden_despacho_detalle.cantidad)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.cantidad}));"%>  
+</td>
+<td align="right">
+<%=format_fm(orden_despacho_detalle.costo_real)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.costo_real}));"%>  
+</td>
+<td align="right">
+<%if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+<%=format_fm(orden_despacho_detalle.monto_financiamiento)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_financiamiento}));"%>
+<%else%>
+<%=format_fm(orden_despacho_detalle.monto_recomendado)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_recomendado}));"%>  
+<%end%>
+</td>
+<td align="right">
+<%=format_fm(orden_despacho_detalle.monto_facturacion)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_facturacion}));"%>  
+</td>
+<td align="center">
+
+<span style="font-weight: bold" id="etiqueta_cantidad_faltante_<%=orden_despacho_detalle.id%>"></span>
+
+
+<%#= text_field_tag "monto_cantidad_faltante_#{orden_despacho_detalle.id}", 0, 
+            :class=>'text', :maxlength=>'12', :style=>'width: 70px; align: right;',
+            :onkeyup=>"ValidarNumero2(this);actualiza_cantidad_faltante_2(#{orden_despacho_detalle.id},#{orden_despacho_detalle.costo_real});suma_divs();actualiza_span(#{orden_despacho_detalle.id},#{orden_despacho_detalle.costo_real});actualizacion_status_orden_despacho();",:autocomplete=>"off",:onpaste=>"return false" -%>
+
+<%= hidden_field "monto_cantidad_faltante", "#{orden_despacho_detalle.id}",:name=>"monto_cantidad_faltante_#{orden_despacho_detalle.id}", :value => "0" -%>
+
+<!-- asi estaba el anterior que solo permitia cantidades sin decimales -->
+<%#= text_field_tag "monto_cantidad_faltante_#{orden_despacho_detalle.id}", 0, 
+            :class=>'text', :maxlength=>'6', :style=>'width: 70px; align: right;',
+            :onkeyup=>"actualiza_cantidad_faltante(#{orden_despacho_detalle.id},#{orden_despacho_detalle.costo_real});suma_divs();actualiza_span(#{orden_despacho_detalle.id},#{orden_despacho_detalle.costo_real});actualizacion_status_orden_despacho();",
+	    :onkeypress=>"return NumberKey(event);",:autocomplete=>"off" -%>
+
+</td>
+<td align="right">
+
+<%= text_field_tag "monto_cantidad_facturada_#{orden_despacho_detalle.id}", 0, 
+            :class=>'text', :maxlength=>'14', :style=>'width: 70px; align: right;',
+            :onkeyup=>"ValidarNumero2(this); suma();actualiza_span_conversion(#{orden_despacho_detalle.id},#{orden_despacho_detalle.monto_financiamiento},#{orden_despacho_detalle.costo_real});suma_divs();actualizacion_status_orden_despacho();",:autocomplete=>"off",:onpaste=>"return false" -%>
+
+<!-- anteriormente estaba esto -->
+<%#= text_field_tag "monto_cantidad_facturada_#{orden_despacho_detalle.id}", 0, 
+            :class=>'text', :maxlength=>'14', :style=>'width: 70px; align: right;',
+            :onkeyup=>"ValidarNumero2(this); suma();actualiza_span(#{orden_despacho_detalle.id},#{orden_despacho_detalle.costo_real});suma_divs();",:autocomplete=>"off",:onpaste=>"return false" -%>
+<!-- anteriormente estaba esto -->
+</td>
+<td align="center">
+
+<%if orden_despacho_detalle.costo_real==0%>
+<span id="saldo_favor_<%=orden_despacho_detalle.id%>_0"></span>
+<%else%>
+<span id="saldo_favor_<%=orden_despacho_detalle.id%>_<%=orden_despacho_detalle.monto_financiamiento%>"></span>
+<%end%>
+
+
+  <%#= text_field_tag "monto_#{plan.id}", @monto, 
+            :class=>'text', :maxlength=>'8', :style=>'width: 100px, align: left',
+            :value=>"#{plan.costo_real > 0 ? plan.costo_real_fm : 0.00}",
+            :onkeyup=>"ValidarNumero('@monto'); formatCurrency(this.value, 'monto_#{plan.id}');",
+            :onchange=>'inputChange();' -%>
+</td>
+<td align="center">
+<label id="cantidad_faltante_<%=orden_despacho_detalle.id%>">
+<%=format_fm(orden_despacho_detalle.cantidad)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.cantidad}));"%>
+</label>
+<%#= text_field_tag "monto_#{plan.id}", @monto, 
+            :class=>'text', :maxlength=>'8', :style=>'width: 100px, align: left',
+            :value=>"#{plan.costo_real > 0 ? plan.costo_real_fm : 0.00}",
+            :onkeyup=>"ValidarNumero('@monto'); formatCurrency(this.value, 'monto_#{plan.id}');",
+            :onchange=>'inputChange();' -%>
+</td>

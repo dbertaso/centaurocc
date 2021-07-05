@@ -1,0 +1,1080 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= t('Sistema.Body.Vistas.General.prestamo')%>
+      <span class="titulo_modificar">'
+        <%= @prestamo.numero %> <%= " - #{t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+      </span>
+      <%= "#{t('Sistema.Body.Vistas.General.del')} #{t('Sistema.Body.General.beneficiario')}" %>
+      <span class="titulo_modificar">'
+        <%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @prestamo.cliente.empresa.nombre : @prestamo.cliente.persona.nombre_corto  %>'
+      </span>
+    </div>
+  </div>
+</div>
+
+<%= render 'prestamos/consulta_prestamo/common/tabs' %>
+
+<div class="marco-contenido2">
+
+   <%= form_title_view  @factura.numero %>
+
+  <%= render 'prestamos/consulta_prestamo_factura/common/tabs' %>
+
+  <div class="marco-contenido2">
+    <%= error %>
+    <%= message %>
+
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%= t('Sistema.Body.Vistas.ConsultaPrestamo.Separadores.datos_generales') %></span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 40%">
+          <label><%= t('Sistema.Body.General.imprimir')%></label>
+        </td>
+        <td style="width: 60%">
+          <%= link_to(image_tag(image_path(t('Sistema.Body.Imagenes.imprimir'))),
+              { :action => 'imprimir', :factura_id => @factura.id, :prestamo_id => @prestamo.id },
+                :popup => ["Factura #{@factura.numero} ", 'height=500,width=700'] ) %>&nbsp;
+        </td>
+      </tr>
+        
+      <tr>
+        <td style="width: 40%">
+          <label>
+            <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.tipo')} #{t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.evento')}"%>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%= @factura.tipo_w %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 40%">
+          <label>
+            <%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.contable')}" %>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%= @factura.fecha_f %>
+        </td>
+      </tr>
+      <tr>
+        <% if @factura.tipo == 'D'%>
+          <td style="width: 40%">
+            <label>
+              <%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.desembolso')}" %>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= @factura.fecha_realizacion_f %>
+          </td>
+        <% end%>
+        <% if @factura.tipo == 'M'%>
+          <td style="width: 40%">
+            <label>
+              <%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.entrega')}" %>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= @factura.fecha_realizacion_f %>
+          </td>
+        <%end%>
+        <% if @factura.tipo != 'D' && @factura.tipo != 'M'%>
+          <td style="width: 40%">
+            <label><%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.pago')}" %></label>
+          </td>
+          <td style="width: 60%">
+            <%= @factura.fecha_realizacion_f %>
+          </td>
+        <%end%>
+      </tr>
+
+      <% if @factura.tipo == 'D' %>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%="#{t('Sistema.Body.Vistas.General.monto')} #{t('Sistema.Body.Vistas.General.banco')}"%>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= format_fm(@factura.monto_banco) %>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%="#{t('Sistema.Body.Vistas.General.monto')} #{t('Sistema.Body.Vistas.General.insumos')}"%>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= format_fm(@factura.monto_insumos) %>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_sras')%>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= format_fm(@factura.monto_sras) %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if @factura.tipo == 'M' %>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%="#{t('Sistema.Body.Vistas.General.monto')} #{t('Sistema.Body.Vistas.General.inventario')}"%>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= format_fm(@factura.monto_inventario) %>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_sras')%>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= format_fm(@factura.monto_sras) %>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_adminstrativos') %>
+            </label>
+          </td>
+          <td style="width: 60%">
+              <%= format_fm(@factura.monto_gastos) %>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td style="width: 40%">
+          <label>
+            <%= t('Sistema.Body.Vistas.General.monto') %>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%= format_fm(@factura.monto) %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 40%">
+          <label>
+            <%= t('Sistema.Body.Vistas.General.entidad_financiera') %>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <% unless @factura.tipo == 'D' or @factura.tipo == 'M' %>
+            <%= @factura.pago_cliente.entidad_financiera.nombre unless @factura.pago_cliente.entidad_financiera.nil? unless @factura.pago_cliente.nil?%>
+          <%else%>
+            <% if !@factura.desembolso.nil? %>
+              <%= @factura.desembolso.entidad_financiera.nombre unless @factura.desembolso.entidad_financiera.nil?%>
+            <%end%>
+          <%end%>
+        </td>
+      </tr>
+      <tr>
+        <% if @factura.tipo == 'D' %>
+          <% unless @factura.desembolso.nil? %>
+            <% if @factura.desembolso.tipo_cheque == 'G' ||
+                  @factura.desembolso.tipo_cheque == 'P' %>
+              <td style="width: 40%">
+                <label>
+                  <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.cheque')}"%>
+                </label>
+              </td>
+            <% else %>
+              <td style="width: 40%">
+                <label>
+                  <%= t('Sistema.Body.Vistas.General.insumos') %>
+                </label>
+              </td>
+            <% end %>
+
+            <td style="width: 60%">
+              <%= @factura.desembolso.referencia %>
+            </td>
+
+         <% else %>
+
+          <td style="width: 40%">
+            <label>
+              <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.cuenta')}"%>
+            </label>
+          </td>
+
+          <td style="width: 60%">
+            <% unless @factura.tipo == 'D' %>
+
+            <% else %>
+
+              <% unless @factura.desembolso.nil? %>
+                <%= @factura.desembolso.numero_cuenta %>
+            <% end %>
+          <% end %>
+
+          </td>
+
+        <% end %>
+      <% end %>
+
+      </tr>
+
+      <% if @factura.tipo == 'C'%>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%= t('Sistema.Body.General.saldo_deudor')%>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= format_fm(@factura.pago_prestamo.saldo_insoluto) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.interes_causado')%>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= format_fm(@factura.pago_prestamo.interes_causado) %>
+          </td>
+      </tr>
+      <% end %>
+
+      <% if @factura.tipo != 'D' && @factura.tipo != 'E'  && @factura.tipo != 'W' && @factura.tipo != 'X' && @factura.tipo != 'M' %>
+        <tr>
+          <td style="width: 40%">
+            <label>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.modalidad')%>
+            </label>
+          </td>
+          <td style="width: 60%">
+            <%= @factura.pago_cliente.modalidad_w %>
+          </td>
+        </tr>
+        <% if @factura.pago_cliente.modalidad == 'D' %>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.banco_domicializacion')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.pago_cliente.entidad_financiera.nombre %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.referencia')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.pago_cliente.numero_voucher %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.monto_debitado')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.pago_cliente.efectivo) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.abono_capital')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.abono_capital) unless @factura.nil? %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.saldo_favor') %>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%# @prestamo = Prestamo.find(@factura.prestamo_id) %>
+              <%= format_fm(@factura.remanente_por_aplicar) unless @factura.nil? %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.estado_pago')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.estado %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.analista')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.analista %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= "#{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.comentario')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.analista')}" %>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.comentario_analista %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                 <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.distincion_cobranza')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.distincion_cobranza_d %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.consultoria')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_bool @factura.consultoria_juridica %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.recuperaciones')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_bool @factura.recuperaciones%>
+            </td>
+          </tr>
+
+        <% end %>
+        <% if @factura.pago_cliente.modalidad == 'R' %>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.banco_recaudador')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.pago_cliente.entidad_financiera.nombre %>
+            </td>
+          </tr>
+          <% unless @factura.pago_cliente.cuenta_bcv.nil? %>
+            <tr>
+              <td style="width: 40%">
+                <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.cuenta_recaudadora') -%></label>
+              </td>
+              <td>
+                <%= @factura.pago_cliente.cuenta_bcv.tipo_w%> - <%= @factura.pago_cliente.cuenta_bcv.numero -%>
+              </td>
+            </tr>
+          <%end%>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.referencia')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.pago_cliente.numero_voucher %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.efectivo')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.pago_cliente.efectivo) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.monto_cheques')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.monto_cheques) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.interes_pagado')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.pago_interes) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.abono_capital')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.abono_capital) unless @factura.nil? %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.saldo_favor') %>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <% @prestamo = Prestamo.find(@factura.prestamo_id) %>
+              <%= format_fm(@factura.remanente_por_aplicar) unless @factura.nil? %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.estado_pago')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.estado %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.analista')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.analista %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= "#{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.comentario')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.analista')}" %>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.comentario_analista %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                 <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.distincion_cobranza')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.distincion_cobranza_d %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.consultoria')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_bool @factura.consultoria_juridica %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.recuperaciones')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_bool @factura.recuperaciones%>
+            </td>
+          </tr>
+          <% if !@factura.prestamo.solicitud.codigo_d3.nil? %>
+            <div>
+              <table style="width: 100%">
+
+                <tr>
+                  <td class="separador" colspan="2">
+                    <span>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Separadores.pago_migracion')%>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 40%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ProgramaProducto.Labels.mora')%>
+                    </label>
+                  </td>
+                  <td style="width: 60%">
+                    <%= format_fm(@factura.pago_mora_migracion) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 40%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.interes_pagado')%>
+                    </label>
+                  </td>
+                  <td style="width: 60%">
+                    <%= format_fm(@factura.pago_interes_migracion) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 40%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.capital')%>
+                    </label>
+                  </td>
+                  <td style="width: 60%">
+                    <%= format_fm(@factura.pago_capital_migracion) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 40%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.cantidad_cuotas')%>
+                    </label>
+                  </td>
+                  <td style="width: 60%">
+                    <%= @factura.prestamo.cuotas_pagadas_migracion %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <% end %>
+        <% end %>
+
+        <% if @factura.tipo == 'R' %>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.General.banco') %>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.pago_cliente.entidad_financiera.nombre unless @factura.pago_cliente.entidad_financiera.nil?%>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.referencia')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.pago_cliente.numero_voucher %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.capital')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.pago_cliente.efectivo) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.monto_cheques')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.monto_cheques) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.interes_pagado')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_fm(@factura.pago_interes) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.abono_capital') %>
+              </label>
+            </td>
+
+            <td style="width: 60%">
+              <%= format_fm(@factura.abono_capital) unless @factura.nil? %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.saldo_favor')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <% @prestamo = Prestamo.find(@factura.prestamo_id) %>
+              <%= format_fm(@factura.remanente_por_aplicar) unless @factura.nil? %> <%= t('Sistema.Body.General.ab_bolivares') %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.estado_pago')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.estado %>
+            </td>
+          </tr>
+
+          <tr>
+              <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.analista')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.analista %>
+            </td>
+          </tr>
+          <tr>
+              <td style="width: 40%">
+              <label>
+                <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.comentario')} #{t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.analista')}" %>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.comentario_analista %>
+            </td>
+          </tr>
+          <tr>
+              <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.distincion_cobranza')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= @factura.distincion_cobranza_d %>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.consultoria')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_bool @factura.consultoria_juridica %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 40%">
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.recuperaciones')%>
+              </label>
+            </td>
+            <td style="width: 60%">
+              <%= format_bool @factura.recuperaciones%>
+            </td>
+          </tr>
+
+          <% if !@factura.prestamo.solicitud.codigo_d3.nil? %>
+            <div>
+              <table style="width: 100%">
+
+                <tr>
+                  <td class="separador" colspan="2">
+                    <span>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Separadores.pago_migracion')%>
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 40%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ProgramaProducto.Labels.mora')%>
+                    </label>
+                  </td>
+                  <td style="width: 60%">
+                    <%= format_fm(@factura.pago_mora_migracion) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 40%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.interes_pagado')%>
+                    </label>
+                  </td>
+                  <td style="width: 60%">
+                    <%= format_fm(@factura.pago_interes_migracion) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 40%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.capital')%>
+                    </label>
+                  </td>
+                  <td style="width: 60%">
+                    <%= format_fm(@factura.pago_capital_migracion) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 40%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.cantidad_cuotas') %>
+                    </label>
+                  </td>
+                  <td style="width: 60%">
+                    <%= @factura.prestamo.cuotas_pagadas_migracion %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <% end %>
+        <% end %>
+      <% elsif @factura.tipo == 'D' %>
+      <!--
+       <tr>
+          <td style="width: 40%">
+          <label>
+            <%#= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.interes_desembolso')%>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%#= @factura.desembolso.interes_desembolso_fm %>
+        </td>
+      </tr>
+      -->
+      <% elsif @factura.tipo == 'X' %>
+       <tr>
+          <td style="width: 40%">
+          <label>
+            <%= "#{t('Sistema.Body.Vistas.General.monto')} #{t('Sistema.Body.Vistas.General.reestructurado')}" %>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%= format_fm(@factura.monto) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+        </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+          <label>
+            <%= t('Sistema.Body.Vistas.General.tasa') %>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%= @factura.prestamo_modificacion.tasa.nombre unless @factura.prestamo_modificacion.nil?%>
+        </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+          <label>
+            <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.valor_tasa') %>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%= @factura.prestamo_modificacion.tasa_inicial unless @factura.prestamo_modificacion.nil?%>
+        </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+          <label>
+            <%= t('Sistema.Body.General.plazo')%>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%= @factura.prestamo_modificacion.plazo unless @factura.prestamo_modificacion.nil?%> <%= t('Sistema.Body.General.meses') %>
+        </td>
+        </tr>
+        <% elsif @factura.tipo == 'W' %>
+       <tr>
+        <td style="width: 40%">
+          <label>
+            <%= "#{t('Sistema.Body.Vistas.General.monto')} #{t('Sistema.Body.Vistas.General.reestructurado')}" %>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%= format_fm(@factura.monto) %> <%= t('Sistema.Body.General.ab_bolivares') %>
+        </td>
+        </tr>
+        <tr>
+          <td style="width: 40%">
+          <label>
+            <%#= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.mora_exonerada') %>
+          </label>
+        </td>
+        <td style="width: 60%">
+          <%#= format_bool @factura.prestamo_modificacion.exonerar_intereses_mora %>
+        </td>
+        </tr>
+      <% end %>
+    </table>
+    <% if @factura.tipo != 'D' &&
+          @factura.tipo != 'W' &&
+          @factura.tipo != 'X'%>
+
+        <table style="width: 100%">
+          <tr>
+            <td class="separador" colspan="2">
+              <span>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Separadores.cheques_notas') %>
+              </span>
+            </td>
+          </tr>
+        </table>
+    <% end %>
+
+    <%  if  @factura.tipo != 'D' &&
+            @factura.tipo != 'E' &&
+            @factura.tipo != 'W' &&
+            @factura.tipo != 'X' &&
+            @factura.tipo != 'M'%>
+
+          <table style="margin-bottom: 10px; width: 100%;" class="lista">
+            <thead>
+              <tr>
+                <th style="width: 50%">
+                  <label>
+                    <%= t('Sistema.Body.Controladores.EntidadFinanciera.FormTitles.form_title_record') %>
+                  </label>
+                </th>
+                <th style="width: 25%">
+                  <label>
+                    <%= "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.cheque')}" %>
+                  </label>
+                </th>
+                <th style="width: 25%">
+                  <label>
+                    <%= "#{t('Sistema.Body.Vistas.General.monto')}" %>
+                  </label>
+                </th>
+              </tr>
+            </thead>
+
+            <% for cheque in @factura.pago_cliente.cheques %>
+
+                <tr>
+                  <td style="text-align: left">
+                    <%= cheque.entidad_financiera.nombre %>
+                  </td>
+                  <td style="text-align: left">
+                    <%= cheque.referencia %>
+                  </td>
+                  <td style="text-align: right">
+                    <%= format_fm(cheque.monto) %>
+                  </td>
+                </tr>
+            <% end -%>
+
+          </table>
+
+          <%  if @factura.tipo != 'A'%>
+
+            <table style="width: 100%">
+              <tr>
+                <td class="separador" colspan="2">
+                  <span>
+                    <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Separadores.detalle_rubros') %>
+                  </span>
+                </td>
+              </tr>
+            </table>
+
+            <div style="width: 100%; overflow: scroll">
+              <table style="margin-bottom: 10px; width: 1200px;" class="lista">
+                <thead>
+                  <tr>
+                    <th style="width: 5%">
+                      <label>
+                        <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Separadores.numero_cuota') %>
+                      </label>
+                    </th>
+                    <th style="width: 5%">
+                      <label>
+                        <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Separadores.tipo') %>
+                      </label>
+                    </th>
+                    <th style="width: 1%">
+                      <label>
+                        <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Separadores.estado_cuota') %>
+                      </label>
+                    </th>
+                    <th style="width: 5%">
+                      <label>
+                        <%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.Vistas.Form.vencimiento')}" %>
+                      </label>
+                    </th>
+                    <th style="width: 6.92%">
+                      <label>
+                        <%= "#{t('Sistema.Body.Vistas.General.monto')} #{t('Sistema.Body.Vistas.Form.cuota')}" %>
+                      </label>
+                    </th>
+                    <th style="width: 6.92%">
+                      <label>
+                        <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.pago_interes') %>
+                      </label>
+                    </th>
+                    <th style="width: 6.92%">
+                      <label>
+                        <%= "#{t('Sistema.Body.Vistas.Form.pago')} #{t('Sistema.Body.Vistas.General.capital')}" %>
+                      </label>
+                    </th>
+                    <th style="width: 6.92%">
+                      <label>
+                        <%= "#{t('Sistema.Body.Vistas.Form.pago')} #{t('Sistema.Body.Vistas.Simulador.Etiquetas.interes_diferido')}" %>
+                      </label>
+                    </th>
+                    <th style="width: 6.92%">
+                      <label>
+                        <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.pago_interes_mora') %>
+                      </label>
+                    </th>
+                    <th style="width: 0.02%">
+                    </th>
+                  </tr>
+                </thead>
+
+                <%
+                  @T_valor_cuota = 0
+                  @T_interes_corriente = 0
+                  @T_capital = 0
+                  @T_interes_diferido = 0
+                  @T_interes_mora = 0
+                  @T_interes_desembolso = 0
+                  @T_total_cuotas = 0
+
+                  pago_prestamo = @factura.pago_cliente.prestamos.find(:first)
+                  even_odd = 1
+                  for cuota in pago_prestamo.cuotas.all(:order=>'plan_pago_cuota_id')
+                    even_odd = 1 - even_odd
+
+                    if (cuota.monto_fm != "0.00" || cuota.interes_corriente_fm != "0,00" ||  cuota.capital_fm != "0,00" || cuota.interes_diferido_fm != "0,00" || cuota.interes_mora_fm != "0,00" ||cuota.interes_desembolso_fm != "0,00")
+
+                      @T_valor_cuota += cuota.plan_pago_cuota.valor_cuota
+                      @T_interes_corriente += cuota.interes_corriente
+                      @T_capital += cuota.capital
+                      @T_interes_diferido += cuota.interes_diferido
+                      @T_interes_mora += cuota.interes_mora
+                      @T_interes_desembolso += cuota.interes_desembolso
+                      @T_total_cuotas += (cuota.interes_corriente + cuota.capital + cuota.interes_diferido +
+                                          cuota.interes_mora + cuota.interes_desembolso) %>
+
+                      <tr>
+                        <td style="text-align: center">
+                          <%= cuota.plan_pago_cuota.numero %>
+                        </td>
+                        <td style="text-align: center">
+                          <%= cuota.plan_pago_cuota.tipo_cuota_w %>
+                        </td>
+                        <td style="text-align: center">
+                          <%= cuota.estatus_pago_w%>
+                        </td>
+                        <td>
+                          <%= cuota.plan_pago_cuota.fecha_f %>
+                        </td>
+                        <td style="text-align: right">
+                          <%= format_fm(cuota.plan_pago_cuota.valor_cuota) %>
+                        </td>
+                        <td style="text-align: right">
+                          <%= format_fm(cuota.interes_corriente) %>
+                        </td>
+                        <td style="text-align: right">
+                          <%= format_fm(cuota.capital) %>
+                        </td>
+                        <td style="text-align: right">
+                          <%= format_fm(cuota.interes_diferido) %>
+                        </td>
+                        <td style="text-align: right">
+                          <%= format_fm(cuota.interes_mora) %>
+                        </td>
+                        <td>
+                        </td>
+                      </tr>
+                  <% end %>
+                <% end %>
+                  <tr>
+                    <td>
+                      <b><%= "#{t('Sistema.Body.Vistas.Helpers.Mensajes.total')} #{t('Sistema.Body.Vistas.General.pago')}" %></b>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td style="text-align: right">
+                       <b> <%= format_fm(@T_total_cuotas) %> </b>
+                    </td>
+                    <td style="text-align: right">
+                      <b> <%= format_fm(@T_interes_corriente) %> </b>
+                    </td>
+                    <td style="text-align: right">
+                      <b> <%= format_fm(@T_capital) %></b>
+                    </td>
+                    <td style="text-align: right">
+                      <b> <%= format_fm(@T_interes_diferido) %></b>
+                    </td>
+                    <td style="text-align: right">
+                      <b> <%= format_fm(@T_interes_mora) %></b>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+              </table>
+            </div>
+
+    </table>
+      <% end -%>
+
+
+
+      <%= link_to(image_tag(image_path(t('Sistema.Body.Imagenes.cerrar'))),
+        { :controller => 'consulta_prestamo_factura', :action => :index, :prestamo_id => @prestamo.id },
+        { :id=>'button_close', } ) -%>
+
+    <% end -%>
+  </div>
+</div>
+

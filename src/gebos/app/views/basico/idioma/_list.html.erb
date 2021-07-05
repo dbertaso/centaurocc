@@ -1,0 +1,31 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 130px" >
+         <%= I18n.t('Sistema.Body.Vistas.General.idioma') %>
+      </th>       
+      <th style="width: 200px" >
+         <%= I18n.t('Sistema.Body.Vistas.General.nemonico') %>
+      </th>   
+      <th style="width: 180px" >
+         <%= I18n.t('Sistema.Body.Vistas.General.bandera') %>
+      </th>
+      <th style="width: 150px" >
+         <%=I18n.t('Sistema.Body.Vistas.General.activo')%>
+      </th>             
+      <th style="width: 30px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>   
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for idioma in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :idioma => idioma, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

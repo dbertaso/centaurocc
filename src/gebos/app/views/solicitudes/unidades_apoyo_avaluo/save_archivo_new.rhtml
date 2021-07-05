@@ -1,0 +1,10 @@
+<script type="text/javascript">
+
+  onload = function()
+  {
+   window.location = '<%= "http://#{request.host.to_s}:#{request.port.to_s}/solicitudes/unidades_apoyo_avaluo/edit_informe/#{@solicitud_tipo_garantia_id}?solicitud_id=#{@solicitud_id}" %>';
+  }
+
+</script>
+
+<p style="text-align: center">Cargando... <%= image_tag('cargando.gif',:title=>'Cargando') %></p>

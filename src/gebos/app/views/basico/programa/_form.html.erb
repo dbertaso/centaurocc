@@ -1,0 +1,201 @@
+
+<script language="javascript">
+
+  function mostrar_porcentaje(){
+    var porcentaje_1 = document.getElementById('programa_tipo_diferimiento_1').checked;
+    var div = document.getElementById('porcentaje');
+
+    if (porcentaje_1 == true)
+         div.style.display = 'true';
+    else
+         div.style.display = 'none';
+  }
+
+  function mostrar_tasa_negocio(){
+    var div = document.getElementById('tasa_negocio');
+    var vinculo_n = document.getElementById('programa_vinculo_tasa_n');
+
+    if (vinculo_n.checked)
+         div.style.display = 'block';
+    else
+         div.style.display = 'none';
+  }
+
+
+
+</script>
+<table>
+
+  <table  style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.General.identificacion')%></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 15%">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.General.nombre')%>
+        </label>
+      </td>
+      <td style="width: 85%">
+        <%= text_area 'programa', 'nombre',
+          :class=>'text', :style=>'width: 500px; height: 60px',
+          :onKeyUp=>'textCounter(this,255)', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.corto')}"%></label>
+      </td>
+      <td>
+        <%= text_area 'programa', 'alias',
+        :class=>'text', :style=>'width: 500px; height: 60px',
+        :onKeyUp=>'textCounter(this,255)', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label>
+      </td>
+      <td>
+        <%= text_area 'programa', 'descripcion',
+          :class=>'text',
+          :style=>'width: 500px; height: 60px',
+          :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 15%">
+        <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda')%>:</label>
+      </td>
+        <td>
+          <%= select(
+            'programa', 'moneda_id',
+            options_from_collection_for_select(@moneda_select, 'id', 'nombre', selected=@programa.moneda_id),
+            {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')} #{I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda')}"},
+            {:class=>'select', :onchange=>'inputChange();'} ) %>
+        </td>
+    </tr>  
+  </table>
+  <table style="display: none; width: 100%">
+    <tr>
+      <td style="width: 15%">
+        <label>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.credito')}"%>
+        </label>
+      </td>
+      <td align="left">
+        <%= select(
+          'programa', 'tipo_credito_id',
+          @tipo_credito_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method => :get, :url=>{:controller=>'programa',
+            :action=>:tipo_credito_change }, :with => "'id='+value")}; inputChange();"}) %>
+      </td>
+    </tr>
+    <br>
+
+</table>
+
+ <!--  <table  style="width: 100%">
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%#= "#{I18n.t('Sistema.Body.Vistas.General.indice')} #{I18n.t('Sistema.Body.Vistas.General.garantia')}"%></span>
+      </td>
+    </tr>
+    <tr>
+       <td style="width: 40%">
+        <label><%#=I18n.t('Sistema.Body.Vistas.General.relacion')%></label>
+      </td>
+      <td style="width: 60%">
+        <%#= text_field 'programa', 'relacion_garantia_f',
+          :class=>'text', :style=>'width: 30px',
+          :maxlength=>'4', :onkeypress=>'inputChange();'  -%> : 1
+      </td>
+
+      </tr>
+  </table> -->
+
+  <!-- Inicio Campo oculto para version Banmujer. Valor por defecto Aprueba Comite y Directorio -->
+    <table  style="display: none; width: 100%">
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= "#{I18n.t('Sistema.Body.Vistas.General.instancias')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.aprobacion')}"%></span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <%= radio_button 'programa', 'solo_aprueba_comite', true,
+              :class=>'text', :onclick=>"inputChange();programa_aprueba_comite_directorio_false.checked='checked'; programa_solo_aprueba_directorio_false.checked='checked'"  -%><%= Etiquetas.etiqueta(5) %><br />
+            <%= radio_button 'programa', 'solo_aprueba_comite', false,
+              :class=>'text', :onclick=>'inputChange();', :style=>'display:none'  -%>
+
+            <%= radio_button 'programa', 'solo_aprueba_directorio', true,
+              :class=>'text', :onclick=>"inputChange();programa_aprueba_comite_directorio_false.checked='checked'; programa_solo_aprueba_comite_false.checked='checked'"  -%><%= Etiquetas.etiqueta(6) %><br />
+            <%= radio_button 'programa', 'solo_aprueba_directorio', false,
+              :class=>'text', :onclick=>'inputChange();', :style=>'display:none'  -%>
+
+            <%= radio_button 'programa', 'aprueba_comite_directorio', true,
+              :class=>'text', :onclick=>"inputChange();programa_solo_aprueba_comite_false.checked='checked'; programa_solo_aprueba_directorio_false.checked='checked'"  -%><%= Etiquetas.etiqueta(7) %><br />
+            <%= radio_button 'programa', 'aprueba_comite_directorio', false,
+              :class=>'text', :onclick=>'inputChange();', :style=>'display:none'  -%>
+
+           </td>
+         </tr>
+      </table>
+    <!-- Inicio Campo oculto para version Banmujer. Valor por defecto Aprueba Comite y Directorio -->
+
+      <table  style="width: 100%">
+        <tr>
+          <td class="separador" colspan="2">
+            <span><%=I18n.t('Sistema.Body.Vistas.General.estado')%></span>
+          </td>
+        </tr>
+          <tr>
+          <td  style="width: 10%" align="left">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+          </td>
+          <td  style="width: 60%">
+            <%= check_box 'programa', 'activo',
+            :checked_value=>"1",
+            :unchecked_value=>"0",
+            :onclick=>'inputChange(); mostrar_porcentaje();' -%>
+           </td>
+         </tr>
+      </table>
+<!-- 
+      <table  style="display: none; width: 100%">
+        <tr>
+          <td class="separador" colspan="3">
+            <span>
+                <%#= "#{I18n.t('Sistema.Body.Vistas.General.partida')} #{I18n.t('Sistema.Body.Vistas.General.presupuestaria')} #{I18n.t('Sistema.Body.Vistas.General.asociada')}"%>
+            </span>
+          </td>
+
+        </tr>
+
+        <tr>
+          <td style="width: 40%">
+            <label>
+                <%#= "#{I18n.t('Sistema.Body.Vistas.General.partida')} #{I18n.t('Sistema.Body.Vistas.General.presupuestaria')}"%>
+            </label>
+          </td>
+          <td style="width: 30%">
+            <%#= select('programa','partida_presupuestaria_id',   PartidaPresupuestaria.find(:all).collect! {|x| [x.nombre, x.id]}, { :include_blank => false }, { :class=>'select', :onchange=>'inputChange();' } ) %>
+          </td>
+
+          <td style="width: 30%">
+            <b> <%#= @programa.cuenta_presupuestaria unless @programa.partida_presupuestaria.nil? %> </b>
+          </td>
+        </tr>
+
+      </table> -->
+</br></br>
+<script language="javascript">
+//SE COMENTO EL LLAMADO A ESTAS FUNCIONES PORQUE NO SE ENCUENTRAN LOS CAMPOS PRESENTES Y GENERA ERROR JACSCRIPT "ROBERT"
+  //mostrar_porcentaje();
+  //mostrar_tasa_negocio();
+</script>

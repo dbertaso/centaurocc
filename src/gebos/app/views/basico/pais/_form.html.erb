@@ -1,0 +1,33 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <% unless @pais.new_record? %>
+    <tr>
+        <td width="150px">
+            <label><%="#{I18n.t('Sistema.Body.Vistas.General.id')} #{I18n.t('Sistema.Body.Vistas.General.registro')}"%></label>
+        </td>
+        <td style="width: 580px">
+            <%= @pais.id %>
+        </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td style="width: 30%">
+        <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.pais')}"%></label>
+        <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td style="width: 70%">
+        <%= text_field 'pais', 'nombre', :class=>'text', :style=>'width: 240px', :maxlength=>'50'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.siglas')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.pais')}"%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_field 'pais', 'abreviacion', :class=>'text', :style=>'width: 100px', :maxlength=>'2'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+            <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

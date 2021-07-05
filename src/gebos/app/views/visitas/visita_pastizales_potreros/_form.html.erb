@@ -1,0 +1,201 @@
+<script type="text/javascript">
+  varEnviado = false;
+</script>
+<table>
+  <tr>
+    <td style="width: 400px">
+      <label><%="#{I18n.t('Sistema.Body.Controladores.TipoPastoForraje.FormTitles.form_title_record')} #{I18n.t('Sistema.Body.Vistas.General.forraje')}"%> </label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 300px">
+      <%= select(
+        'pastizales_potreros', 'tipo_pasto_forraje_id',
+        @tipo_pasto_forraje_list.map{|i| [i.descripcion, i.id]},
+        {:prompt => I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+        { :class=>'select',:onchange=>"#{remote_function(
+        :method=>:get, :loading =>'Element.show("loading")', :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>'visita_pastizales_potreros', :action=>:tipo_pasto_change, :id=>@visitas.id }, 
+        :with=>"'tipo_pasto_forraje_id='+value")}; inputChange();" } ) %>
+    </td>
+  </tr>	
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.superficie')%> </label><label class="requerido">(*)</label>
+    </td>
+    <td>
+      <%= text_field 'pastizales_potreros','superficie_f',
+        :class=>'text', :style=>'width: 150px',
+        :onkeypress=>'inputChange();', :onkeyup=>'conversion(this.id);',                
+        :maxlength=>'100' -%> <%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+      <label id="conversion_a_metros" class="requerido"> (*)</label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.especie_variedad_pasto')%> </label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="especie_pasto-select">
+        <%= render :partial => 'especie_pasto_select' %>
+      </span>
+    </td>
+  </tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.fecha_siembra')%> </label>
+  </td>
+  <td style="width: 500px">
+    <%= calendar_date_select_tag "pastizales_potreros[fecha_siembra_f]", @pastizales_potreros.fecha_siembra_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.fecha_corte')%> </label>
+  </td>
+  <td style="width: 500px">
+    <%= calendar_date_select_tag "pastizales_potreros[fecha_corte_f]", @pastizales_potreros.fecha_corte_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date > (new Date()).stripTime()",:onchange=>'inputChange();' %> <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condiciones_pasto')%></label><label style="color: red">*</label>
+  </td>
+  <td>
+    <%= radio_button 'pastizales_potreros', 'condicion_pasto', 'E',
+      :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;
+    <%= radio_button 'pastizales_potreros', 'condicion_pasto', 'B',
+      :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;
+    <%= radio_button 'pastizales_potreros', 'condicion_pasto', 'R',
+      :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;
+    <%= radio_button 'pastizales_potreros', 'condicion_pasto', 'M',
+      :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%> &nbsp;
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.nro_potrero_cerca_electrica')%></label>
+  </td>
+  <td>
+    <%= text_field 'pastizales_potreros', 'nro_potrero_cerca_electrica',
+      :class=>'text',:onchange=>"#{remote_function(:method=>:get, :loading =>'Element.show("loading")', :loaded => 'Element.hide("loading")',
+      :url=>{:controller=>'visita_pastizales_potreros', :action=>:potreros_onchange, :id=>@visitas.id },
+      :with=>"'nro_potrero_cerca_electrica='+value+'&nro_potrero_cerca_tradicional='+document.getElementById('pastizales_potreros_nro_potrero_cerca_tradicional').value")}; 
+        inputChange();", :style=>'width: 50px', :onkeypress=>'inputChange();', :maxlength=>'3' -%>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.nro_potrero_cerca_tradicional')%></label>
+  </td>
+  <td>
+   <%= text_field 'pastizales_potreros', 'nro_potrero_cerca_tradicional',
+      :class=>'text',:onchange=>"#{remote_function(
+      :method=>:get, :loading =>'Element.show("loading")', :loaded => 'Element.hide("loading")',
+      :url=>{:controller=>'visita_pastizales_potreros', :action=>:potreros_onchange, :id=>@visitas.id },
+      :with=>"'nro_potrero_cerca_tradicional='+value+'&nro_potrero_cerca_electrica='+document.getElementById('pastizales_potreros_nro_potrero_cerca_electrica').value")}; inputChange();",
+      :style=>'width: 50px', :onkeypress=>'inputChange();', :maxlength=>'3' -%>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.cantidad_potreros_asociados')%></label>
+  </td>
+  <td>
+    <div id="cantidad_potreros_label">
+      <label><b><%= @pastizales_potreros.cantidad_potreros -%></b></label>
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.cuantos_potreros_cerca_electrica_posee_sistema_riego')%></label>
+  </td>
+  <td>
+    <%= text_field 'pastizales_potreros', 'nro_potrero_cerca_electrica_sist_riego',
+      :class=>'text',:onchange=>"#{remote_function(
+      :method=>:get, :loading =>'Element.show("loading")', :loaded => 'Element.hide("loading")',
+      :url=>{:controller=>'visita_pastizales_potreros', :action=>:sistema_riego_onchange, :id=>@visitas.id },
+      :with=>"'nro_potrero_cerca_electrica_sist_riego='+value+'&nro_potrero_cerca_tradicional_sist_riego='+document.getElementById('pastizales_potreros_nro_potrero_cerca_tradicional_sist_riego').value")}; inputChange();",
+      :style=>'width: 50px', :onkeypress=>'inputChange();', :maxlength=>'3' -%>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.cuantos_potreros_cerca_electrica_tradicional_posee_sistema_riego')%></label>
+  </td>
+  <td>
+    <%= text_field 'pastizales_potreros', 'nro_potrero_cerca_tradicional_sist_riego',
+      :class=>'text',:onchange=>"#{remote_function(
+      :method=>:get, :loading =>'Element.show("loading")', :loaded => 'Element.hide("loading")',
+      :url=>{:controller=>'visita_pastizales_potreros', :action=>:sistema_riego_onchange, :id=>@visitas.id },
+      :with=>"'nro_potrero_cerca_tradicional_sist_riego='+value+'&nro_potrero_cerca_electrica_sist_riego='+document.getElementById('pastizales_potreros_nro_potrero_cerca_electrica_sist_riego').value")}; inputChange();",
+      :style=>'width: 50px', :onkeypress=>'inputChange();', :maxlength=>'3' -%>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.total_potreros_sistema_riego')%></label>
+  </td>
+  <td>
+    <div id="cantidad_potreros_sist_riego_label">
+      <label><b><%= (@pastizales_potreros.nro_potrero_cerca_electrica_sist_riego.to_i + @pastizales_potreros.nro_potrero_cerca_tradicional_sist_riego.to_i) -%></b></label>
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.productor_realiza_fertilizacion')%></label><label class="requerido"> (*)</label>
+  </td>
+  <td>
+    <%= radio_button 'pastizales_potreros', 'fertilizacion', 'true',
+      :class=>'text', :onclick=>'inputChange(); area_fertilizacion(this.value);'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si')%> &nbsp;
+    <%= radio_button 'pastizales_potreros', 'fertilizacion', 'false',
+      :class=>'text', :onclick=>'inputChange(); area_fertilizacion(this.value);'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no')%> &nbsp;
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <table id="fertilizacion" width="100%" border="0">
+      <tr>
+        <td style="width: 400px">
+          <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.tipo_fertilizacion')%></label><label class="requerido"> (*)</label>
+        </td>
+        <td style="width: 500px">
+          <%= radio_button 'pastizales_potreros', 'tipo_fertilizacion_id', '1',
+            :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.tipo_fertilizacion_organica')%> &nbsp;
+          <%= radio_button 'pastizales_potreros', 'tipo_fertilizacion_id', '2',
+            :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.tipo_fertilizacion_quimica')%> &nbsp;
+          <%= radio_button 'pastizales_potreros', 'tipo_fertilizacion_id', '3',
+            :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.tipo_fertilizacion_mixta')%> &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.descripcion_fertilizacion')%></label>
+        </td>
+        <td>
+          <%= text_area 'pastizales_potreros', 'descripcion_fertilizacion',
+            :class=>'text', :style=>'width: 400px; height: 50px',
+            :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td valign="top">
+    <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.descripcion_observado')%></label>
+  </td>
+  <td>
+    <%= text_area 'pastizales_potreros', 'descripcion_observado',
+      :class=>'text', :style=>'width: 400px; height: 80px',
+      :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+  </td>
+</tr>
+<tr>
+  <td colspan="2" class="lista0" style="text-align: right">
+    <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+

@@ -1,0 +1,11 @@
+<% 
+@intereses_totales = @interes_moratorio + @interes_ordinarios +  @interes_diferido + @causado_no_devengado
+
+interes_a_reestructurar = ParametroGeneral.find(:all)[0].porcentaje_interes_a_reestructurar
+@porcentaje_pago_del_cliente = 100 - interes_a_reestructurar
+@monto_pago_del_cliente = @intereses_totales*@porcentaje_pago_del_cliente/100
+@total_intereses_a_reestructurar = @intereses_totales - @monto_pago_del_cliente
+%>
+
+<b> <%= format_fm(@intereses_totales)%></b>
+

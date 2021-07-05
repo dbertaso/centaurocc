@@ -1,0 +1,45 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.Usuario.UsuarioRol.Etiquetas.modificando_usuario') %> <span style="color: #FF0000">'<%= @usuario.nombre_usuario %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'sistema/usuario/common/tabs' %>
+
+<div class="marco-contenido2">
+
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id => @usuario.id } ) do %>
+
+  <table>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.clave')%></label>
+      </td>
+      <td>
+        <%= password_field 'usuario', 'clave', :class=>'text', :style=>'width: 180px', :maxlength=>'30'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Usuario.CambiarClave.Etiquetas.confirmar_clave')%></label>
+      </td>
+      <td>
+        <%= password_field 'usuario', 'clave_confirmation', :class=>'text', :style=>'width: 180px', :maxlength=>'30'  -%>
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td class="lista0" style="text-align: right">
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.cancelar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')), :action => :index  -%>
+      </td>
+    </tr>
+  </table>
+
+  <% end %>
+</div>

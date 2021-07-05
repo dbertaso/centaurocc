@@ -1,0 +1,166 @@
+<script language="javascript">
+  function abrirCampos(chk, id){
+    if (chk.checked == true){
+      document.getElementById('tipo_' + id).disabled = false;
+      document.getElementById('fijo_valor_' + id).disabled = false;
+      document.getElementById('minimo_valor_' + id).disabled = false;
+      document.getElementById('maximo_valor_' + id).disabled = false;
+    }else{
+      document.getElementById('tipo_' + id).disabled = true;
+      document.getElementById('fijo_valor_' + id).disabled = true;
+      document.getElementById('minimo_valor_' + id).disabled = true;
+      document.getElementById('maximo_valor_' + id).disabled = true;
+    }
+  }
+</script>
+<table  style="width: 100%">
+  <tr>
+    <td colspan="2"><div id="estado-select"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.seleccione')} #{I18n.t('Sistema.Body.General.el')} #{I18n.t('Sistema.Body.Vistas.General.estado')}" %></label> <%= link_to_remote(
+          image_tag(I18n.t('Sistema.Body.Imagenes.img_expandir')), :method => :get, :loading =>'image_load()', :loaded => 'image_unload()',
+          :url => {:action => :estado_select}) -%></div>
+      <div id="oficina-select" style="display: none">
+        <table class="lista" width="100%" border="1">
+          <tr><th colspan="3"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.seleccione')} #{I18n.t('Sistema.Body.Vistas.General.las')} #{I18n.t('Sistema.Body.Vistas.General.oficinas')} #{I18n.t('Sistema.Body.Vistas.General.que')} #{I18n.t('Sistema.Body.Vistas.General.aplicara').gsub('á', 'Á')} #{I18n.t('Sistema.Body.Vistas.General.los')} #{I18n.t('Sistema.Body.Vistas.General.costos')}".upcase %></label></th></tr>
+          <tr><th colspan="3" align="right"><%= I18n.t('Sistema.Body.General.seleccionar_todos') %> <input type="checkbox" id="todos" name="todos" onClick="GenericcheckAll(form.oficina_id,form.todos, 'oficinas')"/></th></tr>
+          <%= Estado.oficinas.to_s %>
+          <tr class="lista0"><td colspan="3" align="center"><%= link_to_remote(
+                image_tag(I18n.t('Sistema.Body.Imagenes.guardar')), :loading =>'image_load()', :method => :get, :loaded => 'image_unload()',
+                :url => {:action => :estado_up_select}) -%></td></tr>
+        </table>
+        <br/>
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>:</label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <%= select(
+          'configurador', 'moneda_id',
+          options_from_collection_for_select(@moneda, 'id', 'nombre', selected=@meneda_activa),
+          {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+          {:class=>'select', :onchange=>'inputChange();'} ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.sector') %></label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'configurador', 'sector_id',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>"#{remote_function(
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :method => :get,
+        :url=>{:controller=>'estructura_costo',
+          :action=>:sector_change },
+        :with=>"'sector_id='+ this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %></label>
+    </td>
+    <td>
+      <div id="sub-sector-select">
+        <%= select(
+          'configurador', 'sub_sector_id',
+          @sub_sector_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>'estructura_costo',
+            :action=>:sub_sector_change },
+          :with=>"'sub_sector_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.rubro') %></label>
+    </td>
+    <td>
+      <div id="rubro-select">
+        <%= select(
+          'configurador', 'rubro_id',
+          @rubro_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>'estructura_costo',
+            :action=>:rubro_change },
+          :with=>"'rubro_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sub_rubro') %></label>
+    </td>
+    <td>
+      <div id="sub_rubro-select">
+        <%= select(
+          'configurador', 'rubro_id',
+          @sub_rubro_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>'estructura_costo',
+            :action=>:sub_rubro_change },
+          :with=>"'sub_rubro_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.actividad') %></label>
+    </td>
+    <td>
+      <div id="actividad-select">
+        <%= select(
+          'configurador', 'rubro_id',
+          @actividad_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>'estructura_costo',
+            :action=>:actividad_change },
+          :with=>"'actividad_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.justificacion') %></label>
+    </td>
+    <td>
+      <%= text_area 'configurador', 'justificacion',
+        :class=>'text',
+        :style=>'width: 580px; height: 60px',
+        :onKeyUp=>'textCounter(this,200)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <div id="partida-item-select" style="display: none"></div>
+    </td>
+  </tr>
+</table>
+<input id="oficinas" type="hidden" name="oficinas_id"/>
+<input id="items_id" type="hidden" name="items_id"/>

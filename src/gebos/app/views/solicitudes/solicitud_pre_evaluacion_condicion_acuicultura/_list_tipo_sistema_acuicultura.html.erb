@@ -1,0 +1,47 @@
+
+<div id="mensaje_porcentaje_topografias" style="display:none;background: #fcc;margin: 0px;border: solid 1px #f66;margin-bottom: 5px">
+	<p>Coloque el porcentaje para guardar su selecci&oacute;n</p>
+</div>	
+
+<table border=0>
+    <% lista = 'lista0'
+       @tipo_topografia.each { |i| %>
+<tr>
+	<td>
+
+	
+		<% entregado_onchange = remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :url=>{:controller=>"solicitud_pre_evaluacion_condicion_acuicultura", :action=>:save_topografias },
+            :with=>"'id=#{i.id}&unidad_produccion_condicion_acuicultura_id=#{@unidad_produccion_condicion_acuicultura.id}&porcentaje='+condiciones_tipo_topografia_porcentaje_#{i.id}.value") %>
+
+       <%= check_box 'recaudo_check', i.id,
+            {:checked=>i.marcado, :onchange=>"actualizar_topografia(#{i.id})", :name => "condiciones_tipo_topografia[]", :id => "tipo_topografia_#{i.id}" }  %>
+        
+        	&nbsp;
+        	
+        <%= i.nombre %>
+	</td>
+	<td>      
+        
+        <input class="text" id="condiciones_tipo_topografia_porcentaje_<%= i.id %>" 
+        value = "<%= i.porcentaje %>" 
+        <%= i.habilitado %> 
+        size="5" 
+        style="width: 40px;" 
+        type="text"
+        maxlength="5" name="condiciones_tipo_topografia_porcentaje[<%= i.id %>]" 
+        onchange="new Ajax.Request('/solicitudes/solicitud_pre_evaluacion_condicion_acuicultura/save_topografias', 
+        	{asynchronous:true, evalScripts:true, onLoaded:function(request){Element.hide(&quot;loading&quot;)}, 
+        	onLoading:function(request){Element.show(&quot;loading&quot;)}, 
+        	parameters:'id=<%= i.id %>&unidad_produccion_condicion_acuicultura_id=<%= @unidad_produccion_condicion_acuicultura.id %>&porcentaje='+condiciones_tipo_topografia_porcentaje_<%= i.id %>.value});
+        	document.getElementById('mensaje_porcentaje_topografias').style.display = 'none';"  > %
+        
+        
+    </td>
+</tr>
+    <%  
+    } %>
+
+</table>

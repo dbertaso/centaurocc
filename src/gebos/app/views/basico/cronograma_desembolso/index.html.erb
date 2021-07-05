@@ -1,0 +1,47 @@
+<div class="marco-titulo"><div><div>
+  <%= "#{I18n.t('Sistema.Body.Vistas.General.modificando')} #{I18n.t('Sistema.Body.Vistas.General.el')} #{I18n.t('Sistema.Body.Vistas.General.rubro')}" %> <span class="titulo_modificar">'<%= @rubro.nombre %>'</span>
+    </div></div></div>
+<%= render :partial=>'/basico/sector/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= render :partial=>'/basico/rubro/common/tabs' %>
+  <div class="marco-contenido2">
+    <div class="marco-titulo"><div><div>
+     <%= I18n.t('Sistema.Body.Vistas.CronogramaDesembolso.Header.form_title') %>
+    </div></div></div>
+
+
+    <%
+    begin
+      controller.method(:new)
+    %>
+      <div class="marco-boton-out" id="button_new">
+        <%= link_to_remote(
+          image_tag(I18n.t('Sistema.Body.Imagenes.agregar')),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method => :get,
+          :url => { :action => :new, :id => @rubro.id } ) if vlink 'edit' -%>
+      </div>
+    <%
+    rescue NameError
+    end
+  %>
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+
+    <div id="list">
+      <div id="list">
+        <%= render 'list' -%>
+      </div>
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :action => :edit, :controller => 'rubro', :popup=>params[:popup], :id => @rubro.id },
+        { :id=>'button_close', } )
+      -%>
+    </div>
+
+  </div>
+</div>

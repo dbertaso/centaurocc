@@ -1,0 +1,59 @@
+<% view_guia_movilizacion = @view_guia_movilizacion if view_guia_movilizacion.nil? %>
+
+<td align ="center">
+  <%= view_guia_movilizacion.numero_guia.to_s %>
+</td>
+<td align ="center">
+  <%= view_guia_movilizacion.fecha_emision_f %>
+</td>
+<td>
+  <%= view_guia_movilizacion.fecha_estimada_f %>
+</td>
+<td>
+  <%= view_guia_movilizacion.nombre_destino %>
+</td>
+<td style="text-align: center">
+  <%= view_guia_movilizacion.cedula_rif %>
+</td>
+<td style="text-align: center">
+  <%= view_guia_movilizacion.productor  %>
+</td>
+<td style="text-align: center; color: red"><label style="color: red">
+    <%if view_guia_movilizacion.estatus == 'E'%>
+      <%=I18n.t('Sistema.Body.Vistas.General.elaborada')%>
+    <%elsif view_guia_movilizacion.estatus == 'T'%>
+      <%=I18n.t('Sistema.Body.Vistas.General.en_transito')%>
+    <%elsif view_guia_movilizacion.estatus == 'R'%>
+      <%=I18n.t('Sistema.Body.Vistas.General.recibida')%>
+    <%end%>
+  </label></td>
+
+<td style="text-align: center">
+  <%= view_guia_movilizacion.encargado.to_s unless view_guia_movilizacion.encargado.nil?-%>
+</td>
+<td style="text-align: center">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+    {:action => :view, :id => view_guia_movilizacion.guia_movilizacion_maquinaria_id, :solicitud_id=> params[:solicitud_id], :controller => 'guia_movilizacion_maquinaria'} %>
+  <% if view_guia_movilizacion.estatus_solicitud == true %>
+    
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')),:title=>I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.impresion_envio_maquinaria')), {:controller=>'guia_movilizacion_maquinaria', :action=>'printer',:popup=>true, :solicitud_id=> params[:solicitud_id], :guia_id => view_guia_movilizacion.guia_movilizacion_maquinaria_id  }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>view_guia_movilizacion.estatus_solicitud) + "','height=600,width=1100, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+    
+    <%  if view_guia_movilizacion.estatus == 'E'%>
+     <div id="row_<%= view_guia_movilizacion.guia_movilizacion_maquinaria_id %>" >
+      <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.modificar')),
+        {:action => :edit, :id => view_guia_movilizacion.guia_movilizacion_maquinaria_id, :solicitud_id => view_guia_movilizacion.solicitud_id,:controller => 'guia_movilizacion_maquinaria'} %>
+      <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+        :url => {:controller => 'guia_movilizacion_maquinaria', :action => :delete, :id => view_guia_movilizacion.guia_movilizacion_maquinaria_id}) if vlink 'delete' -%>
+  
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'), :title=>I18n.t('Sistema.Body.Controladores.Accion.enviar')),
+          :loading =>'image_load()', 
+          :loaded => 'image_unload()',
+          :method=>:get, 
+          :confirm => I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.esta_seguro_enviar_guia'),
+          :url => {:controller => 'guia_movilizacion_maquinaria', :action => :enviar, :id => view_guia_movilizacion.guia_movilizacion_maquinaria_id, :solicitud_id=>view_guia_movilizacion.solicitud_id }) if vlink 'confirmar' -%></div>
+    <%end%>
+  <%end%>
+</td>

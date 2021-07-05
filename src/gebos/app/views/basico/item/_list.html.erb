@@ -1,0 +1,42 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 100px" <%= sort_class_helper('item.rubro.codigo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.rubro')}", 'item.rubro.codigo', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('item.rubro.nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.rubro')}", 'item.rubro.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('item.partida.codigo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.partida')}", 'item.partida.codigo', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('item.partida.nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.partida')}", 'item.partida.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('item.codigo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.item')}", 'item.codigo', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('item.nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.item')}", 'item.nombre', 'list' %>
+      </th>
+      <th style="width: 250px" <%= sort_class_helper('item.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'item.descripcion', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('item.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'item.activo', 'list' %>
+      </th>
+      <th style="width: 80px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.acciones')%></label>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for item in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :item => item, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

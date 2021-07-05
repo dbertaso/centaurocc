@@ -1,0 +1,167 @@
+
+<div id="filters">
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+  <table>
+    <tr>
+      <td style="width: 150px">
+        <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.programa') %>:</label>
+      </td>
+      <td>
+        <%= select_tag(
+          'programa_id',
+            options_from_collection_for_select(@programa_list, "id" ,"nombre" ),
+            {:prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.General.programa')} #{t('Sistema.Body.Vistas.General.social')}",
+             :class=>'select'} ) %>
+      </td>
+
+    </tr>
+      
+    <tr>
+      <td style="width: 150px">
+        <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.transaccion_contable') %>:</label>
+      </td>
+      <td>
+        <%= select_tag(
+          'transaccion_contable_id',
+           options_from_collection_for_select(@transaccion_contable_list, "id" ,"nombre" ),
+          { :prompt=>"#{t('Sistema.Body.Vistas.General.seleccione')} #{t('Sistema.Body.Vistas.ReglaContable.Etiquetas.transaccion_contable')}",
+            :class=>'select'} ) %>
+      </td>
+
+    </tr>
+
+    
+    <tr>
+      <td style="width: 150px">
+        <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.modalidad_pago') %> </label>
+      </td>
+      <td>
+        <%= select_tag(
+          'modalidad_pago',
+           options_for_select([[t('Sistema.Body.ModalidadPago.seleccione_modalidad'),"X"],
+                                [t('Sistema.Body.ModalidadPago.arrime'), "A"],
+                                [t('Sistema.Body.ModalidadPago.deposito'), "R"],
+                                [t('Sistema.Body.ModalidadPago.devengo'), "Z"],
+                                [t('Sistema.Body.ModalidadPago.domicializacion'), "D"],
+                                [t('Sistema.Body.ModalidadPago.taquilla'), "O"]]),
+          { :class=>'select'} ) %>
+      </td>
+
+    </tr>
+
+    <tr>
+      <td style="width: 150px">
+        <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.institucion_origen') %>: </label>
+      </td>
+      <td>
+        <%= select_tag('fuente_recursos_id',
+           options_for_select([[t('Sistema.Body.Institucion.seleccione_institucion'),"0"],
+                               [t('Sistema.Body.Institucion.agro'), 2],
+                               [t('Sistema.Body.Institucion.fondafa'), 3],
+                               [t('Sistema.Body.Institucion.fondas'), 1]]),
+          { :class=>'select' }) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.estatus_financiamiento') %>: </label>
+      </td>
+      <td>
+        <%= select_tag('estatus',
+           options_for_select([[t('Sistema.Body.EstatusPrestamo.seleccione_estatus'),"X"],
+                               [t('Sistema.Body.EstatusPrestamo.cambio_estatus'), "P"],
+                               [t('Sistema.Body.EstatusPrestamo.cancelado'), "C"],
+                               [t('Sistema.Body.EstatusPrestamo.castigado'), "K"],
+                               [t('Sistema.Body.EstatusPrestamo.litigio'), "L"],
+                               [t('Sistema.Body.EstatusPrestamo.vencido'), "E"],
+                               [t('Sistema.Body.EstatusPrestamo.vigente'), "V"]]),
+          { :class=>'select' }) %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label><%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.plazo_ciclo') %>:</label>
+      </td>
+      <td>
+        <%= select_tag('plazos',
+           options_for_select([[t('Sistema.Body.TipoPlazo.seleccione_plazo'),"0"],
+                               [t('Sistema.Body.TipoPlazo.corto'), 'C'],
+                               [t('Sistema.Body.TipoPlazo.largo'), 'L']]),
+          { :class=>'select' }) %>
+      </td>
+    </tr>  
+    <tr>
+      <td>
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+      </td>
+    </tr>
+
+  </table>
+  <% end %>
+</div>
+<br/>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 150px" <%= sort_class_helper('programa_nombre') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.programa'), 'programa_nombre', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('moneda_nombre') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.General.moneda'), 'moneda_nombre', 'list' %>
+      </th>      
+      <th style="width: 150px" <%= sort_class_helper('transaccion_contable_id') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.transaccion_contable'), 'transaccion_contable_id', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('fuente_recursos_id') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.institucion_origen'), 'fuente_recursos_id', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('reestructurado') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.reestructurado'), 'reestructurado', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('estatus') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.estatus'), 'estatus', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('plazos') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.plazo_ciclo'), 'plazos', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('secuencia') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.secuencia'), 'secuencia', 'list' %>
+      </th>
+      <th style="width:75px" <%= sort_class_helper('modalidad_pago') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.modalidad_pago'), 'modalidad_pago', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('codigo_contable') %>>
+        <%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiquetas.codigo_contable'), 'codigo_contable', 'list' %>
+      </th>
+      <th style="width: 100px" align="center">
+        <%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.debe')%>
+      </th>
+      <th style="width: 100px" align="center" >
+        <%= t('Sistema.Body.Vistas.ReglaContable.Etiquetas.haber')%>
+      </th>
+      <th style="width: 60px">
+        <%= t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%
+
+    even_odd = 1
+
+    for regla_contable in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :regla_contable => regla_contable, :even_odd => even_odd } -%>
+
+    <% end %>
+
+  </tbody>
+
+</table>
+
+<%= form_pagination %>
+

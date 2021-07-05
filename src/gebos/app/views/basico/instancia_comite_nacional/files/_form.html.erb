@@ -1,0 +1,116 @@
+<table>
+  <tr>
+    <td style="width: 60px"><label># <%=I18n.t('Sistema.Body.Vistas.General.instancia')%></label></td>
+    <td style="width: 620px">
+      <div id='nro_comite'>
+      <%= text_field 'comite', 'comite_nro', :class=>'text', :style=>'width: 22px', :maxlength=>'4', :value => ""  -%>-
+      <%#=@anio_comite%>
+      <!--	<input  id = "comite_numero" name = "comite_numero" value="<% #@comite.numero-%>" class="text"> -->
+      </div>
+      <input type="hidden" id = "comite_id" name = "comite_numero" value="<%= @comite.id-%>" />
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 60px"><label><%=I18n.t('Sistema.Body.Vistas.General.instancia') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.aprobacion')%></label></td>
+    <td style="width: 620px">
+      <%#= select('comite', 'instancia_tipo_id',
+        @instancia_tipo_select.map{|e| [e.nombre, e.id]},
+        { },
+        { :class=>'select' } )
+      %>
+      <!-- Directorio Ejecutivo -->
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.fecha')%></label></td>
+    <td style="width: 620px">
+      <%#= text_field 'comite', 'fecha_apertura_f',
+        :class=>'text', :style=>'width: 80px',
+        :maxlength=>'10', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();' -%>
+      <%#= calendar 'comite_fecha_apertura_f', 'calendar_fecha_apertura' %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.hora')%></label></td>
+    <td style="width: 620px">
+      <%#= text_field 'comite', 'hora_apertura', :class=>'text', :style=>'width: 20px', :maxlength=>'2'  -%>:
+      <%#= text_field 'comite', 'minuto_apertura', :class=>'text', :style=>'width: 20px', :maxlength=>'2'  -%>
+      <select name="comite_meridiano_apertura" size="1" class="select">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label><%=I18n.t('Sistema.Body.Vistas.General.lugar')%></label></td>
+    <td>
+      <%#= text_area 'comite', 'lugar',
+        :class=>'text',
+        :style=>'width: 350px; height: 40px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,250)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label><%=I18n.t('Sistema.Body.General.direccion')%></label></td>
+    <td>
+      <%#= text_area 'comite', 'direccion',
+      :class=>'text',
+      :style=>'width: 350px; height: 60px',
+      :onkeypress=>'inputChange();',
+      :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+
+</table>
+
+
+<table>
+  <tr>
+    <td style="width: 60px"><label><%=I18n.t('Sistema.Body.General.integrante')%></label></td>
+
+    <td style="width: 220px">
+      <span id="miembros-select">
+        <%#= render :partial => 'miembros_select' %>
+      </span>
+    </td >
+
+    <td style="width: 20px"><label><%=I18n.t('Sistema.Body.Controladores.UsuarioRol.FormTitles.form_title_record')%></label></td>
+    <td style="width: 140px">
+      <select id ="comite_miembro_rol"name="comite_miembro_rol" size="1"  class="select" >
+        <option value="<%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.presidenta')%>"><%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.presidenta')%></option>
+        		<option value="<%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.principal')%>"><%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.principal')%></option>
+        		<option value="<%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.suplente')%>"><%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.suplente')%></option>
+		        <option value="<%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.secretaria')%>"><%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.secretaria')%></option>
+                <option value="<%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.consultor_juridico')%>"><%=I18n.t('Sistema.Body.Vistas.InstanciaComiteNacional.Tipos.consultor_juridico')%></option>
+      </select>
+    </td>
+
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.firma')%></label></td>
+
+    <td style="width: 40px">
+      <%#= check_box 'comite_miembro', 'firma',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onclick=>'inputChange();' -%>
+    </td>
+
+    <td>
+      <a onclick='enviar_miembros()' href='#'>
+        <img src='/assets/boton_agregar.gif?1210954755' alt="#{I18n.t('Sistema.Body.Controladores.Accion.agregar')} #{I18n.t('Sistema.Body.Vistas.General.miembros')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.comite')}" title="#{I18n.t('Sistema.Body.Controladores.Accion.agregar')} #{I18n.t('Sistema.Body.Vistas.General.miembros')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.comite')}"/>
+      </a>
+    </td>
+
+  </tr>
+</table>
+
+<br/>
+
+<div id="list-miembro">
+  <%#= render :partial => 'list_miembro' -%>
+</div>

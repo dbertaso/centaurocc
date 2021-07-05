@@ -1,0 +1,32 @@
+<td align="center">
+  <%= analista_cobranza.primer_nombre unless analista_cobranza.nil?%>
+</td>
+<td align="center">
+  <%= analista_cobranza.primer_apellido unless analista_cobranza.nil?%>
+</td>
+<td>
+  <%= analista_cobranza.letra_cedula.to_s << " " << analista_cobranza.cedula.to_s unless analista_cobranza.nil?%>
+</td>
+<td>
+  <%= analista_cobranza.sector.nombre unless analista_cobranza.sector.nil?%>
+</td>
+<td>
+  <%= analista_cobranza.sub_sector.nombre unless analista_cobranza.sub_sector.nil?%>
+</td>
+<!--
+<td align="center">
+  <%#= analista_cobranza.carga_trabajo unless analista_cobranza.nil?%>
+</td>
+-->
+<td align="center">
+  <%= format_bool(analista_cobranza.senal_supervisor) unless analista_cobranza.nil?%>
+</td>
+<td style="text-align: right">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), :action => 'view', :method => :get, :id => analista_cobranza.id %> &nbsp; 
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')), :action => 'edit', :method => :get, :popup=>params[:popup], :id => analista_cobranza.id ) if vlink 'edit' %>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm =>I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'analista_cobranzas', :action => :delete, :id => analista_cobranza.id}) if vlink 'delete' -%>
+</td>

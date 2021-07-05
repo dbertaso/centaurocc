@@ -1,0 +1,15 @@
+<table>
+  <%# unless @visitas.solicitud.sub_sector.nemonico.nil?%>
+  <%# unless @decision.nil?%>
+  <% if @visitas.solicitud.sub_sector.nemonico=="VE" && @decision=='true' %>
+
+    <td style="width: 300px">
+      <label><%= I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.superficie_recomendada') %></label>
+    </td>
+    <td style="width: 600px">
+      <%= text_field 'seguimiento_cultivo', 'superficie_recomendada_f', :class=>'text',
+        :style=>'width: 150px', :onkeypress=>'inputChange();', :maxlength=>'100' -%><%="#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')}#{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ejemplo')}"%>
+    </td>
+  <% end %>
+</table>
+

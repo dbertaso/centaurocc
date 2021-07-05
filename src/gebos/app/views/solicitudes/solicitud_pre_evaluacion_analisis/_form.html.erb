@@ -1,0 +1,33 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<%= form_remote_tag(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :url => { :action => :save_new, :id=>@solicitud.id } ) -%>
+<table style="width: 100%">
+
+  <tr>
+    <td style="width: 20%"><label>Asignar Aspecto:</label></td>
+    <td style="width: 80%">
+      <%= select(
+          'solicitud_aspectos_evaluar', 'aspectos_resguardo_institucional_id',
+          @aspectos_resguardo_institucional_select.map{|e| [e.nombre, e.id]},
+          { :include_blank=>true },
+          { :class=>'select', } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="left" colspan="2">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar')) -%>&nbsp;
+      <%= link_to_remote(
+            image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :url => { :action => :cancel } ) if vlink 'edit' -%>
+    </td>
+  </tr>
+
+</table>
+<%= end_form_tag -%>
+<br></br>

@@ -1,0 +1,14 @@
+<table>
+	<tr>
+		<td><label>Misi&oacute;n:</label></td>
+		<td>		
+		<%= select(
+		  'mision', 'id',
+		  @mision_select.map{|e| [e.nombre, e.id]},
+		  { },
+		  { :class=>'select'} ) %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

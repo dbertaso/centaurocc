@@ -1,0 +1,63 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+	<%= "#{I18n.t('Sistema.Body.Vistas.General.re_asignado')} #{I18n.t('Sistema.Body.Vistas.General.tecnico')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %>
+</div></div></div>
+
+    <%= form_remote_tag(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :url => { :action => :save_reasignar, :id=>@solicitud.id } ) do -%>
+      <%= render :partial => 'form_reasignar' %>
+      <%= form_buttons_edit %>
+    <% end -%>
+    <%= error %>
+    <%= message %>
+  <br></br>
+  <center>
+<table class="lista" style="width: 80%">
+  <tr>
+    <th colspan="4">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.asignaciones')} #{I18n.t('Sistema.Body.Vistas.General.realizadas')}" %></label>
+    </th>
+  </tr>
+  <tr>
+    <th style="width: 15%">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.fecha') %></label>
+    </th>
+    <th style="width: 25%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tecnico')} #{I18n.t('Sistema.Body.Vistas.General.asignado')}" %></label>
+    </th>
+    <th style="width: 45%">
+      <%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>
+    </th>
+    <th style="width: 15%"></th>
+  </tr>
+  <% lista = 'lista0'
+      @control.each { |c| %>
+  <tr class="<%= lista %>">
+    <td>
+      <%= c.fecha_f %>
+    </td>
+    <td>
+      <%= c.usuario.primer_nombre + ' ' + c.usuario.primer_apellido %>
+    </td>
+    <td>
+      <%= c.observacion.gsub("\n","<br/>") unless c.observacion.nil? %>
+    </td>
+    <td align="center">
+      <% if c.asignacion %>
+        Asignación
+      <% else %>
+        Re-asignación
+      <% end %>
+    </td>
+  </tr>
+  <% if lista == 'lista0'
+        lista = 'lista1'
+     else
+        lista = 'lista0'
+     end } %>
+</table>
+</center>
+</div>

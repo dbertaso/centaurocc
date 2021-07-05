@@ -1,0 +1,27 @@
+<% #eliminada esta condicion if @nueva_orden_para_sucursal=="1" %>
+
+<% sucursal_casa_proveedora_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'orden_despacho_detalle',
+            :action=>:sucursal_casa_proveedora_change },
+            :with=>"'id='+value") %>
+          
+
+
+        <%valor_sucu="<option value='0'>#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}</option>"        
+        @sucursal_casa_proveedora.each{ |x|
+         #aqui recorreo todos los option y le pongo el style a aquellas que cumplen la condicion
+         if params[:casa_sucursal_id].to_i==x.id.to_i
+            valor_sucu+="<option selected value=#{x.id}>#{x.nombre}</option>"
+         else
+            valor_sucu+="<option value=#{x.id} >#{x.nombre}</option>"
+         end
+        }        
+        %>
+        
+        <%= select_tag(
+              'sucursal_id',
+              valor_sucu.html_safe,
+              { :class=>'select', :onchange=>sucursal_casa_proveedora_onchange + ';inputChange();',:style=>'width:280px' } ) %>

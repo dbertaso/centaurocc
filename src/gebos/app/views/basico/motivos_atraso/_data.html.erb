@@ -1,0 +1,21 @@
+<% motivos_atraso = @motivos_atraso if motivos_atraso.nil? %>
+
+<td>
+  <%= motivos_atraso.descripcion  %>
+</td>
+<td align="center">
+  <%= format_bool(motivos_atraso.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'motivos_atraso', :action => :edit, :id => motivos_atraso.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'motivos_atraso', :action => :delete, :id => motivos_atraso.id}) if vlink 'delete' -%>
+</td>

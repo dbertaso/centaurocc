@@ -1,0 +1,82 @@
+<form>
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th align="center"><input type="checkbox" id="todos" name="todos" onClick="checkAll(form.desembolso_id,form.todos); muestro();" /></th>
+        <th style="width:200px" <%= sort_class_helper('beneficiario') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre') << " / " << I18n.t('Sistema.Body.Vistas.General.razon_social'), 'beneficiario', 'list' %>
+        </th>
+
+        <th style="width: 80px" <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+        </th>
+
+        <th style="width: 70px" <%= sort_class_helper('nro_tramite') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'nro_tramite', 'list' %>
+        </th>
+
+        <th style="width: 90px" <%= sort_class_helper('estado') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado')<<" "<< I18n.t('Sistema.Body.Vistas.General.unidad_produccion'), 'estado', 'list' %>
+        </th>
+
+        <th style="width: 90px" <%= sort_class_helper('municipio') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.municipio')<<" "<< I18n.t('Sistema.Body.Vistas.General.unidad_produccion'), 'municipio', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('sector') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('actividad') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('ciclo') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.ciclo')<<" "<<I18n.t('Sistema.Body.Vistas.General.de')<<" "<<I18n.t('Sistema.Body.Vistas.General.rubro'), 'ciclo', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('numero_desembolso') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_desembolso'), 'numero_desembolso', 'list' %>
+        </th>
+        
+        <th style="width:200px" <%= sort_class_helper('moneda_id') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.moneda'), 'moneda_id', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('monto_liquidar') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_a_liquidar'), 'monto_liquidar', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('monto_banco') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_partida_banco'), 'monto_banco', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('monto_liquidado') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Plantilla.Etiquetas.Prestamo.monto_liquidado'), 'monto_liquidado', 'list' %>
+        </th>
+
+        <th style="width:200px" <%= sort_class_helper('(monto_banco - (monto_liquidado + monto_liquidar))') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_pendiente_por_liquidar'), '(monto_banco - (monto_liquidado + monto_liquidar))', 'list' %>
+        </th>
+
+
+        <th style="width: 60px">
+          <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+        </th>
+
+
+      </tr>
+
+    </thead>
+    <tbody id="list-body">
+      <%  
+      even_odd = 1
+      for desembolso in @list
+        even_odd = 1 - even_odd %>
+        <%= render :partial => 'row', :locals => {:total=>@total, :desembolso => desembolso, :even_odd => even_odd } -%>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= form_pagination %>
+</form>

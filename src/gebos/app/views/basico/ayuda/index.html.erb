@@ -1,0 +1,108 @@
+<div class="marco-titulo"><div><div>
+  <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Header.form_title')%>
+</div></div></div>
+
+<table class="lista" style="width: 70%" align="center">
+  <tr>
+    <th style="width: 85%">
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.nombre_guia') %>
+    </th>
+    <th style="width: 15%"></th>
+  </tr>
+
+  <tr class="lista0">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo1') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_I.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista1">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo2') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_II.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista0">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo3') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_III.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista1">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo4') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_IV.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista0">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo5') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_V.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista1">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo6') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_VI.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista0">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo7') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_VII.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista1">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo8') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_VIII.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista0">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo9') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_IX.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+
+  <tr class="lista1">
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.AyudaLinea.Mensajes.capitulo10') %>
+    </td>
+    <td align="center">
+      <a href="/documentos/guiasrapidas/capitulo_X.pdf" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.General.descargar_archivo')) %></a>
+    </td>
+  </tr>
+</table>
+<br>
+<center><%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+               {  },
+               { :id=>'buton_cerrar',:onclick=>"window.close();return false;" } ) -%></center>
+<br/>
+

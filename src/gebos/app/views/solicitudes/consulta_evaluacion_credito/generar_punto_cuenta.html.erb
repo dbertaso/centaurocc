@@ -1,0 +1,6 @@
+<script type="text/javascript">
+    window.open("<%="#{request.protocol}#{request.host.to_s}:#{request.port.to_s}/documentos/pdf/#{@archivo}"%>","Download");
+    history.go(-1);
+
+</script>
+

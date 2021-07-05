@@ -1,0 +1,84 @@
+<table width="100%">
+<tr><td>
+	<div class="msg-notice" id="message_pidan" style="display: none; text-align: center;"></div>
+	<div class="msg-notice" id="message_comite" style="display: none; text-align: center;"></div>
+</td></tr>
+	<tr><td align="right">
+	<% if @total > 0 %>
+		<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.avanzar_filtro'),:title=>I18n.t('Sistema.Body.Vistas.General.avanzar')),
+			:loading =>'image_load()',
+  			:loaded => 'image_unload()',
+  			:method=>:get,
+  			:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro_avanzar_grupo_tramite'),
+  			:id=>"button_enviar",  		
+  			:onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+			:url => {:action => :liberar_grupo, :controlador => 'consulta_ciclo_productivo', :condiciones => @filtro}) -%>
+		<% end %>
+	</td></td>
+</table>
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+		<th  <%= sort_class_helper('solicitud.numero') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nro')<< " " <<I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b'), 'solicitud.numero', 'list' %>
+		</th>
+
+		<th <%= sort_class_helper('(SELECT CASE WHEN e.rif IS NULL THEN ((p.cedula_nacionalidad::text || \' \'::text) || p.cedula::text)::character varying ELSE e.rif END AS cedula_rif FROM cliente c LEFT JOIN empresa e ON c.empresa_id = e.id LEFT JOIN persona p ON c.persona_id = p.id JOIN solicitud s ON s.cliente_id = c.id  WHERE (s.id =solicitud.id))') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cedula') << " / " << I18n.t('Sistema.Body.Vistas.General.rif'), '(SELECT CASE WHEN e.rif IS NULL THEN ((p.cedula_nacionalidad::text || \' \'::text) || p.cedula::text)::character varying ELSE e.rif END AS cedula_rif FROM cliente c LEFT JOIN empresa e ON c.empresa_id = e.id LEFT JOIN persona p ON c.persona_id = p.id JOIN solicitud s ON s.cliente_id = c.id  WHERE (s.id =solicitud.id))', 'list' %>
+		</th>
+		
+		<th  <%= sort_class_helper('(SELECT CASE WHEN e.nombre IS NULL THEN ((p.primer_nombre::text || \' \'::text) || p.primer_apellido::text)::character varying ELSE e.nombre END AS nombre FROM cliente c LEFT JOIN empresa e ON c.empresa_id = e.id LEFT JOIN persona p ON c.persona_id = p.id JOIN solicitud s ON s.cliente_id = c.id WHERE (s.id =solicitud.id))') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre') << " / " << I18n.t('Sistema.Body.Vistas.General.razon_social'), '(SELECT CASE WHEN e.nombre IS NULL THEN ((p.primer_nombre::text || \' \'::text) || p.primer_apellido::text)::character varying ELSE e.nombre END AS nombre FROM cliente c LEFT JOIN empresa e ON c.empresa_id = e.id LEFT JOIN persona p ON c.persona_id = p.id JOIN solicitud s ON s.cliente_id = c.id WHERE (s.id =solicitud.id))', 'list' %>
+		</th>
+
+		<th <%= sort_class_helper('oficina.nombre') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.oficina'), 'oficina.nombre', 'list' %>
+		</th>
+
+		
+		<th <%= sort_class_helper('(select e.nombre from unidad_produccion up, municipio m, estado e where e.id = m.estado_id and  m.id = up.municipio_id and up.id = solicitud.unidad_produccion_id)') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), '(select e.nombre from unidad_produccion up, municipio m, estado e where e.id = m.estado_id and  m.id = up.municipio_id and up.id = solicitud.unidad_produccion_id)', 'list' %>
+		</th> 
+		<th <%= sort_class_helper('actividad.nombre') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad.nombre', 'list' %>
+		</th>
+		
+		<th <%= sort_class_helper('(select monto_insumos from prestamo where solicitud_id=id)') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.insumos'), '(select monto_insumos from prestamo where solicitud_id=id)', 'list' %>
+		</th>
+				
+		<th <%= sort_class_helper('(select monto_banco from prestamo where solicitud_id=id)') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.banco'), '(select monto_banco from prestamo where solicitud_id=id)', 'list' %>
+		</th>
+		
+		<th <%= sort_class_helper('(select monto_solicitado from prestamo where solicitud_id=id)') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.financiamiento'), '(select monto_solicitado from prestamo where solicitud_id=id)', 'list' %>
+		</th>
+		<th <%= sort_class_helper('(select monto_sras_total from prestamo where solicitud_id=id)') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.seguro'), '(select monto_sras_total from prestamo where solicitud_id=id)', 'list' %>
+		</th>
+		<th <%= sort_class_helper('(select monto_gasto_total from prestamo where solicitud_id=id)') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.gastos_administrativos'), '(select monto_gasto_total from prestamo where solicitud_id=id)', 'list' %>
+		</th>
+		
+		<th <%= sort_class_helper('solicitud.monto_solicitado') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total'), 'solicitud.monto_solicitado', 'list' %>
+		</th>
+		<th >
+			<%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+		</th>
+		
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for solicitud in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+<%  end %>
+</tbody>
+</table>
+
+<%= form_pagination %>
+

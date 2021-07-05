@@ -1,0 +1,25 @@
+<tr id="row_<%= @cuenta_contable_presupuesto.id %>_edit">
+	<td class="lista-form" colspan="6">
+	
+		<%= form_title_edit @cuenta_contable_presupuesto.codigo + ' - ' + @cuenta_contable_presupuesto.anio.to_s %>
+
+		<%= error "row_#{@cuenta_contable_presupuesto.id}" %>
+	
+		<%= form_remote_tag(
+		  :loading =>'image_load()',
+			:loaded => 'image_unload()',
+		  :url => { :action => :save_edit, :cuenta_contable_id => @cuenta_contable.id, :id => @cuenta_contable_presupuesto.id } ) -%>
+	
+			<%= render :partial => 'form' %>
+	
+			<%= link_to_remote(
+	       image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+			  :loading =>'image_load()',
+				:loaded => 'image_unload()',
+	       :url => { :action => :cancel_edit, :id => @cuenta_contable_presupuesto.id}) -%>
+				</td>
+	    </tr>
+	  </table>
+	<%= end_form_tag -%>
+	</td>
+</tr>

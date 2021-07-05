@@ -1,0 +1,136 @@
+# encoding: UTF-8
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="REFRESH" content="960" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Sistema de Credito de Gebos: CARTERA</title>
+    
+    <%= stylesheet_link_tag    "menu", "main", :media => "all" %>
+    <%= javascript_include_tag "application", "menu/jscookmenu", "menu/style", 
+                               "prototype", "validation", "effects", "developer", 
+                               "eforsys" %>
+    <%= csrf_meta_tags %>
+    
+		<% if session[:id] %>
+      <script language="JavaScript">
+        <%= menu %>
+      </script>
+		<% end %>    
+	</head>
+
+<body style="">
+	<div id="loading" style="display: none">
+		<table>
+			<tr>
+				<td>
+					<span style="color: #22f">Cargando</span>
+				</td>
+				<td>
+					<%= image_tag 'cargando.gif' %>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+
+		<% if session[:id] %>
+				<% if params[:popup].nil? %>
+					<div id="logo" style="background-color:#68971D; height: 60px; ">
+					<div style="float:left"><%= image_tag(image_path('tope/banner_app_gpt.png')) %></div>
+				<% end %>
+		<% else %>
+				<div id="logo" style="background-color:white; height: 40px; ">
+					<div style="float:left;"><%= image_tag(image_path('tope/gobierno_bolivariano.png')) %></div>
+					<div style="float:right;"><%= image_tag(image_path('tope/bicentenario.png')) %></div>
+				</div>
+				<div id="" style="background-color:#9A0000; height: 2px; "></div>
+				<div id="logo" style="background-color:#68971D; height: 116px; ">
+					<div style="float:left;"><%= image_tag(image_path('tope/banner_login.png')) %></div>
+					<div style="float:right;"><%#= image_tag(image_path('menu_separador_1.gif')) %></div>
+		<% end %>
+
+
+		     <% if session[:id] %>
+				<% if params[:popup].nil? %>
+					<div style="float:right; margin-right:10px;margin-top:20px;">
+
+					<%= link_to(image_tag('tope/boton_home.png',:width=>'30'), '/') %><%= link_to(image_tag('tope/boton_salir.png', :width=>'30'), logout_path) %><%= link_to(image_tag('ayuda.gif', :width=>'40'), '/basico/ayuda', :popup=>true , :popup => ['Ayuda en L&iacute;­nea', 'height=450,width=600, scrollbars=yes, resizable=yes']) %>
+
+	        		</div>
+				<% end %>
+			<% end %>
+
+			</div>
+
+			<div style="background: transparent url(/assets/tope/menu_fondo_estilo.gif) repeat-x; height: 24px;">
+				<div id=myMenuID></div>
+			</div>
+
+		  <% if session[:id] %>
+			<% if params[:popup].nil? %>
+		  		<script language="JavaScript">
+			  		cmDraw ('myMenuID', myMenu, 'hbr', cmFoncrei, 'Foncrei');
+		  		</script>
+			<% end %>
+		  <% end %>
+	
+	<% if @form_title %>
+	  <h1><%= form_title %></h1>
+	<% else %>
+		<br><br>
+	<% end %>
+	
+	<%= @content_for_layout %>
+	
+	<% if session[:id] %>
+
+      <%  @usuario_aux = Usuario.find(session[:id])
+          @oficina = Oficina.find(session[:oficina])
+          @estado = @oficina.municipio.estado_id
+          @oficina_aux = @oficina.nombre.to_s %>
+	<% end %>
+	
+		<br>  
+     	<div id="foot" style="background: transparent url(/assets/tope/menu_fondo_estilo.gif) repeat-x; height: 24px; width:100%">
+
+	      <div style="background: transparent url(/assets/tope/menu_fondo_estilo.gif); text-align: left; width:100%;border=1">
+	        <div style="float:left;">
+				<%= image_tag(image_path('tope/fondas_blanco.png')) %>
+			</div>
+			<div style="float:left;">
+				<div style="color:white; font-size: 9px; text-align: center">
+				Version 5.0<br>2012
+				</div>
+			</div>
+			<div style="float:right;"><%= image_tag(image_path('tope/logo_gebos.png')) %></div>
+			<div style="float:right;color:white; font-size: 9px;">
+				<% if session[:id] %>
+					<b>Oficina: <%= @oficina.nombre %></b> (<%= @oficina.municipio.estado.nombre %>)<br>
+					<b>Usuario: <%= @usuario_aux.primer_nombre + " " + @usuario_aux.primer_apellido %></b>
+				<% end %>
+			</div>
+
+	      </div> 
+
+	    </div>
+
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gebos</title>
+    <%= stylesheet_link_tag    "menu", "main", :media => "all" %>
+    <%= javascript_include_tag "application", "menu/jscookmenu", "menu/style", 
+                               "prototype", "validation", "effects", "developer", 
+                               "eforsys" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+ <% rechazo = @list if rechazo.nil? %>
+<tr class="lista<%= even_odd %>" id="rlt_<%= rechazo.id %>" >
+	<%= render :partial => 'data', :locals => { :rechazo => rechazo, :even_odd => even_odd } -%>
+</tr>
+<tr>
+	<td colspan="10" style="margin: 0px; padding: 0px">
+		<div id="diferir_<%= rechazo.id %>"></div>
+	</td>
+</tr>

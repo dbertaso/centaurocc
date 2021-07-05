@@ -1,0 +1,294 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sector')%>:</label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+      </label>
+    </td>
+    <td style="width: 70%">
+      <% action_name = controller.action_name
+        if action_name == 'new'%>
+
+          <% sector_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :url=>{:controller=>'programa_producto',
+            :action=>:sector_change },
+            :with=>"'id='+value+'&programa_id=#{@programa.id}'") %>
+
+          <%= select(
+                      'producto', 'sector_id',
+                      @sector_select.map{|i| [i.nombre, i.id]},
+                      {:prompt=>'Seleccione un Sector'},
+                      { :class=>'select', :onchange=>sector_onchange + ';inputChange();' } ) %>
+        <%  else %>
+          <%= @producto.sector.nombre %>
+        <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>
+        <%= I18n.t('Sistema.Body.Vistas.General.sub_sector')%>:
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+      </label>
+    </td>
+    <td>
+      <% action_name = controller.action_name
+        if action_name == 'new'%>
+          <span id="sub-sector-select">
+            <%= render :partial => 'sub_sector_select' %>
+          </span>
+      <%  else %>
+        <%=  @producto.sub_sector.nombre%>
+      <% end  %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>
+        <%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.monto_minimo')%>:
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+      </label>
+    </td>
+    <td>
+      <%= text_field 'producto', 'monto_minimo_f', :class=>'text', :style=>'width: 110px', :maxlength=>'16', :onkeypress=>'inputChange();',
+      :onkeyup=>"formatCurrency(this.value, 'producto_monto_minimo');"  -%> Bs.
+      <%= display_number @producto.monto_minimo, 'producto_monto_minimo' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.monto_maximo')%>:
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'producto', 'monto_maximo_f', :class=>'text', :style=>'width: 110px', :maxlength=>'16', :onkeypress=>'inputChange();', :onkeyup=>"formatCurrency(this.value, 'producto_monto_maximo');"  -%> Bs.
+      <%= display_number @producto.monto_maximo, 'producto_monto_maximo' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Modelos.Producto.Columnas.plazo_minimo')} #{I18n.t('Sistema.Body.Modelos.General.expresado_meses')}"%>:</label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'producto', 'plazo_minimo', :class=>'text', :style=>'width: 25px', :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Modelos.Producto.Columnas.plazo_maximo')} #{I18n.t('Sistema.Body.Modelos.General.expresado_meses')}"%>:</label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td>
+      <%= text_field 'producto', 'plazo_maximo', :class=>'text', :style=>'width: 25px', :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.intereses')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 35%" valign="top">
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.tasa')}"%>:
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+      </label>
+    </td>
+    <td colspan="2">
+      <%= radio_button 'producto', 'tasa_fija',
+                       'true', :class=>'text',
+                        :onclick=>'inputChange();'  -%>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.fija')}" %>
+      <br />
+
+      <%= radio_button 'producto', 'tasa_fija',
+                       'false', :class=>'text',
+                       :onclick=>'inputChange();'  -%>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.variable')}" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.meses_fijos_sin_cambio_tasa')%></label>
+    </td>
+    <td>
+      <%= text_field 'producto', 'meses_fijos_sin_cambio_tasa', :class=>'text', :style=>'width: 60px', :maxlength=>'5', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.forma_calculo_intereses') %></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+  <td>
+    <%= radio_button 'producto', 'forma_calculo_intereses', "V",
+                     :class=>'text', :onclick=>'inputChange();'  -%>
+    <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.al_vencimiento')%>
+    <br />
+
+    <%= radio_button 'producto', 'forma_calculo_intereses', "A",
+                     :class=>'text', :onclick=>'inputChange();'  -%>
+    <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.por_anticipado')%>
+  </td>
+
+  </tr>
+    <tr>
+      <td valign="top">
+        <label> <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.base_calculo')%> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+      </td>
+      <td style="width: 70%">
+        <%= radio_button 'producto', 'base_calculo_intereses', "360",
+                         :class=>'text', :onclick=>'inputChange();'  -%>
+        <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.trescientos_sesenta')%>
+        <br />
+
+        <%= radio_button 'producto', 'base_calculo_intereses', "365",
+                         :class=>'text', :onclick=>'inputChange();'  -%>
+        <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.trescientos_sesenta_cinco')%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.abonos_extraordinarios')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+
+      <% permitir_abonos_onchange = remote_function(
+                          :loading =>'image_load()',
+                          :loaded => 'image_unload()',
+                          :url=>{:action=>:permitir_abonos_change },
+                          :with=>"'permitir_abonos='+$('producto_permitir_abonos').checked") %>
+
+      <%= check_box 'producto', 'permitir_abonos',
+                    :checked_value=>"1",
+                    :unchecked_value=>"0",
+                    :onclick=>permitir_abonos_onchange+';inputChange();' -%>
+
+      <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.permitir_abonos')%></label>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <div id="abonos">
+        <%= render( :partial=>'abonos' ) if @producto.permitir_abonos  %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.mora')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.base_cobro_mora')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+    </td>
+    <td style="width: 70%">
+      <%= radio_button 'producto', 'base_cobro_mora', "C",
+                       :class=>'text', :onclick=>'inputChange();'  -%>
+      <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.capital_cuota')%> <br />
+
+      <%= radio_button 'producto', 'base_cobro_mora', "V",
+                       :class=>'text', :onclick=>'inputChange();'  -%>
+      <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.valor_cuota')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_gracia')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <% meses_gracia_si_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+          :url=>{:action=>:meses_gracia_si_change },
+          :with=>"'meses_gracia_si='+$('producto_meses_gracia_si').checked") %>
+
+      <%= check_box 'producto', 'meses_gracia_si',
+            :checked_value=>"1",
+            :unchecked_value=>"0",
+            :onclick=>meses_gracia_si_onchange+';inputChange();' -%>
+    <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_gracia')%></label>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <div id="gracia">
+        <%= render( :partial=>'gracia' ) if @producto.meses_gracia_si  %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="2">
+      <span>
+          <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_muerto')%>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <% meses_muertos_si_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :url=>{:action=>:meses_muertos_si_change },
+          :with=>"'meses_muertos_si='+$('producto_meses_muertos_si').checked") %>
+
+      <%= check_box 'producto', 'meses_muertos_si',
+          :checked_value=>"1",
+          :unchecked_value=>"0",
+          :onclick=>meses_muertos_si_onchange+';inputChange();' -%>
+      <label><%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.periodo_muerto')%></label>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <div id="muertos">
+        <%= render( :partial=>'muertos' ) if @producto.meses_muertos_si  %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" colspan="2">
+      <span>
+        <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Separadores.requisitos')%>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <%= check_box 'producto', 'fiador_si',
+          :checked_value=>"1",
+          :unchecked_value=>"0",:onclick=>'inputChange();'-%>
+      <label>
+        <%= I18n.t('Sistema.Body.Vistas.ProgramaProducto.Labels.exigir_fiador')%>
+      </label>
+    </td>
+  </tr>
+
+</table>

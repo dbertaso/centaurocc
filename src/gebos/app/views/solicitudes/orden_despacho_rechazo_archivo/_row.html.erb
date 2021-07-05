@@ -1,0 +1,4 @@
+<% view_fecha_liquidacion = @view_fecha_liquidacion if view_fecha_liquidacion.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= view_fecha_liquidacion.numero_historico %>">
+	<%= render :partial => 'data', :locals => { :view_fecha_liquidacion => view_fecha_liquidacion, :even_odd => even_odd } -%>
+</tr>

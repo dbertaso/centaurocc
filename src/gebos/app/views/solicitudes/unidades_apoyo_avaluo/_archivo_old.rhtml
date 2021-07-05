@@ -1,0 +1,55 @@
+<br/>
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Evidencia Fotográfica</span>
+    </td>
+  </tr>
+</table>
+<br/>
+<%= start_form_tag ({:action => 'save_archivo_new', :solicitud_tipo_garantia_id=>@solicitud_tipo_garantia_id, :solicitud_id=>@solicitud.id},
+          :multipart => true) %>
+<p><label for="upload_file">Seleccione archivo</label> :
+<%= file_field 'upload', 'datafile' %>
+<br/><br/>
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.procesar')) -%></p>
+<%= end_form_tag %>
+<br/>
+<table class="lista" style="width: 70%">
+  <tr>
+    <th style="width: 90%">
+      <label>Nombre del Archivo</label>
+    </th>
+
+    <th style="width: 10%"></th>
+  </tr>
+<%  unless @solicitud_avaluo_imagen.nil?
+    clase = "lista0"
+    @solicitud_avaluo_imagen.each { |imagen| %>
+  <tr id="sem_<%= imagen.id %>" class='<%= clase %>'>
+    <td>
+      <%= imagen.nombre_real %>
+    </td>
+
+    <td align="center">
+      <a href="/documentos/images_avaluo/<%= imagen.nombre_imagen %>" target="_blank" title="descargar"><%= image_tag('descargar.png',:title=>'Descargar') %></a>&nbsp;
+      <%= link_to_remote (image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Eliminar'),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :confirm => "¿Está usted seguro que desea eliminar el registro seleccionado?",
+          :id=>"button_enviar",
+          :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+          :url => {:action => :delete_imagen, :id => imagen.id}) -%>
+    </td>
+  </tr>
+
+<% if clase == 'lista0'
+    clase = 'lista1'
+  else
+    clase = 'lista0'
+  end
+}
+  end %>
+
+</table>
+<br/>

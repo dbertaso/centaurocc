@@ -1,0 +1,16 @@
+<table style="width: 100%">
+
+  <tr>
+    <td style="width: 110px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %>&ensp;</label><label class="requerido">(*)</label>
+    </td>
+    <td style="width: 500px">
+      <%= text_field 'tipo_iniciativa', 'nombre', :class=>'text', :style=>'width: 500px', :maxlength=>'100'  -%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=> I18n.t('Sistema.Body.Vistas.General.guardar')) -%>
+

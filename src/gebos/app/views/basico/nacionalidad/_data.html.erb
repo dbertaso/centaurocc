@@ -1,0 +1,21 @@
+<% nacionalidad = @nacionalidad if nacionalidad.nil? %>
+
+<td>
+  <%= nacionalidad.femenino  %>
+</td>
+<td>
+  <%= nacionalidad.masculino  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'nacionalidad', :action => :edit, :id => nacionalidad.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'nacionalidad', :action => :delete, :id => nacionalidad.id}) if vlink 'delete' -%>
+</td>

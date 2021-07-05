@@ -1,0 +1,46 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+ 			<th style="width: 5%">
+ 			</th>
+ 			<th style="width: 15%" <%= sort_class_helper('comprobante_contable.tc_nombre') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.ReglaContable.Etiqueta.transaccion_contable'), 'comprobante_contable.tc_nombre', 'list' %>
+
+ 			</th>
+			<th style="width: 10%" <%= sort_class_helper('comprobante_contable.id') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.numero_comprobante'), 'comprobante_contable.id', 'list' %>
+ 			</th>
+			<th style="width: 10%" <%= sort_class_helper('fecha_registro') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.fecha_contable'), 'fecha_registro', 'list' %>
+ 			</th>
+			<th style="width: 8%" <%= sort_class_helper('fecha_comprobante') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.fecha_comprobante'), 'fecha_comprobante', 'list' %>
+ 			</th>
+ 			<th style="width: 8%" <%= sort_class_helper('enviado') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.enviado'), 'enviado', 'list' %>
+ 			</th>
+ 			<th style="width: 9%" <%= sort_class_helper('prestamo.numero') %>>
+				<%= sort_link_helper "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.prestamo')}", 'prestamo.numero', 'list' %>
+ 			</th>
+ 			<th style="width: 12%" <%= sort_class_helper('total_debe') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.debe'), 'total_debe', 'list' %>
+ 			</th>
+ 			<th style="width: 12%" <%= sort_class_helper('total_haber') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.haber'), 'total_haber', 'list' %>
+ 			</th>
+ 			<th style="width: 12%" <%= sort_class_helper('moneda_nombre') %>>
+				<%= sort_link_helper t('Sistema.Body.Vistas.General.moneda'), 'moneda_nombre', 'list' %>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for comprobante_contable in @list
+		even_odd = 1 - even_odd %>
+		<%= render :partial => 'row', :locals => { :comprobante_contable => comprobante_contable, :even_odd => even_odd } -%>
+<% end %>
+    </tbody>
+  </table>
+
+<%= form_pagination %>

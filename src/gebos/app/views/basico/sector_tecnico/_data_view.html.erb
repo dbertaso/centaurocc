@@ -1,0 +1,5 @@
+<% sector_tecnico = @sector_tecnico if sector_tecnico.nil? %>
+<td>
+   <% sector = Sector.find(sector_tecnico.sector_id) %>
+  <%= sector.nombre %> (<%= sector.descripcion %>)
+</td>

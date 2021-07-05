@@ -1,0 +1,4 @@
+<% tipo_infraestructura = @tipo_infraestructura if tipo_infraestructura.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= tipo_infraestructura.id %>">
+	<%= render :partial => 'data', :locals => { :tipo_infraestructura => tipo_infraestructura, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,38 @@
+<script >
+  function es_acuicultura_pesca(){
+    var booleano=false;
+    var href_original=''; 
+
+    if ($('escondido_pesca_acuicultura').value == 'PESCA Y ACUICULTURA') {
+      nombre = prompt('<%=I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Messages.sector_pesca_acuicultura')%>\n\n <%=I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Messages.que_desea_imprimir')%>\n\n <%=I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Messages.opciones_imprimir')%>','1');
+
+      href_original=$('mega_link').href.substr(0,$('mega_link').href.indexOf("acuicultura=") + 12);
+
+      if (nombre!=null) {
+        switch(nombre){
+          case '1': 
+            $('mega_link').href=href_original+"1";booleano=true;break;
+          case '2': 
+            $('mega_link').href=href_original+"2"; booleano=true; break;
+          default: alert(<%=I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Messages.no_coincide_con_opciones')%>); booleano=false; break;
+          }
+        }
+      }
+      return booleano;
+    }
+</script>
+
+
+<div id="mensaje" style="display: none; text-align: center"> ></div>
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+
+  <%= message  %>
+  <%= error %>
+</div>
+<%= content_for :list do %>
+  <%= render :partial => 'list' -%>
+
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :controller =>@controlador, :action => :index },
+    { :id=>'button_close' } ) -%>
+<%end%>

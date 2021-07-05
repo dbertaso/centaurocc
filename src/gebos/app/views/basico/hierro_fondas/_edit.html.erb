@@ -1,0 +1,23 @@
+<tr id="row_<%= @hierro_fondas.id %>_edit">
+  <td class="lista-form" colspan="8">
+
+    <%= form_title_edit @hierro_fondas.nombre_registro %>
+  
+    <%= error "row_#{@hierro_fondas.id}" %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id => @hierro_fondas.id } ) do -%>
+          <%= render 'form' %>
+          <%= link_to_remote(
+            image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar'))),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :url => { :action => :cancel_edit, :id => @hierro_fondas.id}) -%>
+         </td>
+        </tr>
+      </table>
+    <%end -%>
+</div>
+

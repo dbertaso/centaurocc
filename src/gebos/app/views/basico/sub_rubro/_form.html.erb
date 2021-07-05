@@ -1,0 +1,58 @@
+<table>
+  <tr>
+    <td style="width: 120px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </td>
+    <td >
+      <% unless @sub_rubro.id.nil? || @sub_rubro.to_s.empty? %>
+        <%= @sub_rubro.rubro.nombre %>
+      <%else%>
+        <%= @rubro.nombre %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 120px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.codigo')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'sub_rubro', 'codigo', :class=>'text', :style=>'width: 100px', :maxlength=>'20',
+        :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 120px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'sub_rubro', 'nombre',
+        :class=>'text', :style=>'width: 600px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 120px">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label>
+    </td>
+    <td>
+      <%= text_area 'sub_rubro', 'descripcion',
+        :class=>'text',
+        :style=>'width: 600px; height: 100px',
+        :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 120px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'sub_rubro', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+</table>

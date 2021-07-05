@@ -1,0 +1,57 @@
+<% otro_arrime = @otro_arrime if otro_arrime.nil? %>
+<td align ="center">
+  <%= otro_arrime.numero_tramite %>
+</td>
+
+<td>
+  <%=otro_arrime.nombre_beneficiario%>
+</td>
+
+<td>
+  <%= otro_arrime.estado_silo %>
+</td>
+
+<td>
+  <%= otro_arrime.nombre_silo %>
+</td>
+
+<td style="text-align: center">
+  <%= otro_arrime.guia_movilizacion  %>
+</td>
+
+<td style="text-align: center">
+  <%= otro_arrime.numero_ticket  %>
+</td>
+
+<td style="text-align: center">
+  <%= format_fm(otro_arrime.monto_arrime)%>
+</td>
+
+<td style="text-align: center">
+  <%= otro_arrime.fecha_salida.strftime(I18n.t('time.formats.gebos_time_short')) unless otro_arrime.fecha_salida.nil? %>
+</td>
+
+<td>
+  <%= otro_arrime.sector %>
+</td>
+
+<td>
+  <%= otro_arrime.sub_sector %>
+</td>
+
+<td>
+  <%= otro_arrime.rubro %>
+</td>
+
+<% if otro_arrime.confirmacion==false && otro_arrime.resultado == 'A'%>
+  <td style="color: red; text-align: center">
+    Inicial
+  </td>
+<% end %>
+
+<td style="text-align: center">
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'), :title=>'Confirmar'),
+      :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+      :confirm => "¿Está usted seguro que desea Confirmar esta boleta?",
+      :url => {:controller => 'bandeja_otro_arrime', :action => :confirmar, :id => otro_arrime.id}) if vlink 'confirmar' -%>
+</td>

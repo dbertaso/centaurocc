@@ -1,0 +1,227 @@
+<script type="text/javascript">
+  varEnviado = false;
+</script>
+<div id="encabezado">
+  <table>
+
+    <tr style="font-family:verdana;color:blue;font-size:20px;">
+      <td> Rubro:  <td>
+      <td> <%= @plan.rubro_nombre %> </td>
+    </tr>
+  </table>
+</div>
+
+<table class="lista">
+  <tr>
+    <th style="width:5px">
+      <input type="checkbox" id="todos" name="todos" onclick="GenericcheckMontoAll(form.item_id,form.todos,'plan_inversion_id');if (document.getElementById('todos').checked == false) {document.getElementById('resultado_suma').innerHTML='0,00';}"  title="<%="#{I18n.t('Sistema.Body.Vistas.General.seleccionar')} #{I18n.t('Sistema.Body.Vistas.General.todos')}"%>">
+    </th>
+    <th style="width:260px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.descripcion_item')%></th>
+    <th style="width:40px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.cantidad_recomendada')%></th>
+    <% if @plan.tipo_item == "I"%>
+      <th style="width:100px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.unidad_medida')%></th>
+    <% end %>
+
+    <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_aprobado')%></th>
+    <% if @plan.tipo_item == "B"%>
+      <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_desembolsado')%></th>
+      <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_por_desembolsar')%></th>
+    <%else%>
+      <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_despachado')%></th>
+      <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_total_por_despachar')%></th>
+    <%end%>
+    <th style="width:140px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_recomendado')%></th>
+    <% if @plan.tipo_item == "B"%>
+      <th style="width:20px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.numero_desembolso')%></th>
+    <%else%>
+      <th style="width:20px"><%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.numero_despacho')%></th>
+    <%end%>
+  </tr>
+</thead>
+<tbody id="list_body">
+
+  <% even_odd = 1
+  partida = ""
+  rubro = ""
+  monto_partida = 0.00
+  monto_rubro = 0.00
+  monto_banco = 0.00
+  monto_insumos = 0.00
+  monto_desembolsado = 0.00
+  monto_x_desembolsar = 0.00
+  @monto_recomendado = 0.00
+  monto_recomendado = 0.00
+  @monto = 0.00
+  monto_enviado=0.0
+  @plan_inversion.each do |plan|
+    even_odd = 1 - even_odd
+  %>
+    <% if partida != plan.partida_nombre %>
+
+      <% if monto_partida.to_f > 0%>
+        <tr class="lista<%= 1 - even_odd %>">
+          <td style="width: 0px"></td>
+          <td style="text-align: left"><b><%= "Total #{partida}"%></b></td>
+          <td></td>
+          <td style="text-align: right">
+            <b>  <%=  valor = format_fm(monto_partida) %>
+            </b>
+          </td>
+          <% if @plan.tipo_item == "I"%>
+            <td></td>
+          <% end%>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <%end%>
+
+      <% partida = plan.partida_nombre
+      monto_partida = 0.00 %>
+
+      <tr class="lista<%= even_odd %>">
+        <td style="width: 0px"></td>
+        <td><b><%=plan.partida_nombre %></b></td>
+        <td></td>
+        <% if @plan.tipo_item == "I"%>
+          <td></td>
+        <% end%>          
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
+    <% if rubro.empty?
+      rubro = plan.rubro_nombre
+    end    
+  %>
+
+    <tr class="lista<%= even_odd %>">
+      <td align="center">
+
+        <input type="checkbox" name="item_id" id="item_id" onClick="if (this.checked == false) {res=parseFloat((document.getElementById('resultado_suma').innerHTML.toString().replace('.','')).toString().replace(',','.'));res=res-parseFloat(document.getElementById('monto_recomendado_'+<%= plan.id %>).value);$('resultado_suma').innerHTML = formatCurrency3(trunco_a_3_decimales(res));}GenericcheckMontoOne(this,form.todos,'plan_inversion_id');" value="<%= plan.id %>" <%= plan.marcado unless plan.marcado.nil? %> <%= plan.disponible unless plan.disponible.nil? %>/>
+        <% if plan.marcado == 'checked'  %>
+          <script>
+            if (document.getElementById("plan_inversion_id").value == ''){
+              document.getElementById("plan_inversion_id").value = '<%= plan.id %>,';
+            }else{
+              document.getElementById("plan_inversion_id").value = document.getElementById("plan_inversion_id").value + <%= plan.id %> +",";
+            }
+          </script>
+
+        <% end  %>
+      </td>
+
+      <td align="left">
+        <%= plan.item_nombre %>  
+      </td>
+
+      <td align="right">
+        <%= plan.cantidad_fm %>
+      </td>
+      <% if @plan.tipo_item == "I"%>
+        <td align="left">
+          <%=  plan.unidad_medida.nombre %>
+        </td>
+      <% end%>
+
+      <td align="right">
+        <%= plan.monto_financiamiento_fm  unless plan.monto_financiamiento.nil? %>
+      </td>
+
+      <td align="right">
+        <%= plan.monto_desembolsado_fm  unless plan.monto_desembolsado.nil? %>
+      </td>
+
+      <td align="right">
+        <%= valor = sprintf('%01.2f',(plan.monto_financiamiento - plan.monto_desembolsado)).sub('.', ',')
+        valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless plan.monto_financiamiento.nil? || plan.monto_desembolsado.nil? %>
+      </td>
+
+      <td align="right">
+        <%monto_enviado+=plan.monto_enviado.to_f%>
+        <%= text_field_tag "monto_recomendado_#{plan.id}", @monto_recomendado,
+          :class=>'text', :style=>'width: 100px; text-align:right',
+          :value=>"#{plan.monto_enviado ? plan.monto_enviado.to_f : '0'}",
+          :maxlength=>'18',
+          :disabled=> plan.inhabilitado,
+          :onkeyup=>"ValidarNumero2(this); suma();",:autocomplete=>"off",:onpaste=>"return false" -%>
+      </td>
+
+      <td align="center">
+        <%= plan.numero_desembolso  unless plan.numero_desembolso.nil? %>
+      </td>
+
+    </tr>
+
+    <% monto_partida += plan.monto_financiamiento
+    monto_rubro += plan.monto_financiamiento
+
+    if plan.tipo_item == 'B'
+      monto_banco += plan.monto_financiamiento
+    end
+
+    if plan.tipo_item == 'I'
+      monto_insumos += plan.monto_financiamiento
+    end%>
+
+  <%end%>
+
+    <tr class="lista<%= 1 - even_odd %>">
+    <td></td>
+    <td style="text-align: left"><b><%= "Total #{partida}"%></b></td>
+    <td></td>
+    <td style="text-align: right"> 
+      <b>  <%=  valor = sprintf('%01.2f', monto_partida).sub('.', ',')
+        valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %> 
+      </b>
+    </td>
+    <td></td
+    <td></td>
+    <% if @plan.tipo_item == "I"%>
+      <td></td>
+    <% end%>
+    <td></td>
+    <td></td>
+    <td></td>
+
+  </tr>
+
+
+
+  <tr class="lista<%= 1 - even_odd %>">
+    <td></td>
+    <td style="text-align: left"><b><%= "Total General" %></b></td>
+    <td></td>
+    <% if @plan.tipo_item == "I"%>
+      <td></td>
+    <% end %>
+    <td style="text-align: right">
+      <b>  <%=  valor = sprintf('%01.2f', monto_rubro).sub('.', ',')
+        valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      </b>
+    </td>
+    <td style="text-align: right">
+      <b>  <%=  valor = sprintf('%01.2f', @total_monto_desembolsado).sub('.', ',')
+        valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      </b>
+    </td>
+    <td style="text-align: right">
+      <b>  <%=  valor = sprintf('%01.2f', @total_monto_x_desembolsar).sub('.', ',')
+        valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      </b>
+    </td>
+    <td style="text-align: right"> 
+      <b>  <div id="resultado_suma"><%=  valor = sprintf('%01.3f', monto_enviado).sub('.', ',')
+          valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></div>
+      </b>
+    </td>
+    <td></td>
+  </tr>
+
+</tbody>
+</table>
+<br/>

@@ -1,0 +1,156 @@
+    <div id="desembolsos">
+      <table style="width: 100%; margin-bottom: 10px" border="0">
+        <tr>
+          <td class="separador" valign="bottom" colspan="10" style="text-align: center" >
+            <span>
+              <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Separadores.desembolsos') %>
+            </span>
+          </td>
+
+        </tr>
+      </table>
+      
+      <table class="lista" style="width: 100%; margin-bottom: 10px" border="0">
+      
+        <thead>
+          <tr>
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_valor')%>
+            </th>
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.tipo')%>
+            </th>      
+            <th>
+              <%= t('Sistema.Body.Vistas.General.entidad_financiera')%>
+            </th>      
+            <th>
+              <%= t('Sistema.Body.Vistas.General.referencia')%>
+            </th>      
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_banco')%>
+            </th>    
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_insumos')%>
+            </th>   
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_inventario')%>
+            </th>   
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_sras')%>
+            </th>    
+            <th>
+             <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_gastos')%>
+            </th>
+            <th>
+              <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')} #{t('Sistema.Body.Vistas.Form.desembolso')}" %>
+            </th>
+          </tr>
+        </thead>
+        
+        <% monto_total = 0.00 
+           monto_total = monto_total.to_d%>
+        <% even_odd = 1 %>
+        <% for factura in @facturas_desembolso
+            unless factura.desembolso_id.nil?
+              desembolso = Desembolso.find(factura.desembolso_id)
+            else
+              desembolso = nil
+            end
+            monto_total = monto_total + factura.monto
+            logger.info "Monto Total <========> #{monto_total.to_s} <===> #{factura.monto.to_s} <==> #{factura.monto.class.to_s}"
+            even_odd = 1 - even_odd %>
+          
+          <tr class="lista<%= even_odd %>" >
+            <td>
+              <%= factura.fecha_realizacion.strftime("%d/%m/%Y") %>
+            </td>
+            <td>
+              <%= unless desembolso.nil?
+                      case desembolso.tipo_cheque
+                        when 'F'
+                          t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.desembolso_cheque_propio')
+                        when 'G'
+                          t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.desembolso_cheque_gerencia')
+                      else
+                        t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.desembolso_transferencia')
+                      end
+                  else
+                    t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.solo_insumos')
+                  end 
+              %>
+            </td>
+            <td>
+
+              <%=desembolso.entidad_financiera.nombre unless desembolso.nil?%>
+            </td>
+            <td>    
+              <% unless desembolso.nil? %>
+                <% if desembolso.tipo_cheque == 'G' ||
+                      desembolso.tipo_cheque == 'P' %>
+                   <%= desembolso.referencia %>
+                <% else %>
+                    <%= desembolso.numero_cuenta %>
+                <% end %>
+              <% else %>
+                <% logger.info "factura ======> #{factura.inspect}" %>
+                <% orden = OrdenDespacho.where(:prestamo_id => factura.prestamo_id) %>
+                <%= orden[0].numero.strip unless orden.nil?%>
+              <% end %>            
+            </td>
+            <td style="text-align: right">
+              <%= factura.monto_banco_fm %>
+            </td>
+            <td style="text-align: right">
+              <%= factura.monto_insumos_fm %>
+            </td>
+            <td style="text-align: right">
+              <%= factura.monto_inventario_fm %>
+            </td>
+            <td style="text-align: right">
+              <%= factura.monto_sras_fm %>
+            </td>
+            <td style="text-align: right">
+              <%= factura.monto_gastos_fm %>
+            </td>
+            <td style="text-align: right">
+              <%= factura.monto_fm %>
+            </td>
+          </tr>
+        <% end %>
+        
+        <% even_odd = 1 - even_odd %>
+        <tr  class="lista<%= even_odd %>" >
+          <td>
+
+          </td>
+          <td>
+          </td>
+
+          <td>    
+          
+          </td>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+          <td>
+
+          </td>
+          <td>
+
+          </td>          
+          <td style="width: 100px">
+            <label><%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Separadores.desembolsos')}:" %></label>
+          </td>
+          <td style="text-align: right">
+            <b><%= format_fm(monto_total)%></b>
+          </td>
+        </tr>
+
+     </table>
+    </div>

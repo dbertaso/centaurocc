@@ -1,0 +1,110 @@
+<div class="marco-boton-out" id="button_new">
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => { :action => :check_ci_new, :popup=>params[:popup] }) do %>
+  <span>
+    <table align="right" class="tabla-boton-out">
+      <tr>
+        <td>
+          <label>Nro. C&eacute;dula</label>
+        </td>
+        <td>
+          <%=  select_tag "letra_cedula", 
+          "<option value='V' >V</option>
+          <option value='E' >E</option>".html_safe, :include_blank => true, :onchange=>';inputChange();', :class=>'select'%>-
+          <%= text_field_tag 'cedula', '',
+            :class=>'text', :style=>'width: 90px',
+            :maxlength=>'8', :onkeypress=>'return NumberKey(event);' %>
+        </td>
+        <td>
+          <%= image_submit_tag I18n.t('Sistema.Body.Imagenes.agregar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.agregar'), :id=>'button_add' -%>
+        </td>
+      </tr>
+    </table>
+  </span>
+<% end %>
+</div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => { :action => :list, :popup=>params[:popup] } ) do %>
+  <table>
+    <tr>
+      <td style="width: 130px">
+        <label>Nro. C&eacute;dula</label>
+      </td>
+      <td>
+        <%=  select_tag "letra_cedula", 
+          "<option value='V' >V</option>
+          <option value='E' >E</option>".html_safe, :include_blank => true, :onchange=>'inputChange();', :class=>'select' %> -      
+        <%= text_field_tag 'cedula', '', :class=>'text', :maxlength=>'8', :style=>'width: 73px', :onkeypress=>'return NumberKey(event);'  %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 130px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label>
+      </td>
+      <td>
+        <%= text_field_tag 'primer_nombre', '', :class=>'text', :maxlength=>'20', :style=>'width: 120px'  %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 130px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label>
+      </td>
+      <td>
+        <%= text_field_tag 'primer_apellido', '', :class=>'text', :maxlength=>'20', :style=>'width: 120px'  %>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.sector') %> </label>
+      </td>
+      <td style="width: 480px">
+        <span id="sector-search">
+            <%= render :partial => 'sector_search' %>
+        </span>
+      </td>
+      <td>
+      </td>
+    </tr>
+
+    </tr>
+      <td style="width: 100px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.sub_sector') %></label>
+      </td>
+      <td style="width: 480px">
+        <span id="sub-sector-search">
+            <%= render :partial => 'sub_sector_search' %>
+        </span>
+
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'), :title=>I18n.t('Sistema.Body.Vistas.General.buscar')) -%>
+      </td>
+    </tr>
+
+  </table>
+  <% end %>
+
+  <%= error %>
+  <%= message %>
+  <br>
+  <div id="list">
+  </div>
+</div>

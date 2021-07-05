@@ -1,0 +1,33 @@
+<%= form_title %>
+<div class="marco-contenido2">
+	<br>
+	<%= %>
+	<table>
+		<tr>
+			<td>
+        <label align="center" style="font-color:red;font-style:oblique;font-size:20px">
+          Proceso iniciado, el mismo demorará algunos minutos 
+        </label>
+			</td>
+			<td>
+			</td>
+		</tr>
+	</table>
+  <br><br>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+				{ :action => :index},
+				{ :id=>'button_close', } ) -%>
+  </div>
+
+<center>
+	
+	<div>
+	<%= @feedback %>
+	</div>
+
+  <div id="show_error">
+    
+  </div>
+</center>
+</div>

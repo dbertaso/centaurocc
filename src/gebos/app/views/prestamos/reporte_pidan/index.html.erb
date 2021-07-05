@@ -1,0 +1,117 @@
+<div class="marco-titulo"><div><div>
+	<%= @form_title_records %>
+</div></div></div>
+
+<%= errores %>
+<%= message %>
+
+<%= form_tag :action => 'procesar_reporte' do -%>
+
+<table style="width: 100%">
+	
+  <tr>
+    <td>
+      <label>Programa</label>
+      <label title='Dato Obligatorio' style="color: red">   (*)   </label>
+    </td>
+    <td>      
+
+      <%= select(
+        'programa_id', '',
+        @programa_list.map{|i| [i.nombre, i.id]},
+        { :prompt => 'Seleccione' },
+        { :class=>'select',:onchange=> 'inputChange();' } ) %>
+    </td>
+  </tr>
+    
+  <tr>
+    <td>
+      <label>Estado</label>
+    </td>
+    <td>
+      <%= select(
+        'estado_id', '',
+        @estado_list.map{|i| [i.nombre, i.id]},
+        { :prompt => 'Seleccione' },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 30%">
+      <label>Sector</label>
+    </td>
+    <td style="width: 70%">
+      <%= select(
+        'sector_id', '',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>'Seleccionar'},
+        { :class=>'select',:onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method => :get,
+          :url=>{:controller=>'reporte_pidan',
+          :action=>:sector_change },
+          :with=>"'sector_id='+ this.value" )};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Sub-Sector</label>
+    </td>
+    <td>
+      <div id="sub-sector-select">
+        <%= select(
+          'sub_sector_id', '',
+          [],
+          { :prompt=>'Seleccionar'},
+          { :class=>'select',:onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method => :get,
+            :url=>{:controller=>'reporte_pidan',
+            :action=>:sub_sector_change },
+            :with=>"'sub_sector_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+
+    <tr>
+      <td>
+        <label>Rubro</label>
+      </td>
+      <td>
+        <div id="rubro-select">
+          <%= select(
+            'rubro_id', '',
+            [],
+            { :prompt=>'Seleccionar'},
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label>Sub-Rubro</label>
+      </td>
+      <td>
+        <div id="sub_rubro-select">
+          <%= select(
+            'sub_rubro_id', '',
+            [],
+            { :prompt=>'Seleccionar'},
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+      
+  <tr>
+		<td colspan="2" align="center">
+			<%= submit_tag 'Ejecutar reporte', :target=>"_blank" %>
+		</td>
+	</tr>
+</table>
+          
+ <% end -%>

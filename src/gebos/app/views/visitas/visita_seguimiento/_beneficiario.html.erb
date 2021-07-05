@@ -1,0 +1,158 @@
+<%if @es==0%>
+
+  <table>
+    <tr>
+      <td>
+        <label>Cédula </label><label style="color: red">*</label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </td>
+      <td>
+        <%= select('seguimiento_visita', 'cedula_nacionalidad_persona_atencion',
+          ([["V", "V"],["E", "E"]]), {:include_blank => true},  {:class=>'select' })%>
+        <%= text_field 'seguimiento_visita','cedula_persona_atencion', :class=>'text',
+          :style=>'width: 148px',  :maxlength=>'8'-%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Nombre </label><label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'nombre_persona_atencion', :class=>'text',
+          :style=>'width: 200px', :maxlength=>'30' -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Apellido </label><label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'apellido_persona_atencion',
+          :class=>'text',  :style=>'width: 200px', :maxlength=>'30' -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Vínculo con el Solicitante </label><label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'vinculo_persona_atencion', :class=>'text',
+          :style=>'width: 200px', :maxlength=>'30' -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Teléfonos</label>
+      </td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'telf1_persona_atencion', :class=>'text',
+          :style=>'width: 200px', :maxlength=>'12' -%>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'telf2_persona_atencion', :class=>'text',
+          :style=>'width: 200px', :maxlength=>'12' -%>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'telf3_persona_atencion',
+          :class=>'text',  :style=>'width: 200px',  :maxlength=>'12' -%>
+      </td>
+    </tr>
+  </table>
+
+<%else%>
+
+  <table>
+    <tr>
+      <td>
+        <label>Cédula </label><label style="color: red">*</label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </td>
+      <td>
+        <%= select('seguimiento_visita', 'cedula_nacionalidad_persona_atencion',
+          ([["V", "V"],["E", "E"]]), {},  {:class=>'select', :value=>@info_beneficiario.cedula_nacionalidad, :disabled=>"true" })%>
+
+        <%= text_field 'seguimiento_visita','cedula_persona_atencion', :class=>'text',
+          :style=>'width: 148px', :maxlength=>'8', :readonly=>"readonly", :value=>@info_beneficiario.cedula -%>
+
+        <%= hidden_field 'seguimiento_visita', 'cedula_nacionalidad_persona_atencion',
+          :value => @info_beneficiario.cedula_nacionalidad %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label><label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'nombre_persona_atencion',  :class=>'text',
+          :style=>'width: 200px',  :maxlength=>'30', :readonly=>"readonly",
+          :value=>@info_beneficiario.primer_nombre + " " +@info_beneficiario.segundo_nombre -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.apellido')%></label><label style="color: red">*</label>
+      </td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'apellido_persona_atencion', :class=>'text',
+          :style=>'width: 200px', :maxlength=>'30', :readonly=>"readonly",
+          :value=>@info_beneficiario.primer_apellido+" "+@info_beneficiario.segundo_apellido -%>
+
+        <%= hidden_field 'seguimiento_visita', 'vinculo_persona_atencion',
+          :value => "*** NO APLICA ***" %>
+      </td>
+    </tr>
+    <%
+    case @telefonos_beneficiario.length
+    when 0
+      telefono1=''
+      telefono2=''
+      telefono3=''
+
+    when 1
+      telefono1=@telefonos_beneficiario[0].codigo + "-" +@telefonos_beneficiario[0].numero
+      telefono2=''
+      telefono3=''
+
+    when 2
+      telefono1=@telefonos_beneficiario[0].codigo + "-" +@telefonos_beneficiario[0].numero
+      telefono2=@telefonos_beneficiario[1].codigo + "-" +@telefonos_beneficiario[1].numero
+      telefono3=''
+
+    else 3
+      telefono1=@telefonos_beneficiario[0].codigo + "-" +@telefonos_beneficiario[0].numero
+      telefono2=@telefonos_beneficiario[1].codigo + "-" +@telefonos_beneficiario[1].numero
+      telefono3=@telefonos_beneficiario[2].codigo + "-" +@telefonos_beneficiario[2].numero
+    end
+  %>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.telefonos')%></label>
+      </td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'telf1_persona_atencion', :class=>'text',
+          :style=>'width: 200px', :maxlength=>'12', :readonly=>"readonly", :value=>telefono1 -%>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'telf2_persona_atencion', :class=>'text',
+          :style=>'width: 200px', :maxlength=>'12', :readonly=>"readonly", :value=>telefono2 -%>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <%= text_field 'seguimiento_visita', 'telf3_persona_atencion',
+          :class=>'text', :style=>'width: 200px',
+          :maxlength=>'12', :readonly=>"readonly", :value=>telefono3 -%>
+      </td>
+    </tr>
+  </table>
+<%end%>

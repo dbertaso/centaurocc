@@ -1,0 +1,29 @@
+<div align="center">
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th colspan="2"><h2><strong><%=(I18n.t('Sistema.Body.Vistas.General.plan_inversion')).upcase%></strong></h2></th>
+    </tr>
+    <tr>
+      <th style="width: 80%; align:center">
+        <%=I18n.t('Sistema.Body.Vistas.General.item')%>
+      </th>
+      <th style="width: 20%; align:center">
+        <%=I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.financiamiento')%>
+      </th>
+    </tr>
+    </thead>
+    <tbody id="list-body">
+      <% for items in @plan_inversion_plantilla %>
+        <tr>
+          <td>
+            <%= items.nombre %>
+          </td>
+          <td align="right">
+            <%= items.monto_financiamiento %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

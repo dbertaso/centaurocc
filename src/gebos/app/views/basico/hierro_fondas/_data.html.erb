@@ -1,0 +1,36 @@
+<% hierro_fondas = @hierro_fondas if hierro_fondas.nil? %>
+<td>
+  <%= hierro_fondas.nombre_registro  %>
+</td>
+<td>
+  <%= hierro_fondas.estado.nombre  %>
+</td>
+<td align="center">
+  <%= hierro_fondas.fecha_registro_f  %>
+</td>
+<td align="right">
+  <%= hierro_fondas.numero  %>
+</td>
+<td align="right">
+  <%= hierro_fondas.tomo  %>
+</td>
+<td align="right">
+  <%= hierro_fondas.protocolo  %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(hierro_fondas.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'hierro_fondas', :action => :edit, :id => hierro_fondas.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'hierro_fondas', :action => :delete, :id => hierro_fondas.id}) if vlink 'delete' -%>
+</td>
+

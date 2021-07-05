@@ -1,0 +1,30 @@
+<% sucursal_casa_proveedora = @sucursal_casa_proveedora if sucursal_casa_proveedora.nil? %>
+
+<td>
+	<%= sucursal_casa_proveedora.nombre  %>
+</td>
+<td align="center">
+	<%=I18n.t('Sistema.Body.Vistas.General.region')%>: <%=sucursal_casa_proveedora.region.nombre%> - <%=I18n.t('Sistema.Body.Vistas.General.pais')%>: <%=sucursal_casa_proveedora.region.pais.nombre%>
+   
+</td>
+
+<td style="text-align: center">
+	<%= format_bool(sucursal_casa_proveedora.es_express)  %>
+</td>
+<td style="text-align: center">
+	
+<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()', 	  
+	  :url => {:controller => 'sucursal_casa_proveedora', :action => :edit, :id => sucursal_casa_proveedora.id}) if vlink 'edit' -%>
+
+
+	&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+		:loading =>'image_load()',
+		:loaded => 'image_unload()',
+	    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'sucursal_casa_proveedora', :action => :delete, :id => sucursal_casa_proveedora.id}) if vlink 'delete' -%>
+</td>
+

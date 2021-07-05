@@ -1,0 +1,31 @@
+<% miembro = @miembro if miembro.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%#= miembro.id %>">
+	<td align="right">
+		<%#= miembro.cedula  %>
+	</td>	
+	<td align="left">
+		<%#= miembro.nombre %> <%= miembro.apellido %>
+	</td>
+	<td align="left">
+		<%#= miembro.area %>
+	</td>		
+	<td align="left">
+		<%#= miembro.rol %>
+	</td>		
+	<td align="center">
+		<% #if miembro.firma == "t" %>
+			<%#= image_tag('activo.gif') %>
+		<% #else %>
+			<%#= image_tag('inactivo.gif') %>
+		<% #end %>
+	</td>
+	<td align="center">
+					
+	<%#= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Eliminar Miembro'),
+		:loading =>'image_load()',
+ 	  	:loaded => 'image_unload()',
+		:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:action => :delete_miembro_edit, :id => miembro.id}) -%>
+
+	</td>
+</tr>

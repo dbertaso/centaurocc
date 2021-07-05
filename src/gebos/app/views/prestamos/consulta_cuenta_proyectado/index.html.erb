@@ -1,0 +1,64 @@
+<div class="marco" style="width: 800px">
+
+  <div class="marco-contenido" style="width 800%">
+    
+    <div class="marco-titulo">
+      <div>
+        <div>
+          <%= I18n.t('Sistema.Body.Vistas.General.prestamo')%>
+          <span class="titulo_modificar">'
+            <%= @prestamo.numero %> <%= " - #{I18n.t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+          </span> <%= "#{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>
+          <span class="titulo_modificar">'
+            <%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @  prestamo.cliente.empresa.nombre : @prestamo.cliente.persona.nombre_corto  %>'
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <%#render 'prestamos/consulta_prestamo/common/tabs' %>
+    <div class="marco-contenido2">
+    
+      <%= error %>
+      <%= message %>
+    
+      <%= form_remote_tag(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url => { :action => :buscar, :id=>@prestamo.id, :popup=>params[:popup] } ) do -%>
+          
+            <table style="width: 500px; margin-bottom: 10px">
+              <tr>
+                
+                <td style="width: 400px">
+                  <label>
+                    <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.para')} #{I18n.t('Sistema.Body.Vistas.General.el')} #{I18n.t('Sistema.Body.Vistas.Form.calculo')}"%>
+                  </label>
+                  
+                  <%= calendar_date_select 'fecha', @fecha, :year_range => 110.years.ago..-1.years.ago,
+                  :class=>'text',:style=>'width:80px',:maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();'-%>
+                  <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+                  
+                </td>
+                
+                <td>
+                  <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+                </td>
+                
+              </tr>
+              
+          </table>
+                        
+        <% end %>
+        
+
+        <div id="botones" style="display:none"></div>
+    
+      
+      <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :controller => 'consulta_prestamo', :action => :index },
+        { :id=>'button_close' } ) -%>
+      
+    </div>
+  </div>
+</div>

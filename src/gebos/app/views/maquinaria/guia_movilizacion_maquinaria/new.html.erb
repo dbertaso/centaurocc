@@ -1,0 +1,26 @@
+<%#= form_title_new %>
+<div class="marco-titulo">
+  <div>
+    <div>
+	 <%=I18n.t('Sistema.Body.Vistas.General.agregando')%> <%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Header.form_title')%><span class="titulo_modificar">
+      </span> &ensp;<label style="color: red">"<%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%> <%= @view_envio_maquinaria.nro_tramite unless @view_envio_maquinaria.nil? %>"
+        &ensp; "<%=I18n.t('Sistema.Body.Vistas.General.productor')%> <%= @view_envio_maquinaria.productor unless @view_envio_maquinaria.nil? %>" </label>
+    </div>
+  </div>
+</div>
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+<%= error %>
+<%= message %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :save_new, :solicitud_id=> params[:solicitud_id], :popup=>params[:popup] }) do -%>
+
+<%= render :partial => 'form' %>
+
+<%= form_buttons_edit :solicitud_id=>params[:solicitud_id], :popup=>params[:popup] %>
+<% end -%>
+
+

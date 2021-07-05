@@ -1,0 +1,21 @@
+<%= form_title_edit @estado.nombre %>
+		
+<%= render :partial=>'basico/estado/common/tabs' %>
+<div class="marco-contenido2">
+
+	<%= error %>
+	<%= message %>
+
+	
+		<%= render 'form_view' %>
+		
+		<div id="buttons_edit" style="display: none">
+			<%= form_buttons_edit %>
+		</div>
+		
+		<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+			{ :action => :index },
+			{ :id=>'button_close' } ) -%>
+		
+	
+</div>

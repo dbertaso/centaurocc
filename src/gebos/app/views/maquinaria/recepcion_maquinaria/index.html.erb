@@ -1,0 +1,40 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 100px; position: absolute;" ></div>
+
+
+<%= form_title_search %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) do-%>
+<table>
+  <tr>
+    <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.orden')%></label></td>
+    <td><%= text_field_tag 'numero_orden', '', :class=>'text', :maxlength=>'12', :style=>'width: 300px'  %></td>
+  </tr>
+  
+  <tr>
+    <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Catalogo.Etiquetas.fecha_llegada')%></label></td>
+    <td>
+    <%#= text_field 'fecha_llegada', '', :class=>'text', :style=>'width: 70px', :maxlength=>'10'  -%>
+	<%#= calendar 'fecha_llegada_', 'calendar_fecha_llegada_' %> 
+    <%= calendar_date_select_tag "fecha_llegada", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);' %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label></td>
+    <td><%= text_field_tag 'cedula_rif', '', :class=>'text', :maxlength=>'12', :style=>'width: 200px'  %></td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label><%=I18n.t('Sistema.Body.General.beneficiario')%></label></td>
+    <td><%= text_field_tag 'productor', '', :class=>'text', :maxlength=>'40', :style=>'width: 300px'  %>&nbsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%> </td>
+  </tr>
+</table>
+<% end %>
+<br/>
+<%= error %>
+<%= message %>
+<br/>
+<div id="list"></div>

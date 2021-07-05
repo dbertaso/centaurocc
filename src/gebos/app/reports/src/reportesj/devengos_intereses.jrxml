@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="asientos_contables" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_mes" class="java.lang.Integer">
+		<parameterDescription><![CDATA[Mes]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_ano" class="java.lang.Integer">
+		<parameterDescription><![CDATA[Año]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     comprobante_contable."fecha_comprobante" AS comprobante_contable_fecha_comprobante,
+     comprobante_contable."total_debe" AS comprobante_contable_total_debe,
+     comprobante_contable."total_haber" AS comprobante_contable_total_haber,
+     comprobante_contable."referencia" AS comprobante_contable_referencia,
+     comprobante_contable."id" AS comprobante_contable_id,
+     CASE asiento_contable."tipo" when 'D' then asiento_contable."monto" else 0 end AS monto_debe,
+     CASE asiento_contable."tipo" when 'H' then asiento_contable."monto" else 0 end AS monto_haber,
+     asiento_contable."tipo" AS asiento_contable_tipo,
+     asiento_contable."codigo_contable" AS asiento_contable_codigo_contable,
+     CASE substr(asiento_contable."codigo_contable",21,6) WHEN '100608' THEN  cuenta_contable."nombre" || ' ' || 'BANFOANDES'
+                                                          WHEN '100609' THEN  cuenta_contable."nombre" || ' ' || 'BIV'
+                                                          WHEN '100610' THEN  cuenta_contable."nombre" || ' ' || 'MERCANTIL'
+                                                          ELSE cuenta_contable."nombre" END AS cuenta_contable_nombre,
+     CASE date_part('month', comprobante_contable."fecha_comprobante") when 1 then 'Enero'
+                                                                       when 2 then 'Febrero'
+                                                                       when 3 then 'Marzo'
+                                                                       when 4 then 'Abril'
+                                                                       when 5 then 'Mayo'
+                                                                       when 6 then 'Junio'
+                                                                       when 7 then 'Julio'
+                                                                       when 8 then 'Agosto'
+                                                                       when 9 then 'Septiembre'
+                                                                       when 10 then 'Octubre'
+                                                                       when 11 then 'Noviembre'
+                                                                       when 12 then 'Diciembre'
+              end as nombre_mes,
+         date_part('month', comprobante_contable."fecha_comprobante") as mes_contable,
+         date_part('year', comprobante_contable."fecha_comprobante") as year_contable,
+         comprobante_contable."id" as numero_comprobante ,
+         comprobante_contable."codigo_transaccion" as codigo,
+         substr(asiento_contable."codigo_contable",1,19) as codigo_control
+FROM
+     "public"."comprobante_contable" comprobante_contable INNER JOIN "public"."asiento_contable" asiento_contable ON comprobante_contable."id" = asiento_contable."comprobante_contable_id"
+     INNER JOIN "public"."cuenta_contable" cuenta_contable ON substr(asiento_contable."codigo_contable",1,19) = cuenta_contable."codigo"
+     LEFT JOIN "public"."cuenta_contable_presupuesto" cuenta_contable_presupuesto ON cuenta_contable."id" = cuenta_contable_presupuesto."cuenta_contable_id"
+WHERE comprobante_contable.codigo_transaccion is not null and
+      cast(extract(month from comprobante_contable."fecha_comprobante") as int) = $P{p_mes} and
+      cast(extract(year from comprobante_contable."fecha_comprobante") as int)  = $P{p_ano} and
+      (comprobante_contable.codigo_transaccion = 'DEVENGO INTERES' or comprobante_contable.codigo_transaccion = 'DEVENGO INTERES GRACIA')
+ORDER BY substr(asiento_contable."codigo_contable",1,19),
+         comprobante_contable.codigo_transaccion,
+         comprobante_contable.fecha_comprobante]]>
+	</queryString>
+	<field name="comprobante_contable_fecha_comprobante" class="java.sql.Date"/>
+	<field name="comprobante_contable_total_debe" class="java.lang.Double"/>
+	<field name="comprobante_contable_total_haber" class="java.lang.Double"/>
+	<field name="comprobante_contable_referencia" class="java.lang.String"/>
+	<field name="comprobante_contable_id" class="java.lang.Integer"/>
+	<field name="monto_debe" class="java.lang.Double"/>
+	<field name="monto_haber" class="java.lang.Double"/>
+	<field name="asiento_contable_tipo" class="java.lang.String"/>
+	<field name="asiento_contable_codigo_contable" class="java.lang.String"/>
+	<field name="cuenta_contable_nombre" class="java.lang.String"/>
+	<field name="nombre_mes" class="java.lang.String"/>
+	<field name="mes_contable" class="java.lang.Double"/>
+	<field name="year_contable" class="java.lang.Double"/>
+	<field name="numero_comprobante" class="java.lang.Integer"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="codigo_control" class="java.lang.String"/>
+	<variable name="tot_debe" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_debe}]]></variableExpression>
+	</variable>
+	<variable name="tot_haber" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_haber}]]></variableExpression>
+	</variable>
+	<variable name="cc_tot_debe" class="java.lang.Double" resetType="Group" resetGroup="CodigoContable" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_debe}]]></variableExpression>
+	</variable>
+	<variable name="cc_tot_haber" class="java.lang.Double" resetType="Group" resetGroup="CodigoContable" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_haber}]]></variableExpression>
+	</variable>
+	<group name="CodigoContable" isReprintHeaderOnEachPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{codigo_control}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="12" splitType="Stretch">
+				<printWhenExpression><![CDATA[$V{cc_tot_haber} > 0.00]]></printWhenExpression>
+				<textField>
+					<reportElement x="175" y="0" width="360" height="12" isPrintWhenDetailOverflows="true"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cuenta_contable_nombre}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00">
+					<reportElement x="648" y="0" width="100" height="12">
+						<printWhenExpression><![CDATA[$V{cc_tot_haber}> 0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cc_tot_haber}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="8" y="0" width="162" height="12" isPrintWhenDetailOverflows="true"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{asiento_contable_codigo_contable}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="157" splitType="Stretch">
+			<image>
+				<reportElement x="10" y="5" width="111" height="55"/>
+				<imageExpression><![CDATA["/var/www/cartera/public/images/logo_reporte.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="137" y="18" width="479" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Verdana" size="16" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[DEVENGO DE INTERESES]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="668" y="20" width="40" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="722" y="20" width="22" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="631" y="0" width="37" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="40" width="33" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="270" y="40" width="110" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Verdana" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_mes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="391" y="40" width="33" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Verdana" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="435" y="39" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Verdana" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_ano}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="668" y="0" width="76" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="242" y="128" width="182" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="645" y="128" width="103" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Haber]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="128" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Contable]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="153" width="751" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="97" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="535" y="128" width="103" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Debe]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="103" y="97" width="532" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comprobante_contable_referencia}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="124" width="751" height="1"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="103" y="77" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comprobante_contable_fecha_comprobante}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="77" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Comprobante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="631" y="20" width="37" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Página]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="708" y="20" width="14" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[ de ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{monto_debe} > 0.00]]></printWhenExpression>
+			<textField>
+				<reportElement x="175" y="0" width="360" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuenta_contable_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="0" width="162" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{asiento_contable_codigo_contable}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="535" y="0" width="100" height="12">
+					<printWhenExpression><![CDATA[$F{monto_debe} > 0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_debe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement x="541" y="4" width="210" height="1"/>
+			</line>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="535" y="5" width="100" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_debe}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="648" y="5" width="100" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_haber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

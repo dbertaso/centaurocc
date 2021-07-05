@@ -1,0 +1,37 @@
+<script>
+  if (<%= @solicitud_maquinaria_list.length %> == 0){
+    alert("<%= I18n.t('Sistema.Body.Modelos.Errores.el_tramite_no_tiene_proforma') %>");
+    window.close();
+  }
+</script>
+<% if @maquinaria_total > 0 %>
+  <div style="width: 100%" class="marco-boton-out" id="button_new">
+    <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.agregar')), :action => 'new', :popup=>true, :solicitud_id => @solicitud.id) if vlink 'new' %>
+  </div><br/>
+<% end %>
+<div class="marco-contenido">
+  <div id="list">
+    <div class="marco-titulo">
+      <div>
+        <div><%= "#{I18n.t('Sistema.Body.Vistas.General.lista')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.proforma')}" %></div>
+      </div>
+    </div>
+
+    <%= error %>
+    <%= message %>
+
+    <br/>
+    <%= render :partial => 'list' -%>
+  </div>
+
+  <br/>
+
+  <a href="javascript:window.close();"><%= image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')) %></a>
+  <br/><br/>
+  <center>
+    <div id="lista_maq">
+      <%= render :partial => 'lista_maq' -%>
+    </div>
+  </center>
+  <br/><br/>
+</div>

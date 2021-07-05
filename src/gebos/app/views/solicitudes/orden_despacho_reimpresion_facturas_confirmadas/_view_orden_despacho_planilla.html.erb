@@ -1,0 +1,315 @@
+<%
+@marca=params[:marca]
+%>
+
+
+<!-- fin de lo que se hacia en el controlador-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-10" />
+<!--<link rel="stylesheet" type="text/css" href="/stylesheets/Watermark.css" media="screen, print"> -->
+
+<script type="text/javascript">
+
+//   function onload()
+//   {
+//     window.print();
+//   }
+
+function imprime(){
+//desaparece el boton
+document.getElementById("noprint").style.visibility='hidden';
+//se imprime la pagina
+print();
+setTimeout("showlayer()",2000);
+
+}
+function showlayer(){
+     document.getElementById("noprint").style.visibility='visible';
+}
+
+
+function formatCurrency2(num) {
+   
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    //$(name + '_display').innerHTML = numero;
+    return numero;
+}
+
+function formatCurrency3(num) {
+    //alert("numero entrante "+num);   
+    aux=num.toString().split('.');
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*1000+0.50000000001);
+
+    //cents = num%100;
+    if (aux.length > 1){  
+    cents = aux[1].toString();
+    }else{
+    cents ="00";
+    }
+    //alert("numero centimos "+cents);
+    num = Math.floor(num/1000).toString();
+
+    //if(cents<10)
+        //cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    //alert("numero final "+numero);
+    //$(name + '_display').innerHTML = numero;
+    //alert("numero saliente "+numero);   
+    return numero;
+}
+
+
+</script>
+
+<!-- Proceso para realizar la marca de agua -->
+<%if @marca.to_i!=0 %>
+
+<!-- nuevo codigo -->
+
+<!--<script LANGUAGE="Javascript1.2" type="text/javascript" src="/javascripts/watermark.js"></script>
+
+<DIV CLASS="jsbrand" ID="jsbrand" STYLE="position:absolute;top:1;visibility:hide;" zIndex="1000" ALIGN="right">
+  <A HREF="#" TARGET="_top"><IMG SRC="/assets/marca_agua.jpg" BORDER="0"></A>
+</DIV> -->
+
+
+<%end%>
+
+<!-- fin nuevo codigo -->
+
+</head>
+<body>
+
+<img src="/assets/logo_institucion.png" width="164" height="85" align="right" />
+<img src="/assets/Logo_gobiernoagricultura.png" width="350" height="75" align="left" />
+<!-- caso en que se desee imprimir la marca de agua -->
+
+<%if @marca.to_i!=0 %>
+<!-- <div align="center"><font size="600px" align="center"><b><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.solo_consulta')%></b></font></div> -->
+
+ <div id="marca_agua" > 
+<%end%>
+<div style="font-size: 14px;"> 
+
+<BR><BR>
+
+<br><br>
+
+
+<table width="100%" border="1">
+<%if @marca.to_i!=0 %>
+  <tr >
+    <td colspan="8" align="center">
+      <font size="600px" align="center"><b><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.solo_consulta')%></b></font>
+ 
+  </tr>   
+
+<%end%>
+
+
+</table>
+
+
+<table width="100%" border="1">
+<%if @factura_orden_despacho.length > 0%>
+<tr>
+    <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.contenido_del_despacho')%> N° <font color="red" size="200px"><%=@factura_orden_despacho[0].orden_despacho_numero%></font></label>
+    </td>
+  </tr>
+
+<tr>
+    <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.entrega_insumo_beneficiario')%></label>
+    </td>
+  </tr>
+
+<tr>
+
+    <td colspan="4"  >
+
+      <label><%=I18n.t('Sistema.Body.General.beneficiario')%>:</label>
+        <%=@factura_orden_despacho[0].nombre %>
+    </td>
+
+    <td colspan="4" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%>:</label>
+	<%=@factura_orden_despacho[0].cedula_rif %>
+
+    </td>
+</tr>
+   <tr>
+
+    <td colspan="4" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%>:</label>
+	<%=@factura_orden_despacho[0].nombre_estado %>
+
+    </td>
+
+    <td colspan="4" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%>:</label>
+
+        <%=@factura_orden_despacho[0].nombre_municipio %>
+    </td>
+</tr>
+<tr>
+   <td colspan="8" >
+
+      <label><%=I18n.t('Sistema.Body.General.direccion')%>:</label>
+    <%=@factura_orden_despacho[0].direccion_completa %>
+
+    </td>
+</tr>
+
+<% if @factura_orden_despacho[0].nombre_representante!="" %>
+
+    <tr>
+   <td colspan="4" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.representante_legal')%>:</label> 
+
+
+    <%=@factura_orden_despacho[0].nombre_representante %>
+
+    </td>
+<td colspan="4">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>:</label> 
+<%=@factura_orden_despacho[0].cedula_representante %>
+</td>
+    </tr>
+<%end
+end%>
+
+   <tr>
+    <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.detalle_todas_facturas')%> </label>
+    </td>
+  </tr>
+    
+     <tr  align="center">
+    <td colspan="8">
+      <div id="list" >        
+        <%= render :partial => 'list_especial' %>
+	</div>
+    </td>
+       
+  </tr>
+    
+    <tr>
+      <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.vigencia_orden_despacho')%></label>
+    </td>
+    </tr>  
+<tr>    
+	<td colspan="8" >
+
+      <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.parrafo_productor_caduca',:caducidad=>@parametros_general.caducidad_orden_despacho)%>: <label><%=(Time.now + ((60 * @parametros_general.caducidad_orden_despacho) * 60 * 24)).strftime(I18n.t('time.formats.gebos_short'))%> </label>
+    </td>
+   
+</tr><tr>
+   <td colspan="8" >
+<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.parrafo_casa_caduca',:caducidad=>@parametros_general.caducidad_casa_proveedora)%>: <label><%=(Time.now + ((60 * @parametros_general.caducidad_casa_proveedora) * 60 * 24)).strftime(I18n.t('time.formats.gebos_short'))%>
+      </label>
+    </td> </tr>     
+    
+    <tr>
+      <td colspan="8" align="justify" >
+        <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.parrafo_nota',:caducidad=>@parametros_general.caducidad_orden_despacho)%>
+      </td>
+    </tr>
+<tr>
+
+    <td colspan="3" style="width:33%" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.elaborado_por')%>:</label> <%=Usuario.find(session[:id]).primer_nombre.strip.upcase + ' ' + Usuario.find(session[:id]).segundo_nombre.strip.upcase + ' ' + Usuario.find(session[:id]).primer_apellido.strip.upcase + ' ' + Usuario.find(session[:id]).segundo_apellido.strip.upcase %>
+    </td>
+
+    <td colspan="3" style="width:33%" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.usuario')%>:</label> <%=Usuario.find(session[:id]).nombre_usuario.strip.upcase %>
+    </td>
+  <td colspan="2" style="width:33%" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>:</label> <%=Usuario.find(session[:id]).cedula_nacionalidad.strip.upcase + ' ' + Usuario.find(session[:id]).cedula.to_s%>
+    </td>
+</tr>
+    <tr>
+      <td colspan="8">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.oficina')%> <%=I18n.t('Sistema.Body.Vistas.General.regional')%>: </label>
+        <%=@oficina[0].nombre.strip.upcase%>
+        <%#= Oficina.find(Solicitud.find(facturas.solicitud_id).oficina_id).nombre.strip.upcase %>
+      </td>
+    </tr>
+  
+ 
+    
+  </table>
+
+<div>
+  <table style="width: 100%">
+    <tr>
+      <td>
+        
+      </td>
+      <td align="right">
+        <%=I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.fecha_impresion')%>: <%= Time.now.strftime(I18n.t('time.formats.gebos_short')) %>
+      </td>
+    </tr>
+  </table></div>
+<%if @marca.to_i!=0 %>
+<div align="center"><font size="600px" align="center"><b><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.solo_consulta')%></b></font></div>
+<%end%>
+
+<div id=noprint>
+<TABLE width="93%" cellpadding="2">
+<tr align="center">
+  <td><input id="imprimir" name="imprimir" onclick="Javascript:imprime()" type="button" value="Imprimir" /></td>
+</tr>
+</TABLE> 
+</div>
+</td>
+</tr>
+</table>
+</BR>
+</BR>
+</div>
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<% if @viable.to_s == 'false' %>
+
+  <span class="text"><label style="font-size: 12px">¿<%= I18n.t('Sistema.Body.Vistas.General.desea_recomendar_otros_rubros') %>?</label></span>
+  <br/><br/>
+  <table>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label>
+      </td>
+      <td>
+        <%= select(
+          'sector_id', '',
+          @sector_list.map{|i| [i.nombre, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'decision',
+            :action=>:sector_change },
+            :with=>"'sector_id='+ this.value" )};inputChange();" } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %></label>
+      </td>
+      <td>
+        <div id="sub-sector-select">
+          <%= select(
+            'sub_sector_id', '',
+            [],
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select',:onchange=>"#{remote_function(
+              :loading =>'Element.show("loading")',
+              :loaded => 'Element.hide("loading")',
+              :method =>:get,
+              :url=>{:controller=>'decision',
+              :action=>:sub_sector_change },
+              :with=>"'sub_sector_id='+ this.value")};inputChange();" } ) %>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></label>
+      </td>
+      <td>
+        <div id="rubro-select">
+          <%= select(
+            'rubro_id', '',
+            [],
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select',:onchange=>"#{remote_function(
+              :loading =>'Element.show("loading")',
+              :loaded => 'Element.hide("loading")',
+              :url=>{:controller=>'decision',
+              :action=>:rubro_change },
+              :with=>"'rubro_id='+ this.value")};inputChange();" } ) %>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label>
+      </td>
+      <td>
+        <%= text_field 'cantidad', '',
+          :class=>'text',
+          :style=>'width: 100px',
+          :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><samp id="agregar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.agregar'),:title=>'Agregar', :onclick=>"javascript:cargar();", :OnMouseOver=>"style.cursor='pointer'" ) %></samp></td>
+    </tr>
+
+  </table><br/>
+  <table width="100%" class="lista">
+    <tr>
+      <th style="width: 20%"><%= I18n.t('Sistema.Body.Vistas.General.sector') %></th>
+      <th style="width: 25%"><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %></th>
+      <th style="width: 25%"><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></th>
+      <th style="width: 20%"><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></th>
+      <th style="width: 5%">
+      </th>
+    </tr>
+    <% clase = "lista0"
+    @solicitud_rubro_sugerido_list.each { |i| %>
+      <tr class='<%= clase %>'>
+        <td align="center"><%= i.sector.nombre %></td>
+        <td align="center"><%= i.sub_sector.nombre %></td>
+        <td align="center"><%= i.rubro.nombre %></td>
+        <td align="center"><%= sprintf('%01.2f',i.cantidad).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+        <td align="center"><%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Eliminar'),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+            :url => {:action => :delete, :id => i.id, :solicitud_id=>@solicitud.id}) -%></td>
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    } %>
+  </table>
+  <br/>
+<% end %>

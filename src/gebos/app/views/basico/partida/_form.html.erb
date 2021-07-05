@@ -1,0 +1,71 @@
+
+<table>
+  <tr>
+    <td style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+    </td>
+    <td style="width: 200px">
+      <%unless @partida.id.nil? || @partida.id.to_s.empty?%>
+        <%= @partida.actividad.sub_rubro.rubro.sector.nombre %>
+      <%else%>
+        <%= @sector.nombre %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+    </td>
+    <td>
+      <%unless @partida.id.nil? || @partida.id.to_s.empty?%>
+        <%= @partida.actividad.sub_rubro.rubro.sub_sector.nombre %>
+      <%else%>
+        <%= @sub_sector.nombre %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </td>
+    <td>
+      <%unless @partida.id.nil? || @partida.id.to_s.empty?%>
+        <%= @partida.actividad.sub_rubro.rubro.nombre %>
+      <%else%>
+        <%= @rubro.nombre %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 100px">
+      <label>
+        <%=I18n.t('Sistema.Body.Vistas.General.codigo')%>
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td style="width: 75px">
+      <%= text_field 'partida', 'codigo', :class=>'text', :style=>'width: 100px', :maxlength=>'20',
+        :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td style="width: 150px">
+      <%= text_field 'partida', 'nombre', :class=>'text', :style=>'width: 340px', :maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label>
+    </td>
+    <td>
+      <%= text_area 'partida', 'descripcion',
+        :class=>'text',
+        :style=>'width: 500px; height: 100px',
+        :onKeyUp=>'textCounter(this,255)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+</table>

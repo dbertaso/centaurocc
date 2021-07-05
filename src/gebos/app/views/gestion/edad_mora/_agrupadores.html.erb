@@ -1,0 +1,57 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+  		<th style="width: 15%">
+        <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.agrupadores') %>
+   		</th>
+      <th style="width: 15%">
+        <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_0_30') %> 
+      </th>
+      <th>
+        <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_31_60') %> 
+      </th>
+      <th style="width: 15%">
+        <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_61_90') %> 
+      </th>
+      <th style="width: 15%">
+        <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_91_180') %> 
+      </th>
+      <th style="width: 15%">
+        <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_mas_180') %> 
+      </th>
+    </tr>
+	</thead>
+
+	<tbody>
+    <% _agrupador = @agrupador if _agrupador.nil? %>    	    	
+    <% agrupadores = @agrupadores if agrupadores.nil? %>    	
+      <%  even_odd = 1
+          numero = 0
+          for agrupador in agrupadores
+    		    even_odd = 1 - even_odd
+    		    agrupador_contador = Time.now.to_f + numero %>
+
+              <tr class="lista<%= even_odd %>">
+                <td style="width: 300px">
+                  <label><%= agrupador[:agrupador] %></label>
+                </td>
+                <td style="text-align: right">
+                  <%= format_fm agrupador[:_30] %>
+                </td>
+          		  <td style="text-align: right">
+    				      <%= format_fm agrupador[:_60] %>
+                </td>
+        		    <td style="text-align: right">
+    				      <%= format_fm agrupador[:_90] %>
+                </td>
+                <td style="text-align: right">
+    				      <%= format_fm agrupador[:_180] %>
+                </td>
+        		    <td style="text-align: right">
+    				      <%= format_fm agrupador[:_180plus] %>
+                </td>
+              </tr>
+              
+            <% end %>
+  </tbody>
+</table>

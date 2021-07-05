@@ -1,0 +1,17 @@
+<% opcion_accion = @opcion_accion if opcion_accion.nil? %>
+<td>
+  <%= opcion_accion.opcion.nombre  %>
+</td>	
+<td>
+  <%= opcion_accion.accion.nombre  %>
+</td>
+<td>
+  <%= opcion_accion.autorizacion_tiempo_w  %>
+</td>	
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => {:controller => 'opcion_accion_autorizacion', :action => :edit, :id => opcion_accion.id})  if vlink 'edit' -%>&nbsp;
+</td>

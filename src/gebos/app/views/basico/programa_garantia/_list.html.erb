@@ -1,0 +1,23 @@
+<div>
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 550px" <%= sort_class_helper('tipo_garantia.nombre') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'tipo_garantia.nombre', 'recaudo_list' %>
+    </th>
+    <th style="width: 44px">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+    </th>
+  </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+      even_odd = 1
+      for programa_tipo_garantia in @list
+        even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :programa_tipo_garantia => programa_tipo_garantia, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= form_pagination %>

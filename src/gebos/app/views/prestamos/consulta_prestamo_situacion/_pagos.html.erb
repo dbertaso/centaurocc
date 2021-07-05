@@ -1,0 +1,148 @@
+    <div id="pagos">
+      <table style="width: 100%; margin-bottom: 10px" border="0">
+        <tr>
+          <td class="separador" valign="bottom" colspan="10" style="text-align: center" >
+            <span>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.pagos') %>
+            </span>
+          </td>
+        </tr>
+      </table>
+      
+      <table class="lista" style="width: 100%; margin-bottom: 10px" border="0">
+      
+        <thead>
+          <tr>
+            <th>
+              <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.tipo')} #{t('Sistema.Body.Vistas.General.de')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.pago')}"  %>
+            </th>
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_pago') %>
+            </th>      
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_valor') %>
+            </th>      
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_pago') %>
+            </th>      
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora') %>
+            </th>    
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_diferido') %>
+            </th>   
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.intereses') %>
+            </th>   
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.capital') %>
+            </th>    
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_favor') %>
+            </th>
+            <th>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.abono_capital') %>
+            </th>
+          </tr>
+        </thead>
+
+        <% monto_pago = 0.00 
+           monto_mora = 0.00
+           monto_diferido = 0.00
+           monto_ordinario = 0.00
+           monto_capital = 0.00
+           monto_abono_capital = 0.00 
+           monto_remanente = 0.00%>
+        <% even_odd = 1 %>
+        <% for pago in @facturas_pago
+            monto_pago += pago.monto_pago
+            monto_abono_capital += pago.abono_capital
+            monto_mora += pago.pago_interes_mora
+            monto_diferido += pago.pago_interes_diferido
+            monto_ordinario += pago.pago_interes
+            monto_capital += pago.pago_capital
+            monto_remanente += pago.remanente_por_aplicar
+            even_odd = 1 - even_odd %>
+          
+            <tr class="lista<%= even_odd %>" >
+              <td style="text-align: center">
+                <%= case pago.tipo
+                      when 'P'
+                        t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.pago_deposito')
+                      when 'R'
+                        t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.pago_arrime')
+                    end%>
+              </td>
+              <td style="text-align: center">
+                <%= pago.fecha.strftime("%d/%m/%Y") %>
+              </td>
+              <td style="text-align: center">
+                <%= pago.fecha_realizacion.strftime("%d/%m/%Y")%>
+              </td>
+              <td style="text-align: right">    
+                <%= format_fm(pago.monto_pago) unless pago.nil? %>           
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(pago.pago_interes_mora) unless pago.nil? %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(pago.pago_interes_diferido) unless pago.nil? %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(pago.pago_interes) unless pago.nil? %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(pago.pago_capital) unless pago.nil? %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(pago.remanente_por_aplicar) unless pago.nil? %>
+              </td>
+              <td style="text-align: right">
+                <%= format_fm(pago.abono_capital) unless pago.nil? %>
+
+              </td>
+            </tr>
+          <% end %>
+        
+        <% even_odd = 1 - even_odd %>
+        <tr  class="lista<%= even_odd %>" >
+          <td>
+
+          </td>
+          <td>
+          </td>
+
+          <td>    
+          
+          </td>
+          <td style="text-align: right">
+            <b><%= format_fm(monto_pago) %></b>
+
+          </td>
+          <td  style="text-align: right">
+            <b><%= format_fm(monto_mora) %></b>
+
+          </td>
+          <td style="text-align: right">
+            <b><%= format_fm(monto_diferido) %></b>
+
+          </td>
+          <td style="text-align: right">
+            <b><%=  format_fm(monto_ordinario) %></b>
+
+          </td>
+                 
+          <td style="text-align: right">
+            <b><%= format_fm(monto_capital) %></b>
+            
+          </td>
+          <td style="text-align: right">
+          </td>
+          
+          <td style="text-align: right">
+            <b><%=  format_fm(monto_abono_capital) %></b>
+          </td>
+        </tr>
+
+     </table>
+    </div>

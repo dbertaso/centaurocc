@@ -1,0 +1,35 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+
+	logger.info "Action " << action_name
+	logger.info "Controlador " << controller_name.to_s
+
+	if controller_name=='abono_arrime_confirmacion_transferencia' && action_name == 'index'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.Form.actualizacion')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.Form.fechas')%></a></div></li>
+<% 
+	else 	   
+%>
+		<li><div>
+		      <%= link_to(I18n.t('Sistema.Body.Vistas.Form.actualizacion') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.Form.fechas'), :controller => 'abono_arrime_confirmacion_transferencia', :action => 'index', :popup=>params[:popup])  %>
+		</div></li>
+<% 
+	end
+
+	if controller_name=='abono_arrime_confirmacion_transferencia' && action_name == 'consulta_transferencias'
+	%>
+			<li id="actual"><div><a href="#"><%="#{I18n.t('Sistema.Body.Vistas.General.archivos')} #{I18n.t('Sistema.Body.Vistas.General.procesados')}"%></a></div></li>
+	<% 
+		else
+	%>
+			<li><div>
+	     		<%= link_to(I18n.t('Sistema.Body.Vistas.General.archivos') << " " << I18n.t('Sistema.Body.Vistas.General.procesados'), :controller=>'abono_arrime_confirmacion_transferencia', :action => 'consulta_transferencias', :accion=>1)  %>
+			</div></li>
+	<% 
+		end
+	%>
+		</ul>
+	</div>

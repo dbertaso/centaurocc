@@ -1,0 +1,9 @@
+<% sub_sector_onchange = remote_function(
+ :method=>:get, :loading =>'image_load()',:loaded => 'image_unload()',
+ :url=>{:controller=>'solicitud', :action=>:sub_sector_change }, :with=>"'sub_sector_id='+value") %>
+
+<%= select(
+      'sub_sector_id', '',
+      @sub_sector_list.map{|i| [i.nombre, i.id]},
+      { :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+      { :class=>'select',:onchange=>sub_sector_onchange + ';inputChange();' } ) %>

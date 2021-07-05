@@ -1,0 +1,32 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 180px" <%= sort_class_helper('espejo_agua') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.espejo_agua_aprobado'), 'espejo_agua', 'list' %>
+      </th>
+      <th align="center" style="width: 190px" <%= sort_class_helper('duracion_ciclo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.duracion_ciclo'), 'duracion_ciclo', 'list' %>
+      </th>
+      <th style="width: 160px" <%= sort_class_helper('peso_cosecha') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.peso_cosecha')} #{I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.parentesis_kg')}", 'peso_cosecha', 'list' %>
+      </th>
+      <th style="width: 140px" <%= sort_class_helper('densidad_siembra') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.densidad_siembra')} #{I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.peces_m2')}", 'densidad_siembra', 'list' %>
+      </th>
+      <th style="width: 120px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+
+    <%  	
+    even_odd = 1
+    for condiciones_acuicultura in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :condiciones_acuicultura => condiciones_acuicultura, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

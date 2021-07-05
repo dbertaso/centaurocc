@@ -1,0 +1,60 @@
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 70px" <%= sort_class_helper('numero') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}", 'numero', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}/#{I18n.t('Sistema.Body.Vistas.General.rif')}", 'cedula_rif', 'list' %>
+        </th>
+        
+        <th style="width: 150px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'nombre', 'list' %>
+        </th>
+
+        <th style="width: 80px">
+          <%= I18n.t('Sistema.Body.Vistas.Form.estatus') %>
+        </th>
+
+        <th style="width: 150px" <%= sort_class_helper('sector') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.sector'), 'sector', 'list' %>
+        </th>
+        
+        <th style="width: 80px" <%= sort_class_helper('sub_sector') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector', 'list' %>
+        </th>
+
+        <th style="width: 100px" <%= sort_class_helper('rubro') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.rubro'), 'rubro', 'list' %>
+        </th>
+        
+        <th style="width: 80px" <%= sort_class_helper('sub_rubro') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_rubro'), 'sub_rubro', 'list' %>
+        </th>
+
+        <th style="width: 100px" <%= sort_class_helper('actividad') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad', 'list' %>
+        </th>
+
+        <th style="width: 50px" <%= sort_class_helper('consultoria') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.viable_juridicamente'), 'consultoria', 'list' %>
+        </th>
+
+        <th style="width: 60px">
+          <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+        </th>
+      </tr>
+      
+  </thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for solicitud in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <td style="width: 250px">
+      <label><%=I18n.t('Sistema.Body.Modelos.OpcionAccion.Errores.tiempo_vencimiento')%></label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'opcion_accion', 'autorizacion_tiempo', :class=>'text', :style=>'width: 50px', :maxlength=>'5'-%>
+      <%= select 'opcion_accion', 'autorizacion_tiempo_tipo',
+        [[I18n.t('Sistema.Body.Modelos.OpcionAccion.Errores.minutos'), 'M'],
+        [I18n.t('Sistema.Body.Modelos.OpcionAccion.Errores.horas'), 'H'],
+        [I18n.t('Sistema.Body.Modelos.OpcionAccion.Errores.dias'), 'D']],
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+        { :class=>'select', :onchange=>'inputChange();' } %>
+    </td>
+  <tr>
+    <td colspan="2" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

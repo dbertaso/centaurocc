@@ -1,0 +1,119 @@
+/* MainItem, MenuItem */
+
+.FoncreiMainItem,.FoncreiMainItemHover,.FoncreiMainItemActive,
+.FoncreiMenuItem,.FoncreiMenuItemHover,.FoncreiMenuItemActive
+{
+	
+    border:		0;
+	cursor: pointer;
+    
+	font-weight: bold;
+}
+
+.FoncreiMainItemHover,.FoncreiMainItemActive,.FoncreiMenuItemHover,.FoncreiMenuItemActive {
+	
+    color: #000000;
+	font-size: 12px;
+}
+
+/* MainItem */
+.FoncreiMainItem,.FoncreiMenuItem {
+	
+    color: #000000;           
+    font-size: 12px;
+}
+
+.FoncreiMainItem,.FoncreiMainItemActive {   
+   
+   background-image: url(/assets/menu/blanka.png);    
+   background-repeat: no-repeat;
+	background-position: right top;
+	float: left;
+	padding-top: 5px;
+	padding-right: 22px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	color:black;
+}
+
+/* MenuItem  */
+.FoncreiMenuItem,.FoncreiMenuItemHover,.FoncreiMenuItemActive {
+	
+    
+    font-size: 12px;
+	color:black;
+	background-color:#F9F9FA;
+}
+.FoncreiMenuItemHover,.FoncreiMenuItemActive {
+	
+    
+    font-size: 12px;
+	color:white;	
+    background: #1D7CBC; padding:4px; white-space:nowrap; width:100%; min-width:140px; z-index:400; height:auto;
+    /*background: transparent url(/assets/menu_fondo.gif) repeat-x; width:100%;
+	background-color:#2e256a;*/
+}
+.FoncreiMainItemHover {
+	
+    
+    background-image: url(/assets/menu/blank_overa.png);    
+    background-repeat: no-repeat;
+	background-position: right top;
+	float: left;
+	padding-top: 5px;
+	padding-right: 22px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	color:white;
+	background-color:#1D7CBC;
+}
+
+
+
+/* Common */
+
+.FoncreiMenu,.FoncreiSubMenuTable
+{
+	
+    
+    font-family:	verdana, arial, sans-serif;
+    background: #ffffff;
+    background: -moz-linear-gradient(top,  #ffffff 1%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ffffff), color-stop(100%,#e5e5e5));
+    background: -webkit-linear-gradient(top,  #ffffff 1%,#e5e5e5 100%);
+    background: -o-linear-gradient(top,  #ffffff 1%,#e5e5e5 100%);
+    background: -ms-linear-gradient(top,  #ffffff 1%,#e5e5e5 100%);
+    background: linear-gradient(to bottom,  #ffffff 1%,#e5e5e5 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+	/*background-image: url(/assets/tope/menu_fondo_estilo.gif);*/
+	cursor:		default;
+
+}
+
+.FoncreiSubMenu
+{
+	position:	absolute;
+	visibility:	hidden;
+    
+
+	/*
+	   Netscape/Mozilla renders borders by increasing
+	   their z-index.  The following line is necessary
+	   to cover any borders underneath
+	*/
+	z-index:	100;
+	border:		0;
+	overflow:	visible;
+}
+
+.FoncreiSubMenuTable
+{
+	
+    background-color: #F9F9FA;    
+	/* Antiguo background-color Azul Claro - Alex Cioffi */
+	/* background-color: #7da4de; */
+	/* Nuevo background-color Rojo - Alex Cioffi */
+	/*background-color: #7da4de;
+	padding: 5px;
+	overflow:	visible;
+}

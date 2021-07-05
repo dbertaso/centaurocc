@@ -1,0 +1,64 @@
+<script type="text/javascript">
+        function abrir_ventana(){
+            fecha_desde = document.getElementById('_fecha_desde').value;
+            fecha_hasta = document.getElementById('_fecha_hasta').value;
+            window.open('<%= @ruta %>/cobranzas/reporte_indicadores_analista/reporte?popup=true&fecha_desde=' + fecha_desde + "&fecha_hasta=" + fecha_hasta, "ventana emergente", 'height=650,scrollbars=yes,width=1150');
+        }
+</script>
+<div class="marco-titulo"><div><div>
+	<%= @form_title_records %>
+</div></div></div>
+
+<%= errores %>
+<%= message %>
+<%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :reporte } ) do -%>
+		  
+<table style="width: 50%">
+	
+    <tr>
+        <td style="width: 35%">
+    	    <label><%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_desde')}" %>:</label>
+        </td>
+        <td style="width: 65%">
+
+          <%= calendar_date_select '', 'fecha_desde',
+                :year_range => 110.years.ago..-1.years.ago,
+                :class=>'text',
+                :style=>'width:80px',
+                :maxlength=>'10',
+                :onkeypress=>'inputChange();',
+                :onchange=>'inputChange();' %> &nbsp; 
+                <%= I18n.t('Sistema.Body.General.formato_fecha')%>        
+
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 35%">
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.fecha_hasta')}" %>:</label>
+        </td>
+        <td style="width: 65%">
+
+          <%= calendar_date_select '', 'fecha_hasta',
+                :year_range => 110.years.ago..-1.years.ago,
+                :class=>'text',
+                :style=>'width:80px',
+                :maxlength=>'10',
+                :onkeypress=>'inputChange();',
+                :onchange=>'inputChange();' %> &nbsp; 
+                <%= I18n.t('Sistema.Body.General.formato_fecha')%>        
+
+        </td>
+    </tr>
+    
+	<tr>
+		<td colspan="2" align="center">
+			<%= image_tag(I18n.t('Sistema.Body.Imagenes.imprimir_grande'),:title=>I18n.t('Sistema.Body.Vistas.General.imprimir_informe'), :onclick=>"abrir_ventana();") %>
+		</td>
+	</tr>
+</table>
+          
+ <% end %>

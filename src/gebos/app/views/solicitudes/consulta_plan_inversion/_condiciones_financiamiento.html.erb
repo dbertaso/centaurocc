@@ -1,0 +1,132 @@
+<table width="470px">
+
+   <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= t('Sistema.Body.General.condiciones_financiamiento') -%></span>
+    </td>
+    <td></td>
+
+   </tr>
+
+    <% if @prestamo.meses_gracia_si && @prestamo.meses_gracia > 0%>
+      <tr>
+        <td>
+          <%= t('Sistema.Body.Modelos.PlanPago.Columnas.meses_gracia')-%>
+        </td>
+        <td>
+          <%= @prestamo.meses_gracia %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.cuotas_gracia')-%>
+        </td>
+        <td>
+          <%if @prestamo.frecuencia_pago == 0 %>
+            1
+          <%else%>
+            <%= @prestamo.meses_gracia / @prestamo.frecuencia_pago %>
+          <%end%>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <%= t('Sistema.Body.Vistas.Simulador.Etiquetas.diferir_intereses')-%>
+        </td>
+        <td>
+          <%= format_bool(@prestamo.diferir_intereses) %>
+        </td>
+      </tr>
+    <% end%>
+
+    <tr>
+      <td>
+        <%= t('Sistema.Body.General.plazo')-%>
+      </td>
+      <td>
+        <%= @prestamo.plazo %> <%= t('Sistema.Body.General.meses')-%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= "#{t('Sistema.Body.Vistas.General.cuotas')} #{t('Sistema.Body.Vistas.General.de')} #{t('Sistema.Body.Modelos.PlanPagoCuota.TipoCuota.amortizacion')}" %>
+      </td>
+      <td>
+        <% if @prestamo.frecuencia_pago == 0 %>
+        1
+        <% else %>
+          <%= @prestamo.meses_gracia / @prestamo.frecuencia_pago %>
+        <%end%>
+      </td>
+     </tr>
+    <tr>
+      <td>
+        <%= t('Sistema.Body.Modelo.PlanPago.Columnas.frecuencia_pago')-%>
+      </td>
+      <td>
+        <%= @prestamo.frecuencia_pago_w %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= t('Sistema.Body.Modelo.Prestamo.Columnas.tasa_vigente')-%> </td>
+      <td> <%= @prestamo.tasa_vigente_fm %></td>
+    </tr>
+    <tr>
+      <td> <%= I18n.t('Sistema.Body.Vistas.General.moneda') %> </td>
+      <td> <%= @solicitud.moneda.nombre unless @solicitud.moneda.nil? %> </td>
+
+    </tr>
+
+    <% if @solicitud.sub_sector.nemonico == 'VE' %>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= t('Sistema.Body.Vistas.General.superficie') %> </span>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td> 
+          <%= t('Sistema.Body.Vistas.General.unidad_produccion') %> 
+        </td>
+        <td>
+          <%unless @caracterizacion.nil?%>
+            <%= format_fm3(@caracterizacion.superficie_total) %> Has.
+          <%end%>
+        </td>
+      </tr>
+      <tr>
+        <td> 
+          <%= t('Sistema.Body.Vistas.General.aprovechable') %>
+        </td>
+        <td>
+          <%unless @caracterizacion.nil?%>
+            <%= format_fm3(@caracterizacion.superficie_aprovechable) %> Has.
+          <%end%>
+        </td>
+      </tr>
+
+       <tr>
+        <td> 
+          <%= t('Sistema.Body.Vistas.General.solicitadas') %>
+        </td>
+        <td>
+          <%=format_fm(@solicitud.hectareas_solicitadas) %> Has.
+        </td>
+      </tr>
+
+       <tr>
+        <td> 
+            <%= t('Sistema.Body.Vistas.General.recomendadas') %>
+        </td>
+        <td>
+          <%=format_fm(@solicitud.hectareas_recomendadas) %> Has.
+        </td>
+      </tr>
+
+    <%end%>
+
+</table>
+

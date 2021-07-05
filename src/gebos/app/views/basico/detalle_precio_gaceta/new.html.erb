@@ -1,0 +1,17 @@
+<%= form_title_new %>
+
+<%= render 'basico/precio_gaceta/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_new, :precio_gaceta_id=>params[:precio_gaceta_id], :popup=>params[:popup] } ) do -%>
+  <%= render  'form' %>
+  <%= form_buttons_edit :precio_gaceta_id=>params[:precio_gaceta_id], :popup=>params[:popup] %>
+  <%end -%>
+</div>
+

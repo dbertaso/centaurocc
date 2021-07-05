@@ -1,0 +1,37 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='plan_inversion'
+
+    %>
+      <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.plan_inversion') %></a></div></li>
+    <% 
+    else 
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.plan_inversion'), :controller => 'plan_inversion', :action => 'edit', :id => @solicitud.id) if (action_name=='index' || action_name=='edit' ||action_name=='new' )  %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.plan_inversion'), :controller => 'plan_inversion', :action => 'view', :id => @solicitud.id, :partida_id => @partida.id) if action_name=='view'  %>
+        </div></li>
+    <% 
+    end
+
+    if @solicitud.monto_solicitado > 0
+      if controller_name=='sras'
+      %>
+        <li id="actual"><div><a href="#"><%= "#{I18n.t('Sistema.Body.Vistas.General.costos')} #{I18n.t('Sistema.Body.Vistas.General.financiables')}" %> </a></div></li>
+      <% 
+      else
+      %>
+        <li><div>
+            <%= link_to("#{I18n.t('Sistema.Body.Vistas.General.costos')} #{I18n.t('Sistema.Body.Vistas.General.financiables')}", :controller => 'sras', :action => 'index', :solicitud_id => @solicitud.id) if (action_name=='index' || action_name=='edit' ||action_name=='new' )  %>
+            <%= link_to("#{I18n.t('Sistema.Body.Vistas.General.costos')} #{I18n.t('Sistema.Body.Vistas.General.financiables')}", :controller => 'sras', :action => 'view', :solictud_id => @solicitud.id) if action_name=='view' %>
+          </div></li>
+      <% 
+      end 
+    end
+
+  %>
+  </ul>
+</div>

@@ -1,0 +1,470 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.consultando')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.General.beneficiario') %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+      </div></div></div>
+
+  <%= render :partial=>'solicitudes/solicitud/common/tabs' %>
+  <% style1 = "none"
+  style2 = "none"
+  style3 = "none"
+  style4 = "none"
+  @sub_sector = SubSector.find(@solicitud.sub_sector_id)
+  if @sub_sector.nemonico == 'VE'
+    style1 = ""
+  elsif @sub_sector.nemonico == 'AN'
+    style2 = ""
+  elsif @sub_sector.nemonico == 'MA'
+    style3 = ""
+  elsif @sub_sector.nemonico == 'P'
+    style4 = ""
+  end %>
+  <div class="marco-contenido2">
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.General.beneficiario') %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 30%">
+          <label><%= @cliente.class.to_s=='ClienteEmpresa' ? I18n.t('Sistema.Body.Vistas.General.rif') : I18n.t('Sistema.Body.Vistas.General.cedula') %></label>
+        </td>
+        <td style="width: 70%">
+          <% if @cliente.class.to_s=='ClienteEmpresa' %>
+            <%= @cliente.empresa.rif %>
+            <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), {:controller => '/clientes/cliente_empresa', :action => 'view', :id => @solicitud.cliente.empresa.id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.solicitudes') + "', 'height=650,width=1150,,scrollbars=yes'); return false;")  %>
+          <% else %>
+            <%= @cliente.persona.cedula %>
+            <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), {:controller => '/clientes/cliente_persona', :action => 'view', :id => @solicitud.cliente.persona.id, :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.solicitudes') + "', 'height=650,width=1150,,scrollbars=yes'); return false;")  %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= @solicitud.cliente.type =='ClienteEmpresa' ? I18n.t('Sistema.Body.Vistas.Filtros.nombre') : "#{I18n.t('Sistema.Body.Vistas.Filtros.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.Form.apellido')}" %></label>
+        </td>
+        <td>
+          <%= @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.alias : @cliente.persona.nombre_corto %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label>
+        </td>
+        <td>
+          <% if @cliente.class.to_s=='ClienteEmpresa' %>
+            <%= @cliente.empresa.id %>
+          <% else %>
+            <%= @cliente.persona.id  %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Separadores.datos_basicos')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.proyecto')}" %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <% unless @solicitud.numero.nil? -%><label><%= I18n.t('Sistema.Body.Vistas.Form.nro_tramite') %></label><% end -%>
+        </td>
+        <td>
+          <%= @solicitud.numero -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></label>
+        </td>
+        <td style="width: 500px">
+          <%= @solicitud.fecha_solicitud_f %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.programa') %></label></td>
+        <td>
+          <%= @solicitud.programa.alias %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.origen')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.fondo')}" %></label></td>
+        <td>
+          <span id="origen_fondo-select">
+            <%= @solicitud.origen_fondo.nombre %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.modalidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}" %>:</label></td>
+        <td>
+          <div id="modalidad-select">
+            <% unless @solicitud.modalidad_financiamiento.nil? %>
+              <%= @solicitud.modalidad_financiamiento.nombre %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.objetivo')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.proyecto')}" %></label>
+        </td>
+        <td style="text-align: justify">
+          <%= @solicitud.objetivo_proyecto %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 30%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label>
+        </td>
+        <td style="width: 70%">
+          <%= @solicitud.sector.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %></label>
+        </td>
+        <td>
+          <%= @solicitud.sub_sector.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></label>
+        </td>
+        <td>
+          <%= @solicitud.rubro.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sub_rubro') %></label>
+        </td>
+        <td>
+          <%= @solicitud.sub_rubro.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.actividad') %></label>
+        </td>
+        <td>
+          <%= @solicitud.actividad.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.General.unidad_produccion') %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.unidad_produccion_comunidad_pesquera') %>:</label> </td>
+        <td>
+          <%= @solicitud.unidad_produccion.nombre.upcase %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.General.direccion') %>:</label> </td>
+        <td>
+          <%= @solicitud.unidad_produccion.direccion.upcase %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%= "#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.practica')}" %>:</label> </td>
+        <td>
+          <%= @solicitud.unidad_produccion.referencia.upcase %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top"><label><%= "#{I18n.t('Sistema.Body.Vistas.General.ubicacion')} #{I18n.t('Sistema.Body.Vistas.General.geografica')}" %>:</label></td>
+        <td>
+          <label style="color:indigo"><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %>:&nbsp;&nbsp;</label><%= @solicitud.unidad_produccion.parroquia_nombre.upcase %></br>
+          <label style="color:indigo"><%= I18n.t('Sistema.Body.Vistas.General.municipio') %>:&nbsp;&nbsp;</label><%= @solicitud.unidad_produccion.municipio.nombre.upcase %></br>
+          <label style="color:indigo"><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %>   :&nbsp;&nbsp;</label><%= @solicitud.unidad_produccion.ciudad_nombre.upcase %></br>
+          <label style="color:indigo"><%= I18n.t('Sistema.Body.Vistas.General.estado') %>   :&nbsp;&nbsp;</label><%= @solicitud.unidad_produccion.municipio.estado.nombre.upcase %></br>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="superficie" style="display: <%= 'none' if @sub_sector.nemonico == 'PE' || @sub_sector.nemonico == 'MA' %>">
+            <table style="width: 100%">
+              <tr>
+                <td style="width: 30%">
+                  <label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')}" %>:</label>
+                </td>
+                <td style="width: 70%">
+                  <%= sprintf('%01.3f',@solicitud.unidad_produccion.total_hectareas).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @solicitud.unidad_produccion.total_hectareas.nil? %>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" style="width: 30%">
+                  <label><%= I18n.t('Sistema.Body.Vistas.General.linderos') %>:</label>
+                </td>
+                <td style="width: 70%">
+                  <label style="color:indigo"><%= I18n.t('Sistema.Body.Vistas.General.norte') %>:&nbsp;&nbsp;</label><%= @solicitud.unidad_produccion.lindero_norte %></br>
+                  <label style="color:indigo"><%= I18n.t('Sistema.Body.Vistas.General.sur') %>:&nbsp;&nbsp;</label><%= @solicitud.unidad_produccion.lindero_sur %></br>
+                  <label style="color:indigo"><%= I18n.t('Sistema.Body.Vistas.General.este') %>:&nbsp;&nbsp;</label><%= @solicitud.unidad_produccion.lindero_este %></br>
+                  <label style="color:indigo"><%= I18n.t('Sistema.Body.Vistas.General.oeste') %>:&nbsp;&nbsp;</label><%= @solicitud.unidad_produccion.lindero_oeste %></br>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="superficie2" style="display: <%= 'none' if @sub_sector.nemonico == 'VE' || @sub_sector.nemonico == 'AN' %>">
+            <table style="width: 100%">
+              <tr>
+                <td style="width: 30%">
+                  <label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} #{I18n.t('Sistema.Body.Vistas.General.aprovechable')}" %>:</label>
+                </td>
+                <td style="width: 70%">
+                  <%= @solicitud.unidad_produccion.autonomia_pesca.to_s %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="hectarea" style="display: <%= style1 %>">
+            <table style="width: 100%">
+
+              <tr>
+                <td style="width: 30%">
+                  <label><%= "#{I18n.t('Sistema.Body.Vistas.General.hectareas')} #{I18n.t('Sistema.Body.Vistas.General.solicitadas')}" %></label>
+                </td>
+                <td style="width: 70%">
+                  <%= sprintf('%01.3f',@solicitud.hectareas_solicitadas).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @solicitud.hectareas_solicitadas.nil? %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="semovientes" style="display: <%= style2 %>">
+            <table style="width: 100%">
+              <tr>
+                <td style="width: 30%">
+                  <label><%= "#{I18n.t('Sistema.Body.Vistas.General.semovientes')} #{I18n.t('Sistema.Body.Vistas.General.solicitados')}" %></label>
+                </td>
+                <td style="width: 70%">
+                  <%= @solicitud.semovientes_solicitados %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>	
+        <td colspan="2">
+          <div id="semovientes" style="display: <%= style2 %>">
+            <table style="width: 100%">
+              <tr>
+                <td style="width: 30%">
+                  <label><%= "#{I18n.t('Sistema.Body.Vistas.General.semovientes')} #{I18n.t('Sistema.Body.Vistas.General.recomendados')}" %></label>
+                </td>
+                <td style="width: 70%">
+                  <%= @solicitud.semovientes_recomendados %>
+                </td>
+
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="maquinaria" style="display: <%= style3 %>">
+            <table style="width: 100%">
+              <tr>
+                <td style="width: 30%">
+                  <label><%= I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.utilizara_inventario') %></label>
+                </td>
+                <td style="width: 70%">
+                  <% if @solicitud.por_inventario == true %>
+                    <%= image_tag('activo.gif') %>
+                  <% elsif @solicitud.consultoria == false %>
+                    <%= image_tag('inactivo.gif') %>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.evaluacion')} #{I18n.t('Sistema.Body.Vistas.General.tecnica')}" %></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Controladores.TecnicoCampo.FormTitles.form_title') %>:</label>
+        </td>
+        <td>
+          <%= 
+          @tecnico = Usuario.find(:first,:conditions=>"nombre_usuario = '#{@solicitud.usuario_pre_evaluacion}'")
+          @tecnico.nombre_corto unless @tecnico.nil?
+        %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.adscrito')} #{I18n.t('Sistema.Body.Vistas.General.a')}" %>:</label>
+        </td>
+        <td>
+
+          <%= unless @tecnico.nil?
+            @tecnico_of = Oficina.find(:first,:conditions=>"id = '#{@tecnico.oficina_id}'")
+            @tecnico_of.nombre
+          end
+        %>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.viable') %>:</label>
+        </td>
+        <td>
+
+          <%= unless @tecnico.nil?
+            @solicitud.decision_final ? I18n.t('Sistema.Body.General.si') : I18n.t('Sistema.Body.General.negacion')
+          end
+        %>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.observaciones')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.tecnico')}" %>:</label>
+        </td>
+        <td>
+          <%=
+          @solicitud.justificacion
+        %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">
+          <label><%= I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.ver_informe_recomendacion') if @solicitud.estatus_id > 10003 %></label>
+        </td>
+        <td style="width: 70%">
+          <div id="ver_informe" style="display: <%= 'none' if @solicitud.estatus_id <= 10003 %>">
+            <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), {:controller=>'/solicitudes/consulta_evaluacion_credito', :action=>'printer', :popup=>true, :solicitud_id=>@solicitud.id}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>@solicitud.id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+            
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Controladores.VisitaSeguimiento.FormTitles.form_title') %></span>
+        </td>
+      </tr>
+
+      <tr height=10><td colspan="2"></td></tr>
+
+      <table align="center" width="80%" border="1" >
+        <tr>
+          <th >
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.visita')}" %></label>
+          </th>
+          <th>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.visita')}" %></label>
+          </th>
+          <th>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tecnico')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.visita')}" %></label>
+          </th>
+
+        </tr>
+        <% 
+        @svisita = SeguimientoVisita.find(:all,:conditions=>"solicitud_id = #{@solicitud.id} and confirmada", :order =>"fecha_visita")
+        @svisita.each{ |registro| %>
+          <tr>
+            <td align="center">
+
+              <% if registro.motivo_visita_id == 1 %>
+                <% unless @solicitud.estatus_id == 10006 %>
+                  <%= link_to registro.codigo_visita,
+                  { :controller=>'/solicitudes/consulta_evaluacion_credito', :action=>'printer',
+                    :popup=>true, :solicitud_id=>registro.solicitud.id },
+                  :popup => ['consulta_evaluacion_credito', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+                <% end %>
+              <%  else %>
+
+                <%= link_to registro.codigo_visita,
+                { :controller=>'/basico/embarcacion', :action=>'imprimir_sector',
+                  :popup=>true, :id=>registro.id,:tipo=>registro.solicitud.sub_sector.nemonico.strip.upcase },
+                :popup => ['embarcacion', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+
+              <%  end %>
+
+
+            </td>
+            <td align="center">
+              <% unless @solicitud.estatus_id == 10006 %>
+                <%= registro.fecha_visita.strftime("%d/%m/%Y") %>
+              <% end %>
+            </td>
+            <td align="center">
+              <%= @tecnico = Usuario.find(:first,:conditions=>"nombre_usuario = '#{registro.usuario_visita}'")
+              @tecnico.nombre_corto unless @tecnico.nil? %>
+            </td>
+          </tr>
+
+        <%
+        }
+      %>
+      </table>
+
+      <tr height=20><td colspan="2"></td></tr>
+      <tr height=20><td colspan="2"></td></tr>
+
+
+    </table>
+</br></br>
+  <% unless params[:controlador].blank? %>
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :controller =>params[:controlador], :action => :index },
+      { :id=>'button_close' } ) -%>
+  <% end %>
+    </br>
+  </div>
+  </br>
+</div>
+</br>

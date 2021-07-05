@@ -1,0 +1,25 @@
+<% precio_gaceta @precio_gaceta if precio_gaceta.nil? %>
+
+<td style="text-align: center">
+  <%= precio_gaceta.fecha_vigencia_f  %>
+</td>
+<td style="text-align: center">
+  <%= precio_gaceta.gaceta_oficial  %>
+</td>
+<td style="text-align: center">
+  <%= precio_gaceta.estatus -%>
+</td>
+<td style="text-align: right">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'), :action => 'view', :id => precio_gaceta.id %> &nbsp;
+  <%unless precio_gaceta.status == false%>
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))), :action => 'edit', :popup=>params[:popup], :id => precio_gaceta.id ) if vlink 'edit' %>&ensp;
+
+    <%= link_to_remote(
+      image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+      :url => {:controller => 'precio_gaceta', :action => :delete, :id => precio_gaceta.id}) if vlink 'delete' -%>
+  <%end%>
+  </td>
+

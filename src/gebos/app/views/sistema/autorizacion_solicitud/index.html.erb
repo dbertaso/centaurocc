@@ -1,0 +1,107 @@
+<div class="marco" style="width: 900px">
+
+
+  <div class="marco-contenido" style="width: 100%">
+
+    <%= error %>
+    <%= message %>
+
+    <div style="width: 100%; display: none" id="form_new">
+    </div>
+
+    <div style="width: 100%;" id="consulta">
+
+      <%= form_title_search %>
+
+      <div class="marco-boton-out" id="button-new">
+        <%= link_to_remote( 
+          image_tag(I18n.t('Sistema.Body.Imagenes.agregar')), 
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url => { :action => :new } ) if vlink 'edit' -%>
+      </div>
+
+      <%= form_remote_tag(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method => :get,
+        :url => { :action => :list } ) do %>
+      <table style="width: 100%">
+        <tr>
+          <td>
+            <%= radio_button_tag 'estatus',
+              "E", true,
+              :onclick=>"if (this.checked) { $('fechas').hide() } else { $('fechas').show() } " -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.en_espera')%></label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= radio_button_tag 'estatus',
+              "A", false,
+              :onclick=>"if (this.checked) { $('fechas').show() } else { $('fechas').hide() } " -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.aprobadas')%></label>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= radio_button_tag 'estatus',
+              "R", false,
+              :onclick=>"if (this.checked) { $('fechas').show() } else { $('fechas').hide() } " -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.rechazadas')%></label>
+          </td>
+        <tr>
+          <td>
+            <%= radio_button_tag 'estatus',
+              "V", false,
+              :onclick=>"if (this.checked) { $('fechas').show() } else { $('fechas').hide() } " -%>
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.vencidas')%></label>
+          </td>
+        </tr>
+      </table>
+      <div id="fechas" style="width: 100%; display: none" >
+        <table>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_desde')%></label>
+            </td>
+            <td>
+              <%= calendar_date_select_tag 'fecha_desde', @fecha_desde, 
+                :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+                :onkeypress=>'inputChange();',:onchange=>'inputChange();' %>	
+            </td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_hasta')%></label>
+            </td>
+            <td>
+              <%= calendar_date_select_tag 'fecha_hasta', @fecha_hasta, 
+                :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+                :onkeypress=>'inputChange();',:onchange=>'inputChange();' %>	
+            </td>
+            <td>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <table>
+        <tr>
+          <td colspan="2">
+            <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'), :title=>I18n.t('Sistema.Body.Vistas.General.buscar')) -%>
+          </td>
+        </tr>
+      </table>
+      <% end %>
+
+      <div id="list" style="padding-top: 10px">
+      </div>
+
+    </div>
+
+  </div>
+</div>

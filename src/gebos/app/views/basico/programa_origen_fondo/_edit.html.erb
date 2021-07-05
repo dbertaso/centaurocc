@@ -1,0 +1,22 @@
+<tr id="row_<%= @programa_origen_fondo.id %>_edit">
+
+  <td class="lista-form" colspan="7">Modificando Programa <span class="titulo_modificar">'<%= @programa.alias %>'</span>
+
+    <%= error "row_#{@programa_origen_fondo.id}" %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id=>@programa_origen_fondo.id,  :programa_id => @programa.id } ) do -%>
+      <%= render :partial => 'form' %>
+      <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar'))),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :url => { :action => :cancel_edit, :id=>@programa_origen_fondo.id,  :programa_id => @programa.id}) -%>
+    </td>
+  </tr>
+  </table>
+<% end -%>
+<%#*</td>%>
+
+<%#*</tr>%>

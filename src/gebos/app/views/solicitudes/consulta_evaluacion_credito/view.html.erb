@@ -1,0 +1,246 @@
+<div class="marco-contenido">
+
+	<div class="marco-titulo"><div><div>
+		Consultando Solicitud <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+	</div></div></div>
+
+		<%= render :partial=>'solicitudes/consulta_evaluacion_credito/common/tabs' %>
+	<div class="marco-contenido2">
+	
+<table>
+	<tr>
+		<td class="separador" valign="bottom" colspan="2">
+			<span><%= Etiquetas.etiqueta(9) %></span>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 40%">
+			<label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Rif' : 'Cédula' %></label>
+		</td>
+		<td style="width: 60%">
+			<% if @cliente.class.to_s=='ClienteEmpresa' %>
+				<%= @cliente.empresa.rif %>
+				<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), 
+					{ :controller=>'/clientes/cliente_empresa', :action=>'view', :id=>@cliente.empresa.id, :popup=>true },
+					:popup => ['cliente_empresa', 'height=600,width=800, scrollbars=yes, resizable=yes']	%>		
+			<% else %>
+				<%= @cliente.persona.cedula %>
+				<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), 
+					{ :controller=>'/clientes/cliente_persona', :action=>'view', :id=>@cliente.persona.id, :popup=>true },
+					:popup => ['cliente_persona', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Nombre' : 'Nombre, Apellido' %></label>
+		</td>
+		<td>
+			<%= @cliente.class.to_s=='ClienteEmpresa' ? @cliente.empresa.alias : @cliente.persona.nombre_corto %> 
+			
+			<% unless @cliente.tipo_cliente_id.nil? %>
+				<% @tipo_cliente = TipoCliente.find(@cliente.tipo_cliente_id) %>
+				(<%= @tipo_cliente.nombre %>)
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%= @cliente.class.to_s=='ClienteEmpresa' ? 'Número '+ Etiquetas.etiqueta(9) + ' Jurídico' : 'Número Grupo' %></label>
+
+		</td>
+		<td>
+			<% if @cliente.class.to_s=='ClienteEmpresa' %>
+				<%= @cliente.empresa.numero %>	  
+			<% elsif @cliente.persona.GrupoIntegrante[0] != nil %>
+				<%= @cliente.persona.GrupoIntegrante[0].Grupo.numero  %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td class="separador" valign="bottom" colspan="2">
+			<span>Datos Básicos del Microcrédito</span>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label>Número</label>
+		</td>
+		<td>
+			<%= @solicitud.numero -%>
+		</td>
+	</tr>
+	<tr>
+    <td>
+      <label>Fecha Solicitud</label>
+    </td>
+    <td style="width: 500px">
+      <%= @solicitud.fecha_solicitud_f %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Programa</label>
+    </td>
+    <td>
+      <%= @solicitud.programa.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Monto Solicitado</label>
+    </td>
+    <td>
+      <%= @solicitud.monto_solicitado_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Nombre del Proyecto</label>
+    </td>
+    <td>
+      <%= @solicitud.nombre_proyecto %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Objeto del Proyecto</label>
+    </td>
+    <td>
+      <%= @solicitud.objetivo_proyecto %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Convenio</label></td>
+    <td>
+      <% unless @solicitud.Mision.nil? %>
+        <%= @solicitud.Mision.nombre %>
+      <% end %>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td><label>Origen de Fondo</label></td>
+    <td>
+        <%= @solicitud.OrigenFondo.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Cantidad de Empleos Directos a Generar</label>
+    </td>
+    <td>
+      <%= @solicitud.empleos_directo_generar %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Cantidad de Empleos Indirectos Generados</label>
+    </td>
+    <td>
+      <%= @solicitud.empleos_indirecto_generar %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Cantidad de Empleos a Mantener</label>
+    </td>
+    <td>
+      <%= @solicitud.empleaos_mantener %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Cantidad de Empleos Actuales Directos</label>
+    </td>
+    <td>
+      <%= @solicitud.empleos_directo_actual %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Cantidad de Empleos Actuales Indirectos</label>
+    </td>
+    <td>
+      <%= @solicitud.empleos_indirecto_actual %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Ubicación Geográfica donde se ejecuta el Proyecto (Estadísticas)</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Región:</label></td>
+    <td>
+      <%= @solicitud.Region.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Estado:</label></td>
+    <td>
+      <%= @solicitud.ciudad.estado.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Ciudad:</label></td>
+    <td>
+      <%= @solicitud.ciudad.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Eje VP:</label></td>
+    <td>
+      <%= @solicitud.Eje.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Municipio:</label></td>
+    <td>
+      <%= @solicitud.municipio.nombre %>
+  </td>
+  </tr>
+
+  <tr>
+    <td><label>Parroquia:</label></td>
+    <td>
+      <%= @solicitud.parroquia.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Observaciones</label>
+    </td>
+    <td>
+      <%= @solicitud.observacion %>
+    </td>
+  </tr>
+  
+  <tr height=10><td colspan="2"></td></tr>
+
+</table>		
+
+		
+		<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+			{ :controller => params[:controlador], :action => :index } ) -%>		
+	</div>
+</div>

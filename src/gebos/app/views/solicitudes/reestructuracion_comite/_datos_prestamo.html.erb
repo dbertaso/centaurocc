@@ -1,0 +1,393 @@
+<script>
+  var deuda = <%= @deuda %>;
+
+  function centro_actualizacion_jvs(check,monto){
+    if(check.checked == true){
+      deuda = deuda - monto;
+    }else{
+      deuda = deuda + monto;
+    }
+    document.getElementById("monto_deuda").value = deuda;
+    formatCurrency(deuda, 'monto_deuda');
+		
+  }
+</script>
+<table border=0 width="100%">
+
+  <tr>
+    <td  class="separador" valign="bottom" colspan="3" style="width: 100%">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.datos_abono')%></span>
+    </td>
+  </tr>
+  <%= render :partial => 'datos_abono' %>
+
+
+  <tr>
+    <td  class="separador" valign="bottom" colspan="3" style="width: 100%">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.seccion_exoneracion')%>  </span>
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_moratorios')%>  </label>
+    </td>
+    <td><input id="intereses_moratorios_check" type="checkbox" value="true" name="intereses_moratorios_check"  onclick="centro_actualizacion_jvs(this,<%= @interes_moratorio %>);"/> 
+      <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.exonerar')%></td>
+    <td align=left>
+      <div style="width:50%; text-align:right">
+        <%= format_fm(@interes_moratorio) %> <%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td  class="separador" valign="bottom" colspan="3" style="width: 100%">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.condiciones_nuevo_financiamiento')%>  </span>
+    </td>
+  </tr>
+
+  <tr><td colspan=3 height=20></td></tr>
+
+  <tr>
+    <td width="30%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.metodo_amortizacion')%></label>
+    </td>
+    <td colspan=2>
+
+      <%= select(
+        'reestructuracion', 'formula_id',
+        @formula_select.map{|i| ["#{i.nombre} - #{i.descripcion}", i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();',:style=>'width:400px' } ) if !@formula.nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.General.frecuencia_pago')%></label></td>
+    <td colspan=2>
+      <%= select_tag(
+        'reestructuracion[frecuencia]',
+          options_for_select([
+              [I18n.t('Sistema.Body.Vistas.Form.seleccionar'), "0"],
+              [I18n.t('Sistema.Body.General.Periodos.mensual'), "1"],
+              [I18n.t('Sistema.Body.General.Periodos.trimestral'), "3"],
+              [I18n.t('Sistema.Body.General.Periodos.semestral'), "6"],
+              [I18n.t('Sistema.Body.General.Periodos.anual'), "12"]
+            ]
+          ),
+
+        { :class=>'select', :onchange=>'inputChange();', :value=>"0", :style=>'width:400px' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.General.plazo')%></label></td>
+    <td colspan=2>
+      <%= text_field 'reestructuracion', 'plazo',
+        :class=>'text', :style=>'width: 40px',
+        :maxlength=>'4', :onkeypress=>'inputChange();', :onchange=>"if(this.value > 96){alert(#{I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.plazo_no_mayor_96_meses')}); this.value = 96}",
+        :value => "0" -%> <%=I18n.t('Sistema.Body.General.meses')%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.tasa')%></label></td>
+    <td  colspan=2>
+      <%= text_field 'reestructuracion', 'tasa',
+        :class=>'text',  :style=>'width: 40px',
+        :maxlength=>'5', :onkeypress=>'inputChange();',
+        :value => "0" -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.fecha_valor')%></label> <label style="color: red">*</label>
+    </td>
+    <td width="30%">
+      <% fecha = Date.new(Time.now.year.to_i, Time.now.month.to_i, Time.now.day.to_i)
+      @fechasis = format_fecha(fecha)%>
+      
+      
+      <%#= calendar_date_select_tag "reestructuracion[fecha_valor_f]", @reestructuracion.fecha_valor_f, 
+        :default_time =>@fechasis, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> <%#=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>
+      
+      <%= calendar_date_select 'reestructuracion', 'fecha_valor_f', :value =>@fechasis,
+              :year_range => 110.years.ago..-1.years.ago, :class=>'text',
+              :style=>'width:80px', :maxlength=>'10',
+              :onkeypress=>'inputChange();', :onchange=>'inputChange();' %>&nbsp;<%= I18n.t('Sistema.Body.General.formato_fecha')%>
+      
+      <%#= text_field 'reestructuracion', 'fecha_valor_f',
+        :class=>'text', :style=>'width: 80px',
+        :maxlength=>'10', :value=>@fechasis, :onkeypress=>'inputChange();', :onchange=>'inputChange();'  -%>
+      <%#= calendar 'reestructuracion_fecha_valor_f', 'calendar_fecha_valor' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.beneficiario_viable_nuevo_financiamiento')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%> <%= radio_button 'cliente', 'viable', "0",
+        :class=>'text', :value=>'no', :onclick=>'inputChange();'  -%>
+      <%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%><%= radio_button 'cliente', 'viable', "1",
+        :class=>'text', :checked=>'checked', :onclick=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="3">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.datos_proyecto')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <% unless @solicitud.id.nil? -%><label><%=I18n.t('Sistema.Body.Vistas.Form.numero_tramite')%></label><% end -%>
+    </td>
+    <td colspan=2>
+<%#= @solicitud.numero -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.fecha_solicitud')%></label>
+    </td>
+    <td  colspan=2>
+<%#= @solicitud.fecha_registro_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.fecha_registro_beneficiario')%></label>
+    </td>
+    <td colspan=2>
+<%#= @solicitud.cliente.fecha_registro_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.programa')%></label> <label style="color: red">*</label></td>
+    <td colspan=2>
+      <% programa_onchange = remote_function(
+        :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+        :url=>{:controller=>'reestructuracion_comite',
+          :action=>:programa_change }, :with=>"'programa_id='+value") %>
+      <%= select(
+        'solicitud', 'programa_id',
+        @programa.map{|i| ["#{i.alias} - #{i.nombre}", i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        {:class=>'select', :onchange=>programa_onchange + ';inputChange();',:style=>'width:400px' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Controladores.OrigenFondo.FormTitles.form_title_record')%></label> <label style="color: red">*</label></td>
+    <td colspan=2>
+      <span id="origen_fondo-select">
+        <%= render :partial => 'origen_fondo_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.unidad_produccion')%></label> <label style="color: red">*</label></td>
+    <td colspan=2>
+      <%= select(
+        'solicitud', 'unidad_produccion_id',
+        @unidad_produccion_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();', :style=>'width:400px' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.modalidad_financianciamiento')%></label> <label style="color: red">*</label></td>
+    <td colspan=2>
+      <div id="modalidad-select">
+        <%= select_tag("solicitud[modalidad_financiamiento_id]", 
+          options_for_select([[I18n.t('Sistema.Body.Vistas.Form.seleccionar'), ""]]),
+          {:class=>'select',:style=>'width:400px'} ) %>
+<%#= select('solicitud', 'modalidad_financiamiento_id',
+@modalidad_financiamiento_select.map{|e| ["#{e.nombre} --- #{e.descripcion}", e.id]},
+{ :prompt=>'Seleccione...'}, 
+{ :class=>'select', :onchange=>'inputChange();',:style=>'width:400px' }) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.objeto_proyecto')%></label> <label style="color: red">*</label>
+    </td>
+    <td colspan=2>
+      <%= text_area 'solicitud', 'objetivo_proyecto', :class=>'text',
+        :style=>'width: 400px; height: 60px', :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+
+  <% if @cliente.class.to_s=='ClienteEmpresa' %>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.integrante_responsable')%></label>
+      </td>
+      <td>
+        <%= select(
+          'solicitud', 'empresa_integrante_id',
+          @integrante_list.map{|i| [i.persona.nombre_corto, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+          { :class=>'select',:onchange=>'inputChange();', :style=>'width:300px' } ) %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="3">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.rubro_solicitado') %></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+    </td>
+    <td colspan=2>
+      <% sector_onchange = remote_function(
+        :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+        :url=>{:controller=>'reestructuracion_comite', :action=>:sector_change },
+        :with=>"'sector_id='+value" ) %>
+
+      <%= select(
+        'solicitud', 'sector_id',
+        @sector.map{|i| ["#{i.nombre} - #{i.descripcion}", i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select',:style=>'width:500px',:onchange=>sector_onchange + ';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+    </td>
+    <td colspan=2>
+      <div id="sub-sector-select">
+        <% sub_sector_onchange = remote_function(
+          :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+          :url=>{:controller=>'reestructuracion_comite',
+            :action=>:sub_sector_form_change },
+          :with=>"'sub_sector_id='+value") %>
+
+        <%= select_tag("solicitud[sub_sector_id]", 
+          options_for_select([[I18n.t('Sistema.Body.Vistas.Form.seleccionar'), ""]]),
+          {:class=>'select',:style=>'width:500px'} ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </td>
+    <td colspan=2>
+      <div id="rubro-select">
+        <%= select_tag("solicitud[rubro_id]", 
+          options_for_select([[I18n.t('Sistema.Body.Vistas.Form.seleccionar'), ""]]),
+          {:class=>'select',:style=>'width:500px'} ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+    </td>
+    <td colspan=2>
+      <div id="sub_rubro-select">
+        <%= select_tag("solicitud[sub_rubro_id]", 
+          options_for_select([[I18n.t('Sistema.Body.Vistas.Form.seleccionar'), ""]]),
+          {:class=>'select',:style=>'width:500px'} ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+    </td>
+    <td colspan=2>
+      <div id="actividad-select">
+        <%= select_tag("solicitud[actividad_id]", 
+          options_for_select([[I18n.t('Sistema.Body.Vistas.Form.seleccionar'), ""]]),
+          {:class=>'select',:style=>'width:500px'} ) %>
+      </div>
+    </td>
+  </tr>	
+</table>	
+<% style1 = "none"
+style2 = "none"
+style3 = "none"
+unless @solicitud.sub_sector.nil?
+  sub_sector = SubSector.find(@solicitud.sub_sector_id)
+  if sub_sector.nemonico == 'VE'
+    style1 = ""
+  elsif sub_sector.nemonico == 'AN'
+    style2 = ""
+  elsif sub_sector.nemonico == 'MA'
+    style3 = ""
+  end
+end
+%>
+<div id="hectarea" style="display: <%= style1 %>">
+  <table style="width: 100%">
+
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.hectareas_solicitadas')%></label> <label style="color: red">*</label>
+      </td>
+      <td style="width: 70%">
+        <%= text_field 'solicitud', 'hectareas_solicitadas',
+          :class=>'text', :style=>'width: 150px',
+          :maxlength=>'14', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      </td>
+    </tr>
+  </table>
+</div>
+<div id="semovientes" style="display: <%= style2 %>">
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.semovientes_solicitados')%></label> <label style="color: red">*</label>
+      </td>
+      <td style="width: 70%">
+        <%= text_field 'solicitud', 'semovientes_solicitados',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'5', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      </td>
+
+    </tr>
+  </table>
+</div>
+<div id="maquinaria" style="display: <%= style3 %>">
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.utilizara_inventario')%></label>
+      </td>
+      <td style="width: 70%">
+        <%= check_box 'solicitud', 'por_inventario', :checked_value=>"true",
+          :unchecked_value=>"false", :onchange=>'inputChange();' %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+

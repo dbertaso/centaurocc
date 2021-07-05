@@ -1,0 +1,27 @@
+<% causales_anulacion_revocatoria= @causales_anulacion_revocatoria if causales_anulacion_revocatoria.nil? %>
+<td>
+  <%= causales_anulacion_revocatoria.causa  %>
+</td>	
+
+<td style="text-align: center">
+  <%= format_bool(causales_anulacion_revocatoria.anulacion)  %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(causales_anulacion_revocatoria.revocatoria_parcial)  %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(causales_anulacion_revocatoria.revocatoria_total)  %>
+</td>
+<td style="text-align: center">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => {:controller => 'causales_anulacion_revocatoria', :action => :edit, :id => causales_anulacion_revocatoria.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',    
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'causales_anulacion_revocatoria', :action => :delete, :id => causales_anulacion_revocatoria.id}) if vlink 'delete' -%>
+</td>
+

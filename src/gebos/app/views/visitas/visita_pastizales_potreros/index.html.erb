@@ -1,0 +1,72 @@
+<script language="JavaScript">
+  function area_fertilizacion(valor){
+    if (valor == 'true') {
+      document.getElementById('fertilizacion').style.display = 'block';}
+    else{
+      document.getElementById('pastizales_potreros_tipo_fertilizacion_id_1').checked = false;
+      document.getElementById('pastizales_potreros_tipo_fertilizacion_id_2').checked = false;
+      document.getElementById('pastizales_potreros_descripcion_fertilizacion').value = "";
+      document.getElementById('fertilizacion').style.display = 'none';
+    }
+  }
+
+  function conversion(id){
+    var valor = document.getElementById(id).value;
+    valor = valor.replace(",",".");
+    valor = (parseFloat(valor)*10000).toFixed(3);
+
+    if (isNaN(valor)){
+      document.getElementById('conversion_a_metros').innerHTML="0,000 Mts2";
+    }else{
+      valor = valor.replace(".",",");
+      document.getElementById('conversion_a_metros').innerHTML= valor+" Mts2";
+    }
+    return true;
+  }
+
+</script>
+
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.modificando_informacion_visita')%><span style="color: #FF0000">'<%= @full_info %>'</span>
+    </div>
+  </div>
+</div>
+
+
+<div id="contenedor_principal">
+  <%= render :partial=>'visitas/visita_pastizales_potreros/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%
+    begin
+      controller.method(:new)
+    %>
+      <div class="marco-boton-out" id="button_new">
+        <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.agregar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.agregar')),
+          :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+          :url => { :action => :new, :id => @visitas.id } ) if vlink 'edit' -%>
+      </div>
+    <%
+    rescue NameError
+    end
+  %>
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+
+    <div id="list">
+      <div id="list">
+        <%= render :partial => 'list' -%>
+      </div>
+      <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+        { :action => :index, :controller => 'visita_seguimiento', :popup=>params[:popup], :id => @visitas.solicitud.id },
+        { :id=>'button_close', } )
+      -%>
+    </div>
+
+  </div>
+</div>

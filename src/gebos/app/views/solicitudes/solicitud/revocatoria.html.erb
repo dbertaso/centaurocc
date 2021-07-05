@@ -1,0 +1,617 @@
+<div class="marco-titulo"><div><div>
+  <%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.titulo_revocatoria',:men=>@tipo_revocatoria)%> <span style="color:red;font-weight:bold"><%=@solicitud.numero%></span>  <%=I18n.t('Sistema.Body.General.beneficiario')%>: <span style="color:red;font-weight:bold"><%=ViewListSolicitud.find_by_solicitud_id(@solicitud.id).nombre%></span>
+</div></div></div>
+<div align="center" style="width:100%"><div id="errorExplanation" align="center" class="errorExplanation" style="display: none; text-align: left"></div></div>
+<%= form_remote_tag(
+		:loading =>'image_load()',
+    :loaded => 'image_unload()',
+		:url => { :action => :save_revocatoria },
+	    :html => {:id => 'principal_form' } ) do-%>
+        <%= hidden_field 'solicitud', 'id' -%>
+        
+        <%= hidden_field 'solicitud_s', 'tipo_revocatoria', :value=>@tipo_revocatoria -%>
+
+<table align="center" class="lista" style="width: 90%;padding-top:25px;padding-bottom:25px;padding-right:50px;padding-left:50px">
+  
+  <tr>
+    <th align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px" >
+      <%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.causas_motivos_para_revocatoria',:tipo_revocatoria=>@tipo_revocatoria)%>      
+    </th>    
+  </tr>
+
+  <tr class="lista0">
+    <td align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <%= select(
+          'solicitud', 'causa_revocatoria_anulacion',
+          @causal_select.map{|i| [i.causa, i.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>'inputChange();' } ) %>
+    </td>    
+  </tr>  
+
+<tr>
+    <th align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.justificacion_revocatoria',:tipo_revocatoria=>@tipo_revocatoria)%>
+    </th>    
+  </tr>
+
+  <tr class="lista0">
+    <td align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <%= text_area 'solicitud', 'justificacion_revocatoria_anulacion', :style=>'width: 400px; height: 60px', :onkeypress=>'inputChange();'%>
+    </td>    
+  </tr>  
+
+<tr>
+    <th align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.numero_fecha_aprobacion_oficio')%>
+    </th>    
+  </tr>
+
+  <tr class="lista0">
+    <td align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.numero_oficio')%>:</label>&nbsp;<%= text_field 'solicitud', 'numero_oficio_revocatoria_anulacion', :class=>'text', :maxlength=>'20', :style=>'width: 100px', :onkeypress=>'inputChange();'  %>&nbsp;&nbsp;
+       <label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.fecha_aprobacion')%>:</label>&nbsp;
+       <%= calendar_date_select_tag "solicitud[fecha_aprobacion_oficio_revocatoria_anulacion]", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+
+
+       <%#= text_field 'solicitud', 'fecha_aprobacion_oficio_revocatoria_anulacion',
+					:class=>'text', :style=>'width: 80px',
+					:maxlength=>'10', :onkeypress=>'inputChange();',:readonly=>:readonly,
+					:onchange=>'inputChange();'  -%>
+				<%#= calendar 'solicitud_fecha_aprobacion_oficio_revocatoria_anulacion', 'calendar_fecha_aprobacion_oficio_revocatoria_anulacion' %> 
+    </td>    
+  </tr>  
+
+<%if @tipo_revocatoria=="#{I18n.t('Sistema.Body.Vistas.General.parcial').downcase}" && @prestamo.monto_liquidado > 0%>
+
+<script type="text/javascript">
+
+function verificacion(){
+
+
+if(($('revocatoria_monto_liquidado_t').checked) || ($('revocatoria_monto_liquidado_n').checked)){
+$('revocatoria_monto_total_revocar').readOnly=true;
+
+if ($('revocatoria_monto_liquidado_n').checked){
+$('revocatoria_monto_total_revocar').value='0';
+var es;
+es=$('monto_revocar_inicial').value - $('monto_revocar').value;
+$('monto_de_revocatoria').innerHTML=formatCurrency2(es);
+}else{
+$('revocatoria_monto_total_revocar').value=$('monto_revocar').value;
+}
+
+$('revocatoria_monto_total_revocar').style.backgroundColor="Gainsboro";
+$('mensajito').innerHTML="";
+
+if (($('monto_revocar_inicial')) && ($('revocatoria_monto_liquidado_t').checked)){
+$('monto_de_revocatoria').innerHTML=formatCurrency2(($('monto_revocar_inicial').value));
+}else{
+es=$('monto_revocar_inicial').value - $('monto_revocar').value;
+$('monto_de_revocatoria').innerHTML=formatCurrency2(es);
+}
+
+}else{
+$('revocatoria_monto_total_revocar').readOnly=false;
+$('revocatoria_monto_total_revocar').value='';
+$('revocatoria_monto_total_revocar').style.backgroundColor="white";
+
+if ($('monto_revocar_inicial')){
+es=$('monto_revocar_inicial').value - $('monto_revocar').value;
+$('monto_de_revocatoria').innerHTML=formatCurrency2(es);
+}else{
+$('monto_de_revocatoria').innerHTML=formatCurrency2('0');
+}
+
+//$('mensajito').innerHTML="(Si no desea devolver nada, ingrese monto cero o vacio)";
+$('mensajito').innerHTML="";
+$('revocatoria_monto_total_revocar').focus();
+}
+}
+
+
+function formatCurrency2(num) {
+   
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + '<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>' + cents);
+    //$(name + '_display').innerHTML = numero;
+    return numero;
+}
+
+
+
+function trunco_a_2_decimales(numero) { 
+    
+     /*var nume=numero.toString();
+     var pot=nume.split('.');     
+     if (pot.length>1){
+     return (pot[0].toString()+'.'+pot[1].toString().substring(0,2));
+     }else{
+     return numero;
+     }*/
+     pot = Math.pow(10,2); 
+     return (numero * pot).toFixed(0) / pot; 
+} 
+
+function ValidarNumero2(nombre){
+var campo =  $(nombre);
+var myStr;
+var strLen;
+
+   if( isNaN(campo.value) ){
+   myStr = campo.value;
+   strLen = myStr.length;
+   myStr = myStr.slice(strLen-1,strLen); 
+   alert('<%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Errores.caracteres_no_soportados')%>'+myStr);
+   campo.value = campo.value.slice(0,(strLen-1));
+   }else{
+   //verifico si el numero posee decimales, si es asi veo si tiene 3 decimales
+    aux=campo.value.toString().split('.');
+    if (aux.length > 1){  
+     if (aux[1].toString().length>2) {
+         alert('<%=I18n.t('Sistema.Body.Modelos.OrdenDespachoDetalle.Errores.maximo_2_decimales')%>');
+         campo.value = campo.value.slice(0,(strLen-1));
+      }    
+    }
+   
+   
+      //verifico si el numero es mayor a mi monto para revocar            
+      if (campo.value!=""){
+      if (parseFloat(campo.value)>parseFloat($('monto_revocar').value)){
+      alert("<%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Errores.monto_ingresado_mayor_devolver')%>");
+      if ($('monto_revocar_inicial')){
+        campo.value='';        
+        $('monto_de_revocatoria').innerHTML=formatCurrency2($('monto_revocar_inicial').value);
+      }else{        
+        campo.value='';
+      }
+          
+      
+      }
+      }else{
+      $('monto_de_revocatoria').innerHTML=formatCurrency2($('monto_revocar_inicial').value - $('monto_revocar').value);
+      }
+   
+   } 
+}
+
+
+function actualizo_span(){
+
+if(($('revocatoria_monto_liquidado_t').checked) || ($('revocatoria_monto_liquidado_n').checked)){
+$('revocatoria_monto_total_revocar').readOnly=true;
+}else{
+$('revocatoria_monto_total_revocar').readOnly=false;
+
+if ($('monto_revocar_inicial')){
+
+var fel=(parseFloat($('monto_revocar_inicial').value)) - parseFloat($('monto_revocar').value) + parseFloat($('revocatoria_monto_total_revocar').value);
+//var fel=($('monto_revocar_inicial').value - $('monto_revocar').value) + $('revocatoria_monto_total_revocar').value;
+$('monto_de_revocatoria').innerHTML=formatCurrency2(trunco_a_2_decimales(fel));
+}else{
+$('monto_de_revocatoria').innerHTML=formatCurrency2(trunco_a_2_decimales($('revocatoria_monto_total_revocar').value));
+}
+
+}
+
+}
+
+
+</script>
+
+
+<tr id="aqui">
+    <th align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+     <%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.devolucion_total_parcial_monto_liquidado')%>
+    </th>    
+  </tr>
+
+  <tr id="aqui2" class="lista0">
+    <td align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <table style="width:100%">
+      <tr><td colspan=2 align="center"><label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.devolver_totalmente')%>:</label><%=radio_button('revocatoria','monto_liquidado', "t", {:checked=>"checked",:onChange=>'verificacion();inputChange();'})-%>&nbsp;&nbsp;
+       <label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.devolver_parcialmente')%>:</label><%=radio_button('revocatoria','monto_liquidado', "p", {:onChange=>'verificacion();inputChange();'})-%>&nbsp;&nbsp;<label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.no_se_devuelve')%>:</label><%=radio_button('revocatoria','monto_liquidado', "n", {:onChange=>'verificacion();inputChange();'})%></td></tr>
+      
+      <tr>      
+      <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%>:</label>&nbsp;<%= text_field 'solicitud', 'referencia_revocatoria_liquidacion', :class=>'text', :maxlength=>'100', :style=>'width: 200px',:onkeypress=>'inputChange();'  %></td>
+       <td><label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.fecha_liquidacion')%>:</label>&nbsp;
+        <%= calendar_date_select_tag "solicitud[fecha_pago_revocatoria_liquidacion]", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+       <%#= text_field 'solicitud', 'fecha_pago_revocatoria_liquidacion',
+					:class=>'text', :style=>'width: 80px',
+					:maxlength=>'10', :onkeypress=>'inputChange();',:readonly=>:readonly,
+					:onchange=>'inputChange();'  -%>
+				<%#= calendar 'solicitud_fecha_pago_revocatoria_liquidacion', 'calendar_fecha_pago_revocatoria_liquidacion' %></td> </tr>
+       
+       <tr><td colspan=2 align="center"><label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.monto_devolver')%>:</label>&nbsp;<%= text_field_tag 'revocatoria_monto_total_revocar',@prestamo.monto_liquidado, :class=>'text', :maxlength=>'15', :style=>'width: 100px;background-color:Gainsboro',:readonly=>'readonly',:onkeyup=>"inputChange();actualizo_span();ValidarNumero2(this);",:autocomplete=>"off",:onpaste=>"return false"  %>&nbsp;&nbsp;</td>
+       <tr><td colspan=2 align="center"><span id="mensajito" style="color:red"></span></td>
+      </tr>
+      </table>          
+    </td>    
+  </tr>  
+
+<%end%>
+ <tr>
+    <th align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+     <%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.datos_generales_financiamiento')%>
+    </th>    
+  </tr>
+
+  <tr class="lista0">
+    <td align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <table >
+      
+      <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_aprobado')%></label>
+          </td>
+          <td style="text-align: right">
+            <b><font color="purple"><%= @prestamo.monto_solicitado_fm %></font></b>
+          </td>          
+        </tr>
+        <tr>
+          <td valign="bottom" colspan="2">
+          <hr>
+          </td>
+        </tr>
+        
+        <% unless @prestamo.solicitud.por_inventario %>
+          
+          <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_banco')%></label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_banco_fm %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_insumos')%></label>
+            </td>
+            <td style="text-align: right">
+                <%= @prestamo.monto_insumos_fm %>
+            </td>
+            </tr>
+            <tr>
+              <td valign="bottom" colspan="1">
+              <span>+</span>
+              </td>
+            
+            <td style="vertical-align:text-top;">
+            ---------------------
+            </td>
+          </tr>
+          
+          <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_plan_inversion')%></label>
+            </td>
+            <td style="text-align: right">
+              <b><font color="green"><%= @prestamo.total_plan_inversion_fm %></font></b>
+            </td>
+          </tr>
+          
+        <%else%>
+           <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_inventario')%></label>
+            </td>
+            <td style="text-align: right">
+                <b><font color="green"><%= @prestamo.monto_inventario_fm %></font></b>
+            </td>
+            </tr>           
+      
+        <%end%>
+        
+        <tr>
+          <td valign="bottom" colspan="2">
+          <hr>
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td >
+            <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_retencion_sras')%></label>
+          </td>
+          <td style="text-align: right">
+              <%= @prestamo.monto_sras_total_fm %>
+          </td>
+          
+        </tr>
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_gastos')%></label>
+          </td>
+          <td style="text-align: right">
+              <%= @prestamo.monto_gasto_total_fm %>
+          </td>
+          
+        </tr>
+        
+        <tr>
+              <td valign="bottom" colspan="1">
+              <span>+</span>
+              </td>
+            
+            <td style="vertical-align:text-top;">
+            ---------------------
+            </td>
+          </tr>
+        
+        <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_total')%></label>
+            </td>
+            <td style="text-align: right">
+             <b><font color="blue">
+              <%=format_fm(@prestamo.monto_gasto_total+@prestamo.monto_sras_total)%>
+             </font> </b>
+            </td>
+            
+
+          </tr>
+        <tr>
+          <td valign="bottom" colspan="2">
+          <hr>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.total_financiamiento')%></label>
+          </td>
+          <td style="text-align: right">
+              <b><font color="red"><%= @prestamo.total_financiamiento_fm %></font></b>
+          </td>          
+        </tr>
+        <tr>
+          <td valign="bottom" colspan="2">
+          <hr>
+          </td>
+        </tr>
+      
+        <% unless @prestamo.solicitud.por_inventario %>
+          <tr>
+            <td >
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_despachado')%></label>
+            </td>
+            <td style="text-align: right">
+                <%= @prestamo.monto_despachado_fm %>
+            </td>            
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_por_despachar')%></label>
+            </td>
+            <td style="text-align: right">
+                <%= @prestamo.monto_por_despachar_fm %>
+            </td>
+            
+          </tr>
+        <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_facturado')%></label>
+            </td>
+            <td style="text-align: right">
+                <%=format_fm(@prestamo.monto_facturado)%>              
+            </td>
+            
+          </tr>
+        <tr>
+          <td valign="bottom" colspan="2">
+          <hr>
+          </td>
+        </tr>
+        
+        <%end%>
+        
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_liquidado')%></label>
+          </td>
+          <td style="text-align: right">
+              <%= @prestamo.monto_liquidado_fm %>
+          </td>
+        </tr>
+
+          <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_liquidar')%></label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_por_liquidar_fm %>
+            </td>          
+          </tr>
+      <tr>
+          <td valign="bottom" colspan="2">
+          <hr>
+          </td>
+        </tr>
+         <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.capital_pagado')%> (<%= I18n.t('Sistema.Body.Vistas.General.recuperado')%>)</label>
+        </td>
+        <td style=" text-align: right">
+         <%= @prestamo.capital_pagado_fm-%>
+        </td>          
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_pagado')%> (<%= I18n.t('Sistema.Body.Vistas.General.recuperado')%>)</label>
+        </td>
+        <td style=" text-align: right">
+         <%= @prestamo.intereses_pagados_fm-%>
+        </td>          
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.mora_pagada')%> (<%= I18n.t('Sistema.Body.Vistas.General.recuperado')%>)</label>
+        </td>
+        <td style=" text-align: right">
+         <%= @prestamo.mora_pagada_fm-%>
+        </td>          
+     </tr>
+      <tr>
+              <td valign="bottom" colspan="1">
+              <span>+</span>
+              </td>
+            
+            <td style="vertical-align:text-top;">
+            ---------------------
+            </td>
+          </tr>
+      <tr>
+            <td>
+              <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_total')%> (<%= I18n.t('Sistema.Body.Vistas.General.recuperado')%>)</label>
+            </td>
+            <td style="text-align: right">
+             <b><font color="#E65F00">
+              <%=format_fm(@prestamo.mora_pagada+@prestamo.intereses_pagados+@prestamo.capital_pagado)%>              
+             </font> </b>
+            </td>
+          </tr>
+      </table>
+    </td>    
+  </tr> 
+
+
+<%unless @prestamo.solicitud.por_inventario%>
+
+<tr>
+    <th align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.monto_total_revocar')%> (<%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.revocatoria').downcase%> <%=@tipo_revocatoria%>)
+    </th>    
+  </tr>
+
+  <tr class="lista0">
+    <td align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+      <b><font color="red" size="4">
+      
+      <%if @tipo_revocatoria=="#{I18n.t('Sistema.Body.Vistas.General.parcial').downcase}"%>
+      
+      <%if @tipo_revocatoria=="#{I18n.t('Sistema.Body.Vistas.General.parcial').downcase}" && @prestamo.monto_liquidado > 0%>      
+      <span id="monto_de_revocatoria">      
+              <%=format_fm((@prestamo.monto_insumos + @prestamo.monto_banco + @prestamo.monto_sras_total  + @prestamo.monto_gasto_total) - (@prestamo.monto_despachado))%>
+              </span>              
+              <%=hidden_field_tag("monto_revocar",@prestamo.monto_liquidado)%>
+              <%=hidden_field_tag("monto_revocar_inicial",(@prestamo.monto_insumos + @prestamo.monto_banco + @prestamo.monto_sras_total  + @prestamo.monto_gasto_total) - (@prestamo.monto_despachado))%>
+       <%else%>
+       <span id="monto_de_revocatoria">
+      <%=format_fm(((@prestamo.monto_banco-@prestamo.monto_liquidado) + (@prestamo.monto_insumos-@prestamo.monto_despachado) + @prestamo.monto_sras_total + @prestamo.monto_gasto_total))%>              
+              </span>
+              <%=hidden_field_tag("monto_revocar",((@prestamo.monto_banco-@prestamo.monto_liquidado) + (@prestamo.monto_insumos-@prestamo.monto_despachado) + @prestamo.monto_sras_total + @prestamo.monto_gasto_total))%>              
+       <%end%>
+       <%else%>         
+       <span id="monto_de_revocatoria"><%=format_fm((@prestamo.monto_insumos.to_f + @prestamo.monto_banco.to_f + @prestamo.monto_sras_total.to_f  + @prestamo.monto_gasto_total.to_f))%></span>
+              <%=hidden_field_tag("monto_revocar",(@prestamo.monto_insumos.to_f + @prestamo.monto_banco.to_f + @prestamo.monto_sras_total.to_f  + @prestamo.monto_gasto_total.to_f))%>
+       <%end%>       
+              </span></font> </b>
+    </td>    
+  </tr>  
+
+<%else%>
+
+
+<tr>
+    <th align="center" style="width: 100%;padding-top:8px;padding-bottom:8px;padding-right:20px;padding-left:20px">
+     <%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.maquinarias_liberar_revocatoria')%> <%=@tipo_revocatoria%>
+    </th>    
+  </tr>
+
+  <tr class="lista0">
+    <td align="center" style="width: 100%">
+      <%
+      @catalo=Catalogo.find(:all,:conditions=>"solicitud_id=#{@prestamo.solicitud.id}")
+      unless @catalo.empty?
+      clase = "lista0"
+      %>
+        <table class="lista" style="width: 100%">
+            <tr>              
+              <th style="width: 20px">
+                <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+              </th>
+              <th style="width: 20px">
+                <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+              </th>
+              <th style="width: 20px">
+                <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+              </th>
+              <th style="width: 20px">
+                <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%> (<%=I18n.t('Sistema.Body.Vistas.General.motor')%> / <%=I18n.t('Sistema.Body.Vistas.General.chasis')%>)</label>
+              </th>              
+              <th style="width: 20px">
+                <label><%=I18n.t('Sistema.Body.Vistas.General.almacen')%></label>
+              </th>
+              
+            </tr>
+        
+        <%@catalo.each { |maq| %>
+      
+        <tr id="coj_<%= maq.id %>" class='<%= clase %>'>
+              
+                  <td align="center">
+                    <%= maq.clase.nombre.to_s unless maq.clase.nil? %> 
+                  </td>
+                  <td align="center">
+                    <%= maq.marca_maquinaria.nombre.to_s unless maq.marca_maquinaria.nil?%>
+                  </td>
+                  <td align="center">
+                    <%= maq.modelo.nombre.to_s unless maq.modelo.nil?%>
+                  </td>
+                  <td align="center">
+                    <label><%=I18n.t('Sistema.Body.Vistas.General.motor')%>:</label>&nbsp;<%= maq.serial.to_s %><br><label><%=I18n.t('Sistema.Body.Vistas.General.chasis')%>:</label>&nbsp;<%= maq.chasis.to_s %>
+                  </td>                  
+                  <td align="center">
+                    <%= maq.almacen_maquinaria.nombre.to_s unless maq.almacen_maquinaria.nil?%>
+                  </td>
+
+                </tr>
+                <% if clase == 'lista0'
+                  clase = 'lista1'
+                else
+                  clase = 'lista0'
+                end %>
+              
+      <%}%>
+      </table>
+      <%else%>
+      <b><font color="red" size="4"><%= I18n.t('Sistema.Body.Vistas.General.ninguna') %></font></b>
+      <%end%>
+    </td>    
+  </tr>  
+
+<%end%>
+
+
+</table>
+<br>
+<div align="center">
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.aplicar'),:onclick=>"if (!confirm('#{I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.esta_seguro_revocar_financiamiento')}')) {return false;}")  -%>&nbsp;
+
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+               {  },
+               { :id=>'buton_cerrar',:onclick=>"window.close();return false;" } ) -%>
+</div>
+	<% end %>
+
+

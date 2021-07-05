@@ -1,0 +1,100 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+		Consultando Solicitud <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+      </div></div></div>
+
+  <%= render :partial=>'solicitudes/consulta_evaluacion_credito/common/tabs' %>
+  <div class="marco-contenido2">
+    <%= form_remote_tag(
+
+      :url => { :action => :actualizar_cantidad_empleados, :id => @solicitud.id } ) -%>
+
+    <table>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span>Datos del Financiamiento</span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="width: 40%">
+          <table border="1" width="100%">
+            <tr>
+              <td style="width: 10%"><label>Número de Trámite</label><br/>
+                <%= @solicitud.numero %></td>
+              <td style="width: 10%"><label>Fecha de Trámite</label><br/>
+                <%= @solicitud.fecha_solicitud_f %></td>
+              <td style="width: 40%"><label>Programa</label><br/>
+                <%= @solicitud.programa.nombre %></td>
+              <td style="width: 30%"><label>Sector</label><br/>
+                <%= @solicitud.sector.nombre %> </td>
+            </tr>
+            <tr>
+              <td colspan="2"><label>SubSector</label><br/>
+                <%= @solicitud.sub_sector.nombre %></td>
+              <td><label>Rubro</label><br/>
+                <%= @solicitud.rubro.nombre  %></td>
+              <td><label>Superficie Solicitada</label><br/>
+                <%= @solicitud.UnidadProduccion.total_hectareas %></td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span>Datos de la Unidad de Producción</span>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <table width="100%" border="1">
+            <tr>
+              <td colspan="2"><label>Nombre de la Unidad de Producción</label><br/>
+                <%= @solicitud.UnidadProduccion.nombre %></td>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: justify"><label>Direcciónde la Unidad de Producción</label><br/>
+                <%= @solicitud.UnidadProduccion.direccion %></td>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: justify"><label>Como llegar al Problado más Cercano (dirección practica)</label><br/>
+              <%= @solicitud.UnidadProduccion.referencia %></td>
+            </tr>
+            <tr>
+              <td style="width: 50%"><label>Estado</label><br/>
+                <%= @solicitud.UnidadProduccion.Ciudad.estado.nombre %></td>
+              <td style="width: 50%"><label>Ciudad</label><br/>
+                <%= @solicitud.UnidadProduccion.Ciudad.nombre %></td>
+            </tr>
+            <tr>
+              <td style="width: 50%"><label>Municipio</label><br/>
+                <%= @solicitud.UnidadProduccion.Municipio.nombre %></td>
+              <td style="width: 50%"><label>Parroquia</label><br/>
+                <%= @solicitud.UnidadProduccion.Parroquia.nombre %></td>
+            </tr>
+            <tr>
+              <td style="width: 50%"><label>Tenencia de la Tierra</label><br/>
+                <%=  @registro.TenenciaUnidadProduccion.nombre %></td>
+              <td style="width: 50%"><label>Tipo de Documento</label><br/>
+                <%= @registro.TipoDocumento.tipo %></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+       <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span>Datos de la Unidad de Producción</span>
+        </td>
+      </tr>
+      
+    </table>
+    <br/>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :action => :index },
+      { :id=>'button_close' } ) -%>
+  </div>
+</div>

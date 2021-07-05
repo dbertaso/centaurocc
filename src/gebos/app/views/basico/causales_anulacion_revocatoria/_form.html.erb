@@ -1,0 +1,54 @@
+<table style="width: 100%">
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.causal')%></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'causales_anulacion_revocatoria', 'causa',
+        :class=>'text', :style=>'width: 600px;',
+        :maxlength=>'400', :onKeyUp=>'textCounter(this,400)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+    
+  </tr>  
+<tr><td class="separador" valign="bottom" colspan="2"><span><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.causal_aplicada_a')%>: <label style="color: red"> (*) </label></span></td></tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.anulacion')%></label>
+    </td>
+    <td>
+      <%= check_box 'causales_anulacion_revocatoria', 'anulacion',
+        :checked_value=>"true",
+        :unchecked_value=>"false", :onclick=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.revocatoria_parcial')%></label>
+    </td>
+    <td>
+      <%= check_box 'causales_anulacion_revocatoria', 'revocatoria_parcial',
+        :checked_value=>"true",
+        :unchecked_value=>"false", :onclick=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.revocatoria_total')%></label>
+    </td>
+    <td>
+      <%= check_box 'causales_anulacion_revocatoria', 'revocatoria_total',
+        :checked_value=>"true",
+        :unchecked_value=>"false", :onclick=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+   
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :id=>'button_save') -%>&nbsp;

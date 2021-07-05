@@ -1,0 +1,4 @@
+<% tipo_especie_acuicultura = @tipo_especie_acuicultura if tipo_especie_acuicultura.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= tipo_especie_acuicultura.id %>">
+	<%= render :partial => 'data', :locals => { :tipo_especie_acuicultura => tipo_especie_acuicultura, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,49 @@
+<td>
+  <%= catalogo.contrato_maquinaria_equipo.nombre %>
+</td>
+
+<td>
+  <%= catalogo.clase.tipo_maquinaria.descripcion %>
+</td>
+
+<td>
+  <%= catalogo.clase.nombre %>
+</td>
+
+<td>
+  <%= catalogo.marca_maquinaria.nombre unless catalogo.marca_maquinaria.nil? %>
+</td>
+
+<td>
+  <%= catalogo.modelo.nombre unless catalogo.modelo.nil? %>
+</td>
+
+<td>
+  <%= catalogo.serial %>
+</td>
+
+<td>
+  <%= catalogo.chasis %>
+</td>
+
+<td>
+  <%= catalogo.numero_factura %>
+</td>
+
+<td>
+  <%= catalogo.getstatus %>
+  <% unless catalogo.estatus == 'L' %>
+    <br/>
+    (<%= link_to Catalogo.getSolicitud(catalogo.solicitud_id), 
+      {:action => :view,
+        :id => catalogo.solicitud_id,
+        :controller => '/solicitudes/solicitud', :controlador => '/consultas/consulta_inventario'}%>)
+  <% end %>
+</td>
+
+<td width="8%" align="center">
+  <%= link_to image_tag('consultar.gif',:title=>'Consultar'),
+    {:action => :view,
+    :id => catalogo.id,
+    :controller => 'consulta_inventario'} %>
+</td>

@@ -1,0 +1,52 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.rubro.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'boleta_arrime.rubro.nombre', 'list' %>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.actividad_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'boleta_arrime.actividad_id', 'list' %>
+      </th>
+      <th style="width: 10%" >
+        <%=I18n.t('Sistema.Body.Vistas.General.estado')%>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.silo.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.silo'), 'boleta_arrime.silo.nombre', 'list' %>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.guia_movilizacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.guia'), 'boleta_arrime.guia_movilizacion', 'list' %>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.numero_ticket') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.numero_boleta'), 'boleta_arrime.numero_ticket', 'list' %>
+      </th>
+      <th style="width: 10%" %>
+        <%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.valor_arrime')%>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.fecha_salida') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.fecha_arrime'), 'boleta_arrime.fecha_salida', 'list' %>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.confirmacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.fecha_confirmacion'), 'boleta_arrime.fecha_confirmacion', 'list' %>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.confirmacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'boleta_arrime', 'list' %>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('boleta_arrime.arrime_conjunto') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.arrime_conjunto'), 'boleta_arrime.arrime_conjunto', 'list' %>
+      </th>
+
+      <th style="width: 70px"><%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+  </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for boleta_arrime in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :boleta_arrime => boleta_arrime, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

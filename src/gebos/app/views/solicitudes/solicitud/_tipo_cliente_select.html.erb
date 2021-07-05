@@ -1,0 +1,30 @@
+<% unless @tipo_cliente.nil? || @tipo_cliente.empty? %>
+  <td>
+    <% if @tipo_cliente.to_i == 1 %>
+      <label>Nro. Rif</label>
+    <% else %>
+      <label>Nro. Cédula</label>
+    <% end %>
+  </td>
+  <td>
+    <% if @tipo_cliente.to_i == 1 %>
+      <%= select(
+        'tipo','',
+        [['J','J'],["G","G"],["V","V"],["E","E"],["P","P"]],
+        { },
+        { :class=>'select', :onchange=>"inputChange();" } ) %>
+      <%= text_field_tag 'rif', '', :class=>'text',
+        :style=>'width: 70px', :maxlength=>'8', :onkeypress=>'inputChange();'  -%> -
+      <%= text_field_tag 'rif1', '', :class=>'text',
+        :style=>'width: 10px', :maxlength=>'1', :onkeypress=>'inputChange();'  -%>
+    <% else %>
+        <%= select(
+        'tipo','',
+        [["V","V"],["E","E"]],
+        { },
+        { :class=>'select', :onchange=>"inputChange();" } ) %>
+      <%= text_field_tag 'cedula', '', :class=>'text',
+        :style=>'width: 70px', :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    <% end %>
+  </td>
+<% end %>

@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="plan_pago" pageWidth="866" pageHeight="612" orientation="Landscape" columnWidth="806" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="50"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="p_prestamo" class="java.lang.Long">
+		<parameterDescription><![CDATA[Numero del prestamo]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Long(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/dbertaso/sandboxes/sistema_bandes/app/reports/src/reportesj/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     case when empresa."nombre" is null then persona.primer_nombre || ' ' || persona.primer_apellido else empresa.nombre end AS empresa_nombre,
+     case when empresa."rif" is null then cast(persona.cedula as varchar) else empresa.rif end AS empresa_rif,
+     prestamo.codigo_contable as auxiliar_contable,
+     rubro."nombre" AS partida_nombre,
+     prestamo."monto_liquidado" AS prestamo_monto_aprobado,
+     prestamo."numero" AS prestamo_numero,
+     prestamo."tasa_vigente" AS prestamo_tasa_vigente,
+     prestamo.id as prestamo_id,
+     CASE WHEN plan_pago_cuota."tipo_cuota"='C'THEN 'Periodo de Amortización'WHEN plan_pago_cuota."tipo_cuota"='G'THEN 'Periodo de Gracia y/o Diferido'ELSE 'Periodo Muerto'END AS tipo_cuota,
+     plan_pago_cuota."numero" AS plan_pago_cuota_numero,
+     plan_pago_cuota."fecha" AS plan_pago_cuota_fecha,
+     plan_pago_cuota."valor_cuota" AS plan_pago_cuota_valor_cuota,
+     plan_pago_cuota."amortizado" AS plan_pago_cuota_amortizado,
+     plan_pago_cuota."interes_corriente" AS plan_pago_cuota_interes_corriente,
+     solicitud."numero" AS solicitud_numero,
+     programa."nombre" AS programa_nombre,
+     prestamo."remanente_por_aplicar" AS prestamo_remanente_por_aplicar,
+     prestamo."capital_pago_parcial" AS prestamo_capital_pago_parcial,
+     prestamo."deuda" AS prestamo_deuda,
+     prestamo."exigible" AS prestamo_exigible,
+     plan_pago_cuota."pago_interes_mora" AS plan_pago_cuota_pago_interes_mora,
+     plan_pago_cuota."pago_interes_corriente" AS plan_pago_cuota_pago_interes_corriente,
+     plan_pago_cuota."pago_interes_diferido" AS plan_pago_cuota_pago_interes_diferido,
+     plan_pago_cuota."pago_capital" AS plan_pago_cuota_pago_capital,
+     plan_pago_cuota."interes_diferido" AS plan_pago_cuota_interes_diferido,
+     plan_pago_cuota."interes_mora" AS plan_pago_cuota_interes_mora,
+     prestamo."saldo_insoluto" AS prestamo_saldo_insoluto,
+     plan_pago_cuota."saldo_insoluto" AS plan_pago_cuota_saldo_insoluto,
+     case prestamo."estatus" WHEN 'L'THEN 'LITIGIO'WHEN 'J'THEN 'CONSULTORIA JURIDICA'WHEN 'V'THEN 'VIGENTE'WHEN 'H'THEN 'VIGENTE' WHEN 'E' THEN 'VENCIDO' END AS estatus_prestamo,
+     case plan_pago_cuota."estatus_pago" WHEN 'N'THEN 'EXIGIBLE'WHEN 'P'THEN 'PAGO PARCIAL'WHEN 'T'THEN 'TOTALMENTE PAGADA'WHEN 'X'THEN 'NO EXIGIBLE' WHEN 'D' THEN 'DIFERIDA' END AS estatus,
+     plan_pago_cuota."dias_mora" AS plan_pago_cuota_dias_mora,
+     case prestamo."frecuencia_pago" when 0 then 'Pago Único' when 1 then 'Mensual' when 2 then 'Bimestral' when 3 then 'Trimestral' when 5 then 'Pentamestral' when 6 then 'Semestral' when 12 then 'Anual' END AS prestamo_frecuencia_pago,
+     case when programa."porcentaje_tasa_foncrei" = 0 then 0.0 else prestamo."tasa_vigente" * programa."porcentaje_tasa_foncrei" / 100 end as tasa_foncrei,
+     case when programa."porcentaje_tasa_foncrei" = 0 then 0.0 else prestamo."tasa_vigente" -  prestamo."tasa_vigente" * programa."porcentaje_tasa_foncrei" / 100 end as tasa_intermediario,
+     plan_pago_cuota.valor_cuota + plan_pago_cuota.interes_diferido as pago_total_cliente
+
+FROM
+     "public"."cliente" cliente INNER JOIN "public"."prestamo" prestamo ON cliente."id" = prestamo."cliente_id"
+     LEFT JOIN "empresa" empresa ON cliente."empresa_id" = empresa."id"
+     LEFT JOIN "persona" persona ON cliente."persona_id" = persona."id"
+     INNER JOIN "public"."rubro" rubro ON prestamo."rubro_id" = rubro."id"
+     INNER JOIN "public"."plan_pago" plan_pago ON prestamo."id" = plan_pago."prestamo_id"
+     INNER JOIN "public"."solicitud" solicitud ON prestamo."solicitud_id" = solicitud."id"
+     INNER JOIN "public"."programa" programa ON solicitud."programa_id" = programa."id"
+     INNER JOIN "public"."plan_pago_cuota" plan_pago_cuota ON plan_pago."id" = plan_pago_cuota."plan_pago_id"
+WHERE
+     plan_pago."activo" = 'true'
+     and prestamo."numero" = $P{p_prestamo}
+ORDER BY
+     tipo_cuota DESC,
+     plan_pago_cuota."numero" ASC]]>
+	</queryString>
+	<field name="empresa_nombre" class="java.lang.String"/>
+	<field name="empresa_rif" class="java.lang.String"/>
+	<field name="auxiliar_contable" class="java.lang.String"/>
+	<field name="partida_nombre" class="java.lang.String"/>
+	<field name="prestamo_monto_aprobado" class="java.math.BigDecimal"/>
+	<field name="prestamo_numero" class="java.lang.Long"/>
+	<field name="prestamo_tasa_vigente" class="java.lang.Double"/>
+	<field name="prestamo_id" class="java.lang.Integer"/>
+	<field name="tipo_cuota" class="java.lang.String"/>
+	<field name="plan_pago_cuota_numero" class="java.lang.Integer"/>
+	<field name="plan_pago_cuota_fecha" class="java.sql.Date"/>
+	<field name="plan_pago_cuota_valor_cuota" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_amortizado" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_interes_corriente" class="java.math.BigDecimal"/>
+	<field name="solicitud_numero" class="java.lang.Integer"/>
+	<field name="programa_nombre" class="java.lang.String"/>
+	<field name="prestamo_remanente_por_aplicar" class="java.math.BigDecimal"/>
+	<field name="prestamo_capital_pago_parcial" class="java.math.BigDecimal"/>
+	<field name="prestamo_deuda" class="java.math.BigDecimal"/>
+	<field name="prestamo_exigible" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_pago_interes_mora" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_pago_interes_corriente" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_pago_interes_diferido" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_pago_capital" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_interes_diferido" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_interes_mora" class="java.math.BigDecimal"/>
+	<field name="prestamo_saldo_insoluto" class="java.math.BigDecimal"/>
+	<field name="plan_pago_cuota_saldo_insoluto" class="java.math.BigDecimal"/>
+	<field name="estatus_prestamo" class="java.lang.String"/>
+	<field name="estatus" class="java.lang.String"/>
+	<field name="plan_pago_cuota_dias_mora" class="java.lang.Integer"/>
+	<field name="prestamo_frecuencia_pago" class="java.lang.String"/>
+	<field name="tasa_foncrei" class="java.lang.Double"/>
+	<field name="tasa_intermediario" class="java.lang.Double"/>
+	<field name="pago_total_cliente" class="java.math.BigDecimal"/>
+	<variable name="TC_MontoCuota" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_valor_cuota}]]></variableExpression>
+	</variable>
+	<variable name="TC_Capital" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_amortizado}]]></variableExpression>
+	</variable>
+	<variable name="TC_Intereses" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_interes_corriente}]]></variableExpression>
+	</variable>
+	<variable name="TC_InteresDiferido" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_interes_diferido}]]></variableExpression>
+	</variable>
+	<variable name="TC_PagoCapital" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_pago_capital}]]></variableExpression>
+	</variable>
+	<variable name="TC_PagoInteres" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_pago_interes_corriente}]]></variableExpression>
+	</variable>
+	<variable name="TC_PagoInteresDiferido" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_pago_interes_diferido}]]></variableExpression>
+	</variable>
+	<variable name="TituloGrupo" class="java.lang.String">
+		<variableExpression><![CDATA["Total " +  $F{tipo_cuota}]]></variableExpression>
+	</variable>
+	<variable name="TG_MontoCuota" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_valor_cuota}]]></variableExpression>
+	</variable>
+	<variable name="TG_Intereses" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_interes_corriente}]]></variableExpression>
+	</variable>
+	<variable name="TG_Capital" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_amortizado}]]></variableExpression>
+	</variable>
+	<variable name="TG_InteresDiferido" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_interes_diferido}]]></variableExpression>
+	</variable>
+	<variable name="TG_InteresMora" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_interes_mora}]]></variableExpression>
+	</variable>
+	<variable name="TG_PagoCapital" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_pago_capital}]]></variableExpression>
+	</variable>
+	<variable name="TG_PagoInteres" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_pago_interes_corriente}]]></variableExpression>
+	</variable>
+	<variable name="TG_PagoInteresDiferido" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_pago_interes_diferido}]]></variableExpression>
+	</variable>
+	<variable name="TC_InteresMora" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{plan_pago_cuota_interes_mora}]]></variableExpression>
+	</variable>
+	<variable name="TC_pago_total_cliente" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoCuota" calculation="Sum">
+		<variableExpression><![CDATA[$F{pago_total_cliente}]]></variableExpression>
+	</variable>
+	<variable name="TG_pago_total_cliente" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{pago_total_cliente}]]></variableExpression>
+	</variable>
+	<group name="TipoCuota" isStartNewPage="true" isReprintHeaderOnEachPage="true" minHeightToStartNewPage="10">
+		<groupExpression><![CDATA[$F{tipo_cuota}]]></groupExpression>
+		<groupHeader>
+			<band height="46" splitType="Stretch">
+				<rectangle>
+					<reportElement key="rectangle-2" x="13" y="0" width="783" height="46" printWhenGroupChanges="TipoCuota" backcolor="#CCCCCC"/>
+				</rectangle>
+				<staticText>
+					<reportElement key="staticText-21" x="741" y="28" width="38" height="18" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Días Mora]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-12" x="450" y="24" width="59" height="22" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Intereses Diferidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-19" x="190" y="28" width="42" height="18" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Estatus]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-11" x="308" y="28" width="59" height="18" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Capital]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-8" x="78" y="20" width="37" height="26" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Nro.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-18" x="668" y="23" width="55" height="23" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Intereses Mora]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-10" x="235" y="28" width="59" height="18" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Monto Cuota]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-12" x="514" y="28" width="59" height="18" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Pago Total Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-20" x="591" y="28" width="65" height="18" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Saldo Deudor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-12" x="384" y="24" width="59" height="22" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Intereses]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="13" y="0" width="783" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tipo_cuota}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-9" x="133" y="28" width="39" height="18" printWhenGroupChanges="TipoCuota"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="8" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="31" splitType="Stretch">
+				<rectangle>
+					<reportElement key="rectangle-3" mode="Opaque" x="2" y="3" width="794" height="25" backcolor="#CCCCCC"/>
+				</rectangle>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-10" x="232" y="8" width="58" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TC_MontoCuota}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-11" x="384" y="10" width="59" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TC_Intereses}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-12" x="308" y="8" width="59" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TC_Capital}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField" x="656" y="8" width="54" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TC_InteresMora}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-8" x="1" y="5" width="81" height="18"/>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TituloGrupo}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-9" x="78" y="5" width="33" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TipoCuota_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-11" x="450" y="8" width="59" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TG_InteresDiferido}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-11" x="517" y="8" width="59" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TC_pago_total_cliente}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="prestamo">
+		<groupExpression><![CDATA[$F{prestamo_numero}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="6" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="274" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-1" x="0" y="88" width="796" height="175"/>
+			</rectangle>
+			<image>
+				<reportElement key="image-1" x="4" y="6" width="168" height="70"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA["/var/www/cartera/public/images/logo_reporte.jpg"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="100" y="134" width="435" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" x="2" y="134" width="78" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Productor]]></text>
+			</staticText>
+			<textField pattern="###0" isBlankWhenNull="false">
+				<reportElement key="textField" x="100" y="153" width="100" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{solicitud_numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-2" x="2" y="153" width="78" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Trámite Nro.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="2" y="173" width="78" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Financiamiento Nro.]]></text>
+			</staticText>
+			<textField pattern="###0" isBlankWhenNull="false">
+				<reportElement key="textField" x="100" y="173" width="100" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestamo_numero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="101" y="212" width="413" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partida_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="2" y="212" width="78" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Rubro]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="693" y="188" width="76" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestamo_tasa_vigente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="541" y="188" width="96" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Tasa Vigente]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="646" y="133" width="123" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestamo_monto_aprobado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" x="541" y="133" width="96" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Monto Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" x="2" y="232" width="78" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Programa]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="101" y="232" width="668" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{programa_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="624" y="31" width="139" height="19"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página: " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="762" y="31" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="625" y="12" width="173" height="19"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-15" x="541" y="151" width="96" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Exigible]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-2" x="646" y="151" width="123" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestamo_exigible}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-16" x="541" y="170" width="96" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Deuda]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-3" x="646" y="170" width="123" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestamo_deuda}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-26" x="2" y="192" width="78" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Frecuencia Pago]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="100" y="192" width="132" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prestamo_frecuencia_pago}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="100" y="115" width="114" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_rif}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" x="2" y="115" width="78" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[RIF/Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" mode="Opaque" x="215" y="31" width="352" height="36" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="20" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[TABLA DE AMORTIZACION]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="693" y="207" width="76" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estatus_prestamo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" x="541" y="207" width="96" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Estatus]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField pattern="###0" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="82" y="3" width="29" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_numero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="126" y="3" width="46" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_fecha}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="232" y="3" width="58" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_valor_cuota}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="308" y="3" width="59" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_amortizado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="384" y="4" width="59" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_interes_corriente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-6" mode="Opaque" x="668" y="3" width="43" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_interes_mora}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="172" y="3" width="63" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estatus}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="723" y="3" width="46" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_dias_mora}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-26" mode="Opaque" x="591" y="3" width="65" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_saldo_insoluto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="450" y="4" width="59" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_pago_cuota_interes_diferido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="517" y="4" width="59" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pago_total_cliente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-25" x="4" y="12" width="68" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" pdfFontName="Courier"/>
+				</textElement>
+				<text><![CDATA[Papel Oficio]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-4" mode="Opaque" x="0" y="8" width="804" height="25" backcolor="#CCCCCC"/>
+			</rectangle>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="232" y="11" width="58" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TG_MontoCuota}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-19" x="308" y="11" width="59" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TG_Capital}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-20" x="384" y="11" width="59" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TG_Intereses}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-22" x="656" y="11" width="54" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TG_InteresMora}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-27" x="2" y="11" width="73" height="18"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Total General]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="80" y="11" width="35" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-20" x="450" y="11" width="59" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TG_InteresDiferido}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-20" x="514" y="11" width="59" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="7" isBold="true" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TG_pago_total_cliente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,96 @@
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :generar_tabla } ) do-%>
+
+  <input id="orden_abono_excedente_arrime_id" type="hidden" name="orden_abono_excedente_arrime_id"/>
+
+  <div id="registrar">
+    &nbsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.registrar')) -%>
+  </div>
+
+</br>
+
+<%= error %>
+<%= message %>
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"> </div>
+
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th >
+            <br><input type="hidden" title="Click para seleccionar todos los registros en la página" id="todos" name="todos" onClick="checkAll(form.prestamo_id,form.todos)" />
+
+        </th>
+
+        <th >
+          <%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.cheque')}"%><br><%= I18n.t('Sistema.Body.General.formato_fecha')%>
+        </th>
+
+        <th >
+          <%="#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.cheque')}"%>
+        </th>
+
+        <th  <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+        </th>
+        <th <%= sort_class_helper('beneficiario') %>
+          <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'beneficiario', 'list' %>
+        </th>
+        <th  <%= sort_class_helper('nro_tramite') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'nro_tramite', 'list' %>
+        </th>
+        <th <%= sort_class_helper('(select numero from prestamo where id =prestamo_id)') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.financiamiento'), '(select numero from prestamo where id =prestamo_id)', 'list' %>
+        </th>
+        <th <%= sort_class_helper('estado') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'estado', 'list' %>
+        </th>
+        <th <%= sort_class_helper('sector') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector', 'list' %>
+        </th>
+
+        <th <%= sort_class_helper('rubro') %>>
+           <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro', 'list' %>
+        </th>
+
+        <th <%= sort_class_helper('sub_rubro') %>>
+           <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_rubro'), 'sub_rubro', 'list' %>
+        </th>
+
+        <th <%= sort_class_helper('actividad') %>>
+           <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad', 'list' %>
+        </th>
+
+        <th <%= sort_class_helper('estatus') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'estatus', 'list' %>
+        </th>
+
+        <th <%= sort_class_helper('monto_abono') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.abono')}", 'monto_abono', 'list' %>
+        </th>
+
+
+        <th>
+          <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+        </th>
+
+    </tr>
+  </thead>
+  <tbody id="list-body">
+<%
+  even_odd = 1
+  for view_excedente_arrime in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :view_excedente_arrime => view_excedente_arrime, :even_odd => even_odd } -%>
+<% end %>
+
+</tbody>
+</table>
+
+
+<%= form_pagination %>
+
+ <% end %>

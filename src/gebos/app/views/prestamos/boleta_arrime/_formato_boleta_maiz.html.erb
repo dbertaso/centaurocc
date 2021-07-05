@@ -1,0 +1,1054 @@
+  
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+
+<%if (params[:action].to_s == "new" || params[:action].to_s == "edit")%>
+
+  <div id="operacion-maiz">
+
+    <% 
+    if params[:action].to_s == "new"
+      @boleta_laboratorio_maiz = BoletaLaboratorioMaiz.new 
+    elsif params[:action].to_s == "edit"
+      @boleta_laboratorio_maiz = BoletaLaboratorioMaiz.find_by_boleta_arrime_id(@boleta_arrime.id)
+    end
+  %>
+
+    <div id="validacion">
+
+      <script type="text/javascript">
+        onload = function()
+        {
+          checkOption();
+          var mens = "<%= if @view_acta_silo.nil? || @view_acta_silo.to_s.empty?
+      0
+    else
+      1
+    end %>"
+        if (mens < 1){
+          alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.no_hay_silos_abiertos')%>");
+        }
+        var accion = "<%=  controller.action_name%>";
+        if(accion == "edit"){
+          calKg();
+        }
+      }
+
+      function showConjunto(value)
+      {
+        var ban = document.getElementById("var").value;
+        if (value == 'true'){
+          if (ban == 1){
+            document.getElementById("conjunto").style.display="";
+          }
+        }else{
+          document.getElementById("conjunto").style.display="none";
+        }
+      }
+
+      function totalEntrada()
+      {
+        var entV = document.getElementById("boleta_arrime_peso_vehiculo_f").value;
+        var entR = document.getElementById("boleta_arrime_peso_remolque_f").value;
+        eV = false; eR = false;
+        eV = checkDecimals(entV);
+        if (entR > 0){
+          entR = document.getElementById("boleta_arrime_peso_remolque_f").value=(parseFloat(entR)).toFixed(2);
+          eR = checkDecimals(entR);
+
+          if (eV == true && eR == true){
+            entV = document.getElementById("boleta_arrime_peso_vehiculo_f").value=(parseFloat(entV)).toFixed(2);
+            entR = document.getElementById("boleta_arrime_peso_remolque_f").value=(parseFloat(entR)).toFixed(2);
+            var totalE = 0.00;
+            totalE = (parseFloat(entV) + parseFloat(entR));
+            totalE = totalE*100;
+            totalE = Math.floor(totalE);
+            totalE = totalE/100;
+            totalE = totalE.toFixed(2);
+            document.getElementById("boleta_arrime_valor_total_entrada_f").value = " ";
+            document.getElementById("boleta_arrime_valor_total_entrada_f").value = totalE;
+
+            toS = document.getElementById("boleta_arrime_valor_total_salida_f").value;
+            if(toS > 0){
+              totalSalida();
+            }
+          }
+        } else {
+          if (eV == true){
+            document.getElementById("boleta_arrime_peso_remolque_salida_f").value = " ";
+            entV = document.getElementById("boleta_arrime_peso_vehiculo_f").value=(parseFloat(entV)).toFixed(2);
+            var totalE = 0.00;
+            totalE = (parseFloat(entV));
+            totalE = totalE*100;
+            totalE = Math.floor(totalE);
+            totalE = totalE/100;
+            totalE = totalE.toFixed(2);
+            document.getElementById("boleta_arrime_valor_total_entrada_f").value = " ";
+            document.getElementById("boleta_arrime_valor_total_entrada_f").value = totalE;
+
+            toS = document.getElementById("boleta_arrime_valor_total_salida_f").value;
+            if(toS > 0){
+              totalSalida();
+            }
+          }
+        }    
+      }
+  
+      function totalSalida()
+      {
+        var salV = document.getElementById("boleta_arrime_peso_vehiculo_salida_f").value;
+        var salR = document.getElementById("boleta_arrime_peso_remolque_salida_f").value;
+   
+        sV = false;  sR = false;  sT = false;  sKg = false;  Rb = false;  Ab = false;
+        var toE = 0.00;  var toS = 0.00;  var toB = 0.00;  var tKg = 0.00; 
+    
+        Rb = "<%= @view_boleta_arrime.rubro.downcase.match('algodon').to_s.length > 0 ? 1 : 0 %>"
+        Ab = "<%= @view_boleta_arrime.actividad.downcase.match('semilla').to_s.length > 0 ? 1 : 0 %>"
+       
+        if(parseFloat(salV) > 0){
+          sV = checkDecimals(salV);
+        }
+        if (parseFloat(salR) > 0 ){
+          salR = document.getElementById("boleta_arrime_peso_remolque_salida_f").value=(parseFloat(salR)).toFixed(2);
+          sR = checkDecimals(salR);
+
+          if (sV == true && sR == true){
+            salV = document.getElementById("boleta_arrime_peso_vehiculo_salida_f").value=(parseFloat(salV)).toFixed(2);
+            salR = document.getElementById("boleta_arrime_peso_remolque_salida_f").value=(parseFloat(salR)).toFixed(2);
+            var totalS = 0.00;
+            totalS = (parseFloat(salV) + parseFloat(salR));
+            totalS = totalS.toFixed(2);
+            totalS = totalS*100;
+            totalS = Math.floor(totalS);
+            totalS = totalS/100;
+            totalS = parseFloat(totalS).toFixed(2);
+            document.getElementById("boleta_arrime_valor_total_salida_f").value = " ";
+            document.getElementById("boleta_arrime_valor_total_salida_f").value = totalS;
+          }
+        } else {
+          if (sV == true){
+            salV = document.getElementById("boleta_arrime_peso_vehiculo_salida_f").value=(parseFloat(salV)).toFixed(2);
+            var totalS = 0.00;
+            totalS = (parseFloat(salV));
+            totalS = totalS.toFixed(2);
+            totalS = totalS*100;
+            totalS = Math.floor(totalS);
+            totalS = totalS/100;
+            totalS = totalS.toFixed(2);
+            document.getElementById("boleta_arrime_valor_total_salida_f").value = " ";
+            document.getElementById("boleta_arrime_valor_total_salida_f").value = totalS;
+          }
+        }
+
+        toE = document.getElementById("boleta_arrime_valor_total_entrada_f").value;
+        toS = document.getElementById("boleta_arrime_valor_total_salida_f").value;
+        if (totalS > 0){
+          if(parseFloat(toS) < parseFloat(toE)){
+
+            var bruto = 0.00;
+            toE = document.getElementById("boleta_arrime_valor_total_entrada_f").value;
+            toS = document.getElementById("boleta_arrime_valor_total_salida_f").value;
+            bruto = (parseFloat(toE) - parseFloat(toS));
+            bruto = bruto.toFixed(2);
+            bruto = bruto*100;
+            bruto = Math.floor(bruto);
+            bruto = bruto/100;
+            bruto = parseFloat(bruto).toFixed(2);
+            //AGREGAR AQUI VALIDACION QUE SI CASO ALGODON LO AGREGUE AL PESO BRUTO Y NO AL NETO. 
+            if (Rb == 1){
+              document.getElementById("boleta_arrime_peso_bruto_f").value = " ";
+              document.getElementById("boleta_arrime_peso_bruto_f").value = bruto;
+            }else{
+              document.getElementById("boleta_arrime_peso_neto_f").value = " ";
+              document.getElementById("boleta_arrime_peso_neto_f").value = bruto;
+            }
+          }else{
+            alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.valor_total_salida_menor_valor_total_entrada')%>");
+          }
+
+          if (Rb == 1){
+            var tA = 0.00;
+                                
+            Pn = document.getElementById("boleta_arrime_peso_bruto_f").value;
+            tKg = document.getElementById("boleta_arrime_total_kg_f").value;
+            if (parseFloat(tKg) > 0){
+              sKg = checkDecimals(tKg);
+            }
+            if (sKg == true){
+              if (Pn > 0 && tKg > 0){
+                if (parseFloat(tKg) < parseFloat(Pn)){
+
+                  tA = (parseFloat(Pn) - parseFloat(tKg));
+                  tA = tA.toFixed(2);
+                  tA = tA*100;
+                  tA = Math.floor(tA);
+                  tA = tA/100;
+                  tA = parseFloat(tA).toFixed(2);
+                  document.getElementById("boleta_arrime_peso_neto_f").value = " ";
+                  document.getElementById("boleta_arrime_peso_neto_f").value = tA;
+                }
+              }
+            }
+            if (Ab == 0){
+              var vH = 0.00;  var vI = 0.00;  var hA = 0.00;   var iA = 0.00;
+                  
+              vH = document.getElementById("boleta_laboratorio_algodon_humedad").value;
+              vI = document.getElementById("boleta_laboratorio_algodon_impureza").value;  
+              var pBa = document.getElementById("boleta_arrime_peso_neto_f").value;
+              if (vH > 0 && pBa > 0){
+                hA = ((parseFloat(vH) * parseFloat(pBa))/100);
+                hA = hA.toFixed(2);
+                hA = hA*100;
+                hA = Math.floor(hA);
+                hA = hA/100;
+                hA = parseFloat(hA).toFixed(2);
+                document.getElementById("boleta_laboratorio_algodon_humedad_absoluta").value = " ";
+                document.getElementById("boleta_laboratorio_algodon_humedad_absoluta").value = hA;
+              }
+                  
+              if (vI > 0 && pBa > 0){
+                iA = ((parseFloat(vI) * parseFloat(pBa))/100);
+                iA = iA.toFixed(2);
+                iA = iA*100;
+                iA = Math.floor(iA);
+                iA = iA/100;
+                iA = parseFloat(iA).toFixed(2);
+                document.getElementById("boleta_laboratorio_algodon_impureza_absoluta").value = " ";
+                document.getElementById("boleta_laboratorio_algodon_impureza_absoluta").value = iA;
+              }
+                  
+              if (pBa > 0){
+                var vHa = document.getElementById("boleta_laboratorio_algodon_humedad_absoluta").value;
+                var vIa = document.getElementById("boleta_laboratorio_algodon_impureza_absoluta").value;
+                var tNeto = 0.00;
+                    
+                if (vHa > 0 && vIa > 0){
+                  tNeto = ((pBa) - (parseFloat(vHa) + parseFloat(vIa)));
+                  tNeto = tNeto.toFixed(2);
+                  tNeto = tNeto*100;
+                  tNeto = Math.floor(tNeto);
+                  tNeto = tNeto/100;
+                  tNeto = parseFloat(tNeto).toFixed(2);
+                  document.getElementById("boleta_arrime_peso_acondicionado_f").value = " ";
+                  document.getElementById("boleta_arrime_peso_acondicionado_f").value = tNeto;
+                  recal();
+                }
+                    
+              }
+            } else {
+              var pBa = document.getElementById("boleta_arrime_peso_neto_f").value;
+              if(pBa > 0){
+                document.getElementById("boleta_arrime_peso_acondicionado_f").value = pBa;
+                recal();
+              }
+            }
+                
+          }
+
+        }
+      }
+
+      function checkDecimals(fieldValue) {
+        decallowed = 2;
+        if (isNaN(fieldValue) || fieldValue == "") {
+          alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_solo_numeros')%>");
+        }
+        else {
+          if (fieldValue.indexOf('.') == -1) fieldValue += ".";
+          dectext = fieldValue.substring(fieldValue.indexOf('.')+1, fieldValue.length);
+
+          if (dectext.length > decallowed)
+          {
+            alert ("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_solo')%> " + decallowed + " <%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.decimales')%>");
+          }
+          else {
+            return true
+          }
+        }
+      }
+
+      function checkOption(){
+        var op = "";
+        op = document.getElementById("boleta_arrime_resultado").value;
+        if (op == 'A'){
+          document.getElementById("resultado-rechazado").style.display="none";
+          document.getElementById("resultado-aprobado").style.display="";
+        } else if(op == 'R'){
+          document.getElementById("resultado-aprobado").style.display="none";
+          document.getElementById("resultado-rechazado").style.display="";
+        }
+      }
+  
+      function calKg(){
+        rA=null;
+        rA="<%= @view_boleta_arrime.rubro.downcase.match('algodon').to_s.length > 0 ? 1 : 0 %>"
+        if (rA == 1){
+          var uH = document.getElementById("boleta_arrime_humedos").value;
+          var uS = document.getElementById("boleta_arrime_secos").value;
+          var uM = document.getElementById("boleta_arrime_mojados").value;
+          var pH = document.getElementById("boleta_arrime_porcentaje_aplicado_humedo").value;
+          var pS = document.getElementById("boleta_arrime_porcentaje_aplicado_seco").value;
+          var pM = document.getElementById("boleta_arrime_porcentaje_aplicado_mojado").value;
+    
+          sS = false; sM = false; spS = false; spM = false; sH = false; spH = false;   
+          var tS = 0.00;   var tM = 0.00;  var tSC = 0.00;  var tKg = 0.00; var tH = 0.00; 
+       
+          if (uS > 0 && pS >= 0){
+            tS = (parseFloat(uS) * parseFloat(pS));
+            tS = tS.toFixed(2);
+            tS = tS*100;
+            tS = Math.floor(tS);
+            tS = tS/100;
+            tS = parseFloat(tS).toFixed(2);
+            document.getElementById("boleta_arrime_total_secos_f").value=" ";
+            document.getElementById("boleta_arrime_total_secos_f").value = tS;
+          }else{
+            document.getElementById("boleta_arrime_total_secos_f").value = 0.00;
+          }
+
+          if (uM > 0 && pM >= 0){
+            tM = (parseFloat(uM) * parseFloat(pM));
+            tM = tM.toFixed(2);
+            tM = tM*100;
+            tM = Math.floor(tM);
+            tM = tM/100;
+            tM = parseFloat(tM).toFixed(2);
+            document.getElementById("boleta_arrime_total_mojados_f").value=" ";
+            document.getElementById("boleta_arrime_total_mojados_f").value = tM;
+          }else{
+            document.getElementById("boleta_arrime_total_mojados_f").value = 0.00;
+          }
+      
+          if (uH > 0 && pH >= 0){
+            tH = (parseFloat(uH) * parseFloat(pH));
+            tH = tH.toFixed(2);
+            tH = tH*100;
+            tH = Math.floor(tH);
+            tH = tH/100;
+            tH = parseFloat(tH).toFixed(2);
+            document.getElementById("boleta_arrime_total_humedos_f").value=" ";
+            document.getElementById("boleta_arrime_total_humedos_f").value = tH;
+          }else{
+            document.getElementById("boleta_arrime_total_humedos_f").value = 0.00;
+          }
+      
+          if(uS >= 0 || uM >= 0 || uH >= 0){
+            var vpp = 0.00;
+            if (uS >0){
+              vpp = parseFloat(vpp) + parseFloat(uS);
+            }
+            if(uM > 0){
+              vpp = parseFloat(vpp) + parseFloat(uM);
+            }
+            if(uH > 0){
+              vpp = parseFloat(vpp) + parseFloat(uH);
+            }
+            vpp = parseFloat(vpp).toFixed(0)
+            document.getElementById("boleta_arrime_total_sacos").value=" ";
+            document.getElementById("boleta_arrime_total_sacos").value = vpp;
+          }else{
+            document.getElementById("boleta_arrime_total_sacos").value=" ";
+          }
+      
+          var tS = document.getElementById("boleta_arrime_total_secos_f").value;
+          var tM = document.getElementById("boleta_arrime_total_mojados_f").value;
+          var tH = document.getElementById("boleta_arrime_total_humedos_f").value;
+      
+          if(tS >= 0 || tM >= 0 || tH >= 0){
+            var tpp = 0.00;
+            if (parseFloat(tS) > 0){
+              tpp = parseFloat(tpp) + parseFloat(tS);
+            }
+            if(parseFloat(tM) > 0){
+              tpp = parseFloat(tpp) + parseFloat(tM);
+            }
+            if(parseFloat(tH) > 0){
+              tpp = parseFloat(tpp) + parseFloat(tH);
+            }
+            tpp = parseFloat(tpp).toFixed(2)
+            document.getElementById("boleta_arrime_total_kg_f").value=" ";
+            document.getElementById("boleta_arrime_total_kg_f").value = tpp;
+          }else{
+            document.getElementById("boleta_arrime_total_kg_f").value=0.00;
+          }
+      
+          totalSalida();
+        }
+      }
+
+      function val(){
+        var opt = "<%=  @view_boleta_arrime.rubro.to_s %>";
+        var index = document.getElementById("boleta_arrime_clase").selectedIndex;
+        sel = document.getElementById("boleta_arrime_clase").value;
+        silo = document.getElementById("boleta_arrime_silo_id").value;
+        ac = document.getElementById("boleta_arrime_peso_acondicionado_f").value;
+          if (parseFloat(ac) > 0){
+            var a = sel+';'+'peso='+ac+';'+'silo_id='+silo;
+            document.getElementById("boleta_arrime_clase").options[index].value = a;
+          } else {
+              alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_peso_acondicionado')%>");
+          }
+      }
+
+      function recal(){
+
+        var boleta_id = "";  var resul = "";  var clase = "";  var opt = "";  var actividad_id = "";  var sel = null; var sid = "";
+        var a = null; var ac = null;  var id = null; var Ral=null; var myAjax = "";
+    
+        boleta_id = "<%= @boleta_arrime.id %>";
+        if(boleta_id != ''){
+          resul = document.getElementById("boleta_arrime_resultado").value;
+          if (resul == 'A'){
+            opt = "<%=  @view_boleta_arrime.rubro.to_s unless @view_boleta_arrime.nil? %>";
+            actividad_id = "<%= @view_boleta_arrime.actividad_id unless @view_boleta_arrime.nil? %>"
+            clase = document.getElementById("boleta_arrime_clase").value;
+            sid = document.getElementById("boleta_arrime_silo_id").value;
+            sel = clase.split(';');
+            if (opt == "ARROZ" || opt == "arroz" ){
+              ac = document.getElementById("boleta_arrime_peso_acondicionado_liquidar_f").value;
+              if (parseFloat(ac) > 0){
+                a = sel[0]+'='+ac+'='+actividad_id+'='+sid;
+              } else {
+                alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_peso_acondicionado_liquidar')%>");
+              }
+            } else{
+              ac = document.getElementById("boleta_arrime_peso_acondicionado_f").value;
+              if (parseFloat(ac) > 0){
+                a = sel[0]+'='+ac+'='+actividad_id+'='+sid;
+              } else {
+                Ral = "<%= @view_boleta_arrime.rubro.downcase.match('algodon').to_s.length > 0 ? 1 : 0%>"
+                if(Ral > 0){
+                  alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_peso_neto')%>");
+                }else{
+                  alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_peso_acondicionado')%>");
+                }
+              }
+            }
+            id = "id=" + a;
+            myAjax = new Ajax.Request("/prestamos/boleta_arrime/precio_gaceta_script?" + id, {method: 'get', asynchronous:true, evalScripts:true}); return false;
+          }
+        } else{
+          clase = document.getElementById("boleta_arrime_clase").value;
+          if(clase != ""){
+            resul = document.getElementById("boleta_arrime_resultado").value;
+            if (resul == 'A'){
+              opt = "<%=  @view_boleta_arrime.rubro.to_s unless @view_boleta_arrime.nil? %>";
+              actividad_id = "<%= @view_boleta_arrime.actividad_id unless @view_boleta_arrime.nil? %>"
+              clase = document.getElementById("boleta_arrime_clase").value;
+              sid = document.getElementById("boleta_arrime_silo_id").value;
+              sel = clase.split(';');
+              if (opt == "ARROZ" || opt == "arroz" ){
+                ac = document.getElementById("boleta_arrime_peso_acondicionado_liquidar_f").value;
+                if (parseFloat(ac) > 0){
+                  a = sel[0]+'='+ac+'='+actividad_id+'='+sid;
+                } else {
+                  alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_peso_acondicionado_liquidar')%>");
+                }
+              }else{
+                ac = document.getElementById("boleta_arrime_peso_acondicionado_f").value;
+                if (parseFloat(ac) > 0){
+                  a = sel[0]+'='+ac+'='+actividad_id+'='+sid;
+                } else {
+                  Ral = "<%= @view_boleta_arrime.rubro.downcase.match('algodon').to_s.length > 0 ? 1 : 0 %>"
+                  if(Ral > 0){
+                    alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_peso_neto')%>");
+                  }else{
+                    alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_peso_acondicionado')%>");
+                  }
+                }
+              }
+              id =  a;
+              myAjax = new Ajax.Request("/prestamos/boleta_arrime/precio_gaceta_script?id=" + id, {method: 'get', asynchronous:true, evalScripts:true}); return false;
+            }
+          }
+        }
+      }
+
+      function clean(){
+        document.getElementById("acta-silo").innerHTML="";
+      }
+  
+      function sumYP(){
+    
+        var gY = document.getElementById("boleta_laboratorio_arroz_yesosos").value;
+        var gPb= document.getElementById("boleta_laboratorio_arroz_panza_blanca").value;
+    
+        sY = false;  sPb = false;
+
+        if(gY > 0){
+          sY = checkDecimalsOne(gY);
+        }
+    
+        if (gPb > 0 ){
+          sPb = checkDecimalsOne(gPb);
+        }
+        if (sY == true && sPb == true){
+          gY = document.getElementById("boleta_laboratorio_arroz_yesosos").value=(parseFloat(gY)).toFixed(2);
+          gPb= document.getElementById("boleta_laboratorio_arroz_panza_blanca").value=(parseFloat(gPb)).toFixed(2);
+          var totalYP = 0.00;
+          totalYP = (parseFloat(gY) + parseFloat(gPb));
+          totalYP = totalYP.toFixed(2);
+          totalYP = totalYP*100;
+          totalYP = Math.floor(totalYP);
+          totalYP = totalYP/100;
+          totalYP = parseFloat(totalYP).toFixed(2);
+          document.getElementById("boleta_laboratorio_arroz_yesosos_panza_blanca").value = " ";
+          document.getElementById("boleta_laboratorio_arroz_yesosos_panza_blanca").value = totalYP;
+        }else{
+          if(sY == false && sPb == true){
+            gPb= document.getElementById("boleta_laboratorio_arroz_panza_blanca").value=(parseFloat(gPb)).toFixed(2);
+            document.getElementById("boleta_laboratorio_arroz_yesosos_panza_blanca").value = " ";
+            document.getElementById("boleta_laboratorio_arroz_yesosos_panza_blanca").value = gPb;
+          }else{
+            gY = document.getElementById("boleta_laboratorio_arroz_yesosos").value=(parseFloat(gY)).toFixed(2);
+            document.getElementById("boleta_laboratorio_arroz_yesosos_panza_blanca").value = " ";
+            document.getElementById("boleta_laboratorio_arroz_yesosos_panza_blanca").value = gY;
+          }
+     
+        }
+      }
+  
+      function checkDecimalsOne(fieldValue) {
+        decallowed = 2;
+
+        if (fieldValue.indexOf('.') == -1) fieldValue += ".";{
+          dectext = fieldValue.substring(fieldValue.indexOf('.')+1, fieldValue.length);
+        }
+
+        if (dectext.length > decallowed)
+        {
+          alert ("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.ingresar_solo')%> " + decallowed + " <%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.decimales')%>");
+        }
+        else {
+          return true
+        }
+
+      }
+  
+      function validateH(campo) {
+        var RegExPattern = /^(0[1-9]|1[0-2]|0[1-9]){1}(:[0-5][0-9]){1}(:[0-5][0-9]){1}(; [aApP][mM]){1}$/;
+        var errorMessage = '<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.formato_hora_incorrecto')%>';
+        if (campo.value!=''){
+          if (campo.value.match(RegExPattern)){
+            return true; 
+          } else {
+            alert(errorMessage);
+            document.getElementById(campo.id).value = " ";
+            campo.focus();
+            return
+          }
+        }
+      }
+
+      function rD(cv){
+        if (cv.value!=''){
+          var val = document.getElementById(cv.id).value;
+          if(cv.value > 100){
+            document.getElementById(cv.id).value=" ";
+            alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.valor_ingresado_menor_cien')%> ");  
+          }else{
+            val = parseFloat(val).toFixed(2);
+            document.getElementById(cv.id).value=" ";
+            document.getElementById(cv.id).value=val;
+          }
+        }else{
+          document.getElementById(cv.id).value=" ";
+          alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.valor_ingresado_mayor_cero')%> ");
+        }
+      }
+  
+      function cS(cks, id){
+        if (cks.value!=''){
+          if(id == "rm"){
+            var eR = document.getElementById("boleta_arrime_peso_remolque_f").value;
+            var sR = document.getElementById(cks.id).value;
+            if(parseFloat(eR) <= 0 || eR == ""){
+              document.getElementById(cks.id).value=" ";
+            }
+            if(parseFloat(sR) >= parseFloat(eR)){
+              document.getElementById(cks.id).value=parseFloat(0).toFixed(2);
+              alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.peso_salida_remolque_no_mayor_peso_entrada')%>");
+            }
+            totalSalida();
+          }else{
+            var eV = document.getElementById("boleta_arrime_peso_vehiculo_f").value;
+            var sV = document.getElementById(cks.id).value;
+            if(parseFloat(eV) <= 0){
+              document.getElementById(cks.id).value=parseFloat(0).toFixed(2);
+            }
+            if(parseFloat(sV) >= parseFloat(eV)){
+              document.getElementById(cks.id).value=parseFloat(0).toFixed(2);
+              alert("<%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.peso_salida_vehiculo_no_mayor_peso_entrada')%>");
+            }
+            totalSalida();
+          }
+        }
+      }
+      varEnviado = false;
+      </script>
+
+    </div>
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="4">
+          <span><%=I18n.t('Sistema.Body.Vistas.EmpleadosSilo.Etiquetas.datos_personales')%></span>
+        </td>
+      </tr>
+      <tr><td></td></tr>
+      <tr>
+        <td align="center">
+          <table border="1">
+            <tr>
+              <td><label><%=I18n.t('Sistema.Body.Vistas.Form.silo')%> </label></td>
+              <td>
+                <% silo_onchange = remote_function(
+                  :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+                  :url=>{:controller=>'boleta_arrime',
+                    :action=>:silo_change },
+                  :with=>"'id='+value+'&actividad_id='+#{@view_boleta_arrime.actividad_id.to_i}") %>
+                <%= select(
+                  'boleta_arrime','silo_id',
+                  @view_acta_silo.map{|i| [i.nombre_compuesto, i.id]},
+                  {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                  { :class=>'select', :onchange =>'clean();'+silo_onchange+';inputChange();' } ) %>
+              </td>
+            </tr>
+            <tr>
+              <td> <label><%=I18n.t('Sistema.Body.Vistas.General.rif')%> </label></td>
+              <td>
+                <div id="rif-silo">
+                  <%= render :partial => 'rif_silo' %>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td> <label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.asociacion')%> </label></td>
+              <td><%=I18n.t('Sistema.Body.General.banco_origen')%> </td>
+            </tr>
+            <tr>
+              <td><label> <%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label></td>
+              <td>
+                <%=@view_boleta_arrime.rubro.to_s %>
+              </td>
+            </tr>
+            <tr>
+              <td><label> <%=I18n.t('Sistema.Body.Vistas.General.actividad')%> </label></td>
+              <td>
+                <%=@view_boleta_arrime.actividad.to_s %>
+              </td>
+            </tr>
+            <tr>
+              <td><label> <%=I18n.t('Sistema.Body.Vistas.General.ciclo')%> </label></td>
+              <td>
+                <%= select(
+                  'boleta_arrime','ciclo_productivo_id',
+                  @ciclo_productivo.map{|i| [i.nombre, i.id]},
+                  {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                  { :class=>'select', :onchange =>'inputChange();' } ) %>
+              </td>
+            </tr>
+            <tr>
+              <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.hora_registro')%> </label></td>
+              <td>
+                <%= text_field'boleta_arrime', 'hora_registro_f', :class=>'text', :maxlength=>'12',
+                  :style=>'width: 170px', :readonly=> 'readonly' -%>
+              </td>
+            </tr>
+            <tr>
+              <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.hora_entrada')%> </label></td>
+              <td>
+                <%= text_field'boleta_arrime', 'hora_entrada_silo_f', :class=>'text', :maxlength=>'13
+                ',
+                  :style=>'width: 170px', :onblur=>'validateH(this);', :onkeypress=>'inputChange();' -%>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <br/>
+    <table align="center" border="1" width="70%">
+      <tr>
+        <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento')%> </label></td>
+        <td><%= @view_boleta_arrime.nro_solicitud.to_s%></td>
+        <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.numero_boleta')%></label></td>
+        <td><%= text_field'boleta_arrime', 'numero_ticket',
+            :class=>'text', :maxlength=>'12', :style=>'width: 170px', :onkeypress=>'inputChange();' -%></td>
+      </tr>
+      <tr>
+        <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.doc_beneficiario')%></label></td>
+        <td>
+          <% action_name = controller.action_name %>
+          <%if action_name=='edit' %>
+            <% unless @boleta_arrime.cliente.persona_id.nil? || @boleta_arrime.cliente.persona_id.to_s.empty?%>
+              <%= @boleta_arrime.cliente.persona.cedula_nacionalidad.to_s %> - <%= @boleta_arrime.cliente.persona.cedula.to_s%>
+            <%  else %>
+              <%= @boleta_arrime.cliente.empresa.rif.to_s%>
+            <%  end %>
+
+          <%  else %>
+            <% if action_name=='new' %>
+              <%unless @view_boleta_arrime.nil? || @view_boleta_arrime.to_s.empty? %>
+                <%= @view_boleta_arrime.cedula_rif %>
+              <%end%>
+            <%end%>
+          <%end%>
+        </td>
+
+        <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.General.beneficiario')%></label></td>
+        <td>
+          <%= @view_boleta_arrime.productor%>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.placa_vehiculo')%></label></td>
+        <td>
+          <%= text_field 'boleta_arrime', 'placa_vehiculo', :class=>'text', :style=>'width: 170px',
+            :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+        </td>
+        <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.guia')%></label></td>
+        <td><%= text_field 'boleta_arrime', 'guia_movilizacion',
+            :class=>'text', :maxlength=>'12', :style=>'width: 170px', :onkeypress=>'inputChange();' -%></td>
+      </tr>
+      <tr>
+        <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.cedula_conductor')%></label></td>
+        <td>
+          <%= select(
+            'boleta_arrime', 'letra_cedula_conductor',
+            [['V','V'],['E','E']],
+            { :include_blank => true },
+            { :class=>'select', :onchange=>';inputChange();' } ) %>
+          <%= text_field 'boleta_arrime', 'cedula_conductor',
+            :class=>'text', :maxlength=>'12', :style=>'width: 135px', :onkeypress=>'inputChange();' -%></td>
+        <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nombre_conductor')%></label></td>
+        <td><%= text_field 'boleta_arrime', 'nombre_conductor',
+            :class=>'text', :maxlength=>'60', :style=>'width: 170px', :onkeypress=>'inputChange();' -%></td>
+      </tr>
+    </table>
+    <br/>
+    <br/>
+    <div id="formulario">
+
+      <table style="width: 100%">
+
+        <td class="separador" valign="bottom" colspan="4">
+          <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_de_laboratorio')%></span>
+          <input type="hidden" name="laboratorio" value="<%=@boleta_laboratorio_maiz.class %>" />
+        </td>
+      </table>
+      <br/>
+
+      <table align="center" border="1" width="80%">
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.parentesis_maiz')%></label></td>
+          <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+          <td></td>
+          <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+          <td></td>
+          <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+        </tr>
+
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'humedad', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_germinados_danados')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'germinados_danados', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_cristalizados')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'cristalizados', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+        </tr>
+
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'impureza', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_danados_insectos')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'danados_insectos', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_amilaceos')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'amilaceos', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+        </tr>
+
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.mezcla_color')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'mezcla_color', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_quemados')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'quemados', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_infectados')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'infectados', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+        </tr>
+
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.luv')%></label></td>
+          <td><%= select(
+              'boleta_laboratorio_maiz', 'luv',
+              [[I18n.t('Sistema.Body.General.no_aplica'),'A'],[I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.positivo'),'P'], [I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.negativo'),'N']],
+              {:prompt => 'Seleccionar...' },
+              { :class=>'select', :onchange=>';inputChange();' } ) %></td>
+
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_microorganismos')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'danados_microorganismos', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_total')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'danados_total', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+        </tr>
+
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.olor')%></label></td>
+          <td> <%= select(
+              'boleta_laboratorio_maiz', 'olor',
+              [['Bueno','Bueno'],['Malo','Malo'], ['Regular','Regular'], ['Natural','Natural'], ['Característico','Característico'], 
+                ['No Característico','No Característico']],
+              {:prompt => 'Seleccionar...' },
+              { :class=>'select', :onchange=>';inputChange();' } ) %></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.granos_partidos')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'partidos', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.semillas_objetables')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'semillas_objetables', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+        </tr>
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.aspecto')%></label></td>
+          <td> <%= select(
+              'boleta_laboratorio_maiz', 'aspecto',
+              [['Bueno','Bueno'],['Malo','Malo'], ['Regular','Regular'], ['Natural','Natural'], ['Característico','Característico'], 
+                ['No Característico','No Característico']],
+              {:prompt => 'Seleccionar...' },
+              { :class=>'select', :onchange=>';inputChange();' } ) %></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_calor')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'danados_calor', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.aflatoxina')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'aflatoxina', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+        </tr>
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.sensorial')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'sensorial', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.danados_por_hongos')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'hongos', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%= I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.hibrido')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'hibrido', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+        </tr>
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.remolque')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'remolque', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.motriz')%></label></td>
+          <td><%= text_field 'boleta_laboratorio_maiz', 'motriz', :class=>'text', :maxlength=>'12', :style=>'width: 50px', :onkeypress=>'return NumberDoubleKey(event);', :onblur=>'rD(this);', :onchange=>'inputChange();'-%></td>
+          <td colspan="2"><label>&nbsp;</label></td>
+        </tr>
+
+      </table>
+      <br/>
+
+    </div>
+    <br/>
+
+    <div id="operacion">
+
+      <table style="width: 100%">
+        <td class="separador" valign="bottom" colspan="4">
+          <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_del_peso')%></span>
+        </td>
+      </table>
+      <br/>
+      <table align="center" border="1" width="90%">
+        <tr align="center" >
+          <td><label><%=I18n.t('Sistema.Body.Vistas.General.items')%></label></td>
+          <td style="width: 250px"><label><%=I18n.t('Sistema.Body.Vistas.General.fecha')%></label></td>
+          <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.hora')%></label></td>
+          <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.vehiculo')%></label></td>
+          <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.remolque')%></label></td>
+          <td><label><%=I18n.t('Sistema.Body.Vistas.General.total')%></label></td>
+        </tr>
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.entrada')%></label></td>
+          <td><%= calendar_date_select_tag "boleta_arrime[fecha_entrada_f]", @boleta_arrime.fecha_entrada_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>
+          </td>
+          <td>
+            <%= text_field'boleta_arrime', 'hora_entrada_peso_f', :class=>'text', :maxlength=>'12', :style=>'width: 80px', :onblur=>'validateH(this);',
+              :onkeypress=>'inputChange();' -%> <%=I18n.t('Sistema.Body.Vistas.General.ejemplo_hora')%>
+          </td>
+          <td><%= text_field 'boleta_arrime', 'peso_vehiculo_f', :class=>'text', :maxlength=>'12', :style=>'width: 120px',
+              :onkeypress=>'inputChange();return NumberDoubleKey(event);', :onchange=>'inputChange();totalEntrada();' -%></td>
+          <td><%= text_field 'boleta_arrime', 'peso_remolque_f', :class=>'text', :maxlength=>'12',
+              :style=>'width: 120px', :onkeypress=>'return NumberDoubleKey(event);', :onchange=>'inputChange();totalEntrada();' -%></td>
+          <td><%= text_field 'boleta_arrime', 'valor_total_entrada_f', :class=>'text', :maxlength=>'12',
+              :style=>'width: 120px', :readonly=> 'readonly' -%></td>
+        </tr>
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Vistas.General.salida')%></label></td>
+          <td style="width: 250px">
+            <%= calendar_date_select_tag "boleta_arrime[fecha_salida_f]", @boleta_arrime.fecha_salida_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>
+          </td>
+          <td>
+            <%= text_field'boleta_arrime', 'hora_salida_peso_f', :class=>'text', :maxlength=>'12', :onblur=>'validateH(this);',
+              :style=>'width: 80px', :onkeypress=>'inputChange();' -%> <%=I18n.t('Sistema.Body.Vistas.General.ejemplo_hora')%>
+          </td>
+          <td><%= text_field 'boleta_arrime', 'peso_vehiculo_salida_f', :class=>'text', :maxlength=>'12',
+              :style=>'width: 120px', :onkeypress=>'return NumberDoubleKey(event);', :onchange=>"inputChange(); cS(this,'vc');" -%></td>
+          <td><%= text_field 'boleta_arrime', 'peso_remolque_salida_f', :class=>'text', :maxlength=>'12',
+              :style=>'width: 120px', :onkeypress=>'return NumberDoubleKey(event);', :onchange=>"inputChange(); cS(this,'rm');" -%></td>
+          <td><%= text_field 'boleta_arrime', 'valor_total_salida_f', :class=>'text', :maxlength=>'12',
+              :style=>'width: 120px',  :readonly=> 'readonly'  -%></td>
+
+        </tr>
+        <tr>
+          <td colspan="5" align="right"><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_neto')%> &nbsp;&nbsp;</label></td>
+          <td><%= text_field 'boleta_arrime', 'peso_neto_f', :class=>'text', :maxlength=>'12',
+              :style=>'width: 120px', :readonly=> 'readonly' -%>
+          </td>
+        </tr>
+        <tr>
+          <td  colspan="5" align="right" ><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.peso_acondicionado')%></label></td>
+          <td><%= text_field 'boleta_arrime', 'peso_acondicionado_f', :class=>'text', :maxlength=>'12', :style=>'width: 120px',
+              :onkeypress=>'return NumberDoubleKey(event);', :onchange=>"pa=this.form.boleta_arrime_peso_acondicionado_f.value;
+  this.form.boleta_arrime_peso_acondicionado_f.value=(parseFloat(pa)).toFixed(2); recal(); inputChange();" -%>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+    <br/>
+
+    <div id="resultado">
+
+      <table align="center" border="1" width="35%">
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nro_acta')%></label></td>
+          <td><div id="acta-silo">
+              <%= render :partial => 'silo_change' %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><label><%=I18n.t('Sistema.Body.Vistas.General.resultado')%></label></td>
+          <td>
+            <%= select(
+              'boleta_arrime', 'resultado',
+              [[I18n.t('Sistema.Body.Vistas.General.aprobado'),'A'],[I18n.t('Sistema.Body.General.rechazado'),'R']],
+              {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select', :onchange=>'inputChange();checkOption();' } ) %>
+          </td>
+        </tr>
+        <%  unless @view_boleta_arrime.nil?%>
+          <% if @view_boleta_arrime.clasificacion =='N'%>
+            <tr>
+              <td style="width: 150px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.arrime_conjunto')%></label></td>
+              <td>
+                <%= radio_button 'boleta_arrime', 'arrime_conjunto', 'true',
+                  :class=>'text', :onclick=>'inputChange(); showConjunto("true");'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si')%> &emsp; <%= radio_button 'boleta_arrime', 'arrime_conjunto', 'false',
+                  :class=>'text', :onclick=>'inputChange(); showConjunto("false");'  -%><%=I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop')%><br />
+                <%  if controller.action_name == 'new' %>
+                  <%= hidden_field_tag 'var', '',
+                    :value=>"#{1}", :style=>'display:hidden' %>
+                <%else%>
+                  <%= hidden_field_tag 'var', '',
+                    :value=>"#{0}", :style=>'display:hidden' %>
+                <% end %>
+
+              </td>
+            </tr>
+          <%end%>
+        <%end%>
+      </table>
+      <br/>
+      <div id="resultado-aprobado" style="display:none">
+        <table align="center" border="1" width="35%">
+          <tr>
+            <td style="width: 160px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.tipo_clase')%></label></td>
+
+            <td>
+              <% precio_gaceta_onchange = remote_function(
+                :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+                :url=>{:controller=>'boleta_arrime',
+                  :action=>:precio_gaceta_change },
+                :with=>"'id='+value+'&actividad_id='+#{@view_boleta_arrime.actividad_id}")%>
+              <%= select(
+                'boleta_arrime','clase',
+                [['Clase I','A'],['Clase II','B'],['Clase III','C']],
+                {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                { :class=>'select', :onchange => 'val();'+precio_gaceta_onchange +';inputChange();' } ) %>
+
+            </td>
+          </tr>
+          <tr>
+              <td colspan="2" ><div id="referencia-gaceta" align="center">
+                  <%= render :partial => 'referencia_gaceta' %>
+                </div>
+              </td>
+            </tr>
+            <tr>
+            <td><label><%=I18n.t('Sistema.Body.Vistas.General.precio')%></label></td>
+            <td>
+              <div id="precio-gaceta">
+                <%= render :partial => 'precio_pago' %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><label><%=I18n.t('Sistema.Body.Modelos.BoletaArrime.Columnas.monto_arrime')%></label></td>
+            <td>
+              <div id="valor-arrime">
+                <%= render :partial => 'valor_arrime' %>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><label><%=I18n.t('Sistema.Body.Vistas.General.observacion')%></label></td>
+            <td align="center">
+              <%= text_area 'boleta_arrime', 'causa',
+                :class=>'text', :style=>'width: 180px; height: 100px', :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%></td>
+          </tr>
+        </table>
+      </div>
+      <div id="resultado-rechazado" style="display:none">
+        <table align="center" border="1" width="35%">
+          <tr>
+            <td style="width: 160px"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nro_acta_rechazo')%></label></td>
+            <td>
+              <%= text_field 'boleta_arrime', 'nro_acta_rechazo',
+                :class=>'text', :style=>'width: 180px',
+                :maxlength=>'15', :onkeypress=>'inputChange();'  -%>
+            </td>
+          </tr>
+          <tr>
+            <td><label><%= I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.causa')%></label></td>
+            <td align="center">
+              <%= text_area 'boleta_arrime', 'causa_rechazo',
+                :class=>'text',
+                :style=>'width: 180px; height: 100px',
+                :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%></td>
+          </tr>
+        </table>
+      </div>
+
+      <br/>
+      <div id="conjunto" style="display:none">
+        <table style="width: 100%">
+
+          <tr>
+            <td class="separador" valign="bottom" colspan="2">
+              <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.informacion_arrime_conjunto')%></span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.debe_guardar')%> </label></td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+      </div>
+    </div>
+
+  </div>
+
+<%elsif (params[:action].to_s == "imprimir") %>
+  
+  <div id="imprimir-maiz">
+    <%= render :partial => 'view_imprimir_maiz' -%>
+  </div>
+<%elsif (params[:action].to_s == "view") %>
+  <%= render :partial => 'view_formato_maiz' -%>
+<%end%>

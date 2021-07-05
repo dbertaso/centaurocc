@@ -1,0 +1,18 @@
+  <table class="lista" width="1070px">
+    <tr>
+      <!--th>  </th>
+      <th>  </th>
+      <th>  </th>
+      <th>  </th>
+      <th>  </th>
+      <th>  </th>
+      <th>  </th>
+      <th>  </th-->
+      <th colspan="9" width="100px"> &nbsp; </th>
+      <th style="background-color:#D7D7D7" width="100px"> Total: </th>
+      <th style="background-color:#D7D7D7" width="110px">
+        <%=format_fm(@prestamo.monto_inventario) unless @prestamo.nil? || @prestamo.monto_inventario.nil? -%>
+      </th>
+      <th width="50px"> &nbsp; </th>
+    </tr>
+  </table>

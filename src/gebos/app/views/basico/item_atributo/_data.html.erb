@@ -1,0 +1,19 @@
+<td>
+  <%= item_atributo.nombre  %>
+</td>
+<td>
+  <%= item_atributo.descripcion %>
+</td>
+<td>
+  <%= format_bool item_atributo.activo  %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :action => 'edit',  :id => item_atributo.id, :item_id => @item.id, :partida_id => @partida.id, :popup=>params[:popup]) %>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :item_id => @item.id, :id => item_atributo.id}) -%>
+</td>

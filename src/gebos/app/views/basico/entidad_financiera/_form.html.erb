@@ -1,0 +1,117 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+    <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.datos') << " " << I18n.t('Sistema.Body.Vistas.General.entidad_financiera')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre') << " " << I18n.t('Sistema.Body.Vistas.General.corto')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td style="width: 430px">
+      <%= text_field 'entidad_financiera', 'alias_f', :class=>'text', :style=>'width: 300px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td style="width: 430px">
+      <%= text_field 'entidad_financiera', 'nombre_f', :class=>'text', :style=>'width: 480px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.entidad') << " " << I18n.t('Sistema.Body.Vistas.General.privada')%></label>
+    </td>
+    <td>
+      <%= check_box 'entidad_financiera', 'privado',
+        :checked_value=>"1", :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cuenta') << " " << I18n.t('Sistema.Body.Vistas.General.contable')%></label>
+    </td>
+    <td>
+      <%= select('entidad_financiera', 'cuenta_contable_id',
+        @cuenta_contable_select.map{|i| [i.nombre, i.id]},
+        { :prompt => I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();'} ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.ReglaContable.Etiquetas.auxiliar_contable')%></label>
+    </td>
+    <td>
+      <%= text_field 'entidad_financiera', 'auxiliar_contable', :class=>'text', :style=>'width: 120px',
+        :maxlength=>'7', :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.codigo')%> Swift</label>
+    </td>
+    <td>
+      <%= text_field 'entidad_financiera', 'cod_swift', :class=>'text', :style=>'width: 120px',
+        :maxlength=>'12', :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.General.convenio_domiciliacion')%></label>
+    </td>
+    <td>
+      <%= check_box 'entidad_financiera', 'convenio_domiciliacion',
+        :checked_value=>"1", :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'entidad_financiera', 'activo',
+        :checked_value=>"1", :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.informacion') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.contacto')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </td>
+    <td style="width: 430px">
+      <%= text_field 'entidad_financiera', 'nombre_contacto', :class=>'text', :style=>'width: 480px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.gerencia')%></label>
+    </td>
+    <td style="width: 430px">
+      <%= text_field 'entidad_financiera', 'gerencia_contacto', :class=>'text', :style=>'width: 480px',
+        :maxlength=>'60', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%></label>
+    </td>
+    <td style="width: 430px">
+      <%= text_field 'entidad_financiera', 'telefono_contacto', :class=>'text', :style=>'width: 280px',
+        :maxlength=>'40', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+</table>

@@ -1,0 +1,18 @@
+<tr id="row_<%=params[:orden_id] %>_view">
+
+	<td colspan="13" style="padding-bottom: 10px">
+
+
+		<%= render :partial=>"list_accion" %>
+
+	</td>
+
+	<td valign="top" style="text-align: center">
+		<%= link_to_remote(
+			image_tag(I18n.t('Sistema.Body.Imagenes.img_colapsar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cerrar_tabla_desplegable')),
+		  :loading =>'image_load()',
+	 	  :loaded => 'image_unload()',
+          :method=>:get,
+			:url => {:action => :collapse, :orden_id => params[:orden_id]}) -%>
+	</td>
+</tr>

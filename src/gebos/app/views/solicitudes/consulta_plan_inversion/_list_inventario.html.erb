@@ -1,0 +1,117 @@
+<% if @solicitud_maquinaria_inventario.length > 0 %>
+  <div class="marco-contenido" style="width: 99%; background-color:#D7D7D7" align="left">
+    <b><span style="color:black"><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.plan_inversion').upcase.gsub('ó', 'Ó')} #{I18n.t('Sistema.Body.Vistas.General.por').upcase} #{I18n.t('Sistema.Body.Vistas.General.inventario').upcase}" %> </span></b>
+  </div>
+
+  <br/>
+
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>     
+        <th style="width: 14%"> <%= I18n.t('Sistema.Body.Vistas.General.rubro') %> </th>
+        <th style="width: 15%"> <%= I18n.t('Sistema.Body.Vistas.General.tipo') %> </th>
+        <th style="width: 15%"> <%= I18n.t('Sistema.Body.Vistas.General.marca') %> </th>
+        <th style="width: 14%"> <%= I18n.t('Sistema.Body.Vistas.General.modelo') %> </th>
+        <th style="width: 14%"> <%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %> </th>
+        <th style="width: 14%"> <%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %> </th>
+        <th style="width: 14%"> <%= I18n.t('Sistema.Body.Vistas.General.costo') %> </th>
+      </tr>
+    </thead>
+
+    <tbody id="list_body">
+      <% lista = 0
+      @solicitud_maquinaria_inventario.each{|m| %>
+        <tr class="lista<%= lista  %>">
+
+          <td> <%= m.tipo_maquinaria.descripcion %>  </td>
+          <td> <%= m.clase.nombre %> </td>
+          <td> <%= m.marca_maquinaria.nombre %> </td>
+          <td> <%= m.modelo.nombre %> </td>
+          <td> <%= m.catalogo.serial %> </td>
+          <td> <%= m.catalogo.chasis %> </td>
+          <td width="110px" align="right"> <%= sprintf('%01.2f', m.catalogo.monto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>&nbsp; </td>
+        </tr>
+
+        <% if lista == 0
+          lista = 1 
+          else
+          lista = 0 
+        end 
+        } %>
+  <%# end %>
+
+      <tr class="lista1">
+        <td colspan="5"></td>
+        <td align="center" style="background-color:#D7D7D7"><%= I18n.t('Sistema.Body.Vistas.General.sub_total') %></td>
+        <td align="right" style="background-color:#D7D7D7" >
+          <b>
+            <%=sprintf('%01.2f', @solicitud_maquinaria_inventario[0].solicitud.prestamos[0].monto_inventario).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @solicitud_maquinaria_inventario[0].nil? %>
+          </b>
+        </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+<% end 
+if @solicitud_maquinaria_proforma.length > 0 %>
+  <div class="marco-contenido" style="width: 99%; background-color:#D7D7D7" align="left">
+    <b><span style="color:black"><%= "#{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.plan_inversion').upcase.gsub('ó', 'Ó')} #{I18n.t('Sistema.Body.Vistas.General.por').upcase} #{I18n.t('Sistema.Body.Vistas.General.proforma').upcase}" %> </span></b>
+  </div>
+
+  <br/>
+
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>     
+        <th style="width: 14%"> <%= I18n.t('Sistema.Body.Vistas.General.rubro') %> </th>
+        <th style="width: 15%"> <%= I18n.t('Sistema.Body.Vistas.General.tipo') %> </th>
+        <th style="width: 15%"> <%= I18n.t('Sistema.Body.Vistas.General.marca') %> </th>
+        <th style="width: 14%"> <%= I18n.t('Sistema.Body.Vistas.General.modelo') %> </th>
+        <th style="width: 14%"> <%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %> </th>
+        <th style="width: 14%"> <%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %> </th>
+        <th style="width: 14%"> <%= I18n.t('Sistema.Body.Vistas.General.costo') %> </th>
+      </tr>
+    </thead>
+
+    <tbody id="list_body">
+      <% lista = 0
+      @solicitud_maquinaria_proforma.each{|m| %>
+        <tr class="lista<%= lista  %>">
+
+          <td> <%= m.tipo_maquinaria.descripcion %>  </td>
+          <td> <%= m.clase.nombre %> </td>
+          <td> <%= m.marca_maquinaria.nombre %> </td>
+          <td> <%= m.modelo.nombre %> </td>
+          <td> <%= m.serial_motor %> </td>
+          <td> <%= m.serial_chasis %> </td>
+          <td width="110px" align="right"> <%= sprintf('%01.2f', m.costo).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>&nbsp; </td>
+        </tr>
+
+        <% if lista == 0
+          lista = 1 
+          else
+          lista = 0 
+        end 
+        } %>
+  <%# end %>
+
+      <tr class="lista1">
+        <td colspan="5"></td>
+        <td align="center" style="background-color:#D7D7D7"><%= I18n.t('Sistema.Body.Vistas.General.sub_total') %></td>
+        <td align="right" style="background-color:#D7D7D7" >
+          <% if @solicitud_maquinaria_proforma[0].solicitud.prestamos[0].monto_insumos.nil? 
+              @solicitud_maquinaria_proforma[0].solicitud.prestamos[0].monto_insumos = 0
+             end
+          %>
+          
+          <b>
+            <%= sprintf('%01.2f', @solicitud_maquinaria_proforma[0].solicitud.prestamos[0].monto_insumos).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @solicitud_maquinaria_proforma[0].nil? %>
+          </b>
+        </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+<% end %>

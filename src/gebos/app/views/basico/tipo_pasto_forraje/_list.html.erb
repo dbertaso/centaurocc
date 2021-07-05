@@ -1,0 +1,22 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 350px" <%= sort_class_helper('tipo_pasto_forraje.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'tipo_pasto_forraje.descripcion', 'list' %>
+      </th> 			
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for tipo_pasto_forraje in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :tipo_pasto_forraje => tipo_pasto_forraje, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

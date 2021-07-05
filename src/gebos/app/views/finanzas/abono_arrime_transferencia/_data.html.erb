@@ -1,0 +1,44 @@
+<td checked=false, align="center">
+	<%= check_box_tag 'orden_abono_excedente_arrime_id', desembolso.orden_abono_excedente_arrime_id, checked=false, :onClick=>'checkOne(this,form.todos);muestro();' %></td>
+
+<td >
+       <%= desembolso.beneficiario %>
+</td>
+
+<td>
+       <%= desembolso.cedula_rif %>
+</td>
+
+<td>
+       <%=  desembolso.nro_tramite  %>
+</td>
+
+<td>
+       <%= desembolso.banco %>
+</td>
+
+<td>
+       <%= desembolso.numero_cuenta %>
+</td>
+
+<td align="center">
+       <%= desembolso.estado %>
+</td>
+
+<td>
+       <%= desembolso.sector %>
+</td>
+<td>
+       <%= desembolso.actividad %>
+</td>
+
+<td align="right">
+	<%=format_fm(desembolso.monto_abono) %>
+
+</td>
+
+
+<td style="text-align: center">
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), {:controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>desembolso.solicitud_id, :popup=>true  }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>desembolso.nro_tramite) + "','height=600,width=1100, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+</td>
+

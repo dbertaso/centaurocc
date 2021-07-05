@@ -1,0 +1,52 @@
+<%= form_title_search %>
+<%= render :partial=>'solicitudes/orden_despacho_rechazo_archivo/common/tabs' %>
+<div class="marco-contenido2">
+	<br>	
+	<%=message%>	
+	<%= form_for(:upload, :url => { :action => "avanzar", :accion=>0}, :html => {:id=>'primer_form', :multipart => true} ) do %>    
+    <table>
+		<tr>
+			<td>
+				<label for="upload_file"><%=I18n.t('Sistema.Body.General.seleccione_archivo_procesar')%></label>
+			</td>
+			<td>
+				<%= file_field 'upload', 'datafile', :onchange=>'document.getElementById("image").style.display = "";' %>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<label><%=I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_liquidacion')%></label>
+			</td>
+			<td>				
+            <%= calendar_date_select_tag "fecha", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+			</td>
+		</tr>
+	</table>
+	<br><br>
+<div id="image" style="display: none">
+
+
+<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.procesar')),
+                :loading =>'image_load()',
+                :loaded => 'image_unload()',
+                :method=>:get,   
+                :url => {:controller => 'orden_despacho_rechazo_archivo', :action => :avanzar, :accion => 0},
+                :before => "if (document.getElementById('fecha').value == '') {alert('#{I18n.t('Sistema.Body.General.Excepciones.introduzca_fecha_para_continuar')}'); return false;}else{$('image').hide();$('procesando').show();document.getElementById('primer_form').submit();}")  -%>
+	
+</div>
+</p>
+	<% end %>
+		
+
+<center>
+	
+	<div id="procesando" style="display: none">
+		<img style="margin-left: 10px;" id="imagen_cargando_rubro" src="/assets/cargando.gif" width="20px" height="20px" /> <h3><%=I18n.t('Sistema.Body.General.procesando')%> <%=I18n.t('Sistema.Body.Vistas.General.archivo')%> </h3>
+	<%= @feedback %>
+  </div>
+
+<%= render :partial=>'resultado' %>
+</center>
+</div>

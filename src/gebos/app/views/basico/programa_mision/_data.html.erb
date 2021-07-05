@@ -1,0 +1,15 @@
+<% mision = @mision if mision.nil? %>
+<td>
+	<%= mision.nombre  %>
+</td>
+<td>
+	<%= mision.descripcion %>
+</td>
+<td style="text-align: right">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+		:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:action => :delete, :programa_id => @programa.id, :id => mision.id}) -%>
+</td>

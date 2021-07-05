@@ -1,0 +1,39 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 110px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'rol_comite', 'nombre', :class=>'text', :style=>'width: 500px', :maxlength=>'100'  -%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.descripcion') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_area 'rol_comite', 'descripcion',
+        :class=>'text',
+        :style=>'width: 580px; height: 60px',
+        :onKeyUp=>'textCounter(this,255)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <%= check_box 'rol_comite', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0"
+      -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>

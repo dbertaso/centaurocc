@@ -1,0 +1,83 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= I18n.t('Sistema.Body.Controladores.VocacionTierra.FormTitles.form_title') %></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4" style="width:100%">
+      <%= render :partial => 'list_vocacion_tierra' %> 
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.linderos')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.coordenadas')} #{I18n.t('Sistema.Body.Vistas.General.geografica')}" %></span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.norte') %></label>
+    </td>
+    <td colspan=3>
+      <%= text_field 'linderos_coordenadas', 'lindero_norte',
+        :class=>'text',
+        :style=>'width: 500px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sur') %></label>
+    </td>
+    <td colspan=3> 
+      <%= text_field 'linderos_coordenadas', 'lindero_sur',
+        :class=>'text',
+        :style=>'width: 500px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.este') %></label>
+    </td>
+    <td colspan=3>
+      <%= text_field 'linderos_coordenadas', 'lindero_este',
+        :class=>'text',
+        :style=>'width: 500px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.oeste') %></label>
+    </td>
+    <td colspan=3>
+      <%= text_field 'linderos_coordenadas', 'lindero_oeste',
+        :class=>'text',
+        :style=>'width: 500px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+
+  </tr>
+
+
+  <tr><td colspan="4"><table width="100%" border="0">
+
+        <td colspan=4>
+          <div id="linderos_coordenadas_utm">
+            <%= render :partial => 'utm' %>
+          </div>
+
+        </td>
+      </table></td></tr>
+
+</table>
+
+<br>

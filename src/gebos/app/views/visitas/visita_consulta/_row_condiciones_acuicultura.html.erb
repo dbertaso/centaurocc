@@ -1,0 +1,4 @@
+<% condiciones_acuicultura = @condiciones_acuicultura if condiciones_acuicultura.nil? %>
+<tr  id="row_<%= condiciones_acuicultura.id %>">
+	<%= render :partial => 'data_condiciones_acuicultura', :locals => { :condiciones_acuicultura => condiciones_acuicultura } -%>
+</tr>

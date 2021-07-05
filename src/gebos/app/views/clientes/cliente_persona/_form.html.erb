@@ -1,0 +1,543 @@
+<script type="text/javascript">
+	
+  onload = function()
+  {
+    showConyuge('<%= @persona.estado_civil %>');
+  }
+	
+  function showConyuge(value)
+  {
+    if (value == 'C' || value == 'O' || value == 'U'){
+      document.getElementById("conyuge").style.display="";
+    }else{
+      document.getElementById("conyuge").style.display="none";
+      document.getElementById("persona_conyuge_cedula_f").value = "";
+      document.getElementById("persona_conyuge_nombre_apellido").value = "";
+      document.getElementById("persona_conyuge_lugar_nacimiento").value = "";
+      document.getElementById("persona_conyuge_nacionalidad").value = "";
+      document.getElementById("persona_conyuge_profesion").value = "";
+      document.getElementById("persona_conyuge_telefono").value = "";
+      document.getElementById("persona_conyuge_direccion_trabajo").value = "";
+      document.getElementById("persona_conyuge_trabaja_true").checked = false;
+      document.getElementById("persona_conyuge_trabaja_false").checked = false;
+    }
+  }
+
+
+	
+</script>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+            function writeAppletTag() {
+		var id = document.getElementById('persona_cedula_nacionalidad').value + document.getElementById('persona_cedula').value;
+
+                var html = '<APPLET CODE="CapturaHuella" WIDTH="300" HEIGHT="300">';
+                html = html + buildParamTag('cedula', id);
+                html = html + buildParamTag('jnlp_href','launch.jnlp');
+                html = html + '</APPLET>';
+
+		document.getElementById('applet_div').innerHTML = html;
+            }
+
+            function buildParamTag(name, value) {
+                return '<PARAM NAME="' + name + '" VALUE="' + value + '">';
+            }
+
+</SCRIPT>
+
+
+
+<table  style=" width: 100%" >
+  <tr>
+    <td style="width: 18%; text-align: center">
+
+      <img src="/data/<%= 'F_'<< @persona.cedula_nacionalidad.to_s << @persona.cedula.to_s << '.jpg'%>" width="200" height="150" />
+    </td>
+    <td>
+      
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label>
+    </td>
+    <td>
+      <b><%= @persona.id unless @persona.nil? %></b>
+    </td>
+  </tr>
+
+<%unless @persona.id.nil?%>
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_puede_solicitar_financiamiento') %>?</label> 
+    </td>
+    <td style="width: 50%">
+      <%= Cliente.find_by_persona_id(@persona.id).viable ? "<label>#{I18n.t('Sistema.Body.General.si')}</label>".html_safe : "<label style='color: red'>#{I18n.t('Sistema.Body.General.negacion')}</label>".html_safe unless Cliente.find_by_persona_id(@persona.id).nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_esta_solvente') %>?</label> 
+    </td>
+    <td style="width: 50%">
+    <%= !Cliente.find_by_persona_id(@persona.id).moroso ? "<label>#{I18n.t('Sistema.Body.General.si')}</label>".html_safe : "<label style='color: red'>#{I18n.t('Sistema.Body.General.negacion')}</label>".html_safe unless Cliente.find_by_persona_id(@persona.id).nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_reestructuro_deuda') %>?</label> 
+    </td>
+    <td style="width: 50%">
+      <%= Cliente.find_by_persona_id(@persona.id).reestructurado ? "<label style='color: red'>#{I18n.t('Sistema.Body.General.si')}</label>".html_safe : "<label>#{I18n.t('Sistema.Body.General.negacion')}</label>".html_safe unless Cliente.find_by_persona_id(@persona.id).nil? %>
+    </td>
+  </tr>
+
+<%end%>
+
+  <tr>
+    <td style="width: 18%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')}" %> </label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 70%">
+      <%= select(
+        'persona', 'cedula_nacionalidad',
+        [['V','V']],
+        { },
+        { :class=>'select', :onchange=>';inputChange();' } ) %>
+      <%= text_field 'persona', 'cedula',
+        :class=>'text', :style=>'width: 70px',
+        :maxlength=>'8', :readonly=>true, :onkeypress=>'inputChange();' -%>
+    </td>
+    
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'primer_nombre',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'segundo_nombre',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'primer_apellido',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'segundo_apellido',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 130px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'cliente_persona', 'tipo_cliente_id',
+        @tipo_cliente_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select',:onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sexo') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= radio_button 'persona', 'sexo', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.femenino') %><br />
+      <%= radio_button 'persona', 'sexo', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.masculino') %><br />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.fecha_nacimiento') %></label> <label style="color: red">*</label>
+    </td>
+    <td>      
+      <%= calendar_date_select_tag "persona[fecha_nacimiento_f]", @persona.fecha_nacimiento_f, 
+        :year_range => 80.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.edad') %></label>
+    </td>
+    <td>
+      <%= if @persona.fecha_nacimiento.nil?
+        @persona.edad(Time.now, Time.now)
+      else
+        @persona.edad(Time.now, @persona.fecha_nacimiento)
+      end
+    %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.lugar')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.nacimiento')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'lugar_nacimiento',
+        :class=>'text', :style=>'width: 250px',
+        :maxlength=>'100', :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.pais')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.nacimiento')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'persona', 'pais_id',
+        @pais_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nacionalidad') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'persona', 'nacionalidad_id',
+        @nacionalidad_select.map{|c| [c.descripcion, c.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=> ';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.estado_civil') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= radio_button 'persona', 'estado_civil', 'S',
+        :class=>'text', :onclick=>'inputChange();showConyuge("S");'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.soltero')}/#{I18n.t('Sistema.Body.Vistas.General.soltera')}" %><br />
+      <%= radio_button 'persona', 'estado_civil', 'C',
+        :class=>'text', :onclick=>'inputChange();showConyuge("C");'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.casado')}/#{I18n.t('Sistema.Body.Vistas.General.casada')}" %><br />
+      <%= radio_button 'persona', 'estado_civil', 'O',
+        :class=>'text', :onclick=>'inputChange();showConyuge("O");'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.concubino')}/#{I18n.t('Sistema.Body.Vistas.General.concubina')}" %><br />
+      <%= radio_button 'persona', 'estado_civil', 'V',
+        :class=>'text', :onclick=>'inputChange();showConyuge("V");'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.viudo')}/#{I18n.t('Sistema.Body.Vistas.General.viuda')}" %><br />
+      <%= radio_button 'persona', 'estado_civil', 'D',
+        :class=>'text', :onclick=>'inputChange();showConyuge("D");'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.divorciado')}/#{I18n.t('Sistema.Body.Vistas.General.divorciada')}" %><br />
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.numero_hijos') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'cantidad_total_hijos',
+        :class=>'text', :style=>'width: 240px',
+        :maxlength=>'2', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.grado_instruccion') %></label>
+    </td>
+    <td>
+      <%= select(
+        'persona', 'grado_instruccion',
+        [['Primaria Completa','Primaria Completa'],['Primaria Incompleta','Primaria Incompleta'],
+          ['Secundaria Completa','Secundaria Completa'],['Secundaria Incompleta','Secundaria Incompleta'],
+          ['Bachillerato Completa','Bachillerato Completa'],['Bachillerato Incompleta','Bachillerato Incompleta'],
+          ['Técnico Superior Completa','Técnico Superior Completa'],['Técnico Superior Incompleta','Técnico Superior Incompleta'],
+          ['Universitario Completa','Universitario Completa'],['Universitario Incompleta','Universitario Incompleta']],
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select', :onchange=>';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.profesion_oficio') %></label>
+    </td>
+    <td>
+      <%= select(
+        'persona', 'profesion_id',
+        @profesion_select.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ocupacion') %></label>
+    </td>
+    <td>
+      <%= text_field 'persona', 'ocupacion', :class=>'text', :style=>'width: 240px',
+        :maxlength=>'40', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_dedica_pesca') %>?</label>
+    </td>
+    <td  style="width: 80%">
+      <%= check_box 'cliente_persona', 'es_pescador',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onclick=>'inputChange();'-%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo_dependencia_laboral') %></label>
+    </td>
+    <td>
+      <%= select(
+        'persona', 'tipo_dependencia_laboral',
+        [['Independiente','Independiente'],['Empleado','Empleado']],
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+    
+  </tr>
+
+
+</table>
+<br></br>
+<br></br>
+<br></br>
+<table aling="center">
+  <tr>
+    <td style=" text-align: center">
+      <label>FOTOGRAFIA</label>
+    </td>
+    <td>
+      
+    </td>
+    <td  style=" text-align: center">
+      <label>HUELLA</label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <%= hidden_field 'persona', 'foto_confirmacion', :value=>"", :style=>'display:hidden' %>
+        <%= hidden_field 'persona', 'huella_confirmacion', :value=>"", :style=>'display:hidden' %>
+        <script type="text/javascript" src="/webcam.js"></script>
+
+        <script language="JavaScript">
+                webcam.set_api_url( '/upload/uploadFoto' );
+                webcam.set_quality( 90 ); // JPEG quality (1 - 100)
+                webcam.set_shutter_sound( true ); // play shutter click sound
+        </script>
+
+        <script language="JavaScript">
+                document.write( webcam.get_html(320, 240) );
+        </script>
+
+        <!-- Some buttons for controlling things -->
+        <br/><form>
+                <input type=button value="Configurar..." onClick="webcam.configure()">
+                &nbsp;&nbsp;
+                <input type=button value="Tomar foto" onClick="take_snapshot()">
+        </form>
+
+        <!-- Code to handle the server response (see test.php) -->
+        <script language="JavaScript">
+                webcam.set_hook( 'onComplete', 'my_completion_handler' );
+
+                function take_snapshot() {
+                        // take snapshot and upload to server
+                        id = document.getElementById('persona_cedula_nacionalidad').value + document.getElementById('persona_cedula').value;
+                        if(id!="")  {
+                          webcam.set_api_url( '/upload/uploadFoto?cedula=' + id );
+                          document.getElementById('upload_results').innerHTML = '<h1>Enviando...</h1>';
+                          webcam.snap();
+                          document.getElementById("persona_foto_confirmacion").value = true;
+                          
+                        } else {
+                          alert("Debe introducir el número de cédula antes de tomar la foto.");
+                        }
+                }
+
+                   function my_completion_handler(msg) {
+                  if (msg.match(/success/)) {
+                    var image_url = 'F_' + document.getElementById('persona_cedula_nacionalidad').value + document.getElementById('persona_cedula').value + '.jpg';
+                    document.getElementById('upload_results').innerHTML = '<h2> enviada exitosamente!'+'<img src="' + image_url + '"</h2>';
+                    document.getElementById("persona_huella_confirmacion").value = true;
+                    
+                    // reset camera for another shot
+                    webcam.reset();
+                  }
+                  else alert("Server Error: " + msg);
+                }
+        </script>
+
+         <div id="upload_results" style="background-color:#eee;"></div>
+
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      <div id="applet_div">
+		<APPLET CODE="CapturaHuella" WIDTH="300" HEIGHT="300" CODEBASE="/">
+			<PARAM NAME='cedula', VALUE='<%= @persona.cedula %>'>
+			<PARAM NAME='jnlp_href', VALUE='launch.jnlp'>
+               	</APPLET>
+	</div>
+    </td>
+  </tr>
+
+</table>
+
+
+
+<br/>
+<div id="conyuge" style="display:none">
+  <table style="width: 100%">
+    <tr>
+      <th colspan="2" align="left" ><div class="marco-titulo"><%= "#{I18n.t('Sistema.Body.Vistas.General.informacion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></div></th>
+    </tr>
+    <tr>
+      <td style="width: 20%">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label><label style="color:red">*</label>
+      </td>
+      <td style="width: 80%">
+        <%= select(
+          'persona', 'conyuge_cedula_nacionalidad',
+          [['V','V'],['E','E']],
+          { :include_blank => false },
+          { :class=>'select', :onchange=>';inputChange();' } ) %>
+        <%= text_field 'persona', 'conyuge_cedula_f',
+          :class=>'text', :style=>'width: 70px',
+          :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label> <label style="color:red">*</label>
+      </td>
+      <td>
+        <%= text_field 'persona', 'conyuge_nombre_apellido',
+          :class=>'text', :style=>'width: 320px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.lugar')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.nacimiento')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+      </td>
+      <td>
+        <%= text_field 'persona', 'conyuge_lugar_nacimiento',
+          :class=>'text', :style=>'width: 320px',
+          :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nacionalidad')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+      </td>
+      <td>
+        <%= text_field 'persona', 'conyuge_nacionalidad',
+          :class=>'text', :style=>'width: 320px',
+          :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.profesion_oficio')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+      </td>
+      <td>
+        <%= text_field 'persona', 'conyuge_profesion',
+          :class=>'text', :style=>'width: 320px',
+          :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.empresa_donde_labora') %></label>
+      </td>
+      <td>
+        <%= text_field 'persona', 'conyuge_empresa',
+          :class=>'text', :style=>'width: 320px',
+          :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.telefono')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label> <label style="color:red">*</label>
+      </td>
+      <td>
+        <%= text_field 'persona', 'conyuge_telefono',
+          :class=>'text', :style=>'width: 100px',
+          :maxlength=>'16', :onkeypress=>'inputChange(); return NumberKey(event);'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.celular')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+      </td>
+      <td>
+        <%= text_field 'persona', 'conyuge_celular',
+          :class=>'text', :style=>'width: 100px',
+          :maxlength=>'25', :onkeypress=>'inputChange(); return NumberKey(event);'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.trabajo')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.conyuge')}" %></label>
+      </td>
+      <td>
+        <%= text_area 'persona', 'conyuge_direccion_trabajo',
+          :class=>'text',
+          :style=>'width: 320px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,250)' -%>
+      </td>
+    </tr>
+  </table>
+  
+</div>

@@ -1,0 +1,44 @@
+
+  <table>
+	  <tr>
+		  <td style="width: 60px">
+			  <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+             <%= text_field 'tipo_especie_acuicultura', 'nombre', :class=>'text', :style=>'width: 100px', :maxlength=>'20',
+                :onkeypress=>'inputChange();'-%>
+		</td>
+	</tr>
+	<tr>
+
+
+
+		<td>
+			<label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td>
+			<%= text_field 'tipo_especie_acuicultura', 'descripcion',
+          :class=>'text', :style=>'width: 600px;',
+				  :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+          :onkeypress=>'inputChange();'  -%>
+		</td>
+	</tr>
+  <tr>
+
+
+
+	  <td>
+	      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+	  </td>
+	  <td>
+		  <%= check_box 'tipo_especie_acuicultura', 'activo',
+		      :checked_value=>"1", 
+		      :unchecked_value=>"0", :onclick=>'inputChange();'
+	    -%>
+	  </td>
+  </tr>
+<tr>
+
+		<td colspan="2" class="lista0" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

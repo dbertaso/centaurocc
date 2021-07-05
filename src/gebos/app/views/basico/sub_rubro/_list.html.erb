@@ -1,0 +1,36 @@
+  <table class="lista" style="width: 100%">
+    <thead>
+    <tr>
+      <th style="width: 80px" <%= sort_class_helper('sub_rubro.rubro_id') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.codigo')} #{I18n.t('Sistema.Body.Vistas.General.rubro')}", 'sub_rubro.rubro_id', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('sub_rubro.rubro_id') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.rubro')}", 'sub_rubro.nombre', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('sub_rubro.codigo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.codigo'), 'sub_rubro.codigo', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('sub_rubro.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'sub_rubro.nombre', 'list' %>
+      </th>
+      <th style="width: 350px" <%= sort_class_helper('sub_rubro.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'sub_rubro.descripcion', 'list' %>
+      </th>
+      <th style="width: 60px" <%= sort_class_helper('sub_rubro.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'sub_rubro.activo', 'list' %>
+      </th>
+      <th style="width: 70px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+    </thead>
+    <tbody id="list_body">
+<%
+  even_odd = 1
+  for sub_rubro in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :sub_rubro => sub_rubro, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

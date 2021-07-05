@@ -1,0 +1,62 @@
+<table width="100%" class="lista">
+  <% unless  @partida_list.length > 0 %>
+    <tr>
+      <th><%= I18n.t('Sistema.Body.Controladores.EstructuraCosto.no_encontraron') %></th>
+    </tr>
+  <% else %>
+    
+  <% @partida_list.each{|p| %>
+    <tr>
+      <td class="separador" valign="bottom" colspan="4">
+        <span><%= p.nombre %></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <table class="lista" width="100%">
+
+          <tr>
+            <th align="center" style="width: 5%"></th>
+            <th style="width: 9%"><%= I18n.t('Sistema.Body.Vistas.General.codigo') %></th>
+            <th style="width: 21%"><%= I18n.t('Sistema.Body.Vistas.General.item') %></th>
+            <th style="width: 11%"><%= I18n.t('Sistema.Body.Vistas.General.unidad_medida') %></th>
+            <th style="width: 11%"><%= I18n.t('Sistema.Body.Vistas.General.costo') %></th>
+            <th style="width: 11%">Costo Fijo</th>
+            <th style="width: 11%">Costo Mínimo</th>
+            <th style="width: 11%">Costo Máximo</th>
+            <th style="width: 10%" >Desembolso</th>
+          </tr>
+
+          <% p.items.map{|i| %>
+            <tr class="lista0">
+              <td align="center"><input type="checkbox" name="item_id" id="item_id" onClick="GenericcheckOne(this,form.todos,'items_id');abrirCampos(this, '<%= i.id %>')" value="<%= i.id %>" /></td>
+              <td align="center"><%= i.codigo %></td>
+              <td align="center"><%= i.nombre %></td>
+              <td align="center"><%= i.unidad_medida.nombre %></td>
+              <% if i.partida.actividad.paquetizado == true %>
+              <td align="center">Costo Fijo<input type="hidden" value="1" name="tipo_<%= i.id %>" id="tipo_<%= i.id %>"/></td>
+                <td align="center"><%= text_field 'fijo', "valor_#{i.id}",
+                  :class=>'text', :style=>'width: 80px', :maxlength=>'10', :disabled=>"true" -%></td>
+                <td align="center"><input type="hidden" name="minimo[valor_<%= i.id %>]" id="minimo_valor_<%= i.id %>" /></td>
+                <td align="center"><input type="hidden" name="maximo[valor_<%= i.id %>]" id="maximo_valor_<%= i.id %>" /></td>
+              <% else %>
+                <td align="center">Costo Variable<input type="hidden" name="tipo_<%= i.id %>" value="2" id="tipo_<%= i.id %>"/></td>
+                <td align="center"><input type="hidden" name="fijo[valor_<%= i.id %>]" id="fijo_valor_<%= i.id %>" /></td>
+                <td align="center"><%= text_field 'minimo', "valor_#{i.id}",
+                  :class=>'text', :style=>'width: 80px', :maxlength=>'10', :disabled=>"true" -%></td>
+                <td align="center"><%= text_field 'maximo', "valor_#{i.id}",
+                  :class=>'text', :style=>'width: 80px', :maxlength=>'10', :disabled=>"true" -%></td>
+              <% end %>
+              <td align="center"><%= i.numero_desembolso %> - <%= i.tipo_item %></td>
+            </tr>
+
+          <% } %>
+        </table>
+        <br/>
+      </td>
+    </tr>
+
+  <% } %>
+  <% end %>
+</table>

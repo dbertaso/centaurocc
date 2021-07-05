@@ -1,0 +1,5 @@
+<%= select(
+  'catalogo','almacen_maquinaria_id',
+  @almacen_maquinaria.map{|e| [e.nombre, e.id]},
+  { :prompt=>'Seleccione...'},
+  { :class=>'select', :onchange=>'inputChange();'}) %>

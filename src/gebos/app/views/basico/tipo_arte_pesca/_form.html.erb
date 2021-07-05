@@ -1,0 +1,57 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+
+    <tr>
+        <td style="width: 110px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.grupo')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+        </td>
+        <td style="width: 620px">
+	
+  <%valor="".html_safe      
+        @grupo.each{ |x|                  
+         if x.grupo.to_s==@tipo_arte_pesca.grupo.to_s
+            valor+="<option selected value=#{x.grupo.to_s} >#{x.grupo.to_s}</option>".html_safe        
+         else
+            valor+="<option value=#{x.grupo.to_s} >#{x.grupo.to_s}</option>".html_safe        
+         end         
+        }        
+        %>        
+        
+        <%= select_tag(
+              'tipo_arte_pesca_grupo',
+              valor,
+              { :class=>'select',:name=>"tipo_arte_pesca[grupo]",:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')  } ) %> 
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td style="width: 110px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+        </td>
+        <td style="width: 620px">
+            <%= text_field 'tipo_arte_pesca', 'tipo', :class=>'text', :style=>'width: 300px', :maxlength=>'50'  -%>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 110px">
+            <label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+        </td>
+        <td style="width: 620px">
+            <%= text_field 'tipo_arte_pesca', 'descripcion', :class=>'text', :style=>'width: 300px', :maxlength=>'250'  -%>
+        </td>
+    </tr>
+    <tr>
+      <td>
+         <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+     </td>
+     <td>
+        <%= check_box 'tipo_arte_pesca', 'activo', :checked_value=>"1", :unchecked_value=>"0" -%>
+      </td>
+   </tr>
+
+    <tr>
+        <td colspan="2" style="text-align: left">
+                <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

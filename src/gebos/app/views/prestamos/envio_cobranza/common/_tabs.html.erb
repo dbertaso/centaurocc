@@ -1,0 +1,61 @@
+<div id="tabs">
+	<ul>
+		<%
+			action_name = controller.action_name
+			controller_name = controller.controller_name
+
+			logger.info "Action " << action_name
+			logger.info "Controlador " << controller_name.to_s
+
+			if controller_name=='envio_cobranza' && action_name == 'list'
+		%>
+		  <!---
+			<li id="actual">
+				<div>
+					<a href="#">
+						<%#= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Tabs.generar_archivo') %>
+					</a>
+				</div>
+			</li>
+			--->
+		<%
+			else
+		%>
+		<!---
+			<li>
+				<div>
+			    <%#= link_to_remote(I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Tabs.generar_archivo'), 
+			    		:loading =>'image_load()', 
+			    		:loaded => 'image_unload()', 
+			    		:url => {:action => 'list', :conditions=>@conditions}) if (action_name == 'index' || action_name == 'preparar_cobranzas' || action_name == 'list_view') %>
+				</div>
+			</li>
+		-->
+		<%
+			end
+
+			if controller_name=='envio_cobranza' && action_name == 'list_view'
+		%>
+				<li id="actual">
+					<div>
+						<a href="#">
+							<%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Tabs.archivos_procesados') %>
+						</a>
+					</div>
+				</li>
+		<%
+			else
+		%>
+			<li>
+				<div>
+	     		<%= link_to_remote(I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Tabs.archivos_procesados'), 
+	     					:loading =>'image_load()', 
+	     					:loaded => 'image_unload()', 
+	     					:url => {:action => 'list_view', :conditions=>@conditions}) if (action_name == 'index' || action_name == 'preparar_cobranzas' || action_name == 'list') %>
+				</div>
+			</li>
+		<%
+			end
+		%>
+	</ul>
+</div>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="condiciones certificacion"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="556"
+		 columnSpacing="0"
+		 leftMargin="28"
+		 rightMargin="28"
+		 topMargin="14"
+		 bottomMargin="14"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="p_solicitud_numero" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(1)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["C:\\Proyectos\\RubyOnRails\\cartera\\app\\reports\\src\\Fuentes DB\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT
+     solicitud."numero" AS solicitud_numero
+FROM
+     "public"."solicitud" solicitud
+where solicitud."numero" = $P{p_solicitud_numero}]]></queryString>
+
+	<field name="solicitud_numero" class="java.lang.Integer"/>
+
+
+		<group  name="solicitud" >
+			<groupExpression><![CDATA[$P{p_solicitud_numero}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="31"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="-18"
+						y="9"
+						width="451"
+						height="22"
+						key="subreport-1"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<subreportParameter  name="p_solicitud_numero">
+						<subreportParameterExpression><![CDATA[$P{p_solicitud_numero}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "condiciones_especiales_certificación.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="32"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="251"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="2"
+						y="34"
+						width="493"
+						height="90"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[1)  Los integrantes de la instancia de administración o su equivalente dentro de la composición establecida en  el Acta Constitutiva y Estatutos de la Asociación Cooperativa no deberá efectuar retiros en efectivo de la cuenta bancaria correspondiente a la asociación cooperativa, si los mismos superan el diez por ciento (10%) de la totalidad de los fondos, sin la previa autorización mediante acta de  asamblea debidamente suscrita y con la aprobación de por lo menos el setenta y cinco por ciento (75%) de los asociados.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="2"
+						y="126"
+						width="493"
+						height="30"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[2) La Asociación Cooperrativa deberá procurar el encadenamiento productivo con otras cooperativas de la región a los fines de conformar redes socioproductivas.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="2"
+						y="158"
+						width="493"
+						height="20"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[3) La Asociación Cooperativa deberá presentar la solvencia laboral en caso que contrate a terceros.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="2"
+						y="179"
+						width="493"
+						height="61"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+				<text><![CDATA[4) La Asociación Cooperativa se compromete a mantener asegurados los bienes objetos de garantía durante el período de financiamiento. FONCREI financiará la contratación del seguro durante el período de gracia acordado en la partida Capital de Trabajo y será cancelado durante el lapso de amortización de la Partida de Capital de Trabajo.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="3"
+						y="4"
+						width="280"
+						height="20"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true" isUnderline="true"/>
+					</textElement>
+				<text><![CDATA[CONDICIONES ESPECIALES]]></text>
+				</staticText>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

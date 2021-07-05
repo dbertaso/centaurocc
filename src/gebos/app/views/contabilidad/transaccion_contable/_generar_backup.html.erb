@@ -1,0 +1,71 @@
+create or replace function <%= @transaccion_contable.nombre_sistema %>(
+-- Parametros
+<%
+  campos_contables = @transaccion_contable
+  for @campo_contable in @transaccion_contable.campos %>
+  <%= @campo_contable.nombre_sistema %> <%= @campo_contable.tipo %>,
+<% end %>
+  p_fecha_registro date,
+  p_fecha_comprobante date,
+  p_prestamo_id integer
+) returns bool as $$
+
+declare
+  _comprobante_contable_id integer;
+  _cuenta_contable_id integer;
+  _cuenta_contable cuenta_contable%rowtype;
+  _transaccion_contable transaccion_contable%rowtype;
+  _total_debe float;
+  _total_haber float;
+begin
+
+  insert into comprobante_contable (fecha_registro, fecha_comprobante, enviado, prestamo_id, transaccion_id) values(
+    p_fecha_registro, p_fecha_comprobante, false, p_prestamo_id, <%= @transaccion_contable.id %>);
+  
+  _comprobante_contable_id = currval('comprobante_contable_id_seq');
+  
+  _total_debe = 0;
+  _total_haber = 0;
+
+<% for condicion_contable in @transaccion_contable.condiciones %>
+  if <%= condicion_contable.condicion %>  then
+    <% for accion_contable in condicion_contable.acciones %>
+    
+    if <%= accion_contable.campo_contable.nombre_sistema %> > 0 then
+      
+      <% if accion_contable.cuenta_por_campo %>
+        select into _cuenta_contable * from cuenta_contable where id = <%= accion_contable.campo_cuenta.nombre_sistema %>;
+        _cuenta_contable_id = _cuenta_contable.id;
+      <% else %>
+        _cuenta_contable_id = <%= accion_contable.cuenta_contable.id %>;   	
+      <% end %>    
+    
+      insert into asiento_contable (
+        comprobante_contable_id, 
+        cuenta_contable_id, 
+        monto,
+        tipo) values(
+        _comprobante_contable_id, 
+        _cuenta_contable_id,
+        <%= accion_contable.campo_contable.nombre_sistema %>,
+        '<%= accion_contable.tipo %>');
+      
+      <% if accion_contable.tipo == 'D' %>
+        _total_debe = _total_debe + <%= accion_contable.campo_contable.nombre_sistema %>;
+      <% else %>
+        _total_haber = _total_haber + <%= accion_contable.campo_contable.nombre_sistema %>;
+      <% end %>
+      
+    end if;
+    <% end %>
+  end if;
+  
+<% end %>
+
+  update comprobante_contable set total_debe = _total_debe, total_haber = _total_haber
+    where id = _comprobante_contable_id;
+
+  return true;
+ 
+end;
+$$ language 'plpgsql' volatile;

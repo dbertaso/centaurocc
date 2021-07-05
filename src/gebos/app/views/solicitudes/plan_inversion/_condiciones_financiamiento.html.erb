@@ -1,0 +1,127 @@
+<table width="470px">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.General.condiciones_financiamiento') %></span>
+    </td>
+    <td></td>
+  </tr>
+
+  <% if @condiciones.periodo_gracia > 0 %>
+    <tr>
+      <td>
+        <%= I18n.t('Sistema.Body.General.periodo_gracia') %> 
+      </td>
+      <td>
+        <%= @condiciones.periodo_gracia %>
+      </td>
+    </tr>
+  <% elsif @condiciones_periodo_gracia == 0%>
+
+    <tr>
+      <td>
+        <%= "#{I18n.t('Sistema.Body.General.periodo_gracia')} #{I18n.t('Sistema.Body.Vistas.Form.desde')}" %>
+      </td>
+      <td>
+        <%= @condiciones.periodo_gracia_desde %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= "#{I18n.t('Sistema.Body.General.periodo_gracia')} #{I18n.t('Sistema.Body.Vistas.Form.hasta')}" %>
+      </td>
+      <td>
+        <%= @condiciones.periodo_gracia_hasta %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= I18n.t('Sistema.Body.General.diferir_intereses') %>
+      </td>
+      <td>
+        <%= format_bool(@condiciones.diferir_intereses) %>
+      </td>
+    </tr>
+  <% end%>
+
+  <% if @condiciones.plazo > 0 %>
+    <tr>
+      <td>
+        <%= I18n.t('Sistema.Body.General.plazo') %>
+      </td>
+      <td>
+        <%= @condiciones.plazo %> <%= I18n.t('Sistema.Body.General.meses') %>
+      </td>
+    </tr>
+  <% end %>
+  <% if @condiciones.plazo == 0 %>
+    <tr>
+      <td>
+        <%= "#{I18n.t('Sistema.Body.General.plazo')} #{I18n.t('Sistema.Body.Vistas.Form.desde')}" %>
+      </td>
+      <td>
+        <%= @condiciones.plazo_desde %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= "#{I18n.t('Sistema.Body.General.plazo')} #{I18n.t('Sistema.Body.Vistas.Form.hasta')}" %>
+      </td>
+      <td>
+        <%= @condiciones.plazo_hasta %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>
+      <%= I18n.t('Sistema.Body.Modelos.PlanPago.Columnas.frecuencia_pago') %>
+    </td>
+    <td>
+      <%= @condiciones.frecuencia_pago_w %>
+    </td>
+  </tr>
+  <tr>
+    <td> <%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.tasa_interes') %> </td>
+    <td> <%= format_fm(@tasa_valor.valor) %> </td>
+  </tr>
+  <tr>
+    <td> <%= I18n.t('Sistema.Body.Vistas.General.moneda') %> </td>
+    <td> <%= @solicitud.moneda.nombre unless @solicitud.moneda.nil? %> </td>
+
+  </tr>
+  <tr>
+
+    <% if @solicitud.sub_sector.nemonico == 'VE' %>
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.General.unidad_produccion') %> </span>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td> <%= I18n.t('Sistema.Body.Vistas.General.total') %> </td>
+      <td>
+        <%= format_fm3(@caracterizacion.superficie_total) %> <%=I18n.t('Sistema.Body.Vistas.General.hectareas_abreviadas')%>
+      </td>
+    </tr>
+    <tr>
+      <td> <%= I18n.t('Sistema.Body.Vistas.General.aprovechable') %>
+      </td>
+      <td>
+        <%unless @caracterizacion.superficie_aprovechable.nil?%>
+          <%= format_fm3(@caracterizacion.superficie_aprovechable) %> <%=I18n.t('Sistema.Body.Vistas.General.hectareas_abreviadas')%>
+        <%end%>
+      </td>
+    </tr>
+    <tr>
+      <td> <%= I18n.t('Sistema.Body.Vistas.General.solicitadas') %>
+      </td>
+      <td>
+        <%=@solicitud.hectareas_solicitadas_fm %> <%=I18n.t('Sistema.Body.Vistas.General.hectareas_abreviadas')%>
+      </td>
+    </tr>
+
+    <span id="recomendadas">
+      <%= render 'recomendadas'  %>
+    </span>
+  <%end%>
+</table>

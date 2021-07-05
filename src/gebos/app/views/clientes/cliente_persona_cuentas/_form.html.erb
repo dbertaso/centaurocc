@@ -1,0 +1,123 @@
+<% action_name = controller.action_name %>
+<table style="width: 100%">
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.entidad_financiera') %>:</label> <label style="color: red">*</label></td>
+    <td>
+      <% if action_name=='edit' %>
+        <%= select(
+          'cuenta_bancaria', 'entidad_financiera_id',
+          @entidad_financiera_select.map{|e| [e.nombre, e.id]},
+          { },
+          { :class=>'select', :onchange=>'borro_contenido();' } ) %>
+      <% else %>
+
+        <%= select(
+          'cuenta_bancaria', 'entidad_financiera_id',
+          @entidad_financiera_select.map{|e| [e.nombre, e.id]},
+          { },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <% if action_name=='edit' %>
+        <%= radio_button 'cuenta_bancaria', 'tipo', 'C',
+          :class=>'text', :onclick=>'inputChange();muestra();'  -%><%= I18n.t('Sistema.Body.Vistas.General.corriente') %><br />
+        <%= radio_button 'cuenta_bancaria', 'tipo', 'A',
+          :class=>'text', :onclick=>'inputChange();muestra();'  -%><%= I18n.t('Sistema.Body.Vistas.General.ahorros') %><br/>
+      <% else %>
+        <%= radio_button 'cuenta_bancaria', 'tipo', 'C',
+          :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.corriente') %><br />
+        <%= radio_button 'cuenta_bancaria', 'tipo', 'A',
+          :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.ahorros') %><br />
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.numero') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <% if action_name=='edit' %>
+        <%= text_field 'cuenta_bancaria', 'numero',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'20', :onkeypress=>'inputChange();muestra(); return NumberKey(event);' ,:autocomplete=>"off",:onpaste=>"return false" -%>
+      <% else %>
+        <%= text_field 'cuenta_bancaria', 'numero',
+          :class=>'text',
+          :style=>'width: 300px',
+          :maxlength=>'20', :onkeypress=>'inputChange(); return NumberKey(event);' ,:autocomplete=>"off",:onpaste=>"return false" -%>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.apertura')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <% if action_name=='edit' %>
+        <%= calendar_date_select_tag "cuenta_bancaria[fecha_apertura_f]", @cuenta_bancaria.fecha_apertura_f, 
+          :year_range => 80.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+          :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+      <% else %>
+        <%= calendar_date_select_tag "cuenta_bancaria[fecha_apertura_f]", @cuenta_bancaria.fecha_apertura_f, 
+          :year_range => 80.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+          :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+    </td>
+    <td>
+      <% if action_name=='edit' %>
+        <%= check_box 'cuenta_bancaria', 'activo',
+          :checked_value=>"true",
+          :unchecked_value=>"false",:onclick=>'inputChange();muestra();'-%>
+      <% else %>
+        <%= check_box 'cuenta_bancaria', 'activo',
+          :checked_value=>"true",
+          :unchecked_value=>"false",:onclick=>'inputChange();'-%>
+
+      <% end %>
+    </td>
+  </tr>
+  <% if action_name=='edit' %>
+
+    <tr>
+      <td >
+        <label id="papa" style="display: none"><%= I18n.t('Sistema.Body.Vistas.General.explicacion_modificacion_cuenta') %>:</label><label id="papa1" style="color: red;display: none">*</label>
+      </td>
+      <td >
+        <%=  text_area 'historico_cambio_cuenta','observaciones', :rows => 3, :cols => 60, :onclick=>'inputChange();', :id=>'papa_upa', :style=>'display: none' %>
+      </td>
+    </tr>
+
+    <% if HistoricoCambioCuenta.find(:all, :conditions=>"cuenta_id=#{params[:id]}").length > 0 %>
+
+      <tr>
+        <td colspan="2">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.si_desea_ver_todas_modificaciones') %> <%= link_to image_tag(I18n.t('Sistema.Body.Vistas.General.aqui')),
+              {:action => 'detalles_cambios_cuenta', :controller => 'cliente_persona_cuentas',
+              :popup=>true, :id => params[:id]},
+              :popup => ['cliente_persona_cuentas', 'height=600,width=1230, scrollbars=yes, resizable=false'] %> </label>
+        </td>
+
+      </tr>
+
+    <% end %>
+
+
+  <% end %>
+
+</table><br>

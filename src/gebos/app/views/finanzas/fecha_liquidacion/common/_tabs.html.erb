@@ -1,0 +1,34 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+
+	logger.info "Action " << action_name
+	logger.info "Controlador " << controller_name.to_s
+
+	if controller_name=='fecha_liquidacion' && action_name == 'index'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.Form.actualizacion')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.Form.fechas')%></a></div></li>
+<% 
+	else 	   
+%>
+		<li><div>
+		      <%= link_to(I18n.t('Sistema.Body.Vistas.Form.actualizacion') << " " << I18n.t('Sistema.Body.Vistas.General.de')<< " " <<I18n.t('Sistema.Body.Vistas.Form.fechas'), :controller => 'fecha_liquidacion', :action => 'index', :popup=>params[:popup]) if (action_name == 'avanzar') %>
+		</div></li>
+<% 
+	end
+	if controller_name=='fecha_liquidacion' && action_name == 'avanzar'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.General.avanzar')%></a></div></li>
+<% 
+	else
+%>
+		<li><div>
+     		<%= link_to(I18n.t('Sistema.Body.General.avanzar'), :controller => 'fecha_liquidacion', :action => 'avanzar', :accion=>1, :popup=>params[:popup]) if (action_name == 'index') %>
+		</div></li>
+<% 
+	end
+%>
+	</ul>
+</div>

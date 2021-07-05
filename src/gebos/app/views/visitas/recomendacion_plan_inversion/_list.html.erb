@@ -1,0 +1,55 @@
+<table width="100%">
+  <tr><td>
+      <div class="msg-notice" id="messages" style="display: none; text-align: center;"></div>
+    </td></tr>
+</table>
+
+<div id="cantidad" style="width:50%; float:left">
+  <%unless @plan_inversion.empty?
+    if @plan_inversion[0].solicitud.sub_sector.nemonico=="VE" &&
+        @plan_inversion[0].solicitud.actividad.paquetizado %>
+      <%= render :partial => 'cantidad' -%>
+    <%end%>
+  <%end%>
+</div>
+<%= form_remote_tag(
+  :loading =>'image_load()', :loaded => 'image_unload()',
+  :url => { :action => :save_edit, :id => @visitas.id, :tipo=>@tipo }, :html => {:id => 'principal_form' } ) do -%>
+
+<div id="plan-inversion">
+  <%unless @plan_inversion.empty? %>
+    <% if @plan_inversion[0].solicitud.sub_sector.nemonico=="VE" %>
+      <%= render :partial => 'plan_inversion_vegetal' -%>
+    <% else %>
+      <%= render :partial => 'plan_inversion_general' -%>
+    <% end %>
+    <table>
+      <tr>
+        <td valign='top'>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= text_area_tag 'observacion',@observacion, :class=>'text',
+            :style=>'width: 920px; height: 60px', :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+        </td>
+      </tr>
+    </table>
+  <% else %>
+    <%= render :partial => 'error_plan' -%>
+  <% end %>
+</div>
+
+<input id="plan_inversion_id" type="hidden" name="plan_inversion_id"/>
+<table>
+  <tr>
+    <% unless @plan_inversion.empty?%>
+      <td colspan="2" class="lista0" style="text-align: right">
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"this.disabled=true;if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+        <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar')), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+          :method=>:get, :loading =>'image_load()',:loaded => 'image_unload()', :url => { :action => :cancel_edit, :id => @visitas.id}) -%>
+      </td>
+    <% end %>
+      
+<% end %>

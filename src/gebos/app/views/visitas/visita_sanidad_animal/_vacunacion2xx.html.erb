@@ -1,0 +1,40 @@
+<% @vacunacion = vacunacion %>
+<% @tipo_vacunas_select = Vacuna.find(:all, :order=>'descripcion')%>
+
+
+<div id="vacunacion_<%=vacunacion.id%>"><% vacunacion.id%>
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 300px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.tipo_vacuna')%></label>
+      </td>
+      <td style="width: 600px">
+        <%= select(
+          'vacunacion[]', 'vacuna_id',
+          @tipo_vacunas_select.map{|i| [i.descripcion, i.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+        <%= sub_list_remove_link vacunacion, 'Vacunacion' %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.fecha_ultima_vacunacion')%></label>
+      </td>
+      <td>
+        <%= calendar_date_select_tag "vacunacion[#{vacunacion.id}][fecha_colocacion_f]", @pastizales_potreros.fecha_siembra_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+        
+        <%#= text_field 'vacunacion[]', 'fecha_colocacion_f',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();'  -%>
+        <%#= calendar "vacunacion_#{vacunacion.id}_fecha_colocacion_f", "fecha_colocacion_#{vacunacion.id}" %> (dd/mm/aaaa)
+
+      </td>
+    </tr>
+
+  </table>
+</div>
+
+

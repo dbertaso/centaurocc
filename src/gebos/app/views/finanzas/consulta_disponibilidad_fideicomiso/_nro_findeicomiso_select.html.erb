@@ -1,0 +1,5 @@
+<%= select(
+     'nro_fideicomiso', '',
+     @nro_fideicomiso_list.map{|i| [i.numero_fideicomiso, i.id]},
+     { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+     { :class=>'select',:onchange=>'inputChange();'} ) %>

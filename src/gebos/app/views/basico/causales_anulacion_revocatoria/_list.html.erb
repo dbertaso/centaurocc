@@ -1,0 +1,31 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 200px" <%= sort_class_helper('causales_anulacion_revocatoria.causa') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.causal'), 'causales_anulacion_revocatoria.causa', 'list' %>
+      </th> 			      
+      <th style="width: 10px" <%= sort_class_helper('causales_anulacion_revocatoria.anulacion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.aplica_anulacion'), 'causales_anulacion_revocatoria.anulacion', 'list' %>
+      </th> 			 			
+      <th style="width: 10px" <%= sort_class_helper('causales_anulacion_revocatoria.revocatoria_parcial') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.aplica_revocatoria_parcial'), 'causales_anulacion_revocatoria.revocatoria_parcial', 'list' %>
+      </th> 			 			
+      <th style="width: 10px" <%= sort_class_helper('causales_anulacion_revocatoria.revocatoria_total') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.CausalesAnulacionRevocatoria.Mensajes.aplica_revocatoria_total'), 'causales_anulacion_revocatoria.revocatoria_total', 'list' %>
+      </th> 			 			
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for causales_anulacion_revocatoria in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :causales_anulacion_revocatoria => causales_anulacion_revocatoria, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

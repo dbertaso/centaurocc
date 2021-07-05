@@ -1,0 +1,38 @@
+<br/>
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>	
+<%= message %>
+<br/>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 100px" <%= sort_class_helper('empresa.id') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.General.beneficiario')}", 'empresa.id', 'list' %>
+      </th>
+      <th style="width: 145px" <%= sort_class_helper('rif') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.rif')}", 'rif', 'list' %>
+      </th>
+      <th style="width: 200px" <%= sort_class_helper('alias') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.nombre')} #{I18n.t('Sistema.Body.Vistas.General.abreviado')}", 'alias', 'list' %>
+      </th>
+      <th style="width: 240px" <%= sort_class_helper('nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}", 'nombre', 'list' %>
+      </th>
+      <th style="width: 50px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody id="list-body">
+
+    <%  
+    even_odd = 1
+    for empresa in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :empresa => empresa, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

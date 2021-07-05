@@ -1,0 +1,94 @@
+<%= form_title_search %>
+<div class="marco-contenido">
+
+    <%= form_remote_tag( :loading =>'image_load()',
+                  :loaded => 'image_unload()',
+                  :method => :get,
+                  :url => { :action => :preparar_cobranzas }) do -%>
+
+		  <table>
+
+				<tr>
+					<td style="width: 40%">
+						<label>
+              <%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.entidad_financiera') %>      
+            </label>
+					</td>
+          <td>
+            <% entidad_financiera_onchange = remote_function(
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :method=>:get,    
+              :url=>{:controller=>'envio_cobranza',
+                :action=>:entidad_financiera_change },
+              :with=>"'id='+value") %>
+
+
+            <%= select(
+              'entidad_financiera','entidad_financiera_id',
+              @entidad_financiera_list.map{|i| [i.nombre, i.id]},
+              { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select',:onchange=>entidad_financiera_onchange + ';inputChange();',:style=>'width:240px'} ) %>
+
+				</tr>
+        <tr>
+          <td>
+            <label><%="#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.General.fondas')}"%></label>
+          </td>
+          <td>
+
+            <div id="cuenta_bcv-select">
+              <%= render :partial => 'cuenta_bcv_select' %>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.tipo_cobro') %>
+            </label>
+          </td>
+
+          <td style="width: 80%">
+            <%= select_tag(
+                  'tipo_cobro',
+                   options_for_select([[I18n.t('Sistema.Body.Vistas.General.seleccione'), 0],
+                                        [I18n.t('Sistema.Body.Vistas.General.cuota_exigible'), 1],
+                                        [I18n.t('Sistema.Body.Vistas.General.monto_exigible'), 2]], @tipo_cobro),
+                   { :class=>'select', :onchange=>"#{remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method => :get,
+                    :url=>{:controller=>'envio_cobranza',:action=>:list_view },
+                    :with=>"'tipo_cobro='+this.value")};inputChange();"}) %>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.valor')}"%></label>
+          </td>
+          <td>              
+
+            <%= calendar_date_select_tag "fecha_valor_f", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date > (new Date()).stripTime()-1" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+          </td>
+        </tr>
+
+		</table>
+
+	
+  <br>
+	<div id="Selección">
+		<%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.generar'))) %>&nbsp;
+  </div>
+  
+	<% end  %>
+  <%= error %>
+	<%= message %>
+  <br><br>
+  <div id="list">
+  </div>
+  
+</div>

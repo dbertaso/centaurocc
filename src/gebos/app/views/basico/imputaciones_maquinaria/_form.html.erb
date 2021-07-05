@@ -1,0 +1,47 @@
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Maquinaria <%= "#{I18n.t('Sistema.Body.Vistas.General.maquinaria')} #{I18n.t('Sistema.Body.Vistas.General.nacional')}" %> </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.seguro_nacional') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td style="width: 70%">
+      <%= text_field 'imputaciones_maquinaria', 'seguro_nacional', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange(); return NumberDoubleKey(event);', 
+        :onchange=>"paa=this.form.imputaciones_maquinaria_seguro_nacional.value;
+          this.form.imputaciones_maquinaria_seguro_nacional.value=(parseFloat(paa)).toFixed(2);" -%> %
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.flete_nacional') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'imputaciones_maquinaria', 'flete_nacional', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange(); return NumberDoubleKey(event);', 
+        :onchange=>"fn=this.form.imputaciones_maquinaria_flete_nacional.value;
+          this.form.imputaciones_maquinaria_flete_nacional.value=(parseFloat(fn)).toFixed(2);" -%> %
+    </td>
+  </tr>
+</table>
+
+<table style="width: 100%">
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observacion') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td style="width: 70%">
+      <%= text_area 'imputaciones_maquinaria', 'observacion', :class=>'text', :style=>'width: 320px; height: 60px', 
+        :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,250)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"> &MediumSpace;
+    </td>
+  </tr>
+  <tr>
+    <td  colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

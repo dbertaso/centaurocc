@@ -1,0 +1,16 @@
+
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.Sector.Header.form_title')%> <span class="titulo_modificar"></span>
+    </div>
+  </div>
+</div>
+
+<%= error %>
+<%= message %>
+
+<div class="lista-form" id="form_new" style="display: none"></div>
+<div id="list">
+  <%= render 'list' -%>
+</div>

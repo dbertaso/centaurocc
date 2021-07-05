@@ -1,0 +1,71 @@
+<td align="center">
+  <%= view_fecha_liquidacion.numero %>
+</td>
+<td align="center">
+  <%= view_fecha_liquidacion.numero_historico %>
+  <%#= view_fecha_liquidacion.numero %>
+</td>
+
+<td align="center">
+<%=CasaProveedora.find(view_fecha_liquidacion.casa_historico).nombre.upcase%>
+  <%#= view_fecha_liquidacion.nombre.strip.upcase %>
+</td>
+<td align="center">
+ <%= view_fecha_liquidacion.rif %>
+</td>
+<td align="center">
+  <%= view_fecha_liquidacion.nombre %>
+</td>
+<td align="center">
+  <%= view_fecha_liquidacion.numero_cuenta_casa_proveedora %>
+</td>
+<td align="center">  
+  <%= view_fecha_liquidacion.monto_liquidacion_fm %>
+</td>
+
+<td align="center">
+<%men=''  
+if view_fecha_liquidacion.tipo =='A'
+men="<font color=green><b>#{I18n.t('Sistema.Body.General.liquidada')}</b></font>".html_safe
+else
+men="<font color=red><b>#{I18n.t('Sistema.Body.General.rechazado')}</b></font>".html_safe
+end
+%>
+<%= men %>
+</td>
+
+<td align="center">
+<%men=''  
+if view_fecha_liquidacion.tipo =='A'
+men="#{I18n.t('Sistema.Body.Vistas.General.aprobado')}, #{I18n.t('Sistema.Body.General.sin_comentarios')}"
+else
+men=view_fecha_liquidacion.descripcion_error
+end
+%>
+<%= men %>
+
+</td>
+
+
+<td align="center">
+  <%=view_fecha_liquidacion.fecha_liquidacion_f%>
+  <%#= OrdenDespacho.find_by_solicitud_id(view_fecha_liquidacion.solicitud_id).fecha_cierre_f unless OrdenDespacho.find_by_solicitud_id(view_fecha_liquidacion.solicitud_id).nil?%>
+</td>
+<!-- <td style="text-align: right"> -->
+
+    <!--<%#= link_to_remote(
+        image_tag(I18n.t('Sistema.Body.Imagenes.reversar')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :confirm => "¿Está usted seguro que desea reversar la solicitud número #{view_fecha_liquidacion.nro_tramite}?",
+        :url => {:action => :reversar, :cuenta_id1 => view_fecha_liquidacion.prestamo_id}) if (vlink 'Reversar') -%>
+  -->
+    <!---<%#= link_to_remote(
+        image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :confirm => "¿Está usted seguro que desea avanzar la solicitud número #{view_fecha_liquidacion.nro_tramite}?",
+        :url => {:action => :avanzar_solicitud, :cuenta_id => view_fecha_liquidacion.prestamo_id}) if (vlink 'Avanzar') -%>
+    -->
+<!-- </td> -->
+

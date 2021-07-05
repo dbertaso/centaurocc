@@ -1,0 +1,57 @@
+<div class="marco-titulo"><div><div>
+      Modificando Información de la Visita <span style="color: #FF0000">'<%= @full_info %>'</span>
+    </div></div></div>
+<div id="contenedor_principal">
+  <%= render :partial=>'visitas/control_visitas_pesca/embarcacion/common/tabs' %>
+
+  <div class="marco-contenido2"> 
+    <%
+    begin
+      controller.method(:new)
+    %><br>
+
+      <div class="marco-boton-out" id="button_new">
+        <table align="right">
+          <tr>
+            <td align="right">
+              <label>Seleccione Embarcación por faena de pesca </label>
+            </td>
+            <td align="right">       
+              <% embarcaciones_onchange = remote_function(
+                :loading =>'image_load()',
+                :loaded => 'image_unload()',
+                :method => :get,
+                :url=>{:controller=>'faenas_pesca',
+                  :action=>:list },
+                :with=>"'id_de_embarcacion='+value+'&id='+#{params[:id]}")
+              @embarcaciones=Embarcacion.find(:all,:conditions=>"seguimiento_visita_id=#{@visita}", :order=>"nombre_embarcacion")
+            %>
+
+              <%= select('identificador_embarcacion','',
+                @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+                { :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+                { :class=>'select', 
+                  :onchange=>embarcaciones_onchange+';inputChange();' } ) %>
+            </td>
+          </tr>
+        </table>
+        <br><br>
+      </div>
+    <%
+    rescue NameError
+    end
+  %>
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+
+    <div id="list">
+
+      <div id="list">
+        <%= render :partial => 'list' -%>
+      </div>
+    </div>
+  </div>
+</div>

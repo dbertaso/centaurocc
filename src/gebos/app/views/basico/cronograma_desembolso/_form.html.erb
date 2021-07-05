@@ -1,0 +1,34 @@
+<table>
+
+  <tr>
+    <td style="width: 300px">
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.desembolso')}" %>
+      </label>
+    </td>
+    <td style="width: 300px">
+      <label class="requerido"><%=@numero_desembolso%></label>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.tiempo')} #{I18n.t('Sistema.Body.Vistas.General.para')}  #{I18n.t('Sistema.Body.General.el')}  #{I18n.t('Sistema.Body.Vistas.General.desembolso')}" %>
+      </label>
+      <label title=<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%> class="requerido"> (*)
+      </label>
+    </td>
+    <td>
+      <%= text_field 'cronograma_desembolso','dias', :class=>'text',
+          :style=>'width: 80px',
+          :onkeypress=>'inputChange();',
+          :maxlength=>'5' -%> <%= I18n.t('Sistema.Body.Vistas.General.dias')%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+

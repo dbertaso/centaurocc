@@ -1,0 +1,46 @@
+<div class="marco-contenido">
+
+    <div class="marco-titulo">
+      <div>
+        <div>
+          <%= t('Sistema.Body.Vistas.General.prestamo')%>
+          <span class="titulo_modificar">'
+            <%= @prestamo.numero %> <%= " - #{t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+          </span> <%= "#{t('Sistema.Body.Vistas.General.del')} #{t('Sistema.Body.General.beneficiario')}" %>
+          <span class="titulo_modificar">'
+            <%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @prestamo.cliente.empresa.nombre : @prestamo.cliente.persona.nombre_corto  %>'
+          </span>
+        </div>
+      </div>
+    </div>
+
+  <%= render 'prestamos/consulta_prestamo/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <!-- Comienza Bloque la la Cabecera -->
+    
+    <table style="width: 100%; margin-bottom: 10px" border="0" style="text-align: center">
+    
+      <tr>
+        <td class="separador" valign="bottom" colspan="4" style="text-align: center">
+          <span>
+            <%= t('Sistema.Body.Vistas.ConsultaPrestamoCobranzas.Separadores.analisis_pago') %>
+          </span>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+  
+    </table>
+        
+    <%= render :partial => 'datos_generales' %>
+    
+    &nbsp;&nbsp;&nbsp;
+
+    <br>
+    <%= render :partial=>'botones' %>
+
+
+  </div>
+</div>
+

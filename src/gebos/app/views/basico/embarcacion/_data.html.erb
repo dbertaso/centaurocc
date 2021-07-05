@@ -1,0 +1,31 @@
+<% embarcacion = @embarcacion if embarcacion.nil? %>
+<td>
+  <%= embarcacion.nombre_embarcacion %>
+</td>
+<td align="center">
+  <%=format_bool !embarcacion.es_propia %>
+</td>
+
+<td align="center">
+  <%= embarcacion.matricula %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'embarcacion', :action => :edit, :id => @visita, :id_embarcacion=> embarcacion.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'embarcacion', :action => :view, :id => @visita, :id_embarcacion => embarcacion.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'embarcacion', :action => :delete, :id_embarcacion => embarcacion.id}) if vlink 'delete' -%>
+</td>

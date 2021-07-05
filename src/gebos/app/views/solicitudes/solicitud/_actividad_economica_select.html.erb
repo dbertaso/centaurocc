@@ -1,0 +1,21 @@
+<% unless @actividad_economica_select.nil? %>
+   <% actividad_onchange = remote_function(
+		:loading =>'Element.show("loading")',
+		:loaded => 'Element.hide("loading")',
+		:url=>{:controller=>'solicitud',
+		:action=>:actividad_economica_change },
+		:with=>"'ups_actividad_economica_id='+value") %>
+
+	<%= select(
+  	'solicitud', 'ups_actividad_economica_id',
+  	@actividad_economica_select.map{|c| [c.descripcion, c.id]},
+  	{ :include_blank => true},
+  	{ :class=>'select', :onchange=>actividad_onchange + ';inputChange();' } ) %>
+<% else %>
+
+	<%= select(
+	  'solicitud', 'ups_actividad_economica_id',
+	  [],
+	  { :include_blank => true },
+	  { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% end %>

@@ -1,0 +1,23 @@
+<% miembro_comite = @miembro_comite if miembro_comite.nil? %>
+<td>
+  <%= miembro_comite.nombre  %>
+</td> 
+<td>
+  <%= miembro_comite.apellido  %>
+</td>
+<td>
+  <%= miembro_comite.cedula  %>
+</td>   
+<td style="text-align: right">
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'miembro_comite', :action => :edit, :id => miembro_comite.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'miembro_comite', :action => :delete, :id => miembro_comite.id}) if vlink 'delete' -%>
+</td>

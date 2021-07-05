@@ -1,0 +1,34 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='tipo_cliente_natural' 
+    %>
+      <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.naturales') %> </a></div></li>
+    <% 
+    else 	   
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.naturales'), :controller => 'tipo_cliente_natural', :action => 'index', :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.naturales'), :controller => 'tipo_cliente_natural', :action => 'view', :popup=>params[:popup]) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>	
+        </div></li>
+    <% 
+    end
+
+    if controller_name=='tipo_cliente_juridico'
+    %>
+      <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.juridicos') %></a></div></li>
+    <% 
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.juridicos'), :controller => 'tipo_cliente_juridico', :action => 'index', :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.juridicos'), :controller => 'tipo_cliente_juridico', :action => 'view', :popup=>params[:popup]) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>	
+        </div></li>
+    <% 
+    end 
+
+  %>
+  </ul>
+</div>

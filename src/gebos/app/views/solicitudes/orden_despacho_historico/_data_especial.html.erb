@@ -1,0 +1,93 @@
+<% orden_despacho_detalle = @orden_despacho_detalle if orden_despacho_detalle.nil? %>
+
+<td align="center">
+<%=@numero_desembolso%>
+
+</td>
+<td align="center">
+  <%= orden_despacho_detalle.item_nombre.to_s.strip.upcase  %>
+</td>
+<td align="center">
+<%condi="nombre ='#{orden_despacho_detalle.item_nombre}'"%>
+
+<%if OrdenDespacho.find(orden_despacho_detalle.orden_despacho_id).casa_proveedora_id.to_s == '' %>
+<%=Item.find_by_nombre(orden_despacho_detalle.item_nombre).descripcion unless Item.count(:conditions=>condi) == 0 %>  
+<%#= OrdenDespachoDetalle.find(orden_despacho_detalle.id).observacion.strip.upcase %>
+<%else%>
+<%=I18n.t('Sistema.Body.Vistas.General.serial')%> <%=I18n.t('Sistema.Body.Vistas.General.motor')%>: <%=orden_despacho_detalle.plan_inversion.serial_motor%> 
+<br><%=I18n.t('Sistema.Body.Vistas.General.serial')%> <%=I18n.t('Sistema.Body.Vistas.General.chasis')%>: <%=orden_despacho_detalle.plan_inversion.serial_chasis%>
+<%end%>
+
+</td>
+<td align="center">
+  <%= orden_despacho_detalle.unidad_medida.abreviatura.strip.upcase %>
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.cantidad}));"%>
+  
+</td>
+<td align="right">
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.costo_real}));"%>
+  
+</td>
+<td align="right">
+<!-- codigo nuevo al 3/9/2013 -->
+        <%if ( ((orden_despacho_detalle.cantidad * orden_despacho_detalle.costo_real)!=orden_despacho_detalle.monto_financiamiento) and (orden_despacho_detalle.monto_recomendado!=0))%>
+        
+        <%=orden_despacho_detalle.monto_recomendado_f%>
+        
+        <%else%>
+        
+        <%=orden_despacho_detalle.monto_financiamiento_f %>
+        <%end%>
+        <!-- codigo nuevo al 3/9/2013 -->
+</td>
+
+<%if @imprimo!='1'%>
+<td align="center" bgcolor="#CFFFE8">
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+<%=format_fm('0')%>
+<%else%>
+<%#borrada el 6-9-2013=javascript_tag "document.write(formatCurrency2(#{FacturaOrdenDespacho.find_by_orden_despacho_detalle_id(orden_despacho_detalle.id).cantidad_factura}));"%>
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.cantidad_facturacion}));"%>
+<%end %>
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_facturacion}));"%>
+  <%#= orden_despacho_detalle.monto_facturacion_f %>
+</td>
+<td align="center" bgcolor="#FEFF99">
+
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+<%=format_fm('0')%>
+<%else
+resultado_resta_factura=orden_despacho_detalle.cantidad.to_f - FacturaOrdenDespacho.find_by_orden_despacho_detalle_id(orden_despacho_detalle.id).cantidad_factura.to_f
+%>
+<%#eliminado el 6-9-2013=javascript_tag "document.write(formatCurrency2(#{resultado_resta_factura}));"%>
+<%=javascript_tag "document.write(formatCurrency2(#{(orden_despacho_detalle.cantidad-orden_despacho_detalle.cantidad_facturacion)}));"%>
+
+<%end %>
+</td>
+
+<%end%>
+<td align="right">
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+
+<%if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || @imprimio="1" %>
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_financiamiento}));"%>
+<%else%>
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_facturacion}));"%>
+<%end%>
+
+<%else
+resultado_resta=orden_despacho_detalle.monto_recomendado - orden_despacho_detalle.monto_facturacion
+
+if resultado_resta < 0
+resultado_resta=resultado_resta * -1
+end
+%>
+
+<%#quitado el 10-9-2013 ojo=javascript_tag "document.write(formatCurrency2(#{resultado_resta}));"%>
+<%=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_facturacion}));"%>
+<%end %>
+
+  <%#= orden_despacho_detalle.monto_facturacion_f %>
+</td>

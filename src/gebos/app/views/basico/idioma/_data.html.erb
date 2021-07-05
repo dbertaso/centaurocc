@@ -1,0 +1,18 @@
+<% idioma= @idioma if idioma.nil? %>
+
+<td align="center">
+  <%=I18n.t('Idiomas.idioma'+idioma.id.to_s)  %>
+</td> 
+<td align="center">
+  <%= idioma.nemonico %> 
+</td>
+<td align="center">
+<%=image_tag("/assets/paises/#{idioma.bandera}", :height => '15', :width => '23')%>
+</td>
+<td align="center">
+  <%=format_bool idioma.activo %>
+</td>
+
+<td align="center">
+  <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.modificar')), :action => 'edit', :id => idioma.id %>
+</td>

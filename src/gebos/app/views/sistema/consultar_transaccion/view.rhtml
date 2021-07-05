@@ -1,0 +1,35 @@
+<%= form_title_view @meta_transaccion.nombre %>
+
+<%= render :partial=>'sistema/meta_transaccion/common/tabs' %>
+<div class="marco-contenido2">
+
+  <table>
+    <tr>
+      <td style="width: 60px">
+        <label>Nombre</label>
+      </td>
+      <td style="width: 640px">
+        <%= @meta_transaccion.nombre %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Descripción</label>
+      </td>
+      <td>
+        <%= @meta_transaccion.descripcion %>
+      </td>
+    </tr>
+  </table>
+
+  <%= link_to( image_tag("boton_modificar.gif"),
+    :action => :edit,
+    :id => @meta_transaccion.id,
+    :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

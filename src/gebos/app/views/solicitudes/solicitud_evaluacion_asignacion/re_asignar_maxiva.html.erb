@@ -1,0 +1,15 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+	<%= "#{I18n.t('Sistema.Body.Vistas.General.re_asignado')} #{I18n.t('Sistema.Body.Vistas.General.masivamente')} #{I18n.t('Sistema.Body.Vistas.General.tecnico')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %>
+</div></div></div>
+
+    <%= form_remote_tag(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :url => { :action => :save_re_asignar_maxivo } ) do -%>
+      <%= render :partial => 'form_re_maxivo' %>
+      <%= form_buttons_edit %>
+    <% end -%>
+    <%= error %>
+</div>

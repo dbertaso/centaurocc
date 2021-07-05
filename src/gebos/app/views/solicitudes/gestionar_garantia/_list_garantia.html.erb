@@ -1,0 +1,64 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left">
+</div>
+<table class="lista" style="width: 100%">
+  <tr>
+    <th style="width: 60%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.garantia')%></label>
+    </th>
+    <th style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.estatus')%></label>
+    </th>
+    <th style="width: 10%"></th>
+    <th style="width: 10%"></th>
+  </tr>
+  <% formato = 'lista0'
+  @solicitud_tipo_garantia.each { |s| %>
+    <tr id="tipo_<%= s.id %>" class="<%= formato %>">
+      <td align="center">
+        <%= s.tipo_garantia.nombre %>
+      </td>
+      <td align="center">
+        <span style="color: blue"><b><%= s.estatus_w %></b></span>
+      </td>
+      <td align="center">
+        <% if s.estatus == 'P' %>
+          <% if SolicitudConstitucionGarantia.validar_constituir(s.id) || @usuario.super_usuario == true || Usuario.count(:conditions=>["id = ? and id in (select usuario_id from usuario_rol where rol_id = 105)", @usuario.id]) > 0 %>
+            <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')),:title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+            {:action => :edit_informe, :id => s.id, :solicitud_id => s.solicitud_id} if vlink 'edit_informe' %>&ensp;
+
+            <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+              :loading =>'image_load()', :loaded => 'image_unload()',
+              :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+              :url => {:action => :delete, :id => s.id}) if vlink 'delete' -%>
+          <% end %>
+          <% if SolicitudConstitucionGarantia.validar_constituir(s.id) %>
+            <% if SolicitudConstitucionGarantia.count(:conditions=>['solicitud_tipo_garantia_id = ?', s.id]) > 0 && (@usuario.super_usuario == true || Usuario.count(:conditions=>["id = ? and id in (select usuario_id from usuario_rol where rol_id = 105)", @usuario.id]) > 0) %>
+
+              <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.enviar')),:title=>I18n.t('Sistema.Body.General.avanzar')),
+                :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+                :confirm => "#{I18n.t('Sistema.Body.Vistas.GestionarGarantia.Mensajes.esta_seguro_constituir')} #{s.tipo_garantia.nombre}?",
+                :url => {:action => :avanzar, :id => s.id}) if vlink 'avanzar'-%>
+            <% end %>
+
+          <% end %>
+        <%  elsif s.estatus == 'C'%>
+            <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+            {:action => :view_garantia, :solicitud_tipo_garantia_id => s.id, :solicitud_id => s.solicitud_id} if vlink 'view_constituida' %>
+        <% end %>
+      </td>
+      <td align="center">
+        <% if s.estatus == 'P' %>
+          <% if SolicitudConstitucionGarantia.validar_constituir(s.id) && (@usuario.super_usuario == true  || Usuario.count(:conditions=>["id = ? and id in (select usuario_id from usuario_rol where rol_id = 105)", @usuario.id]) > 0) %>
+            <%= link_to I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.constituir'), {:action => :constituir, :method=>:get, :id => s.id, :solicitud_id => s.solicitud_id} %>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+    <%  if formato == 'lista0'
+      formato = 'lista1'
+    else
+      formato = 'lista0'
+    end
+  } %>
+</table>
+<br></br>

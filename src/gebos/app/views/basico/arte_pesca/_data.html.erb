@@ -1,0 +1,30 @@
+<% arte_pesca = @arte_pesca if arte_pesca.nil? %>
+
+<td align="center">
+  <%= arte_pesca.nombre_arte_pesca  %>
+</td>
+<td align="center">
+  <%= format_bool !arte_pesca.es_propia  %>
+</td>
+<td align="center">
+  <%= arte_pesca.cantidad %>
+</td>
+<td align="center">
+  <%= arte_pesca.material  %>
+</td>
+
+<td style="text-align: right">
+
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'arte_pesca', :action => :edit, :id_pesca_index => arte_pesca.id,:id=>params[:id]}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'arte_pesca', :action => :delete, :id => arte_pesca.id}) if vlink 'delete' -%>
+</td>

@@ -1,0 +1,46 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 150px" <%= sort_class_helper('tipo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.tipo'), 'tipo', 'list' %>
+      </th>
+      <th style="width: 60px" <%= sort_class_helper('codigo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.codigo'), 'codigo', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('numero') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.telefono')}", 'numero', 'list' %>
+      </th> 
+      <th style="width: 50px" <%= sort_class_helper('fax') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.fax'), 'fax', 'list' %>
+      </th> 	
+      <!--<th style="width: 30px">
+        <%#= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>-->
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for persona_telefono in @list
+      even_odd = 1 - even_odd %>
+
+      <% persona_telefono = @persona_telefono if persona_telefono.nil? %>
+      <tr class="lista<%= even_odd %>" id="row_<%= persona_telefono.id %>">
+        <td>
+          <%= persona_telefono.tipo_nombre  %>
+        </td>
+        <td>
+          <%= persona_telefono.codigo %>
+        </td>
+        <td>
+          <%= persona_telefono.numero %>
+        </td>
+        <td>
+          <%= format_bool persona_telefono.fax %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

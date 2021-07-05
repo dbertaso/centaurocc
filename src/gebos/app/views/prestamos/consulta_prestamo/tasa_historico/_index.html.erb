@@ -1,0 +1,25 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= t('Sistema.Body.Vistas.General.prestamo') %>
+      <span class="titulo_modificar">
+      '<%= @prestamo.numero %> <%= " - #{t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+      </span>
+      <%= "#{t('Sistema.Body.Vistas.General.del')} #{t('Sistema.Body.General.beneficiario')}" %>
+      <span class="titulo_modificar">'<%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @prestamo.cliente.empresa.alias : @prestamo.cliente.persona.nombre_corto  %>'</span>
+    </div>
+  </div>
+</div>
+
+  <%= render 'prestamos/consulta_prestamo/common/tabs' %>
+<div class="marco-contenido2">
+
+  <div id="tasa_historico_list">
+    <%= render "prestamos/consulta_prestamo/tasa_historico/list" %>
+  </div>
+
+  <%= link_to(image_tag(image_path(t('Sistema.Body.Imagenes.cerrar'))),
+    { :controller => 'consulta_prestamo', :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

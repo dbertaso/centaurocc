@@ -1,0 +1,68 @@
+<%= form_title_view @usuario.nombre_usuario %>
+
+<%= render :partial=>'sistema/usuario/common/tabs' %>
+<div class="marco-contenido2">
+
+  <table>
+    <tr>
+      <td style="width: 150px">
+        <label><%=I18n.t('Sistema.Body.Controladores.Usuario.FormTitles.form_title_record')%></label>
+      </td>
+      <td style="width: 550px">
+        <%= @usuario.nombre_usuario-%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.primer_nombre')%></label>
+      </td>
+      <td>
+        <%= @usuario.primer_nombre-%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label>
+      </td>
+      <td>
+        <%= @usuario.segundo_nombre-%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label>
+      </td>
+      <td>
+        <%= @usuario.primer_apellido-%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label>
+      </td>
+      <td>
+        <%= @usuario.segundo_apellido-%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=  I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+      </td>
+      <td>
+        <%= check_box 'usuario', 'activo', 
+          { :disabled=>'true' }, 'true', 'false' %>
+      </td>
+    </tr>
+  </table>
+
+  <%= link_to( image_tag("boton_modificar.gif", :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :action => :edit, :method=>:get,
+    :id => @usuario.id,
+    :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

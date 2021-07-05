@@ -1,0 +1,72 @@
+<% factura = @factura if factura.nil? %>
+<td  style="text-align: center">
+	<%= factura.numero_factura.to_s.strip.upcase %>
+</td>
+
+
+<td align="center">
+	<%= factura.casa_proveedora.nombre.strip.upcase unless factura.casa_proveedora.nil? %>
+</td>	
+<td align="center">
+	<%= factura.sucursal_casa_proveedora.nombre.strip.upcase unless factura.sucursal_casa_proveedora.nil? %>
+</td>
+<td align="center">
+	<%= factura.cantidad_total_factura.to_f %>
+</td>
+<td align="center">
+	
+<%=factura.fecha_factura_f%>
+</td>
+<td align="center">
+	<%=format_bool factura.emitida %>
+</td>
+<td align="center">
+	<%=format_bool factura.confirmada %>
+</td>
+
+<td align="center">
+
+
+<%=format_fm(factura.monto_total_factura)%>
+
+</td>
+
+<td align="center">
+<!-- Aqui va la impresora -->
+
+
+<%cedula_usuario=Usuario.find(session[:id]).cedula_nacionalidad.to_s.strip.upcase + " " +  Usuario.find(session[:id]).cedula.to_s
+
+cedula_supervisor_asignado=Oficina.find(Usuario.find(session[:id]).oficina_id).cedula_nacionalidad.to_s.strip.upcase + " " + Oficina.find(Usuario.find(session[:id]).oficina_id).cedula_supervisor.to_s
+
+
+
+if cedula_usuario == cedula_supervisor_asignado %>
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir_grande')),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_detalle_factura')), {:controller=>'orden_despacho_historico', :action=>'imprimir_todo',
+        :popup=>true,  :parciales_id=>@mega_condi,:secuencia=>factura.secuencia.strip,:marca=>0  }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>factura.id) + "','height=1100,width=screen.width, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir_grande'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } ",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_detalle_factura')),{ :controller=>'orden_despacho_historico', :action=>'imprimir_todo',
+				:popup=>true,  :parciales_id=>@mega_condi,:secuencia=>factura.secuencia.strip,:marca=>0 },
+				:popup => ['orden_despacho_historico', 'height=600,width=1030, scrollbars=yes, resizable=false'] -%>
+
+
+<%else%>
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir_grande')),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_detalle_factura')), {:controller=>'orden_despacho_historico', :action=>'imprimir_todo',
+        :popup=>true,  :parciales_id=>@mega_condi,:secuencia=>factura.secuencia.strip,:marca=>1  }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>factura.id) + "','height=1100,width=screen.width, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir_grande'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } ",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_detalle_factura')),{ :controller=>'orden_despacho_historico', :action=>'imprimir_todo',
+				:popup=>true,  :parciales_id=>@mega_condi,:secuencia=>factura.secuencia.strip,:marca=>1 },
+				:popup => ['orden_despacho_historico', 'height=600,width=1030, scrollbars=yes, resizable=false'] -%>
+
+
+
+<%end%>
+
+</td>	
+

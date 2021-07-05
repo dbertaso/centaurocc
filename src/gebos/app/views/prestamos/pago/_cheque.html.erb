@@ -1,0 +1,39 @@
+
+<tr id="cheque_<%= @cheque_contador %>">
+  <%= hidden_field_tag "cheque[#{@cheque_contador}][forma]", "C" %>
+  <th>
+		<%= select_tag( "cheque[#{@cheque_contador}][entidad_financiera_id]",
+       options_from_collection_for_select(@entidad_financiera_cheque, 'id', 'nombre'),
+			{ :class=>'select', :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccione') } ) %>
+  </th>
+  <th style="text-align: center">
+		<%= text_field_tag "cheque[#{@cheque_contador}][referencia]",
+		   '', :class=>"required validate-number", :maxlength=>'10', 
+           :style=>'width: 100px',
+           :onchange=>"ValidarNumero('cheque[#{@cheque_contador}][referencia]')",
+           :onKeyPress=>"ValidarNumero('cheque[#{@cheque_contador}][referencia]')" %>
+  </th>
+  <th style="text-align: left">
+
+
+		<%= text_field_tag "cheque[#{@cheque_contador}][monto]",
+		   '', :class=>'text', :maxlength=>'16', :style=>'width: 100px',
+       		    :onkeyup=>"formatCurrency(this.value, this.id);",
+				:onkeypress=>'inputChange();cambio_etiqueta(_fecha_realizacion.value,this.id);',
+				:onchange=>'inputChange();cambio_bsf(_fecha_realizacion.value,this.value,this.id);' -%>
+
+
+       		    <span id="cheque_<%= @cheque_contador %>_monto_moneda"><%=I18n.t('Sistema.Body.General.ab_bolivares')%></span>
+       		    <span id="cheque_<%= @cheque_contador %>_monto_display">0,00</span>
+
+  </th>
+
+  <th>
+  	<%= link_to_remote(
+  		image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+  	  :loading =>'image_load()',
+   	  :loaded => 'image_unload()',
+  		:url => {:action => :eliminar_cheque, :cheque_contador=>@cheque_contador }) -%>
+  </th>
+</tr>
+

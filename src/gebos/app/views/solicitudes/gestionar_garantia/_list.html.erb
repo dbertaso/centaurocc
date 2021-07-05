@@ -1,0 +1,58 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>
+<div id="el_mensaje"></div>
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 50px" <%= sort_class_helper('numero') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'numero', 'list' %>
+      </th>
+      
+      <th style="width: 50px" <%= sort_class_helper('financiamiento') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_financiamiento'), 'financiamiento', 'list' %>
+      </th>
+
+      <th style="width: 60px" <%= sort_class_helper('cedula_rif') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+      </th>
+
+      <th style="width: 150px" <%= sort_class_helper('nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.beneficiario'), 'nombre', 'list' %>
+      </th>
+
+      <th style="width: 80px">
+        <%=I18n.t('Sistema.Body.Vistas.Form.estatus')%>
+      </th>
+      
+      <th style="width: 60px" <%= sort_class_helper('moneda_id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.moneda'), 'moneda_id', 'list' %>
+      </th>
+
+      <th style="width: 60px" <%= sort_class_helper('monto_solicitado') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto'), 'monto_solicitado', 'list' %>
+      </th>
+
+      <th style="width: 150px" <%= sort_class_helper('programa') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.programa'), 'programa', 'list' %>
+      </th>
+
+      <th style="width: 80px" <%= sort_class_helper('estado') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'estado', 'list' %>
+      </th>
+
+      <th style="width: 60px">
+        <%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+
+  </thead>
+  <tbody id="list-body">
+    <%  
+    even_odd = 1
+    for solicitud in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

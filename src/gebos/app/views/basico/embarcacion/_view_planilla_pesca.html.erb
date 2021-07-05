@@ -1,0 +1,2817 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Formulario de Control de Visita</title>
+</head>
+<script type="text/javascript">
+
+//   function onload()
+//   {
+//     window.print();
+//   }
+
+function imprime(){
+//desaparece el boton
+document.getElementById("noprint").style.visibility='hidden';
+//se imprime la pagina
+print();
+setTimeout("showlayer()",2000);
+}
+function showlayer(){
+     document.getElementById("noprint").style.visibility='visible';
+}
+
+</script>
+<body>
+<img src="<%=image_path('logo_institucion.png')%>" width="164" height="95" align="right" />
+<img src="<%=image_path('bolivariano17p.png')%>" width="164" height="95" align="left" />
+
+
+<div style="font-size: 14px">
+<!-- <table width="371" border="1" align="right">
+  <tr>
+    <td width="120" align="right">1. N° Solicitud</td>
+    <td width="105" align="right"><%#= @siniestros[0].solicitud_id %></td>
+  </tr>
+  <tr>
+    <td align="right">2. Fecha de Notificación</td>
+    <td align="right"><%#= @siniestros[0].fecha_notificacion_f %></td>
+  </tr>
+  <tr>
+    <td align="right">3. Fecha del Siniestro</td>
+    <td align="right"><%#= @siniestros[0].fecha_siniestro_f %></td>
+  </tr>
+  <tr>
+    <td align="right">4. Tipo de Pérdida jjhsjhdjs</td>
+    <td align="right"><%#= @siniestros[0].tipo_perdida %></td>
+  </tr>
+</table> 
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p> 
+<p>&nbsp;</p> --> 
+<br>
+<div style="width: 100%; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 20px;" align="center"><label>Formulario de Control de Visita <br> Sector Pesca </label></div>
+
+
+<br><br><br>
+ <div align="justify" style="text-align: right; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px;"><strong>Nro: <u><%=@seguimientos[0].codigo_visita unless @seguimientos.nil?%></u></strong></div>
+
+ <div align="justify" style="text-align: right; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px;"><strong>Fecha de la Visita: <u><%=@seguimientos[0].fecha_visita_f unless @seguimientos[0].fecha_visita.nil?%></u></strong></div>
+<br>
+
+
+<table width="100%" border="1">
+
+<table width="100%" border="1">
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS DEL FINANCIAMIENTO</label>
+    </td>
+  </tr>
+</table>
+
+<table width="100%" border="1" style="table-layout:fixed;">
+ <tr>
+
+    <td colspan="1" align="justify" style="background-color: #f1f1f1">
+
+      Nro. Financiamiento
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+
+      Sector
+    </td>
+  <td colspan="2" style="background-color: #f1f1f1">
+      Sub-Sector
+    </td>
+  
+  <td colspan="2" style="background-color: #f1f1f1">
+      Rubro
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="1" >
+      <%= @prestamos[0].numero.to_s unless @prestamos.empty? %> &nbsp;
+    </td>
+
+    <td colspan="1" style="word-wrap: break-word;">
+      <%=@solicitudes.sector.nombre.to_s.strip.upcase unless @solicitudes.sub_sector_id== '0' %> &nbsp;
+    </td>
+
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @solicitudes.sub_sector.nombre.to_s.strip.upcase unless @solicitudes.sub_sector_id== '0' %> &nbsp;
+    </td>
+
+
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @solicitudes.rubro.nombre.to_s.strip.upcase unless @solicitudes.rubro_id == '0' %> &nbsp;
+      </td>
+
+  </tr>
+
+  <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+
+      Programa
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+
+      Modalidad de Financiamiento
+    </td>
+  
+  </tr>
+  
+
+  <tr>
+    <td colspan="3" style="word-wrap: break-word;">
+      <%= @solicitudes.programa.nombre.to_s.strip.upcase unless @solicitudes.nil? %> &nbsp;
+
+    </td>
+  <td colspan="3">
+
+<%unless @solicitudes.nil?%>
+
+<%if @solicitudes.modalidad_financiamiento.nombre.to_s.strip.downcase == 'consolidacion' %>
+
+<input type="radio" name="group1" value="Fundación" disabled="disabled"> Fundación &nbsp;
+<input type="radio" name="group1" value="Consolidación" checked="checked" disabled="disabled"> Consolidación       
+	
+<%else
+
+if @solicitudes.modalidad_financiamiento.nombre.to_s.strip.downcase == 'fundacion' %>
+<input type="radio" name="group1" value="Fundación" checked="checked" disabled="disabled"> Fundación &nbsp;
+<input type="radio" name="group1" value="Consolidación" disabled="disabled"> Consolidación
+<%else%>
+<%=""%>
+
+<%end%>
+<%end%>
+<%end%>
+    </td>
+  
+  
+  </tr>
+
+  <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+
+      Monto Total Aprobado
+    </td>
+  <td colspan="2" style="background-color: #f1f1f1">
+
+      Monto Liquidado (Entregado)
+    </td>
+  <td  colspan="2" style="background-color: #f1f1f1">
+
+      Monto Total Pendiente por Desembolsar
+    </td>
+  
+  </tr>
+  
+
+  <tr>
+    <td colspan="2" align="justify">
+      <%= @solicitudes.monto_aprobado_fm.to_s << " BsF" unless @solicitudes.nil? %>&nbsp;
+
+    </td>
+  <td colspan="2" align="justify">
+      <% monto = (@sumado_montos_desembolso.to_f + @sumado_montos_orden.to_f) %>
+      <%  valor = sprintf('%01.2f', monto).sub('.', ',') %>
+      <%  valor = valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      <%= valor << " BsF"  %> &nbsp;
+
+
+      <%#= @prestamos[0].monto_liquidado_fm.to_s << " BsF" unless @prestamos.empty? %> &nbsp;
+
+    </td>
+  <td colspan="2" align="justify">
+      
+      <% monto = (@solicitudes.monto_aprobado - (@sumado_montos_desembolso.to_f + @sumado_montos_orden.to_f)) %>
+      <%  valor = sprintf('%01.2f', monto).sub('.', ',') %>
+      <%  valor = valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      <%= valor << " BsF" unless @solicitudes.nil?  %> &nbsp;
+
+
+      <% #monto = (@prestamos[0].monto_banco - @prestamos[0].monto_liquidado) %>
+      <%  #valor = sprintf('%01.2f', monto).sub('.', ',') %>
+      <%  #valor = valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      <%#= valor << " BsF" unless @prestamos.empty?  %> &nbsp;
+
+    </td>
+  
+  </tr>
+
+</table>
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>INFORMACIÓN DE LA VISITA</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1" style="table-layout:fixed;">
+ 
+ <tr>
+    
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      Hora de la Visita
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      Motivo de la Visita
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3">
+      <%= @seguimientos[0].hora_visita.strftime('%I:%M:%S %p') unless @seguimientos.nil? %> &nbsp;
+    </td>
+   <td colspan="3" style="word-wrap: break-word;">
+      <%= @seguimientos[0].MotivoVisita.nombre.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <label>Persona que Atendió al Técnico de Campo en su Visita</label>
+    </td>
+    
+    
+  </tr>
+ 
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1">
+      Cédula
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      Nombre
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      Apellido
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      Teléfonos
+    </td>
+  </tr>
+ 
+ 
+ <tr>
+    
+    
+    <td colspan="1" style="word-wrap: break-word;">
+      <%= @seguimientos[0].cedula_nacionalidad_persona_atencion.to_s.strip.upcase << " " << @seguimientos[0].cedula_persona_atencion.to_s unless @seguimientos.nil? %> &nbsp;
+    </td>
+    <td colspan="1" style="word-wrap: break-word;">
+      <%= @seguimientos[0].nombre_persona_atencion.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+
+    </td>
+   <td colspan="2" style="word-wrap: break-word;">
+      <%= @seguimientos[0].apellido_persona_atencion.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @seguimientos[0].telf1_persona_atencion.to_s << " / " << @seguimientos[0].telf2_persona_atencion.to_s << " / " << @seguimientos[0].telf3_persona_atencion.to_s unless @seguimientos.nil? %> &nbsp;
+    </td>
+  </tr>
+ 
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Vínculo con Solicitante
+    </td>
+    
+  </tr>
+ 
+
+ 
+ <tr>
+       
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @seguimientos[0].vinculo_persona_atencion.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      ¿La Dirección Práctica es Correcta?
+    </td>
+    
+    <td colspan="3" style="background-color: #f1f1f1">
+      Corrección Hecha
+    </td>
+
+  </tr>
+ 
+ 
+ <tr>
+
+    <td colspan="3">
+	<%  unless @seguimientos.nil? 
+
+if @seguimientos[0].direccion_correcta 
+%> 
+    
+<input type="radio" name="group2" value="Si" checked="checked" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group2" value="No" disabled="disabled"> No       
+<%else%>
+<input type="radio" name="group2" value="Si" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group2" value="No" checked="checked" disabled="disabled"> No       
+
+<%end%>
+	
+<%end%>
+   </td>
+       
+    <td colspan="3">
+<!-- esta informacion no se tiene -->      
+<%#= @unidad_produccion.referencia.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+ 
+ 
+
+
+<tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Observaciones
+    </td>
+    
+  </tr>
+ 
+ 
+ <tr>
+       
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @seguimientos[0].observaciones.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+</table>
+
+
+
+<table width="100%" border="1">
+<tr>
+
+    <td colspan="6" style="background-color: #d9d4d4" align="center">
+
+      <label>DATOS DEL BENEFICIARIO</label>
+    </td>
+
+  </tr>
+</table>
+<table width="100%" border="1" style="table-layout:fixed;">
+  
+  <tr>
+    <td style="width: 20%; background-color: #f1f1f1">
+      Apellidos / Empresa
+    </td>
+    <td style="width: 20%; background-color: #f1f1f1">
+      Nombres
+    </td>
+    <td style="width: 20%; background-color: #f1f1f1">
+      Cédula o RIF
+    </td>
+    <td style="width: 20%; background-color: #f1f1f1">
+      Sexo
+    </td>
+    <td colspan="2" style="width: 20%; background-color: #f1f1f1">
+      Edad
+    </td>
+  
+  </tr>
+
+  <tr>
+    
+    
+    <td style="word-wrap: break-word;">
+	<% if @es_no==1 %>      
+	<%=@datos_cliente.primer_apellido.to_s.strip.upcase << " " << @datos_cliente.segundo_apellido.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%else%>      
+	<%=@datos_cliente.nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+      
+
+<%#= @solicitudes.ciudad.estado.nombre unless @solicitudes.nil? %> 
+    </td>
+    <td style="word-wrap: break-word;">
+	<% if @es_no==1 %>      
+	<%=@datos_cliente.primer_nombre.to_s.strip.upcase << " " << @datos_cliente.segundo_nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%else%>      
+	<%=" " %>
+	<%end%>
+      
+
+
+<%#= @solicitudes.ciudad.nombre unless @solicitudes.nil? %>
+    </td>
+    <td style="word-wrap: break-word;">
+	<% if @es_no==1 %>      
+	<%= @datos_cliente.cedula_nacionalidad.to_s.strip.upcase << " " << @datos_cliente.cedula.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%else%>      
+	<%= @datos_cliente.rif.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+      
+
+<%#= @solicitudes.municipio.nombre unless @solicitudes.nil? %>
+    </td>
+    <td>
+	<% if @es_no==1 %>      
+	<%unless @datos_cliente.nil? %>	
+	<%if @datos_cliente.sexo %>
+		<%="MASCULINO" %>
+	<%else%>
+		<%="FEMENINO"%>
+	<%end%>
+	<%else%>      
+	<%=" " %>
+	<%end%>
+	<%end%>
+
+
+      <%#= @solicitudes.parroquia.nombre unless @solicitudes.nil? %>
+    </td>
+    <td colspan="2">
+      <%#=@seguimientos[0].edad(Time.now, Date.parse('1978-05-16')) %>
+	<% if @es_no==1 %>      
+	<%= @seguimientos[0].edad(Date.parse(Time.now.strftime('%Y-%m-%d')), Date.parse(@datos_cliente.fecha_nacimiento.strftime('%Y-%m-%d'))).to_s << " AÑOS" unless @datos_cliente.nil? %> &nbsp;
+	<%else%>      
+	<%=" " %>
+	<%end%>
+
+
+<%#= @solicitudes.parroquia.nombre unless @solicitudes.nil? %>
+    </td>
+  </tr>
+
+
+<tr>
+
+
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+
+      Teléfonos
+    </td>
+    <td colspan="2"  style="background-color: #f1f1f1;width: 33%">
+
+      Estado Civil
+    </td>
+<td colspan="2" style="background-color: #f1f1f1;width: 33%">
+
+      Tipo de Persona
+    </td>
+
+  </tr>
+
+<tr>
+
+    
+    <td colspan="2" style="word-wrap: break-word;">
+	<% if @es_no==1 %>      
+	<%=PersonaTelefono.find_by_persona_id(@datos_cliente.id).codigo.to_s << "-" << PersonaTelefono.find_by_persona_id(@datos_cliente.id).numero.to_s unless @datos_cliente.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaTelefono.find_by_empresa_id(@datos_cliente.id).codigo.to_s << "-" << EmpresaTelefono.find_by_empresa_id(@datos_cliente.id).numero.to_s unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+
+
+      <%#=@siniestros[0].lugar%>
+    </td>
+    <td colspan="2" >
+	<% if @es_no==1       
+	unless @datos_cliente.nil?	 
+	case @datos_cliente.estado_civil.to_s
+		 when 'S' %>
+        <%if @datos_cliente.sexo %>
+	  	  <%="SOLTERO"%>
+        <%else%>
+	  	  <%="SOLTERA"%>
+        <%end%>
+		<% when 'C' %>	
+        <%if @datos_cliente.sexo %>
+		  <%="CASADO"%>	
+        <%else%>
+	  	  <%="CASADA"%>
+        <%end%>
+		<% when 'D' %>	
+        <%if @datos_cliente.sexo %>
+		  <%="DIVORCIADO"%>
+        <%else%>
+	  	  <%="DIVORCIADA"%>
+        <%end%>
+
+		<% else 'V' %>
+        <%if @datos_cliente.sexo %>
+		  <%="VIUDO"%>
+        <%else%>
+	  	  <%="VIUDA"%>
+        <%end%>       
+	<%end%>
+	<%else%>      
+	<%=" " %>
+	<%end%>
+	<%end%>
+      <%#=@siniestros[0].lugar%>
+    </td>
+    
+    <td colspan="2" style="word-wrap: break-word;">
+
+	<% if @es_no==1   %>    
+      <%=Cliente.find(:first,:conditions=>"persona_id = #{@datos_cliente.id}").tipo_cliente.nombre.strip.upcase unless Cliente.find(:first,:conditions=>"persona_id = #{@datos_cliente.id}").tipo_cliente.nil? unless @datos_cliente.nil? %> &nbsp;
+    <%else%>
+      <%=Cliente.find(:first,:conditions=>"empresa_id = #{@datos_cliente.id}").tipo_cliente.nombre.strip.upcase unless Cliente.find(:first,:conditions=>"empresa_id = #{@datos_cliente.id}").tipo_cliente.nil? unless @datos_cliente.nil? %> &nbsp;
+    <%end%>
+
+    </td>
+
+  </tr>  
+
+
+<tr>
+
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+
+      Representante Legal
+    </td>
+
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+
+      Cédula del Representante Legal
+    </td>
+
+  </tr>
+
+<tr>
+
+    
+    <td  colspan="3" style="word-wrap: break-word;">
+
+<%=@datos_empresa.primer_nombre.to_s.strip.upcase << " " << @datos_empresa.segundo_nombre.to_s.strip.upcase << " " << @datos_empresa.primer_apellido.to_s.strip.upcase << " " << @datos_empresa.segundo_apellido.to_s.strip.upcase unless @datos_empresa.nil? %> &nbsp;
+
+
+
+    </td>
+    <td  colspan="3" style="word-wrap: break-word;">
+
+<%=@datos_empresa.cedula_nacionalidad.to_s.strip.upcase << " " << @datos_empresa.cedula.to_s.strip.upcase unless @datos_empresa.nil? %> &nbsp;
+    </td>
+
+  </tr>  
+
+<tr>
+
+    <td colspan="6" style="background-color: #f1f1f1;width: 50%">
+
+      Consejo de Pescadores - CONPPA
+    </td>
+
+
+  </tr>
+
+<tr>
+
+    
+    <td  colspan="6" style="word-wrap: break-word;">
+
+<%=@conppa.nombre.to_s.strip.upcase unless @conppa.nil? %> &nbsp;
+
+    </td>
+
+  </tr>  
+
+
+
+
+</table>
+
+<table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>UBICACIÓN DEL BENEFICIARIO (DOMICILIO PRINCIPAL)</label>
+    </td>
+  </tr>
+ 
+
+
+  </table>
+
+  <table border="1" width="100%" style="table-layout:fixed;">
+    
+    <tr>
+
+    <td colspan="6" style="width: 25%; background-color: #f1f1f1">
+
+      Dirección de Habitación / Domicilio Fiscal
+
+    </td>
+      
+
+  </tr>
+    
+    <tr>    
+    
+    <td colspan="6" style="word-wrap: break-word;">
+
+<% if @es_no==1 
+
+direccion_persona=''
+
+direccion_persona=PersonaDireccion.find_by_persona_id(@datos_cliente.id).avenida.to_s << " " unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).avenida.nil?
+
+
+direccion_persona+=PersonaDireccion.find_by_persona_id(@datos_cliente.id).edificio.to_s << " " unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).edificio.nil?
+
+
+direccion_persona+=PersonaDireccion.find_by_persona_id(@datos_cliente.id).piso.to_s << " " unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).piso.nil?
+
+direccion_persona+=PersonaDireccion.find_by_persona_id(@datos_cliente.id).localidad.to_s << " " unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).localidad.nil?
+
+direccion_persona+=PersonaDireccion.find_by_persona_id(@datos_cliente.id).zona.to_s unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).zona.nil?
+
+%>      
+	<%=direccion_persona.strip.upcase unless direccion_persona.nil? %>
+	
+	<%else
+direccion_empresa=''
+
+direccion_empresa=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).avenida.to_s << " " unless EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).avenida.nil?
+
+direccion_empresa+=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).edificio.to_s << " " unless EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).edificio.nil?
+
+direccion_empresa+=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).piso.to_s << " " unless EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).piso.nil?
+
+direccion_empresa+=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).zona.to_s unless EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).zona.nil?
+
+%>      
+	<%=direccion_empresa.strip.upcase unless direccion_empresa.nil? %>
+	<%end%>      &nbsp;
+
+	<%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+   
+  </tr>
+    
+  
+  <tr>
+
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      Estado
+
+    </td>
+
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      Municipio
+
+    </td>
+  
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      Parroquia
+
+    </td>
+   
+
+  </tr>
+  
+  
+  <tr>    
+    
+    <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).municipio.estado.nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).municipio.estado.nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+  <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).municipio.nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).municipio.nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+
+
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+  <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).parroquia.nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).parroquia.nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+   
+  </tr>
+  
+
+<tr>
+
+    <td colspan="3" style="width: 25%; background-color: #f1f1f1">
+
+      Ciudad más Cercana
+
+    </td>
+
+    
+  
+    <td colspan="3" style="width: 25%; background-color: #f1f1f1">
+
+      Cacerío / Sector
+
+    </td>
+   
+
+  </tr>
+  
+
+  <tr>    
+    
+    
+  <td colspan="3" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).referencia.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).referencia.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+  <td colspan="3" style="word-wrap: break-word;">
+
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).zona.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).zona.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+   
+  </tr>
+
+</table>
+
+<%if @es_no==1 %>
+<!-- esta parte solo aplica si es una persona, caso contrario no se muestra -->
+
+<table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS DEL CONYUGUE</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+  <table border="1" width="100%" style="table-layout:fixed;">
+    
+      
+  <tr>
+
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+     Nombres y Apellidos
+
+    </td>
+
+  
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      Cédula
+
+    </td>
+   
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      Edad
+
+    </td>
+
+
+
+  </tr>
+  
+  
+  <tr>    
+    
+    <td colspan="2" style="word-wrap: break-word;">
+
+
+	<%=Persona.find(@datos_cliente.id).conyuge_nombre_apellido.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	
+
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+
+  <td colspan="2" style="word-wrap: break-word;">
+
+	<%=Persona.find(@datos_cliente.id).conyuge_cedula_nacionalidad.to_s.strip.upcase << " " << Persona.find(@datos_cliente.id).conyuge_cedula.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+  <td colspan="2">
+
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+   
+  </tr>
+  
+
+<tr>
+
+    <td colspan="3" style="width: 50%; background-color: #f1f1f1">
+
+      Sexo
+
+    </td>
+
+    
+  
+    <td colspan="3" style="width: 50%; background-color: #f1f1f1">
+
+      Teléfonos
+
+    </td>
+   
+
+  </tr>
+  
+
+  <tr>    
+    
+    
+  <td colspan="3">
+
+
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+  <td colspan="3" style="word-wrap: break-word;">
+
+	<%=Persona.find(@datos_cliente.id).conyuge_celular.to_s.strip.upcase << " / " << Persona.find(@datos_cliente.id).conyuge_telefono.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+
+
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+   
+  </tr>
+
+</table>
+
+<!-- ojo aqui elimine esta parte porque no existe una tabla que tenga descendientes 
+<table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS DE LOS DESCENDIENTES</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+
+  <table border="1" width="100%">
+    
+    
+  
+  <tr>
+
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      Apellidos
+
+    </td>
+
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      Nombres
+
+    </td>
+  
+
+    <td colspan="1" style="width: 25%; background-color: #f1f1f1">
+
+      Cédula
+
+    </td>
+   
+    <td colspan="1" style="width: 25%; background-color: #f1f1f1">
+
+      Edad
+
+    </td>
+
+
+
+  </tr>
+  
+  
+  <tr>    
+    
+    <td colspan="2">
+
+
+    </td>
+
+  <td colspan="2">
+
+
+    </td>
+
+  <td colspan="1">
+
+
+    </td>
+
+  <td colspan="1">
+
+
+    </td>
+
+   
+  </tr>
+  
+
+<tr>
+
+    <td colspan="3" style="width: 50%; background-color: #f1f1f1">
+
+      Sexo
+
+    </td>
+
+    
+  
+    <td colspan="3" style="width: 50%; background-color: #f1f1f1">
+
+      Teléfonos
+
+    </td>
+   
+
+  </tr>
+  
+
+  <tr>    
+    
+    
+  <td colspan="3">
+
+
+    </td>
+
+  <td colspan="3">
+
+
+
+    </td>
+
+   
+  </tr>
+
+</table>
+
+-->
+
+<%end%>
+
+<table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS DE LA COMUNIDAD PESQUERA (UNIDAD DE PRODUCCIÓN)</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+  
+    <table border="1" width="100%" style="table-layout:fixed;">
+    
+   
+    
+    <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+      Nombre de la Comunidad Pesquera
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+      Puerto Base
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 34%">
+      Autonomía de Pesca
+    </td>
+
+    
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).primer_nombre.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).segundo_nombre.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).primer_apellido.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).segundo_apellido.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	<%end%>
+
+
+
+
+	<%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).cedula_nacionalidad.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).cedula.to_s unless @unidad_produccion.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).rif.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	<%end%>
+      
+      <%#= display_number @siniestros[0].hectareas_sembradas,'' unless @siniestros.nil? %>
+    </td>
+    
+
+    <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).cedula_nacionalidad.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).cedula.to_s unless @unidad_produccion.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).rif.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	<%end%>
+      
+      <%#= display_number @siniestros[0].hectareas_sembradas,'' unless @siniestros.nil? %>
+    </td>
+
+    
+  </tr>
+ 
+   <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Dirección de la Comunidad Pesquera
+    </td>
+    
+    
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="6" style="word-wrap: break-word;">
+<%=@unidad_produccion.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;     
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+    
+    
+  </tr>
+ 
+ 
+    <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Como Llegar desde el Poblado más Cercano (Dirección Práctica)
+    </td>
+    
+    
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="6" style="word-wrap: break-word;">
+<%=@unidad_produccion.referencia.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+    
+    
+  </tr>
+
+<tr>
+<td colspan="3" style="background-color: #f1f1f1;width:50%">
+      Estado
+    </td>
+    
+<td colspan="3" style="background-color: #f1f1f1;width:50%">
+      Municipio
+    </td>
+
+
+</tr>
+
+<tr>
+
+
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).municipio.estado.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).municipio.estado.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	<%end%>
+
+
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+
+
+
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).municipio.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).municipio.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	<%end%>
+
+
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+
+</tr>
+    <tr>
+    
+    <td colspan="3" style="background-color: #f1f1f1">
+      Parroquia
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      Sector
+    </td>
+
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).parroquia.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).parroquia.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	<%end%>
+
+
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).parroquia.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).parroquia.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+	<%end%>
+
+
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+  </tr>
+
+
+
+</table>
+ 
+<!-- Iterativo, una visita seguimiento puede tener varias embarcaciones, moteres, equipos de seguridad y faenas -->
+
+<%
+@we=0
+while @we<@embarcacion_cantidad %>
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS DE LA EMBARCACIÓN (ID= <%=@embarcacion[@we].id%>)</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1" style="table-layout:fixed;">
+ 
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width: 50%">
+      Embarcación
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 50%">
+      Cantidad
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 50%">
+      Condición de la Embarcación
+    </td>
+
+  </tr>
+ 
+ <tr>
+
+<td colspan="2">    
+<%  
+
+if @embarcacion[@we].es_propia 
+%> 
+    
+<input type="radio" name="group1_embarcacion<%=@we%>" value="Si" checked="checked" disabled="disabled"> Propia &nbsp;
+<input type="radio" name="group1_embarcacion<%=@we%>" value="No" disabled="disabled"> A Solicitar       
+<%else%>
+<input type="radio" name="group1_embarcacion<%=@we%>" value="Si" disabled="disabled"> Propia &nbsp;
+<input type="radio" name="group1_embarcacion<%=@we%>" value="No" checked="checked" disabled="disabled"> A Solicitar       
+
+	
+<%end%>
+</td>
+    
+    <td colspan="2">
+      1 
+    </td>
+    <td colspan="2">
+<%
+unless @embarcacion[@we].condicion.nil?
+case @embarcacion[@we].condicion
+
+	when 'En Construcción' %>
+<input type="radio" name="group2_embarcacion<%=@we%>" value="En Construcción" checked="checked" disabled="disabled"> En Construcción &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Regular" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Malo" disabled="disabled"> Malo
+      
+	<%when 'Bueno' %>
+<input type="radio" name="group2_embarcacion<%=@we%>" value="En Construcción" disabled="disabled"> En Construcción &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Bueno" checked="checked" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Regular" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Malo" disabled="disabled"> Malo
+
+
+	<%when 'Regular' %>
+<input type="radio" name="group2_embarcacion<%=@we%>" value="En Construcción" disabled="disabled"> En Construcción &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Regular" checked="checked" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Malo" disabled="disabled"> Malo
+
+
+	<%else 'Malo' %>
+<input type="radio" name="group2_embarcacion<%=@we%>" value="En Construcción" disabled="disabled"> En Construcción &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Regular"  disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_embarcacion<%=@we%>" value="Malo" checked="checked" disabled="disabled"> Malo
+
+
+<%end
+end
+%>
+    </td>
+    
+
+  </tr>
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1;width:50%">
+      Nombre de la Embarcación
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width:50%">
+      Matrícula
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+
+      <%= @embarcacion[@we].nombre_embarcacion.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+
+
+      <%#= @siniestro_informacion[0].fecha_siniestro_f unless @siniestro_informacion.nil? %> 
+    </td>
+    <td colspan="3" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].matricula.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    
+    
+  </tr>
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      Tipo de Embarcación
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      Tipo de Material
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].tipo_embarcacion.tipo.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    
+    <td colspan="3" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].TipoMaterial.descripcion.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+
+
+
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <label>Medidas de la Embarcación</label>
+    </td>
+</tr>
+
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Eslora (m)
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Manga (m)
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width:34%">
+      Puntal (m)
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%= @embarcacion[@we].eslora_f unless @embarcacion[@we].nil? %> &nbsp;
+     
+    </td>
+    
+    <td colspan="2">
+      <%= @embarcacion[@we].manga_f unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%= @embarcacion[@we].puntal_f unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+
+  </tr>
+
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1;width:20%">
+      Número de Tripulantes
+    </td>
+ 
+    <td colspan="1" style="background-color: #f1f1f1;width:20%">
+      U.A.B
+    </td>
+
+    <td colspan="2" style="background-color: #f1f1f1;width:20%">
+      Autonomía de Pesca (días)
+    </td>
+
+    <td colspan="2" style="background-color: #f1f1f1;width:20%">
+      Proveedor Marino
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="1">
+      <%= @embarcacion[@we].cantidad_tripulantes.to_i unless @embarcacion[@we].nil? %> &nbsp;     
+	</td>
+    <td colspan="1">
+      <%= @embarcacion[@we].uab_f unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%= @embarcacion[@we].autonomia_pesca unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].proveedor_marino.nombre.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Puerto Base
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Coordenadas UTM del Puerto Base
+    </td>
+
+    <td colspan="2" style="background-color: #f1f1f1;width:34%">
+      Capacidad de Combustible (L)
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].puerto_base.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].coordenadas_utm_puerto_base.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%= @embarcacion[@we].capacidad_combustible_f unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Lugares Frecuentes de Pesca
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].lugares_pesca.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Estado
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Municipio
+    </td>
+
+    <td colspan="2" style="background-color: #f1f1f1;width:34%">
+      Parroquia
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].estado.nombre.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].municipio.nombre.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @embarcacion[@we].parroquia.nombre.to_s.strip.upcase unless @embarcacion[@we].nil? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+
+
+ </table>
+<%
+
+@we=@we+1
+
+end%>
+
+
+<%
+@we=0
+while @we<@motor_cantidad %>
+
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS DE MOTORES (ID= <%=@motor[@we].id%>)</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1" style="table-layout:fixed;">
+ 
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Motor
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Cantidad
+    </td>
+
+    <td colspan="2" style="background-color: #f1f1f1;width:34%">
+      Tipo de Motor
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="2">
+
+
+<%
+ 
+if @motor[@we].es_propio  %>
+
+
+<input type="radio" name="group1_motores<%=@we%>" value="Si" checked="checked" disabled="disabled"> Propio &nbsp;
+<input type="radio" name="group1_motores<%=@we%>" value="No" disabled="disabled"> A Solicitar
+<%else%>
+<input type="radio" name="group1_motores<%=@we%>" value="Si"  disabled="disabled"> Propio &nbsp;
+<input type="radio" name="group1_motores<%=@we%>" value="No" checked="checked" disabled="disabled"> A Solicitar
+
+<%end%>
+    </td>
+    <td colspan="2">
+      <%= @motor[@we].cantidad_motores.to_i unless @motor[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+	<%=@motor[@we].tipo_motor.tipo.to_s.strip.upcase unless @motor[@we].nil?%>&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      Serial
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      Marca / Modelo
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+
+<%= @motor[@we].numero_serial.to_s.strip.upcase unless @motor[@we].nil? %> &nbsp;
+
+    </td>
+    <td colspan="3">
+      <%= @motor[@we].modelo_motor.to_s.strip.upcase unless @motor[@we].nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1;width: 25%">
+      Potencia (Hp)
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 25%">
+      Año
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 25%">
+      Proveedor Marino
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+   
+    <td colspan="1">
+      <%= @motor[@we].potencia_f unless @motor[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%= @motor[@we].ano unless @motor[@we].nil? %> &nbsp;
+
+    </td>
+
+<td colspan="2" style="word-wrap: break-word;">
+      <%= ProveedorMarino.find(@motor[@we].proveedor_marino_id).nombre.to_s.strip.upcase unless @motor[@we].nil? %> &nbsp;
+</td>
+
+
+  </tr>
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Condiciones del Motor
+    </td>
+
+
+
+
+
+  </tr>
+ 
+ <tr>
+    
+
+   
+    <td colspan="6">
+
+
+
+<%
+unless @motor[@we].condicion.nil? 
+case @motor[@we].condicion
+
+	when 'Excelente' %>
+<input type="radio" name="group2_motores<%=@we%>" value="Excelente" checked="checked" disabled="disabled"> Excelente &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Regular" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Malo" disabled="disabled"> Malo
+      
+	<%when 'Bueno' %>
+<input type="radio" name="group2_motores<%=@we%>" value="Excelente" disabled="disabled"> Excelente &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Bueno" checked="checked" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Regular" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Malo" disabled="disabled"> Malo
+
+
+	<%when 'Regular' %>
+<input type="radio" name="group2_motores<%=@we%>" value="Excelente" disabled="disabled"> Excelente &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Regular" checked="checked" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Malo" disabled="disabled"> Malo
+
+
+	<%else 'Malo' %>
+<input type="radio" name="group2_motores<%=@we%>" value="Excelente" disabled="disabled"> Excelente &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Regular"  disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_motores<%=@we%>" value="Malo" checked="checked" disabled="disabled"> Malo
+
+
+<%
+end
+end
+%>
+
+
+
+    </td>
+
+
+
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Observaciones
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @motor[@we].observacion.to_s.strip.upcase unless @motor[@we].observacion.nil? %>    &nbsp;
+</td>
+
+
+
+  </tr>
+
+
+ </table>
+<%
+
+@we=@we+1
+
+end%>
+
+
+<%
+@we=0
+while @we<@arte_pesca_cantidad %>
+
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS ARTES DE PESCA (ID= <%=@arte_pesca[@we].id%>)</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1" style="table-layout:fixed;">
+ 
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1;width:50%" style="word-wrap: break-word;">
+      <%=@arte_pesca[@we].nombre_arte_pesca.to_s %>:
+    </td>
+
+    <td colspan="3" style="background-color: #f1f1f1;width:50%">
+      Condiciones del Arte de Pesca
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3">
+
+<%unless @arte_pesca[@we].nil?%>
+
+<%if @arte_pesca[@we].es_propia  %>
+
+
+<input type="radio" name="group1_arte<%=@we%>" value="Si" checked="checked" disabled="disabled"> Propia &nbsp;
+<input type="radio" name="group1_arte<%=@we%>" value="No" disabled="disabled"> A Solicitar
+<%else%>
+<input type="radio" name="group1_arte<%=@we%>" value="Si"  disabled="disabled"> Propia &nbsp;
+<input type="radio" name="group1_arte<%=@we%>" value="No" checked="checked" disabled="disabled"> A Solicitar
+
+<%
+end
+
+end
+
+%>
+
+    </td>
+
+
+    <td colspan="3">
+      <%unless @arte_pesca[@we].condicion.nil?%>
+<%
+case @arte_pesca[@we].condicion
+
+	when 'Bueno' %>
+<input type="radio" name="group2_arte<%=@we%>" value="Bueno" checked="checked" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_arte<%=@we%>" value="Regular" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_arte<%=@we%>" value="Malo" disabled="disabled"> Malo
+
+
+	<%when 'Regular' %>
+<input type="radio" name="group2_arte<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_arte<%=@we%>" value="Regular" checked="checked" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_arte<%=@we%>" value="Malo" disabled="disabled"> Malo
+
+
+	<%else 'Malo' %>
+<input type="radio" name="group2_arte<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_arte<%=@we%>" value="Regular"  disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_arte<%=@we%>" value="Malo" checked="checked" disabled="disabled"> Malo
+
+
+<%end
+end
+%>
+
+    </td>
+  </tr>
+
+<!-- Dependiendo del tipo de arte de pesca, a partir de este punto se mostraran los diferentes forms -->
+
+<%
+
+case @arte_pesca[@we].tipo_arte_pesca.grupo.to_s.strip.upcase  
+	when "REDES" %>
+	<tr>
+	<td style="background-color: #f1f1f1">Cantidad
+	</td>
+	<td style="background-color: #f1f1f1">Largo
+	</td>
+		
+	<td style="background-color: #f1f1f1">Ancho
+	</td>
+	
+	<td style="background-color: #f1f1f1">Luz Maya
+	</td>
+	
+	<td style="background-color: #f1f1f1" colspan="2">Tipo de Nylon
+	</td>
+	
+	</tr>
+	
+	<tr>
+	<td><%= @arte_pesca[@we].cantidad.to_i %> &nbsp;
+	</td>
+	<td><%= @arte_pesca[@we].largo_f %> &nbsp;
+	</td>
+		
+	<td><%= @arte_pesca[@we].ancho_f %> &nbsp;
+	</td>
+	
+	<td style="word-wrap: break-word;"><%= @arte_pesca[@we].luz_maya.to_s.strip.upcase unless @arte_pesca[@we].luz_maya.nil? %> &nbsp;
+	</td>
+	
+	<td colspan="2" style="word-wrap: break-word;"><%=TipoNylon.find(@arte_pesca[@we].tipo_nylon_id).descripcion.to_s.strip.upcase unless @arte_pesca[@we].tipo_nylon_id.nil? %> &nbsp;
+	</td>
+	
+	</tr>
+
+
+	<%when "PALANGRES"%>
+		<tr>
+	<td style="background-color: #f1f1f1">Cantidad
+	</td>
+	<td style="background-color: #f1f1f1">Largo
+	</td>
+		
+	<td style="background-color: #f1f1f1">Cantidad de Anzuelos
+	</td>
+	
+	<td style="background-color: #f1f1f1">Nº Anzuelo
+	</td>
+	
+	<td style="background-color: #f1f1f1" colspan="2">Linea Madre
+	</td>
+	
+	</tr>
+	
+	<tr>
+	<td><%= @arte_pesca[@we].cantidad.to_i %> &nbsp;
+	</td>
+	<td><%= @arte_pesca[@we].cantidad_anzuelos.to_i %> &nbsp;
+	</td>
+		
+	<td style="word-wrap: break-word;"><%= @arte_pesca[@we].nro_anzuelo %> &nbsp;
+	</td>
+	
+	<td style="word-wrap: break-word;"><%= @arte_pesca[@we].luz_maya.to_s.strip.upcase unless @arte_pesca[@we].luz_maya.nil? %> &nbsp;
+	</td>
+	<td colspan="2" style="word-wrap: break-word;"><%=@arte_pesca[@we].material_linea_madre.to_s.strip.upcase unless @arte_pesca[@we].material_linea_madre.nil? %> &nbsp;
+	</td>
+	
+	
+	</tr>
+
+	<%when "NASAS"%>
+
+		<tr>
+	<td style="background-color: #f1f1f1">Cantidad
+	</td>
+	<td style="background-color: #f1f1f1">Largo
+	</td>
+		
+	<td style="background-color: #f1f1f1">Ancho
+	</td>
+	
+	<td style="background-color: #f1f1f1">Alto
+	</td>
+	
+	<td style="background-color: #f1f1f1" colspan="2">Material
+	</td>
+	
+	</tr>
+	
+	<tr>
+	<td><%= @arte_pesca[@we].cantidad.to_i %> &nbsp;
+	</td>
+	<td><%= @arte_pesca[@we].largo_f %> &nbsp;
+	</td>
+		
+	<td><%= @arte_pesca[@we].ancho_f %> &nbsp;
+	</td>
+	
+	<td><%= @arte_pesca[@we].alto_f  %> &nbsp;
+	</td>
+	<td colspan="2" style="word-wrap: break-word;"><%=@arte_pesca[@we].material.to_s.strip.upcase unless @arte_pesca[@we].material.nil? %> &nbsp;
+	</td>
+	
+	
+	</tr>
+	<%when "CORDELES"%>
+
+		<tr>
+	<td style="background-color: #f1f1f1">Cantidad
+	</td>
+	<td style="background-color: #f1f1f1">Cantidad de Anzuelos
+	</td>
+		
+	<td style="background-color: #f1f1f1">Nº del Anzuelo
+	</td>
+	
+	<td style="background-color: #f1f1f1">Tipo Cordel
+	</td>
+	
+	<td style="background-color: #f1f1f1" colspan="2">Nº del Cordel
+	</td>
+
+	
+	</tr>
+	
+	<tr>
+	<td><%= @arte_pesca[@we].cantidad.to_i %> &nbsp;
+	</td>
+	<td><%= @arte_pesca[@we].cantidad_anzuelos.to_i %> &nbsp;
+	</td>
+		
+	<td><%= @arte_pesca[@we].nro_anzuelo %> &nbsp;
+	</td>
+	
+	<td style="word-wrap: break-word;"><%= @arte_pesca[@we].tipo_cordel.to_s.strip.upcase unless @arte_pesca[@we].tipo_cordel.nil? %> &nbsp;
+	</td>
+	<td colspan="2" style="word-wrap: break-word;"><%=@arte_pesca[@we].nro_cordel %> &nbsp;
+	</td>
+	
+	
+	</tr>
+	<%else "ATARRAYAS"%>
+	<tr>
+	<td colspan="3" style="background-color: #f1f1f1;width:33%">Cantidad
+	</td>
+	
+	<td colspan="3" style="background-color: #f1f1f1;width:33%">Luz Maya
+	</td>
+	
+	
+	</tr>
+	
+	<tr>
+	<td colspan="3"><%= @arte_pesca[@we].cantidad.to_i %> &nbsp;
+	</td>
+	
+	<td colspan="3" style="word-wrap: break-word;"><%= @arte_pesca[@we].luz_maya.to_s.strip.upcase unless @arte_pesca[@we].luz_maya.nil? %> &nbsp;
+	</td>
+	
+	
+	</tr>
+<%end
+%>
+
+
+</table>
+
+<%
+
+@we=@we+1
+
+end%>
+
+
+<%
+@we=0
+while @we<@equipo_seguridad_cantidad %>
+
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS DE EQUIPO DE SEGURIDAD Y NAVEGACIÓN (ID= <%=@equipo_seguridad[@we].id%>)</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1" style="table-layout:fixed;">
+ 
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      Equipo de Seguridad
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      Item
+    </td>
+<!--    <td colspan="2" style="background-color: #f1f1f1">
+      Marca
+    </td> -->
+    
+
+  </tr>
+ 
+ <tr>   
+    
+    <td colspan="3">
+      <%unless @equipo_seguridad[@we].es_propio.nil? %> 
+
+<%if @equipo_seguridad[@we].es_propio  %>
+
+
+<input type="radio" name="group1_equipo<%=@we%>" value="Si" checked="checked" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group1_equipo<%=@we%>" value="No" disabled="disabled"> No
+<%else%>
+<input type="radio" name="group1_equipo<%=@we%>" value="Si"  disabled="disabled"> Si &nbsp;
+<input type="radio" name="group1_equipo<%=@we%>" value="No" checked="checked" disabled="disabled"> No
+
+<%
+
+end
+else%>
+
+&nbsp;
+<%end%>
+ 
+    </td>
+    <td colspan="3" style="word-wrap: break-word;">
+      <%= TipoEquipoSeguridad.find(@equipo_seguridad[@we].tipo_equipo_id).tipo.to_s unless @equipo_seguridad[@we].tipo_equipo_id.nil? %> &nbsp;
+    </td>
+
+<!--    <td colspan="2">
+      <%#= @equipo_seguridad[@we].condicion_corporal_becerra unless @equipo_seguridad[@we].nil? %> 
+    </td> -->
+
+        
+  </tr>
+
+<!-- Ojo aqui, hay una iteración -->
+ 
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Marca / Modelo
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Serial
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width:34%">
+      Cantidad
+    </td>
+    
+
+  </tr>
+ 
+ <tr>   
+    
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @equipo_seguridad[@we].modelo.to_s.strip.upcase unless @equipo_seguridad[@we].modelo.nil? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @equipo_seguridad[@we].numero_serial.to_s.strip.upcase unless @equipo_seguridad[@we].numero_serial.nil? %> &nbsp;
+    </td>
+
+    <td colspan="2">
+      <%= @equipo_seguridad[@we].cantidad.to_i unless @equipo_seguridad[@we].nil? %> &nbsp;
+    </td>
+
+        
+  </tr>
+
+
+ <tr>   
+    
+    <td colspan="6" style="background-color: #f1f1f1">
+      Descripción 
+    </td>
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @equipo_seguridad[@we].descripcion.to_s.strip.upcase unless @equipo_seguridad[@we].descripcion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="6" style="background-color: #f1f1f1">
+      Condiciones del Equipo de Seguridad y Navegación 
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="6">
+      <%unless @equipo_seguridad[@we].condicion.nil?%>
+<%
+case @equipo_seguridad[@we].condicion
+
+	when 'Bueno' %>
+<input type="radio" name="group2_equipo<%=@we%>" value="Bueno" checked="checked" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_equipo<%=@we%>" value="Regular" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_equipo<%=@we%>" value="Malo" disabled="disabled"> Malo
+
+
+	<%when 'Regular' %>
+<input type="radio" name="group2_equipo<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_equipo<%=@we%>" value="Regular" checked="checked" disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_equipo<%=@we%>" value="Malo" disabled="disabled"> Malo
+
+
+	<%else 'Malo' %>
+<input type="radio" name="group2_equipo<%=@we%>" value="Excelente" disabled="disabled"> Excelente &nbsp;
+<input type="radio" name="group2_equipo<%=@we%>" value="Bueno" disabled="disabled"> Bueno &nbsp;
+<input type="radio" name="group2_equipo<%=@we%>" value="Regular"  disabled="disabled"> Regular &nbsp;
+<input type="radio" name="group2_equipo<%=@we%>" value="Malo" checked="checked" disabled="disabled"> Malo
+
+
+<%end
+end
+%>
+
+    </td>
+
+    
+  </tr>
+
+
+</table>
+<%
+
+@we=@we+1
+
+end%>
+
+<%
+@we=0
+while @we<@faenas_pesca_cantidad %>
+
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>DATOS DE CAMPAÑAS / FAENAS DE PESCA (ID= <%=@faenas_pesca[@we].id%>)</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1" style="table-layout:fixed;">
+ 
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1;width:50%">
+      Nº de Campañas / Faenas de Pesca Mensual
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width:50%">
+      Captura por Campaña / Faenas de Pesca (Kg)
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3">
+      <%= @faenas_pesca[@we].faenas_mensual unless @faenas_pesca[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="3">
+      <%= @faenas_pesca[@we].captura_campana_f unless @faenas_pesca[@we].nil? %> &nbsp;
+    </td>
+
+  </tr>
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      Especies Capturadas (Nombre Común)
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      Captura Estimada (Kg)
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+      <%= TipoEspecieAcuicultura.find(@faenas_pesca[@we].tipo_especie_id).nombre.strip.upcase unless @faenas_pesca[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="3">
+      <%= @faenas_pesca[@we].captura_estimada_f unless @faenas_pesca[@we].nil? %> &nbsp;
+    </td>
+
+  </tr>
+
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      Precio por Kilogramo
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      Destino de la Captura
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+
+    
+    <td colspan="3">
+      <%= @faenas_pesca[@we].ganancia_por_unidad_f unless @faenas_pesca[@we].nil? %> &nbsp;
+    </td>
+    <td colspan="3" style="word-wrap: break-word;">
+      <%= @faenas_pesca[@we].destino_captura.to_s.strip.upcase unless @faenas_pesca[@we].destino_captura.nil? %> &nbsp;
+    </td>
+
+  </tr>
+
+
+</table>
+
+<%
+
+@we=@we+1
+
+end%>
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>INFORMACIÓN DEL SINIESTRO</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1" style="table-layout:fixed;">
+ 
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Fecha del Siniestro
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width:33%">
+      Fecha de Notificación del Siniestro
+    </td>
+    
+    <td colspan="2" style="background-color: #f1f1f1;width:34%">
+      Partidas Siniestradas
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%= @siniestro_informacion[0].fecha_siniestro_f unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%= @siniestro_informacion[0].fecha_notificacion_f unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    
+    <td colspan="2">
+      <%= @siniestro_informacion[0].fecha_notificacion_f unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      Porcentaje de Pérdida
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      Tipo de Pérdida
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      Causa del Siniestro
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @siniestro_informacion[0].porcentaje_perdida_f << " %" unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= TipoPerdida.find(@siniestro_informacion[0].tipo_perdida_id).nombre.to_s.strip.upcase unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+   <td colspan="2" style="word-wrap: break-word;">
+      <%= CausaSiniestro.find(@siniestro_informacion[0].causa_siniestro_id).nombre.to_s.strip.upcase unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Lugar del Siniestro
+    </td>
+
+ </tr>
+
+
+ <tr>
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @siniestro_informacion[0].direccion_siniestro.to_s.strip.upcase unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+
+ </tr>
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Descripción del Siniestro
+    </td>
+
+ </tr>
+
+
+ <tr>
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @siniestro_informacion[0].descripcion_siniestro.to_s.strip.upcase unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+
+ </tr>
+
+
+
+</table>
+
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>SUGERENCIAS Y RECOMENDACIONES DEL TÉCNICO</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1" style="table-layout:fixed;">
+ 
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      ¿Se Realizó Labor Recomendada en Visitas Previas?
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      Dar Continuidad al Financiamiento
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      Casos y Medidas a Aplicar
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="2">
+
+
+<%  unless @decision_informacion.nil? 
+
+if @decision_informacion.labor_visitas_previas 
+%> 
+    
+<input type="radio" name="group3" value="Si" checked="checked" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group3" value="No" disabled="disabled"> No       
+<%else%>
+<input type="radio" name="group3" value="Si" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group3" value="No" checked="checked" disabled="disabled"> No       
+
+<%end%>
+	
+<%end%>
+
+<!--
+<input type="radio" name="group3" value="Si" checked="checked" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group3" value="No" disabled="disabled"> No       
+-->      
+
+	<%#= @siniestros[0].variedad_hibrido unless @siniestros.nil? %> &nbsp;
+    </td>    
+    <td colspan="2">
+<%  unless @decision_informacion.nil? 
+
+if @decision_informacion.continuidad_financiamiento 
+%> 
+    
+<input type="radio" name="group4" value="Si" checked="checked" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group4" value="No" disabled="disabled"> No       
+<%else%>
+<input type="radio" name="group4" value="Si" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group4" value="No" checked="checked" disabled="disabled"> No       
+
+<%end%>
+	
+<%end%>
+     
+
+ <%#= @siniestros[0].variedad_hibrido unless @siniestros.nil? %> &nbsp;
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @decision_informacion.caso_medida.nombre.to_s.upcase unless @decision_informacion.caso_medida.nil? unless @decision_informacion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Justificación del Caso y Medida a Aplicar
+    </td>
+    
+  </tr>
+ 
+ <tr>
+   
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @decision_informacion.justificacion.to_s.upcase unless @decision_informacion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Labores a Realizar por el Beneficiario
+    </td>
+    
+  </tr>
+ 
+ <tr>
+   
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @decision_informacion.labores_por_realizar.to_s.upcase unless @decision_informacion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      Recomendaciones / Sugerencias del Técnico
+    </td>
+    
+  </tr>
+ 
+ <tr>
+   
+    <td colspan="6" style="word-wrap: break-word;">
+      <%= @decision_informacion.recomendaciones.to_s.upcase unless @decision_informacion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      ¿Recomienda la Generación de Desembolso?
+    </td>
+    
+  </tr>
+ 
+ <tr>
+   
+    <td colspan="6">
+<%  unless @decision_informacion.nil? 
+
+if @decision_informacion.recomienda_generar_desembolso 
+%> 
+    
+<input type="radio" name="group5" value="Si" checked="checked" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group5" value="No" disabled="disabled"> No       
+<%else%>
+<input type="radio" name="group5" value="Si" disabled="disabled"> Si &nbsp;
+<input type="radio" name="group5" value="No" checked="checked" disabled="disabled"> No       
+
+<%end%>
+	
+<%end%>
+      &nbsp;
+
+<%#= @siniestros[0].variedad_hibrido unless @siniestros.nil? %> 
+    </td>
+    
+  </tr>
+
+
+<tr>
+  <td colspan="6" align="center" style="background-color: #f1f1f1">
+     <label> RECOMENDACIÓN DEL PLAN DE INVERSIÓN </label>
+    </td>
+
+</tr>
+
+ <tr>
+    <td style="background-color: #f1f1f1">
+      Descripción del Item
+    </td>
+    <td style="background-color: #f1f1f1">
+      Monto del Item
+    </td>
+    <td style="background-color: #f1f1f1">
+      Monto Desembolsado
+    </td>
+    <td style="background-color: #f1f1f1">
+      Saldo Disponible para Recomendar
+    </td>
+    
+    <td style="background-color: #f1f1f1">
+      Monto Recomendado
+    </td>
+
+    <td style="background-color: #f1f1f1">
+      Nº Desembolso
+    </td>
+  </tr>
+<% @de=0
+while (@de<@cantidad_plan_inversion)
+%> 
+
+ <tr>    
+    
+    <td style="word-wrap: break-word;">
+      <%= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td align="right" style="word-wrap: break-word;">
+      <%= @plan_inversion[@de].costo_real_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td align="right" style="word-wrap: break-word;">
+      <%= @plan_inversion[@de].monto_desembolsado_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td align="right" style="word-wrap: break-word;">
+<%
+@acumulador2+=(@plan_inversion[@de].monto_financiamiento - @plan_inversion[@de].monto_desembolsado)
+
+valor = sprintf('%01.2f', (@plan_inversion[@de].monto_financiamiento - @plan_inversion[@de].monto_desembolsado)).sub('.', ',')
+%>
+
+<%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+
+    <td align="right" style="word-wrap: break-word;">
+      
+
+	<%#= @plan_inversion[@de].monto_financiamiento_f unless @plan_inversion.empty? %> 
+
+
+<%
+valor = sprintf('%01.2f', @arreglo[@de]).sub('.', ',')
+%>
+
+
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+&nbsp;
+    </td>
+    <td align="center" style="word-wrap: break-word;">
+<%= @plan_inversion[@de].numero_desembolso unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+
+  </tr>
+<%
+@de=@de+1
+end
+%>
+
+<tr>
+  <td align="right" colspan="2" style="background-color: #d9d4d4">
+      <label>TOTALES </label>
+    </td>
+  <td colspan="1" style="background-color: #d9d4d4" align="right" style="word-wrap: break-word;">
+<%valor = sprintf('%01.2f', @acumulador1).sub('.', ',') %> 
+
+<label> <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%> </label>
+    &nbsp;</td>
+  <td colspan="1" style="background-color: #d9d4d4" align="right" style="word-wrap: break-word;">
+<%valor = sprintf('%01.2f', @acumulador2).sub('.', ',') %>
+     <label> <%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%> </label>
+    &nbsp;</td>
+  <td colspan="1" style="background-color: #d9d4d4" align="right" style="word-wrap: break-word;">
+<%valor = sprintf('%01.2f', @acumulador3).sub('.', ',') %>
+      <label><%=valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%></label> 
+    &nbsp;</td>
+  <td colspan="1" style="background-color: #d9d4d4" align="right" style="word-wrap: break-word;">&nbsp;</td>
+
+</tr>
+
+
+ </table>
+
+<table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label>FIRMAS DE APROBACIÓN</label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+<table border="1">
+
+<tr>
+      <td  >
+        <label>Técnico de Campo que Realizó la Inspección</label>
+        &nbsp;<hr>
+      
+	<table border="0" style="width: 100%" style="table-layout:fixed;">
+          <tr>
+            <td style="word-wrap: break-word;">
+              <label>Apellidos / Nombres:</label> <%=@tecnico_campo[0].primer_nombre.to_s.strip.upcase << " " << @tecnico_campo[0].segundo_nombre.to_s.strip.upcase << " " << @tecnico_campo[0].primer_apellido.to_s.strip.upcase << " " << @tecnico_campo[0].segundo_apellido.to_s.strip.upcase unless @tecnico_campo.empty? %>
+            </td>
+		</tr>            
+<tr>		
+<td style="width: 33%" style="word-wrap: break-word;">
+              <label>Cédula:</label> <%=@tecnico_campo[0].letra_cedula.to_s.strip.upcase << " " << @tecnico_campo[0].cedula.to_s unless @tecnico_campo.empty? %>
+            </td>
+</tr>
+
+<tr>		
+<td style="width: 33%">
+              <label>Código del Técnico:</label> <%=@tecnico_campo[0].codigo.to_s unless @tecnico_campo.empty? %>
+            </td>
+</tr>
+
+<tr>		
+<td style="width: 33%" style="word-wrap: break-word;">
+              <label>Teléfonos:</label> <%=@tecnico_campo[0].telefono_habitacion.to_s << " / " << @tecnico_campo[0].telefono_celular.to_s unless @tecnico_campo.empty? %>
+            </td>
+</tr>
+
+<tr>		
+<td style="width: 33%" style="word-wrap: break-word;">
+              <label>Institución:</label> <%=Oficina.find(@tecnico_campo[0].oficina_id).nombre.to_s.strip.upcase unless @tecnico_campo.empty? %>
+            </td>
+</tr>
+
+<tr >
+            <td rowspan="4" height="70px" style="width: 34%" colspan="">
+              <label>Firma:</label> __________________________
+            </td>
+          </tr>
+
+        </table>
+
+
+	 </td> 
+      <td >
+        <label>Persona que Atendió la Visita / Beneficiario del Financiamiento</label>
+        &nbsp;<hr>
+      
+	<table border="0" style="width: 100%" style="table-layout:fixed;">
+          <tr>
+            <td style="width: 33%" style="word-wrap: break-word;">
+              <label>Apellidos / Nombres:</label> <%=@tecnico_visita.nombre_persona_atencion.to_s.strip.upcase << " " << @tecnico_visita.apellido_persona_atencion.to_s.strip.upcase unless @tecnico_visita.nil? %>
+            </td>
+		</tr>            
+		<tr>		
+	<td style="width: 33%" style="word-wrap: break-word;">
+              <label>Cédula:</label> <%=@tecnico_visita.cedula_nacionalidad_persona_atencion.to_s.strip.upcase << " " << @tecnico_visita.cedula_persona_atencion.to_s unless @tecnico_visita.nil? %>
+            </td>
+	</tr>	
+
+	<tr >
+            <td height="70px" style="width: 34%" colspan="">
+              <label>Firma:</label> __________________________
+            </td>
+          </tr>
+
+
+	<tr >
+            <td rowspan="2" height="90px" style="width: 34%" colspan="">
+              <label>Huella Dactilar:</label> 
+            </td>
+          </tr>
+
+
+
+
+
+        </table>
+
+	</td>
+      <td   colspan="2">
+        <label>Responsable de la Brigada Vegetal</label>
+	&nbsp;<hr>
+	<table border="0" style="width: 100%" style="table-layout:fixed;">
+          <tr>
+            <td style="width: 33%" style="word-wrap: break-word;">
+              <label>Apellidos / Nombres:</label> <%=@tecnico_supervisor.primer_nombre_jefe_brigada.to_s.strip.upcase << " " << @tecnico_supervisor.segundo_nombre_jefe_brigada.to_s.strip.upcase << " " << @tecnico_supervisor.primer_apellido_jefe_brigada.to_s.strip.upcase << " " << @tecnico_supervisor.segundo_apellido_jefe_brigada.to_s.strip.upcase unless @tecnico_supervisor.nil? %>
+            </td>
+		</tr>            
+		<tr>		
+	<td style="width: 33%" style="word-wrap: break-word;">
+              <label>Cédula:</label> <%=@tecnico_supervisor.cedula_nacionalidad_jefe_brigada.to_s.strip.upcase << " " << @tecnico_supervisor.cedula_jefe_brigada.to_s unless @tecnico_supervisor.nil? %>
+            </td>
+	</tr>	
+
+		<tr>		
+	<td style="width: 33%">
+              <label>Teléfonos:</label> 
+            </td>
+	</tr>	
+
+		<tr>		
+	<td style="width: 33%" style="word-wrap: break-word;">
+              <label>Institución:</label> <%=@tecnico_supervisor.nombre.to_s.strip.upcase unless @tecnico_supervisor.nil? %>
+            </td>
+	</tr>	
+
+
+	<tr >
+            <td rowspan="2" height="70px" style="width: 34%" colspan="">
+              <label>Firma:</label> __________________________
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>    
+
+</table>
+
+
+
+
+<!-- ojo aqui
+
+
+<table border="1">
+
+    <tr>
+      <td colspan="6">
+        <div align="justify" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+          <b>Aviso:</b> Cualquier Aviso que desee poner.
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<div>  -->
+  <table style="width: 100%">
+    <tr>
+      <td>
+        
+      </td>
+      <td align="right">
+<div align="right" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">        
+
+Fecha de Impresión: <%= Time.now.strftime('%d/%m/%Y') %>
+</div>      
+</td>
+    </tr>
+  </table></div>
+
+<div id=noprint>
+<TABLE width="93%" cellpadding="2">
+<tr align="center">
+  <td><input id="imprimir" name="imprimir" onclick="Javascript:imprime()" type="button" value="Imprimir" /></td>
+</tr>
+</TABLE>
+</div>
+
+</body>
+
+</html>

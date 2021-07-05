@@ -1,0 +1,4 @@
+<% sector = @sector if sector.nil? %>
+<tr class="lista<%= even_odd  %>" id="row_<%= sector.id %>">
+	<%= render :partial => 'data', :locals => { :sector => sector, :even_odd => even_odd } -%>
+</tr>

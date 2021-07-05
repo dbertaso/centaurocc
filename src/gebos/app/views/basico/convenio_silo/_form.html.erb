@@ -1,0 +1,60 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.fecha_memorandum')%></label><label style="color: red">(*)</label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "convenio_silo[fecha_memorandum_f]", @convenio_silo.fecha_memorandum_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onchange=>"inputChange();",:valid_date_check => "date-1 < (new Date()).stripTime()" %> 
+
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.ConvenioSilo.Etiquetas.numero_memorandum')%></label><label style="color: red">(*)</label>
+    </td>
+    <td>
+      <%= text_field 'convenio_silo', 'numero_memorandum',
+        :class=>'text', :style=>'width: 150px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 120px"><label><%=I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.ciclo_productivo')%></label><label style="color: red">(*)</label></td>
+    <td>
+      <%= select(
+        'convenio_silo','ciclo_productivo_id',
+        @ciclo_productivo_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px"><label><%=I18n.t('Sistema.Body.Vistas.General.observaciones')%></label></td>
+    <td>
+      <%= text_area 'convenio_silo', 'observacion', :class=>'text', :style=>'width: 180px; height: 100px',
+        :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%></td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%=I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.fecha_cierre')%> </label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "convenio_silo[fecha_cierre_f]", @convenio_silo.fecha_cierre_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onchange=>"inputChange();",:valid_date_check => "date-1 < (new Date()).stripTime()" %> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.status')%></label>
+    </td>
+    <td>
+      <%= check_box 'convenio_silo', 'status',  :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+</table>

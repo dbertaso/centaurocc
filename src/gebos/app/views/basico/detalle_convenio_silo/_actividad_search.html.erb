@@ -1,0 +1,7 @@
+
+<%= select(
+  'detalle_convenio_silo', 'actividad_id',
+  @actividad_list.map{|e| [e.nombre, e.id]},
+  {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+  { :class=>'select', :onchange=>'inputChange();' } ) %>
+

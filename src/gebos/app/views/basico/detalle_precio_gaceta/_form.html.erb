@@ -1,0 +1,84 @@
+<table>
+  <tr>
+    <td style="width: 120px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%> </label>  
+    </td>
+    <td>
+      <%= select(
+        'sector_id','',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>'Seleccionar '},
+        { :class=>'select', :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :method => :get, :url=>{:controller=>'detalle_precio_gaceta',
+          :action=>:sector_change }, :with => "'sector_id=' + this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+    </td>
+    <td>
+      <span id="sub-sector-search">
+        <%= render :partial=>'sub_sector_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </td>
+    <td>
+      <span id="rubro-search">
+        <%= render :partial=>'rubro_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+    </td>
+    <td>
+      <span id="sub-rubro-search">
+        <%= render :partial=>'sub_rubro_search' %>
+      </span>
+    </td>
+  </tr>
+    <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)  
+    </td>
+    <td>
+      <span id="actividad-search">
+        <%= render :partial=>'actividad_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 160px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.clase')}"%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)  
+    </td>
+
+    <td>
+      <%= select(
+        'detalle_precio_gaceta','tipo_clase',
+        [[I18n.t('Sistema.Body.Modelos.DetallePrecioGaceta.Lista.tipo_a'),'A'],[I18n.t('Sistema.Body.Modelos.DetallePrecioGaceta.Lista.tipo_b'),'B'],[I18n.t('Sistema.Body.Modelos.DetallePrecioGaceta.Lista.tipo_c'),'C']],
+        { :prompt =>'Seleccionar...'},
+        { :class=>'select', :onchange => 'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 120px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.precio')} /#{I18n.t('Sistema.Body.Vistas.General.kg')}"%> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)  
+    </td>
+    <td>
+      <%= text_field 'detalle_precio_gaceta', 'valor',
+        :class=>'text', :style=>'width: 150px;',
+        :maxlength=>'10', :onKeyUp=>'textCounter(this,150);'"formatCurrency(this.value, 'valor');",
+        :onkeypress=>'inputChange();cambio_bsf(fecha_realizacion.value,this.value,this.id);' -%> 
+    </td>
+  </tr>
+</table>

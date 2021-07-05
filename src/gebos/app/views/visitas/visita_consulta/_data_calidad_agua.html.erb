@@ -1,0 +1,65 @@
+<% calidad_agua = @calidad_agua if calidad_agua.nil? %>
+<td colspan="2">
+<table>
+  <tr>
+    <td colspan="2" align="center">
+      <label style="color: red"> *** ***
+    <td>  
+  </tr>
+
+    <tr>
+          <td style="width: 300px">
+             <label>Temperatura del Agua:</label>
+          </td>
+          <td style="width: 650px">
+
+            <%= calidad_agua.temperatura_f %> ºC
+          </td>
+	</tr>
+
+    <tr>
+        <td>
+            <label>Ph del Agua:</label>
+        </td>
+    <td>
+            <%= calidad_agua.ph_f %>
+    </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Oxigeno Disuelto en el Agua:</label>
+        </td>
+        <td>
+            <%= calidad_agua.oxigeno_disuelto_f %>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+                <label>Consumo Total de Alimentos Diarios (Kg):</label>
+        </td>
+        <td>
+            <%= calidad_agua.alimento_disponible %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+                <label>Consumo de Alimento Diario:</label>
+        </td>
+        <td>
+            <%= calidad_agua.consumo_diario %> Toneladas
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+                <label>Días de Duración Estimado del Alimento:</label>
+        </td>
+        <td>
+            <%= calidad_agua.dias_duracion %> Días
+        </td>
+    </tr>
+
+        
+</table>
+</td>

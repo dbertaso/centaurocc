@@ -1,0 +1,37 @@
+<script type="text/javascript">
+  
+  function cargar_url(id, porcentaje)
+  {
+    pars = "id=" + id;
+    pars += "&unidad_produccion_caracterizacion_id=<%= @unidad_produccion_caracterizacion.id %>";
+    pars += "&porcentaje=" + porcentaje;
+    pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+    var myAjax = new Ajax.Request("/solicitudes/solicitud_pre_evaluacion_caracterizacion/save_suelos?" + pars, {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}}); return false;
+  }
+  
+</script>
+<div id="mensaje_porcentaje_suelos" style="display:none;background: #fcc;margin: 0px;border: solid 1px #f66;margin-bottom: 5px">
+  <p><%= I18n.t('Sistema.Body.Vistas.General.coloque_porcentaje_guardar_selección') %></p>
+</div>	
+
+<label><%= I18n.t('Sistema.Body.Vistas.General.textura') %>:</label>
+<br>
+<table border=0>
+  <% lista = 'lista0'
+  @tipo_suelo.each { |i| %>
+    <tr>
+      <td>
+        <%= i.nombre %>
+      </td>
+      <td> 
+        <%= text_field 'caracterizacion_tipo_suelo_porcentaje', "#{i.id}",
+        :class=>'text', :onblur => "suelo_aux = this.value; cargar_url(#{i.id}, this.value);",
+        :style=>'width: 50px', :value => i.porcentaje,
+        :maxlength=>'5', :onkeypress=>'return NumberDoubleKey(event);inputChange();'  -%>
+      </td>
+    </tr>
+    <script>
+      suma_suelos = suma_suelos + <%= i.porcentaje.to_f %>;
+    </script>
+  <% } %>
+</table>

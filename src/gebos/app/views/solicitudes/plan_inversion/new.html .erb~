@@ -1,0 +1,20 @@
+<%= form_title_search %>
+<div class="marco-contenido">
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+  <div id="error">
+    <table>
+      <tr>
+        <td>
+          <label align="center" style="color:red;font-style:oblique;font-bold:true;font-size:20px"><%= @mensaje1 %> </label>        </td>
+        </tr>
+    </table>
+    <br><br>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller=>'consulta_evaluacion_credito', :action => :index },
+    { :id=>'button_close1' } ) -%>
+  </div>
+
+  </div>
+</div>

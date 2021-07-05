@@ -1,0 +1,16 @@
+<% cuenta_bancaria = @cuenta_bancaria if cuenta_bancaria.nil? %>
+<td>
+  <%= cuenta_bancaria.numero  %>
+</td>
+<td>
+  <%= cuenta_bancaria.tipo_w %>
+</td>
+<td>
+  <%= cuenta_bancaria.fecha_apertura_f %>
+</td>
+<td>
+  <%= cuenta_bancaria.entidad_financiera.nombre %>
+</td>
+<td align="center">
+  <%= format_bool cuenta_bancaria.activo %>
+</td>

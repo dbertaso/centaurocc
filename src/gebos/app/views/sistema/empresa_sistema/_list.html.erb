@@ -1,0 +1,36 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 12%" <%= sort_class_helper('rif') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rif'), 'rif', 'list' %>
+      </th>
+      <th style="width: 16%" <%= sort_class_helper('nombre_corto') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.abreviado')}", 'nombre_corto', 'list' %>
+      </th>
+      <th style="width: 27%" <%= sort_class_helper('nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'nombre', 'list' %>
+      </th> 			
+      <th style="width: 14%" <%= sort_class_helper('telefono') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.telefono'), 'telefono', 'list' %>
+      </th>
+      <th style="width: 16%" <%= sort_class_helper('representante_legal') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.representante_legal'), 'representante_legal', 'list' %>
+      </th>
+      <th style="width: 7%">
+        <%= I18n.t('Sistema.Body.Vistas.General.activo')%>
+      </th>
+      <th style="width: 8%">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for empresa_sistema in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :empresa_sistema => empresa_sistema, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

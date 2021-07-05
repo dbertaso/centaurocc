@@ -1,0 +1,586 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-10" />
+
+
+</head>
+<body>
+
+<img src="/assets/logo_institucion.png" width="164" height="85" align="right" />
+<img src="/assets/Logo_gobiernoagricultura.png" width="350" height="75" align="left" />
+<!-- caso en que se desee imprimir la marca de agua
+<div style="font-size: 14px;background-image: url(/assets/marca_agua.jpg);z-index:1;"> 
+-->
+<div style="font-size: 14px;"> 
+
+<BR><BR>
+
+<br><br>
+
+
+<table width="100%" border="1">
+  <tr >
+    <td rowspan="2" align="center">
+      <label><%= (I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.numero_factura')).upcase %>:</label>
+ <span style="color:green;font-weight: bold;font-size: 28px"><%=@factura_orden_despacho.numero_factura.strip.upcase unless @factura_orden_despacho.numero_factura.nil?%></span> 
+  </tr>   
+ <tr rowspan="2">
+<td  align="center"><label><%=I18n.t('Sistema.Body.Vistas.Form.fecha')%>:</label> <br> <%= Time.now.strftime(I18n.t('time.formats.gebos_short')) %><br><label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho_may')%>: </label> <span style="color:red;font-weight: bold;font-size: 28px"><%= @orden_despacho.numero %></span> </td>
+
+</tr> 
+</table>
+
+
+<table width="100%" border="1">
+
+
+ <tr>
+    <td colspan="3" >
+
+      <label><%=I18n.t('Sistema.Body.General.senores')%>:</label>  <%=@factura_orden_despacho.casa_proveedora.nombre.strip.upcase %>
+    </td>
+
+   <td colspan="3" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.persona_contacto')%>:</label> <%=@factura_orden_despacho.sucursal_casa_proveedora.persona_contacto.strip.upcase unless @factura_orden_despacho.sucursal_casa_proveedora.persona_contacto.nil?%>
+    </td>
+
+   <td colspan="2" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rif')%>:</label>  <%=@factura_orden_despacho.casa_proveedora.rif.strip.upcase %>
+    </td>
+
+
+
+ <tr/>
+ <tr>
+   <td colspan="8" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.telefonos')%>:</label>  
+
+
+
+<%
+unless @factura_orden_despacho.sucursal_casa_proveedora.nil?
+case @factura_orden_despacho.sucursal_casa_proveedora.tipo_telefono1
+
+when 'O'
+  @var_tipo1=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.oficina')
+when 'F'
+  @var_tipo1=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.fax')
+when 'C'
+  @var_tipo1=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.celular')
+else 
+  @var_tipo1=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.otro')
+end
+
+case @factura_orden_despacho.sucursal_casa_proveedora.tipo_telefono2
+
+when 'O'
+  @var_tipo2=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.oficina')
+when 'F'
+  @var_tipo2=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.fax')
+when 'C'
+  @var_tipo2=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.celular')
+else 
+  @var_tipo2=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.otro')
+end
+
+case @factura_orden_despacho.sucursal_casa_proveedora.tipo_telefono3
+
+when 'O'
+  @var_tipo3=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.oficina')
+when 'F'
+  @var_tipo3=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.fax')
+when 'C'
+  @var_tipo3=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.celular')
+else 
+  @var_tipo3=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.otro')
+end
+
+case @factura_orden_despacho.sucursal_casa_proveedora.tipo_telefono4
+
+when 'O'
+  @var_tipo4=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.oficina')
+when 'F'
+  @var_tipo4=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.fax')
+when 'C'
+  @var_tipo4=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.celular')
+else 
+  @var_tipo4=I18n.t('Sistema.Body.Modelos.OrdenDespacho.TiposTelefonos.otro')
+end
+end
+
+%>
+
+<%unless @factura_orden_despacho.sucursal_casa_proveedora.nil?%>
+<%="<strong>#{I18n.t('Sistema.Body.Vistas.General.tlf')} #{@var_tipo1}:</strong> ".html_safe << @factura_orden_despacho.sucursal_casa_proveedora.telefono1  unless @factura_orden_despacho.sucursal_casa_proveedora.telefono1.to_s == ""%> 
+
+<%="<strong>#{I18n.t('Sistema.Body.Vistas.General.tlf')} #{@var_tipo2}:</strong> ".html_safe << @factura_orden_despacho.sucursal_casa_proveedora.telefono2 unless @factura_orden_despacho.sucursal_casa_proveedora.telefono2.to_s == ""%> 
+
+<%="<strong>#{I18n.t('Sistema.Body.Vistas.General.tlf')} #{@var_tipo3}:</strong> ".html_safe << @factura_orden_despacho.sucursal_casa_proveedora.telefono3 unless @factura_orden_despacho.sucursal_casa_proveedora.telefono3.to_s == ""%> 
+
+<%="<strong>#{I18n.t('Sistema.Body.Vistas.General.tlf')} #{@var_tipo4}:</strong> ".html_safe << @factura_orden_despacho.sucursal_casa_proveedora.telefono4 unless @factura_orden_despacho.sucursal_casa_proveedora.telefono4.to_s == ""%> 
+<%end%>
+<!--</font>-->
+
+
+
+    </td>
+
+   </tr>
+ 
+   <td colspan="4" >
+
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sucursal') %>:</label>  <%=@factura_orden_despacho.sucursal_casa_proveedora.nombre.strip.upcase %>
+   </td>
+ 
+   <td colspan="4" style="width:50%" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%>:</label>  <%=Ciudad.find(@factura_orden_despacho.sucursal_casa_proveedora.ciudad_id).estado.nombre.strip.upcase %>
+    </td>
+</tr>
+
+
+  
+    <tr>
+    <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.entrega_insumo_beneficiario')%></label>
+    </td>
+  </tr>
+
+<tr>
+
+    <td colspan="4"  >
+
+      <label><%=I18n.t('Sistema.Body.General.beneficiario')%>:</label>
+<% if @es_no==1 %>
+	<%= @datos_cliente.primer_nombre.to_s.strip.upcase << " " << @datos_cliente.segundo_nombre.to_s.strip.upcase << " " << @datos_cliente.primer_apellido.to_s.strip.upcase << " " << @datos_cliente.segundo_apellido.to_s.strip.upcase%>
+	<%else%>
+
+	<%= @datos_cliente.nombre.to_s.strip.upcase %>
+	<%end%>
+    </td>
+
+    <td colspan="4" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%>:</label>
+	<% if @es_no==1 %>
+	<%= @datos_cliente.cedula_nacionalidad.strip.upcase << " " << @datos_cliente.cedula.to_s.strip.upcase %>
+	<%else%>
+	<%= @datos_cliente.rif.strip.upcase %>
+	<%end%>
+
+    </td>
+</tr>
+   <tr>
+
+    <td colspan="4" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%>:</label>
+<% if @es_no==1 %>
+	<%= Ciudad.find(PersonaDireccion.find_by_persona_id(@datos_cliente.id).ciudad_id).estado.nombre.strip.upcase %>
+	<%else%>
+
+	<%= Ciudad.find(EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).ciudad_id).estado.nombre.strip.upcase %>
+	<%end%>
+
+
+    </td>
+
+    <td colspan="4" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%>:</label>
+
+<% if @es_no==1 %>
+	<%= PersonaDireccion.find_by_persona_id(@datos_cliente.id).municipio.nombre.strip.upcase  %>
+	<%else%>
+
+	<%= EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).municipio.nombre.strip.upcase %>
+	<%end%>
+    </td>
+</tr>
+<tr>
+   <td colspan="8" >
+
+      <label><%=I18n.t('Sistema.Body.General.direccion')%>:</label>
+<% if @es_no==1 %>
+	<%= PersonaDireccion.find_by_persona_id(@datos_cliente.id).avenida.strip.upcase << " " << PersonaDireccion.find_by_persona_id(@datos_cliente.id).edificio.strip.upcase << " " << PersonaDireccion.find_by_persona_id(@datos_cliente.id).zona.strip.upcase %>
+	<%else%>
+
+	<%= EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).avenida.strip.upcase << " " << EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).edificio.strip.upcase << " " << EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).zona.strip.upcase %>
+	<%end%>
+
+    </td>
+</tr>
+<% if @es_no!=1 %>
+
+<%
+
+@la_persona=EmpresaIntegrante.find_by_sql("select persona_id from empresa_integrante,empresa_integrante_tipo  where empresa_integrante.empresa_id=#{@datos_cliente.id} and empresa_integrante_tipo.empresa_integrante_id = empresa_integrante.id and empresa_integrante_tipo.tipo = 'R'")[0].persona unless EmpresaIntegrante.find_by_sql("select persona_id from empresa_integrante,empresa_integrante_tipo  where empresa_integrante.empresa_id=#{@datos_cliente.id} and empresa_integrante_tipo.empresa_integrante_id = empresa_integrante.id and empresa_integrante_tipo.tipo = 'R'").empty?
+
+
+    
+%>
+
+    <tr>
+   <td colspan="4" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.representante_legal')%>:</label> 
+
+
+    <%=@la_persona.primer_nombre.to_s.strip.upcase << " " << @la_persona.segundo_nombre.to_s.strip.upcase << " " << @la_persona.primer_apellido.to_s.strip.upcase << " " << @la_persona.segundo_apellido.to_s.strip.upcase unless @la_persona.nil?%>
+
+
+
+<td colspan="4">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>:</label> 
+<%=@la_persona.cedula_nacionalidad.strip.upcase << " " << @la_persona.cedula.to_s unless @la_persona.nil? %>
+</td>
+    </tr>
+<%end%>
+
+
+   <tr>
+    <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.contenido_del_despacho')%></label>
+    </td>
+  </tr>
+    
+     <tr  align="center">
+    <td colspan="8">
+      <div id="list" >
+
+<%even_odd = 1%>
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%#= sort_class_helper('@numero_desembolso') %>>
+          <%#= sort_link_helper '# Nro.Desembolso', '@numero_desembolso', 'list' %>
+          <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho')%>        
+        </th>
+
+         <th style="width: 120px" <%#= sort_class_helper('item_nombre') %>>
+          <%#= sort_link_helper '# Ítem', 'item_nombre', 'list' %>
+          <%="# #{I18n.t('Sistema.Body.Vistas.General.item')}"%>        
+        </th>
+         <th style="width: 320px" <%#= sort_class_helper('observacion') %>>
+          <%#= sort_link_helper 'Descripción', 'observacion', 'list' %><%=I18n.t('Sistema.Body.General.descripcion')%>
+        </th>
+
+        <th style="width: 150px" <%#= sort_class_helper('unidad_medida_id') %>>
+          <%#= sort_link_helper 'Unidad de Medida', 'unidad_medida_id', 'list' %><%=I18n.t('Sistema.Body.Modelos.UnidadMedida.nombre')%>
+        </th>
+        <th style="width: 120px" <%#= sort_class_helper('cantidad') %>>
+          <%#= sort_link_helper 'Cantidad', 'cantidad', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%>
+        </th>
+
+        <th style="width: 160px" <%#= sort_class_helper('costo_real') %>>
+          <%#= sort_link_helper 'Precio Unitario', 'costo_real', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.General.unitario')%>
+       </th>
+
+        <th style="width: 160px" <%#= sort_class_helper('monto_financiamiento') %>>
+          <%#= sort_link_helper 'Precio Total', 'monto_financiamiento', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%>
+        </th>
+        <% if @imprimo != '1'%>
+        <th style="width: 60px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Cantidad Entregada', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_entregada')%>
+        </th>
+
+        <th style="width: 60px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Cantidad Pendiente por Entregar', 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_pendiente_por_entregar')%>
+        </th>
+        <%end%>
+        <th style="width: 160px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Saldo a Entregar', 'monto_factura', 'list' %>
+          <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.saldo_a_entregar')%>        
+      </th>
+        </tr>
+    </thead>
+	<tbody id="list-body">
+<tr class="lista<%= even_odd %>" id="row_<%= @factura_orden_despacho.id %>">
+<td align="center">
+<%=@numero_desembolso%>
+  <%#= OrdenDespachoDetalle.find(orden_despacho_detalle.id).orden_despacho_id %>
+</td>
+<td align="center">
+  <%= @factura_orden_despacho.item_nombre.to_s.strip.upcase  %>
+</td>
+<td align="center">
+<%condi="nombre ='#{@factura_orden_despacho.item_nombre}'"%>
+<%=Item.find_by_nombre(@factura_orden_despacho.item_nombre).descripcion unless Item.count(:conditions=>condi) == 0 %>  
+<%#= OrdenDespachoDetalle.find(orden_despacho_detalle.id).observacion.strip.upcase %>
+</td>
+<td align="center">
+  <%= @factura_orden_despacho.unidad_medida.abreviatura.strip.upcase %>
+</td>
+<td align="right">
+<%=format_fm(@factura_orden_despacho.cantidad)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{@factura_orden_despacho.cantidad}));"%>
+  <%#= orden_despacho_detalle.cantidad_f %>
+</td>
+<td align="right">
+<%=format_fm(@factura_orden_despacho.costo_real)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{@factura_orden_despacho.costo_real}));"%>
+  <%#= orden_despacho_detalle.costo_real_f %>
+</td>
+<td align="right">
+<%=format_fm(@factura_orden_despacho.monto_financiamiento)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{@factura_orden_despacho.monto_financiamiento}));"%>
+  <%#= orden_despacho_detalle.monto_financiamiento_f %>
+</td>
+
+<%if @imprimo!='1'%>
+<td align="center" bgcolor="#CFFFE8">
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+<%=format_fm('0')%>
+
+<%else%>
+<%=format_fm(@factura_orden_despacho.cantidad_factura)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{@factura_orden_despacho.cantidad_factura}));"%>
+<%end %>
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_facturacion}));"%>
+  <%#= orden_despacho_detalle.monto_facturacion_f %>
+</td>
+<td align="center" bgcolor="#FEFF99">
+
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+<%=format_fm('0')%>
+
+<%else
+resultado_resta_factura=@factura_orden_despacho.cantidad.to_f - @factura_orden_despacho.cantidad_factura.to_f
+%>
+<%=format_fm(resultado_resta_factura)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{resultado_resta_factura}));"%>
+
+
+<%end %>
+
+
+<%#=javascript_tag "document.write(formatCurrency2(#{orden_despacho_detalle.monto_facturacion}));"%>
+  <%#= orden_despacho_detalle.monto_facturacion_f %>
+</td>
+
+<%end%>
+<td align="right">
+<% if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || OrdenDespacho.find(@numero_desembolso).estatus_id==20020 %>
+
+<%if OrdenDespacho.find(@numero_desembolso).estatus_id==20000 || OrdenDespacho.find(@numero_desembolso).estatus_id==20010 || @imprimio="1" %>
+<%=format_fm(@factura_orden_despacho.monto_financiamiento)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{@factura_orden_despacho.monto_financiamiento}));"%>
+<%else%>
+<%=format_fm(@factura_orden_despacho.monto_factura)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{@factura_orden_despacho.monto_factura}));"%>
+<%end%>
+
+<%else
+resultado_resta=@factura_orden_despacho.monto_financiamiento - @factura_orden_despacho.monto_factura
+
+if resultado_resta < 0
+resultado_resta=resultado_resta * -1
+end
+%>
+
+<%=format_fm(resultado_resta)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{resultado_resta}));"%>
+<%end %>
+
+  <%#= orden_despacho_detalle.monto_facturacion_f %>
+</td>
+</tr>
+<tr border="1" style="background-color: #888888;">
+
+<td colspan="6" style="border: solid 1px #000000;" align="right"><strong><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')).upcase%></strong></td>
+<td style="border: solid 1px #000000;" align="right"><strong><%=format_fm(@factura_orden_despacho.monto_financiamiento)%><%#=javascript_tag "document.write(formatCurrency2(#{@factura_orden_despacho.monto_financiamiento}));"%><%#=sprintf('%01.2f', @total_saldo_entregar).sub('.', ',')%></strong></td>
+
+        <% if @imprimo != '1'%>
+<td style="border: solid 1px #000000;" align="right" colspan="2"></td>
+<!--<td style="border: solid 1px #000000;" align="right"></td> -->
+        <% end%>
+
+<td style="border: solid 1px #000000;" align="right"><strong><%=format_fm(resultado_resta)%><%#=javascript_tag "document.write(formatCurrency2(#{resultado_resta}));"%><%#=sprintf('%01.2f', @total_precio_total).sub('.', ',')%></strong></td>
+</tr>
+
+</tbody>
+</table>
+
+
+
+   <%#= render :partial => 'list' %>
+	</div>
+    </td>
+       
+  </tr>
+
+  <tr>
+    <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.montos_orden_despacho')%></label>
+    </td>
+  </tr>
+ 
+  
+
+  <tr>
+    <td colspan="2" style="width:25%">
+
+      <label><%= I18n.t('Sistema.Body.Vistas.ConsultaCuentaProyectado.Etiquetas.monto_total') %>:</label><%=format_fm(@total_saldo_entregar)%><%#=javascript_tag "document.write(formatCurrency2(#{@total_saldo_entregar}));"%> <%#=sprintf('%01.2f', @total_saldo_entregar).sub('.', ',')%>
+
+    </td>
+
+    <td colspan="2" style="width:25%">
+
+      <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_despachado')%>:</label>
+<%if @orden_despacho.estatus_id == 20020  %>
+<%=format_fm('0')%>
+<%else%>
+
+<!-- ojo aqui no estoy seguro si este es el monto que se debe imprimir -->
+<%#eliminado=javascript_tag "document.write(formatCurrency2(#{Prestamo.find(@orden_despacho.prestamo_id).monto_despachado}));"%> <%#=sprintf('%01.2f', Prestamo.find(@orden_despacho[0].prestamo_id).monto_despachado).sub('.', ',')%>
+<%=format_fm(OrdenDespachoDetalle.sum(:monto_facturacion,:conditions=>"orden_despacho_id=#{@orden_despacho.id}"))%>
+<%#=javascript_tag "document.write(formatCurrency2(#{OrdenDespachoDetalle.sum(:monto_facturacion,:conditions=>"orden_despacho_id=#{@orden_despacho.id}")}));"%> 
+<%end%>
+    </td>
+    
+    <td colspan="2" style="width:25%">
+
+      <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_confirmado')%>:</label>
+<%if @orden_despacho.estatus_id == 20020  %>
+<%=format_fm('0')%>
+<%else%>
+<%=format_fm(@total_precio_total)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{@total_precio_total}));"%>
+<%end%>
+ <%#=sprintf('%01.2f', @total_precio_total).sub('.', ',') %>
+
+    </td>
+    <td colspan="2" style="width:25%">
+
+      <label><%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_a_despachar')%>:</label><%=format_fm(@total_precio_total)%><%#=javascript_tag "document.write(formatCurrency2(#{@total_precio_total}));"%> <%#=sprintf('%01.2f', @total_precio_total).sub('.', ',')%>
+
+    </td>
+   </tr>
+ 
+    
+    <tr>
+    <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=(I18n.t('Sistema.Body.General.comentarios')).upcase%></label>
+    </td>
+  </tr>
+    <tr>
+      <td colspan="8" align="justify">
+      <%= @factura_orden_despacho.orden_despacho_detalle.observacion.to_s.strip.upcase %>&nbsp;
+
+    </td>
+    </tr>
+    <tr>
+      <td colspan="8" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.vigencia_orden_despacho')%></label>
+    </td>
+    </tr>  
+<tr>    
+	<td colspan="8" >
+
+      <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.parrafo_productor_caduca',:caducidad=>@parametros_general.caducidad_orden_despacho)%>: <label><%=(Time.now + ((60 * @parametros_general.caducidad_orden_despacho) * 60 * 24)).strftime(I18n.t('time.formats.gebos_short'))%> </label>
+    </td>
+   
+</tr><tr>
+   <td colspan="8" >
+
+      <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.parrafo_casa_caduca',:caducidad=>@parametros_general.caducidad_casa_proveedora)%>: <label><%=(Time.now + ((60 * @parametros_general.caducidad_casa_proveedora) * 60 * 24)).strftime(I18n.t('time.formats.gebos_short'))%><%#=@factura_orden_despacho.fecha_emision.strftime(I18n.t('time.formats.gebos_short')) %></label>
+    </td> </tr>
+<tr>      
+<td colspan="8" align="center" >
+
+      <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.sin_enmiendas')%>
+    </td></tr>
+      <tr><td colspan="8" >
+
+      <label><%= (I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.forma_pago')).upcase %>:   <%=@factura_orden_despacho.casa_proveedora.tipo_pago=='1' ? (I18n.t('Sistema.Body.Vistas.General.transferencia')).upcase : (I18n.t('Sistema.Body.Vistas.General.cheque')).upcase %></label>
+    </td>
+    </tr>
+    <tr>
+    <td colspan="8" align="center" style="background-color: #d9d4d4" >
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.seccion_firmas')%></label>
+    </td>
+  </tr>
+<tr>
+
+    <td colspan="4" align="center" style="width:50%" >
+
+      <label><%= (I18n.t('Sistema.Body.General.beneficiario')).upcase %>:</label>
+    </td>
+
+    <td colspan="4" align="center" style="width:50%" >
+
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.aprobado_por_coordinador_estadal')%>:</label>
+    </td>
+  
+</tr>
+
+<tr >
+<td colspan="4"><br><br><br><br><br><br><br><br></td>
+
+<td colspan="4"><br><br><br><br><br><br><br><br></td>
+</tr>
+
+  <tr>
+
+    <td colspan="4" align="center" style="width:50%" >
+
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.firma_nro_cedula')%></label>
+    </td>
+
+    <td colspan="4" align="center" style="width:50%" >
+
+      <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.firma_nro_cedula')%></label>
+    </td>
+</tr>
+    <tr>
+      <td colspan="8" align="justify" >
+        <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.parrafo_nota',:caducidad=>@parametros_general.caducidad_orden_despacho)%>
+      </td>
+    </tr>
+<tr>
+
+    <td colspan="3" style="width:33%" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Mensajes.elaborado_por')%>:</label> <%=Usuario.find(session[:id]).primer_nombre.to_s.strip.upcase + ' ' + Usuario.find(session[:id]).segundo_nombre.to_s.strip.upcase + ' ' + Usuario.find(session[:id]).primer_apellido.to_s.strip.upcase + ' ' + Usuario.find(session[:id]).segundo_apellido.to_s.strip.upcase %>
+    </td>
+
+    <td colspan="3" style="width:33%" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.usuario')%>:</label> <%=Usuario.find(session[:id]).nombre_usuario.strip.upcase %>
+    </td>
+  <td colspan="2" style="width:33%" >
+
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%>:</label> <%=Usuario.find(session[:id]).cedula_nacionalidad.strip.upcase + ' ' + Usuario.find(session[:id]).cedula.to_s%>
+    </td>
+</tr>
+    <tr>
+      <td colspan="8">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.oficina')%> <%=I18n.t('Sistema.Body.Vistas.General.regional')%>: </label><%= Oficina.find(Solicitud.find(@orden_despacho.solicitud_id).oficina_id).nombre.strip.upcase %>
+      </td>
+    </tr>
+  
+ 
+    
+  </table>
+
+<div>
+  <table style="width: 100%">
+    <tr>
+      <td>
+        
+      </td>
+      <td align="right">
+        <%=I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.fecha_impresion')%>: <%= Time.now.strftime(I18n.t('time.formats.gebos_short')) %>
+      </td>
+    </tr>
+  </table></div>
+
+
+
+</body>
+
+</html>

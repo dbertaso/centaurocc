@@ -1,0 +1,72 @@
+<%= message %>
+<%= error %>
+<%= form_title_search %>
+  <%= form_remote_tag(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :url => { :action => :list } ) do -%>
+      <table>
+        <tr>
+         <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+           <td style="width: 30%">
+             <label><%=I18n.t('Sistema.Body.Vistas.General.banco')%></label>
+             <label style="color: red">      </label>
+           </td>
+           <td style="width: 70%">
+               <% entidad_onchange = remote_function(
+                       :loading =>'image_load()',
+                       :loaded => 'image_unload()',
+                       :method=>:get,
+                       :url=>{:controller=>'consulta_disponibilidad_fideicomiso',
+                       :action=>:entidad_form_change },
+                       :with=>"'entidad_financiera_id='+value" ) %>
+              <%= select(
+                  'entidad_financiera_id', '',
+                   @entidad_financiera_list.map{|i| [i.nombre, i.id]},
+                  {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+                  { :class=>'select',:onchange=>entidad_onchange + ';inputChange();'}) %>
+           </td>
+         </tr>
+          <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.General.numero')%> <%=I18n.t('Sistema.Body.Vistas.General.fideicomiso')%></label>
+            <label style="color: red">      </label>
+          </td>
+          <td>
+            <div id="nro-fideicomiso-select">
+               <%= render :partial => 'nro_fideicomiso_form_select' -%>               
+            </div>
+          </td>
+        </tr>
+          <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_desde')%></label>
+          </td>
+          <td>
+            
+          <%= calendar_date_select_tag "dfecha", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+
+          </td>
+        </tr>
+          <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_hasta')%></label>
+          </td>
+          <td>
+             
+            <%= calendar_date_select_tag "hfecha", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date > (new Date()).stripTime()-1" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>           
+
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td align ="right"><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%></td>
+        </tr>
+     </table>
+     <% end %>
+     <br/> 
+
+<div id="list"></div>	

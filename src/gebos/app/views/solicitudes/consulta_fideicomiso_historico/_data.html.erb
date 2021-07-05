@@ -1,0 +1,51 @@
+<td>
+  <%= format_fecha(transaccion_fideicomiso.fecha) %><br>
+
+  <% begin %>
+    <% usuario = Usuario.find(transaccion_fideicomiso.usuario_id) %>
+    <a href="#" title="<%= usuario.primer_nombre << ' ' << usuario.segundo_nombre << ' ' << usuario.primer_apellido << ' ' << usuario.segundo_apellido << '(' << usuario.oficina.nombre << ')' %>"><%= usuario.nombre_usuario %></a>
+  <% rescue Exception=>e %>
+    <font color=red><strong><%=I18n.t('Sistema.Body.General.Excepciones.ya_no_se_encuentra_registrado_en_el_sistema')%></strong></font>
+  <% end %>
+
+</td>
+<td align="center">
+  <%= transaccion_fideicomiso.moneda_f(transaccion_fideicomiso.solicitud_id.split(',')[0]) %>
+</td>
+<td align="center">
+  <% if  transaccion_fideicomiso.monto_banco == nil 
+    transaccion_fideicomiso.monto_banco = 0 
+    end %>
+  <%= format_fm(transaccion_fideicomiso.monto_banco) %>
+</td>
+<td style="text-align: center;">
+  <% if  transaccion_fideicomiso.monto_insumo == nil 
+    transaccion_fideicomiso.monto_insumo = 0
+    end %>
+  <%= format_fm(transaccion_fideicomiso.monto_insumo)%>
+
+</td>
+<td style="text-align: center;">
+  <% if  transaccion_fideicomiso.monto_sras == nil 
+    transaccion_fideicomiso.monto_sras = 0
+    end %>
+  <%= format_fm(transaccion_fideicomiso.monto_sras)%>
+</td>
+<td style="text-align: center;">
+  <% if  transaccion_fideicomiso.monto_gastos_admin == nil 
+    transaccion_fideicomiso.monto_gastos_admin = 0
+    end %>
+  <%= format_fm(transaccion_fideicomiso.monto_gastos_admin) %>
+</td>
+<td align="center">
+  <a href="javascript:ocultar_lista(<%= transaccion_fideicomiso.id %>,1)"><%= transaccion_fideicomiso.cantidad_solicitudes %> [<%= I18n.t('Sistema.Body.Vistas.General.ver') %>]</a>
+</td>
+<td style="text-align: center;">
+  <% if  transaccion_fideicomiso.monto_total == nil 
+    transaccion_fideicomiso.monto_total = 0
+    end %>
+  <%= format_fm(transaccion_fideicomiso.monto_total)%>
+</td>
+<td style="text-align: center;">
+  <%= link_to(image_tag('icono-pe-excel.gif', :title=>"#{I18n.t('Sistema.Body.General.exportar')} #{I18n.t('Sistema.Body.Vistas.General.a')} Excel"), :action => :export,  :id => transaccion_fideicomiso.id) -%>
+</td>

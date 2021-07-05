@@ -1,0 +1,99 @@
+<script type="text/javascript">Event.observe(window, 'load', function() {$("message").hide();});</script>
+<div id="tabs">
+
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    @seguimiento_cultivo = SeguimientoCultivo.find_by_seguimiento_visita_id(@visitas.id)
+    if controller_name!='visita_decision'
+    %>
+      <li id="actual"><div><a href="#">Seguimiento del Cultivo en el Campo</a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to('Seguimiento del Cultivo en el Campo', :controller => 'visita_seguimiento_cultivo', :action => 'edit', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup])  %>
+
+        </div></li>
+
+    <%
+    end
+
+    if !@seguimiento_cultivo.nil? && @seguimiento_cultivo.id
+
+      if controller_name!='visita_decision'
+      %>
+        <li id="actual"><div><a href="#">Descripciones Específicas</a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to('Descripciones Específicas', :controller => 'visita_descripciones_especificas', :action => 'edit', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro,  :popup=>params[:popup])  %>
+
+          </div></li>
+      <%
+      end
+    end
+  %>
+
+    
+     <%   if controller_name=='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Recomendaci&oacute;n</a></div></li>
+<%
+        else
+%>
+              <li><div>
+              <%= link_to('Recomendaci&oacute;n', :controller => 'visita_decision', :action => 'edit', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+
+          </div></li>
+<%
+        end%>
+
+
+<%if !@visitas.SeguimientoCultivo.nil?  %>
+<%if @tengo_siniestro=="1"%>
+  <%if controller_name=='siniestro' %>
+      <li id="actual"><div><a href="#">Pérdida</a></div></li>
+    <%else%>
+      <li>
+        <div>
+
+          <%= link_to('Pérdida', :controller => '/solicitudes/siniestro', :action => 'index', :visita_id => @visitas.id,:siniestro_checked=>1, :popup=>params[:popup])  %>
+          <!-- anteriormente estaba esta -->
+          <%#= link_to_remote('Pérdida',
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :url => {:controller=>'solicitudes/siniestro',:action=>:index, :visita_id =>@visitas.id,:siniestro_checked=>1})
+          -%>
+        </div>
+      </li>
+    <%end
+end
+    end%>
+
+
+        <%if @visitas.DecisionVisita
+          unless !@visitas.DecisionVisita.recomienda_generar_desembolso
+            if controller_name!='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Recomendaci&oacute;n del Desembolso</a></div></li>
+<%
+
+            else
+%>
+              <li><div>
+              <%= link_to('Recomendaci&oacute;n del Desembolso', :controller => 'recomendacion_plan_inversion', :action => 'index', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup])  %>
+
+              </div></li>
+<%
+
+            end
+          end
+        end
+
+%>
+
+	</ul>
+</div>

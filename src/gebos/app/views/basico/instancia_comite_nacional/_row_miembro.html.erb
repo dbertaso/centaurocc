@@ -1,0 +1,23 @@
+<% miembro = @miembro if miembro.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= miembro.id %>">
+  <td align="right"><%= miembro.cedula  %></td>
+  <td align="right"><%= miembro.nombre_comite+' '+miembro.apellido_comite %></td>
+  <td align="center"><%= miembro.rol_nombre %></td>
+  <td align="center">
+          <%=format_bool miembro.firma %>          
+  </td>
+  <td align="center">
+
+<%= link_to_remote(
+            image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>"#{I18n.t('Sistema.Body.Controladores.Accion.eliminar')} #{I18n.t('Sistema.Body.Vistas.General.miembro')}"),
+            :loading =>'image_load()',
+            :loaded => 'image_unload()', 
+            :method=>:get,            
+            :url => {:controller => 'instancia_comite_nacional', :action => :delete_miembro, :id=>miembro.id }) -%>
+
+
+    <!--<a onclick="eliminarMiembro(<%=miembro.id%>)" href="#">
+      <img title="#{I18n.t('Sistema.Body.Controladores.Accion.eliminar')} #{I18n.t('Sistema.Body.Vistas.General.miembro')}" src="/assets/eliminar.gif?1312559563" alt="#{I18n.t('Sistema.Body.Controladores.Accion.eliminar')}"/>-->
+    </a>
+  </td>
+</tr>

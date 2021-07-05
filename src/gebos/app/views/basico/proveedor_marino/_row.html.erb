@@ -1,0 +1,4 @@
+<% proveedor_marino = @proveedor_marino if proveedor_marino.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= proveedor_marino.id %>">
+	<%= render :partial => 'data', :locals => { :proveedor_marino => proveedor_marino, :even_odd => even_odd } -%>
+</tr>

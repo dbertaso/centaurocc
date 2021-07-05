@@ -1,0 +1,57 @@
+<div class="marco-titulo"><div><div>
+	Listado de archivos enviados desde el Banco
+</div></div></div>
+<%= render :partial=>'finanzas/abono_arrime_confirmacion_transferencia/common/tabs' %>
+<div class="marco-contenido">
+<br>
+  <table class="lista" style="width: 90%">
+    <thead>
+    <tr>
+          <th  style="width: 60px" >Fecha Generación</th>
+          <th>Archivo</th>
+          <th>Cantidad</th>
+          <th>Monto</th>
+          <th>Estatus</th>
+          <th>Accion</th>
+     </tr>
+     </thead>
+     <tbody id="list_body">
+
+          <% even_odd = 1
+          @mostrar_archivo.each do |archivo|
+          even_odd = 1 - even_odd %>
+          <% if (archivo.estatus == 1 ||archivo.estatus == 2 || archivo.estatus == 3) %>  <!-- SOLO SE MOSTRARAN LOS QUE TENGAN ESTATUS 2 Y 3 -->
+
+             <tr class="lista<%= 1 - even_odd %>" >
+
+
+
+                <td align="center"><%= archivo.fecha.to_s[8,2] << "-" << archivo.fecha.to_s[5,2] << "-" << archivo.fecha.to_s[0,4] %><br></td>
+                <td align="center"><%= archivo.archivo %></td>
+                <td align="center"><%= archivo.numero_procesado %></td>
+                <td align="center"><%=  valor = sprintf('%01.2f', archivo.monto_procesado).sub('.', ',')
+                valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %></td>
+
+                <td align="center"><%=
+                  case archivo.estatus
+                      when 2
+                        'Abonado en Cuenta'
+                  end -%>
+                </td>
+                <td align="center"><%="<a target='_blank' href='#{request.protocol}#{request.host.to_s}:#{request.port.to_s}/documentos/finanzas/confirmacion_abono_exedente/#{archivo.archivo}'>Descargue aquí</a>" %></td>
+             </tr>
+
+           <%end%>
+           <% end %>
+
+     </tbody>
+  </table>
+  <br>
+  <p align="center" style="width: 80%"><%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :action => :index },
+        { :id=>'button_close',
+        :confirm => "¿Seguro desea cerrar esta ventana?" } ) -%>
+  </p>
+  <div id="list"></div>
+
+</div>

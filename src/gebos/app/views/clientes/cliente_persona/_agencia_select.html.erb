@@ -1,0 +1,13 @@
+<% unless @agencia_select.nil? %> 
+  <%= select(
+    'cliente_persona', 'agencia_bancaria_id',
+    @agencia_select.map{|e| [e.nombre, e.id]},
+    { },
+    { :class=>'select', :onchange=>';inputChange();' } ) %>
+<% else %>
+  <%= select(
+    'cliente_persona', 'agencia_bancaria_id',
+    [],
+    { :include_blank => true },
+    { :class=>'select', :onchange=>';inputChange();' } ) %>
+<% end %>

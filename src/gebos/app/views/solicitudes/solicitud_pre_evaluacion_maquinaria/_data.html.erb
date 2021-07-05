@@ -1,0 +1,39 @@
+<% unidad_produccion_maquinaria = @unidad_produccion_maquinaria if unidad_produccion_maquinaria.nil? %>
+
+<td align="center">
+  <% unless unidad_produccion_maquinaria.clase_id == 0 %>
+    <%= unidad_produccion_maquinaria.clase.to_s  %>
+  <% else %>
+    <%= I18n.t('Sistema.Body.Vistas.General.otro') %>
+  <% end %>
+</td>
+<td align="center">
+  <%= unidad_produccion_maquinaria.cantidad  %>
+</td>
+<td align="center">
+  <%= unidad_produccion_maquinaria.marca %>
+</td>
+<td align="center">
+  <%= unidad_produccion_maquinaria.modelo %>
+</td>
+<td align="center">
+  <%= unidad_produccion_maquinaria.anio %>
+</td>
+<td align="center">
+  <%= unidad_produccion_maquinaria.condicion_nombre %>
+</td>
+<td align="center">
+  <%= unidad_produccion_maquinaria.tenencia_nombre %>
+</td>
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Modificar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:action => :edit, :seguimiento_visita_id => @seguimiento_visita.id, :id => unidad_produccion_maquinaria.id}) -%>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title=>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :seguimiento_visita_id => @seguimiento_visita.id, :id => unidad_produccion_maquinaria.id}) -%>
+</td>

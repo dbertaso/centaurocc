@@ -1,0 +1,61 @@
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+    <th> <%= sort_class_helper('control_cobranza.fecha') %>
+      <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_valor'), 'control_cobranza.fecha', 'list' %>
+		</th>
+    <th> <%= sort_class_helper('control_cobranza.fecha_cierre') %>
+      <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.proceso')}", 'control_cobranza.fecha_cierre', 'list' %>
+		</th>
+		<th>
+			<%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.archivo') %>
+		</th>
+    <th>
+      <%= I18n.t('Sistema.Body.Vistas.General.entidad_financiera') %>
+    </th>
+    <th>
+      <%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numero_cuenta') %>
+    </th>
+    <th>
+      <%= I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.tipo_cuenta') %>
+    </th>
+ 		<th>
+			<%= I18n.t('Sistema.Body.Vistas.Form.estatus') %>
+		</th>
+    <th>
+			<%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.numero_leidos') %>
+		</th>
+		<th>
+			<%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.monto_leidos') %>
+		</th>		
+    <th>
+      <%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.numero_procesados') %>
+    </th>
+    <th>
+      <%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.monto_procesados') %>
+    </th>   
+    <th>
+      <%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.numero_rechazados') %>
+    </th>
+    <th>
+      <%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.monto_rechazados') %>
+    </th>
+		<th style="text-align: center">
+      <%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.impresion_cobranza_aplicada') %>
+		</th>
+		<th style="text-align: center">
+     <%= I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.impresion_cobranza_rechazada') %>
+		</th style="align: center">
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for control_cobranza in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :control_cobranza => control_cobranza, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

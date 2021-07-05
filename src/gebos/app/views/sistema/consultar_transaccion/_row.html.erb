@@ -1,0 +1,13 @@
+<% transaccion = @transaccion if transaccion.nil? 
+color =''
+if transaccion.reversada
+  if even_odd==1
+    color = '#c2c2f9'
+  else 
+    color = '#e4e4f9'
+  end
+end
+%>
+<tr class="lista<%= even_odd %>" style="background-color: <%= color %>" id="row_<%= transaccion.id %>">
+  <%= render :partial => 'data', :locals => { :transaccion => transaccion, :even_odd => even_odd } -%>
+</tr>

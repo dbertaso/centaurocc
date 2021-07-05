@@ -1,0 +1,7 @@
+<% comprobante_contable = @comprobante_contable if comprobante_contable.nil? %>
+<tr style="<% if comprobante_contable.total_debe != comprobante_contable.total_haber %>background-color: #ffacac 
+           <%   elsif comprobante_contable.reverso %>background-color: #eae5ad<% 
+                elsif comprobante_contable.reversado %> background-color: #ece16a 
+          <% end %>" class="lista<%= even_odd %>" id="row_<%= comprobante_contable.id %>">
+	<%= render :partial => 'data', :locals => { :comprobante_contable => comprobante_contable, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,86 @@
+    <table id="tele">
+      <tr>
+
+        <td valign="top" style="font-family: verdana; font-size: 14px; background-color: #D7D7D7; font-weight: bold;color: #000; padding-left: 10px; width: 200px; text-align: center" colspan="2">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.agregar_telecobranzas') %>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <br>
+
+
+      <tr>
+        <td style="width: 180px">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.General.telefono') %>
+          </label>
+          <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*)
+          </label>
+        </td>
+        <td>
+        <% telefono_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method => :get,
+            :url=>{:controller=>'gestion_cobranzas',
+            :action=>:mostrar_llamada},
+            :with=>"'id='+value") %>
+
+        <%= select(
+        'telecobranzas', 'telefono_id',
+        @telefonos.map{|c| ["Tel-#{c.codigo} - #{c.numero}", c.id]},
+        { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>telefono_onchange+';limpiar_campos_telefono(); ' } ) %>
+        </td>
+      </tr>
+
+    </table>
+      
+
+    <div id="resultado_llamada" style="display: none; width: 100%;">
+      <%= render "resultado_llamada" %>
+    </div>
+
+    <div id="persona_atendio" style="display: none; width: 100%;">
+      <%= render "persona_atendio" %>
+    </div>
+
+    <div id="opcion_compromiso" style="display: none; width: 100%;">
+      <%= render "opcion_compromiso" %>
+    </div>
+    <br>
+    <br>
+    <div id="observacion" style="display: block; width: 100%;">
+      <%= render "observacion" %>
+    </div>
+
+    <div id = 'compromiso_pago' style="display: none; width: 100%;">
+
+      <table id="compromiso" style="width: 100%">
+        <tr>
+
+          <td valign="top" style="font-family: verdana; font-size: 14px; background-color: #D7D7D7; font-weight: bold; color: #000; padding-left: 4px; text-align: center" colspan="3">
+            <label>
+              <%= I18n.t('Sistema.Body.Vistas.Telecobranzas.Etiquetas.agregar_compromiso_pago') %>
+          </td>
+          <td>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+
+      <%= render "compromiso_pago" %>
+    </div>
+    <br>
+    <br>
+    <div id='botones_telecobranzas' align='center' >
+      <%= image_submit_tag image_path(I18n.t('Sistema.Body.Imagenes.guardar')),
+        :onclick=>"mostrar_tipo_cobranzas()",
+      :id=>'button_save' -%>
+      
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+      {:action => :index, :controller => 'cobranzas/agregar_cobranzas', :analista_id=>@analista.id, :prestamo_id=>@prestamo.id,
+        :id=>'button_cancel'} ) -%>
+    </div>

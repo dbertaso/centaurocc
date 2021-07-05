@@ -1,0 +1,35 @@
+<div id="tabs">
+  <ul>
+<%
+  action_name = controller.action_name
+  controller_name = controller.controller_name
+  if controller_name=='cuenta_contable'
+%>
+    <li id="actual"><div><a href="#">Datos Básicos</a></div></li>
+<% 
+  else 
+%>
+    <li><div>
+            <%= link_to(t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'cuenta_contable', :action => :edit, :id => @cuenta_contable.id) if action_name == 'index' %>
+            <%= link_to(t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'cuenta_contable', :action => :view, :id => @cuenta_contable.id) if action_name == 'view' %>
+    </div></li>
+<% 
+  end 
+  #if @cuenta_contable.id
+    
+    #if controller_name=='cuenta_contable_presupuesto'
+%>
+<!--      <li id="actual"><div><a href="#">Cuentas de Presupuesto</a></div></li> -->
+<% 
+    #else
+%>
+<!--      <li><div> -->
+                <%#= link_to('Cuentas de Presupuesto', :controller => 'cuenta_contable_presupuesto', :action => :index, :cuenta_contable_id => @cuenta_contable.id) if (action_name == 'index' || action_name == 'edit') %>
+                <%#= link_to('Cuentas de Presupuesto', :controller => 'cuenta_contable_presupuesto', :action => :view, :cuenta_contable_id => @cuenta_contable.id) if (action_name == 'view' ) %>
+<!--     </div></li> -->
+<% 
+    #end 
+  #end
+%>
+  </ul>
+</div>

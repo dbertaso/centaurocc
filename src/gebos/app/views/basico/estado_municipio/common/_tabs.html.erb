@@ -1,0 +1,21 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	if controller_name=='estado_municipio'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+		<li ><div><%= link_to(I18n.t('Sistema.Body.Vistas.General.parroquia'),:controller=>'municipio_parroquia',:action=>'index',:municipio_id=>params[:id])%></div></li>
+<%
+	end
+	if controller_name=='municipio_parroquia'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+		<li id="actual"><div><%= link_to(I18n.t('Sistema.Body.Vistas.General.parroquia'),:controller=>'municipio_parroquia',:action=>'list',:municipio_id=>params[:id])%></div></li>
+
+<%  end %>
+
+	</ul>
+</div>
+

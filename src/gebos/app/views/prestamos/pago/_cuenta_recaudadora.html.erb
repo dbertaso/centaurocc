@@ -1,0 +1,5 @@
+
+
+<%= select_tag( 'cuenta_bcv_id',
+                options_from_collection_for_select(@cuenta_bcv_select, 'id', 'numero_cuenta'),
+                { :class=>'select', :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccione')} ) %>

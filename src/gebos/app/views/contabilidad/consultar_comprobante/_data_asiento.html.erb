@@ -1,0 +1,18 @@
+<% asiento_contable = @asiento_contable if asiento_contable.nil? %>
+<td>
+  <%= asiento_contable.codigo_contable  unless asiento_contable.nil? %>
+</td> 
+<td>
+  <% cuenta_contable = CuentaContable.find_by_codigo(asiento_contable.codigo_contable) %>
+  <% if asiento_contable.auxiliar_banco.nil? %>
+    <%= cuenta_contable.nombre unless cuenta_contable.nil?%>
+  <% else %>
+    <%= cuenta_contable.nombre + '-' + asiento_contable.auxiliar_banco unless cuenta_contable.nil?%>
+  <% end %>
+</td>
+<td style="text-align: right">
+  <%= asiento_contable.debe_fm  %>
+</td>
+<td style="text-align: right">
+  <%= asiento_contable.haber_fm  %>
+</td>

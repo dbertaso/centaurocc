@@ -1,0 +1,44 @@
+<table style="width: 100%">
+  <td class="separador" valign="bottom" colspan="4">
+    <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_de_laboratorio')%></span>
+  </td>
+</table>
+<br/>
+
+<table align="center" border="1" width="60%">
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.parentesis_algodon')%></label></td>
+    <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+    <td></td>
+    <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.kgs')%></label></td>
+    <td></td>
+    <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></td>
+    <td></td>
+    <td align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.kgs')%></label></td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad')%></label></td>
+    <td><%unless @boleta_laboratorio_algodon.nil? %>
+        <%= format_fm(@boleta_laboratorio_algodon.humedad )%>
+      <%end%>
+    </td>
+    <td><label> <%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad_absoluta')%></label></td>
+    <td><%unless @boleta_laboratorio_algodon.nil? %>
+        <%= format_fm(@boleta_laboratorio_algodon.humedad_absoluta)%>
+      <%end%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza')%></label></td>
+    <td><%unless @boleta_laboratorio_algodon.nil? %>
+        <%= format_fm(@boleta_laboratorio_algodon.impureza)%>
+      <%end%>
+    </td>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza_absoluta')%></label></td>
+    <td><%unless @boleta_laboratorio_algodon.nil? %>
+        <%= format_fm(@boleta_laboratorio_algodon.impureza_absoluta)%>
+      <%end%>
+    </td>
+  </tr>
+</table>
+
+<br/>

@@ -1,0 +1,3248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.formulario_control_visita')%></title>
+</head>
+<script type="text/javascript">
+
+function imprime(){
+//desaparece el boton
+document.getElementById("noprint").style.visibility='hidden';
+//se imprime la pagina
+print();
+setTimeout("showlayer()",2000);
+}
+function showlayer(){
+     document.getElementById("noprint").style.visibility='visible';
+}
+
+</script>
+<body>
+<img src="<%=image_path(I18n.t('Sistema.Body.Imagenes.logo_institucion'))%>" width="164" height="95" align="right" />
+<img src="<%=image_path(I18n.t('Sistema.Body.Imagenes.bolivariano'))%>" width="164" height="95" align="left" />
+
+<div style="font-size: 14px">
+
+<br>
+<div style="width: 100%; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 20px;" align="center"><label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.formulario_control_visita')%><br/> <%="#{I18n.t('Sistema.Body.Vistas.General.sector')} #{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.animal')}"%> </label></div>
+
+
+<br><br><br>
+ <div align="justify" style="text-align: right; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px;"><strong><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.numero_solicitud')%> <u><%=@seguimientos[0].codigo_visita unless @seguimientos.nil?%></u></strong></div>
+
+ <div align="justify" style="text-align: right; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px;"><strong><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.fecha_de_la_visita')%> <u><%=@seguimientos[0].fecha_visita_f unless @seguimientos[0].fecha_visita.nil?%></u></strong></div>
+<br>
+
+
+<table width="100%" border="1">
+
+<table width="100%" border="1">
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.datos_financiamiento')%></label>
+    </td>
+  </tr>
+</table>
+
+<table width="100%" border="1">
+ <tr>
+
+    <td colspan="1" align="justify" style="background-color: #f1f1f1">
+<%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}"%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+<%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}"%>    </td>
+  <td colspan="2" style="background-color: #f1f1f1">
+<%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%>
+    </td>
+  
+  <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.rubro')%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="1" style="word-wrap: break-word;">
+      <%= @prestamos[0].numero.to_s unless @prestamos.empty? %> &nbsp;
+    </td>
+
+    <td colspan="1" style="word-wrap: break-word;">
+      <%=@prestamos[0].solicitud.numero unless @prestamos.empty? %> &nbsp;
+    </td>
+
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @solicitudes.sub_sector.nombre.to_s.strip.upcase unless @solicitudes.sub_sector_id== '0' %> &nbsp;
+    </td>
+
+
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @solicitudes.rubro.nombre.to_s.strip.upcase unless @solicitudes.rubro_id == '0' %> &nbsp;
+      
+    </td>
+
+  </tr>
+
+  <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+<%= I18n.t('Sistema.Body.Vistas.General.programa')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+<%=I18n.t('Sistema.Body.Controladores.ModalidadFinanciamiento.FormTitles.form_title_record')%>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <td colspan="3" style="word-wrap: break-word;">
+      <%= @solicitudes.programa.nombre.to_s.strip.upcase unless @solicitudes.nil? %> &nbsp;
+
+    </td>
+  <td colspan="3">
+
+<%unless @solicitudes.nil?%>
+
+<%if @solicitudes.modalidad_financiamiento.nombre.strip.downcase == 'consolidacion' %>
+
+    <input type="radio" name="group1" value="Fundación" disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.fundacion')%> &nbsp; </input>
+    <input type="radio" name="group1" value="Consolidación"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.consolidacion')%>  </input>
+	
+<%else
+
+if @solicitudes.modalidad_financiamiento.nombre.strip.downcase == 'fundacion' %>
+    <input type="radio" name="group1" value="Fundación"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.fundacion')%> &nbsp;</input>
+    <input type="radio" name="group1" value="Consolidación" disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.consolidacion')%></input>
+<%else%>
+<%=""%>
+
+<%end%>
+<%end%>
+<%end%>
+    </td>
+  
+  
+  </tr>
+
+
+
+  <tr>
+    
+    <td colspan="2" align="justify" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_liquidacion')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.fecha_vencimiento')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Vistas.General.superficie')} #{I18n.t('Sistema.Body.Vistas.General.aprobada')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')}"%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <%=@prestamos[0].fecha_liquidacion.strftime('%d/%m/%Y') unless @prestamos[0].fecha_liquidacion.nil? unless @prestamos.empty? %> &nbsp;
+    </td>
+
+    <td colspan="2" style="word-wrap: break-word;">
+       <% planes_pago = PlanPago.find_by_prestamo_id_and_activo(@prestamos[0].id,true) %>
+      <%= planes_pago.fecha_fin.strftime('%d/%m/%Y') unless planes_pago.fecha_fin.nil? unless planes_pago.nil? %> &nbsp;
+    </td>
+
+    <td colspan="2" style="word-wrap: break-word;">
+      <%= @solicitudes.hectareas_recomendadas_fm unless @solicitudes.nil? %>  &nbsp;
+    </td>
+
+  </tr>
+
+  <tr>
+  <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+<%=I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.animales_aprobados')%>
+    </td>
+  <td  colspan="3" style="background-color: #f1f1f1;width: 50%">
+<%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.cant_animales_adquiridos')%>
+    </td>
+  </tr>
+  
+
+  <tr>
+  <td colspan="3" align="justify">
+      
+      <%= (@semovientes.cant_machos + @semovientes.cant_hembras) unless @semovientes.nil? %> &nbsp;
+
+    </td>
+  <td colspan="3" align="justify">
+      <%= @semovientes.cant_animales_adquiridos unless @semovientes.nil? %> &nbsp;
+
+    </td>
+  
+  </tr>
+
+
+
+  <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.Prestamo.Columnas.monto_aprobado')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.monto_liquidado_entregado')%>
+    </td>
+    <td  colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.monto_total_pendiente_desembolsar')%>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <td colspan="2" align="justify" style="word-wrap: break-word;">
+      <%= @solicitudes.monto_aprobado_fm.to_s << " #{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.bsf')}" unless @solicitudes.nil? %>&nbsp;
+
+    </td>
+  <td colspan="2" align="justify" style="word-wrap: break-word;">
+      <% monto = @sumado_montos_desembolso %>
+      <%  valor = sprintf('%01.2f', monto).sub('.', ',') %>
+      <%  valor = valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      <%#= valor << " BsF"  %> 
+
+
+      <%= @prestamos[0].monto_liquidado_fm.to_s << " #{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.bsf')}" unless @prestamos.empty? %> &nbsp;
+
+    </td>
+  <td colspan="2" align="justify" style="word-wrap: break-word;">
+     
+      <% monto = (@solicitudes.monto_aprobado - @sumado_montos_desembolso) %>
+      <%  valor = sprintf('%01.2f', monto).sub('.', ',') %>
+      <%  valor = valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      <%#= valor << " BsF" unless @solicitudes.nil?  %> &nbsp;
+
+      <% monto = (@prestamos[0].monto_banco - @prestamos[0].monto_liquidado) %>
+      <%  valor = sprintf('%01.2f', monto).sub('.', ',') %>
+      <%  valor = valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+      <%= valor << " BsF" unless @prestamos.empty?  %> &nbsp;
+    </td>
+  </tr>
+
+</table>
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.informacion_visita')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1">
+ 
+ <tr>
+    
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      <%=I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Columnas.hora_visita')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.motivo_de_visita')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3">
+      <%#= @seguimientos[0].hora_visita.strftime('%I:%M:%S %p') unless @seguimientos.nil? %> &nbsp;
+    </td>
+   <td colspan="3">
+      <%#= @seguimientos[0].MotivoVisita.nombre.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.persona_atendio_tecnico_campo_visita')%></label>
+    </td>
+    
+    
+  </tr>
+ 
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.cedula')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.nombre')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.apellido')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.telefono')%>
+    </td>
+  </tr>
+ 
+ 
+ <tr>
+    
+    
+    <td colspan="1">
+      <%#= @seguimientos[0].cedula_nacionalidad_persona_atencion.to_s.strip.upcase << " " << @seguimientos[0].cedula_persona_atencion.to_s unless @seguimientos.nil? %> &nbsp;
+    </td>
+    <td colspan="1">
+      <%#= @seguimientos[0].nombre_persona_atencion.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+
+    </td>
+   <td colspan="2">
+      <%#= @seguimientos[0].apellido_persona_atencion.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= @seguimientos[0].telf1_persona_atencion << " / " << @seguimientos[0].telf2_persona_atencion << " / " << @seguimientos[0].telf3_persona_atencion unless @seguimientos.nil? %> &nbsp;
+    </td>
+  </tr>
+ 
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Columnas.vinculo_persona_atendio')%>
+    </td>
+    
+  </tr>
+ 
+
+ 
+ <tr>
+       
+    <td colspan="6">
+      <%#= @seguimientos[0].vinculo_persona_atencion.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.direccion_practica_es_correcta')%>
+    </td>
+    
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.correccion_hecha')%>
+    </td>
+
+  </tr>
+ 
+ 
+ <tr>
+
+    <td colspan="3">
+      <input type="radio" name="group2" value="Si" disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group2" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%> </input>
+
+   </td>
+       
+    <td colspan="3">
+    <!-- ojo este dato no se tiene -->      
+    <%#= @seguimientos[0].observaciones.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+ 
+ 
+
+
+<tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.observaciones')%>
+    </td>
+    
+  </tr>
+ 
+ 
+ <tr>
+       
+    <td colspan="6">
+      <%#= @seguimientos[0].observaciones.to_s.strip.upcase unless @seguimientos.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+</table>
+
+
+
+<table width="100%" border="1">
+<tr>
+
+    <td colspan="6" style="background-color: #d9d4d4" align="center">
+
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.datos_beneficiario')%></label>
+    </td>
+
+  </tr>
+</table>
+<table width="100%" border="1">
+  
+  <tr>
+    <td style="width: 20%; background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.General.apellido_empresa')%>
+    </td>
+    <td style="width: 20%; background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.nombre')%>
+    </td>
+    <td style="width: 20%; background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%>
+    </td>
+    <td style="width: 20%; background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.sexo')%>
+    </td>
+    <td colspan="2" style="width: 20%; background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.edad')%>
+    </td>
+  
+  </tr>
+
+  <tr>
+    
+    
+    <td style="word-wrap: break-word;">
+	<% if @es_no==1 %>      
+	<%=@datos_cliente.primer_apellido.to_s.strip.upcase << " " << @datos_cliente.segundo_apellido.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%else%>      
+	<%=@datos_cliente.nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+      
+
+<%#= @solicitudes.ciudad.estado.nombre unless @solicitudes.nil? %> 
+    </td>
+    <td style="word-wrap: break-word;">
+	<% if @es_no==1 %>      
+	<%=@datos_cliente.primer_nombre.to_s.strip.upcase << " " << @datos_cliente.segundo_nombre.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%else%>      
+	<%=" " %>
+	<%end%>
+      
+
+
+<%#= @solicitudes.ciudad.nombre unless @solicitudes.nil? %>
+    </td>
+    <td style="word-wrap: break-word;">
+	<% if @es_no==1 %>      
+	<%= @datos_cliente.cedula_nacionalidad.to_s.strip.upcase << " " << @datos_cliente.cedula.to_s.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%else%>      
+	<%= @datos_cliente.rif.to_s.strip.upcase unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+      
+
+<%#= @solicitudes.municipio.nombre unless @solicitudes.nil? %>
+    </td>
+    <td>
+	<% if @es_no==1 %>      
+	<%unless @datos_cliente.nil? %>	
+	<%if @datos_cliente.sexo %>
+		<%="#{I18n.t('Sistema.Body.Vistas.General.masculino')}" %>
+	<%else%>
+		<%="#{I18n.t('Sistema.Body.Vistas.General.femenino')}"%>
+	<%end%>
+	<%else%>      
+	<%=" " %>
+	<%end%>
+	<%end%>
+
+
+      <%#= @solicitudes.parroquia.nombre unless @solicitudes.nil? %>
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+      <%#=@seguimientos[0].edad(Time.now, Date.parse('1978-05-16')) %>
+	<% if @es_no==1 %>      
+	<%= @seguimientos[0].edad(Date.parse(Time.now.strftime('%Y-%m-%d')), Date.parse(@datos_cliente.fecha_nacimiento.strftime('%Y-%m-%d'))).to_s << " #{I18n.t('Sistema.Body.Vistas.General.año')}" unless @datos_cliente.nil? %>
+	<%else%>      
+	<%=" " %>
+	<%end%>
+&nbsp;
+
+<%#= @solicitudes.parroquia.nombre unless @solicitudes.nil? %>
+    </td>
+  </tr>
+
+
+<tr>
+
+
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+<%=I18n.t('Sistema.Body.Vistas.General.telefonos')%>
+    </td>
+    <td colspan="2"  style="background-color: #f1f1f1;width: 33%">
+<%=I18n.t('Sistema.Body.Vistas.General.estado_civil')%>
+    </td>
+<td colspan="2" style="background-color: #f1f1f1;width: 33%">
+<%="#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.persona')}"%>
+    </td>
+
+  </tr>
+
+<tr>
+
+    
+    <td colspan="2" style="word-wrap: break-word;">
+	<% if @es_no==1 %>      
+	<%=PersonaTelefono.find_by_persona_id(@datos_cliente.id).codigo << "-" << PersonaTelefono.find_by_persona_id(@datos_cliente.id).numero unless @datos_cliente.nil? %> &nbsp;
+	
+	<%else%>      
+	<%=EmpresaTelefono.find_by_empresa_id(@datos_cliente.id).codigo << "-" << EmpresaTelefono.find_by_empresa_id(@datos_cliente.id).numero unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+
+
+      <%#=@siniestros[0].lugar%>
+    </td>
+    <td colspan="2" style="word-wrap: break-word;">
+	<% if @es_no==1       
+	unless @datos_cliente.nil?	 
+	case @datos_cliente.estado_civil 
+		 when 'S' %>
+        <%if @datos_cliente.sexo %>
+	  	  <%=I18n.t('Sistema.Body.Vistas.General.soltero')%>
+        <%else%>
+	  	  <%=I18n.t('Sistema.Body.Vistas.General.soltera')%>
+        <%end%>
+		<% when 'C' %>	
+        <%if @datos_cliente.sexo %>
+		  <%=I18n.t('Sistema.Body.Vistas.General.casado')%>	
+        <%else%>
+	  	  <%=I18n.t('Sistema.Body.Vistas.General.casada')%>
+        <%end%>
+		<% when 'D' %>	
+        <%if @datos_cliente.sexo %>
+		  <%=I18n.t('Sistema.Body.Vistas.General.divorciado')%>
+        <%else%>
+	  	  <%=I18n.t('Sistema.Body.Vistas.General.divorciada')%>
+        <%end%>
+
+		<% else 'V' %>
+        <%if @datos_cliente.sexo %>
+		  <%=I18n.t('Sistema.Body.Vistas.General.viudo')%>
+        <%else%>
+	  	  <%=I18n.t('Sistema.Body.Vistas.General.viuda')%>
+        <%end%>       
+	<%end%>
+	<%else%>      
+	<%=" " %>
+	<%end%>
+	<%end%>
+      <%#=@siniestros[0].lugar%>
+    </td>
+    
+    <td colspan="2" style="word-wrap: break-word;">
+
+	<% if @es_no==1   %>    
+      <%=Cliente.find(:first,:conditions=>"persona_id = #{@datos_cliente.id}").tipo_cliente.nombre.strip.upcase unless Cliente.find(:first,:conditions=>"persona_id = #{@datos_cliente.id}").tipo_cliente.nil? unless @datos_cliente.nil? %> &nbsp;
+    <%else%>
+      <%=Cliente.find(:first,:conditions=>"empresa_id = #{@datos_cliente.id}").tipo_cliente.nombre.strip.upcase unless Cliente.find(:first,:conditions=>"empresa_id = #{@datos_cliente.id}").tipo_cliente.nil? unless @datos_cliente.nil? %> &nbsp;
+    <%end%>
+
+    </td>
+
+  </tr>  
+
+
+<tr>
+
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+<%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.nro_cuenta_bancaria')%>
+    </td>
+
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+<%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.tipo_cuenta_bancaria')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+<%=I18n.t('Sistema.Body.Vistas.General.banco')%>
+    </td>
+
+  </tr>
+
+<tr>
+
+    
+    <td  colspan="2" style="word-wrap: break-word;">
+
+	<% if @es_no==1 %>      
+	<%#=CuentaBancaria.find_by_cliente_id(Cliente.find_by_persona_id(@datos_cliente.id).id).numero.to_s unless Cliente.find_by_persona_id(@datos_cliente.id).nil? unless @datos_cliente.nil? %> &nbsp;
+		
+<%=CuentaBancaria.find_by_cliente_id(Cliente.find_by_persona_id(@datos_cliente.id).id).numero.to_s unless CuentaBancaria.find_by_cliente_id(Cliente.find_by_persona_id(@datos_cliente.id).id).nil? unless Cliente.find_by_persona_id(@datos_cliente.id).nil? unless @datos_cliente.nil? %>
+
+	<%else%>      
+	<%=CuentaBancaria.find_by_cliente_id(Cliente.find_by_empresa_id(@datos_cliente.id).id).numero.to_s unless CuentaBancaria.find_by_cliente_id(Cliente.find_by_empresa_id(@datos_cliente.id).id).nil? unless Cliente.find_by_empresa_id(@datos_cliente.id).nil? unless @datos_cliente.nil? %> &nbsp;
+	<%end%>
+
+    </td>
+    <td  colspan="2">
+
+<% 
+unless @datos_cliente.nil?
+
+	if @es_no==1       
+	
+	unless CuentaBancaria.find_by_cliente_id(Cliente.find_by_persona_id(@datos_cliente.id).id).nil?
+	if CuentaBancaria.find_by_cliente_id(Cliente.find_by_persona_id(@datos_cliente.id).id).tipo == 'A' %>
+
+	<%=I18n.t('Sistema.Body.Vistas.General.ahorro') %>
+	
+	<%else%>
+
+	<%=I18n.t('Sistema.Body.Vistas.General.corriente')%>
+	<%end
+end
+%>
+	<%else      	
+unless CuentaBancaria.find_by_cliente_id(Cliente.find_by_empresa_id(@datos_cliente.id).id).nil?
+	if CuentaBancaria.find_by_cliente_id(Cliente.find_by_empresa_id(@datos_cliente.id).id).tipo == 'A' %>
+		<%=I18n.t('Sistema.Body.Vistas.General.ahorro') %>
+	<%else%>
+		<%=I18n.t('Sistema.Body.Vistas.General.corriente')%>
+	<%end
+end
+%>
+	<%end%>
+	<%end%>
+      <%#=@siniestros[0].lugar%>
+    </td>
+    <td  colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=EntidadFinanciera.find(CuentaBancaria.find_by_cliente_id(Cliente.find_by_persona_id(@datos_cliente.id).id).entidad_financiera_id).nombre.to_s.strip.upcase unless CuentaBancaria.find_by_cliente_id(Cliente.find_by_persona_id(@datos_cliente.id).id).nil? unless @datos_cliente.nil? %>
+	
+	<%else%>      
+
+	<%=EntidadFinanciera.find(CuentaBancaria.find_by_cliente_id(Cliente.find_by_empresa_id(@datos_cliente.id).id).entidad_financiera_id).nombre.to_s.strip.upcase unless CuentaBancaria.find_by_cliente_id(Cliente.find_by_empresa_id(@datos_cliente.id).id).nil? unless @datos_cliente.nil? %>
+
+	<%end%>
+&nbsp;
+      <%#=@siniestros[0].lugar%>
+    </td>
+  </tr>  
+
+
+</table>
+
+<table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.ubicacion_beneficiario_domicilio_principal')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+  <table border="1" width="100%">
+    <tr>
+    <td colspan="6" style="width: 25%; background-color: #f1f1f1">
+<%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.direccion_habitacion_domicilio_fiscal')%>
+    </td>      
+  </tr>
+    
+    <tr>    
+    
+    <td colspan="6" style="word-wrap: break-word;">
+
+<% if @es_no==1 
+
+direccion_persona=''
+
+direccion_persona=PersonaDireccion.find_by_persona_id(@datos_cliente.id).avenida << " " unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).avenida.nil?
+
+
+direccion_persona+=PersonaDireccion.find_by_persona_id(@datos_cliente.id).edificio << " " unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).edificio.nil?
+
+
+direccion_persona+=PersonaDireccion.find_by_persona_id(@datos_cliente.id).piso << " " unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).piso.nil?
+
+direccion_persona+=PersonaDireccion.find_by_persona_id(@datos_cliente.id).localidad << " " unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).localidad.nil?
+
+direccion_persona+=PersonaDireccion.find_by_persona_id(@datos_cliente.id).zona unless PersonaDireccion.find_by_persona_id(@datos_cliente.id).zona.nil?
+
+%>      
+	<%=direccion_persona.to_s.strip.upcase unless direccion_persona.nil? %>
+	
+	<%else
+direccion_empresa=''
+
+direccion_empresa=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).avenida << " " unless EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).avenida.nil?
+
+direccion_empresa+=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).edificio << " " unless EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).edificio.nil?
+
+direccion_empresa+=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).piso << " " unless EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).piso.nil?
+
+direccion_empresa+=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).zona unless EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).zona.nil?
+
+%>      
+	<%=direccion_empresa.to_s.strip.upcase unless direccion_empresa.nil? %>
+	<%end%>      &nbsp;
+
+	<%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+   
+  </tr>
+    
+  
+  <tr>
+
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      <%=I18n.t('Sistema.Body.Vistas.General.estado')%>
+
+    </td>
+
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+     <%=I18n.t('Sistema.Body.Vistas.General.municipio')%>
+
+    </td>
+  
+    <td colspan="2" style="width: 25%; background-color: #f1f1f1">
+
+      <%=I18n.t('Sistema.Body.Vistas.General.parroquia')%>
+
+    </td>
+   
+
+  </tr>
+  
+  
+  <tr>    
+    
+    <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).municipio.estado.nombre.to_s.strip.upcase unless @datos_cliente.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).municipio.estado.nombre.to_s.strip.upcase unless @datos_cliente.nil? %>
+	<%end%>
+&nbsp;
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+  <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).municipio.nombre.to_s.strip.upcase unless @datos_cliente.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).municipio.nombre.to_s.strip.upcase unless @datos_cliente.nil? %>
+	<%end%>
+
+&nbsp;
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+  <td colspan="2" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).parroquia.nombre.to_s.strip.upcase unless @datos_cliente.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).parroquia.nombre.to_s.strip.upcase unless @datos_cliente.nil? %>
+	<%end%>
+&nbsp;
+
+    </td>
+
+   
+  </tr>
+  
+
+<tr>
+
+    <td colspan="3" style="width: 25%; background-color: #f1f1f1">
+
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.ciudad_mas_cercana')%>
+
+    </td>
+
+    
+  
+    <td colspan="3" style="width: 25%; background-color: #f1f1f1">
+
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cacerio_sector')%>
+
+    </td>
+   
+
+  </tr>
+  
+
+  <tr>    
+    
+    
+  <td colspan="3" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).referencia.to_s.strip.upcase unless @datos_cliente.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).referencia.to_s.strip.upcase unless @datos_cliente.nil? %>
+	<%end%>
+&nbsp;
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+  <td colspan="3" style="word-wrap: break-word;">
+
+
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(@datos_cliente.id).zona.to_s.strip.upcase unless @datos_cliente.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(@datos_cliente.id).zona.to_s.strip.upcase unless @datos_cliente.nil? %>
+	<%end%>
+&nbsp;
+
+      <%#= display_number @siniestros[0].unidades_aprobadas,'' unless @siniestros.nil? %> 
+
+    </td>
+
+   
+  </tr>
+
+</table>
+
+<table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.datos_unidad_produccion')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+  
+    <table border="1" width="100%">
+    
+   
+    
+    <tr>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+<%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.nombre_del_propietario')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%><br/><br/>
+    </td>
+    
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).primer_nombre.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).segundo_nombre.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).primer_apellido.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).segundo_apellido.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	
+	<%else%>      
+	<%=Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	<%end%>
+
+&nbsp;
+ </td>
+    <td colspan="3" style="word-wrap: break-word;">
+
+<% if @es_no==1 %>      
+	<%=Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).cedula_nacionalidad.to_s.strip.upcase << " " << Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).cedula.to_s unless @unidad_produccion.nil? %>
+	
+	<%else%>      
+	<%=Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).rif.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	<%end%>
+      
+&nbsp;
+    </td>
+    
+    
+  </tr>
+ 
+   <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.nombre_unidad_produccion')%>
+    </td>
+    
+    
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="6" style="word-wrap: break-word;">
+<%=@unidad_produccion.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>    &nbsp;  
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+    
+    
+  </tr>
+ 
+   <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.direccion_unidad_produccion')%>
+    </td>
+    
+    
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="6" style="word-wrap: break-word;">
+<%=@unidad_produccion.direccion.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+    
+    
+  </tr>
+ 
+  <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.como_llegar_desde_poblado_mas_cercano')%>
+    </td>
+  </tr>
+    
+      <tr>
+        <td colspan="6" style="word-wrap: break-word;">
+          <%=@unidad_produccion.referencia.to_s.strip.upcase unless @unidad_produccion.nil? %> &nbsp;
+<%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="3" style="background-color: #f1f1f1">
+          <%=I18n.t('Sistema.Body.Vistas.General.region')%>
+        </td>
+        <td colspan="3" style="background-color: #f1f1f1">
+          <%=I18n.t('Sistema.Body.Vistas.General.estado')%>
+        </td>
+      </tr>
+
+<tr>
+
+
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).municipio.estado.region.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).municipio.estado.region.nombre.to_s.strip.upcase  unless @unidad_produccion.nil? %>
+	<%end%>
+&nbsp;
+
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+
+
+
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).municipio.estado.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).municipio.estado.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	<%end%>
+&nbsp;
+
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+
+</tr>
+    <tr>
+    
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.municipio')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.parroquia')%>
+    </td>
+
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).municipio.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).municipio.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	<%end%>
+&nbsp;
+
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).parroquia.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).parroquia.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	<%end%>
+&nbsp;
+
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+  </tr>
+
+<tr>
+    
+    <td colspan="3" style="background-color: #f1f1f1">
+       <%=I18n.t('Sistema.Body.Vistas.General.ciudad')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.tenencia_tierra')%>
+    </td>
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+<% if @es_no==1 %>      
+	<%=PersonaDireccion.find_by_persona_id(Persona.find(Cliente.find(@unidad_produccion.cliente_id).persona_id).id).ciudad.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>	
+	<%else%>      
+	<%=EmpresaDireccion.find_by_empresa_id(Empresa.find(Cliente.find(@unidad_produccion.cliente_id).empresa_id).id).ciudad.nombre.to_s.strip.upcase unless @unidad_produccion.nil? %>
+	<%end%>
+&nbsp;
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+    <td colspan="3" style="word-wrap: break-word;">
+
+
+<%=TenenciaUnidadProduccion.find(RegistroMercantil.find_by_unidad_produccion_id(@unidad_produccion.id).tenencia_unidad_produccion_id).nombre.to_s.strip.upcase unless  RegistroMercantil.find_by_unidad_produccion_id(@unidad_produccion.id).tipo !='M' || TenenciaUnidadProduccion.find(RegistroMercantil.find_by_unidad_produccion_id(@unidad_produccion.id).tenencia_unidad_produccion_id).nil? %>
+&nbsp;
+      <%#= display_number @siniestros[0].hectareas_aprobadas,'' unless @siniestros.nil? %> 
+    </td>
+  </tr>
+
+<tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.linderos_y_coordenadas_geograficas')%></label>
+    </td>
+    
+    
+  </tr>
+
+
+
+<tr>
+    
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.norte')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.sur')%>
+    </td>
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+
+	<%=@unidad_produccion.lindero_norte.to_s.strip.upcase unless @unidad_produccion.lindero_norte.nil? unless @unidad_produccion.nil? %> &nbsp;
+
+    </td>
+    <td colspan="3" style="word-wrap: break-word;">
+
+	<%=@unidad_produccion.lindero_sur.to_s.strip.upcase unless @unidad_produccion.lindero_sur.nil? unless @unidad_produccion.nil?%>  &nbsp;
+    </td>
+  </tr>
+
+
+<tr>
+    
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.oeste')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.este')%>
+    </td>
+  </tr>
+    
+    <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+	<%=@unidad_produccion.lindero_oeste.to_s.strip.upcase unless @unidad_produccion.lindero_oeste.nil? unless @unidad_produccion.nil? %> &nbsp;
+  </td>
+    <td colspan="3" style="word-wrap: break-word;">
+	<%=@unidad_produccion.lindero_este.to_s.strip.upcase unless @unidad_produccion.lindero_este.nil? unless @unidad_produccion.nil? %> &nbsp;
+    </td>
+  </tr>
+
+<tr>
+    
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.utm')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Vistas.General.ubicacion')} #{I18n.t('Sistema.Body.Vistas.General.geografica')}"%>
+    </td>
+  </tr>
+    
+<!-- DESDE AQUI ITERATIVO -->
+<%@utm_unidad=UtmUnidadProduccion.find(:all,:conditions=>"unidad_produccion_id = #{@unidad_produccion.id}")%>
+<%@utm_unidad.each{ |dato|%>
+
+    <tr>
+    
+    
+    <td colspan="3" style="word-wrap: break-word;">
+         <%=dato.utm %> &nbsp;
+    </td>
+    <td colspan="3" style="word-wrap: break-word;">
+        <%=dato.ubicacion_geografica %> &nbsp;
+    </td>
+  </tr>
+<%}%>
+<!-- FIN DE LO ITERATIVO -->
+
+
+</table>
+ 
+<!-- Nueva informacion para el sector animal (comienzo)-->
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.evaluacion_pastizales_potreros')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ <table width="100%" border="1">
+
+ 
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1;width: 25%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.numero_lote')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1;width: 25%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.tipo_pasto_forraje')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 25%">
+      <%="#{I18n.t('Sistema.Body.Vistas.General.superficie')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')}"%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 25%">
+      <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.especie_variedad_pasto')%>
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="1">
+      <%#= pastizales.nro_lote unless pastizales.nil? %> &nbsp;
+    </td>
+    <td colspan="1">
+      <%#= pastizales.TipoPastoForraje.descripcion.to_s.strip.upcase unless pastizales.nil? %> &nbsp;
+    </td>
+    
+    <td colspan="2">
+      <%#= pastizales.superficie_fm unless pastizales.nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= pastizales.EspecieVariedadPasto.descripcion.to_s.strip.upcase unless pastizales.nil? %> &nbsp;
+    </td>
+
+  </tr>
+
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.lote_posee_sistema_riego')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.fecha_siembra')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.fecha_corte')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condiciones_pasto')%>
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="1">
+
+      <input type="radio" name="group3" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group3" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+      
+      <%#= @siniestro_informacion[0].fecha_siniestro_f unless @siniestro_informacion.nil? %> 
+    </td>
+    <td colspan="1">
+      <%#= pastizales.fecha_siembra_f unless pastizales.nil? %> &nbsp;
+    </td>
+    
+    <td colspan="2">
+      <%#= pastizales.fecha_corte_f unless pastizales.nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <input type="radio" name="group4" value="Excelente" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;</input>
+      <input type="radio" name="group4" value="Bueno" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;</input>
+      <input type="radio" name="group4" value="Regular"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;</input>
+      <input type="radio" name="group4" value="Malo"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%></input>
+    </td>
+  </tr>
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cantidad_potreros_asociados_lote')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.numero_potreros_cerca_electrica')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.numero_potreros_cerca_tradicional')%>
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%#= pastizales.cantidad_potreros.to_i unless pastizales.nil? %> &nbsp;
+    </td>
+    
+    <td colspan="2">
+      <%#= pastizales.nro_potrero_cerca_electrica unless pastizales.nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= pastizales.nro_potrero_cerca_tradicional unless pastizales.nil? %> &nbsp;
+    </td>
+  </tr>
+
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.productor_realiza_fertilizacion')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.tipo_fertilizacion')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.descripcion_fertilizacion')%>
+    </td>
+  </tr>
+ 
+ <tr>
+    <td colspan="2">
+      <input type="radio" name="group5" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group5" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+    
+
+<%#= @siniestro_informacion[0].fecha_notificacion_f unless @siniestro_informacion.nil? %>
+    </td>
+    
+    <td colspan="2">
+
+    </td>
+    <td colspan="2">
+      <%#= pastizales.descripcion_fertilizacion.to_s.strip.upcase unless pastizales.nil? %> &nbsp;
+    </td>
+
+
+
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.descripcion_observado_pastizales_potreros')%>
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="6">
+      <%#= pastizales.descripcion_observado.to_s.strip.upcase unless pastizales.nil? %> &nbsp;
+    </td>
+
+  </tr>
+
+
+
+
+ </table>
+
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.manejo_de_instalacion')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1">
+ 
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.tecnologia_convenio')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="6">
+
+
+
+      <input type="radio" name="group6" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group6" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+&nbsp;
+    </td>
+
+  </tr>
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.inseminacion_artificial')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.descripcion_pajuela')%>
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3">
+
+
+      <input type="radio" name="group7" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group7" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+
+    </td>
+    <td colspan="3">
+      <%#= @manejo_instalacion.descripcion_pajuela.to_s.strip.upcase unless @manejo_instalacion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.sala_ordenio')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.tipo_ordenio')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1;width: 33%">
+      <%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.calidad_ordenio')%>
+    </td>
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+
+      <input type="radio" name="group8" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group8" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+&nbsp;
+
+    </td>
+    
+    <td colspan="2">
+      
+    </td>
+    <td colspan="2">
+
+      <input type="radio" name="group9" value="Excelente" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;</input>
+      <input type="radio" name="group9" value="Bueno" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;</input>
+      <input type="radio" name="group9" value="Regular"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;</input>
+      <input type="radio" name="group9" value="Malo"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%></input>
+    </td>
+  </tr>
+
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.refrescadero_leche')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.calidad_refrescadero')%>
+    </td>
+  </tr>
+ 
+ <tr>
+    
+
+   
+    <td colspan="3">
+
+      <input type="radio" name="group10" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group10" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+&nbsp;
+    </td>
+    <td colspan="3">
+      <input type="radio" name="group11" value="Excelente" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;</input>
+      <input type="radio" name="group11" value="Bueno" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;</input>
+      <input type="radio" name="group11" value="Regular"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;</input>
+      <input type="radio" name="group11" value="Malo"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%></input>
+    </td>
+  </tr>
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.productor_lleva_registro_diario_actividades')%>
+    </td>
+
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.calidad_registro')%>
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="3">
+
+      <input type="radio" name="group12" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group12" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+&nbsp;
+    </td>
+
+    <td colspan="3">
+
+      <input type="radio" name="group13" value="Excelente" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;</input>
+      <input type="radio" name="group13" value="Bueno" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;</input>
+      <input type="radio" name="group13" value="Regular"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;</input>
+      <input type="radio" name="group13" value="Malo"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%></input>
+
+
+
+    </td>
+
+
+
+  </tr>
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.alimento_concentrado')%>
+    </td>
+
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.calidad_alimento_concentrado')%>
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="3">
+
+      <input type="radio" name="group14" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group14" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+&nbsp;
+    </td>
+
+    <td colspan="3">
+      <input type="radio" name="group15" value="Excelente" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;</input>
+      <input type="radio" name="group15" value="Bueno" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;</input>
+      <input type="radio" name="group15" value="Regular"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;</input>
+      <input type="radio" name="group15" value="Malo"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%></input>
+    </td>
+  </tr>
+
+
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.producctor_provee_otro_tipo_suplementacion_alimenticia')%>
+    </td>
+
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.especifique')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.calidad_suplementacion')%>
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="2">
+
+      <input type="radio" name="group16" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group16" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+&nbsp;
+    </td>
+
+    <td colspan="2">
+      <%#= @manejo_instalacion.especificar_suplementacion unless @manejo_instalacion.nil? %> &nbsp;
+    </td>
+
+    <td colspan="2">
+
+      <input type="radio" name="group17" value="Excelente" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;</input>
+      <input type="radio" name="group17" value="Bueno" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;</input>
+      <input type="radio" name="group17" value="Regular"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;</input>
+      <input type="radio" name="group17" value="Malo"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%></input>
+
+
+    </td>
+
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.descripcion_observado_manejo_instalacion')%>
+    </td>
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="6">
+      <%#= @manejo_instalacion.descripcion_observado.to_s.strip.upcase unless @manejo_instalacion.nil? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+ </table>
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Columnas.sanidad_animal')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1">
+ 
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.plan_vacunacion')%>
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="6">
+
+      <input type="radio" name="group18" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group18" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+&nbsp;
+    </td>
+
+  </tr>
+
+<tr>
+<td colspan="6" style="background-color: #f1f1f1">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.otra_vacuna')%></label>
+    </td>
+</tr>
+<!-- Aqui esto es iterativo -->
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.nombre_vacuna')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1;width: 50%">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.fecha_colocacion')%>
+    </td>
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3">
+      <%#= vacunas.Vacuna.descripcion.strip.upcase  unless vacunas.nil? %> &nbsp; 
+    </td>
+    <td colspan="3">
+      <%#= vacunas.fecha_colocacion_f unless vacunas.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.examenes_laboratorio')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.tipo_examen')%>
+    </td>
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3">
+
+      <input type="radio" name="group19" value="Si"  disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group19" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+
+    </td>
+    <td colspan="3">
+      <%#= @sanidad_animal[0].tipo_examen.to_s.strip.upcase unless @sanidad_animal.empty? %> &nbsp;
+    </td>
+    
+  </tr>
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.resultados')%>
+    </td>
+
+ </tr>
+
+
+ <tr>
+    <td colspan="6" >
+      <%#= @sanidad_animal[0].resultados.to_s.strip.upcase unless @sanidad_animal.empty? %> &nbsp;
+    </td>
+
+ </tr>
+
+</table>
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.semovientes')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1">
+ 
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.grupo_etareo')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.cantidad')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.condicion_corporal_grupo_etareo')%>
+    </td>
+    
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Modelos.CultivoLaguna.Columnas.peso_promedio')} #{I18n.t('Sistema.Body.Vistas.General.kg')}"%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.otras_especies')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.cantidad')%>
+    </td>
+
+  </tr>
+ 
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.becerra')%></label> 
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_becerra.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_becerra unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_becerra_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.porcinos')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_porcinos.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+<!-- Ojo aqui, hay una iteración -->
+ 
+
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.becerro')%></label> 
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_becerro.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_becerro unless @semovientes.nil? %> &nbsp;
+
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_becerro_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.conejos')%></label>
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_conejos.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.maute')%></label>
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_maute.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_maute unless @semovientes.nil? %> &nbsp;
+
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_maute_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.equinos')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_caballos.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.mauta')%></label> 
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_mauta.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_mauta unless @semovientes.nil? %> &nbsp;
+
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_mauta_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.aves')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_aves.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.novillo')%></label> 
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_novillo.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_novillo unless @semovientes.nil? %> &nbsp;
+
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_novillo_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.burro')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_burro.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.novilla')%></label>
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_novilla.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_novilla unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_novilla_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.mula')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_mula.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.retajo')%></label> 
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_retajo.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_retajo unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_retajo_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.ovino')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_ovino.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.toro')%></label>
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_toro.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_toro unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_toro_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.caprino')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_caprino.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.vaca_seca')%></label> 
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_vaca_seca.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_vaca_seca unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_vaca_seca_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.caninos')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_caninos.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.vaca_ordenio')%></label> 
+    </td>
+    <td colspan="1">
+      <%#= @semovientes.cantidad_vaca_ordenio.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.condicion_corporal_vaca_ordenio unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.peso_promedio_vaca_ordenio_fm unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.felinos')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.cantidad_felinos.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+ <tr>   
+    
+    <td colspan="4">
+      <%#= @siniestro_informacion[0].fecha_siniestro_f unless @siniestro_informacion.nil? %> 
+    </td>
+
+    <td colspan="1">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.otros')%></label> 
+    </td>
+
+    <td colspan="1">
+      <%#= @semovientes.otra_especie.strip.upcase unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    
+  </tr>
+
+
+
+
+<!-- aqui termina la iteración -->
+
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.total_vacas')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.hembras_ordenio')} #{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.parentesis_porcentaje')}"%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.porcentaje_preniez')%>
+    </td>
+    
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.dias_intervalo_partos')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.dias')}"%>
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="1">
+      <%#= @semovientes.cantidad_vaca_seca.to_i + @semovientes.cantidad_vaca_ordenio.to_i unless @semovientes.nil? %> &nbsp;
+    </td>
+
+    <td colspan="1">
+      <%#=sprintf('%01.2f', (@semovientes.cantidad_vaca_ordenio.to_f/(@semovientes.cantidad_vaca_seca.to_f + @semovientes.cantidad_vaca_ordenio.to_f)*100) ).sub('.', ',') << " %"unless @semovientes.nil? %> &nbsp;
+    </td>
+
+
+    <td colspan="2">
+      <%#=@semovientes.porcentaje_preniez_f.to_s << " %" unless @semovientes.nil? %> &nbsp;
+    </td>
+   <td colspan="2">
+      <%#= @semovientes.dias_intervalo_partos unless @semovientes.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSemovientes.Etiquetas.animales_aprobados')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.cant_animales_adquiridos')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.hembras')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%= I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.machos')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.cant_animales_marcados_hierro_fondas')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.Semovientes.Columnas.fecha_adquisicion_semovientes')%>
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="1">
+      <%#= @siniestro_informacion[0].hectareas_aprobadas_f unless @siniestro_informacion.nil? %> 
+    </td>
+
+    <td colspan="1">
+      <%#= (@semovientes.cantidad_vaca_ordenio.to_i + @semovientes.cantidad_vaca_seca.to_i + @semovientes.cantidad_novilla.to_i + @semovientes.cantidad_mauta.to_i + @semovientes.cantidad_becerra.to_i) + (@semovientes.cantidad_toro.to_i + @semovientes.cantidad_retajo.to_i + @semovientes.cantidad_novillo.to_i + @semovientes.cantidad_maute.to_i + @semovientes.cantidad_becerro.to_i) unless @semovientes.nil? %> &nbsp;
+    </td>
+
+
+    <td colspan="1">
+      <%#= (@semovientes.cantidad_vaca_ordenio.to_i + @semovientes.cantidad_vaca_seca.to_i + @semovientes.cantidad_novilla.to_i + @semovientes.cantidad_mauta.to_i + @semovientes.cantidad_becerra.to_i) unless @semovientes.nil? %> &nbsp;
+    </td>
+   <td colspan="1">
+      <%#= (@semovientes.cantidad_toro.to_i + @semovientes.cantidad_retajo.to_i + @semovientes.cantidad_novillo.to_i + @semovientes.cantidad_maute.to_i + @semovientes.cantidad_becerro.to_i) unless @semovientes.nil? %> &nbsp;
+    </td>
+   <td colspan="1">
+      <%#= @semovientes.cant_animales_marcados_hierro_fondas unless @semovientes.nil? %> &nbsp;
+    </td>
+   <td colspan="1">
+      <%#= @semovientes.fecha_adquisicion_semovientes_f unless @semovientes.nil? %> &nbsp;
+    </td>
+
+
+    
+  </tr>
+
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.amnesis_diagnostico_tratamiento')%>
+    </td>
+
+ </tr>
+
+
+ <tr>
+    <td colspan="6" >
+      <%#= @semovientes.anamnesis_diagnostico.to_s.strip.upcase unless @semovientes.nil? %> &nbsp;
+    </td>
+
+ </tr>
+
+</table>
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.produccion_leche')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1">
+ 
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.produccion_diaria_destinada_plantas_estado')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.produccion_diaria_vendida_terceros')%>
+    </td>
+    
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.carne_anual_finca')} #{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.parentesis_ele')}"%>
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%#= @produccion_leche_carne.prod_diaria_leche_plantas_estado_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= @produccion_leche_carne.prod_diaria_leche_vendida_terceros_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    
+    <td colspan="2">
+      <%#= @produccion_leche_carne.prod_diaria_leche_finca_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.produccion_diaria_vaca_ordenio')%>
+    </td>
+    <td colspan="1" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.produccion_diaria_total')} #{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.parentesis_ele')}"%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.produccion_diaria')} #{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.parentesis_ele')}"%>
+    </td>
+    
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.calidad_higiene_labores_ordenio')%>
+    </td>
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="1">
+      <%#= @produccion_leche_carne.total_litros_dia_leche_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    <td colspan="1">
+      <%#= @produccion_leche_carne.l_vaca_total_dia_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+   <td colspan="2">
+      <%#= @produccion_leche_carne.l_vaca_total_dia_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    
+   <td colspan="2">
+
+     <input type="radio" name="group20" value="Excelente" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;</input>
+     <input type="radio" name="group20" value="Bueno" disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;</input>
+     <input type="radio" name="group20" value="Regular"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;</input>
+     <input type="radio" name="group20" value="Malo"  disabled="disabled"> <%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%></input>
+
+
+
+    </td>
+
+
+  </tr>
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.observaciones_ordenio')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="6">
+      <%#= @produccion_leche_carne.observaciones_ordenio.to_s.strip.upcase unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+
+</table>
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.produccion_leche_carne')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1">
+ 
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.destinado_plantas_estado_anual')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.vendido_terceros_anual')%>
+    </td>
+    
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.para_uso_interno_finca_anual')%>
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%#= @produccion_leche_carne.carne_plantas_estado_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= @produccion_leche_carne.carne_anual_terceros_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    
+    <td colspan="2">
+      <%#= @produccion_leche_carne.carne_anual_finca_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.promedio_ganancia_peso_diario')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.peso_promedio_matadero')%>
+    </td>
+    
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.total_arrime_carne_anual')%>
+    </td>
+
+
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%#= @produccion_leche_carne.carne_peso_diario_promedio_ganancia_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+   <td colspan="2">
+      <%#=@produccion_leche_carne.carne_peso_promedio_matadero_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    
+   <td colspan="2">
+      <%#= @produccion_leche_carne.carne_total_arrime_anual_fm unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+
+
+  </tr>
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Modelos.ProduccionLecheCarne.Columnas.observaciones_prod_carne')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="6">
+      <%#= @produccion_leche_carne.observaciones_prod_carne.to_s.strip.upcase unless @produccion_leche_carne.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+
+</table>
+
+
+
+<!-- Nueva informacion para el sector animal (final)--> 
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.informacion_siniestro')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1">
+ 
+ <tr>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.fecha_siniestro')%>
+    </td>
+    <td colspan="3" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.fecha_notificacion_siniestro')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="3">
+      <%#= @siniestro_informacion[0].fecha_siniestro_f unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    <td colspan="3">
+      <%#= @siniestro_informacion[0].fecha_notificacion_f unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.porcentaje_perdida')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.tipo_perdida')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.causa_siniestro')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%#= @siniestro_informacion[0].porcentaje_perdida_f.to_s << " %" unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= TipoPerdida.find(@siniestro_informacion[0].tipo_perdida_id).nombre.to_s.strip.upcase unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+   <td colspan="2">
+      <%#= CausaSiniestro.find(@siniestro_informacion[0].causa_siniestro_id).nombre.to_s.strip.upcase unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    
+  </tr>
+
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.superficie_aprobada')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')}"%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Modelos.SeguimientoCultivo.Columnas.superficie_sembrada')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')}"%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%="#{I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.superficie_perdida_siniestrada')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.ha')}"%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%#= @siniestro_informacion[0].hectareas_aprobadas_fm unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= @siniestro_informacion[0].hectareas_sembradas_fm unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+   <td colspan="2">
+      <%#= @siniestro_informacion[0].hectareas_siniestradas_fm unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+    
+  </tr>
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.descripcion_siniestro')%>
+    </td>
+
+
+ </tr>
+
+
+ <tr>
+    <td colspan="6" >
+      <%#= @siniestro_informacion[0].descripcion_siniestro.to_s.strip.upcase unless @siniestro_informacion.empty? %> &nbsp;
+    </td>
+
+ </tr>
+
+
+
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.item')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Controladores.UnidadMedida.FormTitles.form_title')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cantidad_siniestrada')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    
+    <td colspan="2">
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+   <td colspan="2">
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+  </tr>
+
+</table>
+
+
+ <table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.sugerencia_recomendacion_tecnico')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+ 
+ <table width="100%" border="1">
+ 
+ <tr>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.realizo_labor_recomendada_visita_previa')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.continuidad_financiamiento')%>
+    </td>
+    <td colspan="2" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Controladores.CasoMedida.FormTitles.form_title')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+    
+    <td colspan="2">
+
+
+      <input type="radio" name="group21" value="Si" disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group21" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+
+<!--
+<input type="radio" name="group3" value="Si"  disabled="disabled"> Si &nbsp;
+<input type="radio" name="group3" value="No" disabled="disabled"> No       
+-->      
+
+	<%#= @siniestros[0].variedad_hibrido unless @siniestros.nil? %> &nbsp;
+    </td>    
+    <td colspan="2">
+      <input type="radio" name="group22" value="Si" disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+  <input type="radio" name="group22" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+     
+
+ <%#= @siniestros[0].variedad_hibrido unless @siniestros.nil? %> &nbsp;
+    </td>
+    <td colspan="2">
+      <%#= @decision_informacion.caso_medida.nombre.to_s.upcase unless @decision_informacion.caso_medida.nil? unless @decision_informacion.nil?%> &nbsp;
+    </td>
+    
+  </tr>
+
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.justificacion_caso_medida_aplicar')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+   
+    <td colspan="6"><br><br><br><br>
+      <%#= @decision_informacion.justificacion.to_s.upcase unless @decision_informacion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.labores_realizar_beneficiario')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+   
+    <td colspan="6"><br><br><br><br>
+      <%#= @decision_informacion.labores_por_realizar.to_s.upcase unless @decision_informacion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.recomendacion_sugerencia_tecnico')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+   
+    <td colspan="6"><br><br><br><br>
+      <%#= @decision_informacion.recomendaciones.to_s.upcase unless @decision_informacion.nil? %> &nbsp;
+    </td>
+    
+  </tr>
+
+ <tr>
+    <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaDecision.Etiquetas.recomienda_generacion_desembolso')%>
+    </td>
+    
+  </tr>
+ 
+ <tr>
+   
+    <td colspan="6">
+      <input type="radio" name="group23" value="Si" disabled="disabled"> <%=I18n.t('Sistema.Body.General.si')%> &nbsp;</input>
+      <input type="radio" name="group23" value="No"  disabled="disabled"> <%=I18n.t('Sistema.Body.Vistas.General.opc_no')%></input>
+
+      &nbsp;
+
+<%#= @siniestros[0].variedad_hibrido unless @siniestros.nil? %> 
+    </td>
+    
+  </tr>
+
+
+<tr>
+  <td colspan="6" align="center" style="background-color: #f1f1f1">
+     <label> <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.ejecucion_plan_inversion')%> </label>
+    </td>
+
+</tr>
+
+ <tr>
+    <td style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.descripcion_item')%>
+    </td>
+    <td style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.cantidad_recomendada')%>
+    </td>
+    <td style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.unidad_medida')%>
+    </td>
+    <td style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%>
+    </td>
+    
+    <td style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.saldo_disponible_recomendar')%>
+    </td>
+
+
+    <td style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.RecomendacionPlanInversion.Etiquetas.monto_recomendado')%>
+    </td>
+  </tr>
+ 
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+ <tr>
+    
+    
+    <td >
+      <%#= @plan_inversion[@de].item_nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].cantidad.to_i unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    
+    <td >
+      <%#= @plan_inversion[@de].unidad_medida.nombre.to_s.strip.upcase unless @plan_inversion.empty? %> &nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_financiamiento_fm unless @plan_inversion.empty? %> &nbsp;
+    </td>
+
+    <td >
+
+      <%#= (@plan_inversion[@de].monto_financiamiento_f - @desembolso_detalle.monto) unless @plan_inversion.empty? || @desembolso_detalle.nil? %> 
+<%#=(@plan_inversion[@de].monto_financiamiento - arreglo[@de]) unless @plan_inversion.empty?%>
+&nbsp;
+    </td>
+    <td >
+      <%#= @plan_inversion[@de].monto_desembolsado_f unless @plan_inversion.empty? %> 
+      <%#=arreglo[@de]%>
+&nbsp;
+    </td>
+
+
+  </tr>
+
+
+<tr>
+  <td colspan="6" style="background-color: #f1f1f1">
+      <%=I18n.t('Sistema.Body.Vistas.General.recomendaciones')%> 
+    </td>
+
+</tr>
+
+<tr>
+  <td colspan="6" ><br><br><br><br>
+       <%#= @plan_inversion.costo_minimo_f unless @plan_inversion.nil? %>&nbsp;
+    </td>
+
+</tr>
+
+ </table>
+
+<table width="100%" border="1">   
+  <tr>
+    <td colspan="6" align="center" style="background-color: #d9d4d4">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.firmas_aprobacion')%></label>
+    </td>
+  </tr>
+ 
+
+  </table>
+
+<table border="1">
+
+<tr>
+      <td  >
+        <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.tecnico_campo_realizo_inspeccion')%></label>
+        &nbsp;<hr>
+      
+	<table border="0" style="width: 100%">
+          <tr>
+            <td >
+              <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.nombre_apellido')%></label> <%#=@tecnico_campo[0].primer_nombre.to_s.strip.upcase << " " << @tecnico_campo[0].segundo_nombre.to_s.strip.upcase << " " << @tecnico_campo[0].primer_apellido.to_s.strip.upcase << " " << @tecnico_campo[0].segundo_apellido.to_s.strip.upcase unless @tecnico_campo.empty? %>
+            </td>
+		</tr>            
+<tr>		
+<td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></label> <%#=@tecnico_campo[0].letra_cedula.to_s.strip.upcase << " " << @tecnico_campo[0].cedula.to_s unless @tecnico_campo.empty? %>
+            </td>
+</tr>
+
+<tr>		
+<td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.codigo_tecnico')%></label> <%#=@tecnico_campo[0].codigo unless @tecnico_campo.empty? %>
+            </td>
+</tr>
+
+<tr>		
+<td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.telefonos')%></label> <%#=@tecnico_campo[0].telefono_habitacion << " / " << @tecnico_campo[0].telefono_celular unless @tecnico_campo.empty? %>
+            </td>
+</tr>
+
+<tr>		
+<td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.institucion')%></label> <%#=Oficina.find(@tecnico_campo[0].oficina_id).nombre.to_s.strip.upcase unless @tecnico_campo.empty? %>
+            </td>
+</tr>
+
+<tr >
+            <td rowspan="4" height="70px" style="width: 34%" colspan="">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.firma')%></label> __________________________
+            </td>
+          </tr>
+
+        </table>
+
+
+	 </td> 
+      <td >
+        <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.persona_atendio_visita')%></label>
+        &nbsp;<hr>
+      
+	<table border="0" style="width: 100%">
+          <tr>
+            <td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.nombre_apellido')%></label> <%#=@tecnico_visita.nombre_persona_atencion.to_s.strip.upcase << " " << @tecnico_visita.apellido_persona_atencion.to_s.strip.upcase unless @tecnico_visita.nil? %>
+            </td>
+		</tr>            
+		<tr>		
+	<td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></label> <%#=@tecnico_visita.cedula_nacionalidad_persona_atencion.to_s.strip.upcase << " " << @tecnico_visita.cedula_persona_atencion.to_s unless @tecnico_visita.nil? %>
+            </td>
+	</tr>	
+
+	<tr >
+            <td height="70px" style="width: 34%" colspan="">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.firma')%></label> __________________________
+            </td>
+          </tr>
+
+
+	<tr >
+            <td rowspan="2" height="90px" style="width: 34%" colspan="">
+              <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.huella_dactilar')%></label> 
+            </td>
+          </tr>
+
+
+
+
+
+        </table>
+
+	</td>
+      <td   colspan="2">
+        <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.responsable_brigada_vegetal')%></label>
+	&nbsp;<hr>
+	<table border="0" style="width: 100%">
+          <tr>
+            <td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.nombre_apellido')%></label> <%#=@tecnico_supervisor.primer_nombre_jefe_brigada.to_s.strip.upcase << " " << @tecnico_supervisor.segundo_nombre_jefe_brigada.to_s.strip.upcase << " " << @tecnico_supervisor.primer_apellido_jefe_brigada.to_s.strip.upcase << " " << @tecnico_supervisor.segundo_apellido_jefe_brigada.to_s.strip.upcase unless @tecnico_supervisor.nil? %>
+            </td>
+		</tr>            
+		<tr>		
+	<td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%></label> <%#=@tecnico_supervisor.cedula_nacionalidad_jefe_brigada.to_s.strip.upcase << " " << @tecnico_supervisor.cedula_jefe_brigada.to_s unless @tecnico_supervisor.nil? %>
+            </td>
+	</tr>	
+
+		<tr>		
+	<td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.telefonos')%></label> 
+            </td>
+	</tr>	
+
+		<tr>		
+	<td style="width: 33%">
+              <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.institucion')%></label> <%#=@tecnico_supervisor.nombre.to_s.strip.upcase unless @tecnico_supervisor.nil? %>
+            </td>
+	</tr>	
+
+
+	<tr >
+            <td rowspan="2" height="70px" style="width: 34%" colspan="">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.firma')%></label> __________________________
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>    
+
+</table>
+
+
+
+
+<!-- ojo aqui
+
+
+<table border="1">
+
+    <tr>
+      <td colspan="6">
+        <div align="justify" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+          <b>Aviso:</b> Cualquier Aviso que desee poner.
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<div>  -->
+  <table style="width: 100%">
+    <tr>
+      <td>
+        
+      </td>
+      <td align="right">
+<div align="right" style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">        
+
+<%=I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.fecha_impresion')%><%= Time.now.strftime('%d/%m/%Y') %>
+</div>      
+</td>
+    </tr>
+  </table></div>
+
+<div id=noprint>
+<TABLE width="93%" cellpadding="2">
+<tr align="center">
+  <td><input id="imprimir" name="imprimir" onclick="Javascript:imprime()" type="button" value="Imprimir" /></td>
+</tr>
+</TABLE>
+</div>
+
+</body>
+
+</html>

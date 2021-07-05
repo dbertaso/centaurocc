@@ -1,0 +1,168 @@
+<div class="marco-contenido">
+
+	<div class="marco-titulo"><div><div>
+		<%= "#{I18n.t('Sistema.Body.Vistas.General.consultando')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%#= @solicitud.estatus_w -%></span>
+	</div></div></div>
+
+		<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+	<div class="marco-contenido2">
+
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= Etiquetas.etiqueta(9) %></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%">
+      <label><%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? 'Rif' : 'Cédula' %></label>
+    </td>
+    <td style="width: 70%">
+      <% if @solicitud.cliente.class.to_s=='ClienteEmpresa' %>
+        <%= @solicitud.cliente.empresa.rif %>
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+            { :controller=>'/clientes/cliente_empresa', :action=>'view', :id=>@solicitud.cliente.empresa.id, :popup=>true },
+            :popup => ['cliente_empresa', 'height=600,width=800, scrollbars=yes, resizable=yes']	%>
+      <% else %>
+        <%= @solicitud.cliente.persona.cedula %>
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+            { :controller=>'/clientes/cliente_persona', :action=>'view', :id=>@solicitud.cliente.persona.id, :popup=>true },
+            :popup => ['cliente_persona', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? 'Nombre' : 'Nombre y Apellido' %></label>
+    </td>
+    <td>
+      <%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.alias : @solicitud.cliente.persona.nombre_corto %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Número de <%= Etiquetas.etiqueta(9) %></label>
+    </td>
+    <td>
+      <% if @solicitud.cliente.class.to_s=='ClienteEmpresa' %>
+        <%= @solicitud.cliente.empresa.id %>
+      <% else %>
+        <%= @solicitud.cliente.persona.id  %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Datos B&aacute;sicos del Proyecto</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <% unless @solicitud.numero.nil? -%><label>Número</label><% end -%>
+    </td>
+    <td>
+      <%= @solicitud.numero -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha Solicitud</label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 500px">
+      <%= @solicitud.fecha_solicitud_f %>
+    </td>
+  </tr>
+
+  <tr>
+      <td><label>Programa</label></td>
+      <td>
+          <%= @solicitud.programa.alias %>
+      </td>
+    </tr>
+
+  <tr>
+    <td><label>Origen de Fondo</label></td>
+    <td>
+      <span id="origen_fondo-select">
+        <%= @solicitud.OrigenFondo.nombre %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Unidad de Producción:</label> <label style="color: red">*</label></td>
+    <td>
+      <%= @solicitud.UnidadProduccion.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label>Modalidad de Financiamiento:</label></td>
+    <td>
+      <div id="modalidad-select">
+        <%= @solicitud.modalidad_financiamiento.nombre %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Objeto del Proyecto</label> <label style="color: red">*</label>
+    </td>
+    <td style="text-align: justify">
+      <%= @solicitud.objetivo_proyecto %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Datos de la Unidad de Producci&oacute;n</span>
+    </td>
+  </tr>
+  
+  
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Tenencia de la Tierra</span>
+    </td>
+  </tr>
+  
+  
+  
+   <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Tipo de Documento(s)</span>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Datos del Solicitante</span>
+    </td>
+  </tr>
+  
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Datos del Conyugue</span>
+    </td>
+  </tr>
+ 
+  <tr height=10><td colspan="2"></td></tr>
+
+</table>
+
+		<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+				{ :action => :index },
+				{ :id=>'button_close' } ) -%>
+	</div>
+</div>
+

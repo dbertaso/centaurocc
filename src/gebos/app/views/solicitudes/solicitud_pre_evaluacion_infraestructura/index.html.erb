@@ -1,0 +1,31 @@
+<div class="marco-titulo"><div><div>
+	<%= I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.Vistas.General.de') %> <span class="titulo_modificar"><%= @solicitud.nombre %></span>
+</div></div></div>
+
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+
+<div class="marco-contenido2">
+
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_visita/common/tabs' %>
+	<div class="marco-boton-in" id="button_new">
+	  <%= link_to_remote( 
+	  	image_tag(I18n.t('Sistema.Body.Imagenes.agregar')), 
+		  :loading =>'image_load()',
+	    :loaded => 'image_unload()',
+	  	:url => { :action => :new, :seguimiento_visita_id=>@seguimiento_visita.id } ) %>
+	</div>
+	
+	<%= error %>
+	<%= message %>
+
+	<div class="lista-form" id="form_new" style="display: none"></div>
+
+	<div id="list">
+		<%= render :partial=>"list" %>
+	</div>
+	
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+          { :controller => '/solicitudes/consulta_evaluacion_credito', :action => :index },
+          { :id=>'buton_cerrar' } ) -%>
+			
+</div>

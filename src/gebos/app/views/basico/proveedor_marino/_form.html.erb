@@ -1,0 +1,65 @@
+<table>
+
+  <tr>
+    <td style="width: 50px;">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %><label style="color: red">(*)</label></label>
+    </td>
+    <td>
+      <%= text_field 'proveedor_marino', 'nombre',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 50px">
+      <label><%= I18n.t('Sistema.Body.General.direccion') %></label><label style="color: red">(*)</label>
+    </td>
+    <td>
+      <%= text_area 'proveedor_marino', 'direccion',
+        :class=>'text',
+        :style=>'width: 500px; height: 100px',
+        :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 50px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.rif') %></label><label style="color: red">(*)</label>
+    </td>
+    <td>
+      <%= text_field 'proveedor_marino', 'rif',
+        :class=>'integer', :style=>'width: 500px;',
+        :maxlength=>'20', :onKeyUp=>'textCounter(this,20)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 100px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.propio') %></label>
+    </td>
+    <td>
+      <%= check_box 'proveedor_marino', 'propia',
+        :checked_value=>"1",
+        :unchecked_value=>"0",
+        :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 100px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.asociado')} #{I18n.t('Sistema.Body.General.fondas')}" %> </label>
+    </td>
+    <td>
+      <%= check_box 'proveedor_marino', 'asociado_fondas',
+        :checked_value=>"1",
+        :unchecked_value=>"0",
+        :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

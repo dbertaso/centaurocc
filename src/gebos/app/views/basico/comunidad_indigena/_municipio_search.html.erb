@@ -1,0 +1,8 @@
+<%= select(
+  'comunidad_indigena', 'municipio_id',
+  @municipio_list.map{|e| [e.nombre, e.id]},
+  { :prompt => "Seleccionar"},
+  { :class=>'select', :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :method => :get, :url=>{:controller=>'comunidad_indigena',
+          :action=>:municipio_change }, :with => "'municipio_id=' + this.value")};inputChange();" } ) %>

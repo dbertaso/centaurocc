@@ -1,0 +1,77 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 100px; position: absolute;" ></div>
+
+
+<%= form_title_search %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) do-%>
+<table>
+  <tr>
+    <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label></td>
+    <td><%= text_field_tag 'solicitud', '', :class=>'text', :maxlength=>'12', :style=>'width: 300px'  %></td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label></td>
+    <td>
+      <select name="tipo" id="tipo" class="select">
+        <option value="V-">V</option>
+        <option value="E-">E</option>
+        <option value="J-">J</option>
+        <option value="G-">G</option>
+      </select>
+      <%= text_field_tag 'cedula_rif', '', :class=>'text', :maxlength=>'10', :style=>'width: 200px'  %></td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label><%=I18n.t('Sistema.Body.General.beneficiario')%></label></td>
+    <td><%= text_field_tag 'productor', '', :class=>'text', :maxlength=>'40', :style=>'width: 300px'  %></td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label></td>
+    <td>
+      <% estado_onchange = remote_function(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url=>{:controller=>'envio_maquinaria',
+        :action=>:estado_change },
+        :with=>"'estado_id='+value") %>
+        
+      <%= select(
+        'estado_id','',
+        @estado_list.map{|i| [i.nombre, i.id]},
+        {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>estado_onchange+';inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%> </label></td>
+    <td>
+      <span id="municipio-search">
+        <%= render :partial=>'municipio_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%> </label></td>
+    <td>
+      <span id="parroquia-search">
+        <%= render :partial=>'parroquia_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px"><label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.unidad_produccion')%></label></td>
+    <td><%= text_field_tag 'unidad_produccion', '', :class=>'text', :maxlength=>'100', :style=>'width: 300px'  %></td>
+    <td><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%></td>
+  </tr>
+</table>
+<% end %>
+<br/>
+<%= error %>
+<%= message %>
+<br/>
+<div id="list"></div>
+

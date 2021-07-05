@@ -1,0 +1,5 @@
+<%= select(
+  'catalogo','almacen_maquinaria_sucursal_id',
+  @almacen_maquinaria_sucursal.map{|e| [e.nombre, e.id]},
+  { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+  { :class=>'select', :onchange=>'inputChange();'}) %>

@@ -1,0 +1,80 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name 
+    controller_name = controller.controller_name
+    controller_top = params[:controlador]
+
+    tipo_cliente = @solicitud.cliente.class.to_s
+
+    logger.debug "controller_name " << controller_name
+    if controller_name=='consulta_solicitud' 
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+    <% 
+    else 	   
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'consulta_solicitud', :action => 'edit', :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'consulta_solicitud', :action => 'view', :id => @solicitud.id,:accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail') %>	
+        </div></li>
+    <% 
+    end
+    if @solicitud.id
+
+      if controller_name=='solicitud_recaudo'
+      %>
+        <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.recaudos')%></a></div></li>
+      <% 
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.recaudos'), :controller => 'solicitud_recaudo', :action => 'index', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.recaudos'), :controller => 'solicitud_recaudo', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail') %>	
+          </div></li>
+      <% 
+      end
+      if controller_name=='solicitud_plan'
+      %>
+        <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.plan_inversion')%></a></div></li>
+      <% 
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.plan_inversion'), :controller => 'solicitud_plan', :action => 'index', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.plan_inversion'), :controller => 'solicitud_plan', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail') %>	
+          </div></li>
+      <% 
+      end		
+      if tipo_cliente == 'ClienteEmpresa'
+        if controller_name=='solicitud_cronograma'
+        %>
+          <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Controladores.CronogramaDesembolso.FormTitles.form_title')%></a></div></li>
+        <% 
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Controladores.CronogramaDesembolso.FormTitles.form_title'), :controller => 'solicitud_cronograma', :action => 'index', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+              <%= link_to(I18n.t('Sistema.Body.Controladores.CronogramaDesembolso.FormTitles.form_title'), :controller => 'solicitud_cronograma', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail') %>	
+            </div></li>
+        <% 
+        end
+      end
+      if tipo_cliente == 'ClientePersona'
+        if controller_name=='ups'
+        %>
+          <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.unidad_produccion')%></a></div></li>
+        <% 
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.unidad_produccion'), :controller => 'ups', :action => 'index', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.unidad_produccion'), :controller => 'ups', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail') %>	
+            </div></li>
+        <% 
+        end
+      end
+    end
+  %>
+  </ul>
+</div>

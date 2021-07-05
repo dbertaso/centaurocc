@@ -1,0 +1,94 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+  <table>
+    <tr>
+      <td style="width: 150px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+      </td>
+      <td>
+        <% estado_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',    
+          :method=>:get,
+          :url=>{:controller=>'asignar_maquinaria',
+            :action=>:estado_change },
+          :with=>"'estado_id='+value" ) %>
+        <%= select(
+          'estado_id', '',
+          @estado_list.map{|i| [i.nombre, i.id]},
+          {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select',:onchange=>estado_onchange + ';inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label>
+      </td>
+      <td>
+        <div id="municipio-select">
+          <%= render :partial => 'municipio_select' %>                   
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%></label>
+      </td>
+      <td>
+        <div id="parroquia-select">
+          <%= render :partial => 'parroquia_select' %>          
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 150px">
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.cedula')%> / <%=I18n.t('Sistema.Body.Vistas.General.rif')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'12', :style=>'width: 100px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 150px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.General.beneficiario')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 140px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.unidad_produccion')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'unidad_produccion', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>&nbsp&nbsp&nbsp<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+      </td>
+    </tr>
+
+  </table>
+  <% end %>
+  <br/>
+  <%= error %>
+  <%= message %>
+  <div id="list">
+  </div>
+</div>

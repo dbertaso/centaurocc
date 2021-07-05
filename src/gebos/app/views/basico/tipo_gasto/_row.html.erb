@@ -1,0 +1,4 @@
+<% tipo_gasto = @tipo_gasto if tipo_gasto.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= tipo_gasto.id %>">
+	<%= render :partial => 'data', :locals => { :tipo_gasto => tipo_gasto, :even_odd => even_odd } -%>
+</tr>

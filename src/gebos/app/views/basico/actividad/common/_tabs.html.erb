@@ -1,0 +1,53 @@
+<div id="tabs">
+  <ul>
+    <%  action_name = controller.action_name
+        controller_name = controller.controller_name
+        if controller_name=='actividad'
+    %>
+          <li id="actual">
+            <div>
+              <a href="#"><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></a>
+            </div>
+          </li>
+        <%
+        else
+        %>
+          <li>
+            <div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.General.actividad'), :controller =>'actividad', :action => 'index', :sub_rubro_id => @actividad.sub_rubro.id, :id => @actividad.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+            </div>
+          </li>
+        <%
+
+        end
+
+        unless @actividad.nil?
+          unless @actividad.id.nil?
+            if @actividad.activo == true
+              if controller_name=='actividad_activar'
+              %>
+                <li id="actual">
+                  <div>
+                    <a href="#"><%=I18n.t('Sistema.Body.Vistas.Actividad.Common.activar_desactivar')%></a>
+                  </div>
+                </li>
+              <%
+              else
+              %>
+                <li>
+                  <div>
+                    <%= if (action_name == 'index' || action_name == 'edit' || action_name == 'new')
+                          link_to(I18n.t('Sistema.Body.Vistas.Actividad.Common.activar_desactivar'), :controller => 'actividad_activar', 
+                                  :action => 'index', :actividad_id => @actividad.id, :popup=>params[:popup]) 
+                        end
+                    %>
+                  </div>
+                </li>
+              <%
+            end
+          end
+        end
+      end
+    %>
+  </ul>
+</div>

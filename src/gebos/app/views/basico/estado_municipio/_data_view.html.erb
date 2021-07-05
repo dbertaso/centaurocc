@@ -1,0 +1,11 @@
+<% municipio = @municipio if municipio.nil? %>
+<td>
+	<%= municipio.nombre  %>
+</td>
+<td style="text-align: left">
+	<%= municipio.eje.nombre  %>
+</td>
+<td align="center">
+	<%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),:controller=>'municipio_parroquia',:action=>'view',:municipio_id=>municipio.id)  %>
+</td>
+

@@ -1,0 +1,139 @@
+<script type="text/javascript">
+
+  function cerrar()
+  {
+    window.close();
+  }
+
+</script>
+
+<%= form_title_view @embarcacion.nombre_embarcacion %>
+
+<%= render :partial=>'basico/embarcacion/common/tabs' %>
+<div class="marco-contenido2">
+
+
+    <table style="width: 100%">
+	<tr>
+		<td class="separador" valign="bottom" colspan="2">
+			<span>Modificación de los datos de la embarcación</span>
+		</td>
+	</tr>
+
+
+	<!-- <tr>
+		<td style="width: 25%">
+			<label>Rif</label> <label style="color: red">*</label>
+		</td>
+		<td style="width: 75%">
+			<%#= @embarcacion.rif %>
+		</td>
+	</tr> -->
+
+        <tr>
+		<td>
+			<label>Nombre de la embarcación</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.nombre_embarcacion %>
+		</td>
+	</tr>
+
+        <tr>
+		<td>
+			<label>Matricula</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.matricula %>
+
+		</td>
+	</tr>
+
+        <tr>
+		<td>
+			<label>Tipo de Embarcación</label> <label style="color: red">*</label>
+		</td>
+		<td>
+
+			<%= @embarcacion.tipo_embarcacion_id %>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label>Tipo de Material</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.tipo_material_id %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label>Proveedor Marino</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.proveedor_marino_id %>
+		</td>
+	</tr>
+
+        <tr>
+		<td>
+			<label>Eslora</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.eslora %>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label>Manga</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.manga %>
+		</td>
+	</tr>
+
+        <tr>
+		<td>
+			<label>Puntal</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.puntal %>
+		</td>
+	</tr>
+
+        <tr>
+		<td>
+			<label>U.A.B</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.uab %>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label>Cantidad de Tripulantes</label> <label style="color: red">*</label>
+		</td>
+		<td>
+			<%= @embarcacion.cantidad_tripulantes %>
+
+		</td>
+
+	</tr>
+
+
+			<tr height="10"><td colspan="2"></td></tr>
+</table>
+
+    <% unless params[:popup] == 'true' %>
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :action => :index, :popup=>params[:popup] },
+		{ :id=>'button_close' } ) -%>
+    <% else %>
+      <%= image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'),:title=>'Agregar', :onclick=>"javascript:cerrar();", :OnMouseOver=>"style.cursor='pointer'" ) %>
+    <% end %>
+
+</div>
+

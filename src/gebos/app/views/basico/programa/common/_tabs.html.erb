@@ -1,0 +1,145 @@
+<div id="tabs">
+  <ul>
+    <%
+      action_name = controller.action_name
+      controller_name = controller.controller_name
+      if
+        controller_name=='programa' &&
+        !(action_name=='tasa_historico_list' || action_name=='tasa_historico_list_view')
+    %>
+      <li id="actual">
+        <div>
+          <a href="#">
+            <%=I18n.t('Sistema.Body.Vistas.General.basico')%>
+          </a>
+        </div>
+      </li>
+    <%
+      else
+    %>
+      <li>
+        <div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.basico'), :controller => 'programa', :action => 'edit', :id => @programa.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.basico'), :controller => 'programa', :action => 'view', :id => @programa.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view') %>
+        </div>
+      </li>
+    <%
+    end
+
+    if !@programa.new_record?
+      if controller_name=='programa_origen_fondo'
+  %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%=I18n.t('Sistema.Body.Vistas.General.fondos')%>
+            </a>
+          </div>
+        </li>
+      <%
+      else
+      %>
+        <li>
+          <div>
+             <%= link_to(I18n.t('Sistema.Body.Vistas.General.fondos'), :controller => 'programa_origen_fondo', :action => 'index', :programa_id => @programa.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+             <%= link_to(I18n.t('Sistema.Body.Vistas.General.fondos'), :controller => 'programa_origen_fondo', :action => 'view', :programa_id => @programa.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view') %>
+          </div>
+        </li>
+  <%
+      end
+
+      if controller_name=='programa_tipo_cliente'
+  %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.cliente')}"%>
+            </a>
+          </div>
+        </li>
+  <%
+      else
+  %>
+        <li>
+          <div>
+             <%= link_to("#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.cliente')}" , :controller => 'programa_tipo_cliente', :action => 'index', :programa_id => @programa.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+             <%= link_to('Tipo ' + Etiquetas.etiqueta(9), :controller => 'programa_tipo_cliente', :action => 'view', :programa_id => @programa.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view') %>
+          </div>
+        </li>
+  <%
+      end
+
+      if controller_name=='programa_modalidad_financiamiento'
+  %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%= "#{I18n.t('Sistema.Body.Vistas.General.modalidad')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}" %>
+            </a>
+          </div>
+        </li>
+  <%
+      else
+  %>
+        <li>
+          <div>
+             <%= link_to("#{I18n.t('Sistema.Body.Vistas.General.modalidad')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}", :controller => 'programa_modalidad_financiamiento', :action => 'index', :programa_id => @programa.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+             <%= link_to("#{I18n.t('Sistema.Body.Vistas.General.modalidad')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}", :controller => 'programa_modalidad_financiamiento', :action => 'view', :programa_id => @programa.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view') %>
+        </div></li>
+  <%
+      end
+
+      if controller_name=='programa_garantia'
+  %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%= I18n.t('Sistema.Body.Vistas.General.garantias')%>
+            </a>
+          </div>
+        </li>
+  <%
+      else
+  %>
+        <li>
+          <div>
+             <%= link_to(I18n.t('Sistema.Body.Vistas.General.garantias'), :controller => 'programa_garantia', :action => 'index', :programa_id => @programa.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+             <%= link_to(I18n.t('Sistema.Body.Vistas.General.garantias'), :controller => 'programa_garantia', :action => 'view', :programa_id => @programa.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view') %>
+          </div>
+        </li>
+  <%
+      end
+    if controller_name=='programa_producto' || controller_name=='programa_producto_garantia' || controller_name=='programa_producto_gasto' || controller_name=='programa_producto_formula' || controller_name == 'programa_producto_concepto'
+%>
+      <li id="actual">
+        <div>
+          <a href="#">
+            <%= I18n.t('Sistema.Body.Vistas.General.financiamiento')%>
+          </a>
+        </div>
+      </li>
+<%
+    else
+%>
+      <li><div>
+           <%= link_to(I18n.t('Sistema.Body.Vistas.General.financiamiento'), :controller => 'programa_producto', :action => 'index', :programa_id => @programa.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+           <%= link_to(I18n.t('Sistema.Body.Vistas.General.financiamiento'), :controller => 'programa_producto', :action => 'view', :programa_id => @programa.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view') %>
+      </div></li>
+<% end
+
+      if controller_name=='programa_gasto'
+  %>
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.gastos')%></a></div></li>
+  <%
+      else
+  %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.gastos'), :controller => 'programa_gasto', :action => 'index', :programa_id => @programa.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name=='tasa_historico_list') %>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.gastos'), :controller => 'programa_gasto', :action => 'view', :programa_id => @programa.id) if (action_name=='view' || action_name=='view_detail' || action_name=='tasa_historico_list_view')  %>
+        </div></li>
+  <%
+      end
+    end
+%>
+  </ul>
+</div>

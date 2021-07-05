@@ -1,0 +1,406 @@
+<script>
+  var deuda = <%= @deuda %>;
+
+  function centro_actualizacion_jvs(check,monto){
+    if(check.checked == true){
+      deuda = deuda - monto;
+    }else{
+      deuda = deuda + monto;
+    }
+    document.getElementById("monto_deuda").value = deuda;
+    formatCurrency(deuda, 'monto_deuda');
+		
+  }
+</script>
+<table border=0 width="100%">
+  <tr>
+    <td  class="separador" valign="bottom" colspan="3" style="width: 100%">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.condiciones_nuevo_financiamiento')%> </span>
+    </td>
+  </tr>
+
+  <% if @reestructuracion.referencia_abono != nil%>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.realizo_abono_deuda')%></label>
+      </td>
+      <td>
+        <input id="check_abono" disabled checked type="checkbox" value="true" name="check_abono" checked="checked" onclick="datos_abono(this);"/>
+      </td>
+      <td  align=left></td>
+    </tr>
+
+    <tr id="div_datos_abono">
+      <td colspan=3 align="center" width="100%">
+        <table style="background-color:white" width="60%">
+          <tr>
+            <td  class="separador" valign="bottom" colspan="2" style="width: 100%">
+              <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.datos_abono')%></span>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30%" align="right"><strong><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.entidad_financiera')%></strong></td>
+            <td style="width: 70%" align="left">
+              <%= @reestructuracion.entidad_financiera.nombre unless @reestructuracion.entidad_financiera.nil? %>
+            </td>
+          </tr
+          <tr>
+            <td align="right">
+              <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.tipo_cuenta')%></label>
+            </td>
+            <td style="width: 80%">
+
+              <%= @reestructuracion.tipo unless @reestructuracion.tipo.nil? %>
+            </td>
+
+          </tr>
+          <tr>
+            <td align="right">
+              <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.numero_cuenta')%></label>
+            </td>
+            <td align="left">
+              <%= @reestructuracion.numero_cuenta unless @reestructuracion.numero_cuenta.nil?%>
+            </td>
+
+          </tr>
+          <tr>
+            <td align="right">
+              <strong>
+                <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.numero_referencia')%>
+              </strong>
+            </td>
+            <td  align="left" >
+              <%= @reestructuracion.referencia_abono %>
+            </td>
+
+          </tr>
+          <tr>
+            <td align="right"><strong><%=I18n.t('Sistema.Body.Vistas.General.monto_abono')%></strong></td>
+            <td  align="left">
+              <%= format_fm(@reestructuracion.monto_abono) %> <%= @moneda %>
+            </td>
+
+          </tr>
+          <tr>
+            <td align="right"><strong><%=I18n.t('Sistema.Body.Vistas.General.fecha_abono')%></strong></td>
+            <td  align="left" >
+              <% fecha_abono_f = @reestructuracion.fecha_abono.to_s.split('-') %>
+              <%= fecha_abono_f[2] << "/" << fecha_abono_f[1] <<  "/" << fecha_abono_f[0]  %>	<%= I18n.t('Sistema.Body.General.formato_fecha')%> 
+            </td>
+          </tr>
+        </table>
+      </td>
+    <tr>
+    <% else %>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.realizo_abono_deuda')%></label>
+      </td>
+      <td>
+        <input id="check_abono" disabled type="checkbox" value="true" name="check_abono" onclick="datos_abono(this);"/>
+      </td>
+      <td  align=left></td>
+    </tr>
+  <% end %>				
+
+
+  <tr>
+    <td>
+      <label> <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_intereses_moratorios')%> </label>
+    </td>
+    <td><input id="intereses_moratorios_check" <%= if @reestructuracion.exonerado_interes_moratorio == true ; 'checked' end %> disabled type="checkbox" value="true" name="intereses_moratorios_check"  onclick="centro_actualizacion_jvs(this,<%= @interes_moratorio %>);"/> <%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.exonerar')%> </td>
+    <td align=left>
+      <div style="width:50%; text-align:right">
+        <%= format_fm(@interes_moratorio) %> <%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+    </td>
+  </tr>
+
+
+
+  <tr><td colspan=3 height=20></td></tr>
+
+  <tr>
+    <td width="30%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.metodo_amortizacion')%></label>
+    </td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.formula.descripcion %>">
+      <%= @reestructuracion.formula.nombre %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.General.frecuencia_pago')%></label></td>
+    <td colspan=2>
+      <%= @reestructuracion.frecuencia_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.General.plazo')%></label></td>
+    <td colspan=2>
+      <%= @reestructuracion.plazo %> <%=I18n.t('Sistema.Body.General.meses')%>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.tasa')%></label></td>
+    <td  colspan=2>
+      <%= @reestructuracion.tasa %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.fecha_valor')%></label></td>
+    <td  colspan=2>
+      <%= @reestructuracion.fecha_valor_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.beneficiario_viable_nuevo_financiamiento')%></label></td>
+    <% unless @reestructuracion.viable_f == 'No' %>
+      <td  font color="red" colspan=2>
+        <%= @reestructuracion.viable_f %>
+      </td>
+    <%else%>
+      <td  font color="blue" colspan=2>
+        <%= @reestructuracion.viable_f %>
+      </td>
+    <%end%>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="3">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.datos_proyecto')%></span>
+    </td>
+  </tr>
+
+  <% if !@reestructuracion.solicitud_id.nil? %>
+    <% nuevo_prestamo = Prestamo.find_by_solicitud_id(@reestructuracion.solicitud_id) %>
+
+    <tr>
+      <td>
+        <font size="+1"><label><%=I18n.t('Sistema.Body.Vistas.Form.numero_tramite')%></label></font>
+      </td>
+      <td colspan=2>
+        <font size="+1">
+        <%= link_to nuevo_prestamo.solicitud.numero,
+          { :controller=>'/solicitudes/solicitud', :action=>'view', :id=>nuevo_prestamo.solicitud.id, :popup=>true },
+          :onclick=>"window.open(this.href,'consulta_solicitud','height=600,width=800,scrollbars=yes,resizable=yes'); return false;" %>
+        </font>
+        
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')),
+          { :controller=>'/solicitudes/solicitud',  :action=>'view', :id=>nuevo_prestamo.solicitud.id, :popup=>true },
+          :onclick=>"window.open(this.href,'consulta_solicitud','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>&nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <font size="+1"><label><%=I18n.t('Sistema.Body.Vistas.Form.numero_financiamiento')%></label></font>
+      </td>
+      <td colspan=2>
+        <font size="+1">
+        <%= link_to nuevo_prestamo.numero,
+          { :controller=>'/prestamos/consulta_prestamo',  :action=>'view', :id=>nuevo_prestamo.id, :popup=>true },
+          :onclick=>"window.open(this.href,'consulta_prestamo','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>
+        </font>
+        <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=>I18n.t('Sistema.Body.Vistas.General.consultar')),
+          { :controller=>'/prestamos/consulta_prestamo',  :controlador => 'consulta_prestamo', :action=>'view', :id=>nuevo_prestamo.id, :popup=>true },
+          :onclick=>"window.open(this.href,'consulta_prestamo','height=600,width=800,scrollbars=yes,resizable=yes'); return false;"  %>
+      </td>
+    </tr>
+    <tr height="20"><td colspan=3></td></tr>
+  <% end %>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.fecha_solicitud')%></label>
+    </td>
+    <td  colspan=2>
+      <% format = @reestructuracion.fecha_impresion_formato_solicitud.to_s.split('-') %>
+      <%= format[2] << "/" << format[1] <<  "/" << format[0]  %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.fecha_registro_beneficiario')%></label>
+    </td>
+    <td colspan=2>
+      <%= @reestructuracion.cliente.fecha_registro_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.programa')%></label> <label style="color: red">*</label></td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.programa.descripcion %>">
+      <%= @reestructuracion.programa.nombre %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Controladores.OrigenFondo.FormTitles.form_title_record')%></label> <label style="color: red">*</label></td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.origen_fondo.descripcion %>">
+      <%= @reestructuracion.origen_fondo.nombre %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.unidad_produccion')%></label> <label style="color: red">*</label></td>
+    <td colspan=2>
+      <%= @reestructuracion.unidad_produccion.nombre %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Columnas.modalidad_financianciamiento')%></label> <label style="color: red">*</label></td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.modalidad_financiamiento.descripcion %>">
+      <%= @reestructuracion.modalidad_financiamiento.nombre %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.objeto_proyecto')%></label> <label style="color: red">*</label>
+    </td>
+    <td colspan=2>
+      <%= @reestructuracion.objetivo_proyecto %>
+    </td>
+  </tr>
+
+  <% if @cliente.class.to_s=='ClienteEmpresa' %>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.integrante_responsable')%></label>
+      </td>
+      <td>
+        <%= @reestructuracion.empresa_integrante_id %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="3">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.rubro_solicitado') %></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+    </td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.actividad.sub_rubro.rubro.sub_sector.sector.descripcion %>">
+      <%= @reestructuracion.actividad.sub_rubro.rubro.sub_sector.sector.nombre %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+    </td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.actividad.sub_rubro.rubro.sub_sector.descripcion %>">
+      <%= @reestructuracion.actividad.sub_rubro.rubro.sub_sector.nombre %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.actividad.sub_rubro.rubro.descripcion %>">
+      <%= @reestructuracion.actividad.sub_rubro.rubro.nombre %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+    </td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.actividad.sub_rubro.descripcion %>">
+      <%= @reestructuracion.actividad.sub_rubro.nombre %>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+    </td>
+    <td colspan=2>
+      <font color="blue" title="<%= @reestructuracion.actividad.descripcion %>">
+      <%= @reestructuracion.actividad.nombre %>
+      </font>
+    </td>
+  </tr>	
+</table>	
+<% style1 = "none"
+style2 = "none"
+style3 = "none"
+unless @solicitud.sub_sector.nil?
+  sub_sector = SubSector.find(@solicitud.sub_sector_id)
+  if sub_sector.nemonico == 'VE'
+    style1 = ""
+  elsif sub_sector.nemonico == 'AN'
+    style2 = ""
+  elsif sub_sector.nemonico == 'MA'
+    style3 = ""
+  end
+end
+%>
+<div id="hectarea" style="display: <%= style1 %>">
+  <table style="width: 100%">
+
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.hectareas_solicitadas')%></label> <label style="color: red">*</label>
+      </td>
+      <td style="width: 70%">
+        <%= @reestructuracion.hectareas_solicitadas %>
+      </td>
+    </tr>
+  </table>
+</div>
+<div id="semovientes" style="display: <%= style2 %>">
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.semovientes_solicitados')%></label> <label style="color: red">*</label>
+      </td>
+      <td style="width: 70%">
+        <%= @reestructuracion.semovientes_solicitados %>
+      </td>
+
+    </tr>
+  </table>
+</div>
+<div id="maquinaria" style="display: <%= style3 %>">
+  <table style="width: 100%">
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.utilizara_inventario')%></label>
+      </td>
+      <td style="width: 70%">
+        <%= @reestructuracion.por_inventario %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+

@@ -1,0 +1,22 @@
+<%@list = list if @list.nil? %>
+<% if @list.total_pages > 1 %>
+  <div class="lista-paginas">
+  <%= form_title_page %>
+  <%if class_super_class=="FormAjaxController" or class_super_class=="FormAjaxTabsController" or class_super_class=="FormVisitasAjaxController" or class_super_class=="FormTabTabsController" %>
+    <% if params.length == 0 %>
+      <%=will_paginate @list %>
+    <% else %>
+      <%=ajax_will_paginate @list, :params => params.merge( :my_excluded_param => nil)  %>
+    <%end%>
+  <%else%>  
+    <%=ajax_will_paginate @list, :params => params.merge( :my_excluded_param => nil)  %>
+  <%end%>  
+  </div>
+<%else%>
+<br>
+<% end %>
+<div class="lista-total">
+  <%= form_title_records_by_page %>
+</div>
+<br>
+<br>

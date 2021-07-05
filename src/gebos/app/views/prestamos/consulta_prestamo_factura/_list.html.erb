@@ -1,0 +1,56 @@
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 75px" <%= sort_class_helper('factura.numero') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.numero'), 'factura.numero', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('factura.fecha Contable') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.contable')}", 'factura.fecha_f', 'list' %>
+      </th>
+      <th style="width: 150px" <%= sort_class_helper('factura.fecha_realizacion Realizacion') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.Form.deposito')}", 'factura.fecha_realizacion_f', 'list' %>
+      </th>
+      <th style="width: 150px">
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.tipo')%>
+      </th>
+      <th style="width: 250px" >
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.entidad_financiera_silo')%>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('factura.pago_cliente.cheques[0].referencia') %>>
+        <%= sort_link_helper 'Referencia', 'factura.pago_cliente.cheques[0].referencia', 'list' %>
+      </th>
+      <th style="text-align: center; width: 75px">
+        <%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.banco')}"%>
+      </th>
+      <th style="text-align: center; width: 75px">
+       <%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.insumos')}"%>
+      </th>
+      <th style="text-align: center; width: 75px">
+        <%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.inventario')}"%>
+      </th>
+      <th style="text-align: center; width: 75px">
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_sras')%>
+      </th>
+      <th style="text-align: center; width: 75px">
+        <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.monto_gastos_administrativos') %>
+      </th>
+
+      <th style="text-align: center; width: 75px" <%= sort_class_helper('desembolso.monto') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.total'), 'desembolso.monto', 'list' %>
+      </th>
+      <th style="width: 44px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+      even_odd = 1
+      for factura in @list
+        even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :factura => factura, :even_odd => even_odd } -%>
+    <% end %>
+    </tbody>
+</table>
+<%= form_pagination %>

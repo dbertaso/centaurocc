@@ -1,0 +1,31 @@
+<% solicitud_maquinaria = @solicitud_maquinaria if solicitud_maquinaria.nil? %>
+
+<td>
+  <%= solicitud_maquinaria.tipo_maquinaria.descripcion %>
+</td>
+
+<td>
+  <%= solicitud_maquinaria.clase.nombre %>
+</td>
+
+<td align="center">
+  <%= solicitud_maquinaria.marca_maquinaria.nombre unless solicitud_maquinaria.marca_maquinaria.nil? %>
+</td>
+
+<td align="center">
+  <%= solicitud_maquinaria.modelo.nombre unless solicitud_maquinaria.modelo.nil? %>
+</td>
+
+<td style="text-align: center">
+  <%= solicitud_maquinaria.estatus_w %>
+</td>
+
+<td align="center">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'),:title =>'Eliminar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete_confirmado, :id => solicitud_maquinaria.id, :solicitud_id => solicitud_maquinaria.solicitud_id }) -%>
+</td>

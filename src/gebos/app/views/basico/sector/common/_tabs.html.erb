@@ -1,0 +1,115 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='sector'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.sectores') %></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.sectores'), :controller => 'sector', :action => 'edit', :id => @sector.id, :popup=>params[:popup])  if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+        </div></li>
+    <%
+    end
+    if @sector.id
+      if controller_name=='sub_sector'
+      %>
+        <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.sub_sectores') %></a></div></li>
+      <%
+      else
+      %>
+        <li>
+          <div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.sub_sectores'),
+              {:controller => 'sub_sector', :action => 'index', :sector_id => @sector.id, :method=>:get}) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+          </div>
+        </li>
+      <%
+      end
+      unless @sub_sector.nil?
+        unless @sub_sector.id.nil?
+          if controller_name=='rubro' || controller_name=='rubro_activar'
+          %>
+            <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.rubros') %></a></div></li>
+          <%
+          else
+          %>
+            <li>
+              <div>
+                <%= link_to(I18n.t('Sistema.Body.Vistas.General.rubros'), :controller => 'rubro', :action => 'index', :sub_sector_id => @sub_sector.id, :sector_id => @sector.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new')%>
+              </div>
+            </li>
+          <%
+          end
+        end
+        unless @rubro.nil?
+          unless @rubro.id.nil?
+            if controller_name=='sub_rubro'
+            %>
+              <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.sub_rubros') %></a></div></li>
+            <%
+            else
+            %>
+              <li><div>
+                  <%= link_to(I18n.t('Sistema.Body.Vistas.General.sub_rubros'), :controller => 'sub_rubro', :action => 'index', :rubro_id => @rubro.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+                </div></li>
+            <%
+            end
+          end
+          unless @sub_rubro.nil?
+            unless @sub_rubro.id.nil?
+              if controller_name=='actividad' || controller_name=='actividad_activar'
+              %>
+                <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.actividades') %></a></div></li>
+              <%
+              else
+              %>
+                <li><div>
+                    <%= link_to(I18n.t('Sistema.Body.Vistas.General.actividades'), :controller => 'actividad', :action => 'index', :sub_rubro_id => @sub_rubro.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+                  </div></li>
+              <%
+              end
+            end
+
+            unless @actividad.nil?
+              unless @actividad.id.nil?
+                if controller_name=='partida'
+              %>
+                  <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.partidas') %></a></div></li>
+                <%
+                else
+                %>
+                  <li><div>
+                      <%= link_to(I18n.t('Sistema.Body.Vistas.General.partidas'), :controller => 'partida', :action => 'index', :actividad_id => @actividad.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+                    </div>
+                  </li>
+                <%
+                end
+              end
+
+              unless @partida.nil?
+                unless @partida.id.nil?
+                  if controller_name=='item' || controller_name=='item_atributo'
+                %>
+                    <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.items') %></a></div></li>
+                  <%
+                  else
+                  %>
+                    <li><div>
+                        <%= link_to(I18n.t('Sistema.Body.Vistas.General.items'), :controller => 'item', :action => 'index', :partida_id => @partida.id,  :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+                      </div></li>
+                  <%
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  %>
+  </ul>
+</div>

@@ -1,0 +1,33 @@
+<% orden_despacho_archivos_generados = @orden_despacho_archivos_generados if orden_despacho_archivos_generados.nil? %>
+
+
+<td align="center">
+  <%= format_fecha(orden_despacho_archivos_generados.fecha) unless orden_despacho_archivos_generados.fecha.nil? %>
+</td>
+<td align="center">
+  <%= orden_despacho_archivos_generados.archivo  %>
+</td>
+<td align="center">
+  <%= orden_despacho_archivos_generados.numero_procesado %>
+</td>
+<td align="center"><font color="red"><b>
+  <%=orden_despacho_archivos_generados.monto_procesado_fm %></font></b>
+</td>
+<td align="center">
+  <%=EntidadFinanciera.find(orden_despacho_archivos_generados.entidad_financiera_id).nombre  %>
+</td>
+
+<td align="center">
+<%case orden_despacho_archivos_generados.estatus
+    when 1%>
+   <%= I18n.t('Sistema.Body.General.generando_archivo') %>
+   <%when 2%>
+   <%= I18n.t('Sistema.Body.General.archivo_generado') %>
+   <%else%>
+   <%= I18n.t('Sistema.Body.General.archivo_enviado') %>
+ <%end%>
+</td>
+
+<td align="center">
+<a target='_blank' href='<%="#{request.protocol}#{request.host.to_s}"%>:<%="#{request.port.to_s}"%>/documentos/orden_despacho_insumo/envio/<%="#{orden_despacho_archivos_generados.archivo}"%>' ><%=I18n.t('Sistema.Body.General.descargue_aqui')%></a>
+</td>

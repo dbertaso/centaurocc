@@ -1,0 +1,12 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 33%">
+      <label><%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.meses_gracia') %></label>
+    </td>
+    <td style="width: 67%">
+      <%= text_field 'producto', 'meses_gracia', :class=>'text', :style=>'width: 40px', :maxlength=>'4', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+</table>
+
+

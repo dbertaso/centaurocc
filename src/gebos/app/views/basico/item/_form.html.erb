@@ -1,0 +1,169 @@
+<table>
+
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+    </td>
+    <td style="width: 200px">
+      <% if @item.id.nil? %>
+        <%= @sector.nombre %>
+      <% else %>
+        <%=  @item.actividad.sub_rubro.rubro.sub_sector.sector.nombre.to_s %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+    </td>
+    <td style="width: 200px">
+      <%  if @item.id.nil? %>
+        <%= @sub_sector.nombre %>
+      <%  else %>
+        <%= @item.actividad.sub_rubro.rubro.sub_sector.nombre %>
+      <%end%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </td>
+    <td style="width: 200px">
+      <% if @item.id.nil? %>
+        <%= @rubro.nombre %>
+      <%else%>
+        <%= @item.actividad.sub_rubro.rubro.nombre.to_s %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+    </td>
+    <td style="width: 200px">
+      <% if @item.id.nil? %>
+        <%= @sub_rubro.nombre.to_s %>
+      <%else%>
+        <%= @item.actividad.sub_rubro.nombre.to_s %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+    </td>
+    <td style="width: 200px">
+      <% if @item.id.nil? %>
+        <%= @actividad.nombre.to_s %>
+      <%else%>
+        <%= @item.actividad.nombre.to_s %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td  style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.partida')%></label>
+    </td>
+    <td style="width: 200px">
+      <%if @item.id.nil?%>
+        <%= @partida.nombre %>
+      <%else%>
+        <%= @item.partida.nombre %>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 100px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>"  class="requerido"> (*)
+      </label>
+    <td style="width: 200px">
+
+      <%= select('item', 'tipo_item',
+        ([[I18n.t('Sistema.Body.Vistas.General.banco'), 'B'],
+            [I18n.t('Sistema.Body.Vistas.General.insumos'), 'I'],
+            [I18n.t('Sistema.Body.Vistas.General.maquinarias'), 'M']]),
+        {:prompt=> 'Seleccionar...'},
+        {:class=>'select', :onchange=>'inputChange();'}) %>
+    </td>
+  </tr>
+  <!-- --->
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.codigo')%> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'item', 'codigo', :class=>'text', :style=>'width: 100px', :maxlength=>'20',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'item', 'nombre', :class=>'text', :style=>'width: 480px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label>
+    </td>
+    <td>
+      <%= text_area 'item', 'descripcion',
+        :class=>'text',
+        :style=>'width: 580px; height: 60px',
+        :onKeyUp=>'textCounter(this,255)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td style= "width: 170px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.unidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.medida')}"%></label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td style="width: 200px">
+      <%= select(
+        'item', 'unidad_medida_id',
+        @unidad_medida_select.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') << '...'},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td style= "width: 170px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.por')} #{I18n.t('Sistema.Body.Vistas.General.hectarea')}"%>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td style="width: 200px">
+      <%= text_field 'item', 'cantidad_por_hectarea', :class=>'text', :style=>'width: 100px',
+        :maxlength=>'9', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style= "width: 170px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.desembolso')}"%> </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+    </td>
+    <td style="width: 200px">
+      <%= text_field 'item', 'numero_desembolso', :class=>'text', :style=>'width: 100px',
+        :maxlength=>'9', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style= "width: 170px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%> </label>
+    </td>
+    <td style="width: 200px">
+      <%= check_box 'item', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();'-%>
+    </td>
+  </tr>
+</table>

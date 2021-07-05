@@ -1,0 +1,234 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> de  <span class="titulo_modificar"><%= @solicitud.nombre %></span>
+    </div></div></div>
+
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+
+<%#= form_title_edit @empresa_direccion.tipo_nombre %>
+
+  <%= render :partial=>'solicitudes/solicitud_pre_evaluacion_visita/common/tabs' %>
+  <div class="marco-contenido2">
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" align="center" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.cuestionario') %></span>
+        </td>
+      </tr>
+    </table>
+
+    <%= error %>
+    <%= message %>
+    <br/>
+    <div id="list">
+      <table class="lista" style="width: 100%">
+        <thead>
+          <tr>
+            <th style="width: 350px">
+              <%= I18n.t('Sistema.Body.Vistas.General.evaluacion') %>
+            </th>
+            <th style="text-align: center; width: 50px">
+              <%= I18n.t('Sistema.Body.Vistas.General.respuesta') %>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="list_body">
+          <%
+          even_odd = 1
+          for encuesta_visita in @encuesta_visita_list
+            even_odd = 1 - even_odd
+          %>
+            <tr class="lista<%= even_odd %>" id="row_<%= encuesta_visita.id %>">
+              <td>
+                <%= encuesta_visita.numero.to_s << '.- ' << encuesta_visita.nombre  %>
+              </td>
+              <td style="text-align: center;">
+                <% if encuesta_visita.respuesta == true %>
+                  <%= radio_button 'encuesta_visita', "resultado_#{encuesta_visita.id}", 'true',
+                    :class=>'text', :checked=>true, :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita },
+                  :with=>"'id=#{encuesta_visita.id}&respuesta='+ this.value")};inputChange();"  -%>Sí <%= radio_button 'encuesta_visita', "resultado_#{encuesta_visita.id}", 'false',
+                    :class=>'text', :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita },
+                  :with=>"'id=#{encuesta_visita.id}&respuesta='+ this.value")};inputChange();"  -%>No
+                <% elsif encuesta_visita.respuesta == false %>
+                  <%= radio_button 'encuesta_visita', "resultado_#{encuesta_visita.id}", 'true',
+                    :class=>'text', :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita },
+                  :with=>"'id=#{encuesta_visita.id}&respuesta='+ this.value")};inputChange();"  -%>Sí <%= radio_button 'encuesta_visita', "resultado_#{encuesta_visita.id}", 'false',
+                    :class=>'text', :checked=>true, :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita },
+                  :with=>"'id=#{encuesta_visita.id}&respuesta='+ this.value")};inputChange();"  -%>No
+                <% else %>
+                  <%= radio_button 'encuesta_visita', "resultado_#{encuesta_visita.id}", 'true',
+                    :class=>'text', :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita },
+                  :with=>"'id=#{encuesta_visita.id}&respuesta='+ this.value")};inputChange();"  -%>Sí <%= radio_button 'encuesta_visita', "resultado_#{encuesta_visita.id}", 'false',
+                    :class=>'text', :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita },
+                  :with=>"'id=#{encuesta_visita.id}&respuesta='+ this.value")};inputChange();"  -%>No
+                <% end %>
+
+              </td>
+            </tr>
+          <%
+          end
+        %>
+        </tbody>
+      </table>
+      <br/><br/>
+      <table class="lista" style="width: 100%">
+        <thead>
+          <tr>
+            <th colspan="5">
+              <%= I18n.t('Sistema.Body.Vistas.General.nivel_conocimiento_productor') %>
+            </th>
+          </tr>
+          <tr>
+            <th style="width: 60%">
+              <%= I18n.t('Sistema.Body.Vistas.General.topicos') %>
+            </th>
+            <th style="text-align: center; width: 10%">
+              <%= I18n.t('Sistema.Body.Modelos.ArtePesca.Columnas.alto') %>
+            </th>
+            <th style="text-align: center; width: 10">
+              <%= I18n.t('Sistema.Body.Vistas.General.moderado') %>
+            </th>
+            <th style="text-align: center; width: 10%">
+              <%= I18n.t('Sistema.Body.Vistas.General.poco') %>
+            </th>
+            <th style="text-align: center; width: 10%">
+              <%= I18n.t('Sistema.Body.Vistas.General.ninguno') %>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="list_body">
+          <%
+          even_odd = 1
+          for encuesta_visita_topico in @encuesta_topico_list
+            even_odd = 1 - even_odd
+          %>
+            <tr class="lista<%= even_odd %>" id="rows_<%= encuesta_visita_topico.id %>">
+              <td>
+                <%= encuesta_visita_topico.nombre  %>
+              </td>
+              <td style="text-align: center;">
+                <% if encuesta_visita_topico.respuesta == 'A' %>
+                  <%= radio_button 'encuesta_visita_topico', "resultado_#{encuesta_visita_topico.id}", 'A',
+                    :class=>'text', :checked=>true, :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita_topico },
+                  :with=>"'id=#{encuesta_visita_topico.id}&respuesta='+ this.value")};inputChange();"  -%>
+                <% else %>
+                  <%= radio_button 'encuesta_visita_topico', "resultado_#{encuesta_visita_topico.id}", 'A',
+                    :class=>'text', :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita_topico },
+                  :with=>"'id=#{encuesta_visita_topico.id}&respuesta='+ this.value")};inputChange();"  -%>
+                <% end %>
+              </td>
+              <td style="text-align: center;">
+                <% if encuesta_visita_topico.respuesta == 'M' %>
+                  <%= radio_button 'encuesta_visita_topico', "resultado_#{encuesta_visita_topico.id}", 'M',
+                    :class=>'text', :checked=>true, :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita_topico },
+                  :with=>"'id=#{encuesta_visita_topico.id}&respuesta='+ this.value")};inputChange();"  -%>
+                <% else %>
+                  <%= radio_button 'encuesta_visita_topico', "resultado_#{encuesta_visita_topico.id}", 'M',
+                    :class=>'text', :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita_topico },
+                  :with=>"'id=#{encuesta_visita_topico.id}&respuesta='+ this.value")};inputChange();"  -%>
+                <% end %>
+              </td>
+              <td style="text-align: center;">
+                <% if encuesta_visita_topico.respuesta == 'P' %>
+                  <%= radio_button 'encuesta_visita_topico', "resultado_#{encuesta_visita_topico.id}", 'P',
+                    :class=>'text', :checked=>true, :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita_topico },
+                  :with=>"'id=#{encuesta_visita_topico.id}&respuesta='+ this.value")};inputChange();"  -%>
+                <% else %>
+                  <%= radio_button 'encuesta_visita_topico', "resultado_#{encuesta_visita_topico.id}", 'P',
+                    :class=>'text', :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita_topico },
+                  :with=>"'id=#{encuesta_visita_topico.id}&respuesta='+ this.value")};inputChange();"  -%>
+                <% end %>
+              </td>
+              <td style="text-align: center;">
+                <% if encuesta_visita_topico.respuesta == 'N' %>
+                  <%= radio_button 'encuesta_visita_topico', "resultado_#{encuesta_visita_topico.id}", 'N',
+                    :class=>'text', :checked=>true, :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita_topico },
+                  :with=>"'id=#{encuesta_visita_topico.id}&respuesta='+ this.value")};inputChange();"  -%>
+                <% else %>
+                  <%= radio_button 'encuesta_visita_topico', "resultado_#{encuesta_visita_topico.id}", 'N',
+                    :class=>'text', :onclick=>"#{remote_function(
+                  :loading =>'Element.show("loading")',
+                  :loaded => 'Element.hide("loading")',
+                  :method =>:get,
+                  :url=>{:controller=>'encuesta',
+                  :action=>:save_visita_topico },
+                  :with=>"'id=#{encuesta_visita_topico.id}&respuesta='+ this.value")};inputChange();"  -%>
+                <% end %>
+              </td>
+            </tr>
+
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <br/>
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :controller => '/solicitudes/consulta_evaluacion_credito', :action => :index },
+      { :id=>'buton_cerrar' } ) -%>
+
+  </div></div>

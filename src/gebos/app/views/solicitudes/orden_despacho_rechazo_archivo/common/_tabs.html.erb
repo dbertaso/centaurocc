@@ -1,0 +1,41 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+
+	logger.info "Action " << action_name
+	logger.info "Controlador " << controller_name.to_s
+
+	if controller_name=='orden_despacho_rechazo_archivo' && action_name == 'index'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.recepcion_archivo')%></a></div></li>
+<% 
+	else 	   
+%>
+		<li><div>
+		      <%= link_to(I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.recepcion_archivo'), :controller => 'orden_despacho_rechazo_archivo', :action => 'index', :popup=>params[:popup]) if (action_name == 'avanzar') %>
+		</div></li>
+<% 
+	end
+
+#if @total > 0
+
+	if controller_name=='orden_despacho_rechazo_archivo' && action_name == 'avanzar'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.resumen_del_proceso')%></a></div></li>
+<% 
+	else
+%>
+		<li><div>
+     		<%= link_to(I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.resumen_del_proceso'), :controller => 'orden_despacho_rechazo_archivo', :action => 'avanzar', :accion=>1, :popup=>params[:popup]) if (action_name == 'index') %>
+		</div></li>
+<% 
+	end
+
+#end
+
+%>
+
+	</ul>
+</div>

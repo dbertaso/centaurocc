@@ -1,0 +1,50 @@
+<td>
+  <%= solicitud.numero %>
+</td>
+<td>
+  <%= solicitud.cedula_rif %>
+</td>
+<td>
+  <%= solicitud.nombre %>
+</td>
+<td>
+  <span style="color: #FF0000"><b><%= solicitud.estatus %></b></span>
+</td>
+<td>
+  <%= solicitud.sector %>
+</td>
+<td>
+  <%= solicitud.sub_sector %>
+</td>
+<td>
+  <%= solicitud.rubro %>
+</td>
+<td>
+  <%= solicitud.sub_rubro %>
+</td>
+<td>
+  <%= solicitud.actividad %>
+</td>
+<td>
+  <%= solicitud.unidad_produccion %>
+</td>
+<td align="center">
+  <%= ControlAsignacion.asignacion(solicitud.solicitud_id) %>
+</td>
+<td align="center">
+  <%= ControlAsignacion.dias_trancurridos(solicitud.solicitud_id) %>
+</td>
+
+<td width="8%" align="center">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+    {:action => :view, :id => solicitud.solicitud_id,
+    :controller => '/solicitudes/solicitud', :controlador => '/visitas/visita_solicitud'} )%>
+
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.descargar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir')),
+    {:controller => '/visitas/visita_solicitud', :action=>'imprimir_sector', :id=>solicitud.solicitud_id, :tipo=>Solicitud.find(solicitud.solicitud_id).sub_sector.nemonico.strip.upcase, :popup=>'true', :method=>:get},
+   :onclick=>"window.open(this.href,'/visitas/visita_solicitud','height=600,width=1080, scrollbars=yes, resizable=yes');return false; ")%>
+
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    {:action => :index, :id => solicitud.solicitud_id,
+    :controller => '/visitas/visita_seguimiento'} )%>
+</td>

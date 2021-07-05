@@ -1,0 +1,46 @@
+<td>
+  <%= solicitud.numero %>
+</td>
+
+<td>
+  <%= solicitud.cedula_rif %>
+</td>
+<td>
+  <%= solicitud.beneficiario %>
+</td>
+<td>
+ <span style="color: #FF0000"><b><%= solicitud.estatus %></b></span>
+</td>
+<td>
+  <%= solicitud.estado %>
+</td>
+<td>
+  <%= solicitud.municipio %>
+</td>
+<td>
+  <%= solicitud.parroquia %>
+</td>
+<td>
+
+  <%= solicitud.unidad_produccion %>
+</td>
+<td align="center">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'),
+    {:action => :view,
+    :id => solicitud.solicitud_id,
+    :controller => '/solicitudes/solicitud',
+    :controlador => 'asignar_maquinaria'} %>
+
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Editar Seriales'),
+    {:action => :edit,
+    :id => solicitud.solicitud_id} %>
+
+  <%= link_to_remote(image_tag('enviar.gif',:title=>'Avanzar'),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :confirm => "¿#{I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.avarzar_solicitud')} #{solicitud.numero}?",
+    :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+    :url => {:action => :avanzar, :id => solicitud.solicitud_id}) -%>
+   
+</td>

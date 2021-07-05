@@ -1,0 +1,222 @@
+<div class="marco-contenido">
+  <div class="marco-titulo"><div><div>
+          Consultando Solicitud <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+  </div></div></div>
+  
+  <%= render :partial=>'solicitudes/solicitud/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%= render :partial=>'solicitudes/unidades_apoyo_consultoria/common/tabs' %>
+      <div class="marco-contenido2">
+        <%= render :partial=>'solicitudes/unidades_apoyo_avaluo/common/tabs' %>
+
+          <div class="marco-contenido2">
+
+            <table style="width: 100%">
+              <tr>
+                <td class="separador" valign="bottom" colspan="2">
+                  <span>Avalúo Proponente</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="width: 20%">
+                  <label>Nombre del Perito:</label>
+                </td>
+                <td style="width: 80%">
+                  <%= @solicitud_avaluo.nombre_perito %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Fecha Avalúo Externo:</label>
+                </td>
+                <td>
+                  <%= @solicitud_avaluo.fecha_avaluo_f %>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="width: 20%">
+                  <label>Número Sudeban:</label>
+                </td>
+                <td style="width: 80%">
+                  <%= @solicitud_avaluo.numero_sudeban %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Valor Avalúo Externo:</label>
+                </td>
+                <td>
+                  <%= display_number @solicitud_avaluo.valor_avaluo, '' %>
+                </td>
+              </tr>
+
+            </table>
+              <div id="formulario">
+                <%= render :partial => @rhtml %>
+              </div>
+            <br></br>
+
+            <table style="width: 100%">
+
+              <tr>
+                <td class="separador" valign="bottom" colspan="2">
+                  <span>Ubicación Geográfica</span>
+                </td>
+              </tr>
+            </table>
+
+            <table style="width: 100%">
+              <tr>
+                <td style="width: 20%">
+                  <label>Urbanización / Barrio / Sector:</label>
+                </td>
+                <td style="width: 80%">
+                  <%= @solicitud_avaluo.urbanizacion %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Calle / Avenida / Callejón:</label>
+                </td>
+                <td>
+                  <%= @solicitud_avaluo.calle %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Casa / Edificio / Galpón:</label>
+                </td>
+                <td>
+                  <%= @solicitud_avaluo.casa %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Número Apto / Casa:</label>
+                </td>
+                <td>
+                  <%= @solicitud_avaluo.numero_apta %>
+                </td>
+              </tr>
+
+              <tr>
+              <td>
+                <label>Piso:</label>
+              </td>
+              <td>
+                <%= @solicitud_avaluo.piso %>
+              </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Punto de Referencia:</label>
+                </td>
+                <td>
+                  <%= @solicitud_avaluo.punto_referencia %>
+                </td>
+              </tr>
+
+              <tr>
+                <td><label>Estado:</label></td>
+                <td>
+                  <span id="estado-select">
+                    <%= @solicitud_avaluo.Estado.nombre unless @solicitud_avaluo.Estado.nil? %>
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td><label>Municipio:</label></td>
+                <td>
+                  <span id="municipio-select">
+                    <%= @solicitud_avaluo.Municipio.nombre unless @solicitud_avaluo.Municipio.nil? %>
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td><label>Parroquia:</label></td>
+                <td>
+                  <span id="parroquia-select">
+                    <%= @solicitud_avaluo.Parroquia.nombre unless @solicitud_avaluo.Parroquia.nil? %>
+                  </span>
+                </td>
+              </tr>
+            </table>
+
+            <table style="width: 100%">
+
+              <tr>
+                <td class="separador" valign="bottom" colspan="2">
+                  <span>Resumen del Informe</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" style="width: 20%">
+                  <label>Comentarios (Narrativa):</label>
+                </td>
+                <td style="width: 80%">
+                  <%= @solicitud_avaluo.comentario.gsub("\n","<br/>") %>
+                </td>
+              </tr>
+            </table>
+
+              <br/>
+              <table style="width: 100%">
+                <tr>
+                  <td class="separador" valign="bottom" colspan="2">
+                    <span>Evidencia Fotográfica</span>
+                  </td>
+                </tr>
+              </table>
+              <br/>
+              <table class="lista" style="width: 70%">
+                <tr>
+                  <th style="width: 90%">
+                    <label>Nombre del Archivo</label>
+                  </th>
+
+                  <th style="width: 10%"></th>
+                </tr>
+              <%  unless @solicitud_avaluo_imagen.nil?
+                  clase = "lista0"
+                  @solicitud_avaluo_imagen.each { |imagen| %>
+                <tr id="sem_<%= imagen.id %>" class='<%= clase %>'>
+                  <td>
+                    <%= imagen.nombre_real %>
+                  </td>
+
+                  <td align="center">
+                    <a href="/documentos/images_avaluo/<%= imagen.nombre_imagen %>" target="_blank" title="descargar"><%= image_tag('descargar.png',:title=>'Descargar') %></a>&nbsp;
+                  </td>
+                </tr>
+
+              <% if clase == 'lista0'
+                  clase = 'lista1'
+                else
+                  clase = 'lista0'
+                end
+              }
+                end %>
+
+              </table>
+              <br/>
+              <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+                  { :action => :informe_view, :solicitud_id => @solicitud.id, :controlador => params[:controlador] },
+                  { :id=>'button_close' } ) -%>
+          </div>
+      </div>
+    
+  </div>
+
+</div>

@@ -1,0 +1,28 @@
+
+  <table class="lista" style="width: 100%">
+    <thead>
+    <tr>
+      <th style="width: 108px" >
+        <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.actualizacion')}"%>
+      </th>
+      <th style="width: 114px" >
+        <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.hasta')}"%>
+      </th>
+      <th style="width: 114px">
+        <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.desde')}"%>
+      </th>
+      <th style="text-align: right; width: 114px">
+        <%=I18n.t('Sistema.Body.Vistas.General.tasa')%>
+      </th>
+
+    </tr>
+    </thead>
+    <tbody id="tasa_historico_list_body">
+<%
+  even_odd = 1
+  for tasa_valor in @tasa_valor_list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'basico/programa/tasa_historico/row', :locals => { :tasa_valor => tasa_valor, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>

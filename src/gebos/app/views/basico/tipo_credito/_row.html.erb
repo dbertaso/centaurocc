@@ -1,0 +1,4 @@
+<% tipo_credito = @tipo_credito if tipo_credito.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= tipo_credito.id %>">
+	<%= render :partial => 'data', :locals => { :tipo_credito => tipo_credito, :even_odd => even_odd } -%>
+</tr>

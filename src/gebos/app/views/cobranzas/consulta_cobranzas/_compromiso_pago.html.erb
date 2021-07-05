@@ -1,0 +1,59 @@
+    <table id="compromiso" style="width: 100%">
+
+      <tr>
+        <td style="width: 40% text-align: left">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.compromiso')}"%>
+          </label>
+        </td>
+        <td style="width: 50%">
+          <%= format_fecha(@compromiso.fecha_pago) %>
+        </td>
+        <td style="width: 10%"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.limite')} #{I18n.t('Sistema.Body.Vistas.General.compromiso')}"%>
+          </label>
+        </td>
+        <td>
+          <span id="fecha_limite">
+            <%= format_fecha(@compromiso.fecha_limite_pago) %>
+          </span>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>
+
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.compromiso')}" %>:
+          </label>
+
+        </td>
+
+        <td>
+          <span id="monto" style="width: 60px, text-align: right">
+            <%= format_fm(@compromiso.monto_pago) %>
+          </span>
+        </td>
+      <td></td>
+      </tr>
+      <br/>
+      <tr>
+
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.observacion')%></label>
+        </td>
+
+        <td>
+          <%= @compromiso.observacion  -%>
+        </td>
+
+      </tr>
+      <br/>
+      <br/>
+  </table>

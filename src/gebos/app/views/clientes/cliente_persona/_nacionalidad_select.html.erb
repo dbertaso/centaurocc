@@ -1,0 +1,15 @@
+<% unless @nacionalidad_select.nil? %>
+
+ 	<%= select(
+  	'persona', 'nacionalidad_id',
+  	@nacionalidad_select.map{|c| [c.descripcion, c.id]},
+  	{ :include_blank => true},
+  	{ :class=>'select', :onchange=> ';inputChange();' } ) %>
+<% else %>
+
+	<%= select(
+	  'persona', 'nacionalidad_id',
+	  [],
+	  { :include_blank => true },
+	  { :class=>'select', :onchange=>'inputChange();' } ) %>
+<% end %>

@@ -1,0 +1,95 @@
+<td>
+  <%= solicitud.numero %>
+</td>
+<td>
+  <%= solicitud.estado %>
+</td>
+<td>
+  <%= solicitud.municipio %>
+</td>
+<td>
+  <%= solicitud.parroquia %>
+</td>
+<td>
+  <%= solicitud.cedula_rif %>
+</td>
+<td>
+  <%= solicitud.nombre %>
+</td>
+<td>
+  <span style="color: #FF0000"><b><%= solicitud.estatus %></b></span>
+</td>
+<td> 
+  <%= solicitud.sector %>
+</td>
+<td>
+  <%= solicitud.unidad_produccion %>
+</td>
+<td>
+  <%= solicitud.usuario %>
+</td>
+<td align="center">
+  <% if solicitud.confirmacion == true
+    if solicitud.decision_final == true %>
+      <%= image_tag('activo.gif') %>
+    <% elsif solicitud.decision_final == false %>
+      <%= image_tag('inactivo.gif') %>
+    <% end
+  end %>
+</td>
+
+<td align="center">
+  <% unless solicitud.confirmacion == true %>
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.reversar'),:title=>'Devolver'),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :url => {:controller => 'reversar', :action => :new_reversar, :id => solicitud.solicitud_id,
+        :codigo=>"Solicitud.eliminar_analista_asignado(#{solicitud.solicitud_id})", :titulo_1=>'Regresar a la instancia', :titulo_2=>'Observaciones'}) if vlink 'reversar' -%>
+  <% end %>
+
+  <% if solicitud.confirmacion == true && solicitud.decision_final == false %>
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>'Deshacer'),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :confirm => "¿#{I18n.t('Sistema.Body.Modelos.Errores.deshacer_viabilidad')} #{solicitud.numero}?",
+      :url => {:controller => 'deshacer', :action => :new_deshacer, :id => solicitud.solicitud_id}) if vlink 'Deshacer' -%>
+
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.confirmar'),:title=>'Confirmar'),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :confirm => "¿#{I18n.t('Sistema.Body.Modelos.Errores.confirmar_viabilidad')} #{solicitud.numero}?",
+      :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+      :url => {:action => :rechazar, :id => solicitud.solicitud_id}) -%>
+  <% end %>
+
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'), 
+    {:controller => 'solicitud', :action => :view,
+    :id => solicitud.solicitud_id,
+    :controlador => 'solicitud_evaluacion_asignacion'} %>
+  <% if solicitud.const_id == 'ST0002' %>
+
+
+    <%= link_to image_tag('asignar.jpg',:title=>'Asignar'),
+      {:action => :asignar,
+      :id => solicitud.solicitud_id} %>
+  <% else %>
+    <% unless solicitud.const_id == 'ST0028' %>
+      <%= link_to image_tag('reasignar.jpg',:title=>'Re-asignar'),
+        {:action => :reasignar,
+        :id => solicitud.solicitud_id} %>
+    <% end %>
+  <% end %>
+  <% if solicitud.const_id == 'ST0028' %>
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'),:title=>'Avanzar'),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :confirm => "¿#{I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.avarzar_solicitud')} #{solicitud.numero}?",
+      :id=>"button_enviar",
+      :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+      :url => {:action => :avanzar, :id => solicitud.solicitud_id}) -%>
+  <% end %>
+</td>

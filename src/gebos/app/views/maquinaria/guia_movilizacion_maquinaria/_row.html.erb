@@ -1,0 +1,4 @@
+<% view_guia_movilizacion = @view_guia_movilizacion if view_guia_movilizacion.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= view_guia_movilizacion.guia_movilizacion_maquinaria_id %>">
+	<%= render :partial => 'data', :locals => { :view_guia_movilizacion => view_guia_movilizacion, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,12 @@
+<a href="#" id="<%= button_name %>"><%= image_tag("calendario.gif") %></a>
+
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "<%= input_name %>",      // id of the input field
+        ifFormat       :    "%d/%m/%Y",       // format of the input field
+        showsTime      :    false,            // will display a time selector
+        button         :    "<%= button_name %>",   // trigger for the calendar (button ID)
+        singleClick    :    true,           // double-click mode
+        step           :    1                // show all years in drop-down boxes (instead of every other year as default)
+    });
+</script>

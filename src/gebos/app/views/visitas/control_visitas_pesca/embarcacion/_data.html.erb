@@ -1,0 +1,41 @@
+<% embarcacion = @embarcacion if embarcacion.nil? 
+emb=TipoEmbarcacion.find(embarcacion.tipo_embarcacion_id)
+mat=TipoMaterial.find(embarcacion.tipo_material_id)
+%>
+<td align="center">
+  <%= embarcacion.nombre_embarcacion %>
+</td>
+
+<td align="center">
+  <%= embarcacion.matricula %>
+</td>
+
+<td align="center">
+  <%= emb.tipo %>
+</td>
+<td align="center">
+  <%= mat.descripcion %>
+</td>
+<td align="right">
+  <%= embarcacion.eslora_fm %>
+</td>
+
+<td align="right">
+  <%= embarcacion.manga_fm %>
+</td>
+
+<td align="right">
+  <%= embarcacion.puntal_fm %>
+</td>
+
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+    :url => {:controller => 'embarcacion', :action => :edit, :id => @visita, :id_embarcacion=> embarcacion.id}) if vlink 'edit' -%>
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+    :method=>:get, :loading =>'image_load()',  :loaded => 'image_unload()',
+    :url => {:controller => 'embarcacion', :action => :view, :id => @visita, :id_embarcacion => embarcacion.id}) if vlink 'edit' -%>
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()', :loaded => 'image_unload()', :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'embarcacion', :action => :delete, :id => @visita, :id_embarcacion => embarcacion.id}) if vlink 'delete' -%>
+</td>

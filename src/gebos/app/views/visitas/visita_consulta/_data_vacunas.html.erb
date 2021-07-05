@@ -1,0 +1,8 @@
+<% vacunas = @vacunas if vacunas.nil? %>
+
+<td>
+  <%= vacunas.Vacuna.descripcion unless vacunas.Vacuna.nil?  %>
+</td>	
+<td>
+  <%= vacunas.fecha_colocacion_f  unless vacunas.fecha_colocacion.nil? %>
+</td>

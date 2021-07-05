@@ -1,0 +1,43 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 130px" <%= sort_class_helper('tipo_gasto.nombre') %>>
+      <%= sort_link_helper ) %>>
+      <%= sort_link_helper , 'tipo_gasto.nombre', 'recaudo_list' %>
+      </th>
+    <th style="width: 140px" <%= sort_class_helper('programa_tipo_gasto.porcentaje') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Modelos.ProgramaGasto.Columnas.porcentaje'), 'programa_tipo_gasto.porcentaje', 'recaudo_list' %>
+      </th>
+    <th style="width: 140px" <%= sort_class_helper('programa_tipo_gasto.monto_fijo') %>>
+      <%= sort_link_helper "#{Sistema.Body.Vistas.General.monto} (#{Sistema.Body.General.ab_bolivares})", 'programa_tipo_gasto.monto_fijo', 'recaudo_list' %>
+      </th>
+    <th style="width: 140px" <%= sort_class_helper('programa_tipo_gasto.forma_cobro') %>>
+      <%= sort_link_helper I18n.t('Sistema.Body.Modelos.ProgramaTipoGasto.Lables.forma_cobro'), 'programa_tipo_gasto.forma_cobro', 'recaudo_list' %>
+      </th>
+  </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+      even_odd = 1
+      for programa_tipo_gasto in @list
+        even_odd = 1 - even_odd %>
+
+      <tr class="lista<%= even_odd %>" id="row_<%= programa_tipo_gasto.id %>">
+                <td>
+                  <%= programa_tipo_gasto.tipo_gasto.nombre  %>
+                </td>
+                <td>
+                  <%= format_float programa_tipo_gasto.porcentaje_f %>
+                </td>
+                <td>
+                  <%= format_float programa_tipo_gasto.monto_fijo_f %>
+                </td>
+                <td>
+                  <%= programa_tipo_gasto.forma_cobro_w %>
+                </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

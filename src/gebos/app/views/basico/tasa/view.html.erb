@@ -1,0 +1,68 @@
+<%= form_title_view @tasa.nombre %>
+
+<%= render 'basico/tasa/common/tabs' %>
+<div class="marco-contenido2">
+
+  <table>
+    <tr>
+      <td style="width: 100px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+      </td>
+      <td style="width: 600px">
+        <%= @tasa.sector.nombre -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 100px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+      </td>
+      <td style="width: 600px">
+        <%= @tasa.sub_sector.nombre -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 100px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+      </td>
+      <td style="width: 600px">
+        <%= @tasa.rubro.nombre -%>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 100px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+      </td>
+      <td style="width: 600px">
+        <%= @tasa.sub_rubro.nombre -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 100px">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      </td>
+      <td style="width: 600px">
+        <%= @tasa.nombre -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label>
+      </td>
+      <td>
+        <%= @tasa.descripcion -%>
+      </td>
+    </tr>
+  </table>
+
+  <%= link_to( image_tag(image_path("boton_modificar.gif")),
+    :action => :edit,
+    :id => @tasa.id,
+    :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

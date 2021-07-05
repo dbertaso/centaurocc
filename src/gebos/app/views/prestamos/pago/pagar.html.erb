@@ -1,0 +1,966 @@
+<script LANGUAGE="JavaScript">
+<!--
+  function confirmar_pago(cliente,rubro,numero,monto,fecha,prestamoid,clienteid)
+  {
+
+    var agree=confirm("<%= t('Sistema.Body.Vistas.Pago.Etiquetas.confirmacion_pago')%>\n\n <%=t('Sistema.Body.Vistas.General.beneficiario')%>: "+
+                       cliente+
+                       "\n\n <%=t('Sistema.Body.Vistas.General.rubro')%>: "+ rubro +
+                       "\n\n <%=t('Sistema.Body.Vistas.General.monto')%>: " + monto +
+                       "\n\n <%=t('Sistema.Body.Vistas.Form.fecha')%>: " + fecha);
+    if (agree) {
+      $('confirmacion').value = 'true';
+      // $('form_pago').submit();
+      new Ajax.Request('/prestamos/pago/ejecutar_pago?cliente_id=' + clienteid + '&prestamo_id='+ prestamoid, {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}, parameters:Form.serialize(document.forms[0])}); return false;
+      // new Ajax.Request("/prestamos/pago/ejecutar_pago?cliente_id=""&amp;prestamo_id="+prestamoid+", {asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}, parameters:Form.serialize(document.forms[0])}); return false;
+
+    } else
+      $('confirmacion').value = '0';
+      return false ;
+    }
+// -->
+
+
+  function agregar_cheque(prestamo_id)
+  {
+   
+    var pars = "tipo=" + document.getElementById("modalidad").value;
+    pars += "&prestamo_id=" + prestamo_id;
+    pars += "&authenticity_token=" + encodeURIComponent('<%= form_authenticity_token %>');
+    var myAjax = new Ajax.Request("/prestamos/pago/agregar_cheque/?" + pars, {method:'get', asynchronous:true, evalScripts:true}); return false;
+
+  }
+
+</script>
+
+
+<div class="marco-contenido">
+
+  <div class="marco-titulo">
+    <div>
+      <div>
+        <%= t('Sistema.Body.Vistas.Pago.Headers.form_title_pagar')%> <span class="titulo_modificar"><%= @prestamo_pago.cliente.nombre %></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="marco-contenido2">
+
+    <%= error %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :ejecutar_pago, :prestamo_id => @prestamo_pago.id},
+      :html=>{:name=>'form_pago'} ) do -%>
+
+        <table style="margin-top: 5px">
+      
+          <%= hidden_field_tag 'confirmacion', '0', :id=>'confirmacion' -%>
+
+          <%
+            color_V = '#e4ffd6'
+            color_P = '#e4ffd6'
+            color_E = '#ffacac'
+            color_L = '#ffacac'
+            color_H = '#e4ffd6'
+            color_C = '#e4ffd6'
+            color_F = '#e4ffd6'
+          %>
+          <tr style="background-color: <%= eval('color_' + @prestamo_pago.estatus) %>">
+      
+            <td>
+              <!-- Comienza Bloque la la Cabecera -->
+
+              <table style="width: 100%; margin-bottom: 10px">
+                <tr>
+                  <td colspan="5">
+                    <label>
+                      <%= I18n.t('Sistema.Body.Vistas.Form.rubro')%>
+                    </label>
+                    <span class="titulo_modificar"><%= @prestamo_pago.solicitud.rubro.nombre %></span>
+                  </td>
+                  <td>
+                    <label>
+                      <%="#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}" %>
+                    </label>
+                    <span class="titulo_modificar"><%= @prestamo_pago.numero %></span>
+                  </td>
+                  <td>
+                    <label>
+                      <%= I18n.t('Sistema.Body.Vistas.Form.estatus')%>
+                    </label>
+                    <span class="titulo_modificar"><%= @prestamo_pago.estatus_w %></span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Comienza Bloque Estado préstamo -->
+              <table>
+                <tr>
+                  <td class="separador" valign="bottom" colspan="3">
+                    <span><%= I18n.t('Sistema.Body.Separadores.estado') %></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label><%= I18n.t('Sistema.Body.Separadores.estado') %></label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+
+                    <%= @prestamo_pago.estatus_w %>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.cuotas')} #{I18n.t('Sistema.Body.Vistas.General.vencidas')}" %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+
+                    <%= @prestamo_pago.cantidad_cuotas_vencidas%>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= "#{I18n.t('Sistema.Body.Vistas.General.dias')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.mora')}"%>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+
+                    <%= @prestamo_pago.dias_mora%>
+
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= "#{I18n.t('Sistema.Body.Vistas.General.tasa')} #{I18n.t('Sistema.Body.Vistas.General.vigente')}"%>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+
+                    <%= @prestamo_pago.tasa_vigente_fm%>
+
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= I18n.t('Sistema.Body.Vistas.General.moneda')%>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+
+                    <%= "#{@prestamo_pago.solicitud.moneda.nombre} - #{@prestamo_pago.solicitud.moneda.abreviatura}" %>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>  
+                <!-- Comienza Bloque deuda del préstamo -->
+
+                <tr>
+                  <td class="separador" valign="bottom" colspan="3">
+                    <span>
+                      <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.deuda') %> &nbsp;&nbsp;&nbsp;&nbsp;<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.expresado_bolivares') %>
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_deudor') %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.saldo_insoluto_total_fm -%>
+                  </td>
+                  <td style="width: 20%; text-align: right">
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.intereses') %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.interes_vencido_fm %>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_diferido') %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.interes_diferido_por_vencer_fm %>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora') %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.monto_mora_fm %>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_devengado') %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.causado_no_devengado_fm %>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      (-) <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_favor') %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.remanente_por_aplicar_fm %>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.deuda')}" %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.deuda_fm %>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+
+                <!-- Comienza Bloque Exigible del préstamo -->
+
+                <tr>
+                  <td class="separador" valign="bottom" colspan="3">
+                    <span>
+                      <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible')%> &nbsp;&nbsp;&nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.expresado_bolivares')%>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.cuotas')} #{I18n.t('Sistema.Body.Vistas.General.vencidas')}"%>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.cantidad_cuotas_vencidas -%>
+                  </td>
+                  <td style="width: 20%">
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= "#{I18n.t('Sistema.Body.Vistas.General.capital')} #{I18n.t('Sistema.Body.Vistas.General.vencido')}" %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.capital_vencido_fm -%>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= "#{I18n.t('Sistema.Body.Vistas.General.interes')} #{I18n.t('Sistema.Body.Vistas.General.vencido')}" %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right"">
+                    <%= @prestamo_pago.interes_vencido_fm -%>
+                  </td>
+                  <td style="width: 20%">
+
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label><%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_diferido')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.vencido')}"%></label>
+                  </td>
+                  <td style="width: 30%; text-align: right"">
+                    <%= @prestamo_pago.interes_diferido_vencido_fm -%>
+                  </td>
+                  <td style="width: 20%">
+
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora')%>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right"">
+                    <%= @prestamo_pago.monto_mora_fm -%>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%=t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.interes_desembolso')%>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right"">
+                    <%= @prestamo_pago.interes_desembolso_vencido_fm -%>
+                  </td>
+                  <td style="width: 20%">
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      (-) <%=t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_favor')%>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.remanente_por_aplicar_fm %>
+                  </td>
+                  <td style="width: 20%">
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 50%">
+                    <label>
+                      <%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible')}" %>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.exigible_fm -%>
+                  </td>
+                  <td style="width: 20%">
+
+                  </td>
+                </tr>
+
+                <tr>
+
+                  <td style="width: 50%">
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.fecha_ultimo_cierre')%>
+                    </label>
+                  </td>
+                  <td style="width: 30%; text-align: right">
+                    <%= @prestamo_pago.solicitud.programa.fecha_ultimo_cierre_f %>
+                  </td>
+                  <td style="width: 20%">
+
+                  </td>
+                </tr>
+
+                <!-- Comienza Bloque Estadísticas del Préstamo -->
+                <tr>
+                  <td class="separador" valign="bottom" colspan="3">
+                     <span>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Separadores.estadisticas')%>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.dias_en_vencido')%>
+                    </label>
+                  </td>
+                  <td style=" text-align: right">
+                     <%= @prestamo_pago.dias_vencido -%>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.dias_en_vigente')%>
+                    </label>
+                  </td>
+                  <td style=" text-align: right">
+                     <%= @prestamo_pago.dias_vigente -%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cuotas_pagadas')%>
+                    </label>
+                  </td>
+                  <td style=" text-align: right">
+                     <%= @prestamo_pago.cuotas_pagadas -%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cuotas_vencidas') %>
+                    </label>
+                  </td>
+                  <td style=" text-align: right">
+                   <%= @prestamo_pago.cantidad_cuotas_vencidas -%>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cuotas_especiales_pagadas') %>
+                    </label>
+                  </td>
+                  <td style=" text-align: right">
+                   <%= @prestamo_pago.cuotas_especiales_vencidas -%>
+                  </td>
+                </tr>
+
+                <!-- Comienza Bloque Montos Recuperados del Préstamo -->
+
+                <tr>
+                  <td class="separador" valign="bottom" colspan="3">
+                    <span>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Separadores.montos_recuperados')%>&nbsp;&nbsp;&nbsp;&nbsp;<%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.expresado_bolivares') %>
+                     </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.capital_pagado') %>
+                    </label>
+                  </td>
+                  <td style=" text-align: right">
+                   <%= @prestamo_pago.capital_pagado_fm-%>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_pagado') %>
+                    </label>
+                  </td>
+                  <td style=" text-align: right">
+                   <%= @prestamo_pago.intereses_pagados_fm-%>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.mora_pagada')%>
+                    </label>
+                  </td>
+                  <td style=" text-align: right">
+                   <%= @prestamo_pago.mora_pagada_fm-%>
+                  </td>
+                </tr>
+              </table>
+
+              <table style="width: 100%">
+                <tr>
+                  <td class="separador" valign="bottom" colspan="3">
+                    <span><%= "#{t('Sistema.Body.Vistas.General.cuotas')} #{t('Sistema.Body.Vistas.General.vencidas')}"%></span>
+                  </td>
+                </tr>
+              </table>
+
+              <div style="width: 100%; overflow: scroll">
+                <table style="margin-bottom: 10px; width: 950px;" class="lista">
+                  <thead>
+                    <tr>
+                      <th style="width: 5%">
+                        <label><%=t('Sistema.Body.Vistas.General.numero')%></label>
+                      </th>
+                      <th style="width: 5%">
+                        <label><%=t('Sistema.Body.Vistas.General.cuotas')%></label>
+                      </th>
+                      <th style="width: 5%">
+                        <label><%= "#{t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.Form.vencimiento')}"%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%=t('Sistema.Body.Vistas.General.estado') %></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= "#{t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.Form.cuota')}"%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.intereses') %></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.pago_interes')%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= t('Sistema.Body.Vistas.General.capital')%></label>
+                      </th>
+                       <th style="width: 6%">
+                        <label><%= "#{t('Sistema.Body.Vistas.Form.pago')} #{I18n.t('Sistema.Body.Vistas.General.capital')}"%></label>
+                      </th>
+                       <th style="width: 6%">
+                        <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.cuota_extra')%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= "#{t('Sistema.Body.Vistas.Form.pago')} #{t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.cuota_extra')}"%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_diferido')%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= "#{t('Sistema.Body.Vistas.Form.pago')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_diferido')}"%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora')%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= "#{t('Sistema.Body.Vistas.Form.pago')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora')}"%></label>
+                      </th>
+                      <th style="width: 6%">
+                        <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')%></label>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <%
+                    plan_pago = @prestamo_pago.planes_pago.find_by_activo_and_proyeccion(true,false);
+                    cuotas = plan_pago.cuotas.find(:all,:order=>"tipo_cuota desc, numero",:conditions=>"estatus_pago = 'N' or estatus_pago = 'P'")
+
+                  for cuota in cuotas %>
+                    <tr>
+                      <td style="text-align: center">
+                        <%= cuota.numero %>
+                      </td>
+                      <td style="text-align: left">
+                        <%= cuota.tipo_cuota_w %>
+                      </td>
+                      <td>
+                        <%= cuota.fecha_f %>
+                      </td>
+                      <td style="text-align: center">
+                        <%= cuota.estatus_pago_w %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.valor_cuota_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.interes_corriente_fm %>
+                      </td>
+                       <td style="text-align: right">
+                        <%= cuota.pago_interes_corriente_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.amortizado_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.pago_capital_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.cuota_extra_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.pago_cuota_extra_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%=  @mo_diferido = 0.00
+                             cuota.interes_diferido.nil? ? @mo_diferido = @mo_diferido + 0 : cuota.estatus_pago_w != 'DI' ? @mo_diferido = @mo_diferido + cuota.interes_diferido : @mo_diferido = @mo_diferido + 0
+                             valor = sprintf('%01.2f', @mo_diferido).sub('.', ',')
+                             valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.pago_interes_diferido_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.interes_mora_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= cuota.pago_interes_mora_fm %>
+                      </td>
+                      <td style="text-align: right">
+                        <%= @mo_pago_total_cliente = 0.00
+                            cuota.pago_total_cliente.nil? ? @mo_pago_total_cliente += 0 : cuota.estatus_pago_w != 'DI' ? @mo_pago_total_cliente += ((cuota.pago_total_cliente + cuota.interes_mora) - (cuota.pago_interes_corriente + cuota.pago_interes_diferido + cuota.pago_capital + cuota.pago_cuota_extra)): @mo_pago_total_cliente += 0
+                            valor = sprintf('%01.2f', @mo_pago_total_cliente).sub('.', ',')
+                            valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+                      </td>
+                    </tr>
+                  <% end -%>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+          <tr style="background-color: <%= eval('color_' + @prestamo_pago.estatus) %>">
+            <td style="text-align: right; font-weight: bold">
+
+               <% exigible_onchange = remote_function(
+                      :loading =>'image_load()',
+                      :loaded => 'image_unload()',
+                      :method => :get,
+                      :url=>{:controller=>'pago',
+                      :action=>:exigible_change, :prestamo_id => @prestamo_pago.id},
+                      :with=>"'valor='+checked" ) %>
+
+                  Exigible&nbsp;<%= check_box_tag(@check_exigible, value = "1", checked= false, options = {:onclick=>exigible_onchange+';'}) -%>&nbsp;&nbsp;&nbsp;
+                  <span id="monto_pagar">
+                    <%= render( :partial=>'monto_pagar' )   %>
+                  </span>
+            </td>
+          </tr>
+          <tr style="background-color: <%= eval('color_' + @prestamo_pago.estatus) %>">
+            <!--
+            EXONERAR MORA COMENTADO POR LOS MOMENTOS
+            <td  style="text-align: right; font-weight: bold">
+              %#= t('Sistema.Body.Vistas.ConsultaPrestamo.Etiquetas.exonerar_mora')%>&nbsp;<%#= check_box_tag('exonerar_mora', value = "1", checked= false, options = {}) -%>
+            </td>
+            -->
+          </tr>
+          <tr>
+            <td style="height: 20px">
+            </td>
+          </tr>
+          <table>
+            <tr>
+              <td>
+                <label><%= t('Sistema.Body.Vistas.Pago.Etiquetas.modalidad')%></label>
+                <label title="<%=t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+              </td>
+              <td>
+                <%= "Prestamo #{@prestamo_pago.tipo_credito.id}" %>
+                <% modalidad_onchange = remote_function(
+                  :loading =>'image_load()',
+                  :loaded => 'image_unload()',
+                  :method => :get,
+                  :url=>{:controller=>'pago',
+                  :action=>:modalidad_change, :tipo_credito_id => @prestamo_pago.tipo_credito.id},
+                  :with=>"'modalidad='+value" ) %>
+
+                <!-- SELECT ACTIVO SOLO CON CUENTA RECAUDADORA -->
+
+                <%= select_tag(:modalidad, options_for_select([[t('Sistema.Body.Vistas.General.seleccion'), "O"],
+                                      [t('Sistema.Body.Vistas.Pago.Modalidad.cuenta_recaudadora'), "R"], 
+                                      [t('Sistema.Body.Vistas.Pago.Modalidad.arrime'), "A"]]),
+                  { :class=>'select', :onchange=>modalidad_onchange } ) %>
+              </td>
+            </tr>
+          </table>
+    
+          <table style="width: 100%; margin-bottom: 10px">
+            <tr>
+              <td style="width: 35%">
+                <label> <%= t('Sistema.Body.Vistas.Pago.Etiquetas.fecha_realizacion')%></label>
+                <label title="<%= t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+              </td>
+              
+              <td style="width: 65%">
+                    <%= calendar_date_select_tag "fecha_realizacion", 'fecha_realizacion', 
+                        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:100px',:maxlength=>'10', 
+                        :onchange=>"inputChange();"%> 
+
+                  <%#= calendar_date_select_tag 'fecha_realizacion', 
+                  :year_range => 20.years.ago..-1.years.ago,
+                  :class=>'text',
+                  :style=>'width:80px',
+                  :maxlength=>'10', 
+                  :onkeypress=>'inputChange();', 
+                  :onchange=>'inputChange();etiquetas_form(this.value,"contador_cheque");if(document.getElementById("false").checked == ""){cambio_bsf(this.value,document.getElementById("monto_pago").value,"monto_pago")}}' %> <%= I18n.t('Sistema.Body.General.formato_fecha') %>
+
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%">
+                <label><%="#{t('Sistema.Body.Vistas.Form.fecha')} #{t('Sistema.Body.General.contable')}" %></label>
+              </td>
+
+              <% mes = Time.now.month < 10 ? '0' +  Time.now.month.to_s : Time.now.month.to_s
+                 dia = Time.now.day < 10 ? '0' +  Time.now.day.to_s : Time.now.day.to_s
+                 fechasis = dia + '/' + mes + '/' + Time.now.year.to_s%>
+              <td style="width: 65%">
+
+                <%= calendar_date_select_tag "fecha_sistema", fechasis, 
+                    :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:100px',:maxlength=>'10', 
+                    :onchange=>"inputChange();"%>
+                    
+                  <%#= calendar_date_select_tag 'fecha_sistema', 
+                  :year_range => 20.years.ago..-1.years.ago,
+                  :class=>'text',
+                  :style=>'width:80px',
+                  :maxlength=>'10',
+                  :value=>fechasis,
+                  :onkeypress=>'inputChange();', 
+                  :onchange=>'inputChange();'%> <%= I18n.t('Sistema.Body.General.formato_fecha') %>
+
+                  <!--
+                  <td style="width: 65%">
+                   <%# fechasis = Time.now.day.to_s + '/' + Time.now.month.to_s + '/' + Time.now.year.to_s%>
+                    <%#= text_field_tag 'fecha_sistema',fechasis,
+                    :class=>'text', :style=>'width: 80px',
+                    :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+                    <%#= calendar 'fecha_sistema', 'calendar_fecha_sistema' %><%#= I18n.t('Sistema.Body.General.formato_fecha') %>
+                  </td>
+                  -->
+              </td>
+            </tr>
+            <tr>
+              <td class="separador" valign="bottom" colspan="2">
+                <span></span>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%">
+                <label><%= t('Sistema.Body.Vistas.Pago.Etiquetas.consultoria_juridica')%></label>
+              </td>
+              <td style="width: 65%">
+                <%= check_box_tag('consultoria_juridica', value = "1", checked = false, options = {}) %>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%">
+                <label><%= t('Sistema.Body.Vistas.Pago.Etiquetas.recuperaciones')%></label>
+              </td>
+              <td style="width: 65%">
+                <%= check_box_tag('recuperaciones', value = "1", checked = true, options = {}) %>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 35%">
+                <label> <%= t('Sistema.Body.Vistas.General.observaciones') %></label>
+                <label title="<%=t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+              </td>
+              <td style="width: 65%">
+                <span>  <%= text_area_tag 'comentario_analista', '',
+                            :class=>'text', :style=>'width: 380px', :rows => 3,
+                            :onkeypress=>'inputChange();' -%></span>
+              </td>
+            </tr>
+          </table>
+          <div id="taquilla">
+
+          </div>
+          <div style="display: none" id="cuenta_recaudadora">
+
+            <table>
+              <tr>
+                <td>
+                  <label> 
+                    <%= t('Sistema.Body.Vistas.Pago.Etiquetas.banco_recaudador') %> 
+                  </label>
+                  <label title="<%= t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+
+                </td>
+                <td>
+                  <% entidad_onchange = remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method => :get,
+                    :url=>{:controller=>'pago',
+                    :action=>:entidad_change,},
+                    :with=>"'entidad='+value" ) %>
+                    
+                    <%= select_tag( 'entidad_financiera_id',
+                    options_from_collection_for_select(@entidad_financiera_select, 'id', 'nombre'),
+                    { :class=>'select', :prompt=>t('Sistema.Body.Vistas.General.seleccione'), :onchange=>entidad_onchange } ) %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label><%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.cuenta_recaudadora')%></label>
+                  <label title="<%=t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+                </td>
+                <td>
+                  <span id="cuentas_recaudadoras">
+                      <%= render :partial => 'cuenta_recaudadora' %>
+                  </span>
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    <%= t('Sistema.Body.Vistas.Pago.Etiquetas.numero_voucher')%>
+                    <label title="<%=t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+                  </label>
+                </td>
+                <td>
+                  <%= text_field_tag 'numero_voucher', '',
+                    :class=>'text', :style=>'width: 150px',
+                    :maxlength=>'20', :onkeypress=>'inputChange();' -%>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    <%= t('Sistema.Body.Vistas.Pago.Etiquetas.monto_efectivo') %>
+                  </label>
+                </td>
+                <td>
+                  <%= text_field_tag 'monto_efectivo', '0',
+                    :class=>'text', :style=>'width: 150px', :maxlength=>'20',
+                                :onkeypress=>'inputChange();cambio_etiqueta(_fecha_realizacion.value,this.id);',
+                                :onchange=>'inputChange(); cambio_bsf(_fecha_realizacion.value,this.value,this.id);',
+                                :onkeyup=>"formatCurrency(this.value, 'monto_efectivo');"  -%>
+                              <%= display_number 0, 'monto_efectivo' %>
+                              <span id="monto_efectivo_moneda"> <%= t('Sistema.Body.General.ab_bolivares')%></span>
+
+                </td>
+              </tr>
+
+            </table>
+          </div>
+
+          <div style="display: none" id="arrime">
+
+            <table>
+              <tr>
+                <td style="width: 50%">
+                  <label> <%= t('Sistema.Body.Vistas.Pago.Etiquetas.otros_arrimes')%> </label>
+                </td>
+                <td style="width: 65%">
+                    <%= check_box_tag('otros_arrimes', value = "1", checked = false, options = {}) %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label> <%= t('Sistema.Body.Vistas.General.referencia')%> </label>
+                  <label title="<%=t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+                </td>
+                <td>
+                  <%= text_field_tag 'numero_voucher_arrime', '',
+                    :class=>'text', :style=>'width: 150px',
+                    :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+
+          <div style="display: none" id="banco_intermediado">
+            <table>
+              <tr>
+                <td>
+                  <label><%= t('Sistema.Body.Vistas.Pago.Etiquetas.banco_intermediario')%></label>
+                </td>
+                <td>
+                  <%= select_tag( 'entidad_financiera_id_int',
+                       options_from_collection_for_select(@entidad_financiera_select, 'id', 'nombre'),
+                    { :class=>'select', :prompt=>t('Sistema.Body.Vistas.General.seleccione'), :onchange=>entidad_onchange } ) %>
+                  </td>
+                </tr>
+
+            </table>
+
+          </div>
+
+          <div id="cheques" style="display:none" >
+            <p>
+              <!-- agregado por Rafael Barrios         -->
+              <label id="contador_cheque_moneda" style="display:none">0</label>
+              <label style="font-size: 15px">
+                <%= t('Sistema.Body.Vistas.Pago.Etiquetas.cheques') %>
+              </label>
+              <br>
+              </br>
+              <samp id="agregar_cheque">
+                <%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.boton_agregar')),
+                  :title=>'Agregar',
+                  :onclick=>"javascript:agregar_cheque("+@prestamo_pago.id.to_s+");",
+                  :OnMouseOver=>"style.cursor='pointer'" ) %>
+              </samp>
+              <!--
+              <a href="#" onclick="agregar_cheque(<%#= @prestamo_pago.id%>);">
+                <img alt="Boton_agregar" src="<%#=image_path(I18n.t('Sistema.Body.Imagenes.boton_agregar'))%>" </img>
+              </a>-->
+
+            </p>
+      
+            <table class="lista" style="margin-bottom: 20px; width: 100%">
+              <thead>
+                <tr>
+                  <th>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.General.banco')%>
+                    </label>
+                  </th>
+                  <th>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.Pago.Etiquetas.numero_cheque') %>
+                    </label>
+                  </th>
+                  <th>
+                    <label>
+                      <%= t('Sistema.Body.Vistas.General.monto')%>
+                    </label>
+                  </th>
+                  <th>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="lista_cheque">
+
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr>
+                <td>
+                  <%= submit_tag t('Sistema.Body.Vistas.Pago.Etiquetas.ejecutar_pago'), 
+                        :onclick=> "this.disabled=true;if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save' %>
+                </td>
+                <td>
+                  <%= link_to(image_tag(image_path(t('Sistema.Body.Imagenes.cerrar'))),
+                      { :controller => 'pago', :action => :index },
+                      { :id=>'button_close' } ) -%>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </table>
+      <%end%>    
+>>>>>>> d043bd0e3faf66e42ca968e7e76d803e773ba904
+  </div>
+</div>
+

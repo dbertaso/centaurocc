@@ -1,0 +1,258 @@
+<script language="JavaScript">
+window.moveTo(0,0);
+window.resizeTo(screen.width,screen.height);
+<!-- Begin
+function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("window.close();", 2000)
+    
+}
+function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+}
+//  End -->
+</script>
+<table width="1120px" align="center" >
+  <tr>
+    <td colspan="4">
+      <div style="padding: 6px" align="center">
+        <form>
+          <div id = boton>
+            <input name="print" type="button" value="<%=I18n.t('Sistema.Body.General.imprimir')%>" onclick="varitext()" />
+		<div align ="center" > 
+		  <table border="1" bordercolor="gray">
+		    <tr>
+			<td align ="center">
+			  <span style="color: blue"><strong><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.recordar_papel')%></strong></span>
+		        </td>
+		    </tr>
+		  </table
+		</div>
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>
+<table width="1120px" border="1" align="center">
+    <tr>
+      <td colspan="10">
+      <table width="100%" border="0">
+        <tr>
+          <td width="50%" align="left">
+            <%= image_tag(I18n.t('Sistema.Body.Imagenes.agricultura_tierras'),:width=>220,:height=>133,:alt=>"logo") -%>
+          </td>
+          <td width="50%" align="right">
+             <%= image_tag(I18n.t('Sistema.Body.Imagenes.logo_reporte_gif'),:alt=>"logo") -%>
+          </td>
+        </tr>
+       </table>
+      </td>
+    </tr>
+    	<tr bgcolor="#E9E9E9">
+            <td align="center" colspan ="10">
+                    <span style="font-size:20px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.seguro_riesgo')%><br><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.certificado_cobertura')%></span>
+            </td>
+        </tr>
+       <tr>
+        	<td colspan= "10" align="center" width="70%">
+            <span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.codigo_seguridad')%></span>
+            <br></br><%= @solicitud.codigo_sras.to_s %>
+               </td>
+        	
+        </tr>
+        <tr bgcolor="#BBBBFF">
+        	<th colspan ="10" align="center"><span style="font-size:16px; font-weight:bold"><%=(I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Separadores.datos_generales')).upcase%></span></th>
+        </tr>
+        <tr>
+        	<td align="center" width="20%"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.cedula_identidad')%> / <%=I18n.t('Sistema.Body.Vistas.General.rif')%></span>
+                  <br></br>
+                  <%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ?
+                            @solicitud.cliente.empresa.rif :
+                            @solicitud.cliente.persona.cedula_nacionalidad.upcase << '-' << @solicitud.cliente.persona.cedula.to_s %>
+                </td>
+           	<td align="center" width="10%"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.edad')%></span>
+                  <br></br>
+                  <%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ?
+                            '-' : @solicitud.cliente.persona.edad(Time.now,@solicitud.cliente.persona.fecha_nacimiento) %>
+                  </td>
+           	<td align="center" width="10%"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.sexo')%></span>
+                  <br></br>
+                  <%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ?
+                            '-' : (@solicitud.cliente.persona.sexo ? "#{I18n.t('Sistema.Body.Vistas.General.masculino')}" : "#{I18n.t('Sistema.Body.Vistas.General.femenino')}") %>
+                  </td>
+           	<td align="center" width="35%"colspan="3"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.nombre')%> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.General.beneficiario')%></span>
+                  <br></br>
+                <%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ?
+                        @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto %>
+              </td>
+            <td align="center" width="25%" colspan="4"><span style="font-size:9px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.numero_certificado')%></span>
+              <br></br><%=I18n.t('Sistema.Body.Vistas.General.sras')%>-<%= @solicitud.numero.to_s << Time.now.strftime(I18n.t('time.formats.gebos_txt_banco')).to_s << @solicitud.codigo_sras.to_s %>  </td>
+        </tr>
+        <tr>
+          <td align="left" colspan="10"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.vigencia')%></span>
+            <br></br>
+            <span><%=(I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.a_partir_fecha_liquidacion')).html_safe%></span>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" colspan="10"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.General.direccion')%></span>
+            <br></br>
+            <%= @udp.direccion_lote %>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" colspan="3"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.telefono')%></span>
+            <br></br>
+            <%= @solicitud.cliente.telefonos_contacto %>
+          </td>
+          <td align="left" colspan="3"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></span>
+            <br></br>
+            <%= @udp.municipio_lote.upcase %>
+          </td>
+          <td align="left" colspan="4"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.estado')%></span>
+            <br></br>
+            <%= @udp.estado_lote.upcase %>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" colspan="5"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.programa')%></span>
+            <br></br><%= @view_solicitud.plan.upcase %></td>
+          <td align="left" colspan="2"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.Form.numero_financiamiento')%></span>
+            <br></br><%= @prestamo.numero %></td>
+          <td align="left" colspan="3"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></span>
+            <br></br><%= @view_solicitud.rubro.upcase %></td>
+        </tr>
+        <tr>
+          <td align="left" colspan="8" ><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.Form.monto_financiamiento')%></span>
+            <br></br><%= format_fm(@solicitud.monto_solicitado) %></td>
+          <td align="left" colspan="2"><span style="font-size:10px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></span>
+            <br></br><%= @view_solicitud.numero_solicitud %></td>
+
+        </tr>
+
+        </table>
+        <table width="1120px" border="1" align="center">
+            <thead>
+             <tr bgcolor="#BBBBFF">
+                    <th colspan ="2" align="center"><span style="font-size:16px; font-weight:bold"><%=(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.plan_inversion')).upcase%></span></th>
+                </tr>            
+                <tr>
+                <th style="width: 80%; align:center">
+                    <%=I18n.t('Sistema.Body.Vistas.General.item') %>
+                </th>
+                <th style="width: 20%; align:center">
+                    <%=I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.financiamiento')%>
+                </th>
+            </tr>
+            <tr>
+                <td style="width: 80%; align:left">
+                  <br><%=(I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.plan_inversion')).upcase%><br></br><%=I18n.t('Sistema.Body.Vistas.General.items') %>
+                </td>
+                <td style="width: 20%;" align="right">
+                  <br><br></br><%=I18n.t('Sistema.Body.Vistas.General.monto')%>
+                </td>
+            </tr>
+             </thead>
+            <tbody id="list-body">
+         <% total_plan = 0
+            @plan_inversion_plantilla = ViewPlanInversionPlantilla.find(:all,:conditions=>['solicitud_id = ?',params[:solicitud_id]])
+         %>
+        <% for items in @plan_inversion_plantilla %>
+        <tr>
+          <td>
+            &nbsp;&nbsp;<%= items.nombre %>
+          </td>
+          <td align="right">
+            <%= format_fm(items.monto_financiamiento) %>
+            <% total_plan += items.monto_financiamiento %>
+          </td>
+        </tr>
+        <% end %>
+        <tr>
+          <td>
+            <strong><%=I18n.t('Sistema.Body.Modelos.Desembolso.Txt.total')%>:</strong>
+          </td>
+          <td align="right">
+            <strong><%= format_fm(total_plan) %></strong>
+          </td>
+        </tr>
+      <br> <tr>
+                <td style="width: 80%; align:left">
+                  <br><strong><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.partidas_financiables')%><br></br><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.imputables')%></strong><br><%=I18n.t('Sistema.Body.General.concepto')%>
+                </td>
+                <td style="width: 20%;" align="right">
+                  <br></br><br></br><%= I18n.t('Sistema.Body.Vistas.General.valor')%>
+                </td>
+
+        </tr>
+        <tr>
+          <td>
+            &nbsp;&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.sras')%>
+          </td>
+          <td align="right">
+            <% total_sras = @prestamo.monto_sras_total %>
+            <%= format_fm(total_sras) %>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+            &nbsp;&nbsp;<%=I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.gastos_administrativos')%>
+          </td>
+          <td align="right">
+            <% total_gasto = @prestamo.monto_gasto_total %>
+            <%= format_fm(total_gasto) %>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+            &nbsp;&nbsp;<%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')%> <%=(I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.imputables')).to_s.downcase.capitalize%>:
+          </td>
+          <td align="right">
+            <%= format_fm(total_sras+total_gasto) %>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <table width="100%"> 
+              <tr>
+                <td width="50%" align="center">
+                  <br></br>
+                  <br></br>
+                  <span>__________________________________</span><br>
+                  <span><%=(I18n.t('Sistema.Body.General.fondas')).upcase%></span><br>
+                </td>
+                <td width="50%" align="center">
+                  <br></br>
+                  <br></br>
+                  <span>__________________________________</span><br>
+                  <span><%=(I18n.t('Sistema.Body.General.beneficiario')).upcase%></span><br>
+                </td>
+              </tr>
+            </table>
+       
+          </td>
+        </tr>
+       
+        </tbody>
+        </table>
+	</br>
+	<table width="1120px" border="1" align="center">
+	<tr>	
+	<td align="left" width="30%">
+	   <span style="font-size:12px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.fecha_impresion')%> <%= format_fecha(Time.now)%></span></td>		
+	<td align="center" width="30%">
+	   <span style="font-size:12px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.hora_impresion')%> <%= format_hora_corta(Time.now)  %></span> <!-- .strftime("%H:%M%p") --></td>
+	<td align="right" width="4 0%">
+	   <span style="font-size:12px; font-weight:bold"><%=I18n.t('Sistema.Body.Vistas.General.usuario')%>:&nbsp; <%= @usuario.nombre_corto %> </span></td>
+	</tr>
+	</table>

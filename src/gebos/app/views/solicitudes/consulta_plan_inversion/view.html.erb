@@ -1,0 +1,36 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= t('Sistema.Body.Vistas.PlanInversion.Header.plan_inversion')%> <span class="titulo_modificar">'<%=  @solicitud.numero.to_s %>'</span>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>
+      <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> -
+      <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+    </div>
+  </div>
+</div>
+
+<%= render :partial=>'solicitudes/solicitud/common/tabs' %>
+<div class="marco-contenido2">
+  <%= render :partial=>'solicitudes/consulta_plan_inversion/common/tabs' %>
+    <div class="marco-contenido2">
+    <% if @solicitud.por_inventario == false %>
+
+        <div id="condiciones" style="width:30% float:right" >
+          <%= render :partial => 'condiciones_financiamiento' -%>
+        </div>
+
+        <br/>
+        <div id="plan-inversion">
+          <%= render :partial => 'plan_inversion_vegetal' -%>
+        </div>
+    <% else %>
+      
+          <%=render :partial => 'list_inventario', :id => params[:id] -%>
+
+      <br/>
+
+      <div id="total-prestamo">
+        <%=render :partial => 'total_prestamo' -%>
+      </div>
+    <% end %>
+</div></div>

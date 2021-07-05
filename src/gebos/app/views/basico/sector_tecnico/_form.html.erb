@@ -1,0 +1,18 @@
+<table border="0" width="80%">
+  <tr>
+    <td style="width: 30px"><label><%=  I18n.t('Sistema.Body.Vistas.General.sector') %></label><label class="requerido"> (*)</label></td>
+    <td style="width: 30px">
+      <%= select(
+        'sector_tecnico','sector_id',
+        @sector.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>

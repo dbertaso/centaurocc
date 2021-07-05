@@ -1,0 +1,124 @@
+
+
+      <div id="excedentes">
+
+        <table  style="width: 100%; margin-bottom: 10px" border="0">
+      
+          <tr>
+            <td class="separador" valign="bottom" colspan="3" style="text-align: center">
+               <span><%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.excedentes') %> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </td>
+          </tr>
+
+          <tr>
+
+            <td style="width: 35%">
+              <label><%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.excedente')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.por_pagar')}:" %></label>
+            </td>
+            <td style="width: 35%; text-align: left">
+               <b><%= @prestamo.remanente_por_aplicar_fm -%></b>
+            </td>
+            <td>
+            </td>
+          </tr>
+          
+        </table>
+        
+        <table style="width: 100%;">
+        
+          <tr>
+          
+            <td class="separador" valign="bottom" colspan="2" style="text-align: center">
+               <span><%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.excedentes')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.pagados')}:"%>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </td>
+          </tr> 
+          
+        </table>
+        
+        <table class="lista" style="width: 100%; margin-bottom: 10px" border="0">
+        
+          <thead>
+
+            <tr>
+              <th style="width: 20%;">
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_pago') %>
+              </th>
+              <th style="width: 20%;">
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.forma_pago') %>
+              </th>
+              <th style="width: 20%;">
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_pagado') %>
+              </th>      
+            </tr>
+          </thead>
+          
+          <% unless @pagos_excedentes %>
+            <% monto_total = 0.00 %>
+            <% even_odd = 1 %>
+            <% for excedente in @pago_excedentes
+                monto_total += excedente.monto_abono
+                even_odd = 1 - even_odd %>
+              
+              <%= excedente.banco %>
+              <tr class="lista<%= even_odd %>">
+              
+                <% if !excedente.tipo_cheque.nil? %>
+                  <td style="text-align: center">
+                    <%= excedente.fecha_registro_cheque.strftime("%d/%m/%Y") %>
+                  </td>
+                  
+                <% else %>
+                  <td style="text-align: center">
+                    <%= excedente.fecha_abono_cuenta.strftime("%d/%m/%Y") %>
+                  </td>
+                  
+                <% end %>
+                <td>
+                  <% if excedente.numero_cuenta != nil %>
+                    <strong>Transferencia</strong><br>
+                    <strong><%= excedente.banco %></strong><br>
+                    <%= if excedente.tipo.upcase == 'C'
+                          t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cuenta_corriente') 
+                        else 
+                          t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cuenta_ahorro') 
+                        end %>:
+                    <%= excedente.numero_cuenta %>
+                  <% else %>
+                    <strong>
+                      <%= if excedente.tipo_cheque == 'G' 
+                            t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cheque_gerencia') 
+                          else 
+                            t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cheque_propio') 
+                          end 
+                      %>:
+                    </strong>
+                    <br>
+                  <%= excedente.referencia %>
+                  <% end %>
+                </td>
+                <td style="text-align: right">
+                  <%= valor = sprintf('%01.2f', excedente.monto_abono).sub('.', ',')
+                      valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>      
+                </td>
+
+              </tr>
+            <% end %>
+            
+            <% even_odd = 1 - even_odd %>
+            <tr  class="lista<%= even_odd %>" >
+            
+              <td>
+              </td>
+              <td style="width: 100px">
+                <label><%= "#{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.total')} #{t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.pagos')}:" %></label>
+              </td>
+              <td style="text-align: right">
+                <b><%=  valor = sprintf('%01.2f', monto_total).sub('.', ',')
+                    valor.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%></b>
+              </td>
+            </tr>
+          <%end%>
+        </table>  
+              
+      </div>
+

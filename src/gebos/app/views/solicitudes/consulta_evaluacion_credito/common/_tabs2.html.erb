@@ -1,0 +1,121 @@
+<div id="tabs">
+	<ul>
+
+<%
+
+        prestamo_incial = Prestamo.find_by_solicitud_id(@solicitud.id)
+        if prestamo_incial.nil?
+          plan_inversion_activo = false
+        else
+          plan_inversion_activo = true
+        end
+
+
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+    controller_top = params[:controlador]
+
+	tipo_cliente = @solicitud.cliente.class.to_s
+
+
+    logger.info "***************************************************************************************************************************************************************************"
+
+    logger.debug "controller_name " << action_name
+
+if (action_name.to_s == "delete"or action_name.to_s == "save_new")
+action_name = "edit"
+end
+
+#CONDICIONAL DUMMY PARA APAGAR DATOS BASICOS
+
+
+
+
+	if @solicitud.id
+if plan_inversion_activo
+		if controller_name=='solicitud_plan'
+%>
+			<li id="actual"><div><a href="#">Plan Inversión</a></div></li>
+<%
+		else
+%>
+			<li><div>
+	     <%= link_to('Plan Inversión', :controller => 'solicitud_plan', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (!(@solicitud.estatus_id == 10026 || @solicitud.estatus_id == 10006 || @solicitud.estatus_id == 10007 || @solicitud.estatus_id == 10005)) %>
+             <%= link_to('Plan Inversión', :controller => 'solicitud_plan', :action => 'view', :solicitud_id => @solicitud.id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if ((@solicitud.estatus_id == 10026 || @solicitud.estatus_id == 10006 || @solicitud.estatus_id == 10007 || @solicitud.estatus_id == 10005) ) %>
+
+          </div></li>
+<%
+		end
+end
+
+		if controller_name=='solicitud_ficha_resumen'
+%>
+			<li id="actual"><div><a href="#">Ficha Resumen</a></div></li>
+<%
+		else
+%>
+			<li><div>
+	     <%= link_to('Ficha Resumen', :controller => 'solicitud_ficha_resumen', :action => 'view', :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+             <%= link_to('Ficha Resumen', :controller => 'solicitud_ficha_resumen', :action => 'view', :solicitud_id => @solicitud.id, :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>
+			</div></li>
+<%
+		end
+
+if  !CondicionamientosNarrativaLibreSolicitud.find_by_solicitud_id (@solicitud.id).nil?
+		if controller_name=='solicitud_condicionamientos_analisis_credito'
+%>
+			<li id="actual"><div><a href="#">Condicionamiento</a></div></li>
+<%
+		else
+%>
+			<li><div>
+	     <%= link_to('Condicionamiento', :controller => 'solicitud_condicionamientos_analisis_credito', :action => 'view', :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+             <%= link_to('Condicionamiento', :controller => 'solicitud_condicionamientos_analisis_credito', :action => 'view', :solicitud_id => @solicitud.id, :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>
+			</div></li>
+<%
+		end
+
+end
+
+
+if  !PuntoCuenta.find_by_solicitud_id (@solicitud.id).nil?
+		if controller_name=='solicitud_punto_cuenta'
+%>
+			<li id="actual"><div><a href="#">Punto de Cuenta</a></div></li>
+<%
+		else
+%>
+			<li><div>
+	     <%= link_to('Punto de Cuenta', :controller => 'solicitud_punto_cuenta', :action => 'view', :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+             <%= link_to('Punto de Cuenta', :controller => 'solicitud_punto_cuenta', :action => 'view', :solicitud_id => @solicitud.id, :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>
+			</div></li>
+<%
+		end
+
+end
+
+
+if  !SolicitudCertificacionPresupuestaria.find_by_solicitud_id(@solicitud.id).nil?
+    if SolicitudCertificacionPresupuestaria.find_by_solicitud_id(@solicitud.id).disponibilidad.to_s != "0"
+		if controller_name=='solicitud_disponibilidad_presupuestaria'
+%>
+			<li id="actual"><div><a href="#">Presupuesto</a></div></li>
+<%
+		else
+%>
+			<li><div>
+	     <%= link_to('Presupuesto', :controller => 'solicitud_disponibilidad_presupuestaria', :action => 'index_view', :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+             <%= link_to('Presupuesto', :controller => 'solicitud_disponibilidad_presupuestaria', :action => 'index_view', :solicitud_id => @solicitud.id, :solicitud_id => @solicitud.id, :id => @solicitud_id, :accion=>params[:accion], :popup=>params[:popup], :controlador=>controller_top) if (action_name=='view' || action_name=='view_detail' || action_name=='index_view') %>
+			</div></li>
+<%
+		end
+end
+end
+
+
+
+	end
+
+%>
+	</ul>
+</div>

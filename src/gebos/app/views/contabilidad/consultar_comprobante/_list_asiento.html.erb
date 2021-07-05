@@ -1,0 +1,26 @@
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 15%">
+         <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.codigo_cuenta') %>
+        </th>
+        <th style="width: 30%">
+         <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.nombre_cuenta') %>
+        </th>
+        <th style="width: 20%">
+          <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.debe') %>
+        </th>
+        <th style="width: 20%">
+          <%= t('Sistema.Body.Vistas.ConsultarComprobante.Etiquetas.haber') %>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="list_body">
+<%  
+  even_odd = 1
+  for asiento_contable in @comprobante_contable.asientos
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row_asiento', :locals => { :asiento_contable => asiento_contable, :even_odd => even_odd } -%>
+<% end %>
+    </tbody>
+  </table>

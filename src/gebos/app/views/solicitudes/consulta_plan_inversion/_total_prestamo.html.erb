@@ -1,0 +1,23 @@
+<table class="lista" width="100%">
+  <tr>
+    <th> &nbsp; </th>
+    <th style="background-color:#D7D7D7; width: 25%"> <%= I18n.t('Sistema.Body.Vistas.General.sras_total') %>: </th>
+    <th style="background-color:#D7D7D7; width: 16%; text-align: right">
+      <%=sprintf('%01.2f', @prestamo.monto_sras_total).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @prestamo.nil? || @prestamo.monto_sras_total.nil? -%>
+    </th>
+  </tr>
+  <tr>
+    <th> &nbsp; </th>
+    <th style="background-color:#D7D7D7; width: 25%"> <%= I18n.t('Sistema.Body.Vistas.General.gastos_administrativos_total') %>: </th>
+    <th style="background-color:#D7D7D7; width: 16%; text-align: right">
+      <%=sprintf('%01.2f', @prestamo.monto_gasto_total).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @prestamo.nil? || @prestamo.monto_gasto_total.nil? -%>
+    </th>
+  </tr>
+  <tr>
+    <th> &nbsp; </th>
+    <th style="background-color:#D7D7D7; width: 25%"> <%= I18n.t('Sistema.Body.Vistas.General.total') %>: </th>
+    <th style="background-color:#D7D7D7; width: 16%; text-align: right">
+      <%= @prestamo.total_financiamiento_fm -%>
+    </th>
+  </tr>
+</table>

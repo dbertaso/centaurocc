@@ -1,0 +1,48 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+  		<tr>
+  			<th style="width: 10%">
+  				<%="#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.factura')}"%>
+   			</th>
+        <th style="width: 10%">
+  				<%=I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title')%>
+   			</th>
+  			<th style="width: 10%">
+  				<%=I18n.t('Sistema.Body.Controladores.SucursalCasaProveedora.FormTitles.form_title')%>
+   			</th>
+  			<th style="width: 10%">
+  				<%=I18n.t('Sistema.Body.Vistas.General.cantidad') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total') << " " << I18n.t('Sistema.Body.Vistas.General.items') << " " << I18n.t('Sistema.Body.Vistas.General.facturados')%>
+   			</th>
+  			<th style="width: 10%">
+  				<%="#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.factura')}"%>
+   			</th>
+   			<th style="width: 10%">
+  				<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.emitida_orden_despacho')%>
+   			</th>
+  			<th style="width: 10%">
+  				<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.confirmada')%>
+   			</th>
+  			<th style="width: 10%">
+  				<%=I18n.t('Sistema.Body.Vistas.ConsultaCuentaProyectado.Etiquetas.monto_total') << " " << I18n.t('Sistema.Body.Vistas.General.factura')%>
+   			</th>
+  			<th style="width: 10%">
+  				<%=I18n.t('Sistema.Body.General.liquidada')%>
+   			</th>
+  			<th style="width: 10%">
+  				<%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+   			</th>
+
+
+  		</tr>
+		</thead>
+		<tbody id="list_body">
+
+<%  
+	even_odd = 1  
+  @facturas.each{ |factura|
+		even_odd = 1 - even_odd %>
+    <%= render :partial => 'row_accion', :locals => { :factura => factura, :even_odd => even_odd,:parciales_id=>@mega_condi } -%>
+
+   <% } %>
+    </tbody>
+  </table>

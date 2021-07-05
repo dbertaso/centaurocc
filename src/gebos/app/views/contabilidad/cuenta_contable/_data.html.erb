@@ -1,0 +1,18 @@
+<% cuenta_contable = @cuenta_contable if cuenta_contable.nil? %>
+<td>
+	<%= cuenta_contable.codigo  %>
+</td>	
+<td>
+	<%= cuenta_contable.nombre  %>
+</td>
+<td style="text-align: right">
+  <%= link_to image_tag(image_path(t('Sistema.Body.Imagenes.consultar'))), :action => 'view', :id => cuenta_contable.id %>&nbsp;
+	<%= link_to(image_tag(image_path(t('Sistema.Body.Imagenes.modificar'))), 
+		:action => 'edit', :id => cuenta_contable.id ) if vlink 'edit' %>&nbsp;
+	<%= link_to_remote(
+		image_tag(image_path(t('Sistema.Body.Imagenes.eliminar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	  :confirm => t('Sistema.Body.Controladores.Mensaje.esta_seguro'),
+		:url => {:action => :delete, :id => cuenta_contable.id}) if vlink 'delete' -%>
+</td>

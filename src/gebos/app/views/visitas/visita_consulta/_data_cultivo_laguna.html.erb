@@ -1,0 +1,81 @@
+<% cultivo_laguna = @cultivo_laguna if cultivo_laguna.nil? %>
+<td colspan="2">
+<table>
+  <tr>
+    <td colspan="2" align="center">
+      <label style="color: red"> *** ***
+    <td>  
+  </tr>
+
+    <tr>
+          <td style="width: 300px">
+             <label>Número de Laguna:</label>
+          </td>
+          <td style="width: 650px">
+
+            <%= cultivo_laguna.numero_laguna %>
+
+
+          </td>
+	</tr>
+    <tr>
+        <td>
+            <label>Área o Espejo de Agua:</label>
+        </td>
+        <td>
+          <%= cultivo_laguna.espejo_agua_f %>  Mts2
+        </td>
+  </tr>
+  <tr>
+      <td>
+          <label>Cantidad de Peces:</label>
+      </td>
+      <td>
+        <%= cultivo_laguna.cantidad_peces %>
+      </td>
+</tr>
+<tr>
+      <td>
+              <label>Peso Promedio:</label>
+      </td>
+      <td>
+        <%= cultivo_laguna.peso_promedio_f %> Toneladas
+      </td>
+  </tr>
+  <tr>
+      <td>
+              <label>Fecha de Siembra:</label>
+      </td>
+      <td>
+        <%= cultivo_laguna.fecha_siembra_f %>
+      </td>
+  </tr>
+
+<tr>
+      <td>
+              <label>Fecha de Cosecha:</label>
+      </td>
+      <td>
+        <%= cultivo_laguna.fecha_cosecha_f %>
+      </td>
+  </tr>
+
+<tr>
+      <td>
+              <label>Kilogramos por Cosechar / Cosechados:</label>
+      </td>
+      <td>
+        <%= cultivo_laguna.kilo_cosechado_f %> Kg
+      </td>
+</tr>
+
+<tr>
+      <td>
+              <label>Coordenadas UTM Asociadas a las Lagunas:</label>
+      </td>
+      <td>
+        <%= cultivo_laguna.coordenadas_utm %>
+      </td>
+</tr>
+</table>
+</td>

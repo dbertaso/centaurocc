@@ -1,0 +1,30 @@
+<td align="center">
+  <%= tecnico_campo.primer_nombre %>
+</td>
+<td align="center">
+  <%= tecnico_campo.primer_apellido %>
+</td>
+<td>
+  <%=tecnico_campo.letra_cedula.to_s << " " << tecnico_campo.cedula.to_s %>
+</td>
+<td>
+  <%= tecnico_campo.oficina.ciudad.estado.nombre%>
+</td>
+<td>
+  <%= tecnico_campo.oficina.nombre %>
+</td>
+<td align="center">
+  <%= tecnico_campo.codigo %>
+</td>
+<td align="center">
+  <%= tecnico_campo.carga_trabajo %>
+</td>
+<td style="text-align: right">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), :action => 'view', :method => :get, :id => tecnico_campo.id %> &nbsp; 
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')), :action => 'edit', :method => :get, :popup=>params[:popup], :id => tecnico_campo.id ) if vlink 'edit' %>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm =>I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'tecnico_campo', :action => :delete, :id => tecnico_campo.id}) if vlink 'delete' -%>
+</td>

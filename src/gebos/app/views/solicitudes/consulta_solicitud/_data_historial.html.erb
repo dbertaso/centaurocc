@@ -1,0 +1,26 @@
+<td>
+  <%= format_fecha(detalle.fecha)  %>
+</td>
+<td>
+  <%= format_hora(detalle.fecha) %>
+</td>
+<td>
+  <%= detalle.motivo_w %>
+</td>
+
+<td>
+  <%= detalle.causa_renuncia_w %>
+</td>
+
+<td>
+  <%= detalle.observaciones %>
+</td>
+<td width="8%" align="center">
+
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.icono_pdf')),
+    { :accion_origen => '/solicitudes/consulta_solicitud', 
+    :controller => '/reportes/acta_reestructuracion',
+    :action => :generar, :id => detalle.id
+  }%>&nbsp;
+
+</td>

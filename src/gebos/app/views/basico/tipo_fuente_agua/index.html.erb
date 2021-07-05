@@ -1,0 +1,12 @@
+<%
+@action_name = controller.action_name
+@controller_name = controller.controller_name
+%>
+
+<%=error%>
+<%=message%>
+<%= content_for :list do %>
+  <div id="list">
+    <%= render :partial => 'list' -%>
+  </div>
+<%end%>

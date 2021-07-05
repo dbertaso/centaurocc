@@ -1,0 +1,98 @@
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+    <table>
+      <tr>
+        <td style="width: 180px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'10', :style=>'width: 120px'  %>
+        </td>
+        <td>
+          <%= image_submit_tag('boton_buscar.gif') -%>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+    <table>
+      <tr>
+        <td style="width: 180px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')} / #{I18n.t('Sistema.Body.Vistas.General.rif')}" %></label>
+        </td>
+        <td>
+          <select name="tipo" id="tipo" class="select">
+            <option value="V ">V</option>
+            <option value="E ">E</option>
+            <option value="J-">J</option>
+            <option value="G-">G</option>
+          </select>
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 120px'  %> Ej: J-12345678-9
+        </td>
+        <td>
+          <%= image_submit_tag('boton_buscar.gif') -%>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+  <%= form_remote_tag(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url => { :action => :list } ) do -%>
+    <table>
+      <tr>
+        <td style="width: 180px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'150', :style=>'width: 400px'  %>
+        </td>
+        <td>
+          <%= image_submit_tag('boton_buscar.gif') -%>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+
+  <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :url => { :action => :list } ) do -%>
+
+    <table>
+      <tr>
+          <td style="width: 180px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.moneda')%></label>
+          </td>
+          <td>          
+              <%= select(
+                'moneda_id', '',
+                @moneda_list.map{|i| [i.nombre << " - " << i.abreviatura, i.id]},
+                {  },
+                { :class=>'select',:onchange=>'inputChange();' } ) %>          
+          </td>
+          <td>
+            <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+          </td>
+        </tr>    
+    </table>
+  <%end%>
+
+  <%= error %>
+  <%= message %>
+
+  <div id="list">
+  </div>
+</div>

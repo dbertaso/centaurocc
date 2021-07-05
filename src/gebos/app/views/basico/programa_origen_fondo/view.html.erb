@@ -1,0 +1,23 @@
+<% @view = true %>
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.ProgramaOrigenFondo.Header.form_title')%> <span class="titulo_modificar">'<%= @programa.alias %>'</span>
+    </div>
+  </div>
+</div>
+
+<%= render 'basico/programa/common/tabs' %>
+
+<div class="marco-contenido2">
+
+  <div id="list">
+    <%= render "list_view"  %>
+  </div>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :controller => 'programa', :action => :index },
+    { :id=>'button_close' } ) -%>
+
+
+</div>

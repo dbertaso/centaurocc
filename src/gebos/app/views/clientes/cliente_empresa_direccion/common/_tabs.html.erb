@@ -1,0 +1,37 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='cliente_empresa_direccion'
+    %>
+      <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.ubicacion') %></a></div></li>
+    <% 
+    else 
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.ubicacion'), :controller => 'cliente_empresa_direccion', :action => 'edit', :empresa_id => @empresa.id, :id => @empresa_direccion.id, :popup=>params[:popup]) if action_name == 'index' %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.ubicacion'), :controller => 'cliente_empresa_direccion', :action => 'view_detail', :empresa_id => @empresa.id, :id => @empresa_direccion.id, :popup=>params[:popup]) if (action_name=='view_detail' || action_name=='view')  %>
+        </div></li>
+
+    <% 
+    end
+
+    if @empresa_direccion.id
+      # if controller_name=='cliente_empresa_direccion_telefono' && (action_name=='index')
+      if controller_name=='cliente_empresa_direccion_telefono'
+      %>
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.General.telefonos') %></a></div></li>
+      <%      
+      else				
+      %>          
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.telefonos'), :controller => 'cliente_empresa_direccion_telefono', :action => 'index', :empresa_id => @empresa.id, :empresa_direccion_id => @empresa_direccion.id, :popup=>params[:popup]) if action_name == 'edit' %>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.General.telefonos'), :controller => 'cliente_empresa_direccion_telefono', :action => 'view', :empresa_id => @empresa.id, :empresa_direccion_id => @empresa_direccion.id, :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+          </div></li>			
+      <% 
+      end
+    end
+  %>
+  </ul>
+</div>

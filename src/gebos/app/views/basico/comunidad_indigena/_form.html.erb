@@ -1,0 +1,61 @@
+<table>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= select(
+        'comunidad_indigena','estado_id',
+        @estado_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>'Seleccionar '},
+        { :class=>'select', :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :method => :get, :url=>{:controller=>'comunidad_indigena',
+          :action=>:estado_change }, :with => "'estado_id=' + this.value")}; inputChange();" } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <span id="municipio-search">
+        <%= render :partial=>'municipio_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <span id="parroquia-search">
+        <%= render :partial=>'parroquia_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.ComunidadIndigena.form.pueblo') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'comunidad_indigena', 'pueblo_indigena',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.ComunidadIndigena.form.comunidad') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_area 'comunidad_indigena', 'comunidad_indigena',
+        :class=>'text', :style=>'width: 500px; height: 100px',
+        :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

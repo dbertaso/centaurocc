@@ -1,0 +1,51 @@
+<% factura_orden_despacho = @factura_orden_despacho if factura_orden_despacho.nil? %>
+<td align="center">
+<%=@numero_desembolso%>  
+</td>
+<td align="center">
+  <%= factura_orden_despacho.item_nombre.strip.upcase  %>
+</td>
+<td align="center">
+<%condi="nombre ='#{factura_orden_despacho.item_nombre}'"%>
+<%=Item.find_by_nombre(factura_orden_despacho.item_nombre).descripcion unless Item.count(:conditions=>condi) == 0 %>  
+</td>
+<td align="center">
+  <%= factura_orden_despacho.unidad_medida.abreviatura.strip.upcase %>
+</td>
+<td align="right">
+
+<%cantidad_orden_total=OrdenDespachoDetalle.find(factura_orden_despacho.orden_despacho_detalle_id).cantidad%>
+<%=format_fm(cantidad_orden_total)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{cantidad_orden_total}));"%>  
+</td>
+<td align="right">
+<%=format_fm(factura_orden_despacho.costo_real)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.costo_real}));"%>  
+</td>
+<td align="right">
+<%=format_fm(factura_orden_despacho.monto_financiamiento)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.monto_financiamiento}));"%>  
+</td>
+
+
+<td align="center" bgcolor="#CFFFE8">
+<%=format_fm((cantidad_orden_total-factura_orden_despacho.cantidad))%>
+<%#=javascript_tag "document.write(formatCurrency2(#{(cantidad_orden_total-factura_orden_despacho.cantidad)}));"%>
+
+</td>
+<td align="center" bgcolor="#FEFF99">
+
+<%=format_fm(factura_orden_despacho.cantidad)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.cantidad}));"%>
+</td>
+
+<%@total_precio_total+=(factura_orden_despacho.costo_real.to_f * factura_orden_despacho.cantidad.to_f)%>
+
+
+<td align="right">
+<%#=javascript_tag "document.write(formatCurrency2(#{(factura_orden_despacho.costo_real.to_f * factura_orden_despacho.cantidad.to_f)}));"%>
+<%=format_fm(factura_orden_despacho.monto_factura)%>
+<%#=javascript_tag "document.write(formatCurrency2(#{(factura_orden_despacho.monto_factura.to_f)}));"%>
+
+<%#=javascript_tag "document.write(formatCurrency2(#{factura_orden_despacho.monto_financiamiento - factura_orden_despacho.monto_factura}));"%>
+</td>

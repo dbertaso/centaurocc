@@ -1,0 +1,45 @@
+<% catalogo = @catalogo if catalogo.nil? %>
+
+<td align="center">
+  <%=  check_box_tag 'checkbox_solicitud_id', catalogo.id,false,:onClick=>'addClassTr(this);checkbox_select(this,"catalogo_id");addClassTr(this)',:disabled => false -%>
+</td>
+
+<td>
+  <%=catalogo.contrato_maquinaria_equipo.nombre%>
+</td>
+
+<td align="center">
+  <%= catalogo.clase.tipo_maquinaria.nombre %>
+</td>
+
+<td align="center">
+  <%= catalogo.clase.nombre %>
+</td>
+
+<td>
+  <%= catalogo.marca_maquinaria.nombre unless catalogo.marca_maquinaria.nil? %>
+</td>
+
+<td>
+  <%= catalogo.modelo.nombre unless catalogo.modelo.nil? %>
+</td>
+
+<td>
+  <%=catalogo.serial%>
+</td>
+
+<td>
+  <%=catalogo.chasis%>
+</td>
+
+<td align="right">
+  <%=format_fm(catalogo.monto)%>&nbsp;
+</td>
+
+<td>
+  <%=catalogo.pais.nombre unless catalogo.pais.nil? %>
+</td>
+
+<td align="center">
+  <%= catalogo.getstatus %>
+</td>

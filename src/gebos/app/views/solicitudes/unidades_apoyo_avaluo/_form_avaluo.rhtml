@@ -1,0 +1,116 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Avalúo Proponente</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Nombre del Perito:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo', 'nombre_perito',
+          :class=>'text', :style=>'width: 400px',
+          :maxlength=>'100', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Fecha Avalúo Externo:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'fecha_avaluo_f',
+          :class=>'text', :style=>'width: 80px',
+          :maxlength=>'10', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+      <%= calendar 'solicitud_avaluo_fecha_avaluo_f', 'calendar_avaluo_fecha' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>Número Sudeban:</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo', 'numero_sudeban',
+          :class=>'text', :style=>'width: 100px',
+          :maxlength=>'20', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Valor Avalúo Externo:</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo', 'valor_avaluo_f',
+          :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+          :onkeypress=>'montosolicitud(); inputChange();',
+          :onchange=>'inputChange();',
+          :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_valor_avaluo'); "  -%>
+      <%= display_number @solicitud_avaluo.valor_avaluo, 'solicitud_avaluo_valor_avaluo' %>
+    </td>
+  </tr>
+ 
+</table>
+  <div id="formulario">
+    <%= render :partial => @rhtml %>
+  </div>
+<br></br>
+
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Ubicación Geográfica</span>
+      <center>
+        <%= link_to_remote ("Sede Principal",
+		:loading =>'image_load()',
+  		:loaded => 'image_unload()',
+  		:id=>"button_enviar",
+  		:onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+                :url => {:action => :ubicacion, :id => "1", :solicitud_id =>@solicitud.id, :solicitud_avaluo_id => @solicitud_avaluo.id}) -%>&nbsp;&nbsp;
+            <%= link_to_remote ("Unidad de Negocio",
+		:loading =>'image_load()',
+  		:loaded => 'image_unload()',
+  		:id=>"button_enviar",
+  		:onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+		:url => {:action => :ubicacion, :id => "2", :solicitud_id =>@solicitud.id, :solicitud_avaluo_id => @solicitud_avaluo.id}) -%>
+
+      </center>
+    </td>
+  </tr>
+</table>
+
+  <div id="direccion-select">
+    <%= render :partial => 'direccion_select' %>
+  </div>
+
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Resumen del Informe</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label>Comentarios (Narrativa):</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_area 'solicitud_avaluo', 'comentario',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,13 @@
+<table style="width: 100%">
+  <tr>
+    <td>
+      <%= radio_button 'producto', 'abono_forma', "C", options = {:disabled => "true", :class=>'text'}  -%>
+      <label><%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.abono_cantidad_cuotas') %></label>
+    </td>
+    <td>
+      <%= @producto.abono_cantidad_cuotas -%>
+    </td>
+  </tr>
+</table>
+
+

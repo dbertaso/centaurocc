@@ -1,0 +1,32 @@
+<table class="lista" style="width: 99%">
+  <thead>
+    <tr>
+      <th style="width: 200px" <%= sort_class_helper('temperatura') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.CalidadAguaAlimento.Columnas.temperatura'), 'temperatura', 'list' %>
+      </th>
+      <th align="center" style="width: 120px" <%= sort_class_helper('ph') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.CalidadAguaAlimento.Columnas.ph'), 'ph', 'list' %>
+      </th>
+      <th style="width: 180px" <%= sort_class_helper('alimento_disponible') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaCalidadAguaAlimento.Etiquetas.consumo_total_alimento_diario'), 'alimento_disponible', 'list' %>
+      </th>
+      <th style="width: 240px" <%= sort_class_helper('dias_duracion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaCalidadAguaAlimento.Etiquetas.dias_duracion_alimento'), 'dias_duracion', 'list' %>
+      </th>
+      <th style="width: 50px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for calidad_agua_alimento in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :calidad_agua_alimento => calidad_agua_alimento, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

@@ -1,0 +1,63 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='silo'
+    %>
+      <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Controladores.Silo.FormTitles.form_title')%></a></div></li>
+    <%
+    else
+
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Controladores.Silo.FormTitles.form_title'), :controller => 'silo', :action => 'edit', :id => @silo.id, :popup=>params[:popup])  if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'view') %>
+        </div></li>
+    <%
+    end
+    if @silo.id
+      if controller_name=='empleado_silo'
+      %>
+        <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Vistas.EmpleadosSilo.Etiquetas.personal_silo')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.EmpleadosSilo.Etiquetas.personal_silo'), :controller => 'empleado_silo', :action => 'index', :silo_id => @silo.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'view') %>
+          </div></li>
+      <%
+
+      end
+    end
+    if @silo.id
+      if controller_name=='acta_silo'
+      %>
+        <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.acta_silo')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.acta_silo'), :controller => 'acta_silo', :action => 'index', :silo_id => @silo.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'view') %>
+          </div></li>
+      <%
+
+      end
+    end
+    if @silo.id
+        if controller_name=='convenio_silo'
+
+        %>
+          <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Vistas.Silo.Etiquetas.convenio_silo')%></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.Silo.Etiquetas.convenio_silo'), :controller => 'convenio_silo', :action => 'index', :silo_id => @silo.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'view') %>
+            </div></li>
+        <%
+        end
+    end
+  %>
+
+  </ul>
+</div>

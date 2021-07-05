@@ -1,0 +1,144 @@
+<div align="center" id="datos_financiamiento" style="width: 100%">
+
+  <table>
+    <tr style="width: 100%" >
+      <td class="separador" valign="bottom" colspan="3">
+        <span>
+          <%= "#{I18n.t('Sistema.Body.Vistas.General.datos')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}" %>
+        </span>
+      </td>
+    </tr>
+  </table>
+
+  <div style="width: 75%; border:1px; border-color: #000; border-style: solid">
+
+    <table>
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.prestamo')}"%>
+          </label>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= @prestamo.numero %>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), {:controller => 'prestamos/consulta_prestamo', :action => 'view', :id => @prestamo.id, :popup=>true },:onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.ConsultaPrestamoPlanPago.Etiquetas.financiamiento') + "',
+'height=800,width=1000,scrollbars=yes, resizable=yes'); return false;") %>&nbsp;
+        </td>
+      </tr>
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.status')%>
+          </label>
+        </td>
+        <td style="width: 30%; text-align: right">
+          <%= @prestamo.estatus_w %>
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_cuotas_vencidas')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @prestamo.cantidad_cuotas_vencidas%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.General.moneda')%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @prestamo.moneda.nombre + ' - ' + @prestamo.moneda.abreviatura %>
+        </td>
+      </tr>
+
+      <tr>
+
+        <td style="width: 50%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.saldo_deudor') %>
+          </label>
+        </td>
+        <td style="width: 50%; text-align: right">
+          <%= @prestamo.saldo_insoluto_total_fm -%>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.deuda') %>
+          </label>
+        </td>
+        <td style=" text-align: right">
+          <b><%= @prestamo.total_deuda_fm %></b>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.exigible') %>
+          </label>
+        </td>
+        <td style=" text-align: right">
+          <b><%= @prestamo.exigible_fm %></b>
+        </td>
+        <td style="width: 20%">
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.capital_vencido') %>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @prestamo.capital_vencido_fm -%>
+        </td>
+      </tr>
+
+      <tr>
+
+        <td>
+          <label>
+           <%= "#{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.intereses')} #{I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.vencidos')}"%>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @prestamo.interes_vencido_fm %>
+        </td>
+
+      </tr>
+
+       <tr>
+
+        <td>
+          <label>
+           <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.interes_mora') %>
+          </label>
+        </td>
+        <td style="text-align: right">
+          <%= @prestamo.monto_mora_fm %>
+        </td>
+
+      </tr>
+    </table>
+
+  </div>
+
+</div>

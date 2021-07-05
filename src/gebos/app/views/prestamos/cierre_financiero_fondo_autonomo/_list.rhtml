@@ -1,0 +1,61 @@
+<% list = @list if list.nil? %>
+
+<%= error %>
+<table class="lista" style="width: 80%" align="center">
+	<thead>
+	<tr>
+		<th style="width: 70px">
+			Mes/Ano
+		</th>
+
+		<th style="width: 80px" align="right">
+			Saldo 
+		</th>
+		<th style="width: 80px" align="right">
+			Desembolso
+		</th>
+
+		<th style="width: 80px" align="right">
+			Cobranza
+		</th>
+		<th style="width: 80px" align="right">
+			Diferencia
+		</th>
+		<th style="width: 70px">
+			Cartera
+		</th>
+                <th style="width: 70px">
+			Desembolsos
+		</th>
+                <th style="width: 70px">
+			Cobranza
+		</th>
+                     <th style="width: 70px">
+			Sector y Estatus
+		</th>
+                </th>
+                     <th style="width: 70px">
+			Region y Estatus
+		</th>
+                         </th>
+                     <th style="width: 70px">
+			Cartera y Analista
+		</th>
+                 <th style="width: 70px">
+			Cartera, Codigo y Cliente
+		</th>
+	</tr>
+	</thead>
+	<tbody id="list_body">
+<%  
+	even_odd = 1
+	for list in @list
+		
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :list => list,  :even_odd => even_odd} -%>
+<% end %>
+
+	
+	
+</table>
+

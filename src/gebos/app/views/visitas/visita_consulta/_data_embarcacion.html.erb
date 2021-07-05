@@ -1,0 +1,255 @@
+<% embarcacion = @embarcacion if embarcacion.nil? %>
+<td colspan="2">
+<table>
+  <tr>
+    <td colspan="2" align="center">
+      <label style="color: red"> *** ***
+    <td>  
+  </tr>
+
+    <tr>
+          <td style="width: 300px">
+             <label>Nombre de la Embarcación:</label>
+          </td>
+          <td style="width: 650px">
+
+            <label><%= embarcacion.nombre_embarcacion  unless embarcacion.nombre_embarcacion.nil? %></label>
+
+
+          </td>
+	</tr>
+    <tr>
+        <td>
+            <label>Matrícula </label>
+        </td>
+        <td>
+
+              <%= embarcacion.matricula unless embarcacion.matricula.nil? %>
+        </td>
+    </tr>
+
+    <tr>
+          <td>
+             <label>Tipo Embarcación </label>
+          </td>
+          <td>
+
+	 <%= embarcacion.tipo_embarcacion.tipo unless embarcacion.tipo_embarcacion.tipo.nil? %>
+
+          </td>
+	</tr>
+    <tr>
+          <td>
+             <label>Tipo de Material</label>
+          </td>
+        <td>
+          <%= embarcacion.TipoMaterial.tipo unless embarcacion.TipoMaterial.tipo.nil? %>
+
+        </td>
+	</tr>
+    <tr>
+          <td>
+             <label>Proveedor Marino </label>
+          </td>
+          <td>
+              <%= embarcacion.proveedor_marino.nombre unless embarcacion.proveedor_marino.nombre.nil? %>
+          </td>
+    </tr>
+    <tr>
+          <td>
+             <label>Eslora </label>
+          </td>
+          <td>
+              <%= embarcacion.eslora unless embarcacion.eslora.nil? %> (Mts)
+          </td>
+    </tr>
+    <tr>
+          <td>
+             <label>Manga</label>
+          </td>
+          <td>
+            <%= embarcacion.manga unless embarcacion.manga.nil? %> (Mts)
+
+        </td>
+
+    </tr>
+    <tr>
+          <td>
+             <label>Puntal</label>
+          </td>
+          <td>
+            <%= embarcacion.puntal unless embarcacion.puntal.nil? -%> (Mts)
+          </td>
+    </tr>
+    <tr>
+          <td>
+             <label>U.A.B</label>
+          </td>
+          <td>
+             <%= embarcacion.uab  unless embarcacion.uab.nil? -%>
+          </td>
+	</tr>
+      <tr>
+    <tr>
+          <td>
+             <label>Cantidad de Tripulantes</label>
+          </td>
+          <td>
+              <%= embarcacion.cantidad_tripulantes unless embarcacion.cantidad_tripulantes.nil? -%>
+          </td>
+	</tr>
+<!-- <tr>
+        <td>
+             <label>Dispone de GPS</label>
+          </td>
+        <td>
+           <%#=format_bool embarcacion.con_gps unless embarcacion.con_gps.nil? %>
+        </td>
+	</tr> -->
+    <tr>
+          <td>
+             <label>Autonomía de Pesca </label>
+          </td>
+          <td>
+            <%= embarcacion.autonomia_pesca unless embarcacion.autonomia_pesca.nil? %> (días)
+          </td>
+	</tr>
+
+  <tr>
+      <td colspan="2">
+        <label style="color: red">Nuevas Especificaciones:</label>
+      </td>
+  </tr>
+
+  <tr>
+      <td>
+              <label>Puerto Base</label>
+      </td>
+      <td>
+        <%= embarcacion.puerto_base unless embarcacion.puerto_base.nil? -%>
+      </td>
+  </tr>
+
+  <tr>
+      <td>
+          <label>Coordenadas UTM del Puerto Base</label>
+      </td>
+      <td>
+        <%= embarcacion.coordenadas_utm_puerto_base unless embarcacion.coordenadas_utm_puerto_base.nil? -%>
+      </td>
+  </tr>
+
+  <tr>
+      <td>
+          <label>Capacidad de Combustible</label>
+      </td>
+      <td>
+        <%= embarcacion.capacidad_combustible_f unless embarcacion.capacidad_combustible.nil? -%>  Litros
+
+		</td>
+	</tr>
+
+
+<tr>
+        <td>
+          <label>Condiciones de la Embarcación</label>
+        </td>
+        <td>
+	<%= embarcacion.condicion unless embarcacion.condicion.nil? -%>
+        </td>
+    </tr>
+<tr>
+      <td>
+        <label>Lugares Frecuentes de Pesca</label>
+      </td>
+      <td>
+        <%= embarcacion.lugares_pesca unless embarcacion.lugares_pesca.nil? -%>
+      </td>
+</tr>
+
+
+  <tr>
+      <td>
+              <label>Estado</label>
+      </td>
+      <td>
+	<% @estado = Estado.find(embarcacion.estado_id) -%>
+        <%= @estado.nombre unless embarcacion.estado_id.nil? -%>
+
+        </td>
+  </tr>
+
+  <tr>
+        <td>
+                <label>Municipio</label>
+        </td>
+        <td>
+            <% @municipio = Municipio.find(embarcacion.municipio_id) -%>
+            <%= @municipio.nombre unless embarcacion.municipio_id.nil? -%>
+        </td>
+  </tr>
+
+
+  <tr>
+        <td>
+                <label>Parroquia</label>
+        </td>
+        <td>
+            <% @parroquia = Parroquia.find(embarcacion.parroquia_id) -%>
+            <%= @parroquia.nombre unless embarcacion.parroquia_id.nil? -%>
+
+        </td>
+</tr>
+<% seguimiento_visita_id = embarcacion.seguimiento_visita_id -%>
+<% embarcacion_id = embarcacion.id -%>
+<%  @motores = Motores.find(:all,:conditions=>"seguimiento_visita_id=#{seguimiento_visita_id} and embarcacion_id=#{embarcacion_id}")%>
+
+<% if @motores %>
+
+
+  <tbody id="list_body">
+    <%  for motores in @motores %>
+      <%= render :partial => 'row_motores', :locals => { :motores => motores } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+
+<%  @arte_pesca = ArtePesca.find(:all,:conditions=>"seguimiento_visita_id=#{seguimiento_visita_id} and embarcacion_id=#{embarcacion_id}")%>
+
+<% if @arte_pesca %>
+
+  <tbody id="list_body1">
+    <%  for arte_pesca in @arte_pesca %>
+      <%= render :partial => 'row_arte_pesca', :locals => { :arte_pesca => arte_pesca } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+
+<%  @equipo_seguridad = EquipoSeguridad.find(:all,:conditions=>"seguimiento_visita_id=#{seguimiento_visita_id} and embarcacion_id=#{embarcacion_id}")%>
+<% if @equipo_seguridad %>
+
+  <tbody id="list_body2">
+    <%  for equipo_seguridad in @equipo_seguridad %>
+      <%= render :partial => 'row_equipo_seguridad', :locals => { :equipo_seguridad => equipo_seguridad } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+
+<%  @faenas_pesca = FaenasPesca.find(:all,:conditions=>"seguimiento_visita_id=#{seguimiento_visita_id} and embarcacion_id=#{embarcacion_id}")%>
+
+<% if @faenas_pesca %>
+
+  <tbody id="list_body3">
+    <%  for faenas_pesca in @faenas_pesca %>
+      <%= render :partial => 'row_faenas_pesca', :locals => { :faenas_pesca => faenas_pesca } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+
+
+</table>
+</td>

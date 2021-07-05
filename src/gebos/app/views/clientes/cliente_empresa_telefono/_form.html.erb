@@ -1,0 +1,56 @@
+<table>
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <%  action_name = controller.action_name
+      if action_name =='new' %>
+        <%= radio_button 'empresa_telefono', 'tipo', 'P',
+          :class=>'text'  -%><%= "#{I18n.t('Sistema.Body.Vistas.General.sede')} #{I18n.t('Sistema.Body.Vistas.General.principal')}" %><br />
+        <%= radio_button 'empresa_telefono', 'tipo', 'S',
+          :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.sucursal') %><br />
+        <%= radio_button 'empresa_telefono', 'tipo', 'L',
+          :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.planta') %><br />
+        <%= radio_button 'empresa_telefono', 'tipo', 'D',
+          :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.Form.deposito') %><br />
+        <%= radio_button 'empresa_telefono', 'tipo', 'T',
+          :class=>'text'  -%><%= I18n.t('Sistema.Body.Vistas.General.otra') %><br />
+      <% else %>
+        <%= @empresa_telefono.tipo_nombre.to_s %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.codigo') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_telefono', 'codigo',
+        :class=>'text',
+        :style=>'width: 35px',
+        :maxlength=>'4', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.telefono')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa_telefono', 'numero',
+        :class=>'text',
+        :style=>'width: 80px',
+        :maxlength=>'7', :onkeypress=>'inputChange();return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <%= check_box 'empresa_telefono', 'fax',
+        :checked_value=>"1",
+        :unchecked_value=>"0" -%>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.fax') %></label>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

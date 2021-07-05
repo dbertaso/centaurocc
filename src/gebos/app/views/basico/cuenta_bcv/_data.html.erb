@@ -1,0 +1,22 @@
+<% cuenta_bcv = @cuenta_bcv if cuenta_bcv.nil? %>
+<td>
+	<%= cuenta_bcv.entidad_financiera.nombre  %>
+</td>
+<td>
+	<%= cuenta_bcv.numero  %>
+</td>
+<td style="text-align: center">
+	<%= format_bool(cuenta_bcv.recaudador)  %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(cuenta_bcv.activo)  %>
+</td>	
+<td style="text-align: right">
+	<%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), :action => 'view', :id => cuenta_bcv.id %>&nbsp;
+	<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))), :action => 'edit', :id => cuenta_bcv.id) if vlink 'edit' %>&nbsp;
+	<%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+	  :url => {:controller => 'cuenta_bcv', :action => :delete, :id => cuenta_bcv.id}) if vlink 'delete' -%>
+</td>

@@ -1,0 +1,24 @@
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+		<th style="width: 260px" <%= sort_class_helper('mision.nombre') %>>
+			<%= sort_link_helper 'Nombre', 'mision.nombre', 'mision_list' %>
+			</th>
+		<th style="width: 285px" <%= sort_class_helper('mision.descripcion') %>>
+			<%= sort_link_helper 'Descripción', 'mision.descripcion', 'mision_list' %>
+			</th>
+			<th style="width: 44px">
+			</th>
+	</tr>
+	</thead>
+	<tbody id="list_body">
+<%  
+	even_odd = 1
+	for mision in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :mision => mision, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

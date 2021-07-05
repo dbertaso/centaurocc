@@ -1,0 +1,74 @@
+
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.mobiliaria_documento_oferta')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+    <%= hidden_field 'solicitud_avaluo_mobiliario_tipo','mobiliaria_id',:value=>@mobiliario.id %>
+      <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'tipo1',
+          :class=>'text',
+          :style=>'width: 300px',
+          :value=>@mobiliario.tipo.to_s,
+          :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label> <label style="color: red">*</label>
+  </td>
+  <td>
+    <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'modelo1',
+        :class=>'text',
+        :style=>'width: 300px',
+        :value=>@mobiliario.modelo,
+        :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+  </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'marca1',
+          :class=>'text',
+          :style=>'width: 300px',
+          :value=>@mobiliario.marca,
+          :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.serial')%></label> <label style="color: red">*</label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'serial1',
+          :class=>'text',
+          :style=>'width: 200px',
+          :value=>@mobiliario.serial,
+          :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.hipoteca')%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario_tipo', 'hipoteca1_f',
+          :value=>@mobiliario.hipoteca,
+          :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+          :onkeypress=>'montosolicitud(); inputChange();'%>
+        <%= display_number 0, 'solicitud_avaluo_mobiliario_tipo_hipoteca1' %>&nbsp;<%= @solicitud.moneda.abreviatura.to_s %>
+      <samp id="agregar"><%= image_tag(image_paht(I18n.t('Sistema.Body.Imagenes.guardar')), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"editar_mobiliario();", :OnMouseOver=>"style.cursor='pointer'" ) %></samp>
+    </td>
+  </tr>
+
+</table>
+<br/>
+

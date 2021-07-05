@@ -1,0 +1,35 @@
+<% texto_mensaje = @texto_mensaje if texto_mensaje.nil? 
+   analista_id = analista_id if analista_id.nil?
+   prestamo_id = prestamo_id if prestamo_id.nil?%>
+
+  <table>
+    <tr>
+
+      <td style="text-align: center; vertical-align:top;">
+        <label><%= I18n.t('Sistema.Body.Vistas.Form.texto_correo') %></label>
+      </td>
+    </tr>
+    <br>
+    <tr>
+      <td>
+        <%= text_area_tag 'mensaje', texto_mensaje, {:class=>'text', 
+          :style=>'width: 500px', :rows=> '5', :readonly=> 'readonly', :onchange => 'inputChange();'} -%>    
+
+      </td>
+      
+    </tr>
+  </table>
+<br>
+<br>
+
+<div id='botones' align='center' >
+
+<%= image_submit_tag image_path(I18n.t('Sistema.Body.Imagenes.enviar')),
+    :onclick=>"mostrar_tipo_cobranzas(); if (varEnviado) { return false; } else {varEnviado = true;}",
+  :id=>'button_save' -%>
+
+
+<%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar'))),
+  {:action => :index, :controller => 'cobranzas/agregar_cobranzas', :analista_id=>analista_id, :prestamo_id=>:prestamo_id,
+    :id=>'button_cancel'} ) -%>
+</div>

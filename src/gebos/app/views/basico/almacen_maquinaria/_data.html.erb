@@ -1,0 +1,37 @@
+<% almacen_maquinaria = @almacen_maquinaria if almacen_maquinaria.nil? %>
+<td>
+  <%= almacen_maquinaria.id %>
+</td>
+<td>
+  <%= almacen_maquinaria.nombre unless almacen_maquinaria.nombre.nil? %>
+</td>
+<td>
+  <%= almacen_maquinaria.rif unless almacen_maquinaria.rif.nil? %>
+</td>
+<td>
+  <%= almacen_maquinaria.telefono_1 unless almacen_maquinaria.telefono_1.nil? %>
+</td>
+<td>
+  <%= almacen_maquinaria.persona_contacto unless almacen_maquinaria.persona_contacto.nil? %>
+</td>
+<td>
+  <%= almacen_maquinaria.estado.nombre unless almacen_maquinaria.estado.nil? %>
+</td>
+<td>
+  <%= almacen_maquinaria.municipio.nombre unless almacen_maquinaria.municipio.nil? %>
+</td>
+<td>
+  <%= almacen_maquinaria.ciudad.nombre unless almacen_maquinaria.ciudad.nil? %>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(almacen_maquinaria.activo)  %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), :action => 'edit', :id => almacen_maquinaria.id) if vlink 'edit' %>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'almacen_maquinaria', :action => :delete, :id => almacen_maquinaria.id}) if vlink 'delete' -%>
+</td>
+

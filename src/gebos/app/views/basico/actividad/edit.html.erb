@@ -1,0 +1,28 @@
+<%= form_title_edit @actividad.nombre %>
+
+<%= render :partial=>'basico/sector/common/tabs' %>
+<div class="marco-contenido2">
+  <%= render :partial=>'basico/actividad/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%= error  %>
+    <%= message  %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id => @actividad.id, :sub_rubro_id =>@sub_rubro.id, :popup=>params[:popup] } ) do -%>
+
+    <%= render 'form' %>
+
+    <div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit  :sub_rubro_id =>@sub_rubro.id, :popup=>params[:popup] %>
+    </div>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+      { :controller=> 'actividad', :action => :index, :sub_rubro_id =>@sub_rubro.id, },
+      { :id=>'button_close' } ) -%>
+
+    <% end -%>
+  </div>
+</div>

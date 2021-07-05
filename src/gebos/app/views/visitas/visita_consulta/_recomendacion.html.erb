@@ -1,0 +1,82 @@
+<%  @decision_visita = DecisionVisita.find_by_seguimiento_visita_id(@seguimiento_visita.id)%>
+
+<%  if @decision_visita  %>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Sugerencias y Recomendaciones del Técnico</span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 300px">
+      <label>Se realizó la labor recomendada en Visitas Previas</label>
+    </td>
+    <td style="width: 650px">
+      <% if !@decision_visita.labor_visitas_previas -%> No <% end %>
+      <% if @decision_visita.labor_visitas_previas -%> Si <% end %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Dar Continuidad al Financiamiento</label>
+    </td>
+    <td>
+      <% if !@decision_visita.continuidad_financiamiento -%> No <% end %>
+      <% if @decision_visita.continuidad_financiamiento -%> Si <% end %>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+       <label>Medidas de Financiamiento</label>
+    </td>
+    <td>
+       <% caso_medida = CasoMedida.find_by_id(@decision_visita.caso_medida_id) %>
+        <%= caso_medida.descripcion unless @decision_visita.caso_medida_id.nil? -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Justificación de la Medida de Financiamiento</label>
+    </td>
+
+    <td>
+      <%= @decision_visita.justificacion unless @decision_visita.justificacion.nil? -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Labores a Realizar por el Beneficiario</label>
+    </td>
+
+    <td>
+      <%= @decision_visita.labores_por_realizar unless @decision_visita.labores_por_realizar.nil? -%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label>Recomendaciones / Sugerencias del Técnico</label>
+    </td>
+
+    <td>
+      <%= @decision_visita.recomendaciones unless @decision_visita.recomendaciones.nil? -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label>Recomienda la Generación del Desembolso</label>
+    </td>
+    <td>
+      <% if !@decision_visita.recomienda_generar_desembolso -%> No <% end %>
+      <% if @decision_visita.recomienda_generar_desembolso -%> Si <% end %>
+
+    </td>
+  </tr>
+<%  end  %>

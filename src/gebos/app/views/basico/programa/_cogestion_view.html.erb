@@ -1,0 +1,18 @@
+<table>
+   <tr>
+    <td style="width: 250px">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.porcentaje')} #{I18n.t('Sistema.Body.Vistas.General.empresa')}"%></label>
+    </td>
+    <td style="width: 450px">
+      <%= @programa.porcentaje_empresa_fm -%>
+    </td>
+   </tr>
+   <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.porcentaje')} #{I18n.t('Sistema.Body.Vistas.General.cooperativa')}"%></label>
+    </td>
+    <td>
+      <%= @programa.porcentaje_cooperativa_fm -%>
+    </td>
+   </tr>
+</table>

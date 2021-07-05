@@ -1,0 +1,202 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 20%" valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <%= radio_button 'registro_mercantil', 'tipo', 'C',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.civil') %><br />
+      <%= radio_button 'registro_mercantil', 'tipo', 'P',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.publico') %><br />
+      <%= radio_button 'registro_mercantil', 'tipo', 'T',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.de_tierras') %><br />
+      <%= radio_button 'registro_mercantil', 'tipo', 'H',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.de_hierro') %><br />
+      <%= radio_button 'registro_mercantil', 'tipo', 'N',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.naval') %><br />
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.documento_propiedad')}" %>:</label> <label style="color: red">*</label></td>
+    <td>
+      <%= select(
+        'registro_mercantil', 'tipo_documento_id',
+        @tipo_documento_select.map{|e| [e.tipo, e.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <% if @persona.cliente_persona.es_pescador == false %>
+    <tr>
+      <td><label><%= I18n.t('Sistema.Body.Vistas.General.unidad_produccion') %>:</label> <label style="color: red">*</label></td>
+      <td>
+        <%= select(
+          'registro_mercantil', 'unidad_produccion_id',
+          @unidad_produccion_select.map{|e| [e.nombre, e.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+  <% else %>
+    <tr>
+      <td><label><%= I18n.t('Sistema.Body.Vistas.General.puerto_base') %>:</label> <label style="color: red">*</label></td>
+      <td>
+        <%= select(
+          'registro_mercantil', 'unidad_produccion_id',
+          @unidad_produccion_select.map{|e| [e.nombre, e.id]},
+          {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.tenencia_tierra') %>:</label> <label style="color: red">*</label></td>
+    <td>
+      <%= select(
+        'registro_mercantil', 'tenencia_unidad_produccion_id',
+        @tenencia_unidad_produccion_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "registro_mercantil[fecha_registro_f]", @registro_mercantil.fecha_registro_f, 
+        :year_range => 80.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'registro_mercantil', 'numero',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.tomo')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'registro_mercantil', 'nro_tomo',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.protocolo')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'registro_mercantil', 'nro_protocolo',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'registro_mercantil', 'nombre_registro',
+        :class=>'text', :style=>'width: 300px',
+        :maxlength=>'80', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %>:</label> <label style="color: red">*</label></td>
+    <td>
+      <%= select(
+        'registro_mercantil', 'estado_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'cliente_persona_registro',
+          :action=>:estado_change },
+          :with=>"'estado_id='+ this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %>:</label> <label style="color: red">*</label></td>
+    <td>
+      <span id="ciudad-select">
+        <%= render :partial => 'ciudad_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %>:</label> <label style="color: red">*</label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.folio_inicial')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'registro_mercantil', 'nro_folio_inicial',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.folio_final')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'registro_mercantil', 'nro_folio_final',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.trimestre')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'registro_mercantil', 'nro_trimestre',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'1', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.año_del_registro')}" %></label>
+    </td>
+    <td>
+      <%= text_field 'registro_mercantil', 'nro_anno',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+</table>

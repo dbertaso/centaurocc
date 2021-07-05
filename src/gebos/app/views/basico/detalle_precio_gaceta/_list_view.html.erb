@@ -1,0 +1,24 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 80px" <%= sort_class_helper('detalle_precio_gaceta.actividad_id') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.actividad')}", 'detalle_precio_gaceta.actividad_id', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('detalle_precio_gaceta.tipo_clase') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.clase')}", 'detalle_precio_gaceta.tipo_clase', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('detalle_precio_gaceta.valor') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.precio')} /#{I18n.t('Sistema.Body.Vistas.General.kg')}", 'detalle_precio_gaceta.valor', 'list' %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for detalle_precio_gaceta in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row_view', :locals => { :detalle_precio_gaceta => detalle_precio_gaceta, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

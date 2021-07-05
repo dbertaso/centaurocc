@@ -1,0 +1,201 @@
+<table style="width: 100%">
+  <tr>
+  	<td class="separador" colspan="2">
+  		<span>
+        <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.global') -%>  
+      </span>
+  	</td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top; width: 70%;" colspan="2">
+        	
+      <div id="meta_global">
+      	<%= render'global' %>
+      </div>
+    </td>
+  	</tr>
+</table>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+	:loaded => 'image_unload()',
+  :method => :get,
+  :url => { :action => :agrupador_change } ) do -%>
+
+
+    <table style="width: 100%">
+
+			<tr>
+				<td class="separador" colspan="2">
+					<span>
+              <%= t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.busqueda') -%>   
+          </span>
+				</td>
+			</tr>
+
+  	<tr>
+  		<td class="sub-separador" colspan="2">
+  			<span>
+          <%="#{t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.agrupadores')} #{t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.por_moneda')}" -%></span>
+  		</td>
+  	</tr>
+    <tr>
+      <td style="width: 180px">
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.General.moneda')%>
+        </label>
+      </td>
+      <td>          
+          <%= select(
+            'moneda_id', '',
+            @moneda_list.map{|i| [i.nombre << " - " << i.abreviatura, i.id]},
+            {  },
+            { :class=>'select',:onchange=>"#{remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method => :get,
+                    :url=>{:controller=>'edad_mora',:action=>:moneda_change },
+                    :with=>"'moneda_id='+ this.value")};inputChange();"} ) %>          
+      </td>
+    </tr> 
+  	<tr>
+  		<td class="sub-separador" colspan="2">
+  			<span>
+          <%= "#{t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.agrupadores')} #{t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.por_region')}" -%>   
+        </span>
+  		</td>
+  	</tr>
+
+  	<tr>
+  	 <td style="vertical-align: top; width: 8%;" >
+
+        <label>
+          <%= I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.region') %>
+        </label>
+      </td>
+      <td>
+
+
+        <%= select_tag(
+                'region_id',
+                options_from_collection_for_select(@region_select, 'id', 'nombre'),
+                { :class=>'select', :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccione'), :onchange=>"#{remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method => :get,
+                    :url=>{:controller=>'indicador_cartera',:action=>:region_change },
+                    :with=>"'region_id='+ this.value")};inputChange();"} ) %>  
+
+  	    </td>
+      </tr>
+
+      	<tr>
+      		<td>
+            <label>
+              <%= I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.estado') %>
+            </label>
+          </td>
+      		<td>
+      			<span id="estado-select">
+      				<%= render 'estado_select'  %>
+      			</span>
+      		</td>
+      	</tr>				
+
+
+
+  	<tr>
+  		<td class="sub-separador" colspan="2">
+  			<span>
+          <%= "#{t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.agrupadores')} #{t('Sistema.Body.Vistas.IndicadorCartera.Etiquetas.por_sectores')}" -%>   
+        </span>
+  		</td>
+  	</tr>
+  	<tr>
+      <td >
+
+        <label>
+          <%= I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.sector') %>
+        </label>
+      </td>
+      <td>
+
+        <%= select_tag(
+          'sector_id',
+                options_from_collection_for_select(@sector_select, 'id', 'nombre'),
+                { :class=>'select', :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccione'), :onchange=>"#{remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method => :get,
+                    :url=>{:controller=>'indicador_cartera',:action=>:sector_change },
+                    :with=>"'sector_id='+ this.value")};inputChange();"} ) %>  
+
+
+      </td>
+  	</tr>
+
+		<tr>
+  		<td>
+        <label>
+          <%= I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.sub_sector') %>
+        </label>
+      </td>
+      <td>
+  			<span id="sub_sector-select">
+  				<%= render 'sub_sector_select'  %>
+  			</span>
+  		</td>
+    </tr>	
+  	<tr>
+  		<td>
+        <label>
+          <%= I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.rubro') %>
+        </label>
+      </td>
+      <td>
+  			<span id="rubro-select">
+  				<%= render 'rubro_select' %>
+  			</span>
+  		</td>
+  	</tr>	
+
+  	<tr>
+  		<td>
+        <label>
+          <%= I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.sub_rubro') %>
+        </label>
+        </td>
+      <td>
+  			<span id="sub_rubro-select">
+  				<%= render 'sub_rubro_select' %>
+  			</span>
+  		</td>
+  	</tr>	
+
+  	<tr>
+  		<td>
+        <label>
+         <%= I18n.t('Sistema.Body.Controladores.IndicadorCartera.Agrupadores.actividad') %>
+        </label>
+      </td>
+      <td>
+  			<span id="actividad-select">
+  				<%= render 'actividad_select' %>
+  			</span>
+  		</td>
+  	</tr>
+
+
+
+  </table>
+  <br>
+  <br>
+  <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar')),
+                                      :id=>'parametro') -%>
+  <br>
+  <br>  
+<% end %>
+
+
+<div id="agrupadores">
+</div>

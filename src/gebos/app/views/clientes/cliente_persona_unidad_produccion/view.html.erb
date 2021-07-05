@@ -1,0 +1,62 @@
+<div class="marco-contenido">
+<div class="marco-titulo"><div><div>
+	<%= I18n.t('Sistema.Body.Vistas.General.consultando') %> <%= Etiquetas.etiqueta(9) %> Natural <span class="titulo_modificar">'<%= @persona.nombre_corto %>'</span>
+</div></div></div>
+
+<%= render :partial=>'clientes/cliente_persona/common/tabs' %>
+<div class="marco-contenido2">
+<br/><br/><br/>
+
+	<%= error %>
+	<%= message %>
+
+	<div id="list">
+<table class="lista" style="width: 100%">
+	<thead>
+    <tr>
+        <th style="width: 100px" <%= sort_class_helper('codigo') %>>
+          <%= sort_link_helper 'Código', 'codigo', 'list' %>
+        </th>
+      <% if @persona.cliente_persona.es_pescador == false %>
+        <th style="width: 240px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper 'Nombre', 'nombre', 'list' %>
+        </th>
+        <th style="width: 220px" <%= sort_class_helper('total_hectareas') %>>
+          <%= sort_link_helper 'Total Hectáreas', 'total_hectareas', 'list' %>
+        </th>
+      <% else %>
+        <th style="width: 340px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper 'Nombre del Puerto Base', 'nombre', 'list' %>
+        </th>
+      <% end %>
+      <th style="width: 140px">
+        Estado
+      </th>
+      <th style="width: 140px">
+        Municipio
+      </th>
+      <th style="width: 70px">
+        Acciones
+      </th>
+    </tr>
+  </thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for unidad_produccion in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_view', :locals => { :unidad_produccion => unidad_produccion, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>
+
+          </div>
+
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :controller => 'cliente_persona', :action => :index, :popup=>params[:popup] },
+		{ :id=>'button_close' } ) -%>
+
+</div>
+</div>

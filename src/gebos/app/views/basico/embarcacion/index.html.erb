@@ -1,0 +1,104 @@
+<script language="JavaScript">
+
+  function actualizo(){
+    if (document.getElementById('embarcacion_es_propia_true').checked == true){
+      document.getElementById('embarcacion_matricula').value = '***No-aplica***';
+    }
+  }
+
+  function verifico(){
+
+    if (document.getElementById('embarcacion_es_propia_true').checked == true){
+      //es a solicitar
+      //document.getElementById('embarcacion_nombre_embarcacion').style.display = 'none';
+      document.getElementById('embarcacion_matricula').style.display = 'none';
+      //document.getElementById('embarcacion_nombre_embarcacion').value = '***No-aplica***';
+      //document.getElementById('embarcacion_matricula').value = '***No-aplica***';
+	
+      //alert("s");
+    }else{
+      //document.getElementById('embarcacion_nombre_embarcacion').style.display = 'block';
+      document.getElementById('embarcacion_matricula').style.display = 'block';
+      //document.getElementById('embarcacion_nombre_embarcacion').value = '';
+      //document.getElementById('embarcacion_matricula').value = '';
+      //alert("a");
+    }
+  }
+
+  function verifico2(){
+
+    if (document.getElementById('embarcacion_es_propia_true').checked == true){
+      //es a solicitar
+      //document.getElementById('embarcacion_nombre_embarcacion').style.display = 'none';
+      document.getElementById('embarcacion_matricula').style.display = 'none';
+      //document.getElementById('embarcacion_nombre_embarcacion').value = '***No-aplica***';
+      document.getElementById('embarcacion_matricula').value = '***No-aplica***';
+
+      //alert("s");
+    }else{
+      //document.getElementById('embarcacion_nombre_embarcacion').style.display = 'block';
+      document.getElementById('embarcacion_matricula').removeAttribute("readonly"  , false);
+
+      document.getElementById('embarcacion_matricula').style.display = 'block';
+      //document.getElementById('embarcacion_nombre_embarcacion').value = '';
+      document.getElementById('embarcacion_matricula').value = '';
+      //alert("a");
+    }
+  }
+
+  function verifico3(){
+
+    if ((document.getElementById('_proveedor_true').checked == true) || (document.getElementById('_proveedor_false').checked == true)){
+      document.getElementById('celda_proveedor').style.visibility = 'visible';
+    }else{
+      document.getElementById('celda_proveedor').style.visibility = 'hidden';
+    }
+  }
+</script>
+
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.Vistas.General.de') %>  <span class="titulo_modificar"><%= @solicitud.nombre %></span>
+    </div></div></div>
+
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+
+
+  <%= render :partial=>'solicitudes/solicitud_pre_evaluacion_visita/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%
+    begin
+      controller.method(:new)
+    %>
+      <div class="marco-boton-out" id="button_new">
+        <%= link_to_remote(
+          image_tag(I18n.t('Sistema.Body.Imagenes.agregar')),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method =>:get,
+          :url => { :action => :new, :id => @visitas.id } ) if vlink 'edit' -%>
+      </div>
+    <%
+    rescue NameError
+    end
+  %>
+<%#= form_title_list %>
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+
+    <div id="list">
+
+      <div id="list">
+        <%= render :partial => 'list' -%>
+      </div>
+<%#= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+{ :action => :index, :controller => 'embarcacion', :popup=>params[:popup] },
+{ :id=>'button_close', } ) -%>
+
+    </div></div>
+</div>
+

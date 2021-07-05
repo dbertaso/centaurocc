@@ -1,0 +1,24 @@
+<tr id="row_<%= @causales_anulacion_revocatoria.id %>_edit">
+  <td class="lista-form" colspan="5">
+
+    <%= form_title_edit @causales_anulacion_revocatoria.causa %>
+
+    <%= error "row_#{@causales_anulacion_revocatoria.id}" %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id => @causales_anulacion_revocatoria.id } ) do -%>
+    <%= render :partial => 'form' %>
+    <%= link_to_remote(
+      image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method=>:get,
+      :url => { :action => :cancel_edit, :id => @causales_anulacion_revocatoria.id}) -%>
+  </td>
+</tr>
+
+<% end -%>
+</td>
+</tr>

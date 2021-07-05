@@ -1,0 +1,177 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.fianza_personal')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.cedula_de_identidad')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_fianza', 'cedula',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_fianza', 'nombre',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nacionalidad')%></label>
+    </td>
+    <td>
+      <%= select(
+        'solicitud_avaluo_fianza', 'nacionalidad_id',
+        @nacionalidad_select.map{|c| [c.descripcion, c.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=> ';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Modelos.TecnicoCampo.Errores.estado_civil')%></label>
+    </td>
+    <td>
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'S', :checked => true,
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.soltero')%><br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'C',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.casado')%><br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'O',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.concubino')%><br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'V',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.viudo')%><br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil', 'D',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.divorciado')%><br />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.domiciliado_en')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= text_area 'solicitud_avaluo_fianza', 'domicilio',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,500)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'solicitud_avaluo_fianza', 'estado_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.informacion_conyugue')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.cedula_de_identidad')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_fianza', 'cedula_conyugue',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_fianza', 'nombre_conyugue',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nacionalidad')%></label>
+    </td>
+    <td>
+      <%= select(
+        'solicitud_avaluo_fianza', 'nacionalidad_conyugue_id',
+        @nacionalidad_select.map{|c| [c.descripcion, c.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=> ';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Modelos.TecnicoCampo.Errores.estado_civil')%></label>
+    </td>
+    <td>
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'S', :checked => true,
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.soltero')%><br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'C',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.casado')%><br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'O',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.concubino')%><br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'V',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.viudo')%><br />
+      <%= radio_button 'solicitud_avaluo_fianza', 'estado_civil_conyugue', 'D',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.divorciado')%><br />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.domiciliado_en')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= text_area 'solicitud_avaluo_fianza', 'domicilio_conyugue',
+        :class=>'text',
+        :style=>'width: 400px; height: 60px',
+        :onkeypress=>'inputChange();',
+        :onKeyUp=>'textCounter(this,500)' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= select(
+        'solicitud_avaluo_fianza', 'estado_conyugue_id',
+        @estado_select.map{|e| [e.nombre, e.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+</table>

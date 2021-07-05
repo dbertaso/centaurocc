@@ -1,0 +1,39 @@
+<table>
+
+  <tr>
+    <td style="width: 220px;">
+      <label><%= I18n.t('Sistema.Body.Vistas.SitioColocacion.Etiquetas.sitio') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'sitio_colocacion', 'sitio',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 220px">
+      <label><%= I18n.t('Sistema.Body.Vistas.SitioColocacion.Etiquetas.sitio_colocacion') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= text_area 'sitio_colocacion', 'nombre',
+        :class=>'text',
+        :style=>'width: 500px; height: 100px',
+        :onKeyUp=>'textCounter(this,300)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=  I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+    </td>
+    <td>
+      <%= check_box 'sitio_colocacion', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();'
+      -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

@@ -1,0 +1,44 @@
+<table width="100%">
+
+  <% lista = 'lista0'
+  @tipo_fuente_agua.each { |i| %>
+
+    <tr>
+      <td width="30px">
+
+        <%= check_box 'recaudo_check',
+        i.id,
+        {:checked=>i.marcado, :onchange=>"inputChange();#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url=>{:controller=>"solicitud_pre_evaluacion_caracterizacion",
+            :action=>:save_fuentes_agua },
+          :with=>"'id=#{i.id}&unidad_produccion_caracterizacion_id=#{@unidad_produccion_caracterizacion.id}'")}", :name => "caracterizacion_fuente_agua[]", :id => "tipo_fuentes_agua_#{i.id}" }  %>
+
+        &nbsp;
+      </td>
+
+      <td>
+
+        <%= i.nombre %>
+      </td>
+    </tr>
+
+    <% if i.nombre == '[Otro]' %>
+      <tr><td></td>
+        <td>
+          <%= text_field 'i', 'descripcion_otro_fuente_agua',
+          :value=>i.descripcion_otro,
+          :class=>'text',
+          :style=>'width: 150px',
+          :onchange=>onchange="document.getElementById('tipo_fuentes_agua_#{i.id}').checked = 'checked'; new Ajax.Request('/solicitudes/solicitud_pre_evaluacion_caracterizacion/save_fuentes_agua', {asynchronous:true, evalScripts:true, onLoaded:function(request){Element.hide(&quot;loading&quot;)}, onLoading:function(request){Element.show(&quot;loading&quot;)}, parameters:'id=#{i.id}&unidad_produccion_caracterizacion_id=#{@unidad_produccion_caracterizacion.id}&actualizar='+this.value})",
+          :onkeypress=>'inputChange();'  -%>
+        </td>
+      </tr>
+    <% end %>
+
+  <%  
+  } %>
+
+</table>
+<br/>

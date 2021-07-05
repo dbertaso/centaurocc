@@ -1,0 +1,61 @@
+<%
+  @tipo_maquinaria_id=  params[:tipo_maquinaria_id] unless params[:tipo_maquinaria_id].nil?
+  unless @solicitud.nil?
+    joins= " INNER JOIN clase ON clase.id=catalogo.clase_id and clase.tipo_maquinaria_id=#{@tipo_maquinaria_id} "
+    @catalogo = Catalogo.find(:all,:joins=>joins, :conditions=>["solicitud_id=#{@solicitud.id}"] ,:include=>['contrato_maquinaria_equipo','clase'])
+    @prestamo = Prestamo.find_by_solicitud_id(@solicitud.id)
+  end
+%>
+<!--width: 1104px;-->
+<div class="marco-contenido" style=" background-color:#D7D7D7" align="left">
+  <b><span style="color:black">PLAN DE INVENTARIO : <%= @nombre_tipo_maquinaria  unless @nombre_tipo_maquinaria.nil? %> </span></b>
+</div>
+
+<br/>
+<!--style="width: 1116px"-->
+<table class="lista" style="table-layout:fixed;width: 935px">
+  <thead>
+    <tr>     
+      <th style="width: 16%"> Clase </th>
+      <th style="width: 17%"> Modelo </th>
+      <th style="width: 17%"> Marca </th>
+      <th style="width: 17%"> Serial </th>
+      <th style="width: 16%"> Chasis </th>
+      <th style="width: 16%"> Monto </th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+    <%
+        sub_total=0
+        even_odd = 1
+        for catalogo in @catalogo
+        even_odd = 1 - even_odd
+        sub_total = sub_total + catalogo.monto
+    %>
+    
+    <tr class="lista<%= even_odd  %>" id="row_<%= catalogo.id %>">
+        
+        <td align="center" style="word-wrap: break-word;">  <%= catalogo.clase.nombre %>  </td>
+        <td style="word-wrap: break-word;"> <%=catalogo.Modelo.nombre unless catalogo.Modelo.nil?%> </td>
+        <td style="word-wrap: break-word;"> <%=catalogo.MarcaMaquinaria.nombre unless catalogo.MarcaMaquinaria.nil?%> </td>
+        <td style="word-wrap: break-word;"> <%=catalogo.serial%> </td>
+        <td style="word-wrap: break-word;"> <%=catalogo.chasis%> </td>
+        <td style="word-wrap: break-word;" align="right"> <%=sprintf('%01.2f', catalogo.monto).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>&nbsp; </td>
+    </tr>
+
+    <% end %>
+
+    <tr class="lista1">
+      <td colspan="4"></td>
+      <td align="center" style="background-color:#D7D7D7">Sub-Total</td>
+      <td align="right" style="background-color:#D7D7D7;word-wrap: break-word;" >
+        <b>
+          <%=sprintf('%01.2f', sub_total).sub('.', ',').to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.") unless @prestamo.nil? %>
+        </b>
+      </td>
+    </tr>
+
+  </tbody>
+
+</table>

@@ -1,0 +1,11 @@
+<%= select(
+  'configurador', 'sub_sector_id',
+  @sub_sector_list.map{|i| [i.nombre, i.id]},
+  { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+  { :class=>'select',:onchange=>"#{remote_function(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :method => :get,
+    :url=>{:controller=>'estructura_costo',
+    :action=>:sub_sector_list },
+    :with=>"'sub_sector_id='+ this.value")};inputChange();" } ) %>

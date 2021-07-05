@@ -1,0 +1,54 @@
+<%= render :partial=>'finanzas/abono_arrime_transferencia/common/tabs' %>
+<div class="marco-contenido">
+
+	<div class="marco-titulo"><div><div>
+		<%=I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.listado_archivos_generados_bancos')%>
+	</div></div></div>
+
+  <table class="lista" style="width: 90%">
+    <thead>
+    <tr>
+          <th  style="width: 60px" ><%=I18n.t('Sistema.Body.Vistas.General.fecha_generacion')%></th>
+		  <th><%=I18n.t('Sistema.Body.Vistas.Form.nro_lote')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.archivo')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.monto')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.entidad_financiera')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.Form.estatus')%></th>
+          <th><%=I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+     </tr>
+     </thead>
+     <tbody id="list_body">
+
+          <% even_odd = 1
+          @mostrar_archivo.each do |archivo|
+          even_odd = 1 - even_odd %>
+          <% if (archivo.estatus == 1 ||archivo.estatus == 2 || archivo.estatus == 3) %>  <!-- SOLO SE MOSTRARAN LOS QUE TENGAN ESTATUS 2 Y 3 -->
+
+             <tr class="lista<%= 1 - even_odd %>" >
+
+                <td align="center"><%= archivo.fecha_f %><br></td>
+                <td align="center"><%= archivo.numero_lote %></td>
+				<td align="center"><%= archivo.archivo %></td>
+                <td align="center"><%= archivo.numero_procesado %></td>
+                <td align="center"><%=  format_fm(archivo.monto_procesado) %></td>
+                <% entidad= EntidadFinanciera.find(archivo.entidad_financiera_id) %>
+                <td align="center"><%= entidad.nombre unless entidad.nil? %></td>
+                <td align="center"><%=
+                  case archivo.estatus
+                      when 1
+                        I18n.t('Sistema.Body.General.archivo_generado')
+                  end -%>
+                </td>
+
+                <td align="center"><a target='_blank' href='<%="#{request.protocol}#{request.host.to_s}"%>:<%="#{request.port.to_s}"%>/documentos/finanzas/abono_excedente/<%="#{archivo.archivo}"%>' ><%=I18n.t('Sistema.Body.General.descargue_aqui')%></a></td>
+
+             </tr>
+
+           <%end%>
+           <% end %>
+
+     </tbody>
+  </table>
+  <br>
+</div>

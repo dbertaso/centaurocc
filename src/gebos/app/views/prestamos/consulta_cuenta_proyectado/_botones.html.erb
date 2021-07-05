@@ -1,0 +1,16 @@
+<table style="width: 100%">
+ <tr>
+  <td style="width: 150px"> <%= I18n.t('Sistema.Body.Vistas.ConsultaCuentaProyectado.Etiquetas.imprimir') %> <%= link_to ( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir'))), { :action => 'imprimir', :prestamo_id => @prestamo_id, :fecha=>@fecha_proceso, :monto_mora=>@monto_mora, :dias_mora=>@dias_mora },
+                  :popup => ["prestamo #{@prestamo_id} ", 'height=500,width=700'] ) %>
+   </td>
+   <td>
+    <%= form_remote_tag(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :url => { :action => :atras, :id=>@prestamo_id, :popup=>params[:popup] } ) do -%>
+
+      <%= I18n.t('Sistema.Body.Vistas.ConsultaCuentaProyectado.Etiquetas.deshacer') %> <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.deshacer'))) -%>
+   <%= end %>
+   </td>
+   </tr>
+</table>

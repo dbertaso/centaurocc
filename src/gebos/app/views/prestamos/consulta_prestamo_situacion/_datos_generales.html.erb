@@ -1,0 +1,305 @@
+    <table style="width: 100%; margin-bottom: 10px" border="0" style="text-align: center">
+    
+      <tr>
+        <td class="separador" valign="bottom" colspan="4" style="text-align: center">
+          <span> 
+            <%= t('Sistema.Body.Vistas.ConsultaPrestamo.Separadores.datos_generales') %>
+          </span>
+        </td>
+      </tr>
+  
+    </table>
+
+    <div id="datos_generales" style="position: relative; height: 280px; width: 100%">
+    
+      <div style="width: 50%; position: absolute; left: 0; top:0; height: 260px" align="center">
+      
+        <table style="width: 97%">
+          <tr>
+            <td>
+              <label>
+
+                <%= t('Sistema.Body.Vistas.General.programa') %>
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.solicitud.programa.nombre unless @prestamo.solicitud.programa.nil? %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.origen')%>:
+              </label>
+            </td>
+            <td>
+              <% banco = t('Sistema.Body.General.banco_origen') %>
+              <% if @prestamo.banco_origen == banco %>
+                <%= t('Sistema.Body.General.procedencia') %>
+              <% else %>
+                <%= @prestamo.banco_origen %>
+              <% end %>
+            </td>
+          </tr>          
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.Form.estatus') %>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.estatus_w %>
+            </td>        
+          </tr>
+          <tr>
+            <td>
+              <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.cantidad_cuotas_vencidas')%>:
+              </label>
+            </td>
+            <td >
+              <%= @prestamo.cantidad_cuotas_vencidas -%>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.dias_mora')%>:
+              </label>
+            </td>
+            <td >
+              <%= @prestamo.dias_mora%>
+            </td>
+          </tr>        
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.General.rubro')%>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.solicitud.rubro.nombre unless @prestamo.solicitud.rubro.nil? %>
+            </td> 
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.General.estado')%>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.solicitud.unidad_produccion.ciudad.estado.nombre unless @prestamo.solicitud.unidad_produccion.nil?%>
+            </td>
+          </tr
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.tasa_vigente')%>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.tasa_vigente_fm unless @prestamo.nil? %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.General.plazo')%>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.plazo unless @prestamo.nil? %> <label><%= t('Sistema.Body.General.meses')%> </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.General.frecuencia_pago') %>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.frecuencia_pago_w unless @prestamo.nil? %>
+          </tr>
+          <tr>
+            <td>
+              <label>
+               <%= t('Sistema.Body.General.cuenta')%>:
+              </label>
+            </td>
+            <td>
+              <% cuenta = CuentaBancaria.find_by_cliente_id_and_activo(@prestamo.solicitud.cliente_id,true) %>
+              
+              <%= cuenta.tipo_w + '-' + cuenta.numero unless cuenta.nil?%>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.General.banco')%>:
+              </label>
+            </td>
+            <td>
+              <%= cuenta.entidad_financiera.nombre unless cuenta.nil?%>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+               <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_liquidacion')%>:
+              </label>
+            </td>
+            <td>
+              <%= @prestamo.fecha_liquidacion_f %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_vencimiento')%>:
+              </label>
+            </td>
+            <td>
+              <% plan = PlanPago.find_by_prestamo_id_and_activo(@prestamo.id, true) %>
+              <%= plan.fecha_fin.strftime("%d/%m/%Y") unless plan.nil?%>
+            </td>
+          </tr>
+        </table>
+      </div>
+        
+      <div style="width: 50%;  position: absolute; left: 50%; top: 0; height: 260px" align="center">
+        <table style="width: 97%">
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_aprobado')%>:
+              </label>
+            </td>
+            <td style="text-align: right">
+              <b><%= @prestamo.monto_solicitado_fm %></b>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_banco')%>:
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_banco_fm %>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_insumos')%>:
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_insumos_fm %>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_sras')%>:
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_sras_total_fm %>
+            </td>
+          </tr>
+          
+          <tr>
+           <td>
+            <label>
+              <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_gastos')%>:
+            </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_gasto_total_fm %>
+            </td>
+         </tr>
+         
+          <tr>
+            <td>
+              <label>
+               <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_credito')%>:
+              </label>
+            </td>
+            <td style="text-align: right">
+              <b><%= @prestamo.total_financiamiento_fm %></b>
+            </td>
+          </tr>    
+          
+          <% unless @prestamo.solicitud.por_inventario %>
+            <tr>
+              <td >
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_despachado')%>:
+                </label>
+              </td>
+              <td style="text-align: right">
+                <%= @prestamo.monto_despachado_fm %>
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_por despachar')%>:
+                </label>
+              </td>
+              <td style="text-align: right">
+                <b><%= format_fm(@prestamo.monto_por_despachar_fm) %></b>
+              </td>
+              <td>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>
+                  <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_facturado')%>:
+                </label>
+              </td>
+              <td style="text-align: right">
+                <b><%= @prestamo.monto_facturado_fm %></b>
+              </td>
+              <td>
+             </td>
+            </tr>
+          <%end%>
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_liquidado')%>:
+              </label>
+            </td>
+            <td style="text-align: right">
+              <%= @prestamo.monto_liquidado_fm %>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>
+                <%= t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_liquidar')%>:
+              </label>
+            </td>
+            <td style="text-align: right">
+              <b><%= @prestamo.monto_por_liquidar_fm %></b>
+            </td>
+            <td>
+           </td>
+          </tr>      
+        </table>
+      </div>
+    </div>

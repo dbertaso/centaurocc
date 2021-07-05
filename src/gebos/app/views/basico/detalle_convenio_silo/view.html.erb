@@ -1,0 +1,21 @@
+<%= form_title_view @convenio_silo.numero_memorandum%>
+<%= render :partial=>'basico/silo/common/tabs' %>
+<div class="marco-contenido">
+
+  <%= render :partial=>'basico/convenio_silo/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%= error %>
+    <%= message %>
+
+    <div class="lista-form" id="form_new" style="display: none"></div>
+</br>
+    <div id="list">
+      <%= render :partial=>"list_view" %>
+    </div>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+      { :controller=> 'convenio_silo', :action => :view, :id => @convenio_silo.id },
+      { :id=>'button_close' } ) -%>
+  </div>
+</div>

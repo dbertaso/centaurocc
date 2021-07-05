@@ -1,0 +1,35 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 50px" <%= sort_class_helper('numero') %>>
+        <%= sort_link_helper '# '<<I18n.t('Sistema.Body.Vistas.General.instancia'), 'numero', 'list' %>
+      </th>
+      <th style="width: 100px"><%=I18n.t('Sistema.Body.Vistas.General.instancias') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.aprobacion')%></th>
+      <th style="width: 80px" <%= sort_class_helper('fecha_apertura') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.fecha'), 'fecha_apertura', 'list' %>
+      </th>
+      <th style="width: 50px" ><%=I18n.t('Sistema.Body.Vistas.General.cantidad') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total') << " " <<  I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.solicitudes') %></th>
+      <th style="width: 50px" ><%=I18n.t('Sistema.Body.Vistas.General.cantidad') << " " <<  I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.solicitudes') << " " << I18n.t('Sistema.Body.Vistas.General.con') << " " << I18n.t('Sistema.Body.Vistas.General.decision') %></th>
+      <th style="width: 80px"><%= I18n.t('Sistema.Body.Vistas.General.moneda_nacional') %></th>
+      <th style="width: 80px"><%= I18n.t('Sistema.Body.Vistas.General.moneda_internacional') %></th>
+      <th style="width: 40px" ><%=I18n.t('Sistema.Body.Vistas.Form.estatus')%></th>
+      <th style="width: 50px"><%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+    </tr>
+  </thead>
+
+  <tbody id="list_body">
+  <%
+    even_odd = 1
+    for comite in @list
+      even_odd = 1 - even_odd
+      if comite.id.to_s != "1"
+  %>
+  <%= render :partial => 'row', :locals => { :comite => comite, :even_odd => even_odd } -%>
+  <%
+      end
+    end
+  %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

@@ -1,0 +1,505 @@
+
+<div class="marco-contenido2">
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>
+            <%= I18n.t('Sistema.Body.Separadores.indicadores') %>
+          </span>
+        </td>
+      </tr>
+      <tr>
+          <td style="width: 40%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.relacion') %>
+          </label>
+        </td>
+        <td style="width: 60%"> 
+          <%= @garantia.solicitud.programa.relacion_garantia_f %> : 1
+        </td>
+      </tr>
+      <tr>
+          <td style="width: 40%">
+          <label>
+            <%= I18n.t('Sistema.Body.General.monto_solicitado') %>
+          </label>
+        </td>
+        <td style="width: 60%"> 
+          <%= @garantia.solicitud.monto_solicitado_fm %>
+        </td>
+      </tr>
+      <tr>
+          <td>
+          <label>
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.exigido')} #{I18n.t('Sistema.Body.Vistas.General.en')} #{I18n.t('Sistema.Body.Vistas.General.garantias')}"%>
+          </label>
+        </td>
+        <td>  
+          <%= @garantia.solicitud.monto_exigido_garantias_fm %>
+        </td>
+      </tr>
+      <tr>
+          <td>
+          <label>
+              <%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.garantias')} #{I18n.t('Sistema.Body.Vistas.General.registradas')}" %>
+          </label>
+        </td>
+        <td>  
+          <%= @garantia.solicitud.total_garantias_fm %>
+        </td>
+      </tr>
+       <tr>
+          <td>
+          <label>
+              <%= "#{I18n.t('Sistema.Body.Vistas.General.porcentaje')} #{I18n.t('Sistema.Body.Vistas.General.cubierto')}" %>
+          </label>
+        </td>
+        <td>  
+          <%= @garantia.solicitud.porcentaje_garantias_cubiertas_fm %> %
+        </td>
+      </tr>
+        
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>
+            <%= I18n.t('Sistema.Body.Separadores.datos_basicos') %>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 40%">
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.tipo') %>
+          </label>
+        </td>
+        <td style="width: 60%"> 
+          <%= @garantia.tipo_garantia.nombre -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <%= I18n.t('Sistema.Body.Vistas.General.monto') %>
+          </label>
+        </td>
+        <td>
+          <%= @garantia.monto_garantia_fm -%>
+        </td>
+      </tr> 
+      <tr>
+        <td colspan="2">      
+          <%= format_bool @garantia.validacion_facturas -%>
+          <label>Validación de Facturas</label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">      
+          <%= format_bool @garantia.validacion_declaracion -%>
+          <label>Validación de Presentación de Declaración Jurada de Propiedad</label>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">      
+          <%= format_bool @garantia.validacion_gravamen -%>
+          <label>Validación de Certificación de Gravamen</label>
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>Constitución a Futuro</span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">    
+            
+          <%= format_bool @garantia.validacion_garantia_futuro -%>
+          <label>Validación de Constitución de la Garantía a Futuro</label>
+        </td>
+      </tr>
+      <tr>
+         <td>             
+             <% if @garantia.validacion_garantia_futuro %>
+                  <tr>
+                <td>
+                  <label>Plazo</label>
+                </td>
+                <td>
+                  <%= @garantia.plazo -%> Meses
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" >
+                  <label>Condiciones</label>
+                </td>
+                <td>
+                  <%= @garantia.condiciones -%>
+                </td>
+              </tr>
+               <% end %>
+              
+            </td>
+         </tr>
+    </table>
+    
+    
+    <% if @garantia.tipo_garantia && @garantia.tipo_garantia.mobiliaria %>
+    <table style="width: 100%">
+        <tr>
+        <td class="separador" colspan="2">
+          <span>Mobiliarias</span>
+        </td>
+      </tr> 
+      <tr>
+        <td style="width: 25%">
+          <label>Vida Util</label>
+        </td>
+        <td style="width: 75%">
+        
+              <%= @garantia.vida_util -%> Meses
+          <%= @garantia.fecha_vida_util_f -%>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Código de Identificación</label>
+        </td>
+        <td>
+          <%= @garantia.codigo_identificacion -%>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+    
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>Ubicación</span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Estado:</label></td>
+        <td>
+          <% if @garantia.ciudad -%>
+           <%= @garantia.ciudad.estado.nombre -%>
+          <% end -%>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Ciudad:</label></td>
+        <td>
+          <span id="ciudad-select">
+               <% if @garantia.ciudad -%>
+                   <%= @garantia.ciudad.nombre -%>
+               <% end -%>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Municipio:</label></td>
+        <td>
+          <span id="municipio-select">
+            <% if @garantia.municipio -%>
+                   <%= @garantia.municipio.nombre -%>
+               <% end -%>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Parroquia:</label></td>
+        <td>
+          <span id="parroquia-select">
+            <% if @garantia.parroquia -%>
+                   <%= @garantia.parroquia.nombre -%>
+               <% end -%>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Avenida/Calle</label>
+        </td>
+        <td>
+          <%= @garantia.avenida -%>
+        </td>
+      </tr>   
+      <tr>
+        <td>
+          <label>Edificio/Torre/Casa</label>
+        </td>
+        <td>
+          <%= @garantia.edificio -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Zona/Urbanización</label>
+        </td>
+        <td>
+          <%= @garantia.zona -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Código Postal</label>
+        </td>
+        <td>
+          <%= @garantia.codigo_postal -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Referencia</label>
+        </td>
+        <td>
+          <%= @garantia.referencia -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Telefono</label>
+        </td>
+        <td>
+          <%= @garantia.telefono -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Fax</label>
+        </td>
+        <td>
+          <%= @garantia.fax -%>
+        </td>
+      </tr>
+      
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>Avaluo</span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">  
+            
+          <%= format_bool @garantia.validacion_avaluo -%>
+          <label>Validación de requerir avalúo</label>
+        </td>
+      </tr>
+      <tr>
+         <td colspan="2">
+              <div id="avaluo">
+                 <% if @garantia.validacion_avaluo %>
+                     <tr>
+                    <td>
+                      <label>Avaluo Inicial</label>
+                    </td>
+                    <td>
+                      <%= @garantia.monto_avaluo_inicial_fm -%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Avaluo <%= Etiquetas.etiqueta(8) %></label>
+                    </td>
+                    <td>
+                      <%= @garantia.monto_avaluo_foncrei_fm -%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 200px">
+                      <label>Fecha Avaluo Inicial</label>
+                    </td>
+                    <td style="width: 500px">
+                      <%= @garantia.fecha_avaluo_inicial_f -%>  
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 200px">
+                      <label>Fecha Avaluo <%= Etiquetas.etiqueta(8) %></label>
+                    </td>
+                    <td style="width: 500px">
+                      <%= @garantia.fecha_avaluo_foncrei_f -%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 40%">
+                      <label>Perito <%= Etiquetas.etiqueta(8) %></label>
+                    </td>
+                    <td style="width: 60%">     
+                        <% if  @garantia.perito -%>
+                       <%= @garantia.perito.nombre_corto -%>
+                      <% end -%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Perito Externo Primer Nombre</label>
+                    </td>
+                    <td>
+                      <%= @garantia.perito_externo_primer_nombre -%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Perito Externo Segundo Nombre</label>
+                    </td>
+                    <td>
+                      <%= @garantia.perito_externo_segundo_nombre -%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Perito Externo Primer Apellido</label>
+                    </td>
+                    <td>
+                      <%= @garantia.perito_externo_primer_apellido -%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>Perito Externo Segundo Apellido</label>
+                    </td>
+                    <td>
+                      <%= @garantia.perito_externo_segundo_apellido -%>
+                    </td>
+                  </tr>
+                   <% end %>
+              </div>
+            </td>
+      </tr>
+    </table>  
+    
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>Constitución</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 200px">
+          <label>Fecha</label>
+        </td>
+        <td style="width: 500px">
+          <%= @garantia.fecha_constitucion_f -%>
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>Autenticación</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 200px">
+          <label>Fecha</label>
+        </td>
+        <%= @garantia.fecha_autenticacion_f -%>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Estado</label></td>
+        <td>
+          <% if @garantia.municipio_autenticacion -%>
+                    <%= @garantia.municipio_autenticacion.estado.nombre -%>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Municipio:</label></td>
+        <td>
+          <span id="municipio-autenticacion-select">
+            <% if @garantia.municipio_autenticacion -%>
+                        <%= @garantia.municipio_autenticacion.estado.nombre -%>
+              <% end %>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>Protocolización</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 200px">
+          <label>Fecha</label>
+        </td>
+        <td style="width: 500px">
+          <%= @garantia.fecha_protocolizacion_f -%>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Estado</label></td>
+        <td>
+                <% if @garantia.municipio_protocolizacion -%>
+                    <%= @garantia.municipio_protocolizacion.estado.nombre -%>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Municipio:</label></td>
+        <td>
+          <span id="municipio-protocolizacion-select">
+               <% if @garantia.municipio_protocolizacion -%>
+                <%= @garantia.municipio_protocolizacion.nombre -%>
+                  <% end -%>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>Póliza de Seguro</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 200px">
+          <label>Fecha Desde</label>
+        </td>
+        <td style="width: 500px">
+          <%= @garantia.poliza_seguro_fecha_desde_f -%>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 200px">
+          <label>Fecha Hasta</label>
+        </td>
+        <td style="width: 500px">
+          <%= @garantia.poliza_seguro_fecha_hasta_f -%>
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span>Estado y Comentarios</span>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label>Comentarios</label>
+        </td>
+        <td>
+          <%= @garantia.comentario -%>
+        </td>
+      </tr>
+      <tr>
+            <td valign="top">
+              <label>Estado</label>
+            </td>
+            <td style="text-align: left">
+            <%= @garantia.estatus_w -%>
+          </td>
+        </tr>
+    </table>
+  
+
+</div>

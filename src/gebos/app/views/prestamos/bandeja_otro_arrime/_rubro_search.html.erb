@@ -1,0 +1,5 @@
+<%= select(
+  'otro_arrime', 'rubro_id',
+  @rubro_list.map{|m| [m.nombre, m.id]},
+  { :prompt => "Seleccionar"},
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

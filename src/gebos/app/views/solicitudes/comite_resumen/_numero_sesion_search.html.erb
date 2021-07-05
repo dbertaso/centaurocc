@@ -1,0 +1,6 @@
+<%=
+  select("comite", "",
+    @numero_sesion.map {|u| [u.numero,u.id]},
+    {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+    { :class=>'select',:onchange=>"activarBoton(this);"})
+%> 

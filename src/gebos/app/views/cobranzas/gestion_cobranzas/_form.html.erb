@@ -1,0 +1,310 @@
+<script>
+
+  function mostrar_tipo_cobranzas() {
+
+    var tipo = document.getElementById('tipo_gestion_cobranza_id').value;
+
+    switch (tipo) {
+
+      case '1':
+
+        document.getElementById('correo').style.display = 'block';
+        document.getElementById('sms').style.display = 'none';
+        document.getElementById('telecobranzas').style.display = 'none';
+        document.getElementById('mensajes_sms').style.display = 'none';
+        break;
+
+      case '2':
+
+        document.getElementById('correo').style.display = 'none';
+        document.getElementById('sms').style.display = 'block';
+        document.getElementById('botones').style.display = 'block';
+        document.getElementById('mensajes_correo').style.display = 'none';
+        document.getElementById('telecobranzas').style.display = 'none';
+        break;
+
+      case '3':
+
+        document.getElementById('correo').style.display = 'none';
+        document.getElementById('sms').style.display = 'none';
+        document.getElementById('botones').style.display = 'none';
+        document.getElementById('telecobranzas').style.display = 'block';
+        document.getElementById('mensajes_correo').style.display = 'none';
+        document.getElementById('mensajes_sms').style.display = 'none';
+        break;
+
+      default:
+
+        document.getElementById('correo').style.display = 'none';
+        document.getElementById('sms').style.display = 'none';
+        document.getElementById('telecobranzas').style.display = 'none';
+        document.getElementById('mensajes_correo').style.display = 'none';
+        document.getElementById('mensajes_sms').style.display = 'none';
+        document.getElementById('mensajes_sms').style.display = 'none';
+        document.getElementById('opcion_compromiso').style.display = 'none';
+        document.getElementById('persona_atendio').style.display = 'none';
+        document.getElementById('resultado_llamada').style.display = 'none';
+    }
+
+  }
+
+  function mostrar_atencion() {
+
+    var tipo = document.getElementById('tipo_gestion_cobranza_id').value;
+
+    if (tipo == 3) {
+
+        var llamada = document.getElementById('telecobranzas_llamada_infructuosa_id').value;
+        if (llamada == 1) {
+
+          document.getElementById('persona_atendio').style.display = 'block';
+          }
+        else
+          {
+            document.getElementById('persona_atendio').style.display = 'none';
+          }
+      }
+    else
+      {
+        document.getElementById('persona_atendio').style.display = 'none';
+      }
+  }
+
+  function mostrar_opcion_compromiso() {
+
+    var tipo = document.getElementById('tipo_gestion_cobranza_id').value;
+
+    if (tipo == 3) {
+        cliente = document.getElementById('telecobranzas_persona_atendio_id').value;
+        if (cliente == 1) {
+
+            document.getElementById('opcion_compromiso').style.display = 'block';
+          }
+        else
+          {
+            document.getElementById('opcion_compromiso').style.display = 'none';
+          }
+      }
+    else
+      {
+        document.getElementById('opcion_compromiso').style.display = 'none';
+      }
+  }
+
+  function mostrar_compromisos() {
+
+    if (document.getElementById('telecobranzas_senal_compromiso_true').checked) {
+      document.getElementById('compromiso_pago').style.display = 'block';
+    }
+    else
+    {
+      document.getElementById('compromiso_pago').style.display = 'none';
+    }
+  }
+
+  function limpiar_campos() {
+
+    document.getElementById('correo').style.display = 'none';
+    document.getElementById('sms').style.display = 'none';
+    document.getElementById('telecobranzas').style.display = 'none';
+    document.getElementById('mensajes_correo').style.display = 'none';
+    document.getElementById('mensajes_sms').style.display = 'none';
+    document.getElementById('opcion_compromiso').style.display = 'none';
+    document.getElementById('persona_atendio').style.display = 'none';
+    document.getElementById('resultado_llamada').style.display = 'none';
+    
+    document.getElementById('tipo_gestion_cobranza_id').value = "";
+    document.getElementById('telecobranzas_llamada_infructuosa_id').value = "";
+    document.getElementById('telecobranzas_telefono_id').value = "";
+    document.getElementById('telecobranzas_persona_atendio_id').value = "";
+    document.getElementById('telecobranzas_motivos_atraso_id').value = "";
+    document.getElementById('telecobranzas_senal_compromiso_true').checked = false;
+    document.getElementById('telecobranzas_senal_compromiso_false').checked = false;
+    document.getElementById('telecobranzas_observacion').value = "";
+    document.getElementById('compromiso_pago_fecha_pago').value = "";
+    document.getElementById('fecha_limite_pago').value = "";
+    document.getElementById('_exigible_true').checked = false;
+    document.getElementById('_exigible_false').checked = true;
+    document.getElementById('monto_pago').value = "0";
+    formatCurrency(document.getElementById('monto_pago').value, 'monto_pago');
+    document.getElementById('compromiso_pago_observacion').value = "";
+    document.getElementById('mensajes_correo_id').value = "";
+    document.getElementById('mensaje').value = "";
+    document.getElementById('email').value = "";
+    document.getElementById('telefono').value = "";
+    document.getElementById('mensajes_sms_id').value = "";
+    document.getElementById('mensajes_sms').value = "";
+  }
+
+  function limpiar_tel_teleco() {
+    document.getElementById('telecobranzas_telefono_id').value = "";
+    document.getElementById('telecobranzas_llamada_infructuosa_id').value = "";
+    document.getElementById('resultado_llamada').style.display = 'none';
+    document.getElementById('opcion_compromiso').style.display = 'none';
+    document.getElementById('persona_atendio').style.display = 'none';
+    document.getElementById('compromiso_pago').style.display = 'none';
+    document.getElementById('telecobranzas_observacion').value = "";
+
+  }
+
+  function limpiar_campos_telefono() {
+
+    document.getElementById('mensajes_correo_id').value = "";
+    document.getElementById('mensaje').value = "";
+    document.getElementById('email').value = "";
+    document.getElementById('telefono').value = "";
+    document.getElementById('mensajes_sms_id').value = "";
+    document.getElementById('mensajes_sms').value = "";
+    document.getElementById('telecobranzas_llamada_infructuosa_id').value = "";
+    document.getElementById('telecobranzas_observacion').value = "";
+
+  }
+
+  function limpiar_campos_persona_atendio() {
+
+    document.getElementById('opcion_compromiso').style.display = 'none';
+    document.getElementById('persona_atendio').style.display = 'none';
+    document.getElementById('compromiso_pago').style.display = 'none';
+    document.getElementById('telecobranzas_persona_atendio_id').value = "";
+    document.getElementById('telecobranzas_motivos_atraso_id').value = "";
+    document.getElementById('telecobranzas_senal_compromiso_true').checked = false;
+    document.getElementById('telecobranzas_senal_compromiso_false').checked = false;
+    document.getElementById('telecobranzas_observacion').value = "";
+    document.getElementById('compromiso_pago_fecha_pago').value = "";
+    document.getElementById('fecha_limite_pago').value = "";
+    document.getElementById('_exigible_true').checked = false;
+    document.getElementById('_exigible_false').checked = false;
+    document.getElementById('monto_pago').value = "0";
+    formatCurrency(document.getElementById('monto_pago').value, 'monto_pago');
+    document.getElementById('compromiso_pago_observacion').value = "";
+
+  }
+
+  function limpiar_campos_motivos_atraso() {
+    
+    document.getElementById('opcion_compromiso').style.display = 'none';
+    document.getElementById('compromiso_pago').style.display = 'none';
+    document.getElementById('telecobranzas_motivos_atraso_id').value = "";
+    document.getElementById('telecobranzas_senal_compromiso_true').checked = false;
+    document.getElementById('telecobranzas_senal_compromiso_false').checked = false;
+    document.getElementById('telecobranzas_observacion').value = "";
+    document.getElementById('compromiso_pago_fecha_pago').value = "";
+    document.getElementById('fecha_limite_pago').value = "";
+    document.getElementById('_exigible_true').checked = false;
+    document.getElementById('_exigible_false').checked = false;
+    document.getElementById('monto_pago').value = "0";
+    formatCurrency(document.getElementById('monto_pago').value, 'monto_pago');
+    document.getElementById('compromiso_pago_observacion').value = "";
+
+  }
+
+  function limpiar_compromiso_pagos() {
+    
+    document.getElementById('compromiso_pago_fecha_pago').value = "";
+    document.getElementById('fecha_limite_pago').value = "";
+    document.getElementById('_exigible_true').checked = false;
+    document.getElementById('_exigible_false').checked = false;
+    document.getElementById('monto_pago').value = "0";
+    formatCurrency(document.getElementById('monto_pago').value, 'monto_pago');
+    document.getElementById('compromiso_pago_observacion').value = "";
+
+
+  }
+
+</script>
+
+<%=
+
+  if @cliente.class.to_s=='ClienteEmpresa'
+    render 'juridica'
+  else
+    render 'natural'
+  end
+%>
+
+<div style="text-align: right">
+  <%= link_to(I18n.t('Sistema.Body.Vistas.GestionCobranzas.Enlaces.historico_gestion'),
+      {:action => 'consultar', :controller => 'historico_cobranzas', :origen => 'G', :id => @prestamo.id,
+      :popup => true}, :onclick => "window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.Etiquetas.historico_cobranzas') + "',
+'height=800,width=1000,scrollbars=yes,resizable=yes'); return false;") %>
+</div>
+
+
+<div align="center">
+
+  <table>
+    <tr>
+      <td>
+        <label>
+          <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.tipo_gestion') %> </label>
+          <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>        
+      </td>
+
+      <td style="width: 300px">
+        <% telecobranza_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method => :get,
+            :url=>{:controller=>'gestion_cobranzas',
+            :action=>:verifica_compromiso, :prestamo_id=>@prestamo.id },
+            :with=>"'id='+value") %>
+
+        <%= select_tag(:tipo_gestion_cobranza_id,
+                        options_for_select(@tipo_cobranza_select.map {|i| [i.descripcion, i.id]},
+                        params[:tipo_gestion_cobranza_id]),
+                        { :class=>'select',
+                          :prompt=> I18n.t('Sistema.Body.Vistas.General.seleccionar'),
+                          :onchange=>telecobranza_onchange + ';mostrar_tipo_cobranzas();limpiar_tel_teleco(); '
+                        }
+                      )%>
+      </td>
+    </tr>
+  </table>
+
+  <br>
+  <br>
+
+  <div id = 'correo' align="left" style="display: none; border:1px; border-color: #000; border-style: solid; width: 80%; padding-left: 4px;">
+
+    <%= render 'email' %>
+  </div>
+
+  <div id = 'sms' style="display: none; border:1px; border-color: #000; border-style: solid; width: 80%; padding-left: 4px;">
+    <%= render 'sms' %>
+  </div>
+  
+  <div id = 'telecobranzas' align="left" style="display: none; border:1px; border-color: #000; border-style: solid; width: 80%; padding-left: 4px;">
+
+    <%= render 'telecobranzas' %>
+  </div>
+
+</div>
+
+<br>
+<div align="center">
+  <label style="font-family: verdana; font-size: 14px; background-color: #D7D7D7; padding-top: 4px; padding-bottom: 4px; font-weight: bold;color: #000; padding-left: 4px; text-align: center">
+    <%= I18n.t('Sistema.Body.Vistas.GestionCobranzas.Etiquetas.lista_gestion') %>
+  </label>
+</div>
+<br>
+
+<br>
+<div id="gestion_cobranzas">
+  <%= render 'gestion_cobranzas' %>
+</div>
+<br>
+<div id="boton_cerrar" align="right">
+  <%= render 'boton_cerrar' %>
+</div>
+<div id="campos_hidden">
+  <%= hidden_field(:gestion_cobranzas, :fecha_registro, :value=>@fecha_registro) %>
+  <%= hidden_field(:gestion_cobranzas, :hora_registro, :value=>@hora_registro) %>
+</div>
+
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<br>

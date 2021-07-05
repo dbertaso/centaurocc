@@ -1,0 +1,5 @@
+<%= select(
+    'actividad_id', '',
+    @actividad_list.map{|i| [i.nombre, i.id]},
+    { :prompt => 'Seleccione' },
+    { :class=>'select',:onchange=>'inputChange();' } ) %>

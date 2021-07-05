@@ -1,0 +1,57 @@
+ <%= render :partial=>'contabilidad/envio_asiento_contable/common/tabs' %>
+ <br>
+ <br>
+ <br>
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th><%= I18n.t('Sistema.Body.General.fecha_inicio') %></th>
+        <th><%= I18n.t('Sistema.Body.General.fecha_fin') %></th>
+        <th><%= I18n.t('Sistema.Body.Modelos.ComprobanteContable.Columnas.total_debe') %></th>
+        <th><%= I18n.t('Sistema.Body.Modelos.ComprobanteContable.Columnas.total_haber') %></th>
+        <th><%= I18n.t('Sistema.Body.Vistas.General.diferencia') %></th>
+        <th><%= I18n.t('Sistema.Body.Vistas.ControlEnvioContabilidad.Etiquetas.cantidad_comprobantes') %></th>
+        <th><%= I18n.t('Sistema.Body.Vistas.Usuario.Etiquetas.nombre_usuario') %></th>
+        <th><%= I18n.t('Sistema.Body.Vistas.ControlEnvioContabilidad.Etiquetas.fecha_proceso') %></th>
+        <th style="width:45%"><%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.nombre_archivo') %></th>
+      </tr>
+    </thead>
+    <tbody id="list_body">
+      <% even_odd = 1 %>
+      <% for comprobante in @comprobantes_enviados
+          even_odd = 1 - even_odd %>
+        <tr class="lista<%= even_odd %>">
+
+        	<td>
+            <%= format_fecha(comprobante.fecha_inicio) %> 
+          </td>
+          <td>
+            <%= format_fecha(comprobante.fecha_fin) %>
+        	</td>
+        	<td style="text-align: right">
+            <%= format_fm(comprobante.total_debe) %>
+          </td>
+          <td style="text-align: right">
+            <%= format_fm(comprobante.total_haber) %>
+          </td>
+          <td style="text-align: right">
+            <%= format_fm(comprobante.diferencia) %>
+          </td>
+          <td style="text-align: center">
+            <%= comprobante.cantidad_envio %>
+          </td>
+          <td style="text-align: center">
+            <% usuario = Usuario.find(comprobante.usuario_id) %>
+            <%= usuario.nombre_usuario unless usuario.nil? %>
+          </td>
+          <td>
+            <%= format_fecha(comprobante.fecha_proceso) %>
+          </td>
+          <td style="text-align: left">             
+
+            <a target='_blank' href='<%="#{request.protocol}#{request.host.to_s}"%>:<%="#{request.port.to_s}/documentos/contabilidad/#{comprobante.file_name}.txt" %>'> <%=I18n.t('Sistema.Body.General.descargue_aqui')%></a>
+          </td>
+         </tr>
+      <%end%>
+    </tbody>
+   </table>

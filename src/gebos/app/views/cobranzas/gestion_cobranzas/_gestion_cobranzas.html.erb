@@ -1,0 +1,61 @@
+
+<div align="center" style="width: 100%">
+
+  <table class="lista" style="width: 75%">
+
+    <thead>
+
+      <tr>
+
+        <th>
+          <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+        </th>
+
+         <th>
+          <%= I18n.t('Sistema.Body.Vistas.Form.fecha') %>
+        </th>
+
+         <th>
+          <%= I18n.t('Sistema.Body.Vistas.General.hora') %>
+        </th>
+
+         <th>
+          <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+        </th>
+      </tr>
+
+    </thead>
+
+    <% even_odd = 1
+      for gestion in @gestion_cobranzas
+      even_odd = 1 - even_odd %>
+      <tr class="lista<%= even_odd %>" id="row_<%= gestion.id %>">
+
+       <td style="text-align: center">
+        <% tipo_gestion = TipoGestionCobranzas.find(gestion.tipo_gestion_cobranza_id) %>
+        <%= tipo_gestion.descripcion unless tipo_gestion.nil? %>
+       </td>
+
+       <td style="text-align: center">
+        <%= format_fecha(gestion.fecha_confirmacion) unless gestion.nil? %>
+       </td>
+
+       <td style="text-align: center">
+        <%= format_hora(gestion.hora_confirmacion) unless gestion.nil? %>
+       </td>
+
+
+      <td style="width: 30%; text-align: right">
+        <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), {:controller => 'cobranzas/consulta_cobranzas', :action => 'index', :id => gestion.id, :popup=>true },
+      :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.ParametroGeneral.Separadores.cobranzas') + "',
+'height=800,width=1000,scrollbars=yes, resizable=yes'); return false;")  %>&nbsp;
+
+       </td>
+
+      </tr>
+
+    <% end %>
+
+  </table>
+
+</div>

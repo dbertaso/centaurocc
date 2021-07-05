@@ -1,0 +1,5 @@
+<%= select(
+        'solicitud', 'modalidad_financiamiento_id',
+        @modalidad_financiamiento_select.map{|e| [e.nombre, e.id]},
+        {:include_blank => true},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>

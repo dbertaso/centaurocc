@@ -1,0 +1,29 @@
+development:
+  base: dc=pruebas,dc=bandes,dc=gob,dc=ve
+  subtree: ou=Venezuela,ou=Bandes,dc=pruebas,dc=bandes,dc=gob,dc=ve
+  admin_username: admin
+  admin_password: hola
+  sag_name: Sistema de Autogestión de Claves
+  sag_url: http://catalyst.pruebas.bandes.gob.ve/seguridad/adminpasswd/indexExterno/appname/gebos
+  host: s01ltidm02.pruebas.bandes.gob.ve
+  port: 389
+
+test:
+  base: dc=gprotec,dc=com
+  subtree: dc=gprotec,dc=com
+  admin_username: admin
+  admin_password: gprotec2000
+  sag_name: Sistema de Autogestión de Claves
+  sag_url: http://localhost:7000
+  host: 192.168.1.116
+  port: 389
+
+production:
+  base: dc=pruebas,dc=bandes,dc=gob,dc=ve
+  subtree: ou=Venezuela,ou=Bandes,dc=pruebas,dc=bandes,dc=gob,dc=ve
+  admin_username: admin
+  admin_password: hola
+  sag_name: Sistema de Autogestión de Claves
+  sag_url: http://catalyst.pruebas.bandes.gob.ve/seguridad/adminpasswd/indexExterno/appname/gebos
+  host: s01ltidm02.pruebas.bandes.gob.ve
+  port: 389

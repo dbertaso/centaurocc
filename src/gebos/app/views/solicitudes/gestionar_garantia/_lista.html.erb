@@ -1,0 +1,30 @@
+<div class="lista-form" id="form_new" style="display: none"></div>
+<%= error %>
+<%= message %>
+<table class="lista" style="width: 90%">
+  <thead>
+    <tr>
+      <th style="width: 50%; text-align: center">
+        Nombre del Recaudo
+      </th>
+      <th style="width: 10%; text-align: center">
+        Revisado
+      </th>
+      <th style="width: 40%; text-align: center">
+        Observaciones
+      </th>
+    </tr>
+  </thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for item in @solicitud_recaudo_avaluo
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_edit', :locals => { :item => item, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<br></br>
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+  { :action => :index },
+  { } ) -%>

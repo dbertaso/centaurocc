@@ -1,0 +1,7 @@
+<%= select(
+'condiciones_financiamiento', 'actividad_id',
+@actividad_select.map{|i| [i.nombre, i.id]},
+{:prompt=>I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.seleccione_actividad')},
+{ :class=>'select', :onchange=>'inputChange();' } ) %>
+
+

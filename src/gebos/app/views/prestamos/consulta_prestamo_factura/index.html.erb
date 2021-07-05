@@ -1,0 +1,29 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.General.prestamo')%>
+      <span class="titulo_modificar">'
+        <%= @prestamo.numero %> <%= " - #{I18n.t('Sistema.Body.Vistas.General.reestructurado')}" if @prestamo.reestructurado != 'N' %>'
+      </span>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>
+      <span class="titulo_modificar">'
+        <%= @prestamo.cliente.class.to_s=='ClienteEmpresa' ? @prestamo.cliente.empresa.nombre : @prestamo.cliente.persona.nombre_corto  %>'
+      </span>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'prestamos/consulta_prestamo/common/tabs' %>
+<div class="marco-contenido2">
+
+
+    <div id="list">
+      <%= render "list" %>
+    </div>
+
+    <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+      { :controller => 'consulta_prestamo', :action => :index },
+      { :id=>'button_close' } ) -%>
+
+</div>
+</div>

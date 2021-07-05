@@ -1,0 +1,15 @@
+<% item = @item if item.nil? %>
+<td style="text-align: center">
+	<%= item.AspectosResguardoInstitucional.nombre %>
+</td>
+<% if item.Solicitud.Estatus.const_id == "ST0003" %>
+<td style="text-align: center">
+
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'solicitud_pre_evaluacion_analisis', :action => :delete, :id => item.id}) if vlink 'delete' -%>
+</td>
+<% end %>

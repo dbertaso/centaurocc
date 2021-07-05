@@ -1,0 +1,34 @@
+<div id="tabs" style="background-color: white">
+  <ul>
+<%
+  action_name = controller.action_name
+  controller_name = controller.controller_name
+
+  logger.info "Action " << action_name
+  logger.info "Controlador " << controller_name.to_s
+
+  if controller_name=='desembolso' && action_name == 'index'
+%>
+    <li id="actual"><div><a href="#"><%="#{I18n.t('Sistema.Body.Vistas.General.generar')} #{I18n.t('Sistema.Body.Vistas.General.archivo')}"%></a></div></li>
+<%
+  else
+%>
+    <li><div>
+          <%= link_to("#{I18n.t('Sistema.Body.Vistas.General.generar')} #{I18n.t('Sistema.Body.Vistas.General.archivo')}",:controller=>'desembolso', :action => 'index') if ( action_name == 'preparar_trasnferencia') %>
+    </div></li>
+<%
+  end
+  if controller_name=='desembolso' && action_name == 'preparar_trasnferencia'
+%>
+    <li id="actual"><div><a href="#"><%="#{I18n.t('Sistema.Body.Vistas.General.archivos')} #{I18n.t('Sistema.Body.Vistas.General.procesados')}"%></a></div></li>
+<%
+  else
+%>
+    <li><div>
+        <%= link_to("#{I18n.t('Sistema.Body.Vistas.General.archivos')} #{I18n.t('Sistema.Body.Vistas.General.procesados')}", :controller=>'desembolso', :accion=>1 , :action => 'preparar_trasnferencia') if (action_name == 'index' ) %>
+    </div></li>
+<%
+  end
+%>
+  </ul>
+</div>

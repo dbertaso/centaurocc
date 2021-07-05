@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <title>Documento sin t&iacute;tulo</title>
+  </head>
+
+  <body>
+    <table width="950" border="1">
+      <tr>
+        <td colspan="8"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_de_laboratorio')%> </label></div></td>
+      </tr>
+      <tr>
+        <td width="128"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.parentesis_algodon')%></label></div></td>
+        <td width="84"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+        <td width="103"><div align="center"></div></td>
+        <td width="153"><div align="center"></div></td>
+        <td width="84"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+        <td width="109"><div align="center"></div></td>
+        <td width="150"><div align="center"></div></td>
+        <td width="88"><div align="center"><label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.porcentaje')%></label></div></td>
+      </tr>
+
+      <tr>
+        <td><div align="left"><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad')%></div></td>
+        <td><%unless @laboratorio_algodon.nil?%>
+            <%= format_fm(@laboratorio_algodon.humedad)%>
+          <%end%>
+        </td>
+        <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.humedad_absoluta')%></td>
+        <td><%unless @laboratorio_algodon.nil?%>
+            <%= format_fm(@laboratorio_algodon.humedad_absoluta)%>
+          <%end%>
+        </td>
+        <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza')%></td>
+        <td><%unless @laboratorio_algodon.nil?%>
+            <%= format_fm(@laboratorio_algodon.impureza)%>
+          <%end%>
+        </td>
+        <td><%=I18n.t('Sistema.Body.Modelos.BoletasLaboratorios.Columnas.impureza_absoluta')%></td>
+        <td><%unless @laboratorio_algodon.nil?%>
+            <%= format_fm(@laboratorio_algodon.impureza_absoluta)%>
+          <%end%>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

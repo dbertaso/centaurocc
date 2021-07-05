@@ -1,0 +1,17 @@
+<tr id="row_<%= @pastizales_potreros.id %>_view">
+  <td class="lista-form" colspan="8">
+
+    <%= form_title_view @pastizales_potreros.nro_lote %>
+
+    <%= error "row_#{@pastizales_potreros.id}" %>
+
+    <%= render :partial => 'form_view' %>
+    <br>
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar')), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => :cancel_view, :id => @pastizales_potreros.id}) -%>
+  </td>
+</tr>
+</table>
+</td>
+</tr>

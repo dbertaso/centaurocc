@@ -1,0 +1,130 @@
+<script language="JavaScript">
+  <!-- Begin
+  function varitext(text){
+    div = document.getElementById('boton');
+    div.style.display='none';
+    text=document
+    print(text)
+    setTimeout("mostrar();", 5000)
+  }
+  function mostrar(){
+
+    div = document.getElementById('boton');
+    div.style.display='';
+  }
+  //  End -->
+</script>
+<table width="1420px" border="1" style="font-size: 16px">
+  <tr>
+    <td style="width: 100%" colspan="8">
+      <table width="100%" border="0">
+        <tr>
+          <td style="width: 20%; text-align: left">
+            <img src="/assets/logo_reporte.gif" alt="logo"/>
+          </td>
+          <td align="center" style="width: 80%">
+            <label style="font-size: 16px">  
+              <%= "#{I18n.t('Sistema.Body.Vistas.General.reporte')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.existencia')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.maquinaria')}" %>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            </label>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 100%" colspan="8">
+      <label style="font-size: 12px; text-align: right; width: 100%">
+        <%= I18n.t('Sistema.Body.Vistas.General.usuario') %>: <%= @usuario.primer_nombre + ' ' + @usuario.primer_apellido %>
+        <br/>
+        <%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.impresion')}" %>: <%= Time.now.strftime('%d/%m/%Y') %>
+      </label>
+    </td>
+  </tr>
+
+  <tr>
+    <th style="width: 100px">
+      <%= I18n.t('Sistema.Body.Vistas.General.rubro') %>
+    </th>
+
+    <th style="width: 200px">
+      <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+    </th>
+
+    <th style="width: 200px">
+      <%= I18n.t('Sistema.Body.Vistas.General.marca') %>
+    </th>
+
+    <th style="width: 200px">
+      <%= I18n.t('Sistema.Body.Vistas.General.modelo') %>
+    </th>
+
+    <th style="width: 150px">
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.existencia')} #{I18n.t('Sistema.Body.Vistas.General.minima')}" %>
+    </th>
+
+    <th style="width: 150px">
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.existencia')} #{I18n.t('Sistema.Body.Vistas.General.maxima')}" %>
+    </th>
+
+    <th style="width: 100px">
+      <%= I18n.t('Sistema.Body.Vistas.General.existencia') %>
+    </th>
+
+    <th style="width: 150px">
+      <%= I18n.t('Sistema.Body.Vistas.General.reposicion_sugerida') %>
+    </th>
+
+  </tr>
+
+  <% @reporte.each {|r| %>
+    <tr>
+      <td>
+        <%= r.rubro %>
+      </td>
+
+      <td>
+        <%= r.tipo %>
+      </td>
+
+      <td>
+        <%= r.marca %>
+      </td>
+
+      <td>
+        <%= r.modelo %>
+      </td>
+
+      <td align ="center">
+        <%= r.minimo %>
+      </td>
+
+      <td align ="center">
+        <%= r.maximo %>
+      </td>
+
+      <td align ="center">
+        <b><%= "#{ViewStockMaquinaria.existencia(r.tipo_id, r.marca_id, r.modelo_id)}".html_safe %></b>
+      </td>
+
+      <td align ="center">
+        <b><%= "#{ViewStockMaquinaria.reposicion(r.tipo_id, r.marca_id, r.modelo_id)}".html_safe %></b>
+      </td>
+    </tr>
+  <%  } %>
+</table>
+
+
+<table width="1420px" >
+  <tr>
+    <td colspan="4">
+      <div style="padding: 6px" align="center">
+        <form>
+          <div id = boton>
+            <input name="print" type="button" value="<%= I18n.t('Sistema.Body.General.imprimir') %>" onclick="varitext()" />
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>

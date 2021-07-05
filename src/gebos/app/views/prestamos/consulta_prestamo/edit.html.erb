@@ -1,0 +1,20 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+    Modificando Condiciones - Solicitud <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span>
+  </div></div></div>
+
+  <%= render 'solicitudes/solicitud_financiamiento/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%= error %>
+    <%= message %>
+
+      <%= render 'form' %>
+
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :action => :index },
+        { :id=>'button_close' } ) -%>
+
+  </div>
+</div>

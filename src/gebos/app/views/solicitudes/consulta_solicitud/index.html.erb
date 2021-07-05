@@ -1,0 +1,230 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :list } ) do-%>
+  <table>
+    
+    <!-- agregado el 27/05/2013 -->
+    <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.programa')%></label>
+    </td>
+    <td>      
+
+      <%= select(
+        'programa_id', '',
+        @programa_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select',:onchange=> 'inputChange();' } ) %>
+    </td>
+  </tr>
+    <!-- fin agregado el 27/05/2013 -->
+    
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda')%></label>
+        </td>
+        <td>          
+            <%= select(
+              'moneda_id', '',
+              @moneda_list.map{|i| [i.nombre << " - " << i.abreviatura, i.id]},
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+              { :class=>'select',:onchange=>'inputChange();' } ) %>          
+        </td>
+      </tr>    
+    
+    <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td>
+      <% estado_onchange = remote_function(
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url=>{:controller=>'consulta_solicitud',
+        :action=>:estado_change },
+        :with=>"'estado_id='+value") %>
+
+<%= select(
+        'estado_id', '',
+        @estado_list.map{|i| [i.nombre, i.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select',:onchange=>estado_onchange + ';inputChange();' } ) %>
+    </td>
+  </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.oficina') %></label>
+        </td>
+        <td>
+          <div id="select-oficina">
+            <%=render :partial=>'estado_select'%>            
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 30%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label>
+        </td>
+        <td style="width: 70%">
+          <%= select(
+            'sector_id', '',
+            @sector_list.map{|i| [i.nombre, i.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select',:onchange=>"#{remote_function(
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :method => :get,
+              :url=>{:controller=>'consulta_solicitud',:action=>:sector_change },
+              :with=>"'sector_id='+ this.value" )};inputChange();" } ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector') %></label>
+        </td>
+        <td>
+          <div id="sub-sector-select">
+            <%= select(
+              'sub_sector_id', '',
+              [],
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.rubro') %></label>
+        </td>
+        <td>
+          <div id="rubro-select">
+            <%= select(
+              'rubro_id', '',
+              [],
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sub_rubro') %></label>
+        </td>
+        <td>
+          <div id="sub_rubro-select">
+            <%= select(
+              'sub_rubro_id', '',
+              [],
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.actividad') %></label>
+        </td>
+        <td>
+          <div id="actividad-select">
+            <%= select(
+              'actividad_id', '',
+              [],
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+          </div>
+        </td>
+      </tr> 
+
+      <tr>
+        <td style="width: 130px">
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.estatus') %></label>
+        </td>
+        <td>
+          <%= select(
+            'estatus_id','',
+            @estatus.map{|i| [i.nombre, i.id]},
+            { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select', :onchange=>'inputChange();' } ) %>
+        </td>
+      </tr>
+<!-- agregado el 27/05/2013 -->
+        <tr>
+			<td style="width: 200px">
+				<label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_desde')%></label>
+			</td>
+			<td>
+				
+        <%= calendar_date_select_tag "fecha_desde", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>     
+
+			</td>
+		</tr>
+		</tr>
+
+		    <tr>
+			<td>
+				<label><%= I18n.t('Sistema.Body.Vistas.AutorizacionAprobacion.Etiquetas.fecha_hasta')%></label>
+			</td>
+			<td>
+				
+        <%= calendar_date_select_tag "fecha_hasta", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date > (new Date()).stripTime()-1" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>       
+
+			</td>
+		</tr>
+<!-- fin agregado el 27/05/2013 -->
+      <tr>
+        <td style="width: 130px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.cedula')} / #{I18n.t('Sistema.Body.Vistas.General.rif')}" %></label>
+        </td>
+        <td>
+
+          <select name="tipo" id="tipo" class =" select">
+            <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.venezolano')%>-"><%=I18n.t('Sistema.Body.General.TipoDocumento.venezolano')%></option>
+            <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%>-"><%=I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%></option>
+            <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.juridico')%>-"><%=I18n.t('Sistema.Body.General.TipoDocumento.juridico')%></option>
+            <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.gobierno')%>-"><%=I18n.t('Sistema.Body.General.TipoDocumento.gobierno')%></option>
+          </select>
+
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>&emsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+        </td>
+      </tr>
+
+    </table>
+  <% end %>
+  <br/>
+  <%= error %>
+  <%= message %>
+  <br/>
+  <div id="list">
+  </div>
+</div>

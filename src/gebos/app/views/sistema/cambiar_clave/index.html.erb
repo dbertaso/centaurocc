@@ -1,0 +1,48 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.Usuario.CambiarClave.Etiquetas.cambiar_clave') %> <span style="color: #FF0000">'<%= @usuario.nombre_usuario %>'</span>
+    </div></div></div>
+<%= render :partial=>'sistema/usuario/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id=>@usuario.id} ) do %>
+
+  <table>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.Usuario.CambiarClave.Etiquetas.clave_nueva') %></label>
+      </td>
+      <td>
+        <%= password_field 'usuario', 'clave', :class=>'text', :style=>'width: 180px', 
+          :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.Usuario.CambiarClave.Etiquetas.confirmar_clave') %></label>
+      </td>
+      <td>
+        <%= password_field 'usuario', 'clave_confirmation', :class=>'text', :style=>'width: 180px', 
+          :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td class="lista0" style="text-align: right">
+        <div id="buttons_edit" style="display: none">
+          <%= image_submit_tag I18n.t('Sistema.Body.Imagenes.guardar'), :title=>I18n.t('Sistema.Body.Vistas.General.guardar'), :id=>'button_save' -%>
+          <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')), '/' ) -%>
+        </div>
+        <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),  { :controller=> 'usuario', :action => :index},
+          { :id=>'button_close' } ) -%>
+      </td>
+    </tr>
+  </table>
+  <% end %>
+</div>

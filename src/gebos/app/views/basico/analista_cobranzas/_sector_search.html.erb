@@ -1,0 +1,10 @@
+        <% sector_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method => :get,
+            :url=>{:controller=>'analista_cobranzas',
+            :action=>:sector_search },
+            :with=>"'id='+value") %>
+
+        <%= select_tag(:sector_id, options_for_select(@sector_select.map {|i| [i.nombre, i.id]}, params[:sector_id]),
+            { :class=>'select', :prompt=> I18n.t('Sistema.Body.Vistas.CondicionesFinanciamiento.Etiquetas.seleccione_sector'), :onchange=>sector_onchange + ';inputChange();' })%>

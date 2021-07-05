@@ -1,0 +1,32 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	if controller_name=='oficina'
+%>
+            <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Controladores.Oficina.FormTitles.form_title_record') %></a></div></li>
+<% 
+	else 	   
+%>
+            <li><div>
+                  <%= link_to(I18n.t('Sistema.Body.Controladores.Oficina.FormTitles.form_title_record'), :controller => 'oficina', :action => 'edit', :id => @oficina.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+            </div></li>
+<% 
+	end
+	if @oficina.id
+            if controller_name=='oficina_area'
+%>
+                <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Controladores.OficinaArea.FormTitles.form_title_record')%></a></div></li>
+<% 
+            else
+%>
+                <li><div>
+                     <%= link_to(I18n.t('Sistema.Body.Controladores.OficinaArea.FormTitles.form_title_record'), :controller => 'oficina_area', :action => 'index', :oficina_id => @oficina.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+                </div></li>
+<% 
+            end
+	end
+%>
+	</ul>
+</div>

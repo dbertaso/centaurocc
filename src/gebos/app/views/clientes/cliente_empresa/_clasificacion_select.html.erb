@@ -1,0 +1,15 @@
+<% unless @clasificacion_select.nil? %>
+		<%= select(
+  		'empresa', 'clasificacion_id',
+  		@clasificacion_select.map{|c| [c.descripcion, c.id]},
+  		{ },
+  		{ :class=>'select', :onchange=>'inputChange();' } ) %>
+	
+<% else %>
+		<%= select(
+			  'empresa', 'clasificacion_id',
+			  [],
+			  { :include_blank => true },
+			  { :class=>'select', :onchange=>';inputChange();' } ) %>
+<% end %>
+

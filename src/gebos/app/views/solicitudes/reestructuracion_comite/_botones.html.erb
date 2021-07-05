@@ -1,0 +1,118 @@
+<%if  @reestructuracion.nil? 
+  @reestructuracion = Reestructuracion.find(params[:reestructuracion_id]) 
+end %>
+
+<table border=0 style="text-align:left; background-colo:red" >
+
+  <%  if  @reestructuracion.estatus != 5 %>
+    <%  if  params[:action].to_s == 'edit' -%>
+      <tr>
+        <td width="40%" align="right">
+          <img src="/assets/pasos_reestructuracion/indicador1_si.png" height="40" alt="Print"/>
+        </td>
+        <td width="60%" align="left">
+          <input type="image" height="40" src="/assets/pasos_reestructuracion/guardar.png" onclick="if (varEnviado) { return false; } else {varEnviado = true;}" id="button_save"/>
+        </td>
+      </tr>
+    <% else %>
+      <tr>
+        <td width="40%" align="right">
+          <img src="/assets/pasos_reestructuracion/indicador1_si.png" height="40" alt="Print"/>
+        </td>
+        <td width="60%" align="left">
+          <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.reconsideracion')), :title=>I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.reconfigurar_nuevo_financiamiento'), :height=>"30"),
+            { :controller=>'reestructuracion_comite', :action=>'edit',  :reestructuracion_id=>@reestructuracion.id, :popup=>false } %>
+        </td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td width="40%" align="right">
+        <img src="/assets/pasos_reestructuracion/indicador1_si.png" height="40" alt="Print"/>
+      </td>
+      <td width="60%" align="left">
+        <img title="<%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.opcion_bloqueada')%>" style="cursor:pointer"  height="30" src="/assets/pasos_reestructuracion/reconsideracion_no.png" onclick="alert(<%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.para_modificar_condiciones_realizar_reverso')%>)"/>
+      </td>
+    </tr>
+
+  <% end %>
+
+
+
+  <% if (@reestructuracion.estatus > 2 and params[:action].to_s == 'view') or (params[:action]=="generar_prestamo") %>
+    <tr>
+      <td align="right">
+        <img src="/assets/pasos_reestructuracion/indicador2_si.png" height="40" alt="Print"/>
+      </td>
+      <td align="left">
+        <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir_grande')), :title=>I18n.t('Sistema.Body.General.imprimir')),
+          { :controller=>'reestructuracion_comite', :action=>'print_propuesta',  :reestructuracion_id=>@reestructuracion.id, :popup=>true },
+          :onclick=>"window.open(this.href,'Informe de Recomendación','height=600,width=800,scrollbars=yes,resizable=yes'); return false;" %>
+      </td>
+    </tr>
+  <% else %>
+    <tr>
+      <td align="right">
+        <img src="/assets/pasos_reestructuracion/indicador2_no.png" height="40" alt="Print"/>
+      </td>
+      <td align="left">
+        <img style="cursor:pointer"  height="40" src="/assets/pasos_reestructuracion/print_inactivo.png" onclick="alert(<%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.es_necesario_guarar_nuevo_financiamiento')%>)"/>
+      </td>
+    </tr>
+  <% end %>
+
+
+
+
+
+  <% if (@reestructuracion.estatus > 3 and params[:action].to_s == 'view') or (params[:action]=="generar_prestamo") %>
+    <tr>
+      <td align="right">
+        <img src="/assets/pasos_reestructuracion/indicador3_si.png" height="40" alt="Print"/>
+      </td>
+      <td align="left">
+        <%  if  @reestructuracion.estatus == 4 %>
+          <input type="image" height="40" src="/assets/pasos_reestructuracion/calendario.png" onclick="new Ajax.Request('/solicitudes/reestructuracion_comite/generar_prestamo?reestructuracion_id=<%= @reestructuracion.id %>',
+                    {method:get, asynchronous:true, evalScripts:true, onLoaded:function(request){image_unload()}, onLoading:function(request){image_load()}, parameters:Form.serialize(this)}); return false;"/>
+        <% end %>
+        <%  if  @reestructuracion.estatus == 5 %>
+          <img title="Opción Bloqueada" style="cursor:pointer"  height="40" src="/assets/pasos_reestructuracion/calendario_check.png" onclick="alert('<%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.generado_nuevo_financiamiento')%> <%= Prestamo.find_by_solicitud_id(@reestructuracion.solicitud_id).numero %>')"/>
+        <% end %>
+      </td>
+    </tr>
+  <% else %>
+    <tr>
+      <td align="right">
+        <img src="/assets/pasos_reestructuracion/indicador3_no.png" height="40" alt="Print"/>
+      </td>
+      <td align="left">
+        <img title="Opción Bloqueada" style="cursor:pointer"  height="40" src="/assets/pasos_reestructuracion/calendario_inactivo.png" onclick="alert('<%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.realizar_pasos_anteriores_para_generar_nuevo_financiamiento')%>')"/>		
+      </td>
+    </tr>
+  <% end %>
+
+
+
+  <% if (@reestructuracion.estatus == 5 and params[:action].to_s == 'view') or (params[:action]=="generar_prestamo") %>
+    <tr>
+      <td align="right">
+        <img src="/assets/pasos_reestructuracion/indicador4_si.png" height="40" alt="Print"/>
+      </td>
+      <td align="left">
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir_grande')),
+          { :controller=>'reestructuracion_comite', :action=>'print_contrato',  :reestructuracion_id=>@reestructuracion.id, :popup=>true },
+        :onclick=>"window.open(this.href,'Informe de Recomendación','height=600,width=800,scrollbars=yes,resizable=yes'); return false;" %>
+      </td>
+    </tr>
+  <% else %>
+    <tr>
+      <td align="right">
+        <img src="/assets/pasos_reestructuracion/indicador4_no.png" height="40" alt="Print"/>
+      </td>
+      <td align="left">
+        <img style="cursor:pointer"  height="40" src="/assets/pasos_reestructuracion/print_inactivo.png" onclick="alert('<%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.realizar_pasos_anteriores_para_generar_nuevo_contrato')%>')"/>
+      </td>
+    </tr>
+  <% end %>
+
+</table>

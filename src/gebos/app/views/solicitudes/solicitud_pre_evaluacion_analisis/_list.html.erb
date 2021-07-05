@@ -1,0 +1,66 @@
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>
+<div id="el_mensaje"></div>
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%= sort_class_helper('numero') %>>
+          <%= sort_link_helper '# Solicitud', 'numero', 'list' %>
+        </th>
+
+        <th style="width: 80px" <%= sort_class_helper('estado') %>>
+          <%= sort_link_helper 'Estado', 'estado', 'list' %>
+        </th>
+
+        <th style="width: 80px" <%= sort_class_helper('municipio') %>>
+          <%= sort_link_helper 'Municipio', 'municipio', 'list' %>
+        </th>
+        
+        <th style="width: 60px" <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper 'C&eacute;dula/Rif', 'cedula_rif', 'list' %>
+        </th>
+        
+        <th style="width: 150px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper 'Cliente', 'nombre', 'list' %>
+        </th>
+
+        <th style="width: 80px">
+          Estatus
+        </th>
+
+        <th style="width: 80px" <%= sort_class_helper('sector') %>>
+          <%= sort_link_helper 'Sector', 'sector', 'list' %>
+        </th>
+
+        <th style="width: 150px" <%= sort_class_helper('unidad_produccion') %>>
+          <%= sort_link_helper 'Unidad de Producci&oacute;n', 'unidad_produccion', 'list' %>
+        </th>
+        
+        <th style="width: 80px" <%= sort_class_helper('fecha_asignacion') %>>
+          <%= sort_link_helper 'Fecha de Asignaci&oacute;n', 'fecha_asignacion', 'list' %>
+        </th>
+
+        <th style="width: 100px" <%= sort_class_helper('tiempo_transcurrido') %>>
+          <%= sort_link_helper 'Transcurrido', 'tiempo_transcurrido', 'list' %>
+        </th>
+
+        <th style="width: 60px">
+          	Viable
+        </th>
+
+        <th style="width: 70px">
+			Acciones
+        </th>
+      </tr>
+      
+  </thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for solicitud in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

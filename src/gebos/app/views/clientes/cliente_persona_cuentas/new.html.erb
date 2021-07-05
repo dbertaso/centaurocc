@@ -1,0 +1,20 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando') %> <%= "#{I18n.t('Sistema.Body.General.beneficiario')} #{I18n.t('Sistema.Body.General.natural')}" %> <span class="titulo_modificar">'<%= @persona.primer_nombre %> <%= @persona.primer_apellido %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'clientes/cliente_persona/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= form_title_new %>
+
+  <%= error %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_new, :popup=>params[:popup], :persona_id => @persona.id } ) do -%>
+  <%= render :partial => 'form' %>
+  <%= form_buttons_edit :persona_id =>@persona.id, :popup=>params[:popup] %>
+<% end -%>
+
+</div>

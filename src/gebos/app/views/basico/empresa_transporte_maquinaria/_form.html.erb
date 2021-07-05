@@ -1,0 +1,123 @@
+<table>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.rif')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>      
+    </td>
+    <td>
+      <%= select(
+        'empresa_transporte_maquinaria', 'rif_1',
+        [[I18n.t('Sistema.Body.General.TipoDocumento.juridico'),I18n.t('Sistema.Body.General.TipoDocumento.juridico')],[I18n.t('Sistema.Body.General.TipoDocumento.gobierno'),I18n.t('Sistema.Body.General.TipoDocumento.gobierno')],[I18n.t('Sistema.Body.General.TipoDocumento.venezolano'),I18n.t('Sistema.Body.General.TipoDocumento.venezolano')],[I18n.t('Sistema.Body.General.TipoDocumento.extranjero'),I18n.t('Sistema.Body.General.TipoDocumento.extranjero')],[I18n.t('Sistema.Body.General.TipoDocumento.pasaporte'),I18n.t('Sistema.Body.General.TipoDocumento.pasaporte')]],
+        { :prompt => I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+        { :class=>'select',:style=>'width: 40px', :onchange=>';inputChange();' } ) %> -
+      <%= text_field 'empresa_transporte_maquinaria', 'rif_2',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8'
+    %> -
+      <%= text_field 'empresa_transporte_maquinaria', 'rif_3',
+        :class=>'text', :style=>'width: 10px',
+        :maxlength=>'1'
+    %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+	  <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_field 'empresa_transporte_maquinaria', 'nombre',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,60)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 135px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+	  <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td style="width: 620px">
+      <% estado_onchange = remote_function(
+        :loading =>'image_load()',
+		    :loaded => 'image_unload()',
+		    :method=>:get,
+        :url=>{:controller=>'empresa_transporte_maquinaria',
+        :action=>:estado_change },
+        :with=>"'id='+value") %>
+
+      <%= select('empresa_transporte_maquinaria', 'estado_id',
+        @estado_select.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>estado_onchange + ';inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 135px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.ciudad')%></label>
+	  <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <span id="ciudad-select">
+        <%= render 'ciudad_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 135px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label>
+		<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <span id="municipio-select">
+        <%= render 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.General.direccion')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_area 'empresa_transporte_maquinaria', 'direccion',
+        :class=>'text',
+        :style=>'width: 600px; height: 100px',
+        :onKeyUp=>'textCounter(this,250)', :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.persona') << " " << I18n.t('Sistema.Body.Vistas.General.contacto')%> </label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_field 'empresa_transporte_maquinaria', 'persona_contacto', :class=>'text', :style=>'width: 150px', :maxlength=>'50',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%>  </label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_field 'empresa_transporte_maquinaria', 'telefono',
+        :class=>'text', :style=>'width: 100px;',
+        :maxlength=>'13', :onKeyUp=>'textCounter(this,13)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%> </label>
+    </td>
+    <td>
+      <%= check_box 'empresa_transporte_maquinaria', 'activo',
+        :checked_value=>"1",
+        :unchecked_value=>"0", :onclick=>'inputChange();' -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"", :id=>'button_save') -%>&nbsp;

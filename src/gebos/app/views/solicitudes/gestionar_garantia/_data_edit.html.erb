@@ -1,0 +1,32 @@
+<% item = @item if item.nil? %>
+<td style="text-align: center">
+  <%= item.recaudos_avaluos_inspecciones.descripcion %>
+</td>
+<% if item.revisado
+      check = true
+   else
+      check = false
+    end %>
+<td style="text-align: center">
+  <% revisado_onchange = remote_function(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :url=>{:controller=>"unidades_apoyo_avaluo",
+      :action=>:save_revisado },
+      :with=>"'id=#{item.id}&revisado='+checked") %>
+  <%= check_box 'solicitud_recaudo_avaluo1', 'revisado',
+      :checked_value=>"true", :checked => check,
+      :unchecked_value=>"false",:onclick=>revisado_onchange -%>
+</td>
+<td>
+  <% observaciones_onchange = remote_function(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :url=>{:controller=>"unidades_apoyo_avaluo",
+      :action=>:save_observaciones },
+      :with=>"'id=#{item.id}&observaciones='+value") %>
+  <%= text_field 'solicitud_recaudo_avaluo1', 'observacion',
+      :class=>'text',:style=>'width: 400px', :maxlength=>'400',
+      :value=>item.observaciones,
+      :onchange=>observaciones_onchange -%>
+</td>

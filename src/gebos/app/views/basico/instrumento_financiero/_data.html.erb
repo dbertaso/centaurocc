@@ -1,0 +1,21 @@
+<% instrumento_financiero = @instrumento_financiero if instrumento_financiero.nil? %>
+<td>
+	<%= instrumento_financiero.descripcion  %>
+</td>	
+<td style="text-align: center">
+	<%= format_bool(instrumento_financiero.activo)  %>
+</td>	
+<td style="text-align: right">
+	<%= link_to_remote(
+		image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method =>:get,
+		:url => {:controller => 'instrumento_financiero', :action => :edit, :id => instrumento_financiero.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(
+		image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Controladores.Mensaje.esta_seguro'),
+		:url => {:controller => 'instrumento_financiero', :action => :delete, :id => instrumento_financiero.id}) if vlink 'delete' -%>
+</td>

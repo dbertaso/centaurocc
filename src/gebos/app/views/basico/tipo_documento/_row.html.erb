@@ -1,0 +1,4 @@
+<% tipo_documento = @tipo_documento if tipo_documento.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= tipo_documento.id %>">
+	<%= render :partial => 'data', :locals => { :tipo_documento => tipo_documento, :even_odd => even_odd } -%>
+</tr>

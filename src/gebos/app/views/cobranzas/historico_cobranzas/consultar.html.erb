@@ -1,0 +1,17 @@
+<%= form_title_view "Financiamiento Nro. #{@prestamo.numero.to_s} del Beneficiario: #{@prestamo.cliente.identificador} - #{@prestamo.cliente.nombre} " %>
+
+<div class="marco-contenido2">
+
+  <%= render 'gestion_cobranzas' %>
+
+</div>
+<br>
+<br>
+<br>
+
+<%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+               {  },
+               { :id=>'buton_cerrar',:onclick=>"window.close();return false;" } ) -%>  
+<br>
+<br>
+<br>

@@ -1,0 +1,65 @@
+<% unless @solicitud_recaudo_list.nil? %>
+  <% seccion = ''
+  lista = 'lista0'
+  @solicitud_recaudo_list.each { |recaudo|
+    unless seccion == recaudo.nombre_seccion
+      if seccion.length > 1 %>
+        </table><br><br>
+      <% end  %>
+      <div class="marco-titulo"><div><div><%= recaudo.nombre_seccion %></div></div></div>
+      <table class="lista" style="width: 90%"><tr><th>Nombre de Recaudo</th><th style="width: 11%">Obligatoriedad</th><th style="width: 10%">Entregado</th><th style="width: 10%">En trámite</th><th style="width: 10%">Revisado</th><th style="width: 10%">No Está</th></tr>
+        <% seccion = recaudo.nombre_seccion %>
+   <% end %>
+   <tr class="<%=  lista %>" id="row_<%=  recaudo.id %>">
+     <td>
+         <%= recaudo.nombre %>
+     </td>
+     <td align="center">
+       <% if recaudo.obligatorio == 't' %>
+        <%= image_tag('activo.gif') %>
+       <% else %>
+        <%= image_tag('inactivo.gif') %>
+       <% end %>
+     </td>
+     <td align="center" style="text-align: center;">
+        <%= format_bool recaudo.entregado %>
+     </td>
+     <td align="center" style="text-align: center;">
+       <%= format_bool recaudo.tramite %>
+     </td>
+     <td align="center">
+       <% entregado_onchange = remote_function(
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>"unidades_apoyo_consultoria",
+        :action=>:save_revisado },
+        :with=>"'id=#{recaudo.id}&revisado_consultoria='+checked") %>
+
+       <%= check_box_tag 'recaudo_check',
+              recaudo.id,
+              checked=recaudo.revisado_consultoria,
+              { :onchange=>entregado_onchange, :name => "solicitud_recaudo[]", :id => "solicitud_recaudo_revisado#{recaudo.id}" }  %>
+     </td>
+     <td align="center">
+       <% no_entregado_onchange = remote_function(
+        :loading =>'Element.show("loading")',
+        :loaded => 'Element.hide("loading")',
+        :url=>{:controller=>"unidades_apoyo_consultoria",
+        :action=>:save_no_revisado },
+        :with=>"'id=#{recaudo.id}&no_revisado_consultoria='+checked") %>
+
+       <%= check_box_tag 'recaudo_check',
+              recaudo.id,
+              checked=recaudo.no_revisado_consultoria,
+              { :onchange=>no_entregado_onchange, :name => "solicitud_recaudo[]", :id => "solicitud_recaudo_no_revisado#{recaudo.id}" }  %>
+     </td>
+    </tr>
+    <%  if lista == 'lista0'
+        lista = 'lista1'
+      else
+        lista = 'lista0'
+      end
+  } %>
+
+      </table><br></br>
+<% end %>

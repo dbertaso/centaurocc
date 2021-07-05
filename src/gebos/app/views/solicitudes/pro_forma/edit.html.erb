@@ -1,0 +1,47 @@
+<div class="marco-contenido">
+<%= form_title_edit @proforma.numero %>
+
+
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id=>@proforma.id } ) do -%>		
+
+  <%= render :partial => 'form' %>
+  <tr>
+      <td colspan="2" style="text-align: left">
+        <div id="buttons_edit" style="display: none">
+          <%= form_buttons_edit :solicitud_id => @proforma.solicitud_id, :popup=>true %>
+        </div>
+
+        <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+            { :action => :index, :solicitud_id => @proforma.solicitud_id, :popup=>true },
+            { :id=>'button_close' } ) -%>
+        
+      </td>
+    </tr>
+  </table>
+  <input type="hidden" id="ids" value="<%= @ids %>" name="ids"/>
+  <% end -%>
+</div>
+
+<script language="javascript">
+  function Chequear(field){
+  var valor = document.getElementById("ids").value
+  if (field.checked == false){
+                valor = ',' + valor;
+    valor= valor.replace(',' + field.value + ',' , ",");
+  }
+  else {
+    valor = valor.replace(',' + field.value + ',' , ",")
+    valor = valor + field.value + ',';
+  }
+        if (valor.charAt(0) == ','){
+            valor = valor.substring(1, valor.length)
+        }
+  document.getElementById("ids").value = valor;
+}
+</script>

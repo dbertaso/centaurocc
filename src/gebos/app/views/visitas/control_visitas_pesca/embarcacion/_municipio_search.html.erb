@@ -1,0 +1,12 @@
+<%=select(
+  'embarcacion', 'municipio_id',
+  @municipio_list.map {|i| [i.nombre,i.id]},
+  {:prompt => I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+  { :class=>'select', :onchange=>"#{remote_function(
+    :method=>:get,:loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :url=>{:controller=>'embarcacion',
+    :action=>:municipio_search },
+    :with=>"'id='+value")}; inputChange();" } ) %>
+
+

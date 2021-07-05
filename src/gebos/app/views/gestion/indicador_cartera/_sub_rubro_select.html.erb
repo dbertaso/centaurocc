@@ -1,0 +1,11 @@
+
+<%= select(
+  'sub_rubro_id', '',
+ options_from_collection_for_select(@sub_rubro_select, 'id', 'nombre'),
+      {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccione')},
+      { :class=>'select',  :onchange=>"#{remote_function(
+                    :loading =>'image_load()',
+                    :loaded => 'image_unload()',
+                    :method => :get,
+                    :url=>{:controller=>'indicador_cartera',:action=>:sub_rubro_change },
+                    :with=>"'sub_rubro_id='+ this.value")};inputChange();"}) %> 

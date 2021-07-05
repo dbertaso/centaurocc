@@ -1,0 +1,62 @@
+<tr id="row_<%= @opcion.id %>_view">
+  <td valign="top" style="text-align: center">
+    <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.img_colapsar'), :title=>I18n.t('Sistema.Body.Vistas.General.colapsar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => {:action => :collapse, :rol_id => @rol.id, :id => @opcion.id}) -%>
+  </td>
+  <td colspan="3">
+    <table>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.grupo')%></label></td>
+        <td>
+          <%= @opcion.opcion_grupo.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label></td>
+        <td>
+          <%= @opcion.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Modelos.Opcion.Errores.ruta')%></label></td>
+        <td>
+          <%= @opcion.ruta %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top"><label><%= I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.acciones') %></label></td>
+        <td id="accion_list">
+          <table style="width: 100%">
+            <tbody>
+              <% 
+              for opcion_accion in @opcion.acciones
+              %>
+                <tr>
+                  <td>
+                    <%
+                    begin
+                      @rol.acciones.find(opcion_accion.id)
+                      image_name = 'activo.gif'
+                    rescue
+                      image_name = 'inactivo.gif'
+                    end
+                  %>
+                    <%= image_tag image_name %>
+                    <%= opcion_accion.accion.nombre %>
+                  </td>
+                </tr>
+              <% 
+              end
+            %>
+            </tbody>
+          </table>
+        </td>
+      <tr>
+    </table>
+  </td>
+  <td style="text-align: right" valign="top">
+    <%= render :partial=>'list_buttons', :locals=>{ :opcion=>@opcion } %>
+  </td>
+</tr>

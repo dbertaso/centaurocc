@@ -1,0 +1,20 @@
+<table>
+	<tr>
+		<td>
+			<label><%= t('Sistema.Body.Vistas.TransaccionContable.Etiquetas.nombre_transaccion_contable')%></label>
+		</td>
+		<td>
+			<%= text_field 'transaccion_contable', 'nombre', :class=>'text', :style=>'width: 350px', :maxlength=>'50',
+			  :onkeypress=>'inputChange();' -%>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label><%= t('Sistema.Body.Vistas.Form.descripcion')%></label>
+		</td>
+		<td>
+			<%= text_field 'transaccion_contable', 'descripcion', :class=>'text', :style=>'width: 400px', :maxlength=>'250',
+			  :onkeypress=>'inputChange();' -%>
+		</td>
+	</tr>
+</table>

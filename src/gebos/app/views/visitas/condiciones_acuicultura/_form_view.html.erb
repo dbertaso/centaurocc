@@ -1,0 +1,76 @@
+<table>
+  <tr>
+    <td style="width: 400px">
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.espejo_agua')%></label>
+    </td>
+    <td style="width: 300px">
+      <%= @condiciones_acuicultura.espejo_agua %>
+    </td>
+  </tr>	
+  <tr>
+    <td style="width: 400px">
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.espejo_agua_up')%></label>
+    </td>
+    <td style="width: 300px">
+      <%= @condiciones_acuicultura.espejo_agua_up %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 400px">
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.espejo_agua_produccion')%></label>
+    </td>
+    <td style="width: 300px">
+      <%= @condiciones_acuicultura.espejo_agua_produccion %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.duracion_ciclo')%></label>
+    </td>
+    <td>
+      <%= @condiciones_acuicultura.duracion_ciclo %> 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.numero_laguna_efectiva')%></label>
+    </td>
+    <td>
+      <%= @condiciones_acuicultura.lagunas_efectivas %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.lagunas_totales')%></label>
+    </td>
+    <td>
+      <%= @condiciones_acuicultura.lagunas_totales %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= " #{I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.peso_cosecha')} #{I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.parentesis_kg')}"%></label>
+    </td>
+    <td>
+      <%= @condiciones_acuicultura.peso_cosecha %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= " #{I18n.t('Sistema.Body.Modelos.CondicionesAcuicultura.Columnas.densidad_siembra')} #{I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.peces_m2')}"%></label>
+    </td>
+    <td>
+      <%= @condiciones_acuicultura.densidad_siembra %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaCondicionesAcuicultura.Etiquetas.especie_cultivada')%></label>
+    </td>
+    <td>
+      <% @tipo_especie=TipoEspecieAcuicultura.find(@condiciones_acuicultura.tipo_especie_id) %>
+      <%= @tipo_especie.nombre %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="8"><br>

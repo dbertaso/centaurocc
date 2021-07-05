@@ -1,0 +1,35 @@
+<tr id="row_<%= @embarcacion.id %>_edit">
+  <td class="lista-form" colspan="8">
+
+    <%= form_title_edit @embarcacion.nombre_embarcacion %>
+
+    <%= error "row_#{@embarcacion.id}" %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_edit, :id => @visita,:id_embarcacion=>@embarcacion.id } ) do -%>
+    <%= render :partial => 'form' %>
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar')), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+      :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+      :url => { :action => :cancel_edit, :id => @visita,:id_embarcacion=>@embarcacion.id}) -%>
+  </td>
+</tr>
+</table>
+<% end -%>
+</td>
+</tr>
+
+<script language="JavaScript">
+
+  function area_fertilizacion(valor){
+    if (valor == 'true') {
+      document.getElementById('fertilizacion').style.display = 'block';}
+    else{
+      document.getElementById('pastizales_potreros_tipo_fertilizacion_id_1').checked = false;
+      document.getElementById('pastizales_potreros_tipo_fertilizacion_id_2').checked = false;
+      document.getElementById('pastizales_potreros_descripcion_fertilizacion').value = "";
+      document.getElementById('fertilizacion').style.display = 'none';
+    }
+  }
+</script>

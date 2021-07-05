@@ -1,0 +1,30 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width:10%" style="text-align: center" <%= sort_class_helper('id') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.id')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'id', 'list' %>
+      </th>
+      <th style="width: 200px" <%= sort_class_helper('modelo.nombre') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.modelo')}", 'modelo.nombre', 'list' %>
+      </th>       
+      <th style="width: 300px" <%= sort_class_helper('modelo.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'modelo.descripcion', 'list' %>
+      </th>   
+      <th style="width: 10px" >
+        <%= I18n.t('Sistema.Body.Vistas.General.activo')%>
+      </th>             
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>   
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for modelo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :modelo => modelo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

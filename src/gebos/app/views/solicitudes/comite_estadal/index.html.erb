@@ -1,0 +1,192 @@
+<script type="text/javascript" src="/assets/comite.js"></script>
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;"></div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :html=>{:id=>'form_comite_estadal_buscar'},
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list }) do -%>
+
+  <table border="0">
+    <tr>
+      <td>
+        <label></label>
+      </td>
+      <td>
+        <% select(
+          'estado_id','',
+          @estado.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select', :onchange=>'inputChange();' } )
+      %>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+      </td>
+      <td>
+        <% sector_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'comite_estadal',
+            :action=>:sector_change },
+          :with=>"'sector_id='+value" ) %>
+        <%= select(
+          'sector_id', '',
+          @sector.map{|i| ["#{i.nombre}", i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:onchange=>sector_onchange + ';inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+      </td>
+      <td>
+        <div id="sub-sector-select">
+          <% sub_sector_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'comite_estadal',
+              :action=>:sub_sector_form_change },
+            :with=>"'sub_sector_id='+value") %>
+
+          <%= select(
+            'sub_sector_id', '',
+            @sub_sector_list.map{|i| [i.nombre, i.id]},
+            { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select',:onchange=>sub_sector_onchange + ';inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+      </td>
+      <td>
+        <div id="rubro-select">
+          <%= select(
+            'rubro_id', '',
+            @rubro_list.map{|i| [i.nombre, i.id]},
+            { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+      </td>
+      <td>
+        <div id="sub_rubro-select">
+          <%= render :partial => 'sub_rubro_select' %>
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+      </td>
+      <td>
+        <div id="actividad-select">
+          <%= render :partial => 'actividad_select' %>         
+        </div>
+      </td>
+    </tr>    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.sesion')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'nro_sesion', '', :class=>'text', :maxlength=>'15', :style=>'width: 100px'  %>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'numero', '', :class=>'text', :style=>'width: 100px'  %>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.cedula')%> / <%=I18n.t('Sistema.Body.Vistas.General.rif')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'12', :style=>'width: 100px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.General.beneficiario')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>&nbsp&nbsp&nbsp
+      </td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>:</label>
+      </td>
+      <td><%= select(
+            'moneda_id', '',
+            options_from_collection_for_select(@moneda_list, 'id', 'nombre'),
+            {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+            {:class=>'select', :onchange=>'inputChange();'} ) %>
+      </td>
+      <td>
+        <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'),{:onclick=>"$('error_decision_comite').hide();$('decision_solicitud_id').value='';"}) -%>
+      </td>
+    </tr>
+  </table>  
+  <% end %>
+  <br/>
+  
+
+</div>
+
+<br/>
+
+<div id="decision-comite-estadal">  
+  
+  <%= render :partial => 'decision_comite_estadal' %>
+</div>
+
+<div id="list"></div>
+
+<script type="text/javascript">
+  function selectSector(this_){
+    if(this_.value.length==0){
+      $('tr_subsector_search').hide();
+      $('tr_rubro_search').hide();
+      $("subsector_id_").value="";
+      $("rubro_id_").value="";
+    }
+  }
+  function selectSubsector(this_){
+    if(this_.value.length==0){
+      $('tr_rubro_search').hide();
+      $("rubro_id_").value="";
+    }
+  }
+</script>

@@ -1,0 +1,16 @@
+<%= form_title_new %>
+
+<%= error 'form_new' %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :save_new, :sector_tecnico_id => @sector_tecnico.id, :tecnico_campo_id => @tecnico_campo.id } ) do %>
+  <%= render :partial => 'form' %>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cancelar'), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :cancel_new, :tecnico_campo_id => @sector_tecnico.tecnico_campo_id}) -%>
+<% end %>
+

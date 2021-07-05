@@ -1,0 +1,26 @@
+
+	<table class="lista" style="width: 100%"> 
+		<thead>
+		<tr>
+			<th style="width: 280x" <%= sort_class_helper('nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'nombre', 'list' %>
+ 			</th>
+                        <th style="width: 250px" <%= sort_class_helper('(select nombre from eje where id=eje_id)') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.eje') << " " << I18n.t('Sistema.Body.Vistas.General.estrategico'), '(select nombre from eje where id=eje_id)', 'list' %>
+ 			</th>
+ 			<th style="width: 64px">
+              <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>
+		</thead>
+		<tbody id="list_body">
+<%
+	even_odd = 1
+	for municipio in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :municipio => municipio, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>
+

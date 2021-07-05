@@ -1,0 +1,25 @@
+<% programa_origen_fondo = @programa_origen_fondo if programa_origen_fondo.nil? %>
+<td>
+  <%= programa_origen_fondo.origen_fondo.nombre  %>
+</td>
+<!--
+<td>
+  <%#= programa_origen_fondo.cuenta_contable_ingreso_interes.codigo if programa_origen_fondo.cuenta_contable_ingreso_interes %>
+</td>
+<td>
+  <%#= programa_origen_fondo.cuenta_contable_capital.codigo if programa_origen_fondo.cuenta_contable_capital%>
+</td>
+<td>
+  <%#= programa_origen_fondo.cuenta_contable_capital_vencido.codigo if programa_origen_fondo.cuenta_contable_capital_vencido %>
+</td>-->
+<td style="text-align: right">
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => {:action => :edit, :id => programa_origen_fondo.id, :programa_id => @programa.id}) -%>
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:action => :delete, :programa_id => @programa.id, :id => programa_origen_fondo.id}) -%>
+</td>

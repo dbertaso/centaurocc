@@ -1,0 +1,237 @@
+<script language="javascript">
+
+function formatCurrency2(num) {
+   
+    num = num.toString().replace(/\$|\,/g,'<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+"<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_miles')%>"+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + "<%=I18n.t('Sistema.Body.ExpresionesRegulares.separador_decimal')%>" + cents);
+    //$(name + '_display').innerHTML = numero;
+    return numero;
+}
+
+
+function esconder_impresion(soli){
+
+
+alert("<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.impresion_orden_despacho')%>");
+
+/*alert("es "+parseInt(i));
+
+switch(parseInt(i)){
+case 1:
+    document.getElementById('impresion1_'+soli).style.visibility='hidden';break;
+case 2:
+    document.getElementById('impresion2_'+soli).style.visibility='hidden';break;
+case 3:
+    document.getElementById('impresion3_'+soli).style.visibility='hidden';break;
+}*/
+
+document.getElementById('deshacer_'+soli).style.visibility='hidden';
+document.getElementById('modificar_'+soli).style.visibility='hidden';
+}
+
+
+
+function esconder_impresion_individual(id){
+
+
+alert("<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.impresion_orden_despacho')%>");
+document.getElementById('deshacer_imprimir_individual_'+id).style.visibility='hidden';
+document.getElementById('modificar_'+id).style.visibility='hidden';
+
+}
+
+
+function esconder_impresion2(soli){
+
+
+alert('<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.impresion_orden_despacho')%>');
+
+/*alert("es "+parseInt(i));
+
+
+switch(parseInt(i)){
+case 1:
+    document.getElementById('impresion_parcial1_'+soli).style.visibility='hidden';break;
+case 2:
+    document.getElementById('impresion_parcial2_'+soli).style.visibility='hidden';break;
+case 3:
+    document.getElementById('impresion_parcial3_'+soli).style.visibility='hidden';break;
+}
+*/
+
+document.getElementById('mega_impresion_'+soli).style.visibility='hidden';
+
+}
+
+
+
+
+</script>
+
+<script language="javascript">varEnviado = false;</script>
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+<div class="marco-boton-out" id="button_new">
+
+</div>
+
+
+<div class="marco-contenido">
+	<%=  form_title_search %>
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+
+
+  <%= error %>
+	<%= message %>
+
+	<%= form_remote_tag(
+		:loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method => :get,
+		:url => { :action => :list },
+        :html => {:id => 'form_lista' } ) do-%>
+
+  <table>
+    
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+        </td>
+        <td>
+           <%sector_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'orden_despacho',
+            :action=>:sector_change },
+            :with=>"'id='+value") %>
+
+   
+   <%= select('sector_id', '',
+                      @sector.map{|i| [i.nombre, i.id]},
+                      { :prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                      { :class=>'select',:onchange=>sector_onchange + ';inputChange();' } ) %>                      
+
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 60px">
+          <label> <%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+	</td>
+	<td>
+           <span id="rubro-select">
+            <%= render :partial => 'rubro_select' %>
+          </span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td style="width: 60px">
+          <label> <%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+	</td>
+	<td>
+           <span id="sub-rubro-select">
+            <%= render :partial => 'sub_rubro_select' %>
+          </span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td style="width: 60px">
+          <label> <%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+	</td>
+	<td>
+           <span id="actividad-select">
+            <%= render :partial => 'actividad_select' %>
+          </span>
+        </td>
+      </tr>
+
+    <tr>
+        <td style="width: 60px">
+          <label> <%=I18n.t('Sistema.Body.Vistas.Form.estatus')%> <%=I18n.t('Sistema.Body.ModalidadPago.orden_despacho')%></label>
+	</td>
+	<td>
+           <%= select(
+                  'estatus_orden_id', '',
+                  @estatus_list.map{|c| [c.nombre, c.id]},
+                 {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+                  { :class=>'select', :onchange=> 'inputChange();' } ) %>
+
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px',:onkeypress=>' return NumberKey(event);'  %>
+        </td>
+      </tr>
+ <tr>
+        <td style="width: 130px">
+          <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}"%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nro_financiamiento', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px',:onkeypress=>' return NumberKey(event);'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label>
+
+         
+        </td>
+        <td> <select name="tipo" class =" select">
+            <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.venezolano')%> "><%=I18n.t('Sistema.Body.General.TipoDocumento.venezolano')%></option>
+            <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%> "><%=I18n.t('Sistema.Body.General.TipoDocumento.extranjero')%></option>
+            <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.juridico')%>-"><%=I18n.t('Sistema.Body.General.TipoDocumento.juridico')%></option>
+            <option value="<%=I18n.t('Sistema.Body.General.TipoDocumento.gobierno')%>-"><%=I18n.t('Sistema.Body.General.TipoDocumento.gobierno')%></option>
+          </select>
+		<%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}"%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>&emsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'),:onclick=>'javascript:varEnviado=false;') -%>
+        </td>
+      
+
+      </tr>
+
+   </table>
+  	<% end %>
+<br/>
+	
+<br/>
+	<div id="list">
+	</div>
+</div>

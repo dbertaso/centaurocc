@@ -1,0 +1,15 @@
+<% imputaciones_maquinaria= @imputaciones_maquinaria if imputaciones_maquinaria.nil? %>
+
+<td>
+	<%= imputaciones_maquinaria.fecha_registro_f  %>
+</td>	
+<td>
+  <%segNac = sprintf('%01.2f', imputaciones_maquinaria.seguro_nacional).sub('.', ',')%> <%=segNac.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+</td>
+<td>
+<%fletNac = sprintf('%01.2f', imputaciones_maquinaria.flete_nacional).sub('.', ',')%> <%=fletNac.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")%>
+</td>
+
+<td style="text-align: right">
+	<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'), :action => 'view', :id => imputaciones_maquinaria.id %> &nbsp;
+</td>

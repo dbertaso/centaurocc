@@ -1,0 +1,42 @@
+<%= form_title_view @sector.nombre %>
+		
+<div class="marco-contenido2">
+
+	<table>
+		<tr>
+			<td style="width: 100px">
+				<label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label>
+			</td>
+			<td style="width: 600px">
+				<%= @sector.nombre -%>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label><%= I18n.t('Sistema.Body.General.descripcion') %></label>
+			</td>
+			<td>
+				<%= @sector.descripcion -%>
+			</td>
+		</tr>
+		<tr>
+		  <td>
+		      <label><%= I18n.t('Sistema.Body.Vistas.General.activo') %></label>
+		  </td>
+		  <td>
+				<%= format_bool @sector.activo -%>
+		  </td>
+	  </tr>
+	</table>
+		
+	<%= link_to( image_tag("boton_modificar.gif"),
+		:action => :edit,
+		:id => @sector.id,
+		:html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+		
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+</div>

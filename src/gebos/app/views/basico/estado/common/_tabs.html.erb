@@ -1,0 +1,49 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name	
+	
+	if controller_name=='estado'
+%>
+		<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+<% 
+	else 
+%>
+		<li><div>
+			<%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'estado', :action => 'edit', :id => @estado.id) if (action_name=='index' or action_name=='edit')  %>
+			<%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'estado', :action => 'view', :id => @estado.id) if action_name=='view'  %>
+		</div></li>
+<% 
+	end
+
+	if @estado.id
+		if controller_name=='estado_ciudad'
+%>
+			<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.ciudades')%></a></div></li>
+<% 
+		else
+%>
+			<li><div>
+				<%= link_to(I18n.t('Sistema.Body.Vistas.General.ciudades'), :controller => 'estado_ciudad', :action => 'index', :estado_id => @estado.id) if (action_name=='edit' || action_name=='index') %>
+				<%= link_to(I18n.t('Sistema.Body.Vistas.General.ciudades'), :controller => 'estado_ciudad', :action => 'view', :estado_id => @estado.id) if action_name=='view' %>
+			</div></li>
+<% 
+		end 
+		
+		if controller_name=='estado_municipio'		
+%>
+			<li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.municipios')%></a></div></li>
+<% 
+		else
+%>
+			<li><div>
+				<%= link_to(I18n.t('Sistema.Body.Vistas.General.municipios'), :controller => 'estado_municipio', :action => 'index', :estado_id => @estado.id) if (action_name=='edit' || action_name=='index') %>
+				<%= link_to(I18n.t('Sistema.Body.Vistas.General.municipios'), :controller => 'estado_municipio', :action => 'view', :estado_id => @estado.id) if action_name=='view' %>
+			</div></li>
+<% 
+		end 
+	end
+%>
+	</ul>
+</div>

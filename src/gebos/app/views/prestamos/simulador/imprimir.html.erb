@@ -1,0 +1,138 @@
+<body>
+<head>
+  <script language="JavaScript">
+  <!-- Begin
+  function varitext(text){
+    text=document
+
+    print(text)
+  }
+  //  End -->
+  </script>
+</head>
+<body>
+
+<table style="width: 100%; background-color: #ffffff">
+  <tr>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.metodo_amortizacion') %></label></td>
+    <td style="width: 16%; text-align: left"><%= Formula.find(@calculadora.metodo).nombre %></td>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.plazo_meses') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.plazo %></td>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.tasa_interes') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.tasa_f %></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_liquidacion') %></label></td>
+    <td style="text-align: left"><%= @calculadora.fecha_f %></td>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.periodicidad_pago') %></label></td>
+    <td style="text-align: left"><%= @calculadora.periodo_w %></td>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.monto_financiar') %></label></td>
+    <td style="text-align: left"><%= @calculadora.monto_fm %> Bs.F</td>
+  </tr>
+</table>
+<% if @calculadora.gracia_plazo.to_i > 0 %>
+<table style="width: 100%; background-color: #ffffff">
+  <tr>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.plazo_gracia') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.gracia_plazo %></td>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.tasa_interes_gracia') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.gracia_tasa_f %></td>
+    <td style="width: 16%; text-align: right"></td>
+    <td style="width: 16%; text-align: left"></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.periodicidad_pago') %></label></td>
+    <td style="text-align: left"><%= @calculadora.gracia_periodo_w %></td>
+    <td style="text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.intereses_diferidos') %></label></td>
+    <td style="text-align: left"><%= (@calculadora.diferir_intereses.to_i==0) ? 'No' : 'Sí' %></td>
+    <td style="text-align: right"></td>
+    <td style="text-align: left"></td>
+  </tr>
+</table>
+<% end %>
+<% if @calculadora.periodo_muerto.to_i==1 %>
+<table style="width: 100%; background-color: #ffffff">
+  <tr>
+    <td style="width: 16%; text-align: right"><label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.meses_muertos') %></label></td>
+    <td style="width: 16%; text-align: left"><%= @calculadora.muerto_plazo %></td>
+    <td style="width: 16%; text-align: right"></td>
+    <td style="width: 16%; text-align: left"></td>
+    <td style="width: 16%; text-align: right"></td>
+    <td style="width: 16%; text-align: left"></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"></td>
+    <td style="text-align: left"></td>
+    <td style="text-align: right"></td>
+    <td style="text-align: left"></td>
+    <td style="text-align: right"></td>
+    <td style="text-align: left"></td>
+  </tr>
+</table>
+<% end %>
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <%= render :partial=>'encabezado' %>
+  </thead>
+  <% if @calculadora.periodo_muerto.to_i==1 %>
+  <tbody>
+    <tr style="background-color: #ffffff">
+      <td>
+      </td>
+      <td colspan="9">
+        <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_muerto') %></label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_muerto">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :cuotas=>@calculadora.muerto_cuotas, :clear=>'ffffff', :dark=>'eeeeee' } %>
+  </tbody>
+  <% end %>
+  <% if @calculadora.gracia_periodo.to_i>0 %>
+  <tbody>
+    <tr style="background-color: #ffffff">
+      <td>
+      </td>
+      <td colspan="9">
+        <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_gracia') %></label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_gracia">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :cuotas=>@calculadora.gracia_cuotas, :clear=>'ffffff', :dark=>'eeeeee' } %>
+  </tbody>
+  <% end %>
+  <tbody>
+    <tr style="background-color: #ffffff">
+      <td>
+      </td>
+      <td colspan="9">
+        <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_amortizacion') %></label>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="list_cuotas">
+    <%= render :partial=>'cuotas',
+      :locals=>{ :cuotas=>@calculadora.cuotas, :clear=>'ffffff', :dark=>'eeeeee' } %>
+  </tbody>
+  </table>
+  <table style="width: 100%">
+  <tr>
+  <td colspan="10">
+  <div style="padding: 6px" align="center">
+    <form>
+      <input name="print" type="button" value="Imprimir" onclick="varitext()">
+    </form>
+  </div>
+  </td>
+  </tr>
+
+
+</table>
+
+<br/>
+<br/>
+<br/>

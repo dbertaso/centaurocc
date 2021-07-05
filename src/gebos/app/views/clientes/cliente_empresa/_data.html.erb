@@ -1,0 +1,19 @@
+<td align="center">
+  <%= empresa.id %>
+</td>
+<td>
+  <%= empresa.rif %>
+</td>
+<td>
+  <%= empresa.alias %>
+</td>
+<td>
+  <%= empresa.nombre %>
+</td>
+
+<td style="text-align: right">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title =>'Consultar'), :action => 'view', :id => empresa.id, :popup=>params[:popup] ) %>&nbsp;
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title => 'Editar'), :action => 'edit', :id => empresa.id, :popup=>params[:popup] ) if vlink 'edit' %>
+   <% link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'), :title=>'Imprimir'),
+        { :action=>'printer', :id=>empresa.id, :popup=>true},
+        :popup => ['informe', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>

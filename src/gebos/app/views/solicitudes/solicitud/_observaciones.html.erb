@@ -1,0 +1,12 @@
+<div style="text-align: justify">
+  <div class="marco-titulo"><div><div><%= "#{I18n.t('Sistema.Body.Vistas.General.observaciones')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %></div></div></div>
+
+  <%= @control_solicitud.comentario %>
+  <br/><br/>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method => :get,
+        :url => {:action => :cerrar_observaciones, :id => @control_solicitud.solicitud_id}) -%>
+  <br/><br/>
+</div>

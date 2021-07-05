@@ -1,0 +1,33 @@
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+		<th style="width: 100px" <%= sort_class_helper('numero_solicitud') %>>
+			<%= sort_link_helper "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.solicitud')}", 'numero_solicitud', 'list' %>
+		</th>
+		<th style="width: 100px" <%= sort_class_helper('numero') %>>
+			<%= sort_link_helper "#{t('Sistema.Body.Vistas.General.numero')} #{t('Sistema.Body.Vistas.General.prestamo')}", 'numero', 'list' %>
+		</th>
+		<th style="width: 140px" <%= sort_class_helper('identificacion') %>>
+			<%= sort_link_helper t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'identificacion', 'list' %>
+		</th>
+		<th style="width: 240px" <%= sort_class_helper('nombre_cliente') %>>
+			<%= sort_link_helper "#{t('Sistema.Body.Vistas.General.nombre')} #{t('Sistema.Body.Vistas.General.beneficiario')}", 'nombre_cliente', 'list' %>
+		</th>
+		<th style="width: 140px" <%= sort_class_helper('estatus_p') %>>
+			<%= sort_link_helper t('Sistema.Body.Vistas.PrestamoCambioEstatus.Etiquetas.estatus'), 'estatus_p', 'list' %>
+		</th>		
+		<th style="width: 70px">
+		</th>
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for solicitud in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

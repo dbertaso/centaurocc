@@ -1,0 +1,36 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 200px" <%= sort_class_helper('embarcacion_id') %>>
+        <%= sort_link_helper 'Nombre de Embarcación', 'embarcacion_id', 'list' %>
+      </th>
+      <th style="width: 200px" <%= sort_class_helper('tipo_especie_id') %>>
+        <%= sort_link_helper 'Matrícula', 'tipo_especie_id', 'list' %>
+      </th>
+
+      <th style="width: 100px" <%= sort_class_helper('gasto_por_unidad') %>>
+        <%= sort_link_helper 'Tipo de Embarcación', 'gasto_por_unidad', 'list' %>
+      </th>
+
+      <th style="width: 100px" <%= sort_class_helper('ganancia_por_unidad') %>>
+        <%= sort_link_helper 'U.A.B', 'ganancia_por_unidad', 'list' %>
+      </th>
+
+      <th style="width: 60px">Acción
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for faenas_pesca in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :faenas_pesca => faenas_pesca, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))), 
+  visitas_visita_seguimiento_index_path<<"/#{@visitas.solicitud_id.to_s}", {:popup=>params[:popup],:id=>'button_close' } ) -%>

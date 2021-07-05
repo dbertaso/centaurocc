@@ -1,0 +1,30 @@
+<table>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Controladores.EspecieVariedadPasto.FormTitles.form_title_records')%> </label>
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= select(
+        'especie_variedad_pasto','tipo_pasto_forraje_id',
+        @tipo_pasto_forraje.map{|i| [i.descripcion, i.id]},
+        { :prompt => I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.General.descripcion')%></label> 
+      <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+    </td>
+    <td>
+      <%= text_field 'especie_variedad_pasto', 'descripcion',
+        :class=>'text', :style=>'width: 500px;',
+        :maxlength=>'150', :onKeyUp=>'textCounter(this,150)',
+        :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"", :id=>'button_save') -%>&nbsp;

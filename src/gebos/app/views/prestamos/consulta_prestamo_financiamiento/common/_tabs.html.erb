@@ -1,0 +1,59 @@
+<div id="tabs">
+  <ul>
+    <%
+      action_name = controller.action_name
+      controller_name = controller.controller_name
+      if controller_name=='solicitud_prestamo'
+      %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%= I18n.t('Sistema.Body.Controladores.ConsultaPrestamo.FormTitles.form_title_record') %>
+            </a>
+          </div>
+        </li>
+      <%
+      else
+      %>
+        <li>
+          <div>
+              <%= link_to(I18n.t('Sistema.Body.Controladores.ConsultaPrestamo.FormTitles.form_title_record'), :controller => 'solicitud_prestamo', :action => 'edit', :solicitud_id => @solicitud.id, :id => @prestamo.id) if action_name == 'index' || action_name=='edit'  %>
+
+              <%= link_to(I18n.t('Sistema.Body.Controladores.ConsultaPrestamo.FormTitles.form_title_record'), :controller => 'solicitud_prestamo', :action => 'view_detail', :solicitud_id => @solicitud.id, :id => @prestamo.id) if (action_name=='view_detail' || action_name=='view')  %>
+          </div>
+        </li>
+
+      <%
+      end
+
+      if @prestamo.id
+
+        if controller_name=='solicitud_prestamo_rubro'
+        %>
+
+          <li id="actual">
+            <div>
+              <a href="#">
+                <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Tabs.plan_inversion') %>
+              </a>
+            </div>
+          </li>
+        <%
+
+        else
+
+        %>
+
+          <li>
+            <div>
+                <%= link_to(I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Tabs.plan_inversion'), :controller => 'solicitud_prestamo_rubro', :action => 'index', :solicitud_id => @solicitud.id, :prestamo_id => @prestamo.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+                <%= link_to(I18n.t('Sistema.Body.Vistas.ConsultaPrestamo.Tabs.plan_inversion'), :controller => 'solicitud_prestamo_rubro', :action => 'view', :solicitud_id => @solicitud.id, :prestamo_id => @prestamo.id) if (action_name == 'view' || action_name == 'view_detail')  %>
+            </div>
+          </li>
+        <%
+        end
+
+      end
+      %>
+  </ul>
+</div>

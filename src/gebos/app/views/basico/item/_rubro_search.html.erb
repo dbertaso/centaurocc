@@ -1,0 +1,9 @@
+
+<%= select_tag(
+  'rubro_id',
+  [options_for_select([["Seleccione un rubro", "0"]]),options_for_select(@rubro_select.map{|i| [i.nombre, i.id]})],
+  { :class=>'select', :onchange=>"#{remote_function(:loading =>'Element.show("loading")',
+  :loaded => 'Element.hide("loading")',
+  :method => :get, :url=>{:controller=>'item',
+    :action=>:rubro_change }, :with => "'id='+value")}; inputChange();"})
+%>

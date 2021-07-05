@@ -1,0 +1,48 @@
+<td>
+	<%= format_fecha(control_cobranza.fecha_cierre) if !control_cobranza.fecha_cierre.nil? %>
+</td>
+<td>
+	<%= format_fecha(control_cobranza.fecha) if !control_cobranza.fecha.nil? %>
+</td>
+<td>
+	<%= control_cobranza.archivo if !control_cobranza.archivo.nil? %>
+</td>
+<td>
+  <%= control_cobranza.entidad_financiera.nombre unless control_cobranza.entidad_financiera.nil? %>
+</td>
+<td>
+  <%= control_cobranza.numero_cuenta unless control_cobranza.numero_cuenta.nil? %>
+</td>
+<td>
+  <%= control_cobranza.tipo_cuenta_w unless control_cobranza.tipo_cuenta.nil? %>
+</td>
+<td style="text-align: center">
+	<%= control_cobranza.estado if !control_cobranza.estado.nil? %>
+</td>
+<td style="text-align: center">
+	<%= control_cobranza.numero_leido_fm if !control_cobranza.numero_leido.nil? %>
+</td>
+<td style="text-align: right">
+	<%= control_cobranza.monto_leido_fm if !control_cobranza.monto_leido.nil? %>
+</td>
+<td style="text-align: center">
+	<%= control_cobranza.numero_procesado_fm if !control_cobranza.numero_procesado.nil? %>
+</td>
+<td style="text-align: right">
+	<%= control_cobranza.monto_procesado_fm if !control_cobranza.monto_procesado.nil? %>
+</td>
+<td style="text-align: center">
+	<%= control_cobranza.cantidad_rechazos_fm if !control_cobranza.cantidad_rechazos.nil? %>
+</td>
+<td style="text-align: right">
+	<%= control_cobranza.monto_rechazos_fm if !control_cobranza.monto_rechazos.nil? %>
+</td>
+<td style="text-align: center">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.impresion_cobranza_aplicada')), 
+  {:controller => '/prestamos/cobranza_aplicada', :action => 'reporte', :fecha_desde => format_fecha(control_cobranza.fecha_cierre), :fecha_hasta => format_fecha(control_cobranza.fecha_cierre), :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.consultar_cobranza_aplicada') + "','height=800,width=800,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+</td>
+<td style="text-align: center">
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.impresion_cobranza_rechazada')), 
+  {:controller => '/prestamos/rechazo_domiciliacion', :action => 'reporte', :fecha_rechazo => format_fecha(control_cobranza.fecha_cierre), :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.ControlCobranzas.Etiquetas.impresion_cobranza_rechazada') + "','height=800,width=800,scrollbars=yes,resizable=yes'); return false;")  %>&nbsp;
+</td>
+

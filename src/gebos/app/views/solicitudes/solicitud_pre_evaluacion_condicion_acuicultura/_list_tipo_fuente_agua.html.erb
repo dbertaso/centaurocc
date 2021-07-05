@@ -1,0 +1,37 @@
+<table width="100%">
+
+
+  <% lista = 'lista0'
+  @tipo_fuente_agua.each { |i| %>
+
+    <tr>
+      <td width="30px">
+        <%= check_box 'recaudo_check',
+        i.id,
+        {:checked=>i.marcado, :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>"solicitud_pre_evaluacion_condicion_acuicultura",
+          :action=>:save_fuentes_agua },
+          :with=>"'id=#{i.id}&unidad_produccion_condicion_acuicultura_id=#{@unidad_produccion_condicion_acuicultura.id}'")}", :name => "condicion_fuente_agua[]", :id => "tipo_fuentes_agua_#{i.id}" }  %>
+      </td>
+
+      <td>
+
+        <%= i.nombre %>
+      </td>
+    </tr>
+
+    <% if i.nombre == '[Otro]' %>
+      <tr><td></td>
+        <td>
+        </td>
+      </tr>
+    <% end %>
+
+  <%  
+  } %>
+
+</table>
+<br/>

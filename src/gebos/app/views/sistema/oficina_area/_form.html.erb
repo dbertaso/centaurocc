@@ -1,0 +1,37 @@
+<table style="width: 100%">
+
+  <tr>
+    <td style="width: 30%"><label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label> <label class="requerido"> (*)</label></td>
+    <td>
+      <%= select(
+        'oficina_area_influencia', 'estado_id',
+        @estado_list.map{|e| [e.nombre, e.id]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method => :get,
+          :url=>{:controller=>'oficina_area',
+          :action=>:estado_change },
+          :with=>"'estado_id='+value")}; inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 30%"><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label> <label class="requerido"> (*)</label></td>
+    <td>
+      <span id="municipio-select">
+        <%= render :partial => 'municipio_select' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%"><label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label> <label class="requerido"> (*)</label></td>
+    <td>
+      <span id="parroquia-select">
+        <%= render :partial => 'parroquia_select' %>
+      </span>
+    </td>
+  </tr>
+
+</table>

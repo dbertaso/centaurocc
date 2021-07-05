@@ -1,0 +1,49 @@
+<%  @condiciones_acuicultura = CondicionesAcuicultura.find(:all,:conditions=>"solicitud_id=#{@seguimiento_visita.id}")%>
+<%  @cultivo_laguna = CultivoLaguna.find(:all,:conditions=>"solicitud_id=#{@seguimiento_visita.id}")%>
+<%  @calidad_agua = CalidadAguaAlimento.find(:all,:conditions=>"solicitud_id=#{@seguimiento_visita.id}")%>
+
+<% if !@condiciones_acuicultura[0].nil? %>
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Condiciones de Acuicultura </span>
+    </td>
+</tr>
+
+  <tbody id="list_body">
+    <%  for condiciones_acuicultura in @condiciones_acuicultura %>
+      <%= render :partial => 'row_condiciones_acuicultura', :locals => { :condiciones_acuicultura => condiciones_acuicultura } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+
+<% if !@cultivo_laguna[0].nil? %>
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Cultivos de Laguna</span>
+    </td>
+</tr>
+
+  <tbody id="list_body">
+    <%  for cultivo_laguna in @cultivo_laguna %>
+      <%= render :partial => 'row_cultivo_laguna', :locals => { :cultivo_laguna => cultivo_laguna } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+
+<% if !@calidad_agua[0].nil? %>
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Calidad del Agua y Alimentos</span>
+    </td>
+</tr>
+
+  <tbody id="list_body">
+    <%  for calidad_agua in @calidad_agua %>
+      <%= render :partial => 'row_calidad_agua', :locals => { :calidad_agua => calidad_agua } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+

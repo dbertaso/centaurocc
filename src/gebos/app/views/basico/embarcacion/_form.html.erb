@@ -1,0 +1,319 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+
+  <!-- Caso especial -->
+
+  <%if @em1==0%>
+    <%= hidden_field 'embarcacion', 'puerto_base',
+      :value => "#{I18n.t('Sistema.Body.Controladores.Embarcacion.Etiquetas.no_aplica')}" %>
+  <%end%>
+
+  <%if @em2==0%>
+    <%= hidden_field 'embarcacion', 'condicion',
+      :value => "#{I18n.t('Sistema.Body.Controladores.Embarcacion.Etiquetas.no_aplica')}" %>
+  <%end%> 
+  <%if @em3==0%>
+    <%= hidden_field 'embarcacion', 'coordenadas_utm_puerto_base',
+      :value => "#{I18n.t('Sistema.Body.Controladores.Embarcacion.Etiquetas.no_aplica')}" %>
+  <%end%>
+  <%if @em4==0%>
+    <%= hidden_field 'embarcacion', 'capacidad_combustible',
+      :value => "1" %>
+  <%end%> 
+
+  <%if @em5==0%>
+    <%= hidden_field 'embarcacion', 'lugares_pesca',
+      :value => "#{I18n.t('Sistema.Body.Controladores.Embarcacion.Etiquetas.no_aplica')}" %>
+  <%end%>
+
+  <%if @em6==0%>
+    <%= hidden_field 'embarcacion', 'estado_id',
+      :value => "25" %>
+  <%end%>
+
+  <%if @em7==0%> 
+    <%= hidden_field 'embarcacion', 'municipio_id',
+      :value => "359" %>
+  <%end%>
+
+  <%if @em8==0%> 
+    <%= hidden_field 'embarcacion', 'parroquia_id',
+      :value => "2697" %>
+  <%end%>
+
+
+  <tr>
+    <td style="width: 25%">
+      <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %></label> <label style="color: red">*</label>
+    </td>
+    <td><%= "#{I18n.t('Sistema.Body.Vistas.General.a').upcase} #{I18n.t('Sistema.Body.Vistas.General.solicitar')}" %>:
+      <%if @estoy_editando!="1" %>             
+        <%=
+        radio_button('embarcacion','es_propia', 'true',                    
+          :class=>'text', :onchange=> 'verifico();inputChange();')
+        -%>
+
+
+
+
+  <%#=
+  radio_button 'embarcacion','es_propia','',
+
+  :class=>'text', :onclick=> 'verifico();inputChange();'
+  -%>
+
+        <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+        <%=
+        radio_button('embarcacion','es_propia', 'false',                    
+          :class=>'text', :onchange=> 'verifico();inputChange();')
+        -%>   
+
+  <%#=
+  radio_button 'embarcacion','es_propia','',
+  :class=>'text', :onclick=> 'verifico();inputChange();'
+  -%>
+      <%else%>
+        <%=
+        radio_button('embarcacion','es_propia', 'true',                    
+          :class=>'text', :onchange=> 'verifico2();inputChange();')
+        -%>
+
+
+
+
+  <%#=
+  radio_button 'embarcacion','es_propia','',
+
+  :class=>'text', :onclick=> 'verifico();inputChange();'
+  -%>
+
+        <%= I18n.t('Sistema.Body.Vistas.General.propia') %>:
+
+        <%=
+        radio_button('embarcacion','es_propia', 'false',                    
+          :class=>'text', :onchange=> 'verifico2();inputChange();')
+        -%>   
+      <%end%>
+    </td>
+
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'embarcacion', 'nombre_embarcacion',
+        :class=>'text', :style=>'width: 120px',
+        :maxlength=>'120', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+
+
+    </td>	
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.matricula') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <% if @es_propia!="1" %>
+        <%= text_field 'embarcacion', 'matricula',
+          :class=>'text', :style=>'width: 120px',
+          :maxlength=>'20', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();' -%>
+      <%else%>
+        <%= text_field 'embarcacion', 'matricula',
+          :class=>'text', :style=>'width: 120px',
+          :maxlength=>'20', :onkeypress=>'inputChange();',
+          :onchange=>'inputChange();',:readonly=>'readonly' -%>
+
+      <%end%>
+    </td>	
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'embarcacion','tipo_embarcacion_id',
+        @tipo_embarcacion.map{|i| [i.tipo, i.id]},
+        {:prompt=>'Seleccione un tipo de embarcacion... '},
+        { :class=>'select'} ) %>
+    </td>	
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.material')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= select(
+        'embarcacion','tipo_material_id',
+        @tipo_material.map{|i| [i.tipo, i.id]},
+        {:prompt=>'Seleccione un tipo de material... '},
+        { :class=>'select'} ) %>
+    </td>	
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.eslora') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'embarcacion', 'eslora_f',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+      (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</td>	
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.manga') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'embarcacion', 'manga_f',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+      (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)</td>	
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.puntal') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'embarcacion', 'puntal_f',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+      (<%= I18n.t('Sistema.Body.Modelos.Plantilla.Mensajes.mts') %>)	</td>	
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.u_a_b') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'embarcacion', 'uab_f',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>	
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.cantidad_tripulante') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'embarcacion', 'cantidad_tripulantes',
+        :class=>'text', :style=>'width: 60px',
+        :onkeypress=>'inputChange();'-%>
+
+    </td>	
+
+  </tr>
+
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.autonomia_pesca') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'embarcacion', 'autonomia_pesca',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'4',
+        :onkeypress=>'inputChange();'-%>
+
+      (<%= I18n.t('Sistema.Body.Vistas.General.dias') %>) </td>	
+
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Motores.Columnas.proveedor_marino') %> <br>¿<%= "#{I18n.t('Sistema.Body.Vistas.General.asociado')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.General.cliente_gprotec')}" %>?</label> <label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= I18n.t('Sistema.Body.General.si') %>:
+      <%if @estoy_editando=="1"%>
+        <%if @es_asociado_fondas%>
+          <%=
+          radio_button('','proveedor', 'true',           
+            :class=>'text', :onclick=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'embarcacion',
+            :action=>:proveedor_click },
+            :with=>"'valor='+ this.value")};verifico3();inputChange();",:checked=>true) -%>
+        <%else%>
+          <%=
+          radio_button('','proveedor','true',
+            :class=>'text', :onclick=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'embarcacion',
+            :action=>:proveedor_click },
+            :with=>"'valor='+ this.value")};verifico3();inputChange();",:checked=>false) -%>
+        <%end%>
+
+        <%= I18n.t('Sistema.Body.General.negacion') %>:
+        <% if !@es_asociado_fondas %>
+          <%= radio_button('','proveedor','false', :class=>'text', :onclick=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'embarcacion',
+            :action=>:proveedor_click },
+            :with=>"'valor='+ this.value")};verifico3();inputChange();",:checked=>false) -%>
+        <% else %>
+          <%= radio_button('','proveedor','false', :class=>'text', :onclick=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'embarcacion',
+            :action=>:proveedor_click },
+            :with=>"'valor='+ this.value")};verifico3();inputChange();",:checked=>false) -%>
+        <% end %>
+      <%else%>
+        <%= radio_button('','proveedor', 'true', :class=>'text', :onclick=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'embarcacion',
+          :action=>:proveedor_click },
+          :with=>"'valor='+ this.value")};verifico3();inputChange();") -%>
+        <%= I18n.t('Sistema.Body.General.negacion') %>:
+        <%= radio_button('','proveedor','false', :class=>'text', :onclick=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'embarcacion',
+          :action=>:proveedor_click },
+          :with=>"'valor='+ this.value")};verifico3();inputChange();",:checked=>false) -%>
+      <%end%>
+    </td></tr>
+
+  <%if @estoy_editando=="1"%>
+    <tr id="celda_proveedor" style="visibility:visible;">
+    <%else%>
+    <tr id="celda_proveedor" style="visibility:hidden;">
+    <%end%>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.Motores.Columnas.proveedor_marino') %></label> <label style="color: red">*</label>
+    </td>
+
+    <td>			
+      <span id="proveedor-marino-select"><%= render :partial => 'proveedor_marino_select' -%></span>
+    </td>	
+  </tr>
+
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"actualizo();if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;
+

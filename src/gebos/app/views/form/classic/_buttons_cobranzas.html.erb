@@ -1,0 +1,15 @@
+<%= image_submit_tag image_path(I18n.t('Sistema.Body.Imagenes.enviar')),
+    :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+  :id=>'button_save' -%>
+
+<%
+  if !params[:controlador].nil?
+  params = {:action => :index, :controller => params[:controlador],
+    :id=>'button_cancel'}.merge(params)
+  else
+  params = {:action => :index,
+    :id=>'button_cancel'}.merge(params)
+  end
+%>
+<%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar'))),
+  params ) -%>

@@ -1,0 +1,127 @@
+<script type="text/javascript">
+
+
+function imprime(){
+//desaparece el boton
+document.getElementById("noprint").style.visibility='hidden';
+//se imprime la pagina
+print();
+setTimeout("showlayer()",2000);
+}
+function showlayer(){
+     document.getElementById("noprint").style.visibility='visible';
+}
+
+</script>
+<img src="/images/logo_bandes.jpg" width="164" height="65" align="left" />
+<br/><br/>
+<div style="width: 83%; text-align: center; font-family: arial; font-size: 20px"><label>Informe de Avalúo</label></div>
+<div style="text-align: right; font-family: arial; font-size: 10px">Fecha de Impresión <%= Time.now.strftime('%d/%m/%Y') %></div>
+<h1></h1>
+<div style="text-align: right; font-family: arial; font-size: 14px">Avalúo e Inspección</div>
+<div style="font-family: arial; font-size: 15px">Tipo de Garantía: <%= @tipo %></div>
+<br/>
+<table width="100%" border="1">
+  <tr>
+    <td colspan="3" align="center" style="background-color: #d9d4d4; font-size: 15px"><label>Avalúo Proponente</label></td>
+  </tr>
+
+  <tr>
+    <td colspan="3" align="justify" style="font-size: 14px">
+      Nombre del Perito: <%= @solicitud_avaluo.nombre_perito %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 33%; font-size: 14px">
+      Fecha Avalúo Externo: <%= @solicitud_avaluo.fecha_avaluo_f %>
+    </td>
+    <td style="width: 33%; font-size: 14px">
+      Número Sudeban: <%= @solicitud_avaluo.numero_sudeban %>
+    </td>
+    <td style="width: 34%; font-size: 14px">
+      Valor Avalúo Externo: <%= display_number @solicitud_avaluo.valor_avaluo, '' %>
+    </td>
+  </tr>
+
+</table>
+
+<%= render :partial => "reporte_#{@rhtml}" %>
+
+<table width="100%" border="1">
+  <tr>
+    <td colspan="3" align="center" style="background-color: #d9d4d4; font-size: 15px"><label>Ubicación Geográfica</label></td>
+  </tr>
+
+  <tr>
+    <td colspan="3" align="justify" style="font-size: 14px">
+      Urbanización / Barrio / Sector: <%= @solicitud_avaluo.urbanizacion %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="3" align="justify" style="font-size: 14px">
+      Calle / Avenida / Callejón: <%= @solicitud_avaluo.calle %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="3" align="justify" style="font-size: 14px">
+      Casa / Edificio / Galpón: <%= @solicitud_avaluo.casa %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 33%; font-size: 14px">
+      Número Apto / Casa: <%= @solicitud_avaluo.numero_apta %>
+    </td>
+    <td style="width: 33%; font-size: 14px">
+      Piso: <%= @solicitud_avaluo.piso %>
+    </td>
+    <td align="justify" style="width: 34%; font-size: 14px">
+      Punto de Referencia: <%= @solicitud_avaluo.punto_referencia %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="font-size: 14px">
+      Estado: <%= @solicitud_avaluo.Estado.nombre unless @solicitud_avaluo.Estado.nil? %>
+    </td>
+    <td style="font-size: 14px">
+      Municipio: <%= @solicitud_avaluo.Municipio.nombre unless @solicitud_avaluo.Municipio.nil? %>
+    </td>
+    <td style="font-size: 14px">
+      Parroquia: <%= @solicitud_avaluo.Parroquia.nombre unless @solicitud_avaluo.Parroquia.nil? %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="3" align="center" style="background-color: #d9d4d4; font-size: 14px"><label>Resumen del Informe</label></td>
+  </tr>
+
+  <tr>
+    <td colspan="3" style="font-size: 14px">
+      Comentarios (Narrativa): <%= @solicitud_avaluo.comentario.gsub("\n","<br/>") %>
+    </td>
+  </tr>
+</table>
+<br/>
+<%  unless @solicitud_avaluo_imagen[0].nil? %>
+<div style="text-align: center">
+  <h2>Evidencia Fotográfica</h2>
+<%  @solicitud_avaluo_imagen.each { |imagen| %>
+        <div><img src="/documentos/images_avaluo/<%= imagen.nombre_imagen %>" height="350px"/>
+        </div><br/>
+        <div style="font-family: Arial; font-size: 16pX"><%= imagen.referencia %></div></div>
+        <br/><br/><br/>
+<% } %>
+</div>
+<% end %>
+
+<div id=noprint>
+<TABLE width="93%" cellpadding="2">
+<tr align="center">
+  <td><input id="imprimir" name="imprimir" onclick="Javascript:imprime()" type="button" value="Imprimir" /></td>
+</tr>
+</TABLE>
+</div>

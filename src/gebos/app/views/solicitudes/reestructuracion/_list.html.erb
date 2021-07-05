@@ -1,0 +1,42 @@
+
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th  <%= sort_class_helper('beneficiario') %> >
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.beneficiario'), 'beneficiario', 'list' %>
+      </th>
+
+      <th width="150px" <%= sort_class_helper('cedula_rif') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+      </th>
+      <th width="100px" <%= sort_class_helper('contador_prestamos') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.cantidad_de_financiamientos'), 'contador_prestamos', 'list' %>
+      </th>
+
+      <th <%= sort_class_helper('saldo_deudor') %> width="150px">
+        <%= sort_link_helper I18n.t('Sistema.Body.General.saldo_deudor'), 'saldo_deudor', 'list' %>
+      </th>
+
+      <th <%= sort_class_helper('deuda') %> width="150px">
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.deuda'), 'deuda', 'list' %>
+      </th>
+
+
+      <th >
+
+      </th>
+
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%
+    even_odd = 1
+    for view_prestamos_reestructurar in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :view_prestamos_reestructurar => view_prestamos_reestructurar, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

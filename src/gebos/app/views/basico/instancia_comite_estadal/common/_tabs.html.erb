@@ -1,0 +1,21 @@
+<div id="tabs">
+  <ul>
+    <% if @tab=="datos_basicos"  %>
+    <li id="actual">
+      <div><a href="#" id="datos_basicos" onclick="document.getElementById('error').style.display = 'none';inputChange();show_content_tabs(this)"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div>
+    </li>
+    <%if !@punto_cuenta.nil?%>
+    <li>
+      <div ><a href="#" id="punto_cuenta" onclick="document.getElementById('error').style.display = 'none';inputChange();show_content_tabs(this)"><%=I18n.t('Sistema.Body.Vistas.General.acta') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.aprobacion')%></a></div>
+    </li>
+    <%end%>
+    <%else%>
+    <li>
+      <div><a href="#" id="datos_basicos" onclick="document.getElementById('error').style.display = 'none';inputChange();show_content_tabs(this)"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div>
+    </li>
+    <li id="actual">
+      <div ><a href="#" id="punto_cuenta" onclick="document.getElementById('error').style.display = 'none';inputChange();show_content_tabs(this)"><%=I18n.t('Sistema.Body.Vistas.General.acta') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.aprobacion')%></a></div>
+    </li>    
+    <%end %>
+  </ul>
+</div>

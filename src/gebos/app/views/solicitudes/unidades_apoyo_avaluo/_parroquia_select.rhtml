@@ -1,0 +1,5 @@
+<%= select(
+  'solicitud_avaluo', 'parroquia_id',
+  @parroquia_select.map{|m| [m.nombre, m.id]},
+  { },
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

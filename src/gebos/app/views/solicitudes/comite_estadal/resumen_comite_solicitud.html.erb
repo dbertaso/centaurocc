@@ -1,0 +1,172 @@
+<div class="marco-contenido">
+  <table width="100%" border="0">
+    <tr style="width: 10px">
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></span>
+        </td>
+       <td></td>
+    </tr>
+    <tr>
+      <td width="20%"><label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label></td>
+      <td>
+        <%=  @solicitud.numero -%>
+      </td>
+    </tr>
+    <tr>
+      <td><label>&nbsp;<%=I18n.t('Sistema.Body.General.beneficiario')%></label></td>
+      <td>
+        <%=  @solicitud.cliente.nombre -%>
+      </td>
+    </tr>
+    <tr>
+      <td><label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.cedula')%> / <%=I18n.t('Sistema.Body.Vistas.General.rif')%></label></td>
+      <td>
+        <%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.rif : @solicitud.cliente.persona.cedula %>
+      </td>
+    </tr>
+    <tr>
+      <td><label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Vistas.General.solicitado')%></label></td>
+      <td>
+        <%=  @solicitud.monto_solicitado_fm -%>
+      </td>
+    </tr>
+    <tr>
+       <td></td>
+       <td></td>
+    </tr>
+    <%  if !@solicitud.unidad_produccion.nil?  %>
+    <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.General.datos')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%><%=I18n.t('Sistema.Body.Modelos.Errores.unidad_produccion')%></span>
+        </td>
+       <td></td>
+    </tr>
+    <tr>
+        <td>
+           <label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+        </td>
+       <td>
+         <%= 
+         @solicitud.unidad_produccion.nombre
+         -%>
+       </td>
+    </tr>
+    <tr>
+        <td>
+           <label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+       <td>
+         <%=  
+         @solicitud.unidad_produccion.ciudad.estado.nombre
+         -%>
+       </td>
+    </tr>
+    <tr>
+        <td>
+           <label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.ciudad')%></label>
+        </td>
+       <td>
+         <%=  @solicitud.unidad_produccion.ciudad.nombre -%>
+       </td>
+    </tr>
+    <tr>
+        <td>
+           <label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label>
+        </td>
+       <td>
+         <%= @solicitud.unidad_produccion.municipio.nombre  -%>
+       </td>
+    </tr>
+    <tr>
+        <td>
+           <label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.parroquia')%></label>
+        </td>
+       <td>
+         <%= @solicitud.unidad_produccion.parroquia.nombre -%>
+       </td>
+    </tr>
+    <tr>
+        <td>
+           <label>&nbsp;<%=I18n.t('Sistema.Body.Vistas.General.superficie')%> <%=I18n.t('Sistema.Body.Vistas.General.hectareas')%></label>
+        </td>
+       <td>
+         <%= @solicitud.unidad_produccion.total_hectareas_f -%>
+       </td>
+    </tr>
+    <% 
+      end
+      if !@unidad_negocio.nil? && !@unidad_negocio.empty?
+    %>
+    <tr>
+        <td>
+           <label>&nbsp;<%=I18n.t('Sistema.Body.Controladores.TenenciaUnidadProduccion.FormTitles.form_title_record')%> <%=I18n.t('Sistema.Body.Controladores.VocacionTierra.FormTitles.form_title_record')%></label>
+        </td>
+       <td>
+         <%=
+         nombre_tenencia_unidad_produccion=""
+         @unidad_negocio.each {|dato| nombre_tenencia_unidad_produccion= "#{nombre_tenencia_unidad_produccion}".html_safe << dato.tenencia_unidad_produccion.nombre.to_s.html_safe << "<br/> ".html_safe }
+         nombre_tenencia_unidad_produccion
+         %>
+       </td>
+    </tr>
+    <% end
+      if !@unidad_produccion_vocacion_tierra.nil? && !@unidad_produccion_vocacion_tierra.empty?
+    %>
+    <tr>
+        <td>
+           <label>&nbsp;<%=I18n.t('Sistema.Body.Controladores.VocacionTierra.FormTitles.form_title_records')%></label>
+        </td>
+       <td>
+         <%=
+         nombre_vocacion_tierra=""
+         @unidad_produccion_vocacion_tierra.each {|dato| nombre_vocacion_tierra= "#{nombre_vocacion_tierra}".html_safe << dato.vocacion_tierra.nombre.to_s.html_safe << "<br/> ".html_safe }
+         nombre_vocacion_tierra
+         -%>         
+       </td>
+    </tr>
+    <% end %>
+    <%unless @solicitud.justificacion.nil?%>
+    <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.General.justificacion')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.General.la')%> <%=I18n.t('Sistema.Body.General.viabilidad')%></span>
+        </td>
+       <td></td>
+    </tr>
+    <tr>      
+      <td colspan="2"><%=  @solicitud.justificacion %></td>
+    </tr>
+    <%end%>
+
+    <%unless @solicitud.comentario_comite_estadal.nil? %>
+    <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.General.comentario')%> <%=I18n.t('Sistema.Body.Vistas.General.comite')%> <%=I18n.t('Sistema.Body.Vistas.General.estadal')%></span>
+        </td>
+       <td></td>
+    </tr>
+    <tr>
+      <td colspan="2"><%=  @solicitud.comentario_comite_estadal %></td>
+    </tr>    
+    <%end%>
+
+
+    <%unless @solicitud.comentario_comite_nacional.nil? %>
+    <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.General.comentario')%> <%=I18n.t('Sistema.Body.Vistas.General.comite')%> <%=I18n.t('Sistema.Body.Vistas.General.nacional')%></span>
+        </td>
+       <td></td>
+    </tr>
+    <tr>
+      <td colspan="2"><%=  @solicitud.comentario_comite_nacional %></td>
+    </tr>
+    <%end%>
+
+  <tr><td colspan="2"><br>
+<%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+               {  },
+               { :id=>'buton_cerrar',:onclick=>"window.close();return false;" } ) -%>  
+  </td></tr>
+
+  </table>
+</div>

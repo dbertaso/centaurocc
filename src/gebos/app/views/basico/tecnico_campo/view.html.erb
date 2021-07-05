@@ -1,0 +1,235 @@
+<div class="marco-contenido">
+  <%= form_title_view @tecnico_campo.complemento %>
+  <%= render :partial=>'basico/tecnico_campo/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <table border="0" width="100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.General.datos_basicos') %></span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px" ><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.codigo_tecnico') %></label></td>
+        <td style="width: 230px">
+          <%= @tecnico_campo.codigo  -%>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 110px"><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.cantidad_visitas') %></label></td>
+        <td style="width: 310px">
+          <% if @tecnico_campo.cantidad_visitas.nil? %>
+            0
+          <%  else %>
+            <%= @tecnico_campo.cantidad_visitas %>
+          <%end%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.cedula') %></label>
+        </td>
+        <td>
+          <%= @tecnico_campo.letra_cedula  -%>-<%= @tecnico_campo.cedula %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.primer_nombre') %></label>
+        </td>
+        <td>
+          <%= @tecnico_campo.primer_nombre  -%>
+        </td>
+      </tr>  
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.segundo_nombre') %></label>
+        </td>
+        <td>
+          <%= @tecnico_campo.segundo_nombre -%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.primer_apellido') %></label></td>
+        <td>
+          <%= @tecnico_campo.primer_apellido -%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.segundo_apellido') %></label></td>
+        <td>
+          <%= @tecnico_campo.segundo_apellido -%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.fecha_nacimiento') %></label>
+        </td>
+        <td>
+          <%= @tecnico_campo.fecha_nacimiento_f %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.Modelos.Errores.sexo') %></label>
+        </td>
+        <td>
+          <% if @tecnico_campo.sexo %>
+            <%= I18n.t('Sistema.Body.Vistas.General.masculino') %>
+          <% else %>
+            <%= I18n.t('Sistema.Body.Vistas.General.femenino') %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <label><%= I18n.t('Sistema.Body.Modelos.TecnicoCampo.Errores.estado_civil') %></label>
+        </td>
+        <td>
+          <% if @tecnico_campo.estado_civil == 'S' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.soltero') %>
+          <% elsif @tecnico_campo.estado_civil == 'C' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.casado') %>
+          <% elsif @tecnico_campo.estado_civil == 'O' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.concubinato') %>
+          <% elsif @tecnico_campo.estado_civil == 'V' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.viudo') %>
+          <% elsif @tecnico_campo.estado_civil == 'D' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.divorciado') %>
+          <% elsif @tecnico_campo.estado_civil == 'U' %>
+            <%= I18n.t('Sistema.Body.Vistas.General.unido') %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Controladores.Profesion.FormTitles.form_title_record')%></label></td>
+        <td>
+          <%= @tecnico_campo.profesion.nombre-%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.oficina_asignacion') %></label></td>
+        <td>
+          <%= @tecnico_campo.oficina.nombre-%>
+        </td>
+      </tr>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.direccion_vivienda') %></span>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label></td>
+        <td>
+          <%= @tecnico_campo.estado.nombre-%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label></td>
+        <td>
+          <%= @tecnico_campo.municipio.nombre -%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label></td>
+        <td>
+          <%= @tecnico_campo.parroquia.nombre-%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.General.direccion') %></label></td>
+        <td>
+          <%= @tecnico_campo.direccion-%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= I18n.t('Sistema.Body.Modelos.TecnicoCampo.Errores.telefono_habitacion') %></label></td>
+        <td>
+          <%= @tecnico_campo.telefono_habitacion-%>
+        </td>
+      </tr>
+      <tr>
+        <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.telefono')} #{I18n.t('Sistema.Body.Vistas.General.celular')}" %></label></td>
+        <td>
+          <%= @tecnico_campo.telefono_celular-%>
+        </td>
+      </tr>
+      <% if @tecnico_campo.posee_vehiculo == true %>
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.datos_vehiculo') %></span>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.posee_vehiculo') %></label>
+          </td>
+          <td>
+            <% if @tecnico_campo.posee_vehiculo %>
+              <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si') %>
+            <% else %>
+              <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop') %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.marca_vehiculo') %></label></td>
+          <td>
+            <%= @tecnico_campo.marca_vehiculo-%>
+          </td>
+        </tr>
+        <tr>
+          <td><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.modelo_vehiculo') %></label></td>
+          <td>
+            <%= @tecnico_campo.modelo_vehiculo-%>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.placa_vehiculo') %></label></td>
+          <td>
+            <%= @tecnico_campo.placa_vehiculo-%>
+          </td>
+        </tr>
+        <tr>
+          <td><label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.tipo_vehiculo') %></label></td>
+          <td>
+            <% unless @tecnico_campo.tipo_vehiculo.nil?-%>
+              <%if @tecnico_campo.tipo_vehiculo == 'S'%>
+                <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.tipo_vehiculo_sedan') %>
+              <%elsif @tecnico_campo.tipo_vehiculo == 'M' %>
+                <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.tipo_vehiculo_moto') %>
+              <%elsif @tecnico_campo.tipo_vehiculo == 'R'%>
+                <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.tipo_vehiculo_rustico') %>
+              <%elsif @tecnico_campo.tipo_vehiculo == 'O' %>
+                <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.tipo_vehiculo_otro') %>
+              <%end%>
+            <%end%>
+          </td>
+        </tr>
+      <%  else %>
+        <tr>
+          <td valign="top">
+            <label><%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.posee_vehiculo') %></label>
+          </td>
+          <td>
+            <% if @tecnico_campo.posee_vehiculo %>
+              <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.si') %>
+            <% else %>
+              <%= I18n.t('Sistema.Body.Vistas.TecnicoCampo.Etiquetas.nop') %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <%= link_to( image_tag("boton_modificar.gif", :title => I18n.t('Sistema.Body.Controladores.Accion.modificar')), :action => :edit, :method => :get,
+      :id => @tecnico_campo.id, :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+      { :action => :index },
+      { :id=>'button_close' } ) -%>
+
+  </div>
+</div>

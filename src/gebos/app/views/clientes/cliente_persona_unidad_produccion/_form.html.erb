@@ -1,0 +1,225 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 23%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.codigo') %></label>
+    </td>
+    <td>
+      <b><%= @unidad_produccion.id %></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion', 'nombre',
+        :class=>'text', :style=>'width: 250px',
+        :maxlength=>'150', :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <% if @persona.cliente_persona.es_pescador == false %>
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.total_hectareas') %></label> <label style="color: red">*</label>
+        <br/><br/>
+      </td>
+      <td>
+        <%= text_field 'unidad_produccion', 'total_hectareas',
+          :class=>'text', :style=>'width: 120px',
+          :maxlength=>'20', :onchange=>'inputChange();'  -%>
+        <br/><br/>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= "#{I18n.t('Sistema.Body.Vistas.General.ubicacion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')}" %></span>
+      </td>
+    </tr>
+  <% else %>
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= "#{I18n.t('Sistema.Body.Vistas.General.ubicacion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.puerto_base')}" %></span>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td style="width: 20%">
+      <br/>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.region') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <br/>
+      <%= select(
+        'unidad_produccion', 'region_id',
+        @region_list.map{|e| [e.nombre, e.id]},
+        {:prompt=>'Seleccione una Region'},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'cliente_persona_unidad_produccion',
+          :action=>:region_change },
+          :with=>"'region_id='+ this.value")};inputChange();" } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <div id="estado-select">
+        <%= select(
+          'unidad_produccion', 'estado_id',
+          @estado_list.map{|e| [e.nombre, e.id]},
+          {:prompt=>'Seleccione un Estado'},
+          { :class=>'select', :onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'cliente_persona_unidad_produccion',
+            :action=>:estado_change },
+            :with=>"'estado_id='+ this.value")};inputChange();" } ) %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <span id="municipio-select">
+        <%= select(
+          'unidad_produccion', 'municipio_id',
+          @municipio_list.map{|e| [e.nombre, e.id]},
+          {:prompt=>'Seleccione un Municipio'},
+          { :class=>'select', :onchange=>"#{remote_function(
+            :loading =>'Element.show("loading")',
+            :loaded => 'Element.hide("loading")',
+            :method =>:get,
+            :url=>{:controller=>'cliente_persona_unidad_produccion',
+            :action=>:municipio_change },
+            :with=>"'municipio_id='+ this.value")};inputChange();" } ) %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <span id="parroquia-select">
+        <%= select(
+          'unidad_produccion', 'parroquia_id',
+          @parroquia_list.map{|i| [i.nombre, i.id]},
+          {:prompt=>'Seleccione una Parroquia'},
+          { :class=>'select',:onchange=>'inputChange();' } ) %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 80%">
+      <div id="ciudad-select">
+        <%= select(
+          'unidad_produccion', 'ciudad_id',
+          @ciudad_list.map{|i| [i.nombre, i.id]},
+          {:prompt=>'Seleccione una Ciudad'},
+          { :class=>'select',:onchange=>'inputChange();' } ) %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion', 'sector',
+        :class=>'text', :style=>'width: 250px',
+        :maxlength=>'100', :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" colspan="2">
+      <label><%= I18n.t('Sistema.Body.General.direccion') %></label> <label style="color: red">*</label><br/>
+      <%= text_area 'unidad_produccion', 'direccion', :style=>'width: 700px; height: 60px',
+        :onkeypress=>'inputChange();' -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" colspan="2">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.referencia')}/#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.practica')}" %></label> <label style="color: red">*</label><br/>
+      <%= text_area 'unidad_produccion', 'referencia',
+        :class=>'text', :style=>'width: 700px; height: 60px',
+        :onkeypress=>'inputChange();' -%>
+      <br/><br/>
+    </td>
+  </tr>
+  <% if @persona.cliente_persona.es_pescador == false %>
+    <tr>
+      <td class="separador" valign="bottom" colspan="2">
+        <span><%= I18n.t('Sistema.Body.Vistas.General.linderos') %></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <br/><br/>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.norte') %></label>
+      </td>
+      <td>
+        <br/><br/>
+        <%= text_field 'unidad_produccion', 'lindero_norte',
+          :class=>'text', :style=>'width: 200px',
+          :maxlength=>'200', :onchange=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.sur') %></label>
+      </td>
+      <td>
+        <%= text_field 'unidad_produccion', 'lindero_sur',
+          :class=>'text', :style=>'width: 200px',
+          :maxlength=>'200', :onchange=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.este') %></label>
+      </td>
+      <td>
+        <%= text_field 'unidad_produccion', 'lindero_este',
+          :class=>'text', :style=>'width: 200px',
+          :maxlength=>'200', :onchange=>'inputChange();'  -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.oeste') %></label>
+      </td>
+      <td>
+        <%= text_field 'unidad_produccion', 'lindero_oeste',
+          :class=>'text', :style=>'width: 200px',
+          :maxlength=>'200', :onchange=>'inputChange();'  -%>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= form_buttons_edit :popup=>params[:popup], :persona_id => @persona.id %>
+<% if @persona.cliente_persona.es_pescador == false %>
+  <div id="cliente_persona_unidad_produccion">
+    <%= render :partial => 'utm' %>
+  </div>
+<% end %>

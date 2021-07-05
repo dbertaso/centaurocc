@@ -1,0 +1,32 @@
+<% convenio_silo @convenio_silo if convenio_silo.nil? %>
+
+<td style="text-align: center">
+  <%= convenio_silo.fecha_memorandum_f  %>
+</td>
+<td style="text-align: center">
+  <%= convenio_silo.numero_memorandum  %>
+</td>
+<td style="text-align: center">
+  <%= convenio_silo.ciclo_productivo.nombre  %>
+</td>
+<td style="text-align: center">
+  <%unless convenio_silo.nil? || convenio_silo.to_s.empty?%>
+    <%if convenio_silo.status == true %>
+      Vigente
+    <%else%>
+      Cerrado
+    <%end%>
+  <%end%>
+</td>
+<td style="text-align: right">
+  <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), :action => 'view', :method => :get, :id => convenio_silo.id %> &nbsp;
+  <%if (convenio_silo.status == true and convenio_silo.silo.convenio == true)%>
+    <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')), :action => 'edit', :method => :get, :popup=>params[:popup], :id => convenio_silo.id ) if vlink 'edit' %>&ensp;
+
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+      :url => {:controller => 'convenio_silo', :action => :delete, :id => convenio_silo.id}) if vlink 'delete' -%>
+  <%end%>
+  </td>
+

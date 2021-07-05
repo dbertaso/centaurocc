@@ -1,0 +1,28 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+
+      <th style="width: 200px" <%= sort_class_helper('tipo_infraestructura.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'tipo_infraestructura.nombre', 'list' %>
+      </th> 			
+      <th style="width: 200px" <%= sort_class_helper('tipo_infraestructura.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'tipo_infraestructura.descripcion', 'list' %>
+      </th> 	
+      <th style="width: 15px" <%= sort_class_helper('tipo_infraestructura.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'tipo_infraestructura.activo', 'list' %>
+      </th> 			 			
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>		
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for tipo_infraestructura in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :tipo_infraestructura => tipo_infraestructura, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

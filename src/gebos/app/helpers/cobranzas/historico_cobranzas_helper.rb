@@ -1,0 +1,2 @@
+module Cobranzas::HistoricoCobranzasHelper
+end

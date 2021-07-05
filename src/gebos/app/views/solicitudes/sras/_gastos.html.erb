@@ -1,0 +1,21 @@
+<tr>
+  <td>
+    <label><%= "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Vistas.General.gastos')} #{I18n.t('Sistema.Body.Vistas.General.administrativos')}" %></label>
+  </td>
+  <td>
+    <% 
+    unless @gastos.nil?
+      if @gastos.porcentaje > 0
+        monto = ((@prestamo.monto_banco + @prestamo.monto_insumos)*(@gastos.porcentaje/100))
+      else
+        monto = @gastos.monto_fijo 
+      end
+    else
+      monto = 0.00
+    end %>
+    <%= monto = sprintf('%01.2f', monto).sub('.', ',') 
+    monto.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.")-%>
+  </td>
+  <td></td>
+</tr>            
+

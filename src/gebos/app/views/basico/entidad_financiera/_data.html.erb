@@ -1,0 +1,25 @@
+<% entidad_financiera = @entidad_financiera if entidad_financiera.nil? %>
+
+<td>
+  <%= entidad_financiera.alias  %>
+</td>
+<td>
+  <%= entidad_financiera.nombre  %>
+</td>
+<td style="text-align: center">
+  <%= format_bool(entidad_financiera.privado)  %>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(entidad_financiera.convenio_domiciliacion)  %>
+</td> 
+<td style="text-align: center">
+  <%= format_bool(entidad_financiera.activo)  %>
+</td>	
+<td style="text-align: right">
+
+  <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))), :action => 'edit', :popup=>params[:popup], :id => entidad_financiera.id ) if vlink 'edit' %>&nbsp;
+  
+<%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))), :loading =>'image_load()', :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'entidad_financiera', :action => :delete, :id => entidad_financiera.id}) if vlink 'delete' -%>
+</td>

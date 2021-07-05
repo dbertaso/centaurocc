@@ -1,0 +1,31 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 50px" <%= sort_class_helper('tipo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'tipo', 'list' %>
+      </th>
+      <th style="width: 130px" <%= sort_class_helper('nombre_registro') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'nombre_registro', 'list' %>
+      </th>
+      <th style="width: 60px" <%= sort_class_helper('fecha_registro') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'fecha_registro', 'list' %>
+      </th>
+      <th style="width: 70px" <%= sort_class_helper('numero') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'numero', 'list' %>
+      </th>
+      <th style="width: 50px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for registro_mercantil in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :registro_mercantil => registro_mercantil, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

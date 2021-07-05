@@ -1,0 +1,102 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+	if controller_name=='solicitud_pre_evaluacion_visita'
+%>
+
+		<li id="actual"><div><a href="#">Unidad de Producci&oacute;n</a></div></li>
+<% 
+	else 
+%>
+		<li><div>
+		      <%= link_to('Unidad de Producci&oacute;n', :controller => 'solicitud_pre_evaluacion_visita', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+		      <%= link_to('Unidad de Producci&oacute;n', :controller => 'solicitud_pre_evaluacion_visita', :action => 'view_detail', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name=='view_detail' || action_name=='view')  %>
+		</div></li>
+
+<% 
+	end
+	
+
+	   if controller_name=='solicitud_pre_evaluacion_servicios'
+%>
+			<li id="actual"><div><a href="#">Servicios B&aacute;sicos</a></div></li>
+<%      
+		else				
+%>          
+			<li><div>
+    			<%= link_to('Servicios B&aacute;sicos', :controller => 'solicitud_pre_evaluacion_servicios', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+    			<%= link_to('Servicios B&aacute;sicos', :controller => 'solicitud_pre_evaluacion_servicios', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+		    </div></li>			
+<% 
+		end
+
+
+	   if controller_name=='solicitud_pre_evaluacion_caracterizacion'
+%>
+			<li id="actual"><div><a href="#">Caracterizaci&oacute;n</a></div></li>
+<%      
+		else				
+%>          
+		<li><div>
+    			<%= link_to('Caracterizaci&oacute;n', :controller => 'solicitud_pre_evaluacion_caracterizacion', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+    			<%= link_to('Caracterizaci&oacute;n', :controller => 'solicitud_pre_evaluacion_caracterizacion', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+		    </div></li>			
+<% 
+		end
+
+	   if controller_name=='solicitud_pre_evaluacion_infraestructura'
+%>
+			<li id="actual"><div><a href="#">Infraestructura</a></div></li>
+<%      
+		else				
+%>          
+			<li><div>
+    			<%= link_to('Infraestructura', :controller => 'solicitud_pre_evaluacion_infraestructura', :action => 'index', :solicitud_id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+    			<%= link_to('Infraestructura', :controller => 'solicitud_pre_evaluacion_infraestructura', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+		    </div></li>			
+<% 
+		end
+		
+	   if controller_name=='solicitud_pre_evaluacion_maquinaria'
+%>
+			<li id="actual"><div><a href="#">Maquinaria</a></div></li>
+<%      
+		else				
+%>          
+			<li><div>
+    			<%= link_to('Maquinaria', :controller => 'solicitud_pre_evaluacion_maquinaria', :action => 'index', :solicitud_id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+    			<%= link_to('Maquinaria', :controller => 'solicitud_pre_evaluacion_maquinaria', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+		    </div></li>			
+<% 
+		end
+		
+	   if controller_name=='solicitud_pre_evaluacion_colocacion'
+%>
+			<li id="actual"><div><a href="#">Sitios de Colocaci&oacute;n Potenciales de los Rubros</a></div></li>
+<%      
+		else				
+%>          
+			<li><div>
+    			<%= link_to('Sitios de Colocaci&oacute;n Potenciales de los Rubros', :controller => 'solicitud_pre_evaluacion_colocacion', :action => 'index', :solicitud_id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+    			<%= link_to('Sitios de Colocaci&oacute;n Potenciales de los Rubros', :controller => 'solicitud_pre_evaluacion_colocacion', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+		    </div></li>			
+<% 
+		end
+
+	   if controller_name=='solicitud_pre_evaluacion_animales'
+%>
+			<li id="actual"><div><a href="#">Inventario de Animales</a></div></li>
+<%      
+		else				
+%>          
+			<li><div>
+    			<%= link_to('Inventario de Animales', :controller => 'solicitud_pre_evaluacion_animales', :action => 'edit', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'edit' || action_name == 'index') %>
+    			<%= link_to('Inventario de Animales', :controller => 'solicitud_pre_evaluacion_animales', :action => 'view', :id => @solicitud.id, :seguimiento_visita_id => params[:seguimiento_visita_id], :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail')  %>
+		    </div></li>			
+<% 
+		end
+%>
+	</ul>
+</div>

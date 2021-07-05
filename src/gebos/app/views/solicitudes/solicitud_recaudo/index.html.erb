@@ -1,0 +1,134 @@
+<script type="text/javascript">
+  function marcar_entregado(id){
+    var check = document.getElementById('solicitud_recaudo_'+id);
+    check.checked = true;
+  }
+
+  function desmarcar_revisado(id, valor){
+    if (valor == false){
+      var check = document.getElementById('solicitud_recaudo_revisados_'+id);
+      check.checked = false;
+    }
+  }
+</script>
+<div class="marco-titulo"><div><div>
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.modificando')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> del Beneficiario <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span></div>
+  </div></div>
+
+<%= render :partial=>'solicitudes/solicitud/common/tabs' %>
+<div class="marco-contenido2">
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_observaciones, :solicitud_id=>@solicitud.id } ) do -%>
+  <br/>
+
+  <br/>
+  <div id="list">
+    <table class="lista" style="width: 100%">
+      <thead>
+        <tr>
+          <th style="width: 350px">
+            <%= "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.Recaudo.FormTitles.form_title')}" %>
+          </th>
+          <th style="text-align: center; width: 50px">
+            <%= I18n.t('Sistema.Body.Vistas.General.obligatoriedad') %>
+          </th>
+          <th style="text-align: center; width: 50px">
+            <%= I18n.t('Sistema.Body.Vistas.General.entregado') %>
+          </th>
+          <th style="text-align: center; width: 50px">
+            <%= I18n.t('Sistema.Body.Vistas.General.verificado') %>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="list_body">
+        <%
+        even_odd = 1
+        for solicitud_recaudo in @solicitud_recaudo_list
+          even_odd = 1 - even_odd
+        %>
+          <tr class="lista<%= even_odd %>" id="row_<%= solicitud_recaudo.id %>">
+            <td>
+              <%= solicitud_recaudo.recaudo.nombre  %>
+            </td>
+            <td align="center">
+              <%= format_bool solicitud_recaudo.recaudo.obligatorio -%>
+            </td>
+            <td style="text-align: center;">
+              <%= check_box_tag "solicitud_recaudo_check_#{solicitud_recaudo.id}",
+                solicitud_recaudo.id,
+                checked=solicitud_recaudo.entregado,
+                { :onchange=> "#{remote_function(
+                :loading =>'Element.show("loading")',
+                :loaded => 'Element.hide("loading")',
+                :method => :get,
+                :url=>{:controller=>'solicitud_recaudo',
+                  :action=>:save },
+                :with=>"'id=#{solicitud_recaudo.id}&entregado='+ this.checked")}", :name => "recaudos[]", :id => "solicitud_recaudo_#{solicitud_recaudo.id}" }  %>
+            </td>
+            <td style="text-align: center;">
+              <%= check_box_tag 'recaudo_check',
+                solicitud_recaudo.id,
+                checked=solicitud_recaudo.revisado_consultoria,
+                { :onchange=>"#{remote_function(
+                :loading =>'Element.show("loading")',
+                :loaded => 'Element.hide("loading")',
+                :method => :get,
+                :url=>{:controller=>'solicitud_recaudo',
+                  :action=>:save_revisado },
+                :with=>"'id=#{solicitud_recaudo.id}&revisado_consultoria='+ this.checked")}", :name => "recaudos[]", :id => "solicitud_recaudo_revisados_#{solicitud_recaudo.id}" }  %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div style="text-align: right">
+    <%= link_to_remote(image_tag('sincronizar.gif',:title=>'Actualizar los recaudos del trámite'),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :confirm => "¿#{I18n.t('Sistema.Body.Modelos.Solicitud.Mensajes.actualizar_recaudos')} #{@solicitud.numero}?",
+      :id=>"button_enviar",
+      :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+      :url => {:action => :actualizar, :solicitud_id => @solicitud.id}) -%>
+  </div>
+  <%= error %>
+  <%= message %>
+  <br/>
+  <table style="width: 100%" >
+    <tr>
+      <td valign="top">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.viable_juridicamente') %>:</label> <label style="color: red">*</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= radio_button 'solicitud', 'consultoria', 'true',
+          :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= radio_button 'solicitud', 'consultoria', 'false',
+          :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %>:</label> <label style="color: red">*</label><br/>
+        <%= text_area 'solicitud', 'observacion',
+          :class=>'text',
+          :style=>'width: 600px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,400)' -%>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <table style="width: 100%" >
+    <tr>
+      <td>
+        <input id="button_save" type="image" src="/assets/boton_guardar.gif" onclick="if (varEnviado) { return false; } else {varEnviado = true;}"/>
+        <% end -%>
+        <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+          { :controller => 'solicitud', :action => :index },
+          { :id=>'buton_cerrar' } ) -%>
+      </td>
+    </tr>
+  </table>
+</div>

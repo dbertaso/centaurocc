@@ -1,0 +1,140 @@
+<script language="javascript">
+  function abrirCampos(chk, id){
+    if (chk.checked == true){
+      document.getElementById('fecha_liquidacion_' + id).disabled = false;
+    }else{
+      document.getElementById('fecha_liquidacion_' + id).disabled = true;
+      document.getElementById('fecha_liquidacion_' + id).value = '';
+
+    }
+  }
+</script>
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list } ) do-%>
+    <table>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %></label>
+        </td>
+        <td><%= select(
+              'moneda_id', '',
+              options_from_collection_for_select(@moneda, 'id', 'nombre', selected=@meneda_activa),
+              { },
+              {:class=>'select', :onchange=>'inputChange();'} ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 170px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'solicitud_numero', '', :class=>'text',
+            :maxlength=>'8', :style=>'width: 300px'  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 170px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.cedula')%> / <%=I18n.t('Sistema.Body.Vistas.General.rif')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'cedula_rif', '', :class=>'text',
+            :maxlength=>'12', :style=>'width: 300px'  %>  <%= I18n.t('Sistema.Body.General.ejemplo_documento')%>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 170px">
+          <label><%=I18n.t('Sistema.Body.General.beneficiario')%></label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre_beneficiario', '', :class=>'text',
+            :maxlength=>'40', :style=>'width: 300px'  %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 170px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+        <td>
+          <%= select(
+            'estado_id', '',
+            @estado.map{|i| [i.nombre, i.id]},
+            {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+
+  <%#= select_tag(
+  'estado_id',
+  [options_for_select([["Seleccione", "0"]]),options_for_select(@estado.map{|i| [i.nombre, i.id]})],
+  { :class=>'select' } ) %>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 170px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+        </td>
+        <td>
+          <% sector_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',    
+            :method=>:get,
+            :url=>{:controller=>'liquidacion_maquinaria_equipo',
+              :action=>:sector_change },
+            :with=>"'sector_id='+value") %>
+
+          <%= select(
+            'sector_id', '',
+            @sector.map{|i| [i.nombre, i.id]},
+            {:prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+            { :class=>'select',:onchange=>sector_onchange + ';inputChange();' } ) %>
+
+
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="width: 170px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+        </td>
+        <td>
+          <div id="sub-sector-select">          
+            <%= render :partial => 'sub_sector_select' %>         
+          </div>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="width: 170px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+        </td>
+        <td>
+          <div id="rubro-select">          
+            <%= render :partial => 'rubro_select' %>                             
+          </div>
+        </td>
+        <td><td><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%></td></td>
+      </tr>
+    </table>
+
+  <% end %>
+
+  <center>
+    <div id="mensaje" style="display: none"><%= @mensaje %></div>
+    <div id="error" style="display: none"><%= @feedback %></div>
+    <div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"> </div>
+    <%= message %>
+  </center>
+
+
+  <br>
+  <div id="list"></div>
+

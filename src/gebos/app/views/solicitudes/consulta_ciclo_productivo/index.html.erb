@@ -1,0 +1,115 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list } ) do-%>
+  <table>
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+      </td>
+      <td style="width: 70%">
+        <%= select(
+          'estado_id','',
+          @estado.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+      </td>
+      <td>
+        <% sector_onchange = remote_function(
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :method=>:get,
+          :url=>{:controller=>'consulta_ciclo_productivo',
+            :action=>:sector_change },
+          :with=>"'sector_id='+value" ) %>
+        
+        <%= select(
+          'solicitud', 'sector_id',
+          @sector.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select',:style=>'width:220px',:onchange=>sector_onchange + ';inputChange();' } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+      </td>
+      <td>
+        <div id="sub-sector-select">
+            <%= render :partial => 'sub_sector_select' -%>          
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+      </td>
+      <td>
+        <div id="rubro-select">
+          <%= render :partial => 'rubro_select' -%>          
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+      </td>
+      <td>
+        <div id="sub_rubro-select">
+          <%= render :partial => 'sub_rubro_select' -%>
+          
+        </div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+      </td>
+      <td>
+        <div id="actividad-select">
+        <%= render :partial => 'actividad_select' -%>
+          
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.ciclo') << " " << I18n.t('Sistema.Body.Vistas.General.productivo')%></label>
+      </td>
+      <td>
+        <%= select(
+          'solicitud','ciclo_productivo_id',
+          @ciclo_productivo.map{|i| [i.nombre, i.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>&nbsp;&nbsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+      </td>
+    </tr>
+  </table>
+  <% end %>
+  <br>
+  <%= error %>
+  <%= message %>
+
+
+  <br>
+  <div id="list">
+  </div>
+</div>

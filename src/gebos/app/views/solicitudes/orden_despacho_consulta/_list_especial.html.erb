@@ -1,0 +1,68 @@
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%#= sort_class_helper('@numero_desembolso') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho'), '@numero_desembolso', 'list' %>
+          <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.nro_orden_despacho')%>
+        </th>
+
+         <th style="width: 120px" <%#= sort_class_helper('item_nombre') %>>
+          <%#= sort_link_helper "# #{I18n.t('Sistema.Body.Vistas.General.item')}", 'item_nombre', 'list' %>
+          # <%=I18n.t('Sistema.Body.Vistas.General.item')%>        
+        </th>
+         <th style="width: 320px" <%#= sort_class_helper('observacion') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.General.descripcion'), 'observacion', 'list' %><%=I18n.t('Sistema.Body.General.descripcion')%>
+        </th>
+
+        <th style="width: 150px" <%#= sort_class_helper('unidad_medida_id') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Modelos.UnidadMedida.nombre'), 'unidad_medida_id', 'list' %><%=I18n.t('Sistema.Body.Modelos.UnidadMedida.nombre')%>
+        </th>
+        <th style="width: 120px" <%#= sort_class_helper('cantidad') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cantidad'), 'cantidad', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%>
+        </th>
+
+        <th style="width: 160px" <%#= sort_class_helper('costo_real') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.General.unitario'), 'costo_real', 'list' %> <%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.General.unitario')%> 
+       </th>
+
+        <th style="width: 160px" <%#= sort_class_helper('monto_financiamiento') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total'), 'monto_financiamiento', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.precio') << " " << I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')%>
+        </th>
+        <% if @imprimo != '1'%>
+        <th style="width: 60px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_entregada'), 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_entregada')%>
+        </th>
+
+        <th style="width: 60px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_pendiente_por_entregar'), 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_pendiente_por_entregar')%>
+        </th>
+        <%end%>
+        <th style="width: 160px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.saldo_a_entregar'), 'monto_factura', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.saldo_a_entregar')%>                  
+      </th>
+        </tr>
+    </thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for orden_despacho_detalle in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_especial', :locals => { :orden_despacho_detalle => orden_despacho_detalle, :even_odd => even_odd } -%>
+<% end %>
+<tr border="1" style="background-color: #888888;">
+
+<td colspan="6" style="border: solid 1px #000000;" align="right"><strong><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.total')).upcase%></strong></td>
+<td style="border: solid 1px #000000;" align="right"><strong><%=javascript_tag "document.write(formatCurrency2(#{@total_saldo_entregar}));"%></strong></td>
+
+        <% if @imprimo != '1'%>
+<td style="border: solid 1px #000000;" align="right" colspan="2"></td>
+<!--<td style="border: solid 1px #000000;" align="right"></td> -->
+        <% end%>
+
+<td style="border: solid 1px #000000;" align="right"><strong><%=javascript_tag "document.write(formatCurrency2(#{@total_precio_total}));"%></strong></td>
+</tr>
+
+</tbody>
+</table>
+
+<%#= form_pagination %>

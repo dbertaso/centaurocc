@@ -1,0 +1,11 @@
+<%= select(
+  'configurador', 'actividad_id',
+  @actividad_list.map{|i| [i.nombre, i.id]},
+  { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+  { :class=>'select',:onchange=>"#{remote_function(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :method => :get,
+    :url=>{:controller=>'estructura_costo',
+      :action=>:actividad_change },
+    :with=>"'actividad_id='+ this.value")};inputChange();" } ) %>

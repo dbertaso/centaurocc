@@ -1,0 +1,33 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 120px" <%= sort_class_helper('acta_silo.silo.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.silo'), 'acta_silo.silo.nombre', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('acta_silo.actividad.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.actividad'), 'acta_silo.actividad.nombre', 'list' %>
+      </th>
+      <th style="width: 90px" <%= sort_class_helper('acta_silo.ciclo_productivo.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.ciclo_productivo'), 'acta_silo.ciclo_productivo.nombre', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('acta_silo.nro_acta') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.numero_acta'), 'acta_silo.nro_acta', 'list' %>
+      </th>
+      <th style="width: 50px" <%= sort_class_helper('acta_silo.status') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus'), 'acta_silo.ciclo_productivo.nombre', 'list' %>
+      </th>
+      <th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for acta_silo in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :acta_silo => acta_silo, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

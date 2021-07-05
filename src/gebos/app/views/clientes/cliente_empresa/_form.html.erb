@@ -1,0 +1,296 @@
+<SCRIPT LANGUAGE="JavaScript">
+
+            function writeAppletTag() {
+		var id = document.getElementById('empresa_rif_1').value + document.getElementById('empresa_rif_2').value + document.getElementById('empresa_rif_3').value ;
+
+                var html = '<APPLET CODE="CapturaHuella" WIDTH="300" HEIGHT="300">';
+                html = html + buildParamTag('rif', id);
+                html = html + buildParamTag('jnlp_href','launch.jnlp');
+                html = html + '</APPLET>';
+
+		document.getElementById('applet_div').innerHTML = html;
+            }
+
+            function buildParamTag(name, value) {
+                return '<PARAM NAME="' + name + '" VALUE="' + value + '">';
+            }
+
+</SCRIPT>
+
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.General.identificacion') %></span>
+    </td>
+  </tr>
+    <tr>
+    <td>
+        <img src="/data/<%= 'F_'<< CGI::escape(@empresa.rif.to_s) << '.jpg'%>" width="200" height="150" />
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <% unless @empresa.numero.nil? -%> <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label> <% end -%>
+    </td>
+    <td>
+      <b><%= @empresa.id unless @empresa.id.nil? -%><b>
+    </td>
+
+  </tr>
+<% unless @empresa.id.nil?%>
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_puede_solicitar_financiamiento') %>?</label> 
+    </td>
+    <td style="width: 50%">
+      <%= Cliente.find_by_empresa_id(@empresa.id).viable ? "<label>#{I18n.t('Sistema.Body.General.si')}</label>".html_safe : "<label style='color: red'>#{I18n.t('Sistema.Body.General.negacion')}</label>".html_safe unless Cliente.find_by_empresa_id(@empresa.id).nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_esta_solvente') %>?</label> 
+    </td>
+    <td style="width: 50%">
+    <%=!Cliente.find_by_empresa_id(@empresa.id).moroso ? "<label>#{I18n.t('Sistema.Body.General.si')}</label>".html_safe : "<label style='color: red'>#{I18n.t('Sistema.Body.General.negacion')}</label>".html_safe unless Cliente.find_by_empresa_id(@empresa.id).nil? %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 25%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_reestructuro_deuda') %>?</label> 
+    </td>
+    <td style="width: 50%">
+      <%=Cliente.find_by_empresa_id(@empresa.id).reestructurado ? "<label style='color: red'>#{I18n.t('Sistema.Body.General.si')}</label>".html_safe : "<label>#{I18n.t('Sistema.Body.General.negacion')}</label>".html_safe unless Cliente.find_by_empresa_id(@empresa.id).nil? %>
+    </td>
+  </tr>
+<%end%>
+
+  <tr>
+    <td style="width: 25%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.rif')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td style="width: 50%">
+      <%= text_field 'empresa', 'rif_1',
+        :class=>'text', :style=>'width: 10px',
+        :maxlength=>'1', :readonly=>true, :onkeypress=>'inputChange();'
+    %> -
+      <%= text_field 'empresa', 'rif_2',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :readonly=>true, :onkeypress=>'inputChange();'
+    %> -
+      <%= text_field 'empresa', 'rif_3',
+        :class=>'text', :style=>'width: 10px',
+        :maxlength=>'1', :readonly=>true, :onkeypress=>'inputChange();'
+    %> Ejemplo 'J-99999999-9'
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')} #{I18n.t('Sistema.Body.Vistas.General.cicom')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa', 'numero_sunacop',
+        :class=>'text', :style=>'width: 90px',
+        :maxlength=>'15', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.registro')} #{I18n.t('Sistema.Body.Vistas.General.cicom')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "empresa[fecha_constitucion_f]", @empresa.fecha_constitucion_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+
+      <%= select(
+        'cliente_empresa', 'tipo_cliente_id',
+        @tipo_empresa_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+        { :class=>'select',:onchange=>';inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.nombre')} #{I18n.t('Sistema.Body.Vistas.General.abreviado')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa', 'alias',
+        :class=>'text', :style=>'width: 300px; height: 30px',
+        :onKeyUp=>'textCounter(this,150)', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_area 'empresa', 'nombre',
+        :class=>'text', :style=>'width: 500px; height: 40px',
+        :onKeyUp=>'textCounter(this,255)', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.miembros')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa', 'cant_miembros',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.familias')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa', 'numero_familias',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.viviendas')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa', 'numero_viviendas',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.cantidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.productores')} #{I18n.t('Sistema.Body.Vistas.General.beneficiados')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'empresa', 'cant_productores',
+        :class=>'text', :style=>'width: 60px',
+        :maxlength=>'8', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label>¿<%= I18n.t('Sistema.Body.Vistas.General.beneficiario_dedica_pesca') %>?</label>
+    </td>
+    <td  style="width: 80%">
+      <%= check_box 'cliente_empresa', 'es_pescador',
+        :checked_value=>"true",
+        :unchecked_value=>"false",:onclick=>'inputChange();'-%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.objeto')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_area 'empresa', 'objeto',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr height="10"><td colspan="2"></td></tr>
+</table>
+
+<br></br>
+<br></br>
+<table>
+  <tr>
+    <td  style=" text-align: center">
+      <label>FOTOGRAFIA</label>
+    </td>
+    <td>
+
+    </td>
+    <td style=" text-align: center">
+      <label>HUELLA</label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <%= hidden_field 'empresa', 'foto_confirmacion', :value=>"", :style=>'display:hidden' %>
+        <%= hidden_field 'empresa', 'huella_confirmacion', :value=>"", :style=>'display:hidden' %>
+        <script type="text/javascript" src="/webcam.js"></script>
+
+        <script language="JavaScript">
+                webcam.set_api_url( '/upload/uploadFoto' );
+                webcam.set_quality( 90 ); // JPEG quality (1 - 100)
+                webcam.set_shutter_sound( true ); // play shutter click sound
+        </script>
+
+        <script language="JavaScript">
+                document.write( webcam.get_html(320, 240) );
+        </script>
+
+        <!-- Some buttons for controlling things -->
+        <br/><form>
+                <input type=button value="Configurar..." onClick="webcam.configure()">
+                &nbsp;&nbsp;
+                <input type=button value="Tomar foto" onClick="take_snapshot()">
+        </form>
+
+        <!-- Code to handle the server response (see test.php) -->
+        <script language="JavaScript">
+                webcam.set_hook( 'onComplete', 'my_completion_handler' );
+
+                function take_snapshot() {
+                        // take snapshot and upload to server
+                        id = document.getElementById('empresa_rif_1').value + '-'+  document.getElementById('empresa_rif_2').value + '-' + document.getElementById('empresa_rif_3').value ;
+                        if(id!="")  {
+                          webcam.set_api_url( '/upload/uploadFoto?cedula=' + id );
+                          document.getElementById('upload_results').innerHTML = '<h1>Enviando...</h1>';
+                          webcam.snap();
+                          document.getElementById("empresa_foto_confirmacion").value = true;
+                        } else {
+                          alert("Debe introducir el número de rif antes de tomar la foto.");
+                        }
+                }
+
+                function my_completion_handler(msg) {
+                  if (msg.match(/success/)) {
+                    var image_url = "F_" + document.getElementById('empresa_rif_1').value + '-' + document.getElementById('empresa_rif_2').value + '-'+  document.getElementById('empresa_rif_3').value + ".jpg";
+                    document.getElementById('upload_results').innerHTML = '<h2> enviada exitosamente!'+'<img src="' + image_url + '"</h2>';
+                    document.getElementById("empresa_huella_confirmacion").value = true;
+                    // reset camera for another shot
+                    webcam.reset();
+                  }
+                  else alert("Server Error: " + msg);
+                }
+
+        </script>
+
+        <div id="upload_results" style="background-color:#eee;"></div>
+
+    </td>
+    <td>
+
+    </td>
+    <td>
+     <div id="applet_div">
+		<APPLET CODE="CapturaHuella" WIDTH="300" HEIGHT="300" CODEBASE="/">
+			<PARAM NAME='cedula', VALUE='<%= @empresa.rif %>'>
+			<PARAM NAME='jnlp_href', VALUE='launch.jnlp'>
+               	</APPLET>
+     </div>
+    </td>
+  </tr>
+</table>

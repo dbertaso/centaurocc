@@ -1,0 +1,258 @@
+<script type="text/javascript">
+  varEnviado = false;
+</script>
+<%=error%>
+
+<table>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.manejo_instalacion')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 400px">
+      <label><%= I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.tecnologia_convenio') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td style="width: 600px">
+      <%= radio_button 'manejo_instalaciones', 'tecnologia_convenio', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si') %> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'tecnologia_convenio', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no') %> &nbsp;
+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.plan_vacunacion') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'plan_vacunacion', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si') %> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'plan_vacunacion', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no') %> &nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.inseminacion_artificial') %> </label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'inseminacion_artificial', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si') %> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'inseminacion_artificial', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no') %> &nbsp;
+    </td>
+  </tr>
+  <tr>
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.descripcion_pajuela') %></label><label class="requerido"> (*)</label>
+    </td>
+    <td><%= I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.descripcion_lugar_adquisicion_pajuela') %>
+      <%= text_area 'manejo_instalaciones', 'descripcion_pajuela',
+        :class=>'text', :style=>'width: 600px; height: 50px',
+        :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.sala_ordenio')%></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'sala_ordenio', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si') %> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'sala_ordenio', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no') %> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.tipo_ordenio')%></label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'tipo_ordenio', 'MA',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.ordenio_manual')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'tipo_ordenio', 'ME',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.ordenio_mecanico')%> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.calidad_ordenio')%></label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'calidad_ordenio', 'E',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_ordenio', 'B',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_ordenio', 'R',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_ordenio', 'M',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.refrescadero_leche')%></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'refrescadero_leche', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si') %> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'refrescadero_leche', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no') %> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.calidad_refrescadero')%></label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'calidad_refrescadero', 'E',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_refrescadero', 'B',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_refrescadero', 'R',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_refrescadero', 'M',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.registro_produccion')%></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'registro', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si') %> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'registro', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no') %> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.calidad_registro')%></label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'calidad_registro', 'E',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_registro', 'B',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_registro', 'R',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_registro', 'M',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.alimento_concentrado')%></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'alimento_concentrado', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si') %> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'alimento_concentrado', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no') %> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.calidad_alimento_concentrado')%></label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'calidad_alimento_concentrado', 'E',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_alimento_concentrado', 'B',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_alimento_concentrado', 'R',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_alimento_concentrado', 'M',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.otro_tipo_suplementacion')%></label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'otro_tipo_suplementacion', 'true',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_si') %> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'otro_tipo_suplementacion', 'false',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.sistema_riego_no') %> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.especifique')%></label>
+    </td>
+    <td>
+      <%= text_field 'manejo_instalaciones','especificar_suplementacion',
+        :class=>'text', :style=>'width: 600px', :onkeypress=>'inputChange();', :maxlength=>'1000' -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.ManejoInstalaciones.Columnas.calidad_suplementacion')%></label>
+    </td>
+    <td>
+      <%= radio_button 'manejo_instalaciones', 'calidad_suplementacion', 'E',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_excelente')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_suplementacion', 'B',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_bueno')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_suplementacion', 'R',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_regular')%> &nbsp;
+      <%= radio_button 'manejo_instalaciones', 'calidad_suplementacion', 'M',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Modelos.PastizalesPotreros.Columnas.condicion_pasto_malo')%> &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.descripcion_observado')%></label>
+    </td>
+    <td>
+      <%= text_area 'manejo_instalaciones', 'descripcion_observado',
+        :class=>'text', :style=>'width: 600px; height: 80px',
+        :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+    </td>
+  </tr>
+</table>
+<div id="visita_sanidad_animal">
+<%= render :partial=>'vacunas' %>
+</div>
+<table>
+<tr>
+  <td style="width: 300px">
+    <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.examenes_laboratorio')%></label><label class="requerido"> (*)</label>
+  </td>
+  <td style="width: 600px">
+    <%= radio_button 'sanidad_animal', 'examenes_laboratorio', 'true',
+      :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.General.si')%> &nbsp;
+    <%= radio_button 'sanidad_animal', 'examenes_laboratorio', 'false',
+      :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.opc_no')%> &nbsp;
+  </td>
+</tr>
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.Vacunacion.Etiquetas.tipo_examen')%></label>
+  </td>
+  <td>
+    <%= text_field 'sanidad_animal','tipo_examen',
+      :class=>'text', :style=>'width: 600px',
+      :onkeypress=>'inputChange();', :maxlength=>'1000' -%>
+  </td>
+</tr>
+<tr>
+  <td valign="top">
+    <label><%=I18n.t('Sistema.Body.Vistas.General.resultados')%> </label>
+  </td>
+  <td>
+    <%= text_area 'sanidad_animal', 'resultados',
+      :class=>'text', :style=>'width: 600px; height: 80px',
+      :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,5000)' -%>
+  </td>
+</tr>
+<tr>
+  <td colspan="2" class="lista0" style="text-align: left"></td>
+</tr>
+</table>
+

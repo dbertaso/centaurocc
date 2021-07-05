@@ -1,0 +1,35 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+        <%=I18n.t('Sistema.Body.Vistas.TasaValor.Header.form_title_modificar') %>
+        <span class="titulo_modificar">'<%= @tasa.nombre %>'</span>
+    </div>
+  </div>
+</div>
+
+<%= render 'basico/tasa/common/tabs' %>
+
+<div class="marco-contenido2">
+  <div id="button_new" class="marco-boton-in">
+    <%= link_to_remote(
+      image_tag(image_path(I18n.t('Sistema.Body.Imagenes.agregar'))),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :new, :tasa_id=>@tasa.id } ) -%>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial=>"list"  %>
+  </div>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :controller => 'tasa', :action => :index },
+    { :id=>'button_close' } ) -%>
+
+
+</div>

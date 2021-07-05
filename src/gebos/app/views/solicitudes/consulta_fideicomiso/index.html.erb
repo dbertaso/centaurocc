@@ -1,0 +1,162 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+
+  <%= form_title_search %>
+  <table width="100%" >
+    <tr>
+      <td align="right">
+        <%= link_to(I18n.t('Sistema.Body.Modelos.Errores.historico_asignacion_fideicomiso'), {:controller=>'/solicitudes/consulta_fideicomiso_historico',  :controlador => 'consulta_fideicomiso_historico', :action=>'view', :popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.Abogado.FormTitles.form_title') + "',
+  'height=600,width=1050, scrollbars=yes, resizable=yes,top=200,left=110'); return false;")  %>               
+
+      </td>
+    </tr>
+  </table>
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method => :get,
+    :url => { :action => :list } ) do-%>
+    <table>
+
+      <tr>
+        <td style="width: 150px">
+          <label><%= I18n.t('Sistema.Body.Vistas.Form.nro_tramite') %></label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 100px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+        </td>
+        <td>
+          <%= select(
+            'estado_id','',
+            @estado.map{|i| [i.nombre, i.id]},
+            { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+            { :class=>'select', :onchange=>'inputChange();' } ) %>
+
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="width: 30%">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label>
+        </td>
+        <td style="width: 70%">
+          <% sector_onchange = remote_function(
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :method=>:get,
+            :url=>{:controller=>'consulta_fideicomiso',
+              :action=>:sector_form_change },
+            :with=>"'sector_id='+value" ) %>
+          <%= select(
+            'solicitud', 'sector_id',
+            @sector.map{|i| [i.nombre, i.id]},
+            {:prompt=> I18n.t('Sistema.Body.Vistas.Form.seleccionar') } ,
+            { :class=>'select',:onchange=>sector_onchange + ';inputChange();'}) %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label>
+        </td>
+        <td style="width: 70%">
+
+          <div id="sub-sector-select">
+            <%= render :partial => 'sub_sector_form_select' -%>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+        </td>
+        <td>
+
+          <div id="rubro-select">
+            <%= render :partial => 'rubro_form_select' -%>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 30%">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%></label>
+        </td>
+        <td style="width: 70%">
+
+          <div id="sub-rubro-select">
+            <%= render :partial => 'sub_rubro_select' -%>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label>
+        </td>
+        <td>
+          <div id="actividad-select">
+            <%= render :partial => 'actividad_select' -%>             
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>:</label>
+        </td>
+        <td><%= select(
+            'moneda_id', '',
+            options_from_collection_for_select(@moneda, 'id', 'nombre', selected=@meneda_activa),
+            {:prompt => "#{I18n.t('Sistema.Body.Vistas.Form.seleccionar')}"},
+            {:class=>'select', :onchange=>'inputChange();'} ) %>&nbsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'),{:onclick=>"$('error_decision_comite').hide();$('decision_solicitud_id').value='';"}) -%>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 150px">
+
+        </td>
+        <td>
+
+        </td>
+        <td></td>
+      </tr>
+      <tr> 	
+
+        <td style="width: 150px">
+
+        </td>
+        <td>
+
+        </td>
+        <td> </td>
+      </tr>
+
+
+    </table>
+  <% end %>
+  <br>	
+  <%= error %>
+  <%= message %>
+  <table width="100%">
+    <tr><td>
+        <div class="msg-notice" id="message_status1" style="display: none; text-align: center;"></div>
+        <div class="msg-notice" id="message_status2" style="display: none; text-align: center;"></div>
+        <div class="msg-notice" id="message_status3" style="display: none; text-align: center;"></div>
+      </td></tr>
+  </table>	
+
+  <br>
+  <div id="list">
+  </div>
+</div>

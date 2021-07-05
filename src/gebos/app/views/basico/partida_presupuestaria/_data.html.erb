@@ -1,0 +1,36 @@
+<% item = @partida_presupuestaria if item.nil? %>
+<td style="text-align: center">
+  <%= item.nombre %>
+</td>	
+<td style="text-align: center">
+	<%= Programa.find(item.programa_id).nombre unless item.programa_id.nil?%>
+</td>	
+<td style="text-align: center">
+	<%
+    case item.plazo_ciclo
+        when "C"
+            nom=I18n.t('Sistema.Body.TipoPlazo.corto')
+        else
+            nom=I18n.t('Sistema.Body.TipoPlazo.largo')
+    end
+    
+    %>
+    
+    <%= nom %>
+</td>	
+
+
+<td style="text-align: center">
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method =>:get,
+    :url => {:controller => 'partida_presupuestaria', :action => :edit, :id => item.id}) if vlink 'edit' -%>&nbsp;
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+     :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'partida_presupuestaria', :action => :delete, :id => item.id}) if vlink 'delete' -%>
+</td>

@@ -1,0 +1,97 @@
+<%= form_title_view @programa.alias %>
+
+<%= render 'basico/programa/common/tabs' %>
+<div class="marco-contenido2">
+
+  <table>
+     <table style="width: 100%">
+          <tr>
+            <td class="separador" valign="bottom" colspan="2">
+              <span><%= I18n.t('Sistema.Body.Vistas.General.identificacion')%>/span>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 20%">
+              <label><%= I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+            </td>
+            <td style="width: 80%">
+              <%= @programa.nombre -%>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%=  "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.corto')}" %>
+              </label>
+            </td>
+            <td>
+              <%= @programa.alias -%>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><%= I18n.t('Sistema.Body.Vistas.General.descripcion')%></label>
+            </td>
+            <td>
+              <%= @programa.descripcion -%>
+            </td>
+          </tr>
+      </table>
+     <!--  <table  style="width: 100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%#= "#{I18n.t('Sistema.Body.Vistas.General.indice')} #{I18n.t('Sistema.Body.Vistas.General.garantia')}"%></span>
+        </td>
+      </tr>
+      <tr>
+         <td style="width: 10%">
+          <label><%#=I18n.t('Sistema.Body.Vistas.General.relacion')%></label>
+        </td>
+        <td style="width: 90%">
+          <%#= @programa.relacion_garantia_f  -%> : 1
+        </td>
+
+        </tr>
+      </table> -->
+          </br>
+      <table style="width: 100%">
+          <tr>
+            <td class="separador" colspan="2">
+              <span><%=I18n.t('Sistema.Body.Vistas.General.estado')%></span>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 10%">
+              <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+            </td>
+            <td>
+              <%= format_bool @programa.activo -%>
+             </td>
+           </tr>
+      </table>
+
+</br>
+   <!-- <table style="width: 100%">
+        <tr>
+          <td style="width: 40%">
+            <label><%#= "#{I18n.t('Sistema.Body.Vistas.General.partida')} #{I18n.t('Sistema.Body.Vistas.General.presupuestaria')}"%></label>
+          </td>
+            <td>
+               <%#= @programa.partida_presupuestaria.nombre -%>
+             </td>
+         </tr>
+    </table> -->
+
+
+
+  <%= link_to( image_tag(image_path("boton_modificar.gif")),
+    :action => :edit,
+    :id => @programa.id,
+    :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

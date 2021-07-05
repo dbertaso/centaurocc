@@ -1,0 +1,52 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.modificando_boleta_de_arrime')%><span class="titulo_modificar">
+      </span> &ensp;<label style="color: red">"<%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%> <%= @view_boleta_arrime.nro_solicitud unless @view_boleta_arrime.nil? %>"
+        &ensp; "<%=I18n.t('Sistema.Body.Vistas.General.productor')%> <%= @view_boleta_arrime.productor unless @view_boleta_arrime.nil? %>" </label>
+    </div>
+  </div>
+</div>
+
+<%= error  %>
+<%= message  %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()', :loaded => 'image_unload()',
+  :url => { :action => :save_edit, :id=>@boleta_arrime.id} ) do-%>
+
+<%= render :partial => @formato_boleta.formato_operacion.to_s %>
+
+<div id="buttons_edit" style="display: none">
+  <%= form_buttons_edit :id => @boleta_arrime.id, :solicitud_id=>@boleta_arrime.solicitud_id,
+    :productor=>@view_boleta_arrime.productor, :nro_solicitud=>@view_boleta_arrime.nro_solicitud, :rubro_id=>@view_boleta_arrime.rubro_id,
+    :popup=>params[:popup] %>
+
+</div>
+
+<% if @boleta_arrime.arrime_conjunto? %>
+  <div id="arrime-conjunto">
+    <%= render :partial => 'arrime_conjunto' %>
+  </div>
+
+  <div id="buttons_edit_conjunto" style="display: none">
+    <br/>
+    <br/>
+    <%= link_to_remote(image_tag(image_paht(I18n.t('Sistema.Body.Imagenes.guardar')), :title=> I18n.t('Sistema.Body.Vistas.General.guardar')), :method=>:get,:loading =>'image_load()', :loaded => 'image_unload()',
+      :confirm => "¿Está usted seguro que desea Guardar los datos?", :url => {:controller => 'boleta_arrime',
+        :action => :confirmar, :id => @boleta_arrime.id, :nro_solicitud=>@view_boleta_arrime.nro_solicitud, :productor=>@view_boleta_arrime.productor }) -%> &ensp;
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cancelar')), :title=>I18n.t('Sistema.Body.Vistas.General.cancelar')),
+      { :action => :index, :solicitud_id => @boleta_arrime.solicitud_id,
+        :productor=>@view_boleta_arrime.productor, :nro_solicitud=>@view_boleta_arrime.nro_solicitud, :rubro_id=>@view_boleta_arrime.rubro_id}
+    ) -%>
+  </div>
+<%end%>
+<br/>
+<br/>
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+  { :action => :index, :solicitud_id => @boleta_arrime.solicitud_id,
+    :productor=>@view_boleta_arrime.productor, :nro_solicitud=>@view_boleta_arrime.nro_solicitud, :rubro_id=>@view_boleta_arrime.rubro_id},
+  { :id=>'button_close' } ) -%>
+
+<% end %>
+

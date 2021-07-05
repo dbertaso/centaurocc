@@ -1,0 +1,24 @@
+<% @view = true %>
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.Item.Header.form_title_view')%> 
+      <span class="titulo_modificar">'<%= @rubro.nombre %>'</span>
+    </div>
+  </div>
+</div>
+
+<%= render 'basico/item/common/tabs' %>
+
+<div class="marco-contenido2">
+
+  <div id="list">
+    <%= render "list_view"  %>
+  </div>
+    
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :controller => 'rubro', :action => :index },
+    { :id=>'button_close' } ) -%>
+
+
+</div>

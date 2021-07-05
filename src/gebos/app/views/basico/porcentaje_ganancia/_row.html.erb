@@ -1,0 +1,4 @@
+<% porcentaje_ganancia = @porcentaje_ganancia if porcentaje_ganancia.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= porcentaje_ganancia.id %>">
+	<%= render :partial => 'data', :locals => { :porcentaje_ganancia => porcentaje_ganancia, :even_odd => even_odd } -%>
+</tr>

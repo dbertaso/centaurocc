@@ -1,0 +1,39 @@
+<% seguimiento_visita = @seguimiento_visita if seguimiento_visita.nil? %>
+<td>
+  <b><label style="color: red"><%= seguimiento_visita.codigo_visita  %></b></label>
+</td>	
+<td>
+  <%= seguimiento_visita.fecha_visita_f  %>
+</td>	
+<td style="text-align: center">
+  <%= seguimiento_visita.MotivoVisita.nombre  %>
+</td>
+<td style="text-align: center">
+  <%= seguimiento_visita.Solicitud.sector.nombre  %>
+</td>
+<td style="text-align: right">
+
+
+  <%= link_to( image_tag("iconos_sectores/vegetal.png"),
+    { :controller => 'solicitudes/solicitud_pre_evaluacion_visita', :action => :edit, :id=>@solicitud ,:seguimiento_visita_id => seguimiento_visita.id, :popup=>params[:popup] }) -%>
+
+
+  <%= link_to_remote(
+    image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:controller => 'visita_inicial', :action => :edit, :id => seguimiento_visita.id}) if vlink 'edit' -%>&nbsp;
+
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Información por Sector/Rubro'),
+    {:action => :edit, :controller => 'visita_seguimiento_cultivo',
+    :id => seguimiento_visita.id} %>&nbsp;
+
+  <% if seguimiento_visita.MotivoVisita.nombre == "Inicial"  %>	
+    <%= link_to_remote(
+      image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+      :url => {:controller => 'visita_seguimiento', :action => :delete, :id => seguimiento_visita.id}) if vlink 'delete' -%>
+  <% end  %>	
+</td>

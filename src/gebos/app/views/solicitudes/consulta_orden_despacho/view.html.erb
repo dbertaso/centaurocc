@@ -1,0 +1,405 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+<div class="marco-contenido">
+	<%=  form_title_search %>
+  
+  <table>
+     <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.informacion')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.General.la')%> <%=I18n.t('Sistema.Body.Vistas.GuiaMovilizacionMaquinaria.Header.title')%></span>
+    </td>
+  </tr>
+     
+     <tr>
+        <td style="width: 260px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.nro')%> <%=I18n.t('Sistema.Body.Vistas.General.orden')%></label>
+        </td>
+        <td>
+          <%= @guias.numero_guia  unless @guias.numero_guia.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+        </td>
+        <td>
+          <b><%= @guias.nro_tramite  %></b> 
+          
+          <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), {:controller=>'solicitud', :action=>'view',:popup=>true, :id=> @guias.solicitud_id, :controlador => 'consulta_orden_despacho' }, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>@guias.numero_guia) + "',
+'height=600,width=1100, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>
+          
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.empresa')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.General.transporte')%></label>
+        </td>
+        <td>
+          <%= GuiaMovilizacionMaquinaria.find(@guias.guia_id).empresa_transporte_maquinaria.nombre unless GuiaMovilizacionMaquinaria.find(@guias.guia_id).empresa_transporte_maquinaria.nil?%>          
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.oficina')%></label>
+        </td>
+        <td>
+          <%= GuiaMovilizacionMaquinaria.find(@guias.guia_id).oficina.nombre  unless GuiaMovilizacionMaquinaria.find(@guias.guia_id).oficina.nil?%>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.unidad_produccion') %></label>
+        </td>
+        <td>
+          <%= GuiaMovilizacionMaquinaria.find(@guias.guia_id).unidad_produccion.nombre.strip  unless GuiaMovilizacionMaquinaria.find(@guias.guia_id).unidad_produccion.nil? %>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.estatus')%></label>
+        </td>
+        <td>
+        <% case @guias.estatus.strip
+			 when 'E' %>
+			   <font color="red"><b><%=I18n.t('Sistema.Body.Vistas.General.elaborada')%></b></font>
+			 <%when 'T'%>
+			   <font color="red"><b><%=I18n.t('Sistema.Body.Vistas.General.en_transito')%></b></font>  
+			<%else%>
+			  <font color="red"><b><%=I18n.t('Sistema.Body.Vistas.General.recibida')%></b></font>
+			<%end%>      
+          (<%=@guias.conforme ? "<b>#{I18n.t('Sistema.Body.Vistas.General.conforme')}</b>".html_safe : "<b>#{I18n.t('Sistema.Body.Vistas.General.inconforme')}</b>".html_safe %>)
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.origen')%></label>
+        </td>
+        <td>
+          <%= @guias.origen.strip  unless @guias.origen.nil? %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label><%=I18n.t('Sistema.Body.Vistas.Form.destino')%></label>
+        </td>
+        <td>
+         <% case @guias.destino.strip
+				when 'F' 
+					destinoi ="#{I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.oficina_asociada')} #{@guias.oficina.nil? ? "" : "("+@guias.oficina.nombre.to_s.strip+")"}"
+				when 'U'
+					destinoi ="#{I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.unidad_produccion_asociada')} #{@guias.unidad_produccion.nil? ? "" : "("+@guias.unidad_produccion.nombre.to_s.strip+")"}"
+				else
+					destinoi =@guias.direccion_destino.to_s.strip
+					#destinoi ="#{I18n.t('Sistema.Body.Vistas.ConsultaMovilizacionMaquinaria.Mensajes.otro_destino')}"
+			end%>      
+          <%=destinoi%>
+        </td>
+      </tr>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.personas')%> <%=I18n.t('Sistema.Body.Vistas.General.que')%> <%=I18n.t('Sistema.Body.General.reciben')%> </span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px" colspan="2">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.primer')%> <%= I18n.t('Sistema.Body.Vistas.General.contacto')%> </label>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.cedula')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @guias.cedula_persona_contacto_1.to_s %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}"%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @guias.nombre_contacto_1.to_s unless @guias.nombre_contacto_1.nil?-%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.telefono')}"%></label>
+    </td>
+    <td style="width: 620px">
+      <%= @guias.telefono_contacto_1.to_s unless @guias.telefono_contacto_1.nil? -%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px" colspan="2">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.segundo')%> <%= I18n.t('Sistema.Body.Vistas.General.contacto')%> </label>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.cedula')%></label>
+    </td>
+    <td style="width: 620px">
+      <%= @guias.cedula_persona_contacto_2.to_s-%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 150px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.y')} #{I18n.t('Sistema.Body.Vistas.General.apellido')}"%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @guias.nombre_contacto_2.to_s unless @guias.nombre_contacto_2.nil?-%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 160px">
+      <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.telefono')}"%></label>
+    </td>
+    <td style="width: 620px">
+      <%= @guias.telefono_contacto_2.to_s unless @guias.telefono_contacto_2.nil? -%>
+    </td>
+  </tr>
+  
+  <!--<tr>
+        <td style="width: 130px">
+          <label>Observación General sobre la Maquinaria Recibida</label>
+        </td>
+        <td>
+          <%#= RecepcionMaquinaria.find_by_guia_movilizacion_maquinaria_id(@guias.guia_id).observaciones unless RecepcionMaquinaria.find_by_guia_movilizacion_maquinaria_id(@guias.guia_id).nil?%>
+        </td>
+      </tr>-->
+  
+  
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.maquinarias')%> </span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px" colspan="2">
+      <table class="lista" style="width: 100%">
+  <tr>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%> (<%=I18n.t('Sistema.Body.Vistas.General.motor')%> / <%=I18n.t('Sistema.Body.Vistas.General.chasis')%>)</label>
+    </th>
+    <th style="width: 30px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.convenio')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.almacen')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.oficina')%> <%=I18n.t('Sistema.Body.Vistas.Form.destino')%></label>
+    </th>
+    
+  </tr>
+  <% unless @maquinaria_list.nil?
+    clase = "lista0"
+    @maquinaria_list.each { |maq| %>
+      <tr id="coj_<%= maq.id %>" class='<%= clase %>'>
+        <td>
+          <%= maq.rubro.to_s %> 
+        </td>
+        <td>
+          <%= maq.tipo_clase.to_s %> 
+        </td>
+        <td>
+          <%= maq.marca.to_s %>
+        </td>
+        <td>
+          <%= maq.modelo.to_s %>
+        </td>
+        <td align="center">
+          <%= maq.serial.to_s %>
+        </td>
+        <td>
+          <%= maq.nombre_convenio.to_s %>
+        </td>
+        <td>
+          <%= maq.almacen.to_s %>
+        </td>
+        <td>
+          <%= maq.oficina.to_s %>
+        </td>
+        
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+</table>
+    </td>
+  </tr>
+  <%if @guias.estatus.strip=='R'%>
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.datos')%> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <%=I18n.t('Sistema.Body.Vistas.General.la')%> <%=I18n.t('Sistema.Body.Vistas.General.recepcion')%> </span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.Vistas.General.receptor')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @info_recepcion.nombe_receptor.to_s unless @info_recepcion.nil?-%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.cedula')%> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.Vistas.General.receptor')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @info_recepcion.cedula_receptor.to_s unless @info_recepcion.nil?-%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.hora_real_llegada')%> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.Vistas.General.receptor')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @info_recepcion.telefono_receptor.to_s unless @info_recepcion.nil?-%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.fecha_real_llegada')%></label>
+    </td>
+    <td style="width: 620px">
+      <%= @info_recepcion.fecha_recepcion_f unless @info_recepcion.nil?-%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.hora_real_llegada')%> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @info_recepcion.hora_llegada -%> <%= @info_recepcion.hora_llegada_ampm %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %> </label>
+    </td>
+    <td style="width: 620px">
+      <%= @info_recepcion.observaciones.to_s unless @info_recepcion.nil?-%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.maquinarias')%> <%=I18n.t('Sistema.Body.Vistas.General.recibidas')%> </span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 150px" colspan="2">
+      <table class="lista" style="width: 100%">
+  <tr>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.serial')%> (<%=I18n.t('Sistema.Body.Vistas.General.motor')%> / <%=I18n.t('Sistema.Body.Vistas.General.chasis')%>)</label>
+    </th>
+    <th style="width: 30px">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.convenio')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.almacen')%></label>
+    </th>
+    <th style="width: 20px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.oficina')%> <%=I18n.t('Sistema.Body.Vistas.Form.destino')%></label>
+    </th>
+    <th style="width: 20px" >
+      <label><%=I18n.t('Sistema.Body.Vistas.General.conforme')%></label>
+    </th>
+    
+  </tr>
+  <% unless @maquinaria_list.nil?
+    clase = "lista0"
+    @maquinaria_list.each { |maq| %>
+      <tr id="coj_<%= maq.id %>" class='<%= clase %>'>
+        <td>
+          <%= maq.rubro.to_s %> 
+        </td>
+        <td>
+          <%= maq.tipo_clase.to_s %> 
+        </td>
+        <td>
+          <%= maq.marca.to_s %>
+        </td>
+        <td>
+          <%= maq.modelo.to_s %>
+        </td>
+        <td align="center">
+          <%= maq.serial.to_s %>
+        </td>
+        <td>
+          <%= maq.nombre_convenio.to_s %>
+        </td>
+        <td>
+          <%= maq.almacen.to_s %>
+        </td>
+        <td>
+          <%= maq.oficina.to_s %>
+        </td>
+        <td align="center">
+          <%= format_bool maq.conforme %>
+        </td>
+        
+        
+      </tr>
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+</table>
+    </td>
+  </tr>
+  
+  
+  
+  <%end%>
+  <table>
+	
+<br/>
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :action => :index, :controller => 'consulta_orden_despacho'},
+        { :id=>'button_close2', } ) -%>
+</div>

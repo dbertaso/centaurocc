@@ -1,0 +1,32 @@
+<% acta_silo = @acta_silo if acta_silo.nil? %>
+<td>
+  <%= acta_silo.silo.nombre.to_s unless acta_silo.nil? %>
+</td>
+<td>
+  <%= acta_silo.actividad.nombre unless acta_silo.actividad.nil? %>
+</td>	
+<td>
+  <%= acta_silo.ciclo_productivo.nombre.to_s unless acta_silo.nil?%>
+</td>	
+<td style="text-align: center">
+  <%= acta_silo.nro_acta unless acta_silo.nil?%>
+</td>	
+<td style="text-align: center">
+  <%= format_bool(acta_silo.status) unless acta_silo.nil? %>
+</td>
+<td style="text-align: right">
+  <% if acta_silo.fecha_fin.nil? %>
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title => I18n.t('Sistema.Body.Controladores.Accion.modificar')), :action => 'edit', 
+      :method => :get, :silo_id => @silo.id, :popup=>params[:popup], :id => acta_silo.id ) if vlink 'edit' %>
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title => I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+      :url => {:controller => 'acta_silo', :action => :delete, :id => acta_silo.id}) if vlink 'delete' -%>
+  <%else%>
+    <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+      {:action => :view, :method => :get, :id => acta_silo.id, :silo_id => @silo.id, :controller => 'acta_silo'} %>
+  <%end%>
+
+</td>
+

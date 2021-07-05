@@ -1,0 +1,127 @@
+<div class="marco-contenido">
+  <div class="marco-titulo"><div><div>
+          Consultando Solicitud <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= Etiquetas.etiqueta(9) %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+  </div></div></div>
+
+          <%= render :partial=>'solicitudes/solicitud/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <%= render :partial=>'solicitudes/unidades_apoyo_consultoria/common/tabs' %>
+      <div class="marco-contenido2">
+        <%= render :partial=>'solicitudes/unidades_apoyo_avaluo/common/tabs' %>
+
+          <div class="marco-contenido2">
+
+            <table style="width: 100%">
+              <tr>
+                <td>
+                  <label>Obras Civiles</label> <%= format_bool @solicitud.avaluo_obra_civil %>
+                </td>
+              </tr>
+            </table>
+            <% if @solicitud.avaluo_obra_civil %>
+            <br></br>
+            <table>
+
+              <tr>
+                <td style="width: 20%">
+                  <label>Fecha:</label>
+                </td>
+                <td style="width: 80%">
+                  <%= @solicitud_obra_civil.fecha_f %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Nombre de la Obra:</label>
+                </td>
+                <td>
+                  <%= @solicitud_obra_civil.nombre_obra %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Monto del Presupuesto:</label>
+                </td>
+                <td>
+                  <%= display_number @solicitud_obra_civil.monto_presupuesto, '' %>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">
+                  <label>Ubicación de la Obra:</label>
+                </td>
+                <td align="justify">
+                  <%= @solicitud_obra_civil.ubicacion_obra.gsub("\n","<br/>") %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Nombre de la Empresa y/o Profesional a Cargo de la Obra:</label>
+                </td>
+                <td>
+                  <%= @solicitud_obra_civil.empresa_profesional %>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label>Revisor:</label>
+                </td>
+                <td>
+                  <%= @solicitud_obra_civil.revisior %>
+                </td>
+              </tr>
+
+            </table>
+            <% end %>
+            <br/>
+            <table class="lista" style="width: 90%">
+              <thead>
+                <tr>
+                  <th style="width: 50%; text-align: center">
+                    Nombre del Recaudo
+                  </th>
+                  <th style="width: 10%; text-align: center">
+                    Revisado
+                  </th>
+                  <th style="width: 40%; text-align: center">
+                    Observaciones
+                  </th>
+                </tr>
+              </thead>
+
+              <% lista = 'lista0'
+                @solicitud_recaudo_avaluo.each { |item|  %>
+                <tr class="<%=  lista %>" id="row_<%=  item.id %>">
+                  <td style="text-align: justify">
+                    <%= item.RecaudosAvaluosInspecciones.descripcion %>
+                  </td>
+                  <td style="text-align: center">
+                    <%= format_bool item.revisado %>
+                  </td>
+                  <td align="justify">
+                    <%= item.observaciones.gsub("\n","<br/>") unless item.observaciones.nil? %>
+                  </td>
+                </tr>
+              <% if lista == 'lista0'
+                  lista = 'lista1'
+                else
+                  lista = 'lista0'
+                end
+              } %>
+            </table>
+            <br/><br/>
+
+            <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+                    { :controller => params[:controlador], :action => :index },
+                    { :id=>'button_close' } ) -%>
+          </div>
+     </div>
+  </div>
+
+</div>

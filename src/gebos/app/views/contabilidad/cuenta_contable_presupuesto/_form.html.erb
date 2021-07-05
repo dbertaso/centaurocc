@@ -1,0 +1,20 @@
+<table>
+	<tr>
+		<td style="width: 60px">
+			<label>Código</label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'cuenta_contable_presupuesto', 'codigo', :class=>'text', :style=>'width: 160px', :maxlength=>'20'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 60px">
+			<label>Año</label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'cuenta_contable_presupuesto', 'anio', :class=>'text', :style=>'width: 40px', :maxlength=>'4'  -%>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

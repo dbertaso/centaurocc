@@ -1,0 +1,70 @@
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%#= sort_class_helper('@numero_desembolso') %>>
+          <%#= sort_link_helper '# Nro.Desembolso', '@numero_desembolso', 'list' %>
+          <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.numero_factura') %>
+        </th>
+
+         <th style="width: 120px" <%#= sort_class_helper('item_nombre') %>>
+          <%#= sort_link_helper '# Ítem', 'item_nombre', 'list' %>
+          <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.casa_proveedora') %>
+        </th>
+         <th style="width: 320px" <%#= sort_class_helper('observacion') %>>
+          <%#= sort_link_helper 'Descripción', 'observacion', 'list' %><%= I18n.t('Sistema.Body.Vistas.General.sucursal') %>
+        </th>
+        <th style="width: 120px" <%#= sort_class_helper('cantidad') %>>
+          <%#= sort_link_helper 'Cantidad', 'cantidad', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.forma_pago') %>
+        </th>
+
+        <th style="width: 160px" <%#= sort_class_helper('costo_real') %>>
+          <%#= sort_link_helper 'Precio Unitario', 'costo_real', 'list' %><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_emision')%>
+       </th>
+        
+        <th style="width: 160px" <%#= sort_class_helper('costo_real') %>>
+          <%#= sort_link_helper 'Precio Unitario', 'costo_real', 'list' %><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.fecha_confirmacion')%>
+       </th>
+        
+        <th style="width: 160px" <%#= sort_class_helper('costo_real') %>>
+          <%#= sort_link_helper 'Precio Unitario', 'costo_real', 'list' %><%=I18n.t('Sistema.Body.Vistas.General.nombre')%> <%= I18n.t('Sistema.Body.Vistas.Form.item') %>
+       </th>
+
+        <th style="width: 160px" <%#= sort_class_helper('monto_financiamiento') %>>
+          <%#= sort_link_helper 'Precio Total', 'monto_financiamiento', 'list' %><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cantidad_entregada')%>
+
+        </th>        
+        <th style="width: 160px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Saldo a Entregar', 'monto_factura', 'list' %>
+          <%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_facturado')%>        
+      </th>
+        <th style="width: 160px" <%#= sort_class_helper('monto_factura') %>>
+          <%#= sort_link_helper 'Saldo a Entregar', 'monto_factura', 'list' %>
+          <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.estatus_factura')%>
+      </th>
+        
+        </tr>
+    </thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for orden_despacho_detalle in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row_especial', :locals => { :orden_despacho_detalle => orden_despacho_detalle, :even_odd => even_odd } -%>
+<% end %>
+<tr border="1" style="background-color: #888888;">
+
+<td colspan="7" style="border: solid 1px #000000;" align="right"><strong><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.totales')).upcase%></strong></td>
+<td style="border: solid 1px #000000;" align="center"><strong>
+<%=format_fm(@cantidad_total_entregar) %>
+</strong></td>
+
+<td style="border: solid 1px #000000;" align="right"><strong>
+<%=format_fm(@total_saldo_entregar) %>
+</strong></td>
+
+</tr>
+
+</tbody>
+</table>
+
+

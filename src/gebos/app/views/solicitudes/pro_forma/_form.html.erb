@@ -1,0 +1,152 @@
+<table>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Controladores.CasaProveedora.FormTitles.form_title') %></label>
+    </td>
+    <td>
+      <%= select(
+        'proforma', 'casa_proveedora_id',
+        @casa_proveedora_select.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.numero') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'proforma', 'numero',
+        :class=>'text', :style=>'width: 200px;',
+        :maxlength=>'30', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.emision')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "proforma[fecha_emision_f]", @proforma.fecha_emision_f, 
+        :year_range => 10.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.en')} #{I18n.t('Sistema.Body.Vistas.General.que')} #{I18n.t('Sistema.Body.Vistas.General.caduca')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "proforma[fecha_caduca_f]", @proforma.fecha_caduca_f, 
+        :year_range => 10.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:onchange=>'inputChange();' %> (dd/mm/aaaa)
+    </td>
+  </tr>
+</table>
+<br/>
+<table class="lista" style="width: 100%">
+  <tr>
+  <tr>
+    <th style="width: 5%"></th>
+
+    <th style="width: 14%">
+      <%= I18n.t('Sistema.Body.Vistas.General.rubro') %>
+    </th>
+
+    <th style="width: 15%">
+      <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+    </th>
+
+    <th style="width: 14%">
+      <%= I18n.t('Sistema.Body.Vistas.General.marca') %>
+    </th>
+
+    <th style="width: 14%">
+      <%= I18n.t('Sistema.Body.Vistas.General.modelo') %>
+    </th>
+
+    <th style="width: 14%">
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %>
+    </th>
+
+    <th style="width: 14%">
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %>
+    </th>
+    
+    <th style="width: 10%">
+      <%= I18n.t('Sistema.Body.Vistas.General.costo') %>
+    </th>
+  </tr>
+  <% lista = 0  
+    @solicitud_maquinaria.each {|m| %>
+    <tr class="lista<%= lista %>">
+      <td>
+        <% if m.proforma_id.nil? %>
+          <input type='checkbox' id='maquinaria_id' name='maquinaria_select_id' value='<%= m.id %>' onClick='inputChange(); Chequear(this);' />
+        <% else %>
+          <input type='checkbox' id='maquinaria_id' checked="true" name='maquinaria_select_id' value='<%= m.id %>' onClick='inputChange(); Chequear(this);' />
+        <% end %>
+      </td>
+      
+      <td>
+        <%= m.tipo_maquinaria.descripcion %>
+      </td>
+
+      <td>
+        <%= m.clase.nombre %>
+      </td>
+
+      <td align="center">
+        <%= m.marca_maquinaria.nombre unless m.marca_maquinaria.nil? %>
+      </td>
+
+      <td align="center">
+        <%= m.modelo.nombre unless m.modelo.nil? %>
+      </td>
+
+      <td>
+        <% if m.proforma_id.nil? %>
+          <%= text_field 'solicitud_maq', "serial_motor_#{m.id}",
+              :class=>'text', :style=>'width: 100px;',
+              :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+        <% else %>
+          <%= text_field 'solicitud_maq', "serial_motor_#{m.id}",
+              :class=>'text', :style=>'width: 100px;', :value => "#{m.serial_motor}",
+              :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+       <% end %>
+      </td>
+      
+      <td>
+        <% if m.proforma_id.nil? %>
+          <%= text_field 'solicitud_maq', "serial_chasis_#{m.id}",
+              :class=>'text', :style=>'width: 100px;',
+              :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+        <% else %>
+          <%= text_field 'solicitud_maq', "serial_chasis_#{m.id}",
+              :class=>'text', :style=>'width: 100px;', :value => "#{m.serial_chasis}",
+              :maxlength=>'50', :onkeypress=>'inputChange();'  -%>
+        <% end %>
+      </td>
+      
+      <td>
+        <% if m.proforma_id.nil? %>
+          <%= text_field 'solicitud_maq', "costo_#{m.id}",
+              :class=>'text', :style=>'width: 100px;',
+              :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+        <% else %>
+          <%= text_field 'solicitud_maq', "costo_#{m.id}",
+              :class=>'text', :style=>'width: 100px;', :value => "#{m.costo}",
+              :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+        <% end %>
+      </td>
+    </tr>
+  <% if lista == 0
+        lista = 1
+     else
+       lista = 0
+     end
+     } %>
+</table>
+<br/>

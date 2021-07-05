@@ -1,0 +1,181 @@
+<div id="tabs">
+  <ul>
+    <%
+      action_name = controller.action_name
+      controller_name = controller.controller_name
+
+      if controller_name=='consulta_prestamo' and
+        action_name == 'view' and
+        @prestamo.estatus != 'C' and
+        @prestamo.estatus != 'F' and
+        @prestamo.estatus != 'R'
+
+    %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%= I18n.t('Sistema.Body.General.general') %>
+            </a>
+          </div>
+        </li>
+    <%
+      else
+    %>
+        <li>
+          <div>
+            <%= link_to(I18n.t('Sistema.Body.General.general'), :controller => 'consulta_prestamo', :action => 'view', :popup=>params[:popup], :id => @prestamo.id) %>
+          </div>
+        </li>
+    <%
+      end
+
+      if @prestamo.id
+
+        if controller_name=='consulta_prestamo_financiamiento'
+    %>
+          <li id="actual">
+            <div>
+              <a href="#">
+                <%= I18n.t('Sistema.Body.Controladores.ConsultaPrestamoFinanciamiento.FormTitles.form_title') %>
+              </a>
+            </div>
+          </li>
+    <%
+        else
+    %>
+          <li>
+            <div>
+              <%= link_to(I18n.t('Sistema.Body.Controladores.ConsultaPrestamoFinanciamiento.FormTitles.form_title'), :controller => 'consulta_prestamo_financiamiento', :action => 'index', :popup=>params[:popup], :prestamo_id => @prestamo.id)  %>
+            </div>
+          </li>
+      <%
+        end
+
+        plan_pago = PlanPago.find_by_prestamo_id_and_activo(@prestamo.id, true)
+
+        if controller_name=='consulta_prestamo_plan_pago'
+
+      %>
+          <li id="actual">
+            <div>
+              <a href="#">
+                <%= I18n.t('Sistema.Body.General.tabla_amortizacion') %>
+              </a>
+            </div>
+          </li>
+      <%
+        else
+      %>
+          <li>
+            <div>
+              <%= link_to(I18n.t('Sistema.Body.General.tabla_amortizacion'), :controller => 'consulta_prestamo_plan_pago', :action => 'index', :popup=>params[:popup], :prestamo_id => @prestamo.id) %>
+              </div>
+          </li>
+      <%
+        end
+
+      end
+
+    if controller_name=='consulta_prestamo_factura'
+    %>
+      <li id="actual">
+        <div>
+          <a href="#"><%= I18n.t('Sistema.Body.General.eventos_financieros') %></a>
+        </div>
+      </li>
+    <%
+    else
+    %>
+      <li>
+        <div>
+          <%= link_to(I18n.t('Sistema.Body.General.eventos_financieros') , :controller => 'consulta_prestamo_factura', :action => 'index', :popup=>params[:popup], :prestamo_id => @prestamo.id) %>
+        </div>
+      </li>
+    <%
+    end
+
+    if controller_name=='consulta_prestamo_situacion'
+    %>
+      <li id="actual">
+        <div>
+          <a href="#">
+            <%= I18n.t('Sistema.Body.General.estado_cuenta') %>
+          </a>
+        </div>
+      </li>
+    <%
+    else
+    %>
+      <li>
+        <div>
+          <%= link_to(I18n.t('Sistema.Body.General.estado_cuenta'), :controller => 'consulta_prestamo_situacion', :action => 'index', :popup=>params[:popup], :prestamo_id => @prestamo.id) %>
+        </div>
+      </li>
+    <%
+    end
+
+    if controller_name=='consulta_prestamo_cobranzas'
+    %>
+      <li id="actual">
+        <div>
+          <a ref="#">
+            <%= I18n.t('Sistema.Body.General.analisis_pago') %>
+          </a>
+        </div>
+      </li>
+    <%
+    else
+    %>      
+      <li>
+        <div>
+        <%= link_to(t('Sistema.Body.General.analisis_pago'), :controller => 'consulta_prestamo_cobranzas', :action => 'view', :popup=>params[:popup], :id => @prestamo.id) %>
+        </div>
+      </li>
+    <%
+    end
+
+    if controller_name == 'consulta_prestamo_desempeno'
+    %>
+      <li id="actual">
+        <div>
+          <a ref="#">
+            <%= t('Sistema.Body.General.desempeno_cobranzas') %>
+          </a>
+        </div>
+      </li>
+    <%
+    else
+    %>
+    <li>
+      <div>
+        <%= link_to(t('Sistema.Body.General.desempeno_cobranzas'), :controller => 'consulta_prestamo_desempeno', :action => 'view', :popup=>params[:popup], :id => @prestamo.id) %>
+      </div>
+    </li>
+    <%
+    end
+
+    if controller_name=='consulta_prestamo' && (action_name=='tasa_historico_list' || action_name=='tasa_historico_list_view')
+    %>
+      <li id="actual">
+        <div>
+          <a href="#">
+            <%= I18n.t('Sistema.Body.Controladores.Tasa.FormTitles.form_title_record') %>
+          </a>
+        </div>
+      </li>
+    <%
+    else
+    %>
+      <li>
+        <div>
+          <%= link_to(t('Sistema.Body.Controladores.Tasa.FormTitles.form_title_record'), :controller => 'consulta_prestamo', :action => 'tasa_historico_list', :id => @prestamo.id) if (action_name == 'index' || action_name == 'edit' || action_name == 'new')  %>
+
+          <%= link_to(t('Sistema.Body.Controladores.Tasa.FormTitles.form_title_record'), :controller => 'consulta_prestamo', :action => 'tasa_historico_list_view', :id => @prestamo.id) if (action_name=='view' || action_name=='view_detail')  %>
+
+        </div>
+      </li>
+    <%
+    end
+  %>
+  </ul>
+</div>

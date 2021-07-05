@@ -1,0 +1,69 @@
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+      :loading =>'Element.show("loading")',
+      :loaded => 'Element.hide("loading")',
+      :url => { :action => :list } ) -%>
+    <table>
+      <tr>
+        <td style="width: 130px">
+          <label>Sector</label>
+        </td>
+        <td>
+          <%= select(
+              'sector_economico_id','',
+              @sector_economico.map{|i| [i.descripcion, i.id]},
+              { :include_blank => true },
+              { :class=>'select', :onchange=>'inputChange();' } ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label>Estado</label>
+        </td>
+        <td>
+          <%= select(
+              'estado_id','',
+              @estado.map{|i| [i.nombre, i.id]},
+              { :include_blank => true },
+              { :class=>'select', :onchange=>'inputChange();' } ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label>Solicitud</label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label>Cédula / Rif</label>
+        </td>
+        <td>
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'12', :style=>'width: 100px'  %> Ej: J-12345678-9
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 130px">
+          <label>Apellido / Empresa</label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>&emsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+        </td>
+      </tr>
+      
+    </table>
+  <%= end_form_tag %>
+  <br></br>
+  <%= error %>
+  <%= message %>
+  <div id="list">
+  </div>
+</div>

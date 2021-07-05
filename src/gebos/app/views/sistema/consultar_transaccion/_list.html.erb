@@ -1,0 +1,45 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 2%">
+      </th>
+      <th style="width: 4%" <%= sort_class_helper('transaccion.id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.numero'), 'transaccion.id', 'list' %>
+      </th>
+      <th style="width: 10%" <%= sort_class_helper('meta_transaccion.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.tipo'), 'meta_transaccion.nombre', 'list' %>
+      </th>
+      <th style="width: 5%" <%= sort_class_helper('usuario.nombre_usuario') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Login.user'), 'usuario.nombre_usuario', 'list' %>
+      </th>
+      <th style="width: 9%" <%= sort_class_helper('fecha') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.fecha_hora'), 'fecha', 'list' %>
+      </th>
+      <th style="width: 8%" <%= sort_class_helper('prestamo.numero') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultarTransaccion.Etiquetas.prestamo'), 'prestamo.numero', 'list' %>
+      </th>
+      <th style="width: 15%" <%= sort_class_helper('transaccion.prestamo.cliente.empresa.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.empresa'), 'transaccion.prestamo.cliente.empresa.nombre', 'list' %>
+      </th>
+      <th style="width: 30%" <%= sort_class_helper('transaccion.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'transaccion.descripcion', 'list' %>
+      </th>
+      <th style="width: 7%" <%= sort_class_helper('transaccion.monto_transaccion_fm') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto'), 'transaccion.monto_transaccion_fm', 'list' %>
+      </th>
+      <th style="width: 10%">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for transaccion in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :transaccion => transaccion, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

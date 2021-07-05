@@ -1,0 +1,21 @@
+
+
+<%= render :partial=>'basico/tipo_cliente_juridico/common/tabs' %>
+
+<div class="marco-boton-in" id="button_new">
+  <%= link_to_remote( 
+    image_tag(I18n.t('Sistema.Body.Imagenes.agregar')), 
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => { :action => :new } ) %>
+</div>
+
+<%= error %>
+<%= message %>
+<div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial => 'list' -%>
+  </div>
+

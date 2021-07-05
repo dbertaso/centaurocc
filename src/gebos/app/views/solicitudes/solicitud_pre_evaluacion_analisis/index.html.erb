@@ -1,0 +1,92 @@
+<div class="marco-contenido">
+  <%= form_title_search %>
+
+  <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method => :get,
+      :url => { :action => :list } ) -%>
+    <table>
+      <tr>
+        <td style="width: 160px">
+          <label>Nro Trámite</label>
+        </td>
+        <td>
+          <%= text_field_tag 'numero', '', :class=>'text', :maxlength=>'8', :style=>'width: 100px'  %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>Nro C&eacute;dula / Rif</label>
+        </td>
+        <td>
+
+          <select name="tipo" id="tipo" class="select">
+            <option value="V ">V</option>
+            <option value="E ">E</option>
+            <option value="J-">J</option>
+            <option value="G-">G</option>
+          </select>
+          <%= text_field_tag 'identificacion', '', :class=>'text', :maxlength=>'10', :style=>'width: 100px'  %> Ej: J-12345678-9
+        </td>
+      </tr>
+ 
+       <tr>
+        <td>
+          <label>Apellido / Empresa</label>
+        </td>
+        <td>
+          <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+        </td>
+      </tr>
+                 
+      <tr>
+        <td>
+          <label>Sector</label>
+        </td>
+        <td>
+          <%= select(
+              'sector_id','',
+              @sector.map{|i| [i.nombre, i.id]},
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+              { :class=>'select', :onchange=>'inputChange();' } ) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label>Unidad de Producci&oacute;n</label>
+        </td>
+        <td>
+          <%= text_field_tag 'unidad_produccion', '', :class=>'text', :maxlength=>'30', :style=>'width: 200px'  %>
+        </td>
+      </tr>
+         
+      <tr>
+        <td>
+          <label>Municipio</label>
+        </td>
+        <td>
+          <%= select(
+              'municipio_id','',
+              @municipio.map{|i| [i.nombre, i.id]},
+              { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+              { :class=>'select', :onchange=>'inputChange();' } ) %> &emsp;<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar')) -%>
+        </td>
+      </tr>
+
+
+
+
+
+
+      
+    </table>
+  <%= end_form_tag %>
+  <br></br>
+  <%= error %>
+  <%= message %>
+  <div id="list">
+  </div>
+</div>

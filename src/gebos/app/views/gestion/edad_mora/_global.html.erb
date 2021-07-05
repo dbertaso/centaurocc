@@ -1,0 +1,49 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+  		<th style="width: 15%">
+        <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.indicador') %>
+   		</th>
+  		<th style="width: 15%">
+  		  <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_0_30') %> 
+   		</th>
+  		<th>
+        <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_31_60') %> 
+   		</th>
+  		<th style="width: 15%">
+  		  <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_61_90') %> 
+   		</th>
+  		<th style="width: 15%">
+  		  <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_91_180') %> 
+   		</th>
+  		<th style="width: 15%">
+  		  <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.mora_mas_180') %> 
+   		</th>
+  	</tr>
+  </thead>
+	<tbody>
+    <tr class="lista0">
+  		<td>
+        <label>
+          <%= t('Sistema.Body.Vistas.EdadMora.Etiquetas.indicador') %>
+        </label>
+   		</td>
+  		<td style="text-align: right">
+  	     <%= format_fm @_30 %>
+   		</td>
+  		<td style="text-align: right">
+  	     <%= format_fm @_60 %>
+   		</td>
+  		<td style="text-align: right">
+  	     <%= format_fm @_90 %>
+   		</td>
+  		<td style="text-align: right">
+  	     <%= format_fm @_180 %>
+   		</td>
+  		<td style="text-align: right">
+  	     <%= format_fm @_180plus %>
+   		</td>
+  	</tr>
+	</tbody>
+</table>
+            

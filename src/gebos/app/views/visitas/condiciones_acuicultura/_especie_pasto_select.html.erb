@@ -1,0 +1,5 @@
+<%= select(
+  'pastizales_potreros', 'especie_variedad_pasto_id',
+  @especie_variedad_pasto_list.map{|i| [i.descripcion, i.id]},
+  {:prompt => I18n.t('Sistema.Body.Vistas.General.seleccionar') },
+  { :class=>'select',:onchange=>';inputChange();' } ) %>

@@ -1,0 +1,80 @@
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%= I18n.t('Sistema.Body.Vistas.ImputacionesMaquinaria.Separador.maquinaria_internacional') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.gastos_administrativos') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td style="width: 70%">
+      <%= text_field 'imputaciones_maquinaria', 'gastos_administrativos', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange(); return NumberDoubleKey(event);', 
+        :onchange=>"gad=this.form.imputaciones_maquinaria_gastos_administrativos.value;
+          this.form.imputaciones_maquinaria_gastos_administrativos.value=(parseFloat(gad)).toFixed(2);"-%> %
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.seguro_internacional') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'imputaciones_maquinaria', 'seguro_internacional', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange(); return NumberDoubleKey(event);', 
+        :onchange=>"sit=this.form.imputaciones_maquinaria_seguro_internacional.value;
+          this.form.imputaciones_maquinaria_seguro_internacional.value=(parseFloat(sit)).toFixed(2);" -%> %
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.flete_internacional') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td> 
+      <%= text_field 'imputaciones_maquinaria', 'flete_internacional', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange(); return NumberDoubleKey(event);', 
+        :onchange=>"fit=this.form.imputaciones_maquinaria_flete_internacional.value;
+          this.form.imputaciones_maquinaria_flete_internacional.value=(parseFloat(fit)).toFixed(2);" -%> %
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.nacionalizacion_impuestos') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'imputaciones_maquinaria', 'nacionalizacion_impuestos', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange(); return NumberDoubleKey(event);',
+         :onchange=>"nip=this.form.imputaciones_maquinaria_nacionalizacion_impuestos.value;
+          this.form.imputaciones_maquinaria_nacionalizacion_impuestos.value=(parseFloat(nip)).toFixed(2);" -%> %
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Modelos.ImputacionesMaquinaria.Columnas.almacenamiento') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td>
+      <%= text_field 'imputaciones_maquinaria', 'almacenamiento', :class=>'text', :style=>'width: 200px',
+        :maxlength=>'100', :onkeypress=>'inputChange(); return NumberDoubleKey(event);', 
+         :onchange=>"alm=this.form.imputaciones_maquinaria_almacenamiento.value;
+          this.form.imputaciones_maquinaria_almacenamiento.value=(parseFloat(alm)).toFixed(2);" -%> %
+    </td>
+  </tr>
+
+</div>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 30%">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observacion') %></label> <label style="color: red"> (*) </label>
+    </td>
+    <td style="width: 70%">
+      <%= text_area 'imputaciones_maquinaria', 'observacion', :class=>'text', :style=>'width: 320px; height: 60px', 
+        :onkeypress=>'inputChange();', :onKeyUp=>'textCounter(this,250)' -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"> &MediumSpace;
+    </td>
+  </tr>
+  <tr>
+    <td  colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

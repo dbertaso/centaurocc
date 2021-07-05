@@ -1,0 +1,46 @@
+<%= error %>
+<%= message %>
+<br/>
+<div align="center" id ="fecha_acta">
+  <%= form_remote_tag(
+    :loading =>'image_load()', :loaded => 'image_unload()', :method=>:get,
+    :url => { :controller=>"solicitud_consultoria_juridica_historico", :action => :save_suscribir,  :solicitud_id => @solicitud_id_sus }) do -%>
+  <table class="lista" width="400px">
+    <tr><td colspan="3" height="10px"></td></tr>
+    <tr>
+      <td style="width:40%" align="left"><label><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.fecha_recepcion')%></label></td>
+      <td width="60%">
+        <%= calendar_date_select_tag "fecha_rc", @fecha_rc, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', :onkeypress=>'inputChange();' %> 
+          <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+        
+        <%#= text_field_tag 'fecha_rc', '', :class=>'text', :maxlength=>'10', :value =>@fecha_rc,  :style=>'width: 100px'  %>&nbsp;<%#= calendar 'fecha_rc', 'calendar_fecha_rc' %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:40%" align="left"><label><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.fecha_notaria')%></label></td>
+      <td width="60%">
+
+        <%= text_field_tag 'fecha_ntd', '', :class=>'text', :disabled => 'disabled', :maxlength=>'10', :value =>@fecha_nt,  :style=>'width: 100px'  %> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+      </td>
+    </tr>
+    <!--
+      <tr>
+        <td style="width:40%" align="left"><label>Fecha de Registro</label></td>
+        <td width="60%">
+            <%= calendar_date_select_tag "fecha_rg", @fecha_rg, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', :onkeypress=>'inputChange();' %> 
+          <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    <%#= text_field_tag 'fecha_rg', '', :class=>'text', :maxlength=>'10', :value =>@fecha_rg,  :style=>'width: 100px'  %> &nbsp;<%#= calendar 'fecha_rg', 'calendar_fecha_rg' %> (dd/mm/aaaa) (Opcional)
+    </td>
+    </tr>
+    -->
+    <tr><td colspan="3" height="10px"></td></tr>
+    <tr>
+      <td colspan = "3" align="center"><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar')) -%></td>
+    </tr>
+    <tr><td colspan="3" height="10px"></td></tr>
+
+  </table>
+  <% end %>
+  <br></br>
+</div>
+

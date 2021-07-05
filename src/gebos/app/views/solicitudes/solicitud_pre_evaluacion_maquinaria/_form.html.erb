@@ -1,0 +1,140 @@
+
+<table style="table-layout:fixed;width: 100%">
+
+  <tr>
+    <td width="140px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %></label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td style="word-wrap: break-word;">
+      <%= select(
+        'unidad_produccion_maquinaria','clase',
+        @tipo_maquinaria.map{|e| [e.nombre, e.nombre]},
+        { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method =>:get,
+          :url=>{:controller=>'solicitud_pre_evaluacion_maquinaria',
+          :action=>:clase_search },
+          :with=>"'id='+ this.value")};inputChange();"}) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.clase') %></label>&nbsp;&nbsp;<span style="color:red">*</span>
+    </td>
+    <td>
+      <div id="clase-search">
+        <%= render :partial => 'clase_search' %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.cantidad') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_maquinaria', 'cantidad', 
+        :class=>'text', 
+        :style=>'width: 60px', 
+        :maxlength=>'8', :onkeypress=>'return NumberKey(event);'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.marca') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_maquinaria', 'marca', 
+        :class=>'text', 
+        :style=>'width: 200px', 
+        :maxlength=>'50'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.modelo') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_maquinaria', 'modelo', 
+        :class=>'text', 
+        :style=>'width: 200px', 
+        :maxlength=>'50'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.serial') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_maquinaria', 'serial', 
+        :class=>'text', 
+        :style=>'width: 200px', 
+        :maxlength=>'50'  -%>
+    </td>
+  </tr>
+  
+  <tr id ="tr_chasis">
+    <td>
+      <label><%= I18n.t('Sistema.Body.Vistas.General.chasis') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_maquinaria', 'nro_chasis', 
+        :class=>'text', 
+        :style=>'width: 200px', 
+        :maxlength=>'50'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.año') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= text_field 'unidad_produccion_maquinaria', 'anio', 
+        :class=>'text', 
+        :style=>'width: 50px', 
+        :maxlength=>'4', :onkeypress=>'return NumberKey(event);' ,
+        :onchange=>'if(this.value*0 != 0 || this.value < 1900 || this.value > new Date().getFullYear() +1){this.value = ""; document.getElementById("mensaje_año").style.display="block";}else{document.getElementById("mensaje_año").style.display="none"}'  -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>			
+      <label><%= I18n.t('Sistema.Body.Modelos.Embarcacion.Columnas.condicion') %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= radio_button 'unidad_produccion_maquinaria', 'condicion', 'E',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.excelente') %>
+      <%= radio_button 'unidad_produccion_maquinaria', 'condicion', 'B',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.buena') %>
+      <%= radio_button 'unidad_produccion_maquinaria', 'condicion', 'R',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.regular') %>
+      <%= radio_button 'unidad_produccion_maquinaria', 'condicion', 'M',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.mala') %>     
+    </td>
+  </tr>
+  
+  <tr>
+    <td>			
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.tenencia')}" %></label> <label style="color: red">*</label>
+    </td>
+    <td>
+      <%= radio_button 'unidad_produccion_maquinaria', 'tipo_tenencia', 'PR',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.propia') %>
+      <%= radio_button 'unidad_produccion_maquinaria', 'tipo_tenencia', 'AQ',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.alquilada') %>
+      <%= radio_button 'unidad_produccion_maquinaria', 'tipo_tenencia', 'FI',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.financiada') %>
+      <%= radio_button 'unidad_produccion_maquinaria', 'tipo_tenencia', 'AD',
+        :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.adjudicada') %>     
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

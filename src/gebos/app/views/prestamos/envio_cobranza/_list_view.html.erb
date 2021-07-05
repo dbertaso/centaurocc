@@ -1,0 +1,56 @@
+<%= render :partial=>'prestamos/envio_cobranza/common/tabs' %>
+<div class="marco-contenido2">
+<br>
+
+<br>
+<form>
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+    <th style="width: 50px">
+      <%= I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_valor') %>
+    </th>		
+    <th style="width: 50px">
+			<%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.fecha_generacion') %>
+		</th>
+		<th style="width: 40px">
+			<%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.nombre_archivo') %>
+		</th>
+    <th style="width: 30px">
+      <%= I18n.t('Sistema.Body.Vistas.General.entidad_financiera') %>
+    </th>
+    <th style="width: 30px">
+      <%= I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.numero_cuenta') %>
+    </th>
+    <th style="width: 30px">
+      <%= I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.tipo_cuenta') %>
+    </th>
+		<th style="width: 30px">
+			<%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.estatus') %>
+		</th>
+		<th style="width: 100px">
+			<%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.cantidad_registros') %>
+		</th>
+		<th style="width: 70px">
+			<%= I18n.t('Sistema.Body.Vistas.EnvioCobranzas.Etiquetas.monto') %>
+		</th>
+    <th style="width: 70px"></th>
+  </tr>
+	</thead>
+	<tbody id="list-body">
+    <%
+      even_odd = 1
+      for control_envio_cobranza in @list
+        even_odd = 1 - even_odd %>
+      <%= render :partial => 'row_view', :locals => { :control_envio_cobranza => control_envio_cobranza, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+  <div id="error">
+
+  </div>
+</form>
+<%= form_pagination %>
+
+
+</div>

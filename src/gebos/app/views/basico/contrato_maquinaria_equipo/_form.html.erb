@@ -1,0 +1,80 @@
+<script language="text/javascript">varEnviado = false;</script>
+
+<table style="width: 100%">
+  
+  <% unless @contrato_maquinaria_equipo.new_record? %>
+    <tr>
+        <td width="150px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.id') << " " << I18n.t('Sistema.Body.Vistas.General.registro')%>:</label>
+        </td>
+        <td style="width: 580px">
+            <%= @contrato_maquinaria_equipo.id %>
+        </td>
+    </tr>
+  <% end %>
+    <tr>
+        <td width="150px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.Form.convenio')%>:</label> <label style="color:red"> <%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+        </td>
+        <td style="width: 580px">
+            <%= text_field 'contrato_maquinaria_equipo', 'numero_contrato', :class=>'text', :style=>'width: 320px', :maxlength=>'50'  -%>
+        </td>
+    </tr>
+    
+    <tr>
+      <td width="200px">
+         <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.Form.contrato')%>:</label>
+     </td>
+     <td>
+        <%= calendar_date_select_tag "contrato_maquinaria_equipo[fecha_contrato]", @contrato_maquinaria_equipo.fecha_contrato_f, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+
+     </td>
+   </tr>
+   
+   <tr>
+      <td width="110px">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.naturaleza') << " " << I18n.t('Sistema.Body.Vistas.General.del') << " " << I18n.t('Sistema.Body.Vistas.Form.convenio')%>:</label> <label style="color:red"> <%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td style="width: 620px">
+        <%= radio_button 'contrato_maquinaria_equipo', 'naturaleza', 'N',
+          :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.nacional')%><br />
+        <%= radio_button 'contrato_maquinaria_equipo', 'naturaleza', 'I',
+          :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.General.internacional')%><br />
+    </td>
+      </td>
+  </tr>
+   
+    <tr>
+        <td width="110px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.rif') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.la') << " " << I18n.t('Sistema.Body.Vistas.General.empresa')%>:</label> <label style="color:red"> <%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+        </td> 
+        <td style="width: 620px">
+            <%= text_field 'contrato_maquinaria_equipo', 'rif', :class=>'text', :style=>'width: 180px', :maxlength=>'12'  -%> <%=I18n.t('Sistema.Body.General.ejemplo_documento')%> 
+        </td>
+    </tr>
+    
+    <tr>
+        <td width="110px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.nombre') << " " << I18n.t('Sistema.Body.Vistas.General.empresa')%>:</label>
+        </td>
+        <td style="width: 620px">
+            <%= text_field 'contrato_maquinaria_equipo', 'nombre', :class=>'text', :style=>'width: 320px', :maxlength=>'250'  -%>
+        </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion') << " " << I18n.t('Sistema.Body.Vistas.General.del') << " " << I18n.t('Sistema.Body.Vistas.Form.convenio')%>: </label><label style="color:red"> <%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%= text_area 'contrato_maquinaria_equipo', 'descripcion',
+          :class=>'text',
+          :style=>'width: 320px; height: 60px',
+          :onkeypress=>'inputChange();' -%>
+      </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="text-align: left">
+                <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

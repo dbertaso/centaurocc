@@ -1,0 +1,62 @@
+<td align="center">
+<input type="checkbox" name="prestamo_id" id="prestamo_id" onClick="GenericcheckOne(this,form.todos,'prestamos_id'); abrirCampos(this, '<%= view_generacion_tabla.prestamo_id %>')" value='<%= view_generacion_tabla.prestamo_id %>' />
+</td>
+
+<td align="center">
+<%= calendar_date_select_tag "fecha_liquidacion_#{view_generacion_tabla.prestamo_id}", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off',:disabled=>"true", :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:valid_date_check => "date-1 < (new Date()).stripTime()" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+</td>
+
+<td align="center">
+<%= text_field_tag "numero_cheque_#{view_generacion_tabla.prestamo_id}", '', :class=>'text', :style=>'width: 100px', :maxlength=>'15', :disabled=>"true" -%>
+</td>
+
+<td align="center">
+  <%= view_generacion_tabla.cedula_rif %>
+</td>
+<td align="right">
+  <%= view_generacion_tabla.beneficiario %>
+</td>
+<td align="center">
+  <%= view_generacion_tabla.nro_tramite %>
+</td>
+<td align="center">
+  <%= view_generacion_tabla.nro_prestamo %>
+</td>
+<td align="center">
+  <%= view_generacion_tabla.oficina_nombre %>
+</td>
+<td align="center">
+  <%= view_generacion_tabla.fecha_liquidacion_f%>
+</td>
+<td align="center">
+  <%= view_generacion_tabla.sector %>
+</td>
+<td align="center">
+  <%= view_generacion_tabla.actividad %>
+</td>
+<td align="center">
+ <font color="red"><strong> <% estatus = Estatus.find(view_generacion_tabla.estatus_id) %>
+  <%=  estatus.nombre unless estatus.nil? %></strong></font>
+</td>
+<td align="center">
+  <%= view_generacion_tabla.moneda %>
+</td>
+<td style="text-align: right">
+  <%= view_generacion_tabla.monto_desembolso_fm %>
+</td>
+<td style="text-align: right">
+  <%= view_generacion_tabla.monto_sras_fm %>
+</td>
+<td style="text-align: right" >
+  <%= view_generacion_tabla.monto_insumos_fm %>
+</td>
+<td style="text-align: right" >
+  <%= view_generacion_tabla.monto_total_desembolso_fm %>
+</td>
+<td style="text-align: right">
+  <%= view_generacion_tabla.monto_por_desembolsar_fm %>
+</td>
+
+<td style="text-align: center">
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar'))), {:controller=>'/solicitudes/solicitud',  :controlador => 'consulta_solicitud', :action=>'view', :id=>view_generacion_tabla.solicitud_id, :accion=>'1' ,:popup=>true}, :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>view_generacion_tabla.cedula_rif) + "','height=600,width=1100, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>
+</td>

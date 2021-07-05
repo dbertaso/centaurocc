@@ -1,0 +1,11 @@
+<%= select(
+  'unidad_produccion', 'municipio_id',
+  @municipio_list.map{|e| [e.nombre, e.id]},
+  {:prompt=>'Seleccione un Municipio'},
+  { :class=>'select', :onchange=>"#{remote_function(
+    :loading =>'Element.show("loading")',
+    :loaded => 'Element.hide("loading")',
+    :method => :get,
+    :url=>{:controller=>'cliente_persona_unidad_produccion',
+    :action=>:municipio_change },
+    :with=>"'municipio_id='+ this.value")};inputChange();" } ) %>

@@ -1,0 +1,40 @@
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+		<th style="width: 100px" <%= sort_class_helper('rechazo_cobranza.fecha') %>>
+			<%= sort_link_helper 'Fecha', 'rechazo_cobranza.fecha', 'list' %>
+		</th>
+		<th style="width: 100px">
+			Archivo
+		</th>
+    <th style="width: 100px">
+			Usuario
+		</th>
+		<th style="width: 100px">
+			# Solicitud
+		</th>		
+		<th style="width: 70px">
+      # Préstamo
+		</th>
+		<th style="width: 30px">
+      Monto Pago
+		</th>
+		<th style="width: 30px">
+      Código
+		</th>
+		<th style="width: 30px">
+     Descripción
+		</th>
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for rechazo_cobranza in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :rechazo_cobranza => rechazo_cobranza, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

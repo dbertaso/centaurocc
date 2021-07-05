@@ -1,0 +1,201 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.avaluo_institucion')%></span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluo.Errores.nombre_perito')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_prenda.nombre_perito %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.fecha_avaluo_mobiliario')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_prenda.fecha_avaluo_prenda_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_sudeban')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= @solicitud_avaluo_prenda.numero_sudeban_prenda %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.valor_avaluo')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= display_number @solicitud_avaluo_prenda.valor_avaluo_prenda, '' %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.General.semovientes')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <br/>
+      <table class="lista" style="width: 90%">
+        <tr>
+          <th style="width: 100px">
+            <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoPrendaSemoviente.Errores.tipo_semoviente')%></label>
+          </th>
+
+          <th style="width: 50px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%></label>
+          </th>
+
+          <th style="width: 80px">
+            <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.peso_unitario')%></label>
+          </th>
+
+          <th style="width: 110px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.raza')%></label>
+          </th>
+
+          <th style="width: 50px">
+            <label><%=I18n.t('Sistema.Body.Vistas.General.edad')%></label>
+          </th>
+
+          <th style="width: 110px">
+            <label><%="#{I18n.t('Sistema.Body.Vistas.General.monto')} #{@solicitud.moneda.abreviatura.to_s} "%></label>
+          </th>
+        </tr>
+      <%  unless @prenda_semoviente_list.nil?
+          clase = "lista0"
+          @prenda_semoviente_list.each { |semoviente| %>
+        <tr id="sem_<%= semoviente.id %>" class='<%= clase %>'>
+          <td>
+            <%= semoviente.tipos_semovientes.nombre %>
+          </td>
+
+          <td>
+            <%= semoviente.cantidad %>
+          </td>
+
+          <td>
+            <%= semoviente.peso %>
+          </td>
+
+          <td>
+            <%= semoviente.raza %>
+          </td>
+
+          <td>
+            <%= semoviente.edad.to_s %> <%= semoviente.unidad_edad %>
+          </td>
+
+          <td align="left">
+            <%= display_number semoviente.monto, '' %>
+          </td>
+        </tr>
+
+      <% if clase == 'lista0'
+          clase = 'lista1'
+        else
+          clase = 'lista0'
+        end
+      }
+        end %>
+
+      </table>
+      <br/>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.documento_oferta')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.tipo_documento_oferta')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_prenda.tipo_documento_w %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_prenda.referencia_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.fecha_documento')%></label>
+    </td>
+    <td>
+      <%= @solicitud_avaluo_prenda.fecha_documento_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.empresa_documento')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_prenda.empresa_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%="#{I18n.t('Sistema.Body.Vistas.General.rif')} #{I18n.t('Sistema.Body.Vistas.General.empresa')}"%></label></td>
+    <td>
+      <%= @solicitud_avaluo_prenda.rif_empresa_documento %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.documento_definitivo')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_prenda.referencia_definitivo %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_factura')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_prenda.fecha_factura_f %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.empresa_factura')%></label></td>
+    <td>
+      <%= @solicitud_avaluo_prenda.empresa_factura %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%="#{I18n.t('Sistema.Body.Vistas.General.rif')} #{I18n.t('Sistema.Body.Vistas.General.empresa')}"%></label></td>
+    <td>
+      <%= @solicitud_avaluo_prenda.rif_empresa_difinitivo %>
+    </td>
+  </tr>
+  
+</table>

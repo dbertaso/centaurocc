@@ -1,0 +1,72 @@
+<div class="marco-contenido">
+
+  <div class="marco-titulo"><div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.modificando')} #{I18n.t('Sistema.Body.Vistas.General.seriales')} #{I18n.t('Sistema.Body.Vistas.General.al')} #{I18n.t('Sistema.Body.Vistas.General.solicitud')}" %> <span class="titulo_modificar">'<%=  @solicitud.numero.to_s %>'</span>
+        <%= I18n.t('Sistema.Body.General.beneficiario') %>
+        <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span>
+      </div></div></div>
+
+  <%= message %>
+  <br/>
+
+  <table class="lista" style="width: 100%">
+    <tr>
+      <th colspan="8">
+        <label><%= I18n.t('Sistema.Body.General.sector_maquinarias') %></label>
+      </th>
+    </tr>
+
+    <tr>
+      <th style="width: 16%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+      </th>
+      <th style="width: 17%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.tipo')%></label>
+      </th>
+      <th style="width: 16%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.marca')%></label>
+      </th>
+      <th style="width: 16%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.modelo')%></label>
+      </th>
+      <th style="width: 10%">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.motor')}" %></label>
+      </th>
+      <th style="width: 10%">
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.serial')} #{I18n.t('Sistema.Body.Vistas.General.chasis')}" %></label>
+      </th>
+      <th style="width: 10%">
+        <label><%= I18n.t('Sistema.Body.Vistas.General.costo') %></label>
+      </th>
+      <th style="width: 5%"></th>
+    </tr>
+
+    <% clase = "lista0"
+    @solicitud_maquinaria_list.each { |m| %>
+      <tr class="<%= clase %>" >
+        <td><%= m.tipo_maquinaria.nombre %></td>
+        <td><%= m.clase.nombre %></td>
+        <td><%= m.marca_maquinaria.descripcion %></td>
+        <td><%= m.modelo.nombre %></td>
+        <td><%= m.catalogo.serial %></td>
+        <td><%= m.catalogo.chasis %></td>
+        <td><%= m.catalogo.monto_c(m.solicitud_id) %></td>
+        <td align="center"><%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+          {:action => :asignar,
+            :id => m.id} %></td>
+      </tr>
+      <% if clase == "lista0"
+        clase = "lista1"
+        else
+        clase = "lista0"
+      end
+      } %>
+
+  </table>
+
+  <br/>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+</div>

@@ -1,0 +1,29 @@
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.monto_renegociado')%></span>
+    </td>
+  </tr>  
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Controladores.CobranzaAplicada.Etiquetas.interes_general')%></label>
+    </td>
+    <td></td>
+    <td  align=left>
+      <div style="width:50%; text-align:right">
+        <%= format_fm(@total_intereses) %> <%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td  align=left colspan=3>
+      <font color=green size="3px">
+      <div style="width:700px; text-align:right">
+        <input style="display:none" readonly type="text" style="width: 100px;" size="14"  name="monto_deuda" id="monto_deuda" class="text" value="<%= @deuda %>"/>
+        <strong>
+          <%=t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.total_deuda')%> &nbsp;&nbsp;
+          <span id="monto_deuda_display"><%= format_fm(@reestructuracion.monto_reestructurado) %></span>&nbsp;<%=I18n.t('Sistema.Body.General.ab_bolivares')%>
+      </div>
+      </font>
+      </font>
+    </td>
+  </tr>

@@ -1,0 +1,92 @@
+<br>
+
+<%if @usuario.errors.any?%>
+  <div id="errorExplanation" class="errorExplanation" ><%= errors_for (@usuario)  %></div>
+<%else%>
+  <div id="errorExplanation" class="errorExplanation" style="display:none" ><%= errors_for (@usuario)  %></div>
+<%end%>
+
+<div id="loginbg">
+  <div id="boxlogin">
+    <img src="assets/GeBos.png" width="284" height="121" />
+      <%= form_tag :action=>'login' %>
+
+        <div id="cont-boxlogin">
+          <div id="cblogin-left">
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="80" align="right">
+                  <img src="assets/iconLogin.png" width="24" height="24" />
+                </td>
+                <td align="left">
+                  <span style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; color: #FFF; margin-left:8px"> <%=I18n.t('Sistema.Body.Vistas.Login.iniciar_sesion')%></span>
+                </td>
+                <td width="44">&nbsp;
+                </td>
+              </tr>
+              <tr>
+                <td height="30">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="30" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #FFF; text-align:right; padding-right:10px;"><%=I18n.t('Sistema.Body.Vistas.Login.user')%>:
+                </td>
+                <td>
+                  <%= text_field 'usuario', 'nombre_usuario', :maxlength=>'30', :style=>'width:220px; padding:8px', :onfocus=>'inputChange();' %>
+                    <!--      <input type="text" name="textfield" id="textfield" / style="padding:8px;"> -->
+                </td>
+                <td style="padding-left:5px;">
+                  <img src="assets/icon-user.png" width="17" height="20" />
+                </td>
+              </tr>
+              <tr>
+                <td height="30">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="30" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #FFF; text-align:right; padding-right:10px;"><%=I18n.t('Sistema.Body.Vistas.Login.password')%>:
+                </td>
+                <td>
+                  <%= password_field 'usuario', 'clave', :maxlength=>'30', :style=>'width:220px; padding:8px', :onfocus=>'inputChange();' %>
+                  <!--      <input type="password" name="textfield2" id="textfield2" / style="padding:8px"> -->
+                </td>
+                <td style="padding-left:5px;">
+                  <img src="assets/icon-lock.png" width="15" height="21" />
+                </td>
+              </tr>
+              <tr>
+                <td height="">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="30">&nbsp;</td>
+                <td align="left">
+                <%= submit_tag I18n.t('Sistema.Body.Vistas.Login.entrar'), :class=>'login-button' %>
+
+                </td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+          </div>
+        <div id="cblogin-right">
+          <h2 style="text-align: left;">
+            <%=I18n.t('Sistema.Body.Vistas.Login.bienvenida')%>
+          </h2>
+
+          <p><%=I18n.t('Sistema.Body.Vistas.Login.descripcion_bienvenida')%></p>
+          <p>&nbsp;</p>
+          <p><%= link_to(I18n.t('Sistema.Body.Vistas.Login.olvido_contrasena'), 
+            {:controller => '/sistema/olvido_clave', :action => 'index', :popup=>true}, 
+              :onclick=>"window.open(this.href,'" + I18n.t('Sistema.Body.Vistas.General.beneficiario') + "','height=400,width=800,scrollbars=yes,resizable=yes,top=250,left=240'); return false;")  %>&nbsp;
+          </p>
+          <!---
+            <a href="#"><%#=I18n.t('Sistema.Body.Vistas.Login.olvido_contrasena')%></a></p> -->
+        </div>
+  </div>
+    <img src="assets/gprotec.png" width="197" height="39" /> </div>
+</div>
+

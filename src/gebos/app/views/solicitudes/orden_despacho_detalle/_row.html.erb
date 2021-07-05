@@ -1,0 +1,6 @@
+<% orden_despacho_detalle = @orden_despacho_detalle if orden_despacho_detalle.nil? %>
+<%if orden_despacho_detalle.cantidad > 0%>
+<tr class="lista<%= even_odd %>" id="row_<%= orden_despacho_detalle.id %>">
+	<%= render :partial => 'data', :locals => { :orden_despacho_detalle => orden_despacho_detalle, :even_odd => even_odd } -%>
+</tr>
+<%end%>

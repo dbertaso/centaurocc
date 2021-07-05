@@ -1,0 +1,35 @@
+<td>
+  <%= solicitud.numero %>
+</td>
+<td>
+  <%= solicitud.financiamiento %>
+</td>
+<td>
+  <%= solicitud.cedula_rif %>
+</td>
+<td>
+  <%= solicitud.nombre %>
+</td>
+<td>
+  <span style="color: #FF0000"><b><%= solicitud.estatus %></b></span>
+</td>
+<td>
+  <%= solicitud.moneda %>
+</td>
+<td>
+  <%= format_fm(solicitud.monto_solicitado) %>
+</td>
+<td>
+  <%= solicitud.programa %>
+</td>
+<td>
+  <%= solicitud.estado %>
+</td>
+<td align="center">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')), 
+    {:controller => 'solicitud', :action => :view, :id => solicitud.solicitud_id,
+    :controlador => 'gestionar_garantia'} %>
+
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')),
+    {:action => :edit, :id => solicitud.solicitud_id} %>
+</td>

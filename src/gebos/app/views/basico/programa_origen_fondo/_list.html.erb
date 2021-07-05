@@ -1,0 +1,32 @@
+<table class="lista" style="width: 100%">
+  <thead>
+  <tr>
+    <th style="width: 200px">
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.origen')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.fondo')}"%>
+    </th>
+    <!--
+    <th style="width: 100px">
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.contable')} #{I18n.t('Sistema.Body.Vistas.General.ingreso')} #{I18n.t('Sistema.Body.Vistas.General.intereses')}"%>
+    </th>
+    <th style="width: 100px">
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.contable')}  #{I18n.t('Sistema.Body.Vistas.General.capital')}"%>
+    </th>
+    <th style="width: 100px">
+       <%= "#{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.contable')} #{I18n.t('Sistema.Body.Vistas.General.capital')} #{I18n.t('Sistema.Body.Vistas.General.vencido')}"%>
+    </th>-->
+    <th style="width: 44px">
+      <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+    </th>
+  </tr>
+  </thead>
+  <tbody id="list_body">
+<%
+  even_odd = 1
+  for programa_origen_fondo in @list
+    even_odd = 1 - even_odd %>
+  <%= render :partial => 'row', :locals => { :programa_origen_fondo => programa_origen_fondo, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

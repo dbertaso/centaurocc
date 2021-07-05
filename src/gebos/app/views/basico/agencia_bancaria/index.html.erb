@@ -1,0 +1,72 @@
+<%= form_title_search %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) -%>
+  <table>
+    <tr>
+      <td style="width: 60px">
+        <label>I18n.t('Sistema.Body.Vistas.Filtros.entidad_financiera')</label>
+      </td>
+      <td>
+        <%= select(
+          'entidad_financiera','',
+          @entidad_financiera_list.map{|e| [e.nombre, e.id]},
+          { :prompt =>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+      </td>
+      <td>
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+      </td>
+    </tr>
+  </table>
+  
+<%= end_form_tag %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) -%>
+  <table>
+    <tr>
+      <td style="width: 60px">
+        <label>I18n.t('Sistema.Body.Vistas.Filtros.nombre')</label>
+      </td>
+      <td>
+        <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'50', :style=>'width: 300px'  %>
+      </td>
+      <td>
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+      </td>
+    </tr>
+  </table>
+<%= end_form_tag %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :method=>:get,
+  :url => { :action => :list } ) -%>
+  <table>
+    <tr>
+      <td style="width: 60px">
+        <label>I18n.t('Sistema.Body.Vistas.Filtros.codigo')</label>
+      </td>
+      <td>
+        <%= text_field_tag 'codigo', '', :class=>'text', :maxlength=>'50', :style=>'width: 300px'  %>
+      </td>
+      <td>
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.buscar'))) -%>
+      </td>
+    </tr>
+  </table>
+<%= end_form_tag %>
+
+<%= error %>
+<%= message %>
+
+<div id="list">
+</div>

@@ -1,0 +1,681 @@
+<% orden_despacho = @orden_despacho if orden_despacho.nil? %>
+
+
+<td align="center">
+  <%= Solicitud.find(orden_despacho.solicitud_id).numero %>
+</td>
+<td align="center">
+  <%= orden_despacho.cedula_rif  %>
+</td>
+<td align="center">
+  <%= orden_despacho.nombre %>
+</td>
+<td align="center"><font color="red"><b>
+  <%= orden_despacho.estatus %></b></font>
+</td>
+<td align="center">
+  <%= orden_despacho.rubro %>
+</td>
+<td align="center">
+  <%= SubRubro.find(orden_despacho.sub_rubro_id).nombre.to_s unless SubRubro.find(orden_despacho.sub_rubro_id).nil? %>
+</td>
+
+<td align="center">
+  <%= Actividad.find(orden_despacho.actividad_id).nombre.to_s unless Actividad.find(orden_despacho.actividad_id).nil? %>
+</td>
+
+
+<td align="center">
+<%= OrdenDespacho.find(orden_despacho.orden_despacho_id).seguimiento_visita.codigo_visita %>
+</td>
+<td align="center">
+<%= OrdenDespacho.find(orden_despacho.orden_despacho_id).seguimiento_visita.fecha_visita_f %>
+</td>
+<td align="center">
+<%= OrdenDespacho.find(orden_despacho.orden_despacho_id).monto_fm %>
+</td>
+<td align="center"><font color="green"><b>
+<% 
+case orden_despacho.estatus_id
+ when 20000 %>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.por_generar_orden_despacho')%>
+ <%when 20010%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.generada_orden_despacho')%>
+  <%when 20020%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.emitida_orden_despacho')%>
+<%when 20030%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.cerrada_manualmente')%>
+<%when 20040%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.cerrada')%>
+<%when 20050%>
+  <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.parcialmente_entregada')%>
+  <%if (FacturaOrdenDespacho.find(:all,:conditions=> "orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id=#{orden_despacho.orden_despacho_id}) and emitida=false and confirmada=false and casa_proveedora_id is null and length(trim(secuencia))=(select max(length(trim(secuencia))) from factura_orden_despacho where orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id=#{orden_despacho.orden_despacho_id})) ").empty?)%>    
+    <%unless (FacturaOrdenDespacho.find(:all,:conditions=> "orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id=#{orden_despacho.orden_despacho_id}) and emitida=false and casa_proveedora_id is not null and length(trim(secuencia))=(select max(length(trim(secuencia))) from factura_orden_despacho where orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id=#{orden_despacho.orden_despacho_id}))")).empty?%>    
+    (<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.generada_orden_despacho')%>)
+    <%else%>
+    (<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.emitida_orden_despacho')%>)
+    <%end%>
+  <%else%>
+    (<%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.por_generar_corta_orden_despacho')%>)
+  <%end%>
+<%when 20060%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.por_liquidar')%>
+<%when 20070%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.enviada_al_banco')%>
+<%when 20080%>
+   <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.liquidada_orden_despacho')%>
+<%else%>
+  <%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Estatus.rechazada_banco')%>
+<%end%></b></font>
+</td>
+<td align="center">
+<% OrdenDespachoDetalle.sum(:monto_facturacion,:conditions=>"orden_despacho_id = #{orden_despacho.orden_despacho_id}").nil? ? valor = format_f('0') : valor = format_fm(OrdenDespachoDetalle.sum(:monto_facturacion,:conditions=>"orden_despacho_id = #{orden_despacho.orden_despacho_id}")) %>
+<%=valor%>
+</td>
+
+
+<td style="text-align: center">
+<%
+OrdenDespachoDetalle.sum(:monto_facturacion,:conditions=>"orden_despacho_id = #{orden_despacho.orden_despacho_id}").nil? ? valor = format_fm(orden_despacho.monto) : valor = format_fm((orden_despacho.monto - OrdenDespachoDetalle.sum(:monto_facturacion,:conditions=>"orden_despacho_id = #{orden_despacho.orden_despacho_id}")))
+%>
+<!-- nueva columna -->
+<%=valor %>
+</td>
+
+<%if ((orden_despacho.estatus_id == 20000) || (orden_despacho.estatus_id == 20010)) %>
+<!-- style="text-align: center" -->
+<td  align="center">
+<%if orden_despacho.estatus_id == 20010 %>
+
+<div id="deshacer_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:20px;">
+
+
+
+<!-- Se quitaron todos los deshacer fecha 19/03/2013 -->
+      <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>'Deshacer la Orden de Despacho'),
+          :action => :deshacer,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id) if vlink 'edit' -%>
+
+
+</div>
+
+<%end%>	
+<div id="modificar_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:20px;">
+
+<%if orden_despacho.estatus_id == 20000%>
+	<%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.modificar_orden_despacho')), 
+          :action => :edit,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id,:es=>"1") if vlink 'edit' -%>
+<%else%>          
+
+	<%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.modificar_orden_despacho')), 
+          :action => :edit,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id) if vlink 'edit' -%>
+
+<%end%>
+
+
+</div>
+
+<%if orden_despacho.estatus_id != 20010 %>
+&nbsp;
+<%end%>
+
+<%unless OrdenDespachoDetalle.find_by_orden_despacho_id(orden_despacho.orden_despacho_id).nil? %>
+	<%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.consultar_orden_despacho')), 
+          :action => :view,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id,          
+          :solicitud_id => orden_despacho.solicitud_id) if vlink 'edit' -%>
+<%end%>
+
+  </td>
+
+<td align="center" >
+
+<%if orden_despacho.estatus_id == 20010 %>
+
+
+<div id="impresion1_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir1',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'))), {:controller=>'/solicitudes/orden_despacho_detalle', :action=>'imprimir1', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"esconder_impresion(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_beneficiario')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir1',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %><br>
+</div>
+
+<div id="impresion2_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_fondas'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir2',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_fondas'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir2', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"esconder_impresion(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_fondas'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_fondas')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir2',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %><br>
+
+</div>
+
+<div id="impresion3_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir3',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir3', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"esconder_impresion(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_agrotienda')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir3',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+
+</div>
+
+</div>
+
+<%end%>
+
+</td>
+
+<%else%>
+<!-- estautus 20020 -->
+<td style="text-align: center">
+
+<% cedula_usuario=Usuario.find(session[:id]).cedula_nacionalidad.strip.upcase + " " +  Usuario.find(session[:id]).cedula.to_s
+
+cedula_supervisor_asignado=Oficina.find(Usuario.find(session[:id]).oficina_id).cedula_nacionalidad.strip.upcase + " " + Oficina.find(Usuario.find(session[:id]).oficina_id).cedula_supervisor.to_s
+
+if cedula_usuario == cedula_supervisor_asignado %>
+
+<!-- Se quitaron todos los deshacer fecha 19/03/2013 -->
+      <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>'Deshacer la Orden de Despacho por Supervisor'),
+          :action => :deshacer,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id) if vlink 'edit' -%>
+
+
+
+<%end%>
+
+<%unless OrdenDespachoDetalle.find_by_orden_despacho_id(orden_despacho.orden_despacho_id).nil? %>
+
+<!-- ojo se va a poner el editar cuando la orden despacho tienes estatus 20070 (enviada al banco) cambio 23/05/2013 -->
+
+<% if (orden_despacho.estatus_id==20070 or orden_despacho.estatus_id==20060 or orden_despacho.estatus_id==20080 or orden_despacho.estatus_id==20090) %>
+
+
+<%@condition = " orden_despacho_id = #{orden_despacho.orden_despacho_id} "
+
+    
+    
+  unless OrdenDespachoDetalle.sum(:cantidad, :conditions=>@condition) == OrdenDespachoDetalle.sum(:cantidad_facturacion, :conditions=>@condition)
+    #@condition +=" and cantidad > 0"
+    @ordenes_de_despacho_aux=OrdenDespachoDetalle.find(:all, :conditions=>@condition)
+    unless @ordenes_de_despacho_aux.empty?
+      condi="("
+      @ordenes_de_despacho_aux.each{ |orden|
+        condi+=orden.id.to_s << ","
+        }
+      condi=condi[0,condi.length-1]
+      condi+=")"
+      logger.info "qqqqqqqqqqqqqqq" << condi.to_s
+
+      @facturas_faltantes_aux=FacturaOrdenDespacho.find(:all, :conditions=>"orden_despacho_detalle_id in #{condi} and confirmada=false") #and length(secuencia)>1 
+    
+    condi2="("
+      @facturas_faltantes_aux.each{ |facturat|
+        condi2+=facturat.id.to_s << ","
+        }
+      condi2=condi2[0,condi2.length-1]
+      condi2+=")"
+      end
+      %>
+
+        <%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.modificar_todas_ordenes_parciales')), 
+          :action => :nueva_orden,
+          :controller => 'orden_despacho_detalle',
+          :una => '2',
+          :oid => orden_despacho.orden_despacho_id,
+          :parciales => '1',
+          :parciales_id => condi2) if vlink 'edit' -%>
+
+        <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Modificar la Orden de Despacho'), 
+          :action => :edit,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id) if vlink 'edit' -%>       
+          
+          <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Crear Nueva Orden de Despacho para Orden Enviada al Banco'),
+		{:action => :abrir_nueva_orden, :controller => 'orden_despacho_detalle',
+		:id => orden_despacho.orden_despacho_id} -%>
+
+    <%end%>
+
+
+<%end%>
+
+<!-- fin ojo se va a poner el editar cambio 23/05/2013 -->
+
+      <%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.consultar_orden_despacho')),
+          :action => :view,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id,          
+          :solicitud_id => orden_despacho.solicitud_id) if vlink 'edit' -%>&nbsp;
+<%end%>
+
+<!-- ############################################################### fgfgfgf -->
+
+<%
+
+cedula_usuario=Usuario.find(session[:id]).cedula_nacionalidad.strip.upcase + " " +  Usuario.find(session[:id]).cedula.to_s
+
+cedula_supervisor_asignado=Oficina.find(Usuario.find(session[:id]).oficina_id).cedula_nacionalidad.strip.upcase + " " + Oficina.find(Usuario.find(session[:id]).oficina_id).cedula_supervisor.to_s
+
+
+
+if cedula_usuario == cedula_supervisor_asignado %>
+
+
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir1',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir1', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"esconder_impresion(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.reimprimir_orden_despacho_copia_beneficiario')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir1',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %><br>
+
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_fondas'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir2',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_fondas'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir2', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"esconder_impresion(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_fondas'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.reimprimir_orden_despacho_copia_fondas')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir2',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %><br>
+
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir3',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir3', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"esconder_impresion(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.reimprimir_orden_despacho_copia_agrotienda')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir3',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+
+
+<%end%>
+
+<%if orden_despacho.estatus_id == 20020 %>
+
+      <!-- se agrega para lo nuevo del fondas 31/05/2013 -->
+     <%
+        
+        #@orden_despacho_detalle=OrdenDespachoDetalle.find(:all,:conditions=>['orden_despacho_id = ?',orden_despacho.orden_despacho_id],:order=>"id desc")
+        @factura_casa_proveedora_aux=FacturaOrdenDespacho.find(:all, :conditions=> "emitida=true and orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id =#{orden_despacho.orden_despacho_id})",:order=>"id desc")	        
+        #@factura_casa_proveedora_aux=FacturaOrdenDespacho.find(:all, :conditions=> ['orden_despacho_detalle_id = ? and emitida=true',@orden_despacho_detalle[0].id],:order=>"id desc")	
+        @factura_casa_proveedora=@factura_casa_proveedora_aux[0].casa_proveedora_id.to_s+";"+@factura_casa_proveedora_aux[0].sucursal_casa_proveedora_id.to_s
+        arr_aux=FacturaOrdenDespacho.find(:all,:select=>"id",:conditions=>"orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id=#{orden_despacho.orden_despacho_id})")
+        unless arr_aux.empty?
+            condi33="("            
+            arr_aux.each{ |facr|
+            condi33+=facr.id.to_s << ","
+            }
+            condi33=condi33[0,condi33.length-1]
+            condi33+=")"
+          end      
+        
+        %>
+     
+     
+      <%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.confirmar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.confirmar_orden_despacho')),
+          :action => :multiples_facturas_confirmar_parciales,
+          :controller => 'orden_despacho_detalle',
+          :oid => orden_despacho.orden_despacho_id,
+          :parciales_id => condi33,
+          :accion=>"confirmar",
+          :casa_proveedora_id=>"#{@factura_casa_proveedora.gsub(";","-")}") if vlink 'edit' -%>&nbsp;  
+     
+     <!-- fin se agrega para lo nuevo del fondas 31/05/2013 -->       
+     
+      
+      
+      
+
+
+<%end%>
+
+<%if orden_despacho.estatus_id == 20050 %>
+
+
+<%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.candado'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.cerrar_orden_despacho_parcialmente_emitida')),
+          {:action => :explicacion_cierre,
+          :controller => 'orden_despacho_detalle',
+          :id => orden_despacho.orden_despacho_id},
+          {:onclick=>"return confirm('#{I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.esta_seguro_realizar_cierre_manual')}');" })  -%>
+
+ <br>&nbsp;
+
+
+<%
+#verificamos si exiten secuencias para esa factura
+
+    @condition = " orden_despacho_id = #{orden_despacho.orden_despacho_id} "
+
+    @ordenes_de_despacho_aux=OrdenDespachoDetalle.find(:all, :conditions=>@condition)
+
+    unless @ordenes_de_despacho_aux.empty?
+      condi="("
+      @ordenes_de_despacho_aux.each{ |orden|
+        condi+=orden.id.to_s << ","
+        }
+      condi=condi[0,condi.length-1]
+      condi+=")"
+
+      logger.info "wwwwwwwwwwwwwwwwww "<< condi.to_s
+
+
+      @facturas_faltantes_aux=FacturaOrdenDespacho.find(:first, :conditions=>"orden_despacho_detalle_id in #{condi} and length(secuencia)>1 and confirmada=false")
+    else
+      @facturas_faltantes_aux=nil
+    end
+
+unless @facturas_faltantes_aux.nil?
+
+%>
+
+<%else%>
+
+ <%= link_to image_tag(I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.crear_nueva_orden'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.crear_nueva_orden_parcialmente_entregada')),
+		{:action => :abrir_nueva_orden, :controller => 'orden_despacho_detalle',
+		:id => orden_despacho.orden_despacho_id} -%>
+
+
+<%end%>
+
+<%end%>
+
+
+
+<%if orden_despacho.estatus_id == 20040 || orden_despacho.estatus_id == 20030 %>
+
+<%orden_destalle=OrdenDespachoDetalle.find(:first,:conditions=>"orden_despacho_id = #{orden_despacho.orden_despacho_id}")%>
+
+<%if CasaProveedora.find(FacturaOrdenDespacho.find(:first,:conditions=>"orden_despacho_detalle_id = #{orden_destalle.id}",:order=>"id asc").casa_proveedora_id).tipo_cuenta.nil? %>
+
+ <!-- Quitado a peticion del fondas 25/06/2013 -->
+ <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'),:title=>'Avanzar a la Generación de la Orden de Pago a la Casa Proveedora por Cheque'),
+          :action => :index_cheque,
+          :controller => 'orden_despacho_insumo',
+          :id => orden_despacho.orden_despacho_id) if vlink 'edit' -%>
+
+
+<%else%>
+<!-- Quitado a peticion del fondas 25/06/2013 -->
+ <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'),:title=>'Avanzar a la Generación de la Orden de Pago a la Casa Proveedora por Transferencia'),
+          :action => :index,
+          :controller => 'orden_despacho_insumo',
+          :id => orden_despacho.orden_despacho_id) if vlink 'edit' -%>
+
+
+
+<%end%>
+
+<%end%>
+
+<!-- ################################################################b -->
+
+  </td>
+
+
+
+
+<td align="center" >
+
+<!-- esto no va quitar despues ojo  -->
+<%if orden_despacho.estatus_id == 20020 %>
+
+
+<div id="impresion1_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir1',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir1', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"alert('#{I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.impresion_orden_despacho')}');window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_beneficiario')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir1',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %><br>
+</div>
+
+<div id="impresion2_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_fondas'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir2',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_fondas'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir2', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"alert('#{I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.impresion_orden_despacho')}');window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_fondas'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_fondas')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir2',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %><br>
+
+</div>
+
+<div id="impresion3_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir3',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id  }, :onclick=>"esconder_impresion(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir3', :popup=>true, :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id}, :onclick=>"alert('#{I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.impresion_orden_despacho')}');window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+
+<%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_agrotienda')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir3',
+				:popup=>true,  :solicitud_id=>orden_despacho.solicitud_id,:id=>orden_despacho.orden_despacho_id },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+
+</div>
+
+</div>
+
+<%end%>
+
+<!-- fin esto no va quitar despues ojo  -->
+
+<%unless @facturas_faltantes_aux.nil? or orden_despacho.estatus_id != 20050
+
+    @condition = " orden_despacho_id = #{orden_despacho.orden_despacho_id} "
+
+    @ordenes_de_despacho_aux=OrdenDespachoDetalle.find(:all, :conditions=>@condition)
+    unless @ordenes_de_despacho_aux.empty?
+      condi="("
+      @ordenes_de_despacho_aux.each{ |orden|
+        condi+=orden.id.to_s << ","
+        }
+      condi=condi[0,condi.length-1]
+      condi+=")"
+      logger.info "qqqqqqqqqqqqqqq" << condi.to_s
+
+      @facturas_faltantes_aux=FacturaOrdenDespacho.find(:all, :conditions=>"orden_despacho_detalle_id in #{condi} and length(secuencia)>1 and confirmada=false")
+       
+
+    condi2="("
+      @facturas_faltantes_aux.each{ |facturat|
+        condi2+=facturat.id.to_s << ","
+        }
+      condi2=condi2[0,condi2.length-1]
+      condi2+=")"
+
+
+      logger.info "eeeeeeeeeee " << condi2.to_s
+
+    end
+
+%>
+
+<!-- antes estaba esto <div id="mega_impresion_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible" > -->
+
+<%unless @facturas_faltantes_aux.empty? or orden_despacho.estatus_id != 20050%>
+
+      <%if (FacturaOrdenDespacho.find(:all,:conditions=> "id in #{condi2} and emitida=true")).empty?%>
+
+      <%  if (FacturaOrdenDespacho.find(:all,:conditions=> "id in #{condi2} and casa_proveedora_id is null")).empty? %>
+
+<!-- original -->
+
+<div id="impresion_parcial1_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+<%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir_parciales1',
+				:popup=>true,  :parciales_id=>condi2  }, :onclick=>"esconder_impresion2(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir_parciales1', :popup=>true,  :parciales_id=>condi2}, :onclick=>"esconder_impresion2(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+
+    <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_beneficiario'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion2(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_beneficiario')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir_parciales1',
+				:popup=>true,  :parciales_id=>condi2 },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+</div>
+
+<div id="impresion_parcial2_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+    
+    <%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_fondas'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir_parciales2',
+				:popup=>true,  :parciales_id=>condi2  }, :onclick=>"esconder_impresion2(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_fondas'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir_parciales2', :popup=>true,  :parciales_id=>condi2}, :onclick=>"esconder_impresion2(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+
+    
+    <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_fondas'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion2(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_fondas')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir_parciales2',
+				:popup=>true,  :parciales_id=>condi2 },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+
+</div>
+
+
+<div id="impresion_parcial3_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible;width:80px;">
+
+    <%#= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir_parciales3',
+				:popup=>true,  :parciales_id=>condi2  }, :onclick=>"esconder_impresion2(#{orden_despacho.solicitud_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.solicitud_id) + "','height=600,width=1030, scrollbars=yes, resizable=yes,top=200,left=80'); return false;")  %>  
+
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'))), {:controller=>'orden_despacho_detalle', :action=>'imprimir_parciales3', :popup=>true,  :parciales_id=>condi2}, :onclick=>"esconder_impresion2(#{orden_despacho.orden_despacho_id});window.open(this.href,'" + I18n.t('Sistema.Body.Controladores.SolicitudTestigos.FormTitles.form_title',:numero=>orden_despacho.orden_despacho_id) + "',
+'height=screen.height,width=screen.width, scrollbars=yes, resizable=yes'); return false;")  %>
+    
+    <%#= link_to image_tag(I18n.t('Sistema.Body.Imagenes.copia_agrotienda'), :onclick=>"javacript: if (varEnviado) { return false; } else { varEnviado = true; } esconder_impresion2(#{orden_despacho.solicitud_id});",:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.imprimir_orden_despacho_copia_agrotienda')),
+				{ :controller=>'orden_despacho_detalle', :action=>'imprimir_parciales3',
+				:popup=>true,  :parciales_id=>condi2 },
+				:popup => ['orden_despacho_detalle', 'height=600,width=1030, scrollbars=yes, resizable=false'] %>
+</div>
+
+<%end%>
+
+      <!-- se quitaron los deshacer -->
+      <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>'Deshacer Todas las Ordenes de Despacho Parciales'),
+          :action => :deshacer_parciales,
+          :controller => 'orden_despacho_detalle',
+          :parciales_id => condi2) if vlink 'edit' -%>
+
+
+<!-- se puso ahora aqui -->
+
+<div id="mega_impresion_<%=orden_despacho.orden_despacho_id%>" style="visibility:visible" >
+<%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.modificar_todas_ordenes_parciales')), 
+          :action => :nueva_orden,
+          :controller => 'orden_despacho_detalle',
+          :una => '2',
+          :oid => orden_despacho.orden_despacho_id,
+          :parciales => '1',
+          :parciales_id => condi2) if vlink 'edit' -%>
+</div>
+<%end%>
+
+
+
+
+
+      <%unless (FacturaOrdenDespacho.find(:all,:conditions=> "id in #{condi2} and emitida=true")).empty?%>
+
+<!-- se agrega para lo nuevo del fondas 31/05/2013 -->
+     <%
+        
+        #@orden_despacho_detalle=OrdenDespachoDetalle.find(:all,:conditions=>['orden_despacho_id = ?',orden_despacho.orden_despacho_id],:order=>"id desc")        
+        @factura_casa_proveedora_aux=FacturaOrdenDespacho.find(:all, :conditions=> "emitida=true and orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id =#{orden_despacho.orden_despacho_id})",:order=>"id desc")	        
+        #@factura_casa_proveedora_aux=FacturaOrdenDespacho.find(:all, :conditions=> ['orden_despacho_detalle_id = ? and emitida=true',@orden_despacho_detalle[0].id],:order=>"id desc")	
+        @factura_casa_proveedora=@factura_casa_proveedora_aux[0].casa_proveedora_id.to_s+";"+@factura_casa_proveedora_aux[0].sucursal_casa_proveedora_id.to_s
+        arr_aux=FacturaOrdenDespacho.find(:all,:select=>"id",:conditions=>"orden_despacho_detalle_id in (select id from orden_despacho_detalle where orden_despacho_id=#{orden_despacho.orden_despacho_id})")        
+        
+        %>
+     
+     
+      <%=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.confirmar'),:title=>I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.confirmar_todas_ordenes_emitidas')),
+          :action => :multiples_facturas_confirmar_parciales,
+          :controller => 'orden_despacho_detalle',
+          :oid => orden_despacho.orden_despacho_id,
+          :parciales_id => condi2,
+          :accion=>"nueva_confirmar_parciales",
+          :casa_proveedora_id=>"#{@factura_casa_proveedora.gsub(";","-")}") if vlink 'edit' -%>&nbsp;  
+     
+     <!-- fin se agrega para lo nuevo del fondas 31/05/2013 -->       
+
+
+
+      <%#=link_to(image_tag(I18n.t('Sistema.Body.Imagenes.confirmar'),:title=>'Confirmar Todas las Ordenes de Despacho Emitida Parciales'),
+          :action => :nueva_confirmar_parciales,
+          :controller => 'orden_despacho_detalle',
+          :parciales_id => condi2) if vlink 'edit' -%>&nbsp;
+
+      <%end%>
+<!--     redirect_to :action => 'nueva_confirmar', :id => params[:id],:una=>"1" -->
+
+
+<%end%>
+<%end%>
+</td>
+
+
+<%end%>

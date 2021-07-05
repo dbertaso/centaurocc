@@ -1,0 +1,17 @@
+<%  @embarcacion = Embarcacion.find(:all,:conditions=>"seguimiento_visita_id=#{@seguimiento_visita.id}")%>
+
+<% if !@embarcacion[0].nil? %>
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Embarcación</span>
+    </td>
+</tr>
+
+  <tbody id="list_body">
+    <%  for embarcacion in @embarcacion %>
+      <%= render :partial => 'row_embarcacion', :locals => { :embarcacion => embarcacion } -%>
+    <% end %>
+  </tbody>
+
+<% end %>
+

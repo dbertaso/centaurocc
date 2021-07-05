@@ -1,0 +1,322 @@
+<script type="text/javascript">
+
+  function cerrar()
+  {
+    window.close();
+  }
+
+</script>
+
+<div class="marco-contenido">
+  <div class="marco-titulo"><div><div>
+	<%= I18n.t('Sistema.Body.Vistas.General.consultando') %> <%= "#{I18n.t('Sistema.Body.General.beneficiario')} #{I18n.t('Sistema.Body.Vistas.General.juridico')}" %> <span class="titulo_modificar">'<%= @empresa.alias %>'</span>
+      </div></div></div>
+  <%= render :partial=>'clientes/cliente_empresa/common/tabs' %>
+  <div class="marco-contenido2">
+<% if @empresa.cliente_empresa.es_pescador == false %>
+    <table style="width: 100%">
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.codigo') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.id %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.total_hectareas') %></label>
+          <br/><br/>
+        </td>
+        <td>
+          <%= @unidad_produccion.total_hectareas %>
+          <br/><br/>
+        </td>
+      </tr>
+      <br/>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.ubicacion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.unidad_produccion')}" %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <br/>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.region') %></label>
+        </td>
+        <td style="width: 80%">
+          <br/>
+          <%= @unidad_produccion.municipio.estado.region.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label>
+        </td>
+        <td style="width: 80%">
+          <div id="estado-select">
+            <%= @unidad_produccion.municipio.estado.nombre %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label>
+        </td>
+        <td style="width: 80%">
+          <span id="municipio-select">
+            <%= @unidad_produccion.municipio.nombre %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label>
+        </td>
+        <td style="width: 80%">
+          <span id="parroquia-select">
+            <%= @unidad_produccion.parroquia.nombre %>
+          </span>
+        </td>
+      </tr>
+      
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label>
+        </td>
+        <td style="width: 80%">
+          <div id="ciudad-select">
+            <%= @unidad_produccion.ciudad.nombre %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.sector %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top" style="text-align: justify" colspan="2">
+          <label><%= I18n.t('Sistema.Body.General.direccion') %></label><br/>
+          <%= @unidad_produccion.direccion %><br/><br/>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top" style="text-align: justify" colspan="2">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.referencia')}/#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.practica')}" %></label><br/>
+          <%= @unidad_produccion.referencia %>
+          <br/><br/>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= I18n.t('Sistema.Body.Vistas.General.linderos') %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <br/><br/>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.norte') %></label>
+        </td>
+        <td>
+          <br/><br/>
+          <%= @unidad_produccion.lindero_norte %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sur') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.lindero_sur %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.este') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.lindero_este %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.oeste') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.lindero_oeste %>
+        </td>
+      </tr>
+
+    </table>
+      <div id="cliente_empresa_unidad_produccion">
+      <%= render :partial => 'utm_view' %>
+    </div>
+<% else %>
+    <table style="width: 100%">
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.codigo') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.codigo %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.nombre') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+      <td>
+        <label><%= I18n.t('Sistema.Body.Vistas.General.puerto_base') %></label>
+      </td>
+      <td>
+        <%= @unidad_produccion.puerto_base %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%= "#{I18n.t('Sistema.Body.Vistas.General.autonomia_pesca')} (#{I18n.t('Sistema.Body.Vistas.General.dias')})" %></label>
+        <br/><br/>
+      </td>
+      <td>
+        <%= @unidad_produccion.autonomia_pesca %>
+        <br/><br/>
+      </td>
+    </tr>
+      <br/>
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.ubicacion')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.puerto_base')}" %></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <br/>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.region') %></label>
+        </td>
+        <td style="width: 80%">
+          <br/>
+          <%= @unidad_produccion.ciudad.estado.region.nombre %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.estado') %></label>
+        </td>
+        <td style="width: 80%">
+          <div id="estado-select">
+            <%= @unidad_produccion.ciudad.estado.nombre %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.municipio') %></label>
+        </td>
+        <td style="width: 80%">
+          <span id="municipio-select">
+            <%= @unidad_produccion.municipio.nombre %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.parroquia') %></label>
+        </td>
+        <td style="width: 80%">
+          <span id="parroquia-select">
+            <%= @unidad_produccion.parroquia.nombre %>
+          </span>
+        </td>
+      </tr>
+      
+
+      <tr>
+        <td style="width: 20%">
+          <label><%= I18n.t('Sistema.Body.Vistas.General.ciudad') %></label>
+        </td>
+        <td style="width: 80%">
+          <div id="ciudad-select">
+            <%= @unidad_produccion.ciudad.nombre %>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%= I18n.t('Sistema.Body.Vistas.General.sector') %></label>
+        </td>
+        <td>
+          <%= @unidad_produccion.sector %>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top" style="text-align: justify" colspan="2">
+          <label><%= I18n.t('Sistema.Body.General.direccion') %></label><br/>
+          <%= @unidad_produccion.direccion %><br/><br/>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top" style="text-align: justify" colspan="2">
+          <label><%= "#{I18n.t('Sistema.Body.Vistas.General.referencia')}/#{I18n.t('Sistema.Body.General.direccion')} #{I18n.t('Sistema.Body.Vistas.General.practica')}" %></label><br/>
+          <%= @unidad_produccion.referencia %>
+          <br/><br/>
+        </td>
+      </tr>
+      </tr>
+    </table>
+    <div id="cliente_empresa_unidad_produccion">
+      <%= render :partial => 'puertos_view' %>
+    </div>
+<% end %>
+    <% unless params[:popup] == 'true' %>
+
+      <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        { :action => :view, :popup=>params[:popup], :empresa_id => @empresa.id },
+        { :id=>'button_close' } ) -%>
+    <% else %>
+      <%= image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'),:title=>'Agregar', :onclick=>"javascript:cerrar();", :OnMouseOver=>"style.cursor='pointer'" ) %>
+    <% end %>
+  </div>
+</div>

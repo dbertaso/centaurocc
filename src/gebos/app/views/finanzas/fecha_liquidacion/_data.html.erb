@@ -1,0 +1,50 @@
+<td align="center"><%= check_box_tag 'prestamo_id', view_fecha_liquidacion.prestamo_id, checked=false, :onClick=>'checkOne(this,form.todos);' %></td>
+<td align="center">
+  <%= view_fecha_liquidacion.nro_tramite %>
+</td>
+<td align="center">
+  <%= view_fecha_liquidacion.nro_prestamo %>
+</td>
+
+<td align="right">
+  <%= view_fecha_liquidacion.beneficiario %>
+</td align="center">
+<td>
+  <%= view_fecha_liquidacion.cedula_rif %>
+</td>
+<td align="center">
+  <%= view_fecha_liquidacion.banco %>
+</td>
+<td align="center">
+  <%= view_fecha_liquidacion.numero_cuenta %>
+</td>
+<td align="center">
+  <%= view_fecha_liquidacion.moneda %>
+</td>
+<td align="right">
+  <%= view_fecha_liquidacion.monto_solicitado_fm %>
+</td>
+<td align="right">
+  <%= view_fecha_liquidacion.monto_liquidar_fm %>
+</td>
+<td align="center">
+  <%= view_fecha_liquidacion.fecha_liquidacion_f %>
+</td>
+<td style="text-align: right">
+
+    <!--<%= link_to_remote(
+        image_tag(I18n.t('Sistema.Body.Imagenes.reversar')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :confirm => "¿Está usted seguro que desea reversar la solicitud número #{view_fecha_liquidacion.nro_tramite}?",
+        :url => {:action => :reversar, :cuenta_id1 => view_fecha_liquidacion.prestamo_id}) if (vlink 'Reversar') -%>
+  -->
+    <!---<%#= link_to_remote(
+        image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :confirm => "¿Está usted seguro que desea avanzar la solicitud número #{view_fecha_liquidacion.nro_tramite}?",
+        :url => {:action => :avanzar_solicitud, :cuenta_id => view_fecha_liquidacion.prestamo_id}) if (vlink 'Avanzar') -%>
+    -->
+</td>
+

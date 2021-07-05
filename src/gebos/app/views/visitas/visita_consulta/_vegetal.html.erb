@@ -1,0 +1,148 @@
+<%  @seguimiento_cultivo = SeguimientoCultivo.find_by_seguimiento_visita_id(@seguimiento_visita.id)%>
+
+<%  if @seguimiento_cultivo %>
+    <%  @descripciones_especificas = DescripcionesEspecificas.find_by_seguimiento_cultivo_id(@seguimiento_cultivo.id)%>
+
+<tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span>Seguimiento del Cultivo en el Campo</span>
+    </td>
+</tr>
+
+<tr>
+    <td>
+          <label>Fecha de Siembra</label>
+    </td>
+    <td>
+     <%= @seguimiento_cultivo.fecha_siembra_f  unless @seguimiento_cultivo.fecha_siembra.nil? %> (dd/mm/aaaa)
+    </td>
+</tr>
+<tr>
+    <td>
+          <label>Edad del Cultivo </label>
+    </td>
+
+    <td>
+      <%= @seguimiento_cultivo.edad_cultivo unless @seguimiento_cultivo.edad_cultivo.nil? %>  (días)
+    </td>
+</tr>
+
+<tr>
+    <td>
+      <label>Superficie sin realizar labores agrónomicas </label>
+    </td>
+    <td>
+      <%= @seguimiento_cultivo.superficie_sin_labores_f unless @seguimiento_cultivo.superficie_sin_labores.nil? %> (Ha)
+    </td>
+</tr>
+<tr>
+    <td>
+      <label>Superficie semillero ó vivero </label>
+    </td>
+    <td>
+      <%= @seguimiento_cultivo.superficie_semillero_f unless @seguimiento_cultivo.superficie_semillero.nil? %> (Ha)
+    </td>
+</tr>
+<tr>
+    <td>
+      <label>Superficie preparada </label>
+    </td>
+    <td>
+      <%= @seguimiento_cultivo.superficie_preparada_f unless @seguimiento_cultivo.superficie_preparada.nil? %> (Ha)
+    </td>
+</tr>
+<tr>
+    <td>
+      <label>Superficie cosechada </label>
+    </td>
+    <td>
+      <%= @seguimiento_cultivo.superficie_cosechada_f unless @seguimiento_cultivo.superficie_cosechada.nil? %> (Ha)
+    </td>
+</tr>
+<tr>
+    <td>
+      <label>Superficie sembrada </label>
+    </td>
+    <td>
+      <%= @seguimiento_cultivo.superficie_sembrada_f unless @seguimiento_cultivo.superficie_sembrada.nil? %> (Ha)
+    </td>
+</tr>
+<tr>
+    <td>
+      <label>Superficie efectiva </label>
+    </td>
+    <td>
+      <%= @seguimiento_cultivo.superficie_efectiva_f unless @seguimiento_cultivo.superficie_efectiva.nil? %> (Ha)
+    </td>
+
+</tr>
+<tr>
+    <td>
+      <label>Rendimientos esperados </label>
+    </td>
+    <td>
+      <%= @seguimiento_cultivo.rendimientos_estimados_f unless @seguimiento_cultivo.rendimientos_estimados.nil? %> (Kg/Ha)
+    </td>
+</tr>
+<tr>
+    <td>
+          <label>Fecha estimada de cosecha</label>
+    </td>
+    <td style="width: 500px">
+      <%= @seguimiento_cultivo.fecha_estimada_cosecha_f unless @seguimiento_cultivo.fecha_estimada_cosecha.nil? %> (dd/mm/aaaa)
+    </td>
+
+</tr>
+<tr>
+    <td>
+      <label>Superficie recomendada </label>
+    </td>
+    <td>
+      <%= @seguimiento_cultivo.superficie_recomendada_f unless @seguimiento_cultivo.superficie_recomendada.nil? %> (Ha)
+    </td>
+</tr>
+    <% if @descripciones_especificas %>
+      <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span>Descripciones Específicas</span>
+          </td>
+      </tr>
+
+         <tr>
+            <td>
+            <label>Descripción de lo Observado</label>
+            </td>
+            <td>
+                <%= @descripciones_especificas.descripcion unless @descripciones_especificas.descripcion.nil? -%>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>Comportamiento Agronómico del Cultivo</label>
+            </td>
+
+            <td>
+                <%= @descripciones_especificas.comportamiento_agronomico unless @descripciones_especificas.comportamiento_agronomico.nil? %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Factores que Condicionan el Cultivo</label>
+            </td>
+
+            <td>
+                <%= @descripciones_especificas.factores_condicionantes unless @descripciones_especificas.factores_condicionantes.nil? -%>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Labores que debe Realizar el Beneficiario</label>
+            </td>
+
+            <td>
+                <%= @descripciones_especificas.labores_beneficiario unless @descripciones_especificas.labores_beneficiario.nil? -%>
+            </td>
+          </tr>
+    <%  end %>
+<%  end %>

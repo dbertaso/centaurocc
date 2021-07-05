@@ -1,0 +1,5 @@
+<%= select(
+  'parroquia_id', '',
+  @parroquia_list.map{|m| [m.nombre, m.id]},
+  { :prompt=>'Seleccionar' },
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

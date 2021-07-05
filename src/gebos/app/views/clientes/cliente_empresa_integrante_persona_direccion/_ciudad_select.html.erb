@@ -1,0 +1,5 @@
+<%= select(
+  'persona_direccion', 'ciudad_id',
+  @ciudad_select.map{|c| [c.nombre, c.id]},
+  {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+  { :class=>'select', :onchange=>'inputChange();' } ) %>

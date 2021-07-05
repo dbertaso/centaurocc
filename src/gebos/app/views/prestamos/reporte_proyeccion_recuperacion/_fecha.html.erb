@@ -1,0 +1,11 @@
+<tr>
+    <td style="width: 35%">
+	    <label>Fecha</label>
+    </td>
+    <td style="width: 65%">
+	    <%= text_field_tag 'fecha','', 
+		  :class=>'text', :style=>'width: 100px', 
+		  :maxlength=>'10', :onkeypress=>'inputChange();'  -%>
+		  <%= calendar 'fecha', 'calendar_fecha' %> (dd/mm/aaaa)
+    </td>
+</tr>

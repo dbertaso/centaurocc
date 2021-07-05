@@ -1,0 +1,431 @@
+<script>
+  var suma_suelos = 0;
+  var suma_topografia = 0;
+  var suelo_aux = 0;
+  var vegetacion_aux = 0;
+  var topografia_aux = 0;
+
+  function checkTemp(valor)
+  {
+    if(valor < 0 || valor > 100)
+    {
+      alert("El valor para Temperatura debe estar entre 0 a 100");
+      document.getElementById("unidad_produccion_condicion_acuicultura_calidad_agua_temperatura").value = '';
+      return false;
+    }
+  }
+
+  function checkOD(valor)
+  {
+    if(valor < 0 || valor > 20)
+    {
+      alert("El valor para Oxigeno Disuelto debe estar entre 0 a 20");
+      document.getElementById("unidad_produccion_condicion_acuicultura_calidad_agua_od").value = '';
+      return false;
+    }
+  }
+	
+</script>
+
+<table width="100%" border="0">
+  <tr>
+    <td width="30%"></td>
+    <td width="25%"></td>
+    <td width="25%"></td>
+    <td width="20%"></td>
+  </tr>
+
+
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.caracteristicas')} #{I18n.t('Sistema.Body.Vistas.General.generales')} - #{I18n.t('Sistema.Body.Vistas.General.acuicultura')}" %> </span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="center">
+      <table border="1" width="97%" class="lista">
+        <thead>
+          <tr>
+            <th width="30%"><%= I18n.t('Sistema.Body.Vistas.General.vialidad') %></th>
+            <th width="20%"><%= I18n.t('Sistema.Body.Vistas.General.suelos') %></th>
+            <th width="20%"><%= I18n.t('Sistema.Body.Vistas.General.vegetacion') %></th>
+            <th width="30%"><%= I18n.t('Sistema.Body.Vistas.General.topografia') %></th>
+          </tr>
+        </thead>
+        <tbody id="list-body">
+          <tr>
+            <td>
+              <%= render :partial => 'list_tipo_vialidad' %>
+              <label><%= I18n.t('Sistema.Body.Vistas.General.distancia') %> (<%= I18n.t('Sistema.Body.Vistas.General.km') %>):</label>
+              <%= text_field 'unidad_produccion_condicion_acuicultura', 'vialidad_distancia',
+                :class=>'text',
+                :style=>'width: 100px',
+                :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+
+              <p><label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label></p>
+              <%= radio_button 'unidad_produccion_condicion_acuicultura', 'vialidad_condiciones', 'E',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.excelente') %>
+              <%= radio_button 'unidad_produccion_condicion_acuicultura', 'vialidad_condiciones', 'B',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.buena') %>
+              <%= radio_button 'unidad_produccion_condicion_acuicultura', 'vialidad_condiciones', 'R',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.regular') %>
+              <%= radio_button 'unidad_produccion_condicion_acuicultura', 'vialidad_condiciones', 'M',
+                :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.mala') %>             
+            </td>
+            <td valign="top">
+
+              <%= render :partial => 'list_tipo_suelo' %>
+              <br><br>
+              <label><%= I18n.t('Sistema.Body.Vistas.General.ph') %>:</label>
+              <%= select(
+                'unidad_produccion_condicion_acuicultura', 'suelo_ph',
+                [[1,1],[1.5, 1.5],[2, 2],[2.5, 2.5],[3, 3],[3.5, 3.5],[4, 4],[4.5, 4.5],[5, 5],[5.5, 5.5],
+                  [6, 6],[6.5, 6.5],[7, 7],[7.5, 7.5],[8, 8],[8.5, 8.5],[9, 9],[9.5, 9.5],[10, 10],
+                  [10.5, 10.5],[11, 11],[11.5, 11.5],[12, 12],[12.5, 12.5],[13, 13],[13.5, 13.5],[14, 14]],
+                { :include_blank => true },
+                {:class=>'select',:onchange=>'inputChange();' } ) %>
+            </td>
+            <td valign="top">
+              <table width="100%">
+                <tr><td colspan=2 height="15"></td></tr>
+                <tr>
+                  <td width="50"><%= I18n.t('Sistema.Body.Vistas.General.baja') %>:</td>
+                  <td>
+                    <%= text_field 'unidad_produccion_condicion_acuicultura', 'porcentaje_vegetacion_baja',
+                      :class=>'text',
+                      :style=>'width: 50px',
+                      :maxlength=>'20', :onkeypress=>'inputChange();', :onchange=>'validar_vegetacion(this)'  -%> %
+                  </td>
+                </tr>
+                <tr>
+                  <td width="50"><%= I18n.t('Sistema.Body.Vistas.General.alta') %>:</td>
+                  <td>
+                    <%= text_field 'unidad_produccion_condicion_acuicultura', 'porcentaje_vegetacion_media',
+                      :class=>'text',
+                      :style=>'width: 50px',
+                      :maxlength=>'20', :onkeypress=>'inputChange();', :onchange=>'validar_vegetacion(this)'  -%> %
+                  </td>
+                </tr>
+                <tr>
+                  <td width="50"><%= I18n.t('Sistema.Body.Vistas.General.alta') %>:</td>
+                  <td>
+                    <%= text_field 'unidad_produccion_condicion_acuicultura', 'porcentaje_vegetacion_alta',
+                      :class=>'text',
+                      :style=>'width: 50px',
+                      :maxlength=>'20', :onkeypress=>'inputChange();', :onchange=>'validar_vegetacion(this)'  -%> %
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+            <td valign="top">
+              <%= render :partial => 'list_tipo_topografia' %>
+            </td>
+          </tr>
+        </tbody>
+
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td colspan=4>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.describa')} #{I18n.t('Sistema.Body.Vistas.General.las')} #{I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones')} #{I18n.t('Sistema.Body.Vistas.General.climaticas').downcase}" %>:</label><br>     
+      <%= text_area 'unidad_produccion_condicion_acuicultura', 'condiciones_climaticas',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>   
+
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.densidad_siembra')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.cultivo')}" %></span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.espejo_agua')} #{I18n.t('Sistema.Body.Vistas.General.solicitado')} (#{I18n.t('Sistema.Body.Vistas.General.mts2')})" %>  :</label>
+      <%= text_field 'unidad_produccion_condicion_acuicultura', 'superficie_disponible',
+        :class=>'text',
+        :style=>'width:60px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.densidad_siembra')} (#{I18n.t('Sistema.Body.Vistas.General.peces').downcase}/#{I18n.t('Sistema.Body.Vistas.General.mts2')})" %>:</label>
+      <%= text_field 'unidad_produccion_condicion_acuicultura', 'densidad_siembra',
+        :class=>'text',
+        :style=>'width:60px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" >
+      <label><%= "#{I18n.t('Sistema.Body.Controladores.TipoSistemaAcuicultura.FormTitles.form_title_records')} #{I18n.t('Sistema.Body.Vistas.General.actuales')}" %>:</label><br>
+      <%= render :partial => 'list_tipo_sistema_cultivo_actual' %> 
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Controladores.TipoSistemaAcuicultura.FormTitles.form_title_record')} #{I18n.t('Sistema.Body.Vistas.General.a')} #{I18n.t('Sistema.Body.Vistas.General.implementar').downcase}" %>:</label>
+
+
+    </td>
+    <td colspan="3" >
+
+      <%= select(
+        'unidad_produccion_condicion_acuicultura', 'tipo_sistema_acuicultura_id',
+        @tipo_sistema_acuicultura_list.map{|i| ["#{i.nombre} - #{i.descripcion}", i.id]},
+        { :include_blank => true },
+        { :class=>'select',:onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.cultivo')} #{I18n.t('Sistema.Body.Vistas.General.a')} #{I18n.t('Sistema.Body.Vistas.General.implementar').downcase}" %>:</label>
+    </td>
+    <td colspan="3">
+      <%= select(
+        'unidad_produccion_condicion_acuicultura', 'tipo_cultivo_acuicultura_id',
+        @tipo_cultivo_acuicultura_list.map{|i| ["#{i.nombre} - #{i.descripcion}", i.id]},
+        { :include_blank => true },
+        { :class=>'select',:onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>   
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td colspan=4>
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.descripcion')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.lo').downcase} #{I18n.t('Sistema.Body.Vistas.General.observado').downcase}" %></label>(<%= I18n.t('Sistema.Body.Vistas.General.incluir_piscinas_depositos') %>)<br>     
+      <%= text_area 'unidad_produccion_condicion_acuicultura', 'observaciones',
+        :class=>'text', :style=>'width: 100%; height: 60px;',
+        :onkeypress=>'inputChange();'-%>
+
+    </td>
+  </tr>
+
+
+
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= I18n.t('Sistema.Body.Controladores.TipoEspecieAcuicultura.FormTitles.form_title_records') %></span>
+    </td>
+  </tr>	
+  <tr>
+    <td colspan="1" >
+      <label><%= I18n.t('Sistema.Body.Vistas.General.actuales') %>:</label><br>
+      <%= render :partial => 'list_tipo_especie_acuicultura' %> 
+    </td>
+
+    <td colspan="3" >
+      <label><%= I18n.t('Sistema.Body.Vistas.General.solicitadas') %>:</label><br>
+      <%= render :partial => 'list_tipo_especie_solicitada_acuicultura' %> 
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.rubros')} #{I18n.t('Sistema.Body.Vistas.General.actuales')}" %></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.rubros')} #{I18n.t('Sistema.Body.Vistas.General.animales')}" %>:</label><br />
+      <%= text_area 'unidad_produccion_condicion_acuicultura', 'rubros_animales',
+        :class=>'text', :style=>'width: 500px; height: 50px;',
+        :onkeypress=>'inputChange();'-%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>       
+
+  <tr>
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.recursos')} #{I18n.t('Sistema.Body.Vistas.General.hidricos')}" %></span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4" style="width:100%">
+      <%= render :partial => 'list_tipo_fuente_agua' %> 
+    </td>
+  </tr>
+  <tr>  
+    <td valign="top" width="30%">
+      <label><%= "#{I18n.t('Sistema.Body.Vistas.General.calidad')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.agua')}" %>:</label>&nbsp;&nbsp;&nbsp;
+
+      <label><%= I18n.t('Sistema.Body.Vistas.General.ph') %>:</label>
+      <%= select(
+        'unidad_produccion_condicion_acuicultura', 'calidad_agua_ph',
+        [[1,1],[1.5, 1.5],[2, 2],[2.5, 2.5],[3, 3],[3.5, 3.5],[4, 4],[4.5, 4.5],[5, 5],[5.5, 5.5],
+          [6, 6],[6.5, 6.5],[7, 7],[7.5, 7.5],[8, 8],[8.5, 8.5],[9, 9],[9.5, 9.5],[10, 10],
+          [10.5, 10.5],[11, 11],[11.5, 11.5],[12, 12],[12.5, 12.5],[13, 13],[13.5, 13.5],[14, 14]],
+        { :include_blank => true },
+        {:class=>'select',:onchange=>'inputChange();' } ) %>
+    </td>
+    <td valign="top" width="30%">
+      &nbsp;&nbsp;  <strong><%= I18n.t('Sistema.Body.Vistas.General.temperatura') %></strong>
+      <%= text_field 'unidad_produccion_condicion_acuicultura', 'calidad_agua_temperatura',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'3', :onkeypress=>'checkTemp(this.value);inputChange();'  -%> (°C)
+    </td> 
+    <td valign="top" width="45%">
+      <strong><%= I18n.t('Sistema.Body.Vistas.General.oxigeno_disuelto') %></strong>
+      <%= text_field 'unidad_produccion_condicion_acuicultura', 'calidad_agua_od',
+        :class=>'text',
+        :style=>'width: 100px',
+        :maxlength=>'5', :onkeypress=>'checkOD(this.value);inputChange();'  -%> (mg/L)
+    </td>  
+
+  </tr> 
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td colspan="4">
+      <label>¿<%= "#{I18n.t('Sistema.Body.Vistas.General.tiene')} #{I18n.t('Sistema.Body.Vistas.General.sistema_drenaje')}" %>?: </label>
+      <%= radio_button 'unidad_produccion_condicion_acuicultura', 'posee_drenaje', 'true',
+        :class=>'text', :onclick=>'custom_mostrar_div("drenaje_actual");inputChange();'  -%><%= I18n.t('Sistema.Body.General.si') %>
+      <%= radio_button 'unidad_produccion_condicion_acuicultura', 'posee_drenaje', 'false',
+        :class=>'text', :onclick=>'custom_limpiar_ocultar_div("drenaje_actual");inputChange();'  -%><%= I18n.t('Sistema.Body.General.negacion') %>
+
+    </td>
+  </tr>
+  <tr id="drenaje_actual_1">
+    <td class="separador" colspan="4" valign="bottom">
+      <span><%= "#{I18n.t('Sistema.Body.Vistas.General.sistema_drenaje')} #{I18n.t('Sistema.Body.General.actual')}" %></span>
+    </td>
+  </tr>
+  <tr id="drenaje_actual_2">
+    <td colspan="4">
+      <table width="500px">
+        <tr>
+          <td width="120px">
+            <label><%= I18n.t('Sistema.Body.Vistas.General.tipo') %>:</label>
+          </td>
+          <td>
+            <%= select(
+              'unidad_produccion_condicion_acuicultura', 'tipo_drenaje_id',
+              @tipo_drenaje_list.map{|i| ["#{i.nombre} - #{i.descripcion}", i.id]},
+              { :include_blank => true },
+              { :class=>'select',:onchange=>'inputChange();' } ) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= "#{I18n.t('Sistema.Body.Vistas.General.superficie')} (#{I18n.t('Sistema.Body.Vistas.General.ha')})" %>:&nbsp;</label>
+          </td>
+          <td>
+
+            <%= text_field 'unidad_produccion_condicion_acuicultura', 'superficie_drenaje',
+              :class=>'text',
+              :style=>'width: 70px',
+              :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label><%= I18n.t('Sistema.Body.Modelos.SeguimientoVisita.Errores.Confirmar.condiciones') %>:</label>&nbsp;
+          </td>
+          <td>
+            <%= radio_button 'unidad_produccion_condicion_acuicultura', 'condicion_drenaje', 'E',
+              :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.excelente') %>
+            <%= radio_button 'unidad_produccion_condicion_acuicultura', 'condicion_drenaje', 'B',
+              :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.buena') %>
+            <%= radio_button 'unidad_produccion_condicion_acuicultura', 'condicion_drenaje', 'R',
+              :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.regular') %>
+            <%= radio_button 'unidad_produccion_condicion_acuicultura', 'condicion_drenaje', 'M',
+              :class=>'text', :onclick=>'inputChange();'  -%><%= I18n.t('Sistema.Body.Vistas.General.mala') %>  
+          </td>
+        </tr>
+      </table> 
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+
+
+</table>
+
+<script>
+  function actualizar_topografia(id){
+    if(document.getElementById("tipo_topografia_"+id).checked == true){
+      document.getElementById("mensaje_porcentaje_topografias").style.display = 'block';
+    }else{
+      new Ajax.Request('/solicitudes/solicitud_pre_evaluacion_condicion_acuicultura/save_topografias', 
+      {asynchronous:true, evalScripts:true, onLoaded:function(request){Element.hide('loading')}, 
+        onLoading:function(request){Element.show('loading')}, 
+        parameters:'authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>') + '&id='+id+'&accion=eliminar&unidad_produccion_condicion_acuicultura_id=<%= @unidad_produccion_condicion_acuicultura.id %>&porcentaje='+document.getElementById("condiciones_tipo_topografia_porcentaje_"+id).value});
+      document.getElementById("condiciones_tipo_topografia_porcentaje_"+id).value = '';
+    }	
+  }
+
+  function custom_limpiar_ocultar_div(div){
+    document.getElementById(div+"_1").innerHTML = '';
+    document.getElementById(div+"_2").style.display = 'none';
+  }
+
+  function custom_mostrar_div(div){
+    document.getElementById(div+"_1").innerHTML = '<td class="separador" colspan="4" valign="bottom"><span>Sistema de Drenaje Actual</span></td>';
+    document.getElementById(div+"_2").style.display = 'block';		
+  }
+
+
+  function actualizar_suelo(id){
+    if(document.getElementById("tipo_suelo_"+id).checked == true){
+	
+      document.getElementById("mensaje_porcentaje_suelos").style.display = 'block';
+      document.getElementById("condiciones_tipo_suelo_porcentaje_"+id).focus;
+    }else{
+      new Ajax.Request('/solicitudes/solicitud_pre_evaluacion_condicion_acuicultura/save_suelos', 
+      {asynchronous:true, evalScripts:true, onLoaded:function(request){Element.hide('loading')}, 
+        onLoading:function(request){Element.show('loading')}, 
+        parameters:'authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>') + '&id='+id+'&accion=eliminar&unidad_produccion_condicion_acuicultura_id=<%= @unidad_produccion_condicion_acuicultura.id %>&porcentaje='+document.getElementById("condiciones_tipo_suelo_porcentaje_"+id).value});
+      document.getElementById("condiciones_tipo_suelo_porcentaje_"+id).value = '';
+    }	
+  }
+
+  function validar_vegetacion(objeto){
+    var vegetacion = 
+      document.getElementById('unidad_produccion_condicion_acuicultura_porcentaje_vegetacion_alta').value/1 + 
+      document.getElementById('unidad_produccion_condicion_acuicultura_porcentaje_vegetacion_media').value/1 + 
+      document.getElementById('unidad_produccion_condicion_acuicultura_porcentaje_vegetacion_baja').value/1;
+    if(vegetacion > 100){objeto.value = 0;alert("Valor inv\u00e1lido: Verfique que la suma de los porcentajes de tipos de vegetaci\u00f3n no sea mayor a 100%");}
+	
+  }
+<%= @mostrar %>
+  document.getElementById("unidad_produccion_condicion_acuicultura[suelo_ph]").value = '<%= @unidad_produccion_condicion_acuicultura.suelo_ph %>';
+  document.getElementById("unidad_produccion_condicion_acuicultura[calidad_agua_ph]").value = '<%= @unidad_produccion_condicion_acuicultura.calidad_agua_ph %>';
+
+</script>

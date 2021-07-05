@@ -1,0 +1,97 @@
+
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_tramite')%></span>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 10%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%></label>
+    </td>
+    <td style="width: 100%">
+      <%= @boleta_arrime.nro_solicitud.to_s %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 16%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nombre_proyecto')%></label>
+    </td>
+    <td style="width: 100%">
+      <%= @boleta_arrime.proyecto.to_s %>
+    </td>
+  </tr>
+
+
+</table>
+
+
+<table style="width: 100%">
+
+  <td class="separador" valign="bottom" colspan="4">
+    <span><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.datos_beneficiario')%></span>
+
+  <tr>
+    <td style="width: 10%">
+      <label><%=I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif')%></label>
+    </td>
+    <td>
+      <%= @boleta_arrime.cedula_rif  %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 16%">
+      <label><%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.nombre_beneficiario')%></label>
+    </td>
+    <td>
+
+      <%= @boleta_arrime.productor %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 10%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.unidad_produccion')%></label>
+    </td>
+    <td>
+
+      <%= @boleta_arrime.unidad_produccion %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 10%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label>
+    </td>
+    <td>
+
+      <%= @boleta_arrime.estado %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 10%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label>
+    </td>
+    <td>
+      <%= @boleta_arrime.rubro %>
+    </td>
+  </tr>
+
+</td>
+
+<tr>
+  <td></td>
+
+</tr>
+
+</table>
+
+<%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+  { :action => :index },
+  { :id=>'button_close' } ) -%>
+

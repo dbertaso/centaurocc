@@ -1,0 +1,28 @@
+<% @form_title = 'Roles' %>
+<%= form_title_search %>
+
+<%= form_remote_tag(
+  :loading =>'Element.show("loading")',
+  :loaded => 'Element.hide("loading")',
+  :method => :get,
+  :url => { :action => :list } ) do %>
+<table>
+  <tr>
+    <td style="width: 60px">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+    </td>
+    <td>
+      <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'50', :style=>'width: 300px'  %>
+    </td>
+    <td>
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.buscar'), :title=>I18n.t('Sistema.Body.Vistas.General.buscar')) -%>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<%= error %>
+<%= message %>
+
+<div id="list">
+</div>

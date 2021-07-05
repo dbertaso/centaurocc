@@ -1,0 +1,8 @@
+<% silo_destino_onchange = remote_function(
+  :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+  :url=>{:controller=>'desvio_silo', :action=>:silo_destino_change }, :with=>"'id='+value") %>
+<%= select(
+  'desvio_silo','silo_destino_id',
+  @view_acta_silo.map{|i| [i.nombre, i.id]},
+  { :prompt =>'Seleccionar'},
+  { :class=>'select', :onchange =>silo_destino_onchange+';inputChange();' } ) %>

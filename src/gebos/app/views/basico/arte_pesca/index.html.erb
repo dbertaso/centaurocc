@@ -1,0 +1,351 @@
+<script language="JavaScript" type="text/javascript">
+
+
+function eliminarElemento(id){
+	tabla = document.getElementById(id);
+	if (!tabla){
+		alert("El elemento selecionado no existe");
+	} else {
+		padre = tabla.parentNode;
+		padre.removeChild(tabla);
+	}
+}
+
+
+function actualizo(){
+
+document.getElementById('arte_pesca_tipo_arte_pesca_id').readonly='readonly';
+
+}
+
+function aparece_guardar(){
+
+document.getElementById('button_save').style.visibility="visible";
+
+}
+
+
+function muevo(){
+	
+	
+	/*
+	document.getElementById('tablon2').style.display = 'none';
+	document.getElementById('tablon0').style.display = 'none';
+	document.getElementById('tablon4').style.display = 'none';
+	document.getElementById('tablon5').style.display = 'none';
+	document.getElementById('tablon').style.display = 'none'; 	
+	*/
+	
+	
+	//cada vez que entre tengo que resetear todas las variables
+	
+	  
+	  
+	  /*
+	  document.getElementById('arte_pesca_alto').value='';
+    document.getElementById('arte_pesca_nro_anzuelo').value='';
+    document.getElementById('arte_pesca_cantidad_anzuelos').value='';
+    document.getElementById('arte_pesca_material_linea_madre').value='';
+    document.getElementById('arte_pesca_material').value='';
+    document.getElementById('arte_pesca_tipo_cordel').value='';  
+    document.getElementById('arte_pesca_nro_cordel').value='';  
+  	//document.getElementById('arte_pesca_es_propia').value='true';
+  	document.getElementById('arte_pesca_largo').value='';
+  	document.getElementById('arte_pesca_ancho').value='';
+  	document.getElementById('arte_pesca_luz_maya').value='';
+    document.getElementById('arte_pesca_nro_anzuelo').value='';
+    document.getElementById('arte_pesca_proveedor_marino_id').value='';
+    document.getElementById('arte_pesca_tipo_nylon_id').value='';	
+	*/
+	
+	switch(document.getElementById('item_arte_pesca_').value){
+	case "REDES":
+	  document.getElementById('tablon').style.display = 'block'; //se quito el block
+	  document.getElementById('tablon2').style.display = 'none';
+	  document.getElementById('tablon0').style.display = 'none';
+	  document.getElementById('tablon4').style.display = 'none';
+	  document.getElementById('tablon5').style.display = 'none';
+	  
+	  //poner los valores
+
+	  document.getElementById('tablon').style.visibility = 'visible';
+	  document.getElementById('tablon2').style.visibility = 'collapse';
+	  document.getElementById('tablon0').style.visibility = 'collapse';
+	  document.getElementById('tablon4').style.visibility = 'collapse';
+	  document.getElementById('tablon5').style.visibility = 'collapse';
+	  
+	  eliminarElemento('tablon2');
+	  eliminarElemento('tablon0');
+	  eliminarElemento('tablon4');
+	  eliminarElemento('tablon5');
+	  
+	  
+	  
+	  /*
+	  document.getElementById('arte_pesca_alto').value='0';
+    document.getElementById('arte_pesca_nro_anzuelo').value='0';
+    document.getElementById('arte_pesca_cantidad_anzuelos').value='0';
+    document.getElementById('arte_pesca_material_linea_madre').value='No-aplica';
+    document.getElementById('arte_pesca_material').value='No-aplica';
+    document.getElementById('arte_pesca_tipo_cordel').value='0';  
+    document.getElementById('arte_pesca_nro_cordel').value='0';  
+	  */
+
+
+	  //aqui tengo que deshabilitar los demas input
+	    
+	  
+	  
+	  break;
+	case "PALANGRES":
+	  document.getElementById('tablon2').style.display = 'block';
+	  document.getElementById('tablon').style.display = 'none';
+	  document.getElementById('tablon0').style.display = 'none';
+	  document.getElementById('tablon4').style.display = 'none';
+	  document.getElementById('tablon5').style.display = 'none';
+	  
+	  document.getElementById('tablon2').style.visibility = 'visible';
+	  document.getElementById('tablon').style.visibility = 'collapse';
+	  document.getElementById('tablon0').style.visibility = 'collapse';
+	  document.getElementById('tablon4').style.visibility = 'collapse';
+	  document.getElementById('tablon5').style.visibility = 'collapse';
+	  
+	  
+	  /*
+	  document.getElementById('arte_pesca_alto').value='0';
+    document.getElementById('arte_pesca_ancho').value='0';
+    document.getElementById('arte_pesca_luz_maya').value='No-aplica';
+    document.getElementById('arte_pesca_tipo_nylon_id').value='1';
+    document.getElementById('arte_pesca_material').value='No-aplica';
+    document.getElementById('arte_pesca_tipo_cordel').value='0';  
+    document.getElementById('arte_pesca_nro_cordel').value='0';  
+	  */
+	  
+	  eliminarElemento('tablon');
+	  eliminarElemento('tablon0');
+	  eliminarElemento('tablon4');
+	  eliminarElemento('tablon5');
+	  
+	  	  
+	  
+
+
+	  
+	  
+	  break;
+	case "NASAS":
+	  //alert("contenido "+document.getElementById('arte_pesca_nombre_arte_pesca').value);
+	  document.getElementById('tablon0').style.display = 'block';
+	  document.getElementById('tablon').style.display = 'none';
+	  document.getElementById('tablon2').style.display = 'none';
+	  document.getElementById('tablon4').style.display = 'none';
+	  document.getElementById('tablon5').style.display = 'none';
+
+
+
+    /*
+    document.getElementById('arte_pesca_cantidad_anzuelos').value='0';
+    document.getElementById('arte_pesca_nro_anzuelo').value='0';
+    document.getElementById('arte_pesca_luz_maya').value='No-aplica';
+    document.getElementById('arte_pesca_tipo_nylon_id').value='1';
+    document.getElementById('arte_pesca_material_linea_madre').value='No-aplica';
+    document.getElementById('arte_pesca_tipo_cordel').value='0';  
+    document.getElementById('arte_pesca_nro_cordel').value='0';  
+*/
+
+	  document.getElementById('tablon0').style.visibility = 'visible';
+	  document.getElementById('tablon').style.visibility = 'collapse';
+	  document.getElementById('tablon2').style.visibility = 'collapse';
+	  document.getElementById('tablon4').style.visibility = 'collapse';
+	  document.getElementById('tablon5').style.visibility = 'collapse';
+
+    eliminarElemento('tablon');
+	  eliminarElemento('tablon2');
+	  eliminarElemento('tablon4');
+	  eliminarElemento('tablon5');
+
+
+	  break;
+	case "CORDELES":
+	  document.getElementById('tablon4').style.display = 'block';
+	  document.getElementById('tablon').style.display = 'none';
+	  document.getElementById('tablon2').style.display = 'none';
+	  document.getElementById('tablon0').style.display = 'none';
+	  document.getElementById('tablon5').style.display = 'none';
+	  
+	  /*
+	  document.getElementById('arte_pesca_largo').value='0';
+    document.getElementById('arte_pesca_ancho').value='0';
+    document.getElementById('arte_pesca_alto').value='0';
+    document.getElementById('arte_pesca_tipo_nylon_id').value='1';
+    document.getElementById('arte_pesca_material_linea_madre').value='No-aplica';
+    document.getElementById('arte_pesca_material').value='No-aplica';  
+    document.getElementById('arte_pesca_luz_maya').value='No-aplica';  
+	*/  
+	
+	  document.getElementById('tablon4').style.visibility = 'visible';
+	  document.getElementById('tablon').style.visibility = 'collapse';
+	  document.getElementById('tablon2').style.visibility = 'collapse';
+	  document.getElementById('tablon0').style.visibility = 'collapse';
+	  document.getElementById('tablon5').style.visibility = 'collapse';
+
+	  eliminarElemento('tablon');
+	  eliminarElemento('tablon2');
+	  eliminarElemento('tablon0');
+	  eliminarElemento('tablon5');
+	  
+	  
+	  break;
+	case "ATARRAYAS":
+	  document.getElementById('tablon5').style.display = 'block';
+	  document.getElementById('tablon').style.display = 'none';
+	  document.getElementById('tablon2').style.display = 'none';
+	  document.getElementById('tablon0').style.display = 'none';
+	  document.getElementById('tablon4').style.display = 'none';
+	 
+	  /*
+	  document.getElementById('arte_pesca_largo').value='0';
+    document.getElementById('arte_pesca_ancho').value='0';
+    document.getElementById('arte_pesca_alto').value='0';
+    document.getElementById('arte_pesca_nro_anzuelo').value='0';
+    document.getElementById('arte_pesca_cantidad_anzuelos').value='0';
+    document.getElementById('arte_pesca_material').value='No-aplica';  
+    document.getElementById('arte_pesca_material_linea_madre').value='No-aplica';  	 
+    document.getElementById('arte_pesca_tipo_cordel').value='0';  
+    document.getElementById('arte_pesca_nro_cordel').value='0';  
+    document.getElementById('arte_pesca_tipo_nylon_id').value='1';  
+*/
+	  document.getElementById('tablon5').style.visibility = 'visible';
+	  document.getElementById('tablon').style.visibility = 'collapse';
+	  document.getElementById('tablon2').style.visibility = 'collapse';
+	  document.getElementById('tablon0').style.visibility = 'collapse';
+	  document.getElementById('tablon4').style.visibility = 'collapse';
+
+	 eliminarElemento('tablon');
+	  eliminarElemento('tablon2');
+	  eliminarElemento('tablon0');
+	  eliminarElemento('tablon4');
+	 
+	  break;
+	default:
+	  document.getElementById('tablon5').style.display = 'none';
+	  document.getElementById('tablon').style.display = 'none';
+	  document.getElementById('tablon2').style.display = 'none';
+	  document.getElementById('tablon0').style.display = 'none';
+	  document.getElementById('tablon4').style.display = 'none';
+	
+  	document.getElementById('tablon5').style.visibility = 'collapse';
+	  document.getElementById('tablon').style.visibility = 'collapse';
+	  document.getElementById('tablon2').style.visibility = 'collapse';
+	  document.getElementById('tablon0').style.visibility = 'collapse';
+	  document.getElementById('tablon4').style.visibility = 'collapse';
+	
+	
+	
+	  break;	
+	}
+	
+
+document.getElementById('arte_pesca_seleccionada').innerHTML ="'"+document.getElementById('item_arte_pesca_').value+"'";
+document.getElementById('item_arte_pesca_').style.display='none';
+
+return true;
+
+
+
+
+
+}
+</script>
+
+<div class="marco-titulo"><div><div>
+	<%= I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') %> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%=I18n.t('Sistema.Body.Vistas.General.de')%>  <span class="titulo_modificar"><%= @solicitud.nombre %></span>
+    </div></div></div>
+
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+
+
+  <%= render :partial=>'solicitudes/solicitud_pre_evaluacion_visita/common/tabs' %>
+  <div class="marco-contenido2">
+
+       
+    <% embarcaciones_onchange = remote_function(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method=>:get,
+      :url=>{:controller=>'arte_pesca',
+      :action=>:list },
+      :with=>"'id_de_embarcacion='+value+'&id='+#{params[:id]}")
+
+
+
+    %>
+
+       
+    
+    <div class="marco-contenido2"> 
+          <%= form_title_list %>
+      <%
+            begin
+                    controller.method(:new)
+      %>
+      <div class="marco-boton-out" id="button_new">
+	<table align="right">				
+	<tr>
+					<td align="right">
+          
+        
+         <!-- <label>Si desea agregar un nuevo arte de pesca pulse el botón agregar </label> -->
+          </td>
+          
+                  
+          <td align="right"> 
+          <%= link_to_remote(
+          image_tag(I18n.t('Sistema.Body.Imagenes.agregar')),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :url => { :action => :new, :id => @visitas.id  } ) if vlink 'edit' -%>
+      </td>
+				</tr>
+			</table>
+       <table align="left">
+				<tr align="right">
+					<td >
+					 <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %>: </label><label style="color: red"><%=I18n.t('Sistema.Body.Controladores.Embarcacion.Etiquetas.solo_busqueda')%></label> 
+					</td>
+					<td align="right">       
+
+<%= select("identificador_embarcacion","",
+        @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+        {:prompt=>"Seleccione una embarcación"},
+        { :class=>"select", :onchange=>embarcaciones_onchange +";inputChange();"} ) -%>
+
+
+       </td>
+				</tr>
+	</table>	
+      
+          <br><br>
+      
+      </div>
+      <%
+            rescue NameError
+            end
+      %>
+      <%#= form_title_list %>
+
+      <%= error %>
+      <%= message %>
+
+      <div class="lista-form" id="form_new" style="display: none"></div>
+
+      <div id="list">
+
+      <div id="list">
+        <%= render :partial => 'list' -%>
+      </div>
+        
+
+  </div>
+    </div></div>

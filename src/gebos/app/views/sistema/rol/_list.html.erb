@@ -1,0 +1,30 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 50px" <%= sort_class_helper('id') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.numero'), 'id', 'list' %>
+      </th>
+      <th style="width: 250px" <%= sort_class_helper('nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'nombre', 'list' %>
+      </th>
+      <th style="width: 360px" <%= sort_class_helper('descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.descripcion'), 'descripcion', 'list' %>
+      </th>
+      <th align="right" style="width: 70px">
+        <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'), :title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir')),
+          { :action=>'imprimir', :method=>:get, :popup=>true },
+          :popup => ['unidad_apoyo_resguardo', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for rol in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :rol => rol, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

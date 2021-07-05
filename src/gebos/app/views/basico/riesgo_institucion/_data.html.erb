@@ -1,0 +1,26 @@
+<% riesgo_institucion = @riesgo_institucion if riesgo_institucion.nil? %>
+<td style="text-align: center">
+	<%= riesgo_institucion.dias_vencidos_cota_inferior.to_i.to_s + "-" + riesgo_institucion.dias_vencidos_cota_superior.to_i.to_s %>
+</td>	
+<td style="text-align: center">
+	<%= riesgo_institucion.categoria %>
+</td>	
+<td style="text-align: center">
+   <%= sprintf('%03.6f', riesgo_institucion.porcentaje_riesgo.to_s).sub('.', ',').to_s  + "%" %>
+</td>
+
+<td style="text-align: center">
+	<%= link_to_remote(
+		image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=> :get,
+		:url => {:controller => 'riesgo_institucion', :action => :edit, :id => riesgo_institucion.id}) if vlink 'edit' -%>&nbsp;
+
+	<%= link_to_remote(
+		image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar'))),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Controladores.Mensaje.esta_seguro'),
+		:url => {:controller => 'riesgo_institucion', :action => :delete, :id => riesgo_institucion.id}) if vlink 'delete' -%>
+</td>

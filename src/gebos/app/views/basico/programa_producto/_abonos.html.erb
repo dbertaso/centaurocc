@@ -1,0 +1,14 @@
+<table style="width: 100%">
+  <tr>
+    <td style="width: 35%">
+      <%= radio_button 'producto', 'abono_forma', "C", :class=>'text', :onclick=>'inputChange();'  -%>
+      <label><%= I18n.t('Sistema.Body.Modelos.Producto.Columnas.abono_cantidad_cuotas') %></label>
+    </td>
+    <td>
+      <%= text_field 'producto', 'abono_cantidad_cuotas', :class=>'text', :style=>'width: 40px', :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+</table>
+
+

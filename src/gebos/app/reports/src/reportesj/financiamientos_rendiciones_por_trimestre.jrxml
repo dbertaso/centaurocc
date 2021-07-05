@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="financiamientos_otorgados_por_trimestre" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_fecha_inicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[$P{p_fecha_inicio}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_fecha_fin" class="java.util.Date">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_sector" class="java.lang.Integer"/>
+	<parameter name="p_sub_sector" class="java.lang.Integer"/>
+	<parameter name="p_rubro" class="java.lang.Integer"/>
+	<parameter name="p_sub_rubros" class="java.lang.Object" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select
+        solicitud.id,
+        sub_rubro.nombre as sub_rubro_nombre,
+        case when empresa.rif is null then cast(cedula as character varying) else empresa.rif end as documento,
+        case when empresa.rif is null then 0 else cantidad_integrantes_empresa.cantidad_integrantes end as cantidad_integrantes,
+        cast(solicitud.monto_aprobado as numeric(16,2)) as monto_aprobado
+from
+	prestamo
+		inner join solicitud on (solicitud.id = prestamo.solicitud_id)
+		inner join cliente on (solicitud.cliente_id = cliente.id)
+		left join persona on (cliente.persona_id = persona.id)
+		left join empresa on (cliente.empresa_id = empresa.id)
+		left join cantidad_integrantes_empresa on (empresa.id = cantidad_integrantes_empresa.empresa_id)
+		inner join sector on (solicitud.sector_id = sector.id)
+		inner join sub_sector on (solicitud.sub_sector_id = sub_sector.id)
+		inner join rubro on (solicitud.rubro_id = rubro.id)
+		inner join sub_rubro on (solicitud.sub_rubro_id = sub_rubro.id)
+where
+	solicitud.fecha_aprobacion >= $P{p_fecha_inicio} and solicitud.fecha_aprobacion <= $P{p_fecha_fin} and
+	solicitud.sector_id  = $P{p_sector} and solicitud.sub_sector_id = $P{p_sub_sector} and solicitud.rubro_id = $P{p_rubro} and
+	(solicitud.sub_rubro_id = 737 or solicitud.sub_rubro_id =  18 or solicitud.sub_rubro_id =  641 or solicitud.sub_rubro_id =  632 or solicitud.sub_rubro_id =  630 or solicitud.sub_rubro_id =  645) and prestamo.estatus in ('V','E','P')]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="sub_rubro_nombre" class="java.lang.String"/>
+	<field name="documento" class="java.lang.String"/>
+	<field name="cantidad_integrantes" class="java.lang.Long"/>
+	<field name="monto_aprobado" class="java.math.BigDecimal"/>
+	<variable name="gMontoAprobado" class="java.math.BigDecimal" resetType="Group" resetGroup="sub_rubro" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_aprobado}]]></variableExpression>
+	</variable>
+	<variable name="gBeneficiarios" class="java.lang.Integer" resetType="Group" resetGroup="sub_rubro" calculation="Count">
+		<variableExpression><![CDATA[$V{sub_rubro_COUNT} + $F{cantidad_integrantes}]]></variableExpression>
+	</variable>
+	<variable name="gCantFinanciamientos" class="java.lang.Integer" resetType="Group" resetGroup="sub_rubro" calculation="Count">
+		<variableExpression><![CDATA[$F{id}]]></variableExpression>
+	</variable>
+	<group name="sub_rubro">
+		<groupExpression><![CDATA[$F{sub_rubro_nombre}]]></groupExpression>
+		<groupHeader>
+			<band height="36">
+				<textField>
+					<reportElement x="10" y="11" width="137" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{sub_rubro_nombre}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="147" y="11" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{gCantFinanciamientos}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="247" y="11" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{gBeneficiarios}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="347" y="11" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{gMontoAprobado}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="136" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-8" x="462" y="18" width="78" height="19"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="10" pdfFontName="Courier" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="10" y="10" width="534" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement key="staticText-6" mode="Opaque" x="362" y="18" width="100" height="19" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true" pdfFontName="Courier" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Emisión]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="29" y="84" width="495" height="27"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="18" isBold="true" pdfFontName="Courier" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Rendiciones Por Trimestre]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" positionType="FixRelativeToBottom" x="10" y="131" width="534" height="1" forecolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement key="image-1" x="10" y="11" width="117" height="62"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA["/var/www/cartera/public/images/logo_reporte.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="100" y="111" width="47" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="147" y="111" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_fecha_fin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="327" y="111" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_fecha_inicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="111" width="47" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="7" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

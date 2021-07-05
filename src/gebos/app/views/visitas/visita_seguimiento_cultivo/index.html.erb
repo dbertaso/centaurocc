@@ -1,0 +1,25 @@
+<div class="marco-titulo"><div><div>
+      <%=I18n.t('Sistema.Body.Vistas.General.modificando')%> <%= Etiquetas.etiqueta(9) %> <%=I18n.t('Sistema.Body.Vistas.General.juridico')%> <span class="titulo_modificar">'<%= @empresa.alias %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'visitas/visita_seguimiento_cultivo/common/tabs' %>
+<div class="marco-contenido2">
+
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.agregar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.agregar')), :action => 'new', 
+      :popup=>params[:popup], :empresa_id => @empresa.id ) if vlink 'edit' %>
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div id="list">
+    <%= render :partial=>"form" %>
+  </div>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :controller => 'cliente_empresa', :action => :index, :popup=>params[:popup] },
+    { :id=>'button_close' } ) -%>
+
+
+</div>

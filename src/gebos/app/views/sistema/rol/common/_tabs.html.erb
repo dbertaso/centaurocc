@@ -1,0 +1,47 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='rol'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+    <% 
+    else 
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'rol', :action => :edit, :id => @rol.id) if (action_name == 'index') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'rol', :action => :view, :id => @rol.id) if action_name == 'view' %>
+        </div></li>
+    <% 
+    end 
+    if @rol.id
+      if controller_name=='rol_opcion'
+      %>
+        <li id="actual"><div><a href="#"><%= I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.opciones') %></a></div></li>
+      <% 
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.opciones'), :controller => 'rol_opcion', :action => :index, :rol_id => @rol.id) if (action_name == 'index' || action_name == 'edit' ) %>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.Usuario.Imprimir.opciones'), :controller => 'rol_opcion', :action => :view, :rol_id => @rol.id) if (action_name == 'view') %>		      
+          </div></li>
+      <% 
+      end 
+      if 1 == 2
+        if controller_name=='rol_autorizacion'  %>
+          <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.Rol.Etiquetas.eventos_autorizar')%></a></div></li>
+        <% 
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.Rol.Etiquetas.eventos_autorizar'), :controller => 'rol_autorizacion', :action => :index, :rol_id => @rol.id) if (action_name == 'index' || action_name == 'edit') %>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.Rol.Etiquetas.eventos_autorizar'), :controller => 'rol_autorizacion', :action => :view, :rol_id => @rol.id) if (action_name == 'view' ) %>		      
+            </div></li>
+        <%
+        end
+      end
+    end
+  %>
+  </ul>
+</div>

@@ -1,0 +1,63 @@
+<div class="marco-contenido">
+  <%= form_title_search %>
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+    :url => { :action => :list, :popup=>params[:popup] } ) do-%>
+  <table>
+    <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nombre') << " " << I18n.t('Sistema.Body.Vistas.General.corto')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'alias', '', :class=>'text', :maxlength=>'10', :style=>'width: 300px'  %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 130px">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+      </td>
+      <td>
+        <%= text_field_tag 'nombre', '', :class=>'text', :maxlength=>'20', :style=>'width: 300px'  %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Controladores.EntidadFinanciera.FormTitles.tipo_entidad')%></label>
+      </td>
+      <td>
+        <%
+        priv=I18n.t('Sistema.Body.Vistas.General.privado')
+        publ=I18n.t('Sistema.Body.Vistas.General.publico')
+        selec=I18n.t('Sistema.Body.Vistas.General.seleccionar')
+        %>
+        
+        <select id="privado" class="select" onchange="inputChange();" name="privado" class="select">
+        <option value=""><%=I18n.t('Sistema.Body.Vistas.General.seleccionar')%></option>
+          <option value="FALSE"><%=I18n.t('Sistema.Body.Vistas.General.publico')%></option>
+          <option value="TRUE"><%=I18n.t('Sistema.Body.Vistas.General.privado')%></option>
+        </select>
+        
+        
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <%= image_submit_tag(image_path(t('Sistema.Body.Imagenes.buscar'))) -%>
+      </td>
+    </tr>
+  </table>
+  <% end %>
+
+  <%= error %>
+  <%= message %>
+  
+<br/>
+  <div id="list">
+  </div>
+</div>

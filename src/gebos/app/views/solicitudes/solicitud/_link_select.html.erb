@@ -1,0 +1,7 @@
+<label><%= @direccion.parroquia.nombre %></label> <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.deshacer'),:title=>'Deshacer'),
+		:loading =>'image_load()',
+  		:loaded => 'image_unload()',
+  		:id=>'button_enviar',
+  		:onclick=>'if (varEnviado) { return false; } else {varEnviado = true;}',
+		:url => {:action => :ubicacion, :id =>'3', :solicitud_id =>@solicitud_id}) -%>
+<input type='hidden' name='solicitud[parroquia_id]' value='<%= @direccion.parroquia.id %>'>

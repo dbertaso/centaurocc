@@ -1,0 +1,34 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='tecnico_campo'
+    %>
+      <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'tecnico_campo', :action => 'edit', :id => @tecnico_campo.id, :popup=>params[:popup])  if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.datos_basicos'), :controller => 'tecnico_campo', :action => 'view', :id => @tecnico_campo.id, :popup=>params[:popup])  if (action_name == 'view' || action_name == 'view_detail') %>
+        </div></li>
+    <%
+    end
+    if @tecnico_campo.id
+      if controller_name=='sector_tecnico'
+      %>
+        <li id="actual"><div><a href=" "><%=I18n.t('Sistema.Body.Controladores.SectorTecnico.FormTitles.form_title')%></a></div></li>
+      <%
+      else
+      %>
+        <li><div>
+            <%= link_to(I18n.t('Sistema.Body.Controladores.SectorTecnico.FormTitles.form_title'), :controller => 'sector_tecnico', :action => 'index', :tecnico_campo_id => @tecnico_campo.id, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new') %>
+            <%= link_to(I18n.t('Sistema.Body.Controladores.SectorTecnico.FormTitles.form_title'), :controller => 'sector_tecnico', :action => 'view', :tecnico_campo_id => @tecnico_campo.id, :popup=>params[:popup]) if (action_name == 'view' || action_name == 'view_detail' ) %>
+          </div></li>
+      <%
+      end
+    end
+  %>
+  </ul>
+</div>

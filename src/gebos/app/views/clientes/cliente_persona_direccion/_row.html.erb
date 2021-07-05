@@ -1,0 +1,4 @@
+<% persona_direccion = @persona_direccion if persona_direccion.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= persona_direccion.id %>">
+	<%= render :partial => 'data', :locals => { :persona_direccion => persona_direccion, :even_odd => even_odd } -%>
+</tr>

@@ -1,0 +1,19 @@
+<% opcion = @opcion if opcion.nil? %>
+<td style="text-align: center">
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.img_expandir'), :title=>I18n.t('Sistema.Body.Vistas.General.expandir')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => {:action => :expand, :rol_id => @rol.id, :id => opcion.id}) -%>
+</td>
+<td>
+  <%= opcion.nombre  %>
+</td>
+<td>
+  <%= opcion.ruta %>
+</td>
+<td>
+  <%= opcion.opcion_grupo.nombre  %>
+</td>
+<td style="text-align: right">
+  <%= render :partial=>'list_buttons', :locals=>{ :opcion=>opcion } %>
+</td>

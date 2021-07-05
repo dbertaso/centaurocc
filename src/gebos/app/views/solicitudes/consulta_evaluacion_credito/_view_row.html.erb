@@ -1,0 +1,118 @@
+<% sol = Solicitud.find(@solicitud.solicitud_id) %>
+<td>
+  <%= @solicitud.numero %>
+</td>
+
+<td>
+  <%= @solicitud.cedula_rif %>
+</td>
+<td>
+  <%= @solicitud.nombre %>
+</td>
+<td>
+  <% if sol.sub_sector.nemonico == 'MA' and sol.confirmacion == true
+      if sol.conf_maquinaria ==  true
+       if ViewListSolicitud.deshacer(@solicitud.solicitud_id) == true %>
+          <span style="color: white"><b><%= solicitud.estatus %></b></span>
+      <% else %>
+            <span style="color: #FF0000"><b><%= @solicitud.estatus %></b></span>
+      <% end
+      else %>
+           <span style="color: #FF0000"><b><%= @solicitud.estatus %> - En espera de maquinaria</b></span>
+   <% end
+     else %>
+           <span style="color: #FF0000"><b><%= @solicitud.estatus %></b></span>
+   <% end %>
+</td>
+<td>
+  <%= @solicitud.sector %>
+</td>
+<td>
+  <%= @solicitud.sub_sector %>
+</td>
+<td>
+  <%= @solicitud.rubro %>
+</td>
+
+<td>
+        <%= @solicitud.sub_rubro %>
+</td>
+<td>
+        <%= @solicitud.actividad %>
+</td>
+
+
+<td>
+
+  <%= @solicitud.unidad_produccion %>
+</td>
+<td align="center">
+  <%= ControlAsignacion.asignacion(@solicitud.solicitud_id) %>
+</td>
+<td align="center">
+  <%= ControlAsignacion.dias_trancurridos(@solicitud.solicitud_id) %>
+</td>
+<td align="center">
+  <% if @solicitud.decision_final == true %>
+    <%= image_tag('activo.gif') %>
+  <% elsif @solicitud.decision_final == false %>
+    <%= image_tag('inactivo.gif') %>
+  <% end %>
+</td>
+<td width="8%" align="center">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>'Consultar'),
+    {:action => :view,
+    :id => @solicitud.solicitud_id,
+    :controller => '/solicitudes/solicitud',
+    :controlador => 'consulta_evaluacion_credito'} %>
+
+  <% if @solicitud.confirmacion == false %>
+
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.descargar'), :title=>'Formulario Informe de Inspección'),
+      { :action=>'blanco', :solicitud_id=>@solicitud.solicitud_id, :popup=>true},
+      :popup => ['informe', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+
+    <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.modificar'),:title=>'Cargar Informe'),
+      {:action => :index,
+      :id => @solicitud.solicitud_id,
+      :controller => '/visitas/visita_inicial'} %>
+
+    <%= link_to_remote image_tag(I18n.t('Sistema.Body.Imagenes.confirmar'),:title=>'Confirmar'),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :confirm => "¿Está usted seguro que desea confirmar el informe de recomendación del trámite número #{@solicitud.numero}?",
+      :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+      :url => {:action => :confirmar, :id => @solicitud.solicitud_id} -%>
+  <% else
+        if sol.sub_sector.nemonico == 'MA'
+          if sol.conf_maquinaria ==  true %>
+            <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'), :title=>'Imprimir Informe de Recomendación'),
+              { :action=>'printer', :solicitud_id=>@solicitud.solicitud_id, :popup=>true},
+              :popup => ['informe', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+      <%  end
+        else %>
+          <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.imprimir'), :title=>'Imprimir Informe de Recomendación'),
+              { :action=>'printer', :solicitud_id=>@solicitud.solicitud_id, :popup=>true},
+              :popup => ['informe', 'height=600,width=800, scrollbars=yes, resizable=yes'] %>
+    <% end %>
+    <% if @solicitud.decision_final == true
+        if sol.sub_sector.nemonico == 'MA'
+          if sol.conf_maquinaria ==  true %>
+            <%= link_to_remote (image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'),:title=>'Avanzar'),
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :confirm => "¿Está usted seguro que desea avanzar el trámite número #{@solicitud.numero}?",
+              :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+              :url => {:action => :avanzar, :id => @solicitud.solicitud_id}) -%>
+    <%    end
+        else %>
+          <%= link_to_remote (image_tag(I18n.t('Sistema.Body.Imagenes.enviar_flecha'),:title=>'Avanzar'),
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :confirm => "¿Está usted seguro que desea avanzar el trámite número #{@solicitud.numero}?",
+              :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+              :url => {:action => :avanzar, :id => @solicitud.solicitud_id}) -%>
+      <% end
+      end %>
+  <% end %>
+</td>

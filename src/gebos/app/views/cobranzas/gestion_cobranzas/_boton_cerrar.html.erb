@@ -1,0 +1,4 @@
+<%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+  { :action => :index, :controller=>"agregar_cobranzas", :analista_id=>@analista.id, :prestamo_id=>@prestamo.id, :popup=>params[:popup] },
+  { :id=>'button_cerrar' } ) -%>  
+  

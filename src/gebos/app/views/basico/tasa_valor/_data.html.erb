@@ -1,0 +1,26 @@
+<% tasa_valor = @tasa_valor if tasa_valor.nil? %>
+<td>
+  <%= tasa_valor.fecha_resolucion_desde_f  %>
+</td>
+<td>
+  <%= tasa_valor.fecha_resolucion_hasta_f %>
+</td>
+<td>
+  <%= tasa_valor.fecha_actualizacion_f  %>
+</td>
+<td>
+  <%= tasa_valor.resolucion  %>
+</td>
+<td style="text-align: right">
+  <%= format_float tasa_valor.valor_f %>
+</td>
+<td style="text-align: right">
+  <% if tasa_valor.fecha_resolucion_hasta.nil? %>
+    <%= link_to_remote(
+      image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar'))),
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => {:action => :edit, :tasa_id => @tasa.id, :id => tasa_valor.id}) if !@view -%>
+  <% end%>
+
+</td>

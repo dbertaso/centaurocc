@@ -1,0 +1,5 @@
+<% calidad_agua_alimento = @calidad_agua_alimento if calidad_agua_alimento.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= calidad_agua_alimento.id %>">
+  <%= render :partial => 'data', :locals => { :calidad_agua_alimento => calidad_agua_alimento, :even_odd => even_odd } -%>
+</tr>
+

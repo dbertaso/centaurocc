@@ -1,0 +1,20 @@
+<% cuenta_contable_presupuesto = @cuenta_contable_presupuesto if cuenta_contable_presupuesto.nil? %>
+<td>
+	<%= cuenta_contable_presupuesto.codigo  %>
+</td>
+<td>
+	<%= cuenta_contable_presupuesto.anio  %>
+</td>
+<td style="text-align: right">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+		:url => {:action => :edit, :cuenta_contable_id => @cuenta_contable.id, :id => cuenta_contable_presupuesto.id})  if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	  :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:action => :delete, :cuenta_contable_id => @cuenta_contable.id, :id => cuenta_contable_presupuesto.id})  if vlink 'delete' -%>
+</td>

@@ -1,0 +1,98 @@
+<div id="tabs">
+  <ul>
+    <%
+      
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+      
+    if controller_name=='historico_cobranzas' and
+       (action_name == 'consultar' or 
+        action_name == 'index')
+      
+    %>
+      <li id="actual">
+        <div>
+          <a href="#">
+            <%=I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.Etiquetas.historico_cobranzas')%>
+          </a>
+        </div>
+      </li>
+    <%
+    else
+    %>
+      <li>
+        <div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.Etiquetas.historico_cobranzas'), :controller => 'historico_cobranzas', :action => 'consultar', :id => @gestion_cobranzas.id) if action_name == 'consultar'  %>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.Etiquetas.historico_cobranzas'), :controller => 'historico_cobranzas', :action => 'index') if action_name = 'index' %>
+        </div>
+      </li>
+    <%
+    end
+      
+    unless @gestion_cobranzas.nil?
+      if controller_name == 'historico_cobranzas' &&
+         action_name = 'telecobranzas'
+    %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%=I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.Etiquetas.telecobranzas')%>
+            </a>
+          </div>
+        </li>
+      <%
+      else
+      %>
+        <li>
+          <div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.Etiquetas.telecobranzas'), :controller => 'historico_cobranzas', :action => 'telecobranzas', :gestion_id => @gestion_cobranzas.id) if (action_name == 'telecobranzas' || action_name == 'consultar') %>
+          </div>
+        </li>
+      <%
+      end
+
+      if controller_name == 'historico_cobranzas' && action_name=='email'
+      %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%= I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.Etiquetas.email')%>
+            </a>
+          </div>
+        </li>
+      <%
+      else
+      %>
+        <li>
+          <div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.email'), :controller => 'historico_cobranzas', :action => 'email', :gestion_id => @gestion_cobranzas.id) if (action_name == 'email' || action_name == 'consultar') %>
+          </div>
+        </li>
+      <%
+      end
+
+      if controller_name == 'historico_cobranzas' && action_name=='sms'
+      %>
+        <li id="actual">
+          <div>
+            <a href="#">
+              <%= I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.Etiquetas.sms') %>
+            </a>
+          </div>
+        </li>
+      <%
+      else
+      %>
+        <li>
+          <div>
+            <%= link_to(I18n.t('Sistema.Body.Vistas.HistoricoCobranzas.sms'), :controller => 'historico_cobranzas', :action => 'sms', :gestion_id => @gestion_cobranzas.id) if (action_name == 'sms' || action_name == 'consultar') %>
+          </div>
+        </li>
+      <%
+      end
+
+    end
+    %>
+      
+  </ul>
+</div>

@@ -1,0 +1,29 @@
+<tr id="row_<%= @regla_contable.id %>_edit">
+	<td class="lista-form" colspan="12">
+	
+		<%= form_title_edit @regla_contable.transaccion_contable.nombre %>
+	
+		<%= error "row_#{@regla_contable.id}" %>
+ 
+		<%= form_remote_tag(
+                :loading =>'image_load()',
+                :loaded => 'image_unload()',
+                :url => { :action => :save_edit, :id => @regla_contable.id } ) do -%>
+      <%= render 'form' %>
+      <br/>
+      <br/>
+    	<%= form_buttons_edit %>
+
+    </td>
+  </tr>
+</table>
+		<% end -%>
+	</td>
+</tr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

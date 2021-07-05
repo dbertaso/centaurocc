@@ -1,0 +1,63 @@
+<div id="mensaje" style="display:none; width:420px; height: 150px; left: 300px; top: 130px; position: absolute;" ></div>
+
+
+<div class="marco-boton-out" id="button_new">
+
+</div>
+
+
+
+<div class="marco-contenido">
+	<%#=  form_title_search %>
+
+<br>	
+
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+
+
+	<%= error %>
+	<%= message %>
+
+
+<%= form_remote_tag(
+		:loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :method=>:get,
+		:url => { :action => :save_explicacion_cierre , :id => params[:id] },
+	  :html => {:id => 'principal_form' } ) do-%>
+
+
+  <table width="1150">
+     
+  <tr>
+		<td class="separador" valign="bottom" colspan="4">
+			<span><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.titulo_explicacion_cierre')%></span>
+		</td>
+	</tr>
+
+<tr><td ></td></tr>
+     <tr><td ></td></tr>     
+       <tr>
+<!-- style="width: 130px" -->
+        <td colspan="1">
+          <label><%=I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.explicacion_cierre')%>:</label>
+        </td>
+        <td colspan="3">
+           <%=  text_area_tag 'observacion_cerrado', nil, :rows => 5, :cols => 100 %>
+        </td>
+       </tr>
+       <!-- </table> -->
+ 
+  </table><br/><br/>
+<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :id=>'button_save') -%>&nbsp;
+
+<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cancelar')),
+               { :controller => 'orden_despacho', :action => 'index' },
+               { :id=>'buton_cerrar' } ) -%>
+
+	<% end %>
+	
+<br/>
+
+</div>

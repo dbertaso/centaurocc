@@ -1,0 +1,60 @@
+<% liquidacion_maquinaria_equipo = @liquidacion_maquinaria_equipo if liquidacion_maquinaria_equipo.nil? %>
+
+<td align="center">
+  <% if ViewLiquidacionMaquinariaEquipo.visible(liquidacion_maquinaria_equipo.solicitud_id) == true %>
+    <input type="checkbox"
+        name="prestamo_id" id="prestamo_id"
+        onClick="GenericcheckOne(this,form.todos,'prestamos_id'); abrirCampos(this, '<%= liquidacion_maquinaria_equipo.prestamo_id %>')" value="<%= liquidacion_maquinaria_equipo.prestamo_id %>" />
+  <% end %>
+</td>
+
+<td align="center">
+<%#= text_field_tag "fecha_liquidacion_#{liquidacion_maquinaria_equipo.prestamo_id}", '',
+  :class=>'text', :style=>'width: 100px', :maxlength=>'10', :disabled=>"true" -%>
+ <%#= calendar "fecha_liquidacion_#{liquidacion_maquinaria_equipo.prestamo_id}", "calendar_fecha_liquidacion_#{liquidacion_maquinaria_equipo.prestamo_id}" %> 
+ <%= calendar_date_select_tag "fecha_liquidacion_#{liquidacion_maquinaria_equipo.prestamo_id}", nil, :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10',:autocomplete=>'off', :onfocus=>'inputChange();', :onkeypress=>'return noEscribir(event);',:disabled=>"true" %> <%=I18n.t('Sistema.Body.General.formato_fecha')%>
+</td>
+
+<td>
+  <%= Solicitud.find(liquidacion_maquinaria_equipo.solicitud_id).moneda.nombre %>
+</td>
+
+<td>
+  <%= liquidacion_maquinaria_equipo.numero_tramite unless liquidacion_maquinaria_equipo.numero_tramite.nil?  %>
+</td>
+
+<td>
+  <%= liquidacion_maquinaria_equipo.prestamo_numero unless liquidacion_maquinaria_equipo.prestamo_numero.nil?  %>
+</td>
+
+<td style="color: red"><strong>
+  <%= liquidacion_maquinaria_equipo.estatus_tramite unless liquidacion_maquinaria_equipo.estatus_tramite.nil?  %>
+</strong></td>
+<td>
+  <%= liquidacion_maquinaria_equipo.documento_beneficiario unless liquidacion_maquinaria_equipo.documento_beneficiario.nil?  %>
+</td>
+<td>
+  <%= liquidacion_maquinaria_equipo.nombre_beneficiario unless liquidacion_maquinaria_equipo.nombre_beneficiario.nil?  %>
+</td>
+<td>
+  <%= liquidacion_maquinaria_equipo.estado_nombre unless liquidacion_maquinaria_equipo.estado_nombre.nil? %>
+</td>
+<td>
+  <%= liquidacion_maquinaria_equipo.nombre_sector unless liquidacion_maquinaria_equipo.nombre_sector.nil? %>
+</td>
+
+<td>
+  <%= liquidacion_maquinaria_equipo.nombre_sub_sector unless liquidacion_maquinaria_equipo.nombre_sub_sector.nil? %>
+</td>
+
+<td>
+  <%= liquidacion_maquinaria_equipo.nombre_rubro unless liquidacion_maquinaria_equipo.nombre_rubro.nil? %>
+</td>
+
+<td style="text-align: right">  
+  <%=format_fm3(liquidacion_maquinaria_equipo.monto_aprobado)%>  
+</td>
+<td style="text-align: center">
+  <%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar'),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+		{:action => :view,:id => liquidacion_maquinaria_equipo.solicitud_id,:controller => '/solicitudes/solicitud',:controlador => 'liquidacion_maquinaria_equipo'} %>&nbsp;
+</td>

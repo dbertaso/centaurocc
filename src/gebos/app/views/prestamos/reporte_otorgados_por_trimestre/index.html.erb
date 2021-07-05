@@ -1,0 +1,129 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+        <%= @form_title_records %>
+    </div>
+  </div>
+</div>
+
+<%= errores %>
+<%= message %>
+
+<%= form_tag :action => 'procesar_reporte' do -%>
+
+  <table style="width: 100%">
+    
+    <tr>
+      <td style="width: 35%">
+        <label>Fecha Desde:</label> 
+        <label title='Dato Obligatorio' style="color: red">   (*)   </label>
+      </td>
+      <td style="width: 65%">
+        <%= calendar_date_select_tag 'fecha_inicio', nil,
+            :year_range => 110.years.ago..-1.years.ago,
+            :class=>'text',
+            :style=>'width:80px',
+            :maxlength=>'10',
+            :value=>@fecha_fin,
+            :onkeypress=>'inputChange(); return noEscribir(event);',
+            :onchange=>'inputChange();' %> &nbsp; 
+          <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+      </td>
+    </tr>
+    
+    <tr>
+      <td style="width: 35%">
+        <label>Fecha Hasta:</label>  
+        <label title='Dato Obligatorio' style="color: red">   (*)   </label>
+      </td>
+      <td style="width: 65%">
+        <%= calendar_date_select_tag 'fecha_fin', nil,
+            :year_range => 110.years.ago..-1.years.ago,
+            :class=>'text',
+            :style=>'width:80px',
+            :maxlength=>'10',
+            :value=>@fecha_fin,
+            :onkeypress=>'return noEscribir(event);',
+            :onchange=>'inputChange();' %> &nbsp; 
+          <%= I18n.t('Sistema.Body.General.formato_fecha')%>        
+      </td>
+    </tr>
+
+
+    
+    <tr>
+      <td style="width: 30%">
+        <label>Sector</label>
+        <label title='Dato Obligatorio' style="color: red">   (*)   </label>
+      </td>
+      <td style="width: 70%">
+        <% sector_onchange =  %>
+        <%= select(
+            'sector_id', '',
+            @sector_list.map{|i| [i.nombre, i.id]},
+            { :prompt=>'Seleccionar'},
+            { :class=>'select',:onchange=>"#{remote_function(
+              :loading =>'Element.show("loading")',
+              :loaded => 'Element.hide("loading")',
+              :method => :get,
+              :url=>{:controller=>'reporte_otorgados_por_trimestre',
+              :action=>:sector_change },
+              :with=>"'sector_id='+ this.value" )};inputChange();" } ) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Sub-Sector</label>
+      </td>
+      <td>
+        <div id="sub-sector-select">
+          <%= select(
+            'sub_sector_id', '',
+            [],
+            { :prompt=>'Seleccionar'},
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label>Rubro</label>
+      </td>
+      <td>
+        <div id="rubro-select">
+          <%= select(
+            'rubro_id', '',
+            [],
+            { :prompt=>'Seleccionar'},
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+      
+    <tr>
+      <td>
+        <label>Sub-Rubro</label>
+      </td>
+      <td>
+        <div id="sub_rubro-select">
+          <%= select(
+            'sub_rubro_id', '',
+            [],
+            { :prompt=>'Seleccionar'},
+            { :class=>'select',:onchange=>'inputChange();' } ) %>
+        </div>
+      </td>
+    </tr>
+          
+    <tr>
+      <td colspan="2" align="center">
+        <%= submit_tag 'Ejecutar reporte', :onclick=>"if ($('errorExplanation')) {$('errorExplanation').style.display='none';}" %>
+      </td>
+    </tr>
+       
+  </table>
+  <br/>
+ <input id="sub_rubros" type="hidden" name="sub_rubros_id"/>
+ <% end -%>

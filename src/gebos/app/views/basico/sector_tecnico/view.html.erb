@@ -1,0 +1,18 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.SectorTecnico.Etiquetas.modificar_tecnico') %>  <span class="titulo_modificar">'<%= @tecnico_campo.primer_nombre %>&nbsp;<%=@tecnico_campo.primer_apellido%>'</span>
+    </div></div></div>
+<%= render :partial=>'basico/tecnico_campo/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial=>"list_view" %>
+  </div>
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+    { :controller=> 'tecnico_campo', :action => :index }, { :id=>'button_close' } ) -%>
+</div>

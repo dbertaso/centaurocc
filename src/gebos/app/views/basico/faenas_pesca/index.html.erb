@@ -1,0 +1,80 @@
+<div class="marco-titulo"><div><div>
+	<%= I18n.t('Sistema.Body.Vistas.General.modificando_informe_inicial') %> <%=I18n.t('Sistema.Body.Vistas.General.del')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')%> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%=I18n.t('Sistema.Body.Vistas.General.de')%> <span class="titulo_modificar"><%= @solicitud.nombre %></span>
+    </div></div></div>
+
+<%= render :partial=>'solicitudes/solicitud_pre_evaluacion_analisis/common/tabs' %>
+<div class="marco-contenido2">
+
+
+  <%= render :partial=>'solicitudes/solicitud_pre_evaluacion_visita/common/tabs' %>
+  <div class="marco-contenido2">
+
+       
+    <% embarcaciones_onchange = remote_function(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :method=>:get,
+      :url=>{:controller=>'faenas_pesca',
+      :action=>:list },
+      :with=>"'id_de_embarcacion='+value+'&id='+#{params[:id]}")
+
+    
+            begin
+                    controller.method(:new)
+      %>
+      <div class="marco-boton-out" id="button_new">
+       <table align="left">
+				<tr>
+					<td align="right">
+						 <label><%= I18n.t('Sistema.Body.Controladores.Embarcacion.FormTitles.form_title') %>: </label><label style="color: red"><%=I18n.t('Sistema.Body.Controladores.Embarcacion.Etiquetas.solo_busqueda')%></label> 
+					</td>
+					<td align="right">       
+
+<%= select("identificador_embarcacion","",
+        @embarcaciones.map{|i| [i.nombre_embarcacion, i.id]},
+        {:prompt=>"Seleccione una embarcación"},
+        { :class=>"select", :onchange=>embarcaciones_onchange +";inputChange();"} ) -%>
+
+       </td>
+				</tr>
+</table>
+<table align="right">				
+	<tr>
+					<td align="right">
+          
+        
+        <!--  <label>Si desea agregar una nueva faena de pesca pulse el botón agregar </label> -->
+          </td>
+          <td align="right"> 
+          <%= link_to_remote(
+          image_tag(I18n.t('Sistema.Body.Imagenes.agregar')),
+          :loading =>'image_load()',
+          :loaded => 'image_unload()',
+          :url => { :action => :new, :id => @visitas.id  } ) if vlink 'edit' -%>
+      </td>
+				</tr>
+			</table>
+      
+          <br><br>
+      
+      </div>
+      <%
+            rescue NameError
+            end
+      %>
+
+
+      <%= error %>
+      <%= message %>
+
+      <div class="lista-form" id="form_new" style="display: none"></div>
+
+      <div id="list">
+
+      <div id="list">
+        <%= render :partial => 'list' -%>
+      </div>        
+
+  </div>
+
+    </div></div>

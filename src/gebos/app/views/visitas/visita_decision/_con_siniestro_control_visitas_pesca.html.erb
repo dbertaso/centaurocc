@@ -1,0 +1,133 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+
+
+	if controller_name!='visita_decision'
+%>
+		<li id="actual"><div><a href="#">Embarcación</a></div></li>
+<%
+	else
+%>
+		<li><div>
+		      <%= link_to('Embarcación', :controller => 'control_visitas_pesca/embarcacion', :action => 'index', :id=>params[:id],:siniestro_checked=>@tengo_siniestro,:popup=>params[:popup])  %>
+
+		</div></li>
+
+<%
+	end
+#	if @embarcacion
+
+
+		if controller_name!='visita_decision'
+
+%>
+			<li id="actual"><div><a href="#">Motores</a></div></li> 
+<%
+		else
+%>
+			<li><div>
+			     <%= link_to('Motores', :controller => 'control_visitas_pesca/motores', :action => 'index', :id=>params[:id],:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup], :id_embarcacion => @id_embarcacion)  %>
+
+			</div></li> 
+<%
+		end
+
+
+		if controller_name!='visita_decision'
+%>
+			<li id="actual"><div><a href="#">Artes de Pesca</a></div></li>
+<%
+		else
+%>
+			<li><div>
+			     <%= link_to('Artes de Pesca', :controller => 'control_visitas_pesca/arte_pesca', :action => 'index', :id=>params[:id],:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup], :id_embarcacion => @id_embarcacion)  %>
+			    
+			</div></li>
+<%
+		end
+		if controller_name!='visita_decision'
+%>
+			<li id="actual"><div><a href="#">Equipos de Seguridad</a></div></li>
+<%
+		else
+%>
+			<li><div>
+			     <%= link_to('Equipos de Seguridad', :controller => 'control_visitas_pesca/equipo_seguridad', :action => 'index', :id=>params[:id],:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup], :id_embarcacion => @id_embarcacion)  %>
+			</div></li>
+<%
+		end
+		if controller_name!='visita_decision'
+%>
+			<li id="actual"><div><a href="#">Campañas / Faenas de Pesca</a></div></li>
+<%
+		else
+%>
+			<li><div>
+			     <%= link_to('Campañas / Faenas de Pesca', :controller => 'control_visitas_pesca/faenas_pesca', :action => 'index', :id=>params[:id],:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup], :id_embarcacion => @id_embarcacion)  %>
+			     
+			</div></li>
+<%
+		end
+
+
+
+
+#end
+%>
+           
+    
+      <%if controller_name=='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Recomendaci&oacute;n</a></div></li>
+<%
+      else
+%>
+              <li><div>
+              <%= link_to('Recomendaci&oacute;n', :controller => '../visita_decision', :action => 'edit', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+
+          </div></li>
+<%
+
+      end%>
+<%if @tengo_siniestro=="1"%>
+<%if controller_name=='siniestro' %>
+      <li id="actual"><div><a href="#">Pérdida</a></div></li>
+    <%else%>
+      <li>
+        <div>
+          <%= link_to('Pérdida', :controller => '/solicitudes/siniestro', :action => 'index', :visita_id => @visitas.id,:siniestro_checked=>1, :popup=>params[:popup])  %>
+          <!-- anteriormente estaba esta -->
+          <%#= link_to_remote('Pérdida',
+            :loading =>'image_load()',
+            :loaded => 'image_unload()',
+            :url => {:controller=>'solicitudes/siniestro',:action=>:index, :visita_id =>@visitas.id,:siniestro_checked=>1})
+          -%>
+        </div>
+      </li>
+    <%end%>
+
+<%end%>
+     <% if @visitas.DecisionVisita
+        unless !@visitas.DecisionVisita.recomienda_generar_desembolso
+          if controller_name!='visita_decision'
+%>
+              <li id="actual"><div><a href="#">Recomendaci&oacute;n del Desembolso</a></div></li>
+<%
+          else
+%>
+              <li><div>
+              <%= link_to('Recomendaci&oacute;n del Desembolso', :controller => '../recomendacion_plan_inversion', :action => 'index', :id => @visitas.id,:siniestro_checked=>@tengo_siniestro, :popup=>params[:popup])  %>
+
+              </div></li>
+<%
+          end
+        end
+     end
+%>
+
+	</ul>
+</div>
+

@@ -1,0 +1,18 @@
+<tr class="lista<%= even_odd %>" id="row_<%= gebos_contabilidad_dataload.id%> ">
+ 			 <td style="width: 10%">
+				<%= gebos_contabilidad_dataload.nombre_archivo %>
+ 			</td>
+			<td style="width: 10%">
+				<%= gebos_contabilidad_dataload.tipo_movimiento %>
+ 			</td>
+ 			 <td style="width: 10%">
+				<%= gebos_contabilidad_dataload.fecha_creacion.strftime('%d-%m-%Y a las %H:%m:%S') %>
+ 			</td>
+ 			 <td style="width: 10%">
+				<%= gebos_contabilidad_dataload.numero_filas %>
+ 			</td>
+ 			 			 <td style="width: 5%">
+ 			 	<%= link_to(image_submit_tag('descargar.png'),:action=>:descargar, :nombre=>gebos_contabilidad_dataload.nombre_archivo)%>
+ 			</td>
+</tr>
+

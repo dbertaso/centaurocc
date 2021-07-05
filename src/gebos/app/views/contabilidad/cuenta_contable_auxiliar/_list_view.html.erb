@@ -1,0 +1,42 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 15%" <%= sort_class_helper('codigo') %>>
+				<%= sort_link_helper 'Código', 'codigo', 'list' %>
+ 			</th>
+ 			<th style="width: 45%" <%= sort_class_helper('nombre') %>>
+				<%= sort_link_helper 'Nombre', 'nombre', 'list' %>
+ 			</th>
+ 			<th style="width: 10%" <%= sort_class_helper('activo') %>>
+				<%= sort_link_helper 'Activo', 'activo', 'list' %>
+ 			</th>
+ 			<th style="width: 17%" <%= sort_class_helper('auxiliar_por_programa') %>>
+				<%= sort_link_helper 'Por Programa', 'auxiliar_por_programa', 'list' %>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for cuenta_contable_auxiliar in @list
+		even_odd = 1 - even_odd %>
+  	<% cuenta_contable_auxiliar = @cuenta_contable_auxiliar if cuenta_contable_auxiliar.nil? %>
+  	<tr class="lista<%= even_odd %>" id="row_<%= cuenta_contable_auxiliar.id %>">
+      <td>
+      	<%= cuenta_contable_auxiliar.codigo  %>
+      </td>	
+      <td>
+      	<%= cuenta_contable_auxiliar.nombre  %>
+      </td>
+      <td style="text-align: center">
+      	<%= format_bool cuenta_contable_auxiliar.activo  %>
+      </td>
+      <td style="text-align: center">
+      	<%= format_bool cuenta_contable_auxiliar.auxiliar_por_programa  %>
+      </td>	
+  	</tr>
+<% end %>
+    </tbody>
+  </table>
+
+<%= form_pagination %>

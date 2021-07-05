@@ -1,0 +1,37 @@
+<% stock_maquinaria = @stock_maquinaria if stock_maquinaria.nil? %>
+<td style="text-align: center">
+	<%= stock_maquinaria.tipo_maquinaria.descripcion %>
+</td>
+<td style="text-align: center">
+	<%= stock_maquinaria.clase.nombre %>
+</td>
+<td style="text-align: center">
+	<%= stock_maquinaria.marca_maquinaria.nombre %>
+</td>
+
+<td style="text-align: center">
+	<%= stock_maquinaria.modelo.nombre %>
+</td>
+
+<td style="text-align: center">
+	<%= stock_maquinaria.minimo %>
+</td>
+
+<td style="text-align: center">
+	<%= stock_maquinaria.maximo %>
+</td>
+
+<td style="text-align: center">
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+          :method =>:get,
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+		:url => {:controller => 'configuracion_existencia', :action => :edit, :id => stock_maquinaria.id}) if vlink 'edit' -%>
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'configuracion_existencia', :action => :delete, :id => stock_maquinaria.id}) if vlink 'delete' -%>
+</td>

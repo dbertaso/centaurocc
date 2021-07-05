@@ -1,0 +1,131 @@
+<table width="100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2" >
+      <span><%=  I18n.t('Sistema.Body.Vistas.ActaSilo.Separador.titulo_01')%></span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%=  I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.nombre_silo')%></label>
+    </td>
+    <td >
+      <% unless @acta_silo.id.nil? || @acta_silo.to_s.empty? %>
+        <%= @acta_silo.silo.nombre unless @acta_silo.silo.nombre.nil? %>
+      <%else%>
+        <%= @silo.nombre %>
+      <%end%>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 200px">
+      <label><%=  I18n.t('Sistema.Body.Vistas.General.sector') %></label><label class="requerido"> (*)</label></td>
+    <td>
+      <%= select(
+        'solicitud','sector_id',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>"#{remote_function(
+          :loading =>'Element.show("loading")',
+          :loaded => 'Element.hide("loading")',
+          :method => :get,
+          :url=>{:controller=>'acta_silo',
+          :action=>:sector_change },
+          :with=>"'sector_id='+value")} ;inputChange();" } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sub_sector')%> </label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="sub-sector-search">
+        <%= render :partial=>'sub_sector_search' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.rubro')%> </label><label class="requerido"> (*)</label></td>
+    <td>
+      <span id="rubro-search">
+        <%= render :partial=>'rubro_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.sub_rubro')%> </label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="sub-rubro-search">
+        <%= render :partial=>'sub_rubro_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.actividad')%> </label><label class="requerido"> (*)</label>
+    </td>
+    <td>
+      <span id="actividad-search">
+        <%= render :partial=>'actividad_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.ciclo_productivo') %></label><label class="requerido"> (*)</label></td>
+    <td>
+      <%= select(
+        'acta_silo','ciclo_productivo_id',
+        @ciclo_productivo.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+        { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.numero_acta')%></label>
+    </td>
+    <td >
+      <%= @acta_silo.nro_acta unless @acta_silo.nil?%>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.fecha_inicio')%> </label><label class="requerido"> (*)</label></label>
+    </td>
+    <td>   
+      <%= calendar_date_select_tag "acta_silo[fecha_inicio_f]", @acta_silo.fecha_inicio_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> 
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.ActaSilo.Etiquetas.fecha_cierre') %></label>
+    </td>
+    <td>    
+      <%= calendar_date_select_tag "acta_silo[fecha_fin_f]", @acta_silo.fecha_fin_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> 
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%= I18n.t('Sistema.Body.Vistas.Form.estatus') %></label>
+    </td>
+    <td>
+      <% unless @acta_silo.id.nil?%>
+        <%if (@acta_silo.status == true || @acta_silo.status.to_s.empty? )%>
+          <label style="color: green"><%= I18n.t('Sistema.Body.Vistas.Form.abierto') %></label>
+        <%else%>
+          <label style="color: red"><%= I18n.t('Sistema.Body.Vistas.Form.cerrado') %></label>
+        <%end%>
+      <%end%>
+    </td>
+  </tr>
+</table>
+</br>

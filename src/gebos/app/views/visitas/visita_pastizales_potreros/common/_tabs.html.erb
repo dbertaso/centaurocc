@@ -1,0 +1,94 @@
+<div id="tabs">
+  <ul>
+    <%
+    action_name = controller.action_name
+    controller_name = controller.controller_name
+    if controller_name=='visita_pastizales_potreros'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.evalucacion_pastizales_potreros')%></a></div></li>
+    <% 
+    else 
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.evalucacion_pastizales_potreros'), :controller => '/visitas/visita_pastizales_potreros', :action => 'index', :id => @visitas.id,:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup]) if (action_name == 'index' ||action_name == 'edit')  %>
+        </div></li>
+    <% 
+    end
+    if controller_name=='visita_sanidad_animal'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.instalacion_sanidad_animal')%></a></div></li>
+    <%      
+    else
+    %>          
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.instalacion_sanidad_animal'), :controller => '/visitas/visita_sanidad_animal', :action => 'edit', :id => @visitas.id,:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+        </div></li>
+    <% 
+    end
+    if controller_name=='visita_semovientes'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.semovientes')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.semovientes'), :controller => '/visitas/visita_semovientes', :action => 'edit', :id => @visitas.id,:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+        </div></li>
+    <%
+    end
+
+    if controller_name=='visita_produccion_leche_carne'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.General.produccion')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.General.produccion'), :controller => '/visitas/visita_produccion_leche_carne', :action => 'edit', :id => @visitas.id,:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+        </div></li>
+    <%
+    end%>
+
+    <%
+    if controller_name=='visita_decision'
+    %>
+      <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.recomendacion')%></a></div></li>
+    <%
+    else
+    %>
+      <li><div>
+          <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.recomendacion'), :controller => '/visitas/visita_decision', :action => 'edit', :id => @visitas.id,:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+        </div></li>
+    <%
+    end%>
+    <%    if ( !@visitas.pastizales_potreros.nil?  ||  !@visitas.semovientes.nil? )
+      if controller_name=='siniestro'
+      %>
+        <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Controladores.Partida.FormTitles.form_title_record')%></a></div></li> 
+      <%elsif params[:siniestro_checked] == "1"%>
+        <li>
+          <div>
+            <%= link_to(I18n.t('Sistema.Body.Controladores.Partida.FormTitles.form_title_record'), :controller => '/solicitudes/siniestro', :action => 'index', :visita_id => @visitas.id,:id=>params[:id],:siniestro_checked=>1, :popup=>params[:popup])  %>
+          </div>
+        </li>
+      <%    
+      end
+    end
+    if @visitas.decision_visita
+      unless !@visitas.decision_visita.recomienda_generar_desembolso
+        if controller_name=='recomendacion_plan_inversion'
+        %>
+          <li id="actual"><div><a href="#"><%=I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.recomendacion_desembolso')%></a></div></li>
+        <%
+        else
+        %>
+          <li><div>
+              <%= link_to(I18n.t('Sistema.Body.Vistas.VisitaSeguimientoCultivo.Etiquetas.recomendacion_desembolso'), :controller => '/visitas/recomendacion_plan_inversion', :action => 'index', :id => @visitas.id,:siniestro_checked=>params[:siniestro_checked], :popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit') %>
+            </div></li>
+        <%
+        end
+      end
+    end
+  %>
+  </ul>
+</div>

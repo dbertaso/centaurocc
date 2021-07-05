@@ -1,0 +1,83 @@
+<div id="tabs">
+	<ul>
+<%
+	action_name = controller.action_name
+	controller_name = controller.controller_name
+
+
+	if controller_name=='embarcacion'
+%>
+		<li id="actual"><div><a href="#">Embarcación</a></div></li>
+<%
+	else
+%>
+		<li><div>
+		      <%= link_to('Embarcación', :controller => 'embarcacion', :action => 'index', :id=>params[:id],:popup=>params[:popup]) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+		      <%= link_to('Embarcación', :controller => 'embarcacion', :action => 'view', :id=>params[:id],:popup=>params[:popup]) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+		</div></li>
+
+<%
+	end
+#	if @embarcacion
+
+
+		if controller_name=='motores'
+
+%>
+			<li id="actual"><div><a href="#">Motores</a></div></li> 
+<%
+		else
+%>
+			<li><div>
+			     <%= link_to('Motores', :controller => 'motores', :action => 'index', :id=>params[:id], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+                 <%= link_to('Motores', :controller => 'motores', :action => 'view', :id=>params[:id], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+			</div></li> 
+<%
+		end
+
+
+		if controller_name=='arte_pesca'
+%>
+			<li id="actual"><div><a href="#">Artes de Pesca</a></div></li>
+<%
+		else
+%>
+			<li><div>
+			     <%= link_to('Artes de Pesca', :controller => 'arte_pesca', :action => 'index', :id=>params[:id], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+			     <%= link_to('Artes de Pesca', :controller => 'arte_pesca', :action => 'view', :id=>params[:id], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+			</div></li>
+<%
+		end
+		if controller_name=='equipo_seguridad'
+%>
+			<li id="actual"><div><a href="#">Equipos de Seguridad y Navegación</a></div></li>
+<%
+		else
+%>
+			<li><div>
+			     <%= link_to('Equipos de Seguridad y Navegación', :controller => 'equipo_seguridad', :action => 'index', :id=>params[:id], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+			     <%= link_to('Equipos de Seguridad y Navegación', :controller => 'equipo_seguridad', :action => 'view', :id=>params[:id], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+			</div></li>
+<%
+		end
+		if controller_name=='faenas_pesca'
+%>
+			<li id="actual"><div><a href="#">Faenas de Pesca</a></div></li>
+<%
+		else
+%>
+			<li><div>
+			     <%= link_to('Faenas de Pesca', :controller => 'faenas_pesca', :action => 'index', :id=>params[:id], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name == 'index' || action_name == 'edit' || action_name == 'new' || action_name == 'vinculo') %>
+			     <%= link_to('Faenas de Pesca', :controller => 'faenas_pesca', :action => 'view', :id=>params[:id], :popup=>params[:popup], :id_embarcacion => @id_embarcacion) if (action_name=='view' || action_name=='view_detail' || action_name == 'vinculo_view') %>
+			</div></li>
+<%
+		end
+
+
+
+
+#end
+%>
+	</ul>
+</div>
+

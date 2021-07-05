@@ -1,0 +1,277 @@
+<%= form_title_view @casa_proveedora.nombre %>
+
+<%= render 'basico/casa_proveedora/common/tabs' -%>
+
+<div class="marco-contenido2">
+
+  <table border="0" width="100%">
+    <tr>
+      <td style="width: 130px"><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%> </label><label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label></td>
+      <td style="width: 230px">
+        <%= @casa_proveedora.estado.nombre  -%>
+      </td>
+      <td style="width: 110px"></td>
+      <td style="width: 310px"></td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.ciudad')%> </label>
+        <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%
+	 emb=Ciudad.find(@casa_proveedora.ciudad_id)
+
+	%>
+	<%= emb.nombre  -%>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%> </label>
+        <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.municipio.nombre  -%>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%> </label>
+        <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.parroquia.nombre  -%>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%> </label>
+        <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.nombre -%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.rif')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label></td>
+      <td>
+        <%= @casa_proveedora.rif.upcase -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.Form.fecha') << " " << I18n.t('Sistema.Body.Vistas.Form.convenio')%></label>
+        <label style="color:red"></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.fecha_convenio_f -%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.Form.site')%></label></td>
+      <td>
+        <%= @casa_proveedora.enlace_internet -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.persona') << " " << I18n.t('Sistema.Body.Vistas.General.contacto')%></label>
+        <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.persona_contacto -%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.email')<< " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.contacto')%>:</label></td>
+      <td>
+        <%= @casa_proveedora.email_contacto -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.telefono')%> <%=I18n.t('Sistema.Body.Vistas.General.oficina')%></label>
+        <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.telefono_oficina -%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.fax')%>:</label></td>
+      <td>
+        <%= @casa_proveedora.telefono_fax -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.telefono') << " " << I18n.t('Sistema.Body.Vistas.General.celular')%></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.telefono_celular -%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.codigo') << " " << I18n.t('Sistema.Body.Vistas.General.postal')%>: </label><label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label></td>
+      <td>
+        <%= @casa_proveedora.codigo_postal -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.avenida')%></label>
+        <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.avenida -%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.edificio')%></label></td>
+      <td>
+        <%= @casa_proveedora.edificio -%>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.piso')%></label>
+      </td>
+      <td>
+        <%= @casa_proveedora.piso -%>
+      </td>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.General.numero')%></label></td>
+      <td>
+        <%= @casa_proveedora.numero -%>
+      </td>
+     
+
+    </tr>
+
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.Form.descripcion')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label></td>
+      <td >
+        <%= @casa_proveedora.descripcion -%>
+      </td>
+
+     
+    <!-- se tomara en cuenta en el segundo release
+     <td><label><%=I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.anticipo')%></label></td>
+      <td>
+        <%= @casa_proveedora.anticipo -%>
+      </td>    -->
+
+     <!-- <td></td>
+      <td></td> -->
+          
+
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.activo')%></label>
+      </td>
+      <td>
+        <%= format_bool @casa_proveedora.activo -%>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td>
+        <label><%=I18n.t('Sistema.Body.Vistas.General.forma') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.pago')%></label>
+        <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+      </td>
+      <td>
+        <%  if @casa_proveedora.tipo_pago=="2" %> 
+            <%=I18n.t('Sistema.Body.Vistas.General.cheque')%> 
+          <% else %> 
+            <%=I18n.t('Sistema.Body.Vistas.General.transferencia') << " " << I18n.t('Sistema.Body.Vistas.General.electronica')%> 
+          <%  end %>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td colspan="3">
+        <div id="forma_pago" <% if @casa_proveedora.tipo_pago=="2" %> style="display:none;" <% end %> >
+          <table width="100%">
+            <tr>
+              <td>
+                <label><%=I18n.t('Sistema.Body.Vistas.General.cuenta')%></label>
+                <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+              </td>
+              <td colspan="4">
+                <table>
+                  <tr>
+                    <td><%=I18n.t('Sistema.Body.Vistas.General.ahorro')%>:</td>
+                    <td>
+                      <%=
+                      radio_button('casa_proveedora','tipo_cuenta', "a", {:disabled=>'disabled',:onChange=>'inputChange();'})
+                      -%>
+                    </td>
+                    <td><%=I18n.t('Sistema.Body.Vistas.General.corriente')%>:</td>
+                    <td>
+                      <%=
+                      radio_button('casa_proveedora','tipo_cuenta', "c", {:disabled=>'disabled',:onclick=>'inputChange();'})
+                      -%>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label><%=I18n.t('Sistema.Body.Vistas.General.banco')%>:</label>
+                <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+              </td>
+              <td  colspan="4">
+                <%= @casa_proveedora.entidad_financiera.nombre unless @casa_proveedora.tipo_pago=="2"-%>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.cuenta')%></label>
+                <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+              </td>
+              <td colspan="4">
+                <%= @casa_proveedora.numero_cuenta -%>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+
+  
+  <%#= link_to_remote(
+		image_tag('boton_modificar.gif'),
+   	    :loading =>'image_load()',
+		:loaded => 'image_unload()',
+		:method =>:get,
+		:html_options => { :id=>'button_edit' },
+		:url => {:controller => 'casa_proveedora', :action => :edit, :id => @casa_proveedora.id} ) if vlink 'edit' -%>  
+  
+  
+  
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.boton_modificar')),
+    :action => :edit,    
+    :id => @casa_proveedora.id,
+    :html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+    { :action => :index },
+    { :id=>'button_close' } ) -%>
+
+</div>

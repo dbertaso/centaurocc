@@ -1,0 +1,19 @@
+<%= form_title_new %>
+
+<%= render :partial=>'basico/sector/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_new, :sector_id=>@sector.id, :popup=>params[:popup] } ) do-%>
+
+      <%= render :partial => 'form' %>
+      <%= form_buttons_edit :sector_id=>@sector.id, :popup=>params[:popup] %>
+
+  <% end -%>
+</div>
+

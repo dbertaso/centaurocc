@@ -1,0 +1,66 @@
+<center>	
+<div id="errorExplanation" class="errorExplanation" style="display: none; text-align: left"></div>	
+<div id="el_mensaje"></div>
+
+</center>
+<br/>
+
+
+<table class="lista" style="width: 100%">
+	<thead>
+	<tr>
+		<th style="width: 50px" <%= sort_class_helper('numero_helper') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'numero_helper', 'list' %>
+		</th>
+		<th style="width: 80px" <%= sort_class_helper('identificacion') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'identificacion', 'list' %>
+		</th>
+		<th style="width:200px" <%= sort_class_helper('nombre') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'nombre', 'list' %>
+		</th>
+		<th style="width: 80px" <%= sort_class_helper('sector.nombre') %>>
+           <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector.nombre', 'list' %>           
+		</th>
+		<th style="width:120px" <%= sort_class_helper('sub_sector.nombre') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector.nombre', 'list' %>
+		</th>
+		<th style="width:120px" <%= sort_class_helper('rubro.nombre') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro.nombre', 'list' %>
+		</th>
+		<th style="width:120px" <%= sort_class_helper('sub_rubro.nombre') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_rubro'), 'sub_rubro.nombre', 'list' %>
+		</th>
+		<th style="width:120px" <%= sort_class_helper('actividad.nombre') %>>
+			<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad.nombre', 'list' %>
+		</th>
+                <th style="width: 80px" ><%= I18n.t('Sistema.Body.Vistas.General.moneda') %></th>
+		<th style="width: 60px">
+			<%=I18n.t('Sistema.Body.Vistas.General.monto')%>
+		</th>
+        <th  style="width: 20px"></th>
+		<th  style="width: 20px">
+           <%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.notas_autenticacion')%>
+                </th>
+		<th  style="width: 20px">
+           <%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.actas_entrega')%>
+                </th>
+		<th  style="width: 20px">
+           <%=I18n.t('Sistema.Body.Vistas.General.sras')%>
+                </th>
+		<th style="width: 80px">
+			<%=I18n.t('Sistema.Body.Vistas.General.acciones')%>
+		</th>
+	</tr>
+	</thead>
+	<tbody id="list-body">
+<%  
+	even_odd = 1
+	for solicitud in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+<% end %>
+<input type="hidden" id = "cuenta_id" name = "cuenta_id" value=""/>
+</tbody>
+</table>
+<%= form_pagination %>
+

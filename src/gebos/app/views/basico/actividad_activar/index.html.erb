@@ -1,0 +1,63 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.ActividadActivar.Header.modificando')%> <span class="titulo_modificar">'<%= @actividad.nombre %>'</span>
+    </div>
+  </div>
+</div>
+
+<%= render 'basico/sector/common/tabs' %>
+
+<div class="marco-contenido2">
+  <%= render 'basico/actividad/common/tabs' %>
+
+  <div class="marco-contenido2">
+    <div class="marco-titulo">
+      <div>
+        <div>
+          <%= I18n.t('Sistema.Body.Vistas.ActividadActivar.Etiquetas.primer_encabezado') %>
+        </div>
+      </div>
+    </div>
+
+    <%= error %>
+    <%= message %>
+
+    <%= form_remote_tag(
+      :loading =>'image_load()',
+      :loaded => 'image_unload()',
+      :url => { :action => :save_new, :actividad_id => @actividad.id } ) do -%>
+
+        <table  style="width: 100%">
+          <tr>
+            <td colspan="2">
+              <div id="oficina-select">
+                <table class="lista" width="100%" border="1">
+                  <tr>
+                    <th colspan="3">
+                      <label><%=I18n.t('Sistema.Body.Vistas.ActividadActivar.Etiquetas.segundo_encabezado')%></label>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th colspan="3" align="right">
+                      <%=I18n.t('Sistema.Body.General.seleccionar_todos') %> <input type="checkbox" id="todos" name="todos" onClick="GenericcheckAll(form.oficina_id,form.todos, 'oficinas')"/>
+                    </th>
+                  </tr>
+
+                  <%= @oficinas %>
+                </table>
+                <br/>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <input type="hidden" id="oficinas" name="oficina" value="<%= @oficina_id %>" />
+
+        <%= form_buttons_edit :controller => 'actividad', :action => :edit, :id => @actividad.id %>
+
+    <% end -%>
+
+  </div>
+
+</div>

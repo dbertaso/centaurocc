@@ -1,0 +1,35 @@
+<br></br>
+<div align="center" id ="contrato">
+  <%= form_remote_tag(
+    :loading =>'image_load()', :loaded => 'image_unload()', :method=>:get,
+    :url => { :controller=>"solicitud_consultoria_juridica", :action => :generar,  :solicitud_id => @solicitud_id_cj } ) do -%>
+  <table class="lista" width="100px">
+    <tr><td colspan="3" height="10px"></td></tr>
+    <tr>
+      <td style="width:20%" align="center"><label><%=I18n.t('Sistema.Body.Controladores.Abogado.FormTitles.form_title')%></label></td>
+      <td width="50%">
+        <%= select(
+          'abogado_ofic', 'id',
+          @list_abogado_ofic.map{|e| [e.nombre, e.id]},
+          { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange(); ' } ) %>
+      </td>
+      <td style="width:5%;align:right"><%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.imprimir_grande')) -%></td>
+    </tr>
+    <tr><td colspan="3" >
+        <div align ="center" > 
+          <table border="1" bordercolor="gray">
+            <tr>
+              <td align ="center">
+                <span style="color: blue"><strong><%=I18n.t('Sistema.Body.Vistas.SolicitudConsultoriaJuridica.Mensajes.recordar_papel')%></strong></span>
+              </td>
+            </tr>
+          </table
+        </div>
+      </td></tr>
+
+  </table>
+
+  <% end %>
+  <br></br>
+</div>

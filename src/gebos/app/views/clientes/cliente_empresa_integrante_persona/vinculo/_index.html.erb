@@ -1,0 +1,55 @@
+<div class="marco-titulo"><div><div>
+      <%= I18n.t('Sistema.Body.Vistas.General.modificando') %> <%= "#{I18n.t('Sistema.Body.General.beneficiario')} #{I18n.t('Sistema.Body.Vistas.General.juridico')}" %> <span class="titulo_modificar">'<%= @empresa.alias %>'</span>
+    </div></div></div>
+
+<%= render :partial=>'clientes/cliente_empresa/common/tabs' %>
+<div class="marco-contenido2">
+
+  <%= form_title_edit @empresa_integrante_tipo.empresa_integrante.persona.nombre_corto %>
+
+  <%= render :partial=>'clientes/cliente_empresa_integrante_persona/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.relacion')} #{I18n.t('Sistema.Body.Vistas.General.con')} #{I18n.t('Sistema.Body.General.cliente_gprotec')}" %></span>
+        </td>
+      </tr>
+      <tr>
+        <td style="width: 20%">
+          <label>¿<%= "#{I18n.t('Sistema.Body.General.es')} #{I18n.t('Sistema.Body.General.beneficiario')}" %>?</label>
+        </td>
+        <td style="width: 80%">
+          <%= format_bool @es_cliente %>
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" colspan="2">
+          <span><%= "#{I18n.t('Sistema.Body.Vistas.General.tambien')} #{I18n.t('Sistema.Body.General.es')} #{I18n.t('Sistema.Body.General.integrante')} #{I18n.t('Sistema.Body.Vistas.General.de')}" %>...</span>
+        </td>
+      </tr>
+    </table>
+    <table style="width: 100%">
+      <% for integrante in @integrante_list %>
+        <tr>
+          <td colspan="2">
+            <%= integrante.empresa_integrante.empresa.nombre %>,
+            <%= integrante.empresa_integrante.empresa.rif %>,
+            <%= integrante.tipo_w %>
+            <% if !integrante.empresa_integrante.cargo.nil? && !integrante.empresa_integrante.cargo.empty?-%>
+              - <%= integrante.empresa_integrante.cargo %>
+            <% end -%>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+      { :controller => 'cliente_empresa_integrante_persona', :action => :index, :popup=>params[:popup], :empresa_id => @empresa.id },
+      { :id=>'button_close' } ) -%>
+  </div>
+
+</div>

@@ -1,0 +1,5 @@
+<%= select(
+  'almacen_maquinaria', 'municipio_id',
+  (@municipio_select.map{|i| [i.nombre, i.id]}),
+  { :prompt=>'Seleccione un Municipio'},
+  { :class=>'select'} ) %>

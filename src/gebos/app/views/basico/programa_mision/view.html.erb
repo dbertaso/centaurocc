@@ -1,0 +1,19 @@
+<% @view = true %>
+<div class="marco-titulo"><div><div>
+	Consultando Programa  <span class="titulo_modificar">'<%= @programa.alias %>'</span>
+</div></div></div>
+
+<%= render :partial=>'basico/programa/common/tabs' %>
+
+<div class="marco-contenido2">
+
+	<div id="list">
+		<%= render :partial=>"list_view"  %>
+	</div>
+		
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :controller => 'programa', :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+
+</div>

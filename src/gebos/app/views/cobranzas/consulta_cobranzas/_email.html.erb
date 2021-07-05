@@ -1,0 +1,30 @@
+<div align="center">
+    <table>
+      <tr  style="width: 100%">
+        <td class="separador" valign="bottom" colspan="3">
+          <span style="text-align: center">
+            <%= "#{I18n.t('Sistema.Body.Vistas.Form.email')}" %>
+          </span>
+        </td>
+      </tr>    
+    </table>
+  <br>
+  <table>
+
+    <tr>
+
+      <td style="text-align: center">
+        <label><%= I18n.t('Sistema.Body.Vistas.Form.texto_correo') %></label>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <%= text_area_tag 'mensaje_email', @texto_correo,
+           :class=>'text', :size=>'60x10', :onkeypress=>'inputChange();'  -%>
+      </td>
+
+    </tr>
+
+  </table>
+</div>

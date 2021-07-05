@@ -1,0 +1,34 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%=I18n.t('Sistema.Body.Vistas.Arrime.Etiquetas.boletas_del_tramite')%><span class="titulo_modificar">
+      </span> &ensp;<label style="color: red">"<%=I18n.t('Sistema.Body.Vistas.Form.nro_tramite')%> <%= @view_boleta_arrime.nro_solicitud unless @view_boleta_arrime.nil? %>"
+        &ensp; "<%=I18n.t('Sistema.Body.Vistas.General.productor')%> <%= @view_boleta_arrime.productor unless @view_boleta_arrime.nil? %>" </label>
+    </div>
+  </div>
+</div>
+<%= render :partial=>'prestamos/boleta_arrime/common/tabs' %>
+
+<div class="marco-contenido2">
+  <div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+  </div>
+
+
+  <div class="marco-boton-in" id="button_new">
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.agregar')),:title=>image_path(I18n.t('Sistema.Body.Controladores.Accion.agregar'))),
+      {:action => :new, :solicitud_id=> params[:solicitud_id],  :popup => params[:popup]}) -%>
+
+  </div>
+
+  <%= error %>
+  <%= message %>
+
+  <div class="lista-form" id="form_new" style="display: none"></div>
+
+  <div id="list">
+    <%= render :partial=>"list" %>
+  </div>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>image_path(I18n.t('Sistema.Body.Vistas.General.cerrar'))),
+    { :controller=> 'arrime', :action => :index }, { :id=>'button_close' } ) -%>
+</div>

@@ -1,0 +1,35 @@
+<% desvio_silo = @desvio_silo if desvio_silo.nil? %>
+<td>
+  <%= desvio_silo.actividad.nombre  %>
+</td>	
+<td>
+  <%= desvio_silo.silo_origen.estado.nombre  %>
+</td>	
+<td>
+  <%= desvio_silo.silo_origen.nombre  %>
+</td>
+<td>
+  <%= desvio_silo.silo_destino.estado.nombre  %>
+</td>
+<td>
+  <%= desvio_silo.silo_destino.nombre  %>
+</td>	
+<td>
+  <%= desvio_silo.numero_acta_desvio  %>
+</td>	
+<td>
+  <%= desvio_silo.nombre_conductor  %>
+</td>	
+<td style="text-align: center">
+  <%= desvio_silo.guia_movilizacion  %>
+</td>
+<td style="text-align: right">
+  <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), :method=>:get,
+    :action => 'edit',  :id => desvio_silo.id, :solicitud_id =>params[:solicitud_id], :actividad_id =>params[:actividad_id], :popup=>params[:popup]) %>&nbsp;
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'desvio_silo', :action => :delete, :id => desvio_silo.id}) if vlink 'delete' -%>
+</td>
+

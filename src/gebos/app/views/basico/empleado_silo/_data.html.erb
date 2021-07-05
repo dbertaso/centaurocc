@@ -1,0 +1,20 @@
+<% empleado_silo = @empleado_silo if empleado_silo.nil? %>
+<td>
+  <%= empleado_silo.cedula.to_s unless empleado_silo.nil? %>
+</td>
+<td>
+  <%= empleado_silo.primer_nombre.to_s unless empleado_silo.nil? %>
+</td>	
+<td>
+  <%= empleado_silo.primer_apellido.to_s unless empleado_silo.nil?%>
+</td>	
+<td style="text-align: right">
+  <%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.modificar'), :title=>I18n.t('Sistema.Body.Vistas.General.modificar')), :action => 'edit',
+    :method => :get, :silo_id => @silo.id, :popup=>params[:popup], :id => empleado_silo.id ) if vlink 'edit' %>
+  <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :confirm =>I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+    :url => {:controller => 'empleado_silo', :action => :delete, :id => empleado_silo.id}) if vlink 'delete' -%>
+</td>
+

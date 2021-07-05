@@ -1,0 +1,34 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      
+      <th style="width: 200px" <%= sort_class_helper('modelo_motor') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.modelo'), 'modelo_motor', 'list' %>
+      </th>
+      <th align="center" style="width: 100px" <%= sort_class_helper('es_propio') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.propio'), 'es_propio', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('sereal') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.serial'), 'sereal', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('cantidad_motores') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.cantidad'), 'cantidad_motores', 'list' %>
+      </th>
+      <th style="width: 100px" <%= sort_class_helper('potencia_f') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Modelos.Motores.Columnas.potencia'), 'potencia_f', 'list' %>
+      </th>
+
+      <th><%= I18n.t('Sistema.Body.Vistas.General.acciones') %></th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    for motores in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :motores => motores, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

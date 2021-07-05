@@ -1,0 +1,24 @@
+<% especie_variedad_pasto= @especie_variedad_pasto if especie_variedad_pasto.nil? %>
+
+<td>
+	<%= especie_variedad_pasto.tipo_pasto_forraje.descripcion  %>
+</td>
+<td>
+	<%= especie_variedad_pasto.descripcion  %>
+</td>	
+	
+
+<td style="text-align: center">
+	<%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+ 	  :method=>:get,
+		:url => {:controller => 'especie_variedad_pasto', :action => :edit, :id => especie_variedad_pasto.id}) if vlink 'edit' -%>&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'especie_variedad_pasto', :action => :delete, :id => especie_variedad_pasto.id}) if vlink 'delete' -%>
+</td>
+

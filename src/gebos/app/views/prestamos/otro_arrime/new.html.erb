@@ -1,0 +1,27 @@
+<div class="marco-titulo">
+  <div>
+    <div>
+      Agregando Boleta de Arrime<span class="titulo_modificar">
+      </span> &ensp;<label style="color: red">"Nro. Tr&aacute;mite <%= @view_boleta_arrime.nro_solicitud unless @view_boleta_arrime.nil? %>"
+        &ensp; "Productor <%= @view_boleta_arrime.productor unless @view_boleta_arrime.nil? %>" </label>
+    </div>
+  </div>
+</div>
+<div id="errorExplanation" class="errorExplanation" style="display: none;text-align: left">
+</div>
+<%= error %>
+<%= message %>
+
+<%= form_remote_tag(
+  :loading =>'image_load()',
+  :loaded => 'image_unload()',
+  :url => { :action => :save_new, :solicitud_id=> params[:solicitud_id], :cliente_id=>@view_boleta_arrime.cliente_id, :popup=>params[:popup] }) do %>
+
+<%= render :partial => 'form' %>
+
+<%= form_buttons_edit :solicitud_id=>params[:solicitud_id], :productor=>@view_boleta_arrime.productor,
+  :nro_solicitud=>@view_boleta_arrime.nro_solicitud, :cliente_id=>@view_boleta_arrime.cliente_id, :actividad_id=>@view_boleta_arrime.actividad_id, :popup=>params[:popup] %>
+
+  <% end %>
+
+

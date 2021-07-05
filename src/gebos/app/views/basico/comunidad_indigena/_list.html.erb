@@ -1,0 +1,35 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+				
+ 			<th style="width: 200px" <%= sort_class_helper('comunidad_indigena.pueblo_indigena') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.ComunidadIndigena.Lista.pueblo'), 'comunidad_indigena.pueblo_indigena', 'list' %>
+ 			</th> 			
+ 			<th style="width: 200px" <%= sort_class_helper('comunidad_indigena.comunidad_indigena') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.ComunidadIndigena.Lista.comunidad'), 'comunidad_indigena.comunidad_indigena', 'list' %>
+ 			</th> 	
+ 			<th style="width: 200px" <%= sort_class_helper('comunidad_indigena.estado_id') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'comunidad_indigena.estado_id', 'list' %>
+ 			</th>
+                        <th style="width: 200px" <%= sort_class_helper('comunidad_indigena.municipio_id') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.municipio'), 'comunidad_indigena.municipio_id', 'list' %>
+ 			</th>
+ 			<th style="width: 200px" <%= sort_class_helper('comunidad_indigena.parroquia_id') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.parroquia'), 'comunidad_indigena.parroquia_id', 'list' %>
+ 			</th>
+ 			<th style="width: 50px">
+                          <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for comunidad_indigena in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :comunidad_indigena => comunidad_indigena, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

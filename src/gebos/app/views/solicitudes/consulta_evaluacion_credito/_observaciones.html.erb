@@ -1,0 +1,12 @@
+<div style="text-align: justify">
+  <div class="marco-titulo"><div><div>Observaciones de la solicitud</div></div></div>
+
+  <%= @solicitud.comentario_directorio %>
+  <br/><br/>
+  <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+        :loading =>'image_load()',
+        :loaded => 'image_unload()',
+        :method=>:get,
+        :url => {:action => :cerrar_observaciones, :id => @solicitud.id}) -%>
+  <br/><br/>
+</div>

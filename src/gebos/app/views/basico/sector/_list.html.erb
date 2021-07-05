@@ -1,0 +1,31 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 170px" <%= sort_class_helper('sector.codigo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.codigo'), 'sector.codigo', 'list' %>
+      </th>
+      <th style="width: 170px" <%= sort_class_helper('sector.nombre') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.nombre'), 'sector.nombre', 'list' %>
+      </th>
+      <th style="width: 480px" <%= sort_class_helper('sector.descripcion') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.General.descripcion'), 'sector.descripcion', 'list' %>
+      </th>
+      <th style="width: 80px" <%= sort_class_helper('sector.activo') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'sector.activo', 'list' %>
+      </th>
+      <th style="width: 50px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%
+    even_odd = 1
+    logger.info "list in list #{@list.inspect}"
+    for sector in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :sector => sector, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+<%= form_pagination %>

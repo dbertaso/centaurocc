@@ -1,0 +1,23 @@
+<% @view = true %>
+<div class="marco-titulo">
+  <div>
+    <div>
+      <%= I18n.t('Sistema.Body.Vistas.TasaValor.Header.form_title_consultar')%> <span style="color: #FF0000">'<%= @tasa.nombre %>'</span>
+    </div>
+  </div>
+</div>
+
+<%= render 'basico/tasa/common/tabs' %>
+
+<div class="marco-contenido2">
+
+  <div id="list">
+    <%= render "list_view"  %>
+  </div>
+
+  <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+    { :controller => 'tasa', :action => :index },
+    { :id=>'button_close' } ) -%>
+
+
+</div>

@@ -1,0 +1,181 @@
+<style type="text/css">
+  .decision_comite_aprobado{ color: #0B0B61; font-size:9px;  }
+  .decision_comite_rechazado{ color:#D50000; font-size:9px; }
+  .decision_comite_diferido{ color:#ff6000; font-size:9px; }
+</style>
+
+<div class="marco-contenido" style=" background-color:#FFFFFF; border-bottom: 0px; ">
+  <br/>
+  <div style="margin-left: 4px;">
+    <label><%="#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.sesion')}"%> / <%=I18n.t('Sistema.Body.Vistas.General.instancia')%>:</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <label style="color:#565656; font-size:12px"><b><i><%=@nro_instancia%></i></b></label>
+  </div>
+  <br/>
+</div>
+<div class="marco-contenido">
+  <% if @list.length > 0 %>
+    <form id="form_solicitud_comite_estadal">
+      <table class="lista" style="width: 100%">
+        <thead>
+          <tr>
+            <th colspan="10"><%= "#{I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda')}: #{@moneda.nombre}" %></th>
+          </tr>
+          <tr>
+            <th width="110px"><%=I18n.t('Sistema.Body.Vistas.General.estado')%></th>
+            <th width="150px"><%=I18n.t('Sistema.Body.Vistas.General.sector')%></th>
+            <th width="150px"><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></th>
+            <th width="150px"><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></th>
+            <th width="30px"><span class="decision_comite_aprobado"><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></span></th>
+            <th width="70px"><span class="decision_comite_aprobado"><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></span></th>
+            <th width="30px"><span class="decision_comite_rechazado"><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.General.rechazado')%></span></th>
+            <th width="70px"><span class="decision_comite_rechazado"><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.General.rechazado')%></span></th>
+            <th width="30px"><span class="decision_comite_diferido"><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.General.diferido')%></span></th>
+            <th width="70px"><span class="decision_comite_diferido"><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.General.diferido')%></span></th>
+          </tr>
+        </thead>
+
+        <tbody id="list-body">
+          <%
+          @total_aprobadas =0
+          @total_rechazadas=0
+          @total_diferidas =0
+          @monto_aprobadas =0
+          @monto_rechazadas=0
+          @monto_diferidas =0
+          even_odd = 1
+          for solicitud in @list
+            even_odd = 1 - even_odd
+          %>
+            <%=  render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+          <% end %>
+        </tbody>
+
+        <tr style=" background-color:#BDBDBD; ">
+          <th colspan="4"><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.totales')).upcase%></th>
+          <th width="100px"><%=@total_aprobadas if @total_aprobadas!=0%></th>
+          <th width="100px" align="right">
+            <%=format_fm(@monto_aprobadas) if @monto_aprobadas!=0%>
+          </th>
+          <th width="100px"><%=@total_rechazadas if @total_rechazadas!=0%></th>
+          <th width="100px" align="right">
+            <%=format_fm(@monto_rechazadas) if @monto_rechazadas!=0%>
+          </th>
+          <th width="100px"><%=@total_diferidas if @total_diferidas!=0%></th>
+          <th width="100px" align="right">
+            <%=format_fm(@monto_diferidas) if @monto_diferidas!=0%>
+          </th>
+        </tr>
+      </table>
+  <%#= form_pagination %>
+    </form>
+    <br/>
+  <% end %>
+
+  <% tadas_moneda = Moneda.find(:all, :conditions => "id <> #{ParametroGeneral.first.moneda_id}", :order => "nombre")
+  tadas_moneda.each{|moneda|
+    sql="select 
+  distinct sector.id as sector_id,sector.nombre as sector_nombre,
+  sub_sector.id as subsector_id,sub_sector.nombre as subsector_nombre,
+  rubro.id as rubro_id,rubro.nombre as rubro_nombre,
+  estado.id as estado_id,estado.nombre as estado_nombre
+  from 
+  comite_decision_historico cdh
+  inner join solicitud on solicitud.id=cdh.solicitud_id
+  inner join oficina on solicitud.oficina_id=oficina.id
+  inner join ciudad on ciudad.id=oficina.ciudad_id
+  inner join estado on estado.id=ciudad.estado_id
+  inner join rubro on rubro.id=solicitud.rubro_id
+  inner join sector on sector.id=solicitud.sector_id
+  inner join sub_sector on sub_sector.id=solicitud.sub_sector_id
+  where
+  cdh.decision is not null and solicitud.moneda_id = #{moneda.id}
+  and cdh.tipo_comite='#{@tipo_comite}'
+  and cdh.comite_id=#{@comite_id}
+  #{@conditions}
+  union
+  select 
+  distinct sector.id as sector_id,sector.nombre as sector_nombre,
+  sub_sector.id as subsector_id,sub_sector.nombre as subsector_nombre,
+  rubro.id as rubro_id,rubro.nombre as rubro_nombre,
+  estado.id as estado_id,estado.nombre as estado_nombre
+  from
+  comite_decision_historico_total cdht
+  inner join solicitud on solicitud.id=cdht.solicitud_id
+  inner join oficina on solicitud.oficina_id=oficina.id
+  inner join ciudad on ciudad.id=oficina.ciudad_id
+  inner join estado on estado.id=ciudad.estado_id
+  inner join rubro on rubro.id=solicitud.rubro_id
+  inner join sector on sector.id=solicitud.sector_id
+  inner join sub_sector on sub_sector.id=solicitud.sub_sector_id
+  where
+  cdht.decision is not null and solicitud.moneda_id = #{moneda.id}
+  and cdht.tipo_comite='#{@tipo_comite}'
+  and cdht.comite_id=#{@comite_id}
+  #{@conditions}
+  order by 
+  sector_nombre asc, subsector_nombre asc, rubro_nombre asc
+    " 
+    cdh=ComiteDecisionHistorico.find_by_sql(sql) %>
+
+    <% if cdh.length > 0 %>
+
+
+      <form id="form_solicitud_comite_estadal">
+        <table class="lista" style="width: 100%">
+          <thead>
+            <tr>
+              <th colspan="10"><%= "#{I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda')}: #{moneda.nombre}" %></th>
+            </tr>
+            <tr>
+              <th width="110px"><%=I18n.t('Sistema.Body.Vistas.General.estado')%></th>
+              <th width="150px"><%=I18n.t('Sistema.Body.Vistas.General.sector')%></th>
+              <th width="150px"><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></th>
+              <th width="150px"><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></th>
+              <th width="30px"><span class="decision_comite_aprobado"><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></span></th>
+              <th width="70px"><span class="decision_comite_aprobado"><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></span></th>
+              <th width="30px"><span class="decision_comite_rechazado"><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.General.rechazado')%></span></th>
+              <th width="70px"><span class="decision_comite_rechazado"><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.General.rechazado')%></span></th>
+              <th width="30px"><span class="decision_comite_diferido"><%=I18n.t('Sistema.Body.Vistas.General.cantidad')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.General.diferido')%></span></th>
+              <th width="70px"><span class="decision_comite_diferido"><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Modelos.Errores.tramites')%> <%=I18n.t('Sistema.Body.General.diferido')%></span></th>
+            </tr>
+          </thead>
+
+          <tbody id="list-body">
+            <%
+            @total_aprobadas =0
+            @total_rechazadas=0
+            @total_diferidas =0
+            @monto_aprobadas =0
+            @monto_rechazadas=0
+            @monto_diferidas =0
+            even_odd = 1
+            for sol in cdh
+              even_odd = 1 - even_odd
+            %>
+              <%=  render :partial => 'row', :locals => { :solicitud => sol, :even_odd => even_odd } -%>
+            <% end %>
+          </tbody>
+
+          <tr style=" background-color:#BDBDBD; ">
+            <th colspan="4"><%=(I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.totales')).upcase%></th>
+            <th width="100px"><%=@total_aprobadas if @total_aprobadas!=0%></th>
+            <th width="100px" align="right">
+              <%=format_fm(@monto_aprobadas) if @monto_aprobadas!=0%>
+            </th>
+            <th width="100px"><%=@total_rechazadas if @total_rechazadas!=0%></th>
+            <th width="100px" align="right">
+              <%=format_fm(@monto_rechazadas) if @monto_rechazadas!=0%>
+            </th>
+            <th width="100px"><%=@total_diferidas if @total_diferidas!=0%></th>
+            <th width="100px" align="right">
+              <%=format_fm(@monto_diferidas) if @monto_diferidas!=0%>
+            </th>
+          </tr>
+        </table>
+    <%#= form_pagination %>
+      </form>
+    <br/>
+    <% end
+    } %>
+</div>

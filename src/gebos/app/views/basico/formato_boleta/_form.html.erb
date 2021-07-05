@@ -1,0 +1,70 @@
+<script language="javascript">varEnviado = false;</script>
+<table style="width: 100%">
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.sector')%></label><label style="color:red"> (*)</label></td>
+    <td>
+      <% sector_onchange = remote_function(
+        :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+        :url=>{:controller=>'formato_boleta',
+          :action=>:sector_change },
+        :with=>"'sector_id='+value") %>
+      <%= select(
+        'formato_boleta','sector_id',
+        @sector_list.map{|i| [i.nombre, i.id]},
+        {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+        { :class=>'select', :onchange=>sector_onchange+';inputChange();' } ) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.sub_sector')%></label><label style="color:red"> (*)</label></td>
+    <td>
+      <span id="sub-sector-search">
+        <%= render :partial=>'sub_sector_search' %>
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.rubro')%></label><label style="color:red"> (*)</label></td>
+    <td>
+      <span id="rubro-search">
+        <%= render :partial=>'rubro_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.sub_rubro')%> </label><label style="color:red"> (*)</label></td>
+    <td>
+      <span id="sub-rubro-search">
+        <%= render :partial=>'sub_rubro_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px"><label><%=I18n.t('Sistema.Body.Vistas.General.actividad')%></label><label style="color:red"> (*)</label></td>
+    <td>
+      <span id="actividad-search">
+        <%= render :partial=>'actividad_search' %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 200px">
+      <label><%=I18n.t('Sistema.Body.Vistas.FormatoBoleta.Etiquetas.formato_boleta')%></label>
+    </td>
+    <td style="width: 620px">
+      <%= text_field 'formato_boleta', 'formato_operacion', :class=>'text', :style=>'width: 500px', :maxlength=>'250', 
+        :onChange=>'pal=this.form.formato_boleta_formato_operacion.value; this.form.formato_boleta_formato_operacion.value=(pal.trim());'  -%>
+    </td>
+  </tr>
+  <tr>
+    <td><label> <%= I18n.t('Sistema.Body.Vistas.General.activo') %></label></td>
+    <td>
+      <%= check_box 'formato_boleta', 'status', :checked_value=>"1", :unchecked_value=>"0" -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left">
+      <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :title=> I18n.t('Sistema.Body.Vistas.General.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>
+

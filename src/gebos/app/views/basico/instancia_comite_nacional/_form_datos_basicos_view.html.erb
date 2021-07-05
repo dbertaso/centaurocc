@@ -1,0 +1,60 @@
+<table>
+  <tr>
+    <td style="width: 100px"><label><%=I18n.t('Sistema.Body.Vistas.General.nro') << " " << I18n.t('Sistema.Body.Vistas.General.sesion')%></label></td>
+    <td style="width: 620px">
+      <div id='nro_comite'><b><%=@comite.numero-%></b></div>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Modelos.ItemAtributo.Tipo.fecha')%></label></td>
+    <td>
+      <%= text_field 'comite', 'fecha_apertura_f',
+        :class=>'text', :style=>'width: 80px',:readonly=>true,
+        :maxlength=>'10'
+      -%>&nbsp;<%=I18n.t('Sistema.Body.General.formato_fecha')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.hora')%></label></td>
+    <td>
+      <%= text_field 'comite', 'hora_apertura', :class=>'text',:readonly=>true, :style=>'width: 20px', :maxlength=>'2' -%>:
+      <%= text_field 'comite', 'minuto_apertura', :class=>'text',:readonly=>true, :style=>'width: 20px', :maxlength=>'2' -%>
+      <%=select('comite', 'meridiano_apertura',
+      @meridiano.map{|e| [e, e]},
+      { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+      {:class=>'select', :onchange=>'inputChange();',:disabled=>true } )%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td valign="top"><label><%=I18n.t('Sistema.Body.Vistas.General.lugar')%></label></td>
+    <td>
+      <%= text_area 'comite', 'lugar',
+        :class=>'text',
+        :readonly=>true,
+        :style=>'width: 350px; height: 40px',      
+        :onKeyUp=>'textCounter(this,250)'
+      -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top"><label><%=I18n.t('Sistema.Body.General.direccion')%></label></td>
+    <td>
+      <%= text_area 'comite', 'direccion',
+        :class=>'text',
+        :readonly=>true,
+        :style=>'width: 350px; height: 60px',
+        :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+
+</table>
+
+<br/>
+
+<div id="list-miembro">
+  <%= render :partial => 'list_miembro_view' -%>
+</div>

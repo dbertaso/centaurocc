@@ -1,0 +1,180 @@
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.avaluo_institucion')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluo.Errores.nombre_perito')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_mobiliario', 'nombre_perito',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.fecha_avaluo_mobiliario')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "solicitud_avaluo_mobiliario[fecha_avaluo_mobiliario_f]", @solicitud_avaluo_mobiliario.fecha_avaluo_mobiliario_f, 
+        :year_range => 110.years.ago..-1.years.ago, :class=>'text', :style=>'width: 80px', :maxlength=>'10', 
+        :onkeypress=>'inputChange();', :valid_date_check => "date-1 < (new Date()).stripTime()", :onchange=>'inputChange();' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_sudeban')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_mobiliario', 'numero_sudeban_mobiliario',
+        :class=>'text', :style=>'width: 100px',
+        :maxlength=>'20', :onkeypress=>'inputChange();',
+        :onchange=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.valor_avaluo')%></label> <label style="color: red"> (*)</label>
+    </td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario', 'valor_avaluo_mobiliario_f',
+        :class=>'text', :style=>'width: 100px', :maxlength=>'16',
+        :onchange=>'inputChange();',
+        :onkeyup=>"inputChange(); formatCurrency(this.value, 'solicitud_avaluo_mobiliario_valor_avaluo_mobiliario'); "  -%>
+      <%= display_number @solicitud_avaluo_mobiliario.valor_avaluo_mobiliario, 'solicitud_avaluo_mobiliario_valor_avaluo_mobiliario' %> &emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+    </td>
+  </tr>
+</table>
+
+<div id="mobiliaria">
+  <%= render :partial => 'mobiliaria_tipo_mobiliario' %>
+</div>
+
+<table style="width: 100%">
+
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.documento_oferta')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.tipo_documento_oferta')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= radio_button 'solicitud_avaluo_mobiliario', 'tipo_documento', 'P',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.presupuesto')%><br/>
+      <%= radio_button 'solicitud_avaluo_mobiliario', 'tipo_documento', 'C',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.cotizacion')%><br/>
+      <%= radio_button 'solicitud_avaluo_mobiliario', 'tipo_documento', 'F',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.factura_proforma')%><br/>
+      <%= radio_button 'solicitud_avaluo_mobiliario', 'tipo_documento', 'N',
+        :class=>'text', :onclick=>'inputChange();'  -%><%=I18n.t('Sistema.Body.General.no_aplica')%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario', 'referencia_documento',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluoMobiliario.Errores.fecha_documento')%></label>
+    </td>
+    <td>
+      <%= calendar_date_select_tag "solicitud_avaluo_mobiliario[fecha_documento_f]", @solicitud_avaluo_mobiliario.fecha_documento_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text', :style=>'width: 80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.empresa_documento')%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario', 'empresa_documento',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%="#{I18n.t('Sistema.Body.Vistas.General.rif')} #{I18n.t('Sistema.Body.Vistas.General.empresa')}"%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario', 'rif_empresa_documento',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'12', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+</table>
+
+<div id="documento">
+  <%= render :partial => 'mobiliaria_tipo_documento' %>
+</div>
+
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.documento_definitivo')%></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 20%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label>
+    </td>
+    <td style="width: 80%">
+      <%= text_field 'solicitud_avaluo_mobiliario', 'referencia_definitivo',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'20', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_factura')%></label></td>
+    <td>
+      <%= calendar_date_select_tag "solicitud_avaluo_mobiliario[fecha_factura_f]", @solicitud_avaluo_mobiliario.fecha_factura_f, 
+        :year_range => 110.years.ago..-1.years.ago,:class=>'text', :style=>'width: 80px',:maxlength=>'10', 
+        :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.empresa_factura')%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario', 'empresa_factura',
+        :class=>'text',
+        :style=>'width: 300px',
+        :maxlength=>'100', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td><label><%="#{I18n.t('Sistema.Body.Vistas.General.rif')} #{I18n.t('Sistema.Body.Vistas.General.empresa')}"%></label></td>
+    <td>
+      <%= text_field 'solicitud_avaluo_mobiliario', 'rif_empresa_difinitivo',
+        :class=>'text',
+        :style=>'width: 200px',
+        :maxlength=>'12', :onkeypress=>'inputChange();'  -%>
+    </td>
+  </tr>
+
+</table>

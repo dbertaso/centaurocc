@@ -1,0 +1,105 @@
+
+<tr>
+  <td>
+    <label><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.realizo_abono_deuda')%></label>
+  </td>
+  <td>
+    <input id="check_abono" type="checkbox" value="true" name="check_abono" checked="checked" onclick="datos_abono(this);"/>
+  </td>
+  <td  align=left></td>
+</tr>
+
+<script>
+  function datos_abono(check){
+    if(check.checked == true){
+      document.getElementById("div_datos_abono").style.display='table-row';
+    }else{
+      document.getElementById("reestructuracion_referencia_abono").value = '';
+      document.getElementById("reestructuracion_monto_abono").value = '';
+      document.getElementById("reestructuracion_fecha_abono").value = '';
+      document.getElementById("div_datos_abono").style.display='none';
+    }
+  }
+</script>
+
+<tr id="div_datos_abono">
+  <td colspan=3 align="center" width="100%">
+    <table style="background-color:white" width="50%">
+
+
+      <tr>
+        <td align="right"><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.entidad_financiera')%></td>
+        <td style="width: 60px" colspan="4">
+          <% entidad_onchange = remote_function(
+              :loading =>'image_load()',
+              :loaded => 'image_unload()',
+              :method => :get,
+              :url=>{:controller=>'reestructuracion_comite',
+              :action=>:entidad_change,},
+              :with=>"'entidad='+value" ) %>
+
+          <%= select( 'reestructuracion', 'entidad_financiera_id',
+            @entidad_financiera_cheque.map{|i| [i.nombre, i.id]},
+            {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+            { :class=>'select', :onchange=>entidad_onchange}) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <%= t('Sistema.Body.Vistas.ConsultaPrestamoFactura.Etiquetas.cuenta_recaudadora')%>
+        </td>
+        <td>
+          <span id="cuentas_recaudadoras">
+              <%= render :partial => 'cuenta_recaudadora' %>
+          </span>
+
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.numero_referencia')%></td>
+        <td  align=left >
+          <div style="width:50%;">
+            <%= text_field 'reestructuracion', 'referencia_abono',
+              :class=>'text', :style=>'width: 80px',
+              :maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();'  -%>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><%=I18n.t('Sistema.Body.Vistas.General.monto_abono')%></td>
+        <td  align=left>
+          <%= text_field 'reestructuracion', 'monto_abono',
+            :class=>'text', :style=>'width: 100px', :maxlength=>'14',
+            :onkeypress=>'inputChange()',
+            :onfocus=>'monto_campo = this.value',
+            :onchange=>"inputChange();",
+            :onkeyup=>"formatCurrency(this.value, 'monto_abono');"  -%>
+          <%= display_number 0, 'monto_abono' %>
+        </td>
+      </tr>
+      <tr>
+        <td align="right"><%=I18n.t('Sistema.Body.Vistas.General.fecha_abono')%></td>
+        <td  align=left >
+<%#= text_field 'reestructuracion', 'fecha_abono',
+:class=>'text', :style=>'width: 80px',
+:maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();'  -%>
+<%#= calendar 'reestructuracion_fecha_abono', 'calendar_reestructuracion_fecha_abono' %><%#= I18n.t('Sistema.Body.General.formato_fecha')%> 
+
+          <%#= calendar_date_select_tag "reestructuracion[fecha_abono]", @reestructuracion.fecha_abono, 
+            :year_range => 110.years.ago..-1.years.ago,:class=>'text',:style=>'width:80px',:maxlength=>'10', 
+            :onkeypress=>'inputChange();',:valid_date_check => "date-1 < (new Date()).stripTime()",:onchange=>'inputChange();' %> <%#=I18n.t('Sistema.Body.Vistas.VisitaPastizalesPotreros.Etiquetas.ejemplo_fecha')%>
+       <%= calendar_date_select 'reestructuracion', 'fecha_abono',
+              :year_range => 110.years.ago..-1.years.ago, :class=>'text',
+              :style=>'width:80px', :maxlength=>'10',
+              :onkeypress=>'inputChange();', :onchange=>'inputChange();' %> &nbsp; <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+        </td>
+      </tr>
+    </table>
+  </td>
+<tr>
+
+
+
+
+

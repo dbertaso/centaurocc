@@ -1,0 +1,35 @@
+<script type="text/javascript">
+
+  function cerrar()
+  {
+    window.close();
+  }
+
+</script>
+<% @view = true %>
+<div class="marco-titulo"><div><div>
+	<%= I18n.t('Sistema.Body.Vistas.General.consultando') %> <%= "#{I18n.t('Sistema.Body.General.beneficiario')} #{I18n.t('Sistema.Body.General.natural')}" %> <span class="titulo_modificar">'<%= @persona.nombre_corto %>'</span>
+</div></div></div>
+
+<%= render :partial=>'clientes/cliente_persona/common/tabs' %>
+<div class="marco-contenido2">
+
+	<div class="marco-titulo"><div><div>
+		<%= "#{I18n.t('Sistema.Body.Vistas.General.consultando')} #{I18n.t('Sistema.Body.Vistas.General.ubicacion')}" %> <span class="titulo_modificar">'<%= @persona_direccion.tipo_nombre %>'</span>
+	</div></div></div>
+
+	<%= render :partial=>'clientes/cliente_persona_direccion/common/tabs' %>
+	<div class="marco-contenido2">
+
+	<div id="list">
+		<%= render :partial=>"list_view"  %>
+	</div>
+<% unless params[:popup] == 'true' %>
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :controller => 'cliente_persona_direccion', :action => :view, :persona_id => @persona.id, :popup=>params[:popup]  },
+		{ :id=>'button_close' } ) -%>
+<% else %>
+      <%= image_tag(I18n.t('Sistema.Body.Imagenes.cerrar'),:title=>'Agregar', :onclick=>"javascript:cerrar();", :OnMouseOver=>"style.cursor='pointer'" ) %>
+    <% end %>
+
+</div>

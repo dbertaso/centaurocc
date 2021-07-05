@@ -1,0 +1,22 @@
+<script type="text/javascript">
+  varEnviado= false;
+</script>
+<table>
+  <tr>
+    <td>
+      <label>
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.modalidad')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}" %>:
+      </label>
+      <label title="<%=I18n.t('Sistema.Body.Vistas.General.obligatorio')%>" class="requerido"> (*) </label>
+      </td>
+    <td>
+    <%= select(
+      'modalidad_financiamiento', 'id',
+      @modalidad_financiamiento_select.map{|e| [e.nombre, e.id]},
+      { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+      { :class=>'select'} ) %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="lista0" style="text-align: right">
+      <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

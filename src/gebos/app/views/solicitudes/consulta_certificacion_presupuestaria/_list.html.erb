@@ -1,0 +1,89 @@
+<br>
+<div>
+
+  <%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.aplicar')) -%>
+  <input id="cuenta_id1" type="hidden" name="cuenta_id1"/>
+  <input id="cuenta_id2" type="hidden" name="cuenta_id2"/>
+  <input id="cuenta_id" type="hidden" name="cuenta_id"/>
+
+</div>
+<br>
+
+<form>
+  <table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+
+        <th style="width: 2%"  align="center" >
+          <input type="checkbox" id="todos" name="todos"
+                 onClick="checkAll(form.solicitud_id,form.todos);" />
+        </th>
+
+        <th style="width: 5%"  <%= sort_class_helper('numero') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.nro_tramite'), 'numero', 'list' %>
+        </th>
+
+        <th style="width: 5%" <%= sort_class_helper('productor') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.General.beneficiario')}", 'productor', 'list' %>
+        </th>
+
+        <th style="width: 5%" <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+        </th>
+
+
+      <th  <%= sort_class_helper('estado') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.estado'), 'estado', 'list' %>
+      </th>
+
+        <th style="width: 5%" <%= sort_class_helper('programa') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.programa'), 'programa', 'list' %>
+        </th>
+
+      <th <%= sort_class_helper('sector') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sector'), 'sector', 'list' %>
+      </th>
+
+      <th  <%= sort_class_helper('sub_sector') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_sector'), 'sub_sector', 'list' %>
+      </th>
+
+      <th <%= sort_class_helper('rubro') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro', 'list' %>
+      </th>
+
+      <th <%= sort_class_helper('sub_rubro') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.sub_rubro'), 'sub_rubro', 'list' %>
+      </th>
+
+
+        <th style="width: 4%" <%= sort_class_helper('actividad') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.actividad'), 'actividad', 'list' %>
+        </th>
+        
+        <th style="width: 4%">
+          <%= I18n.t('Sistema.Body.Modelos.Programa.Columnas.moneda') %>
+        </th>
+
+        <th style="width: 4%" <%= sort_class_helper('monto_tramite') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.monto')} #{I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b')}", 'monto_tramite', 'list' %>
+        </th>
+
+        <th style="width: 5%" <%= sort_class_helper('disponibilidad') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.disponibilidad')}", 'disponibilidad', 'list' %> 
+        </th>
+
+    </tr>
+  </thead>
+  <tbody id="list-body">
+    <%
+    even_odd = 1
+    for solicitud in @list
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row', :locals => { :solicitud => solicitud, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>
+

@@ -1,0 +1,35 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+<div class="marco-contenido-2">
+  <%= form_title_search %>
+
+  <div id="error">
+      <table>
+        <tr>
+        <td>
+          <label alin="center" style="color:red;font-style:oblique;font-bold:true;font-size:20px">
+             <%=  I18n.t('Sistema.Body.General.ocurrio_error')%>:
+          </label>
+        </td>
+        </tr>
+        <tr>
+        </tr>
+      </table>
+
+      <div>
+        <ul>
+          <%=@mensaje.html_safe%>
+        </ul>
+      </div>
+    
+    <br><br>
+
+
+    <%= link_to(I18n.t('Sistema.Body.Menu.menu882'),
+        { :action => :index},
+        { :id=>'button_close',:class=>'myButton'} ) -%>
+  </div>
+
+</div>

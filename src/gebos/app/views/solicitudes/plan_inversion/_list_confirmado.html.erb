@@ -1,0 +1,46 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th colspan="7">
+        <%= "#{I18n.t('Sistema.Body.Vistas.General.maquinaria_equipos_implementos')} #{I18n.t('Sistema.Body.Vistas.General.confirmadas')}" %>
+      </th>
+    </tr>
+
+    <tr>
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.rubro') %>
+      </th>
+
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.tipo') %>
+      </th>
+
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.marca') %>
+      </th>
+
+      <th style="width: 20%">
+        <%= I18n.t('Sistema.Body.Vistas.General.modelo') %>
+      </th>
+
+      <th style="width: 10; text-align: center">
+        <%= I18n.t('Sistema.Body.Vistas.Form.estatus') %>
+      </th>
+
+      <th style="width: 5%">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+
+  </thead>
+  <tbody id="list-body">
+    <%
+    even_odd = 1
+    for solicitud in @solicitud_maquinaria_confirmado
+      even_odd = 1 - even_odd %>
+      <%= render :partial => 'row_confirmado', :locals => { :solicitud_maquinaria => solicitud, :even_odd => even_odd } -%>
+    <% end %>
+  </tbody>
+</table>
+
+<br/>

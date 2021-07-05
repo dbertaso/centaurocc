@@ -1,0 +1,27 @@
+<div class="marco-contenido">
+<br>
+	<%= @feedback %>
+	<p align="center" style="width: 90%"><font size="4"><b>Archivo generado con éxito</b></font</p>
+<br>	
+	<table class="lista" style="width: 90%">
+		<tr>
+			<th><label>Banco</label</th>
+			<th><label>Tipo de <%= Etiquetas.etiqueta(9) %></label></th>
+			<th><label>Cuenta Matriz</label</th>
+			<th><label>Cantidad</label</th>
+			<th><label>Monto</label</th>
+			<th><label></label</th>
+		</tr>
+	<% @resultado.each {|lista|%>
+		<%= lista %>
+	<% } %>
+	</table>
+	
+	<br>
+	
+	<p align="center" style="width: 80%"><%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+				{ :action => :index },
+				{ :id=>'button_close',
+				  :confirm => "¿Seguro desea cerrar esta ventana?" } ) -%></p>
+	
+</div>

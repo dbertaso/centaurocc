@@ -1,0 +1,26 @@
+<% condiciones_financiamiento = CondicionesFinanciamiento.find(params[:id])
+logger.debug condiciones_financiamiento.inspect %>
+<%= form_title_edit condiciones_financiamiento.rubro.codigo.to_s << ' - ' << condiciones_financiamiento.rubro.nombre %>
+
+<div class="marco-contenido2">
+
+  <%= error %>
+  <%= message %>
+
+  <%= form_remote_tag(
+    :loading =>'image_load()',
+    :loaded => 'image_unload()',
+    :url => { :action => :save_edit, :id=>condiciones_financiamiento.id } ) do -%>
+    
+    <%= render 'form' %>
+
+    <div id="buttons_edit" style="display: none">
+      <%= form_buttons_edit %>
+    </div>
+
+    <%= link_to( image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar'))),
+      { :action => :index },
+      { :id=>'button_close' } ) -%>
+
+  <% end -%>
+</div>

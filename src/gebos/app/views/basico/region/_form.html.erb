@@ -1,0 +1,30 @@
+<script language="javascript">varEnviado = false;</script>
+<table>
+	
+	<tr>
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.pais')%></label> <label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= select(
+		  'region', 'pais_id',
+		  @pais.map{|e| [e.nombre, e.id]},
+		  { :prompt => I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+		  { :class=>'select', :onchange=>'inputChange();' } ) %>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td style="width: 60px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.nombre')%></label>
+			<label style="color:red"><%=I18n.t('Sistema.Body.Vistas.Form.asterisco')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'region', 'nombre', :class=>'text', :style=>'width: 240px', :maxlength=>'40'  -%>
+                         
+		</td>
+	</tr>	
+	<tr>
+		<td colspan="2" style="text-align: right">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save') -%>&nbsp;

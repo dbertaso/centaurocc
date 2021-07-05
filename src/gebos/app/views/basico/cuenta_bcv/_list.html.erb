@@ -1,0 +1,30 @@
+	<table class="lista" style="width: 100%">
+		<thead>
+		<tr>
+			<th style="width: 160px" <%= sort_class_helper('entidad_financiera.nombre') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Controladores.EntidadFinanciera.FormTitles.form_title_record'), 'entidad_financiera.nombre', 'list' %>
+ 			</th>
+			<th style="width: 160px" <%= sort_class_helper('numero') %>>
+				<%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.numero') << " " << I18n.t('Sistema.Body.Vistas.General.de') << " " << I18n.t('Sistema.Body.Vistas.General.cuenta'), 'numero', 'list' %>
+ 			</th>
+      <th <%= sort_class_helper('recaudador') %>>
+        <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.recaudadora'), 'recaudador', 'list'%>
+      </th>
+			<th style="width: 160px" <%= sort_class_helper('activo') %>>
+				<%=  sort_link_helper I18n.t('Sistema.Body.Vistas.General.activo'), 'activo', 'list' %>
+ 			</th>
+ 			<th style="width: 10px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones')%>
+ 			</th>
+		</tr>		
+		</thead>
+		<tbody id="list_body">
+<%  
+	even_odd = 1
+	for cuenta_bcv in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :cuenta_bcv => cuenta_bcv, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+<%= form_pagination %>

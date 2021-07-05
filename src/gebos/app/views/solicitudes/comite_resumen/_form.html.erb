@@ -1,0 +1,199 @@
+<script LANGUAGE="JavaScript">
+function formatCurrency(num, name) {
+   
+    num = num.toString().replace(/\$|\,/g,'.');
+
+    if(isNaN(num))
+        num = "0";
+
+    sign = (num == (num = Math.abs(num)));
+    num = Math.floor(num*100+0.50000000001);
+    cents = num%100;
+    num = Math.floor(num/100).toString();
+
+    if(cents<10)
+        cents = "0" + cents;
+
+    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+        num = num.substring(0,num.length-(4*i+3))+'.'+
+        num.substring(num.length-(4*i+3));
+        
+    numero = (((sign)?'':'-') + num + ',' + cents);
+    $(name + '_display').innerHTML = numero;
+    
+}
+</script>
+<table style="width: 100%">
+      <tr><td class="separador" valign="bottom" colspan="3">
+			    			<span>
+	  <table style="width: 100%">
+            <tr>
+              <td>
+              <%=I18n.t('Sistema.Body.Vistas.General.evaluando')%> <%=I18n.t('Sistema.Body.Vistas.General.solicitud')%> .....
+              </td>
+              <td align='right'>
+            
+
+              </td>
+            </tr>
+          </table></span>
+                           
+			    		</td></tr>
+	
+      
+         
+
+        
+           <tr>
+		<td style="width: 320px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.decision')%></label>
+		</td>
+		<td style="width: 620px">
+			<table style="width: 100%">
+   	                     <tr>
+   				<td style="width: 50%">
+ 					  <%= radio_button 'solicitud', 'pre_visado', '2', :class=>'text', :onclick=>'inputChange();'  -%> &nbsp <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%> 
+   				</td>	
+   	                     </tr>
+                              <tr>
+   				<td style="width: 50%">
+ 					 <%= radio_button 'solicitud', 'pre_visado', '2', :class=>'text', :onclick=>'inputChange();'  -%> &nbsp <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%> <%=I18n.t('Sistema.Body.Vistas.General.condicionado')%> 
+   				</td>
+   	                     </tr>
+                                 <tr>
+   				<td style="width: 50%">
+ 					<%= radio_button 'solicitud', 'pre_visado', '2', :class=>'text', :onclick=>'inputChange();'  -%> &nbsp <%=I18n.t('Sistema.Body.General.rechazado')%> 
+   				</td>
+   	                     </tr>
+                             <tr>
+   				<td style="width: 50%">
+ 					<%= radio_button 'solicitud', 'pre_visado', '2', :class=>'text', :onclick=>'inputChange();'  -%> &nbsp <%=I18n.t('Sistema.Body.General.diferido')%> 
+   				</td>
+   	                     </tr>
+                        </table>
+                    
+                      
+		</td>
+	</tr>
+         <tr>
+             <td class="separador" valign="bottom" colspan="3">
+	       <span><%=I18n.t('Sistema.Body.Vistas.General.datos_basicos')%></span>
+	     </td>
+         </tr>
+        <tr>
+		<td style="width: 320px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.firma')%> <%=I18n.t('Sistema.Body.General.delegada')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= "32/2009" -%>
+                      
+		</td>
+	</tr>
+           <tr>
+		<td style="width: 320px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.resolución')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'solicitud', 'unidades_actuales', :class=>'text', :style=>'width: 100px', :maxlength=>'18',  :onkeypress=>'inputChange();'  -%>
+                      
+		</td>
+	</tr>
+           <tr>
+		<td style="width: 320px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.monto_solicitado')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= "0.000.000,00 Bs." -%>
+                      
+		</td>
+	</tr>
+        <tr>
+		<td style="width: 320px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Vistas.General.sugerido')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= "0.000.000,00 Bs." -%>
+                      
+		</td>
+	</tr>
+        <tr>
+		<td style="width: 320px">
+			<label><%=I18n.t('Sistema.Body.Vistas.General.monto')%> <%=I18n.t('Sistema.Body.Vistas.General.aprobado')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'solicitud', 'unidades_actuales', :class=>'text', :style=>'width: 100px', :maxlength=>'18',  :onkeypress=>'inputChange();'  -%>
+                      
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 320px">
+			<%= check_box "puppy", "gooddog", {}, "yes", "no"  %>
+
+		</td>
+		<td style="width: 620px">
+			<label><%=I18n.t('Sistema.Body.Vistas.ComiteResumen.Mensajes.obligacion_corresponsabilidad')%></label>
+                      
+		</td>
+	</tr>
+        <tr>
+		<td style="width: 320px">
+			<label><%=I18n.t('Sistema.Body.General.beneficiario')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'solicitud', 'unidades_proyecto', :class=>'text', :style=>'width: 100px', :maxlength=>'18',  :onkeypress=>'inputChange();'   -%>
+                      
+		</td>
+	</tr>
+          <tr>
+		<td style="width: 320px">
+			<label><%=I18n.t('Sistema.Body.General.concepto')%></label>
+		</td>
+		<td style="width: 620px">
+			<%= text_area 'solicitud', 'destino_credito', :class=>'text', :style=>'width: 380px', :rows => 3, :onkeypress=>'inputChange();' -%>
+                      
+		</td>
+	</tr>
+        <tr>
+		<td style="width: 320px">
+			<%= check_box "puppy", "gooddog", {}, "yes", "no"  %> &nbsp <%=I18n.t('Sistema.Body.General.publicidad')%>
+
+		</td>
+		<td style="width: 620px">
+			 <%= radio_button 'solicitud', 'pre_visado', '2', :class=>'text', :onclick=>'inputChange();'  -%> &nbsp <%=I18n.t('Sistema.Body.Vistas.General.empresa') %>
+                      
+		</td>
+                <td style="width: 620px">
+			 <%= radio_button 'solicitud', 'pre_visado', '2', :class=>'text', :onclick=>'inputChange();'  -%> &nbsp <%=I18n.t('Sistema.Body.General.fundo')%>
+                      
+		</td>
+	</tr>
+         <tr>
+		<td style="width: 320px">
+			<%= check_box "puppy", "gooddog", {}, "yes", "no"  %> &nbsp <%=I18n.t('Sistema.Body.Vistas.ComiteResumen.Mensajes.obligacion_incrementar')%>
+
+		</td>
+		<td style="width: 620px">
+			<%= text_field 'solicitud', 'unidades_actuales', :class=>'text', :style=>'width: 100px', :maxlength=>'18',  :onkeypress=>'inputChange();'  -%> &nbsp %
+                      
+		</td>
+	</tr>
+
+<div id="motivo_condicionamiento">
+</div>
+
+         <tr>
+             <td class="separador" valign="bottom" colspan="3">
+	       <span><%=I18n.t('Sistema.Body.General.comentarios')%></span>
+	     </td>
+         </tr>
+         <tr>
+           <td style="width: 620px">
+			<%= text_area 'solicitud', 'destino_credito', :class=>'text', :style=>'width: 380px', :rows => 3, :onkeypress=>'inputChange();' -%>       
+           </td>
+         </tr>
+
+   
+	<tr>
+		<td colspan="2" style="text-align: left">
+			<%= image_submit_tag(I18n.t('Sistema.Body.Imagenes.guardar'), :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}", :id=>'button_save', :onkeypress=>'inputChange();') -%>
+		

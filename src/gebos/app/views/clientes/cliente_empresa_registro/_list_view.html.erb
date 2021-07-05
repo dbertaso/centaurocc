@@ -1,0 +1,58 @@
+<table class="lista" style="width: 100%">
+  <thead>
+    <tr>
+      <th style="width: 50px" <%= sort_class_helper('tipo') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'tipo', 'list' %>
+      </th>
+      <th style="width: 130px" <%= sort_class_helper('nombre_registro') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nombre')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'nombre_registro', 'list' %>
+      </th>
+      <th style="width: 60px" <%= sort_class_helper('fecha_registro') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'fecha_registro', 'list' %>
+      </th>
+      <th style="width: 70px" <%= sort_class_helper('numero') %>>
+        <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.del')} #{I18n.t('Sistema.Body.Vistas.General.registro')}", 'numero', 'list' %>
+      </th>
+      <th style="width: 20px">
+        <%= I18n.t('Sistema.Body.Vistas.General.acciones') %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="list_body">
+    <%  
+    even_odd = 1
+    for registro_mercantil in @list
+      even_odd = 1 - even_odd %>
+
+      <% registro_mercantil = @registro_mercantil if registro_mercantil.nil? %>
+      <tr class="lista<%= even_odd %>" id="row_<%= registro_mercantil.id %>">
+        <td>
+          <% if  registro_mercantil.tipo == 'C' %>
+            Civil
+          <% elsif registro_mercantil.tipo == 'M' %>
+            Mercantil
+          <% elsif registro_mercantil.tipo == 'N' %>
+            Naval
+          <% else %>
+            Público
+          <% end %>
+        </td>
+        <td>
+          <%= registro_mercantil.nombre_registro  %>
+        </td>
+        <td>
+          <%= registro_mercantil.fecha_registro_f %>
+        </td>
+        <td>
+          <%= registro_mercantil.numero %>
+        </td>
+        <td style="text-align: right">
+          <%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), 
+            :action => 'view_detail', :popup=>params[:popup], :empresa_id => @empresa.id, :id => registro_mercantil.id) %>&nbsp;
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_pagination %>

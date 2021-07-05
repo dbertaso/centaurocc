@@ -1,0 +1,27 @@
+<td>
+	<%= format_fecha(control_envio_cobranza.fecha) unless control_envio_cobranza.fecha.nil?%>
+</td>
+<td>
+  <%= format_fecha(control_envio_cobranza.fecha_proceso) unless control_envio_cobranza.fecha_proceso.nil?%>
+</td>
+<td>
+  <%= control_envio_cobranza.entidad_financiera.nombre unless control_envio_cobranza.entidad_financiera.nil? %>
+</td>
+<td>
+  <%= control_envio_cobranza.numero_cuenta unless control_envio_cobranza.numero_cuenta.nil? %>
+</td>
+<td>
+  <%= control_envio_cobranza.tipo_cuenta_w unless control_envio_cobranza.tipo_cuenta.nil? %>
+</td>
+<td>
+	<%= control_envio_cobranza.archivo unless control_envio_cobranza.archivo.nil? %>
+</td>
+<td>
+	<%= control_envio_cobranza.estado unless control_envio_cobranza.estado.nil? %>
+</td>
+<td>
+	<%= control_envio_cobranza.numero_procesado_fm unless control_envio_cobranza.numero_procesado.nil? %>
+</td>
+<td>
+	<%= control_envio_cobranza.monto_procesado_fm unless control_envio_cobranza.monto_procesado.nil? %>
+</td>

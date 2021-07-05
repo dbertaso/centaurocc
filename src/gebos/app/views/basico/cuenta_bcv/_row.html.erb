@@ -1,0 +1,4 @@
+<% cuenta_bcv = @cuenta_bcv if cuenta_bcv.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= cuenta_bcv.id %>">
+	<%= render :partial => 'data', :locals => { :cuenta_bcv => cuenta_bcv, :even_odd => even_odd } -%>
+</tr>

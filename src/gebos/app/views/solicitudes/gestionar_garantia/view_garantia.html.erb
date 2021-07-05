@@ -1,0 +1,245 @@
+<div class="marco-contenido">
+  <div class="marco-titulo">
+    <div><div>
+        <%= "#{I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.modificando_tramite')}" %> <span class="titulo_modificar">'<%= @solicitud.numero %>'</span> <%= I18n.t('Sistema.Body.General.beneficiario') %> <span class="titulo_modificar">'<%= @solicitud.cliente.class.to_s=='ClienteEmpresa' ? @solicitud.cliente.empresa.nombre : @solicitud.cliente.persona.nombre_corto  %>'</span> - <span class="titulo_modificar"><%= @solicitud.estatus_w -%></span>
+      </div></div>
+  </div>
+
+  <%= render :partial=>'solicitudes/gestionar_garantia/common/tabs' %>
+  <div class="marco-contenido2">
+
+    <table style="width: 100%">
+      <% if @rhtml.to_s == "fianza_view"%>
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.valor_fianza')%></span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%">
+            <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.monto_fianza')%></label> 
+          </td>
+          <td style="width: 80%">
+            <label style="color: red"><%= format_fm(SolicitudTipoGarantia.indice_garantia(@solicitud_tipo_garantia.relacion_garantia, @solicitud.monto_solicitado)) -%>&emsp;<%= @solicitud.moneda.abreviatura.to_s %></label>
+          </td>
+        </tr>
+      <%else%>
+        <tr>
+          <td class="separador" valign="bottom" colspan="2">
+            <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.avaluo_proponente')%></span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluo.Errores.nombre_perito')%></label>
+          </td>
+          <td style="width: 80%">
+            <%= @solicitud_avaluo.nombre_perito %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Modelos.SolicitudAvaluo.Errores.fecha_avaluo')%></label>
+          </td>
+          <td>
+            <%= @solicitud_avaluo.fecha_avaluo_f %>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">
+            <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.numero_sudeban')%></label>
+          </td>
+          <td style="width: 80%">
+            <%= @solicitud_avaluo.numero_sudeban %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.valor_avaluo_externo')%></label>
+          </td>
+          <td>
+            <%= display_number @solicitud_avaluo.valor_avaluo, '' %>&emsp;<%= @solicitud.moneda.abreviatura.to_s %>
+          </td>
+        </tr>
+      <%end%>
+    </table>
+    <div id="formulario">
+      <%= render :partial => @rhtml %>
+    </div>
+    <br></br>
+
+    <table style="width: 100%">
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.ubicacion_geografica')%></span>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 20%">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.urbanizacion_barrio_sector')%></label>
+        </td>
+        <td style="width: 80%">
+          <%= @solicitud_avaluo.urbanizacion %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.avenida_calle_callejon')%></label>
+        </td>
+        <td>
+          <%= @solicitud_avaluo.calle %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.casa_edificio_galpon')%></label>
+        </td>
+        <td>
+          <%= @solicitud_avaluo.casa %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.numero_apto_casa')%></label>
+        </td>
+        <td>
+          <%= @solicitud_avaluo.numero_apta %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.piso')%></label>
+        </td>
+        <td>
+          <%= @solicitud_avaluo.piso %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label><%=I18n.t('Sistema.Body.Vistas.General.punto_de_referencia')%></label>
+        </td>
+        <td>
+          <%= @solicitud_avaluo.punto_referencia %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.estado')%></label></td>
+        <td>
+          <span id="estado-select">
+            <%= @solicitud_avaluo.estado.nombre unless @solicitud_avaluo.estado.nil? %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.municipio')%></label></td>
+        <td>
+          <span id="municipio-select">
+            <%= @solicitud_avaluo.municipio.nombre unless @solicitud_avaluo.municipio.nil? %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label><%=I18n.t('Sistema.Body.Vistas.General.parroquia')%></label></td>
+        <td>
+          <span id="parroquia-select">
+            <%= @solicitud_avaluo.parroquia.nombre unless @solicitud_avaluo.parroquia.nil? %>
+          </span>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width: 100%">
+
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.resumen_del_informe')%></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top" style="width: 20%">
+          <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.comentario_narrativa')%></label>
+        </td>
+        <td style="width: 80%">
+          <%= @solicitud_avaluo.comentario.gsub("\n","<br/>") %>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <table style="width: 100%">
+      <tr>
+        <td class="separador" valign="bottom" colspan="2">
+          <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.evidencia_fotografica')%></span>
+        </td>
+      </tr>
+    </table>
+    <br/>
+    <table class="lista" style="width: 70%">
+      <tr>
+        <th style="width: 10%">
+          <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.imagen')%></label>
+        </th>
+        <th style="width: 40%">
+          <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.nombre_archivo')%></label>
+        </th>
+        <th style="width: 40%">
+          <label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label>
+        </th>
+        <th style="width: 10%"><%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+      </tr>
+      <%  unless @solicitud_avaluo_imagen.nil?
+        clase = "lista0"
+        @solicitud_avaluo_imagen.each { |imagen| %>
+          <tr id="sem_<%= imagen.id %>" class='<%= clase %>'>
+
+            <td align="center">
+              <%=image_tag("/assets/images_avaluo/#{imagen.nombre_imagen}.#{imagen.nombre_real.to_s}", :height => '23', :width => '30')%>
+            </td>
+
+            <td>
+              <%= imagen.nombre_real %>
+            </td>
+
+            <td>
+              <%= imagen.referencia %>
+            </td>
+
+            <td align="center">
+              <a href="/documentos/images_avaluo/<%= "#{imagen.nombre_imagen}.#{imagen.nombre_real}" %>" target="_blank" title="descargar"><%= image_tag(image_path(I18n.t('Sistema.Body.Imagenes.descargar')),:title=>I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.descargar')) %></a>&nbsp;
+            </td>
+          </tr>
+
+          <% if clase == 'lista0'
+            clase = 'lista1'
+          else
+            clase = 'lista0'
+          end
+        }
+      end %>
+
+    </table>
+    <br/></br></br></br>
+    <%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.cerrar')), :title=>I18n.t('Sistema.Body.Vistas.General.cerrar')),
+      { :action => :index }, { } ) -%>
+
+  </div>
+  </br></br></br>
+
+</div>

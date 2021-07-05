@@ -1,0 +1,4 @@
+<% cuenta_contable_presupuesto = @cuenta_contable_presupuesto if cuenta_contable_presupuesto.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= cuenta_contable_presupuesto.id %>">
+	<%= render :partial => 'data', :locals => { :cuenta_contable_presupuesto => cuenta_contable_presupuesto, :even_odd => even_odd } -%>
+</tr>

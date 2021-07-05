@@ -1,0 +1,106 @@
+<table style="width: 100%">
+
+  <tr>
+    <td><label><%= "#{I18n.t('Sistema.Body.Vistas.General.tecnico')} #{I18n.t('Sistema.Body.Vistas.General.a')} #{I18n.t('Sistema.Body.Vistas.General.asignar')}" %>:</label></td>
+    <td>
+      <%= select(
+          'control_asignacion', 'usuario_id',
+          @usuario_select.map{|e| [e.primer_nombre + ' ' + e.primer_apellido, e.id]},
+          { :prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar')},
+          { :class=>'select', :onchange=>'inputChange();' } ) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top">
+      <label><%= I18n.t('Sistema.Body.Vistas.General.observaciones') %></label>
+    </td>
+    <td>
+      <%= text_area 'control_asignacion', 'observacion',
+          :class=>'text',
+          :style=>'width: 400px; height: 60px',
+          :onkeypress=>'inputChange();',
+          :onKeyUp=>'textCounter(this,400)' -%>
+    </td>
+  </tr>
+
+</table>
+<br/>
+<table class="lista" style="width: 100%">
+
+  <tr>
+    <th style="width: 2%">
+      <%= I18n.t('Sistema.Body.General.seleccionar_todos') %><br/><input type="checkbox" id="todos" name="todos" onClick="GenericcheckAll(form.solicitud_id,form.todos, 'solicitudes')"/>
+    </th>
+    <th style="width: 10%">
+      <%= I18n.t('Sistema.Body.Vistas.Form.nro_tramite') %>
+    </th>
+    <th style="width: 10%">
+      <%= "#{I18n.t('Sistema.Body.Vistas.General.cedula')}/#{I18n.t('Sistema.Body.Vistas.General.rif')}" %>
+    </th>
+    <th style="width: 20%">
+      <%= I18n.t('Sistema.Body.General.beneficiario') %>
+    </th>
+    <th style="width: 13%">
+      <%= I18n.t('Sistema.Body.Vistas.Form.sector') %>
+    </th>
+    <th style="width: 20%">
+      <%= I18n.t('Sistema.Body.Vistas.General.unidad_produccion') %>
+    </th>
+    <th style="width: 13%">
+      <%= I18n.t('Sistema.Body.Vistas.General.municipio') %>
+    </th>
+    <th style="width: 13%">
+      <%= I18n.t('Sistema.Body.Vistas.General.parroquia') %>
+    </th>
+  </tr>
+  <input id="solicitudes" type="hidden" name="solicitudes" value="" />
+  <% clase = "lista0"
+    @solicitud.each { |s| %>
+  <tr class="<%= clase %>">
+      <td style="text-align: center">
+        <input id="solicitud_id" type="checkbox" name="solicitud_id" value="<%= s.id.to_s %>" onClick="GenericcheckOne(this,form.todos,'solicitudes');" />
+      </td>
+      <td style="text-align: center">
+        <%= s.numero %>
+      </td>
+      <% unless s.cliente.persona_id.nil? %>
+        <td style="text-align: center">
+            <%= s.cliente.persona.cedula_nacionalidad << '-' << s.cliente.persona.cedula.to_s %>
+        </td>
+        <td style="text-align: center">
+          <%= s.cliente.persona.primer_nombre << " " << s.cliente.persona.primer_apellido %>
+        </td>
+       <% else %>
+        <td style="text-align: center">
+          <%= s.cliente.empresa.rif %>
+        </td>
+        <td style="text-align: center">
+          <%= s.cliente.empresa.nombre %>
+        </td>
+      <% end %>
+
+        <td style="text-align: center">
+          <%= s.sector.nombre %>
+        </td>
+
+        <td style="text-align: center">
+          <%= s.UnidadProduccion.nombre %>
+        </td>
+
+        <td style="text-align: center">
+          <%= s.UnidadProduccion.Municipio.nombre %>
+        </td>
+
+        <td style="text-align: center">
+          <%= s.UnidadProduccion.Parroquia.nombre %>
+        </td>
+    </tr>
+  <% if clase == 'lista0'
+      clase = 'lista1'
+    else
+      clase = 'lista0'
+    end
+    } %>
+</table>
+<br/>

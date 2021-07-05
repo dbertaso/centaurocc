@@ -1,0 +1,97 @@
+<% boleta_arrime = @boleta_arrime if boleta_arrime.nil? %>
+
+<td align ="center">
+  <%= boleta_arrime.rubro.nombre %>
+</td>
+
+<td align ="center">
+  <%= boleta_arrime.actividad.nombre %>
+</td>
+
+<td>
+  <%=boleta_arrime.silo.estado.nombre%>
+</td>
+
+<td>
+  <%=boleta_arrime.silo.nombre%>
+</td>
+<td style="text-align: center">
+  <%= boleta_arrime.guia_movilizacion  %>
+</td>
+
+<td style="text-align: center">
+  <%= boleta_arrime.numero_ticket  %>
+</td>
+<% if boleta_arrime.resultado == 'A' %>
+  <td style="text-align: center">
+    <%= format_fm(boleta_arrime.valor_arrime) %>
+  </td>
+<% elsif boleta_arrime.resultado == 'R' %>
+  <td style="text-align: center">
+    0.00
+  </td>
+<%end%>
+<td>
+  <%= format_fecha(boleta_arrime.fecha_salida) unless boleta_arrime.fecha_salida.nil? %>
+</td>
+<td>
+  <%= format_fecha(boleta_arrime.fecha_confirmacion) unless boleta_arrime.fecha_confirmacion.nil? %>
+</td>
+
+<% if boleta_arrime.confirmacion==true && boleta_arrime.estatus == 'A' %>
+  <td style="color: green; text-align: center">
+    Pagada
+  </td>
+<%end%>
+
+<% if boleta_arrime.confirmacion==false && boleta_arrime.resultado == 'A'%>
+  <td style="color: red; text-align: center">
+    Inicial
+  </td>
+<% end %>
+
+<% if boleta_arrime.confirmacion==false && boleta_arrime.resultado == 'R'%>
+  <td style="text-align: center">
+    Rechazado
+  </td>
+<% end %>
+
+<% if boleta_arrime.confirmacion==true && boleta_arrime.resultado == 'A' && boleta_arrime.estatus != 'A'%>
+  <td style="color: blue; text-align: center">
+    Confirmado
+  </td>
+<%end%>
+
+<td style="text-align: center">
+  <% if boleta_arrime.arrime_conjunto? %>
+    <%= image_tag('activo.gif', :title=>'Si') %>
+  <%else%>
+    <%= image_tag('inactivo.gif', :title=>'No') %>
+  <%end%>
+</td>
+
+<td style="text-align: center">
+  <% if boleta_arrime.confirmacion==true && boleta_arrime.resultado == "A"%>
+    <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+      {:action => :view, :id => boleta_arrime.id, :solicitud_id=> params[:solicitud_id], :controller => 'boleta_arrime'} %>
+    
+  <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.imprimir')), :title=>I18n.t('Sistema.Body.Controladores.Accion.imprimir')),
+      { :controller=>'boleta_arrime', :action=>'imprimir', :method=>:get, :popup=>true, :id => boleta_arrime.id, :solicitud_id=> params[:solicitud_id], :rubro_id => params[:rubro_id],
+      :cliente_id => params[:cliente_id]}, :onclick=> "window.open(this.href,'boleta_arrime','height=600,width=1030, scrollbars=yes, resizable=false');return false;" %>
+
+  <%  elsif boleta_arrime.confirmacion==false && boleta_arrime.resultado == "A" %>
+
+    <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title => I18n.t('Sistema.Body.Controladores.Accion.modificar')),
+      {:action => :edit, :id => boleta_arrime.id,:solicitud_id => boleta_arrime.solicitud_id, :rubro_id => params[:rubro_id], :controller => 'boleta_arrime'} %>
+
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.eliminar')), :title => I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+      :loading =>'image_load()', :loaded => 'image_unload()',
+      :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+      :url => {:controller => 'boleta_arrime', :action => :delete, :id => boleta_arrime.id}) if vlink 'delete' -%>
+
+  <%  elsif boleta_arrime.resultado == "R" %>
+    <%= link_to image_tag(image_path(I18n.t('Sistema.Body.Imagenes.consultar')),:title=>I18n.t('Sistema.Body.Controladores.Accion.consultar')),
+      {:action => :view, :id => boleta_arrime.id, :solicitud_id=> params[:solicitud_id], :controller => 'boleta_arrime'} %>
+
+  <%end%>
+</td>

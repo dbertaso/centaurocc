@@ -1,0 +1,42 @@
+<%= form_title_view @item.nombre %>
+<%= render :partial=>'basico/item/common/tabs' %>
+<div class="marco-contenido2">
+
+	<table>
+		<tr>
+			<td style="width: 100px">
+				<label>Nombre</label>
+			</td>
+			<td style="width: 600px">
+				<%= @item.nombre -%>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Descripción</label>
+			</td>
+			<td>
+				<%= @item.descripcion -%>
+			</td>
+		</tr>
+		<tr>
+		  <td>
+		      <label>Activo</label>
+		  </td>
+		  <td>
+				<%= format_bool @item.activo -%>
+		  </td>
+	  </tr>
+	</table>
+		
+	<%= link_to( image_tag("boton_modificar.gif"),
+		:action => :edit,
+		:id => @item.id,
+		:html_options => { :id=>'button_edit' } ) if vlink 'edit' -%>
+
+		
+	<%= link_to( image_tag(I18n.t('Sistema.Body.Imagenes.cerrar')),
+		{ :action => :index },
+		{ :id=>'button_close' } ) -%>
+
+</div>

@@ -1,0 +1,4 @@
+<% convenio_silo = @convenio_silo if convenio_silo.nil? %>
+<tr class="lista<%= even_odd %>" id="row_<%= convenio_silo.id unless convenio_silo.nil?%>">
+	<%= render :partial => 'data', :locals => { :convenio_silo => convenio_silo, :even_odd => even_odd } -%>
+</tr>

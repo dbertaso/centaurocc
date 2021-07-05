@@ -1,0 +1,60 @@
+<table class="lista" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="width: 50px" <%= sort_class_helper('numero') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.General.financiamiento')}", 'numero', 'list' %>
+        </th>
+
+         <th style="width: 20px" <%= sort_class_helper('cedula_rif') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.VisitaSolicitud.Etiquetas.cedula_rif'), 'cedula_rif', 'list' %>
+        </th>        
+         <th style="width: 20px" <%= sort_class_helper('nombre') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'nombre', 'list' %>
+        </th>
+        
+        <th style="width: 150px" <%= sort_class_helper('estatus') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus') << " " << I18n.t('Sistema.Body.Vistas.General.del') << " " << I18n.t('Sistema.Body.Modelos.Errores.tramite_sin_b'), 'estatus', 'list' %>
+        </th>
+        <th style="width: 20px" <%= sort_class_helper('rubro') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.rubro'), 'rubro', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper('(select nombre from oficina where id = oficina_id)') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.oficina'), '(select nombre from oficina where id = oficina_id)', 'list' %>
+       </th>
+
+          <th style="width: 60px" <%= sort_class_helper('codigo_visita') %>>
+          <%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.nro')} #{I18n.t('Sistema.Body.Vistas.Form.control')} #{I18n.t('Sistema.Body.Vistas.VisitaSeguimiento.Etiquetas.visita')}", 'codigo_visita', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper('fecha_orden') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.fecha_orden'), 'fecha_orden', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper('monto') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.monto') << " " << I18n.t('Sistema.Body.Vistas.General.orden'), 'monto', 'list' %>
+        </th>
+
+       <th style="width: 60px" <%= sort_class_helper('(select nombre from estatus where id = estatus_id)') %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.estatus') << " " << I18n.t('Sistema.Body.Modelos.OrdenDespacho.Mensajes.abreviatura'), '(select nombre from estatus where id = estatus_id)', 'list' %>
+        </th>
+
+        <th style="width: 60px" <%= sort_class_helper("(select sum(fact.monto_factura) from factura_orden_despacho fact inner join orden_despacho_detalle ord_det on fact.orden_despacho_detalle_id=ord_det.id inner join orden_despacho ord on ord_det.orden_despacho_id =ord.id LEFT JOIN solicitud sol ON ord.solicitud_id = sol.id left JOIN cliente cli ON sol.cliente_id = cli.id LEFT JOIN empresa emp ON cli.empresa_id = emp.id LEFT JOIN persona per ON cli.persona_id = per.id LEFT JOIN empresa_direccion emp_dir ON emp.id = emp_dir.empresa_id left JOIN persona_direccion per_dir ON per.id = per_dir.persona_id left JOIN persona per_int ON per_int.id=(select persona_id from empresa_integrante,empresa_integrante_tipo where empresa_integrante.empresa_id=emp.id and empresa_integrante_tipo.empresa_integrante_id = empresa_integrante.id and empresa_integrante_tipo.tipo = 'R') join casa_proveedora casa on fact.casa_proveedora_id=casa.id join sucursal_casa_proveedora sucu on fact.sucursal_casa_proveedora_id=sucu.id where fact.monto_factura>0 and fact.emitida=true and fact.confirmada=true and orden_despacho_id=orden_despacho_id)") %>>
+          <%= sort_link_helper I18n.t('Sistema.Body.Vistas.ConsultaPrestamoSituacion.Etiquetas.monto_facturado'), "(select sum(fact.monto_factura) from factura_orden_despacho fact inner join orden_despacho_detalle ord_det on fact.orden_despacho_detalle_id=ord_det.id inner join orden_despacho ord on ord_det.orden_despacho_id =ord.id LEFT JOIN solicitud sol ON ord.solicitud_id = sol.id left JOIN cliente cli ON sol.cliente_id = cli.id LEFT JOIN empresa emp ON cli.empresa_id = emp.id LEFT JOIN persona per ON cli.persona_id = per.id LEFT JOIN empresa_direccion emp_dir ON emp.id = emp_dir.empresa_id left JOIN persona_direccion per_dir ON per.id = per_dir.persona_id left JOIN persona per_int ON per_int.id=(select persona_id from empresa_integrante,empresa_integrante_tipo where empresa_integrante.empresa_id=emp.id and empresa_integrante_tipo.empresa_integrante_id = empresa_integrante.id and empresa_integrante_tipo.tipo = 'R') join casa_proveedora casa on fact.casa_proveedora_id=casa.id join sucursal_casa_proveedora sucu on fact.sucursal_casa_proveedora_id=sucu.id where fact.monto_factura>0 and fact.emitida=true and fact.confirmada=true and orden_despacho_id=orden_despacho_id)", 'list' %>
+        </th>
+        <th style="width: 60px"><%=I18n.t('Sistema.Body.Vistas.General.acciones')%>    
+        </th>        
+      </tr>
+
+  </thead>
+	<tbody id="list-body">
+<%
+	even_odd = 1
+	for orden_despacho in @list
+		even_odd = 1 - even_odd %>
+	<%= render :partial => 'row', :locals => { :orden_despacho => orden_despacho, :even_odd => even_odd } -%>
+<% end %>
+</tbody>
+</table>
+
+<%= form_pagination %>

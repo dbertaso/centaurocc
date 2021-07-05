@@ -1,0 +1,20 @@
+<% rubro = @rubro if rubro.nil? %>
+<td>
+	<%= estado.region.nombre  %>
+</td>	
+<td>
+	<%= estado.nombre  %>
+</td>	
+<td align="center">
+	<%= estado.region.pais.nombre  %>
+</td>	
+<td style="text-align: right">
+	<%= link_to image_tag(I18n.t('Sistema.Body.Imagenes.consultar')), :action => 'view', :id => estado.id %>&nbsp;
+	<%= link_to(image_tag(I18n.t('Sistema.Body.Imagenes.modificar')), :action => 'edit', :id => estado.id) if vlink 'edit' %>&nbsp;
+	<%= link_to_remote(
+		image_tag(I18n.t('Sistema.Body.Imagenes.eliminar')),
+	  :loading =>'image_load()',
+ 	  :loaded => 'image_unload()',
+	:confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+		:url => {:controller => 'estado', :action => :delete, :id => estado.id}) if vlink 'delete' -%>
+</td>

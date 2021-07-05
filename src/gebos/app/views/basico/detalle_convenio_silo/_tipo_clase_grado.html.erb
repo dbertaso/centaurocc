@@ -1,0 +1,28 @@
+<% if @tcg.nil? %>
+  <%= select(
+    'detalle_convenio_silo','tipo_clase_grado',
+    [],
+    {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+    { :class=>'select', :onchange => 'inputChange();' } ) %>
+
+<% elsif @tcg == 'A' %>
+  <!-- arroz -->
+  <%= select('detalle_convenio_silo','tipo_clase_grado',
+    [[I18n.t('Sistema.Body.Modelos.DetallePrecioGaceta.Lista.tipo_a'),'A'],[I18n.t('Sistema.Body.Modelos.DetallePrecioGaceta.Lista.tipo_b'),'B']],
+    { :prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+    { :class=>'select', :onchange => 'inputChange();' } ) %>
+<% elsif @tcg == 'B' %>
+  <!-- algodon -->
+  <%= select(
+    'detalle_convenio_silo','tipo_clase_grado',
+    [[I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.grado_a'),'A'],[I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.grado_b'),'B'],[I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.grado_c'),'C'],[I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.grado_d'),'D']],
+    {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+    { :class=>'select', :onchange => 'inputChange();' } ) %>
+<% else @tcg == 'C'%>
+  <%= select(
+    'detalle_convenio_silo','tipo_clase_grado',
+    [[I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.clase_a'),'A'],[I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.clase_b'),'B'],[I18n.t('Sistema.Body.Vistas.DetalleConvenioSilo.Etiquetas.clase_c'),'C']],
+    {:prompt=>I18n.t('Sistema.Body.Vistas.General.seleccionar')},
+    { :class=>'select', :onchange => 'inputChange();' } ) %>
+<%end%>
+

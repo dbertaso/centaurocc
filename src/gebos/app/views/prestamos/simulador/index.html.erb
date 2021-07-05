@@ -1,0 +1,289 @@
+<script>
+  function click_sector(name_sector) {
+    $('list_'+name_sector).toggle();
+    $('button_'+name_sector).src=Element.visible('list_'+name_sector) ? '/images/colapsar.gif' : '/images/expandir.gif' ;
+  }
+
+  cuota_activa='0';
+  function click_cuota(cuota) {
+    if ($('cuota_encabezado_'+cuota_activa) && (cuota_activa!='0' || cuota_activa==cuota)) {
+      $('cuota_encabezado_'+cuota_activa).remove();
+    }
+
+    if (cuota_activa!=cuota || (!$('cuota_encabezado_'+cuota_activa) && cuota_activa==cuota)) {
+      _html = '<tr id="cuota_encabezado_' + cuota +'" onclick="$(\'cuota_encabezado_'+ cuota +'\').remove()"><th style="width: 1%"></th><th style="width: 5%">' + I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.numero') + '</th><th style="width: 10%">'+ I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_pago') + '</th><th style="width: 10%">' + I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.monto_cuota') + '</th><th style="width: 10%">' + I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.intereses') + '</th><th style="width: 10%">' + I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.capital') + '</th><th style="width: 10%">' + I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.interes_diferido') + '</th><th style="width: 10%">' + I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.pago_total_cliente') + '</th><th style="width: 10%">' + I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.saldo_insoluto') + '</th><th style="width: 10%">' + I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.porcentaje_tasa_periodo') + '</th></tr>'
+      new Insertion.Before('cuota_'+cuota, _html);
+    }
+    cuota_activa=cuota;
+  }
+</script>
+
+<div class="marco" style="width: 100%">
+
+  <div class="marco-contenido" style="width:100%">
+
+    <div id="condiciones">
+
+      <%= error %>
+
+      <%= form_remote_tag( :loading =>'image_load()',
+         :loaded => 'image_unload()',
+         :url => { :action => :calcular } ) do -%>
+
+        <table style="width: 100%">
+
+          <tr>
+            <td class="separador" colspan="2">
+              <span><%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.datos_basicos')%></span>
+            </td>
+          </tr>
+
+        </table>
+
+          <table width="100%">
+
+            <tr>
+              <td style="width: 20%">
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.metodo_amortizacion') %></label>
+              </td>
+              <td style="width: 80%">
+
+                <%= select( 'calculadora', 'metodo',
+                            @formula_select.map{|i| [i.nombre, i.id]},
+                            {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                            { :class=>'select', :onchange=>'inputChange();' } )
+                %>
+
+              </td>
+            </tr>
+
+            <tr>
+              <td style="width: 20%">
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.calculo_365') %></label>
+              </td>
+              <td style="width: 80%">
+                <%= check_box 'calculadora', '_365', :checked_value=>true, :unchecked_value=>false %>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.fecha_liquidacion') %></label>
+              </td>
+              <td>
+              <%= calendar_date_select 'calculadora', 'fecha_f', :year_range => 110.years.ago..-1.years.ago,
+                  :class=>'text',:style=>'width:80px',:maxlength=>'10', :onkeypress=>'inputChange();', :onchange=>'inputChange();'-%>
+                  <%= I18n.t('Sistema.Body.General.formato_fecha')%>
+              </td>
+            </tr>
+            <tr>
+
+              <td>
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.plazo_meses') %></label>
+              </td>
+              <td>
+                <%= text_field 'calculadora', 'plazo',
+                        :class=>'text', :style=>'width: 25px',
+                        :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td valign="top">
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.periodicidad_pago') %></label>
+              </td>
+
+              <td style="text-align: left">
+
+                <%= select( 'calculadora', 'periodo',
+                  [
+                    [I18n.t('Sistema.Body.General.Periodos.mensual'), "1"],
+                    [I18n.t('Sistema.Body.General.Periodos.bimestral'), "2"],
+                    [I18n.t('Sistema.Body.General.Periodos.trimestral'), "3"],
+                    [I18n.t('Sistema.Body.General.Periodos.cuatrimestral'), "4"],
+                    [I18n.t('Sistema.Body.General.Periodos.pentamestral'), "5"],
+                    [I18n.t('Sistema.Body.General.Periodos.semestral'),"6"],
+                    [I18n.t('Sistema.Body.General.Periodos.heptamestral'),"7"],
+                    [I18n.t('Sistema.Body.General.Periodos.anual'),"12"]
+                  ],
+                  {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                  { :class=>'select', :onchange=>'inputChange();' } )%>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td>
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.monto_financiar') %></label>
+              </td>
+              <td>
+                <%= text_field  'calculadora', 'monto_f',
+                                :class=>'text', :style=>'width: 100px',
+                                :maxlength=>'16',
+                                :onkeypress=>'inputChange();',
+                                :onchange=>'inputChange();',
+                                :onkeyup=>"formatCurrency(this.value, 'calculadora_monto');"  -%>
+                                <span id="calculadora_monto_display">0,00</span>
+                                <span id="calculadora_monto_f_moneda"></span>
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td>
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.tasa_interes') %></label>
+              </td>
+
+              <td>
+                <%= text_field  'calculadora', 'tasa_f',
+                                :class=>'text', :style=>'width: 50px',
+                                :maxlength=>'5', :onkeypress=>'inputChange();'  -%> %
+              </td>
+
+            </tr>
+
+          </table>
+
+          <table style="width: 100%">
+
+            <tr>
+              <td class="separador" colspan="2">
+                <span>
+                  <%= check_box 'calculadora', 'periodo_gracia',
+                                :checked_value=>"1",
+                                :unchecked_value=>"0",
+                                :onclick=>"this.checked ? $('condiciones_gracia').show() : $('condiciones_gracia').hide() "
+                  -%>
+                  &nbsp;<%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_gracia') %>
+                </span>
+              </td>
+            </tr>
+
+          </table>
+
+          <table style="width: 100%; display: none" id="condiciones_gracia">
+
+            <tr>
+
+              <td style="width: 20%">
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.plazo_meses') %></label>
+              </td>
+
+              <td style="width: 80%">
+                <%= text_field  'calculadora', 'gracia_plazo',
+                                :class=>'text', :style=>'width: 25px',
+                                :value=>'0',
+                                :maxlength=>'3', :onkeypress=>'inputChange();'  -%>
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td>
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.tasa_interes') %></label>
+              </td>
+
+              <td>
+                <%= text_field  'calculadora', 'gracia_tasa_f',
+                                :class=>'text', :style=>'width: 50px',
+                                :value=>'0',
+                                :maxlength=>'5', :onkeypress=>'inputChange();'  -%> %
+              </td>
+
+            </tr>
+
+            <tr>
+
+              <td valign="top">
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.periodicidad_pago') %></label>
+              </td>
+
+              <td style="text-align: left">
+
+                <%= select( 'calculadora', 'gracia_periodo',
+                      [
+                        [I18n.t('Sistema.Body.General.Periodos.mensual'), "1"],
+                        [I18n.t('Sistema.Body.General.Periodos.bimestral'), "2"],
+                        [I18n.t('Sistema.Body.General.Periodos.trimestral'), "3"],
+                        [I18n.t('Sistema.Body.General.Periodos.cuatrimestral'), "4"],
+                        [I18n.t('Sistema.Body.General.Periodos.pentamestral'), "5"],
+                        [I18n.t('Sistema.Body.General.Periodos.semestral'),"6"],
+                        [I18n.t('Sistema.Body.General.Periodos.heptamestral'),"7"],
+                        [I18n.t('Sistema.Body.General.Periodos.anual'),"12"]
+                      ],
+                    {:prompt=>I18n.t('Sistema.Body.Vistas.Form.seleccionar') },
+                    { :class=>'select', :onchange=>'inputChange();' } ) %>
+                </td>
+
+            </tr>
+
+            <tr>
+
+              <td colspan="2">
+                <%= check_box 'calculadora','diferir_intereses',
+                    :checked=>false -%>
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.diferir_intereses') %></label>
+              </td>
+
+            </tr>
+
+          </table>
+
+          <table style="width: 100%">
+
+            <tr>
+
+              <td class="separador" colspan="2">
+
+                <span>
+
+                  <%= check_box 'calculadora', 'periodo_muerto',
+                                :checked_value=>"1",
+                                :unchecked_value=>"0",
+                                :onclick=>"this.checked ? $('condiciones_muerto').show() : $('condiciones_muerto').hide() " -%>
+                                &nbsp;<%= I18n.t('Sistema.Body.Vistas.Simulador.Separadores.periodo_muerto') %>
+
+                </span>
+
+              </td>
+
+            </tr>
+
+          </table>
+
+          <table style="width: 100%; display: none" id="condiciones_muerto">
+
+            <tr>
+
+              <td style="width: 20%">
+                <label><%= I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.plazo_meses') %></label>
+              </td>
+
+              <td style="width: 80%">
+                <%= text_field  'calculadora', 'muerto_plazo',
+                                :class=>'text', :style=>'width: 25px',
+                                :value=>'0',
+                                :maxlength=>'3', :onkeypress=>'inputChange();'
+               -%>
+              </td>
+
+            </tr>
+
+          </table>
+
+        <%= submit_tag I18n.t('Sistema.Body.Vistas.Simulador.Etiquetas.calcular') %>
+
+      <% end %>
+  </div>
+
+    <div id="list">
+    </div>
+
+
+  </div>
+
+</div>

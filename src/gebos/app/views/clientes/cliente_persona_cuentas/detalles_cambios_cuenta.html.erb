@@ -1,0 +1,107 @@
+<script type="text/javascript">
+
+  function cerrar()
+  {
+    window.close();
+  }
+
+</script>
+
+
+<div class="marco-contenido">
+
+  <%= form_title_search %>
+
+  <table class="lista" style="table-layout:fixed;width: 100%">
+    <thead>
+      <tr>
+        <th <%= sort_class_helper('usuario.primer_nombre') %>><%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.usuario'), 'usuario.primer_nombre', 'list' %></th>
+        <th <%= sort_class_helper('cliente.persona.primer_nombre') %>><%= sort_link_helper I18n.t('Sistema.Body.General.beneficiario'), 'cliente.persona.primer_nombre', 'list' %></th>
+        <th <%= sort_class_helper('fecha_apertura') %>><%= sort_link_helper I18n.t('Sistema.Body.Vistas.Form.fecha'), 'fecha_apertura', 'list' %></th> 
+        <th <%= sort_class_helper('entidad_financiera_id_ultima_modificacion') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.entidad_financiera')} #{I18n.t('Sistema.Body.Vistas.General.anterior')}", 'entidad_financiera_id_ultima_modificacion', 'list' %></th>
+        <th <%= sort_class_helper('entidad_financiera_id_actual') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.entidad_financiera')} #{I18n.t('Sistema.Body.Vistas.General.actual')}", 'entidad_financiera_id_actual', 'list' %></th>
+        <th <%= sort_class_helper('tipo_cuenta_ultima_modificacion') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.anterior')}", 'tipo_cuenta_ultima_modificacion', 'list' %></th>
+        <th <%= sort_class_helper('tipo_cuenta_actual') %>><%= sort_link_helper 'Tipo de Cuenta Actual', "#{I18n.t('Sistema.Body.Vistas.General.tipo')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.actual')}", 'list' %></th>
+        <th <%= sort_class_helper('numero_cuenta_ultima_modificacion') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.anterior')}", 'numero_cuenta_ultima_modificacion', 'list' %></th>
+        <th <%= sort_class_helper('numero_cuenta_actual') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.numero')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.actual')}", 'numero_cuenta_actual', 'list' %></th>
+
+
+        <th <%= sort_class_helper('activo_ultima_modificacion') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.activo')} #{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.anterior')}", 'activo_ultima_modificacion', 'list' %></th>
+        <th <%= sort_class_helper('activo_actual') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.General.activo')} #{I18n.t('Sistema.Body.Vistas.General.cuenta')} #{I18n.t('Sistema.Body.Vistas.General.actual')}", 'activo_actual', 'list' %></th>
+
+
+        <th <%#= sort_class_helper('fecha_ultima_modificacion') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.anterior')} #{I18n.t('Sistema.Body.Vistas.General.a')} #{I18n.t('Sistema.Body.Vistas.General.la')} #{I18n.t('Sistema.Body.Vistas.General.modificacion')}", 'fecha_ultima_modificacion', 'list' %></th> 
+        <th <%= sort_class_helper('fecha_modificacion_actual') %>><%= sort_link_helper "#{I18n.t('Sistema.Body.Vistas.Form.fecha')} #{I18n.t('Sistema.Body.Vistas.General.de')} #{I18n.t('Sistema.Body.Vistas.General.modificacion')}", 'fecha_modificacion_actual', 'list' %></th>
+        <th <%= sort_class_helper('observaciones') %>><%= sort_link_helper I18n.t('Sistema.Body.Vistas.General.observaciones'), 'observaciones', 'list' %></th>
+      </tr>
+    </thead>
+    <tbody id="list_body">
+
+
+      <% even_odd = 1
+      @todos_historico.each do |historico|
+        even_odd = 1 - even_odd %>
+
+        <%
+
+        if historico.observaciones.nil?
+          colores="bgcolor='#F7FE2E'"
+        else
+          colores=""
+        end
+      %>
+
+        <tr class="lista<%=even_odd %>" >
+
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= historico.usuario.primer_nombre+" "+historico.usuario.primer_apellido+" ("+historico.usuario.nombre_usuario+")" %></td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= Cliente.find(historico.persona_id).persona.primer_nombre+" "+Cliente.find(historico.persona_id).persona.primer_apellido unless historico.persona_id.nil?%>
+
+            <%= Cliente.find(historico.empresa_id).empresa.nombre unless historico.empresa_id.nil?%>
+
+
+          </td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= historico.fecha_apertura.strftime('%d/%m/%Y') unless historico.fecha_apertura.nil? %></td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= EntidadFinanciera.find(historico.entidad_financiera_id_ultima_modificacion).nombre unless historico.entidad_financiera_id_ultima_modificacion.nil?%></td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= EntidadFinanciera.find(historico.entidad_financiera_id_actual).nombre unless historico.entidad_financiera_id_actual.nil?%></td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>>
+
+            <%if historico.tipo_cuenta_ultima_modificacion=='A' %>
+              <%= I18n.t('Sistema.Body.Vistas.General.ahorros') %>
+            <% elsif historico.tipo_cuenta_ultima_modificacion=='C' %>
+              <%= I18n.t('Sistema.Body.Vistas.General.corriente') %>
+            <%end%>                 
+          </td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>>
+            <% if historico.tipo_cuenta_actual=='A'  %>
+              <%= I18n.t('Sistema.Body.Vistas.General.ahorros') %>
+            <% elsif historico.tipo_cuenta_actual=='C' %>
+              <%= I18n.t('Sistema.Body.Vistas.General.corriente') %>
+            <% end %>
+          </td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= historico.numero_cuenta_ultima_modificacion unless historico.numero_cuenta_ultima_modificacion.nil?%></td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= historico.numero_cuenta_actual unless historico.numero_cuenta_actual.nil?%></td>
+
+
+          <td align="center" style="word-wrap: break-word;" <%=colores%>>  <%= format_bool historico.activo_ultima_modificacion unless historico.activo_ultima_modificacion.nil?%></td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>>  <%= format_bool historico.activo_actual unless historico.activo_actual.nil?%></td>
+
+
+
+
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= historico.fecha_ultima_modificacion.strftime('%d/%m/%Y') unless historico.fecha_ultima_modificacion.nil? %></td> 
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= historico.fecha_modificacion_actual.strftime('%d/%m/%Y') unless historico.fecha_modificacion_actual.nil? %></td>
+          <td align="center" style="word-wrap: break-word;" <%=colores%>><%= historico.observaciones unless historico.observaciones.nil?%></td>
+        </tr>
+
+
+      <% end %>
+
+    </tbody>
+  </table>
+  <br>
+  <strong><font color="#FF0000">* <%= I18n.t('Sistema.Body.Vistas.General.la_celda_color_amarillo') %></font></strong>
+  <br><br>
+
+
+
+</div>

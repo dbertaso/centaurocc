@@ -1,0 +1,37 @@
+<td>
+  <%= view_prestamos_reestructurar.beneficiario %>
+</td>
+
+<td align="right">
+  <%= view_prestamos_reestructurar.cedula_rif %>
+</td>
+<td align="center">
+  <%= view_prestamos_reestructurar.contador_prestamos %>
+</td>
+
+<td align="right">
+  <% view_prestamos_reestructurar.saldo_deudor.nil? ? view_prestamos_reestructurar.saldo_deudor = 0 : view_prestamos_reestructurar.saldo_deudor %>
+  <%= format_fm(view_prestamos_reestructurar.saldo_deudor) %>
+</td>
+<td align="right">
+  <% view_prestamos_reestructurar.deuda.nil? ? view_prestamos_reestructurar.deuda = 0 : view_prestamos_reestructurar.deuda %>
+  <%= format_fm(view_prestamos_reestructurar.deuda) %>
+</td>
+
+
+<td width="60px" align="left">
+  <a title="<%=I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.vista_rapida')%>" href="#row_<%= view_prestamos_reestructurar.cliente_id %>" onclick="fila_detalle(<%= view_prestamos_reestructurar.cliente_id %>)">
+    <img id="imagen_fila_<%= view_prestamos_reestructurar.cliente_id %>" src="/assets/expandir.gif" alt="<%= I18n.t('Sistema.Body.Vistas.General.expandir')%>"/></a>
+    
+<%= link_to(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.modificar')), :title => I18n.t('Sistema.Body.Controladores.Accion.modificar')), 
+      :action => 'edit', :cliente_id => view_prestamos_reestructurar.cliente_id ) if (vlink 'edit')  %>
+
+  <% if view_prestamos_reestructurar.estatus_reestructuracion == 1 %>	
+    <%= link_to_remote(image_tag(image_path(I18n.t('Sistema.Body.Imagenes.enviar_flecha')), :title=>I18n.t('Sistema.Body.Vistas.Reestructuracion.Etiquetas.enviar_comite_reestructuracion')),
+      :method=>:get, :loading =>'image_load()', :loaded => 'image_unload()',
+      #:confirm => "¿Está usted seguro que desea avanzar el Tr&aacute;mite ?",
+      #:id=>"button_enviar",
+      #:onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+      :url => { :action => :avanzar_reestructuracion_index, :cliente_id=>view_prestamos_reestructurar.cliente_id, :popup=>params[:popup] } ) -%>
+  <% end %>
+</td>

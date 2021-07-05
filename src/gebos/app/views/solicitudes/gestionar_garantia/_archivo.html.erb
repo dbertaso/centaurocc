@@ -1,0 +1,85 @@
+<br/>
+<table style="width: 100%">
+  <tr>
+    <td class="separador" valign="bottom" colspan="2">
+      <span><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.evidencia_fotografica')%></span>
+    </td>
+  </tr>
+</table>
+<br/>
+<%= form_for(:upload, :url => { :controller=>"gestionar_garantia",:action => "save_archivo", :method=>:get}, :html => {:id=>'primer_form', :multipart => true}) do %>
+
+  <%= hidden_field '', 'solicitud_tipo_garantia_id', :value=>@solicitud_tipo_garantia_id %>
+  <%= hidden_field '', 'solicitud_id', :value=>@solicitud.id %> 
+
+  <table style="width: 70%">
+    <tr>
+      <td><label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.evidencia_fotografica')%></label> :</td>
+      <td>
+        <%= file_field 'upload', 'datafile' %>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 30%">
+        <label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label>
+      </td>
+      <td style="width: 70%">
+        <%= text_field 'upload', 'referencia' -%>&ensp;&ensp;&ensp;&ensp;
+        <%= image_submit_tag(image_path(I18n.t('Sistema.Body.Imagenes.guardar')), 
+          :onclick=>"if (varEnviado || varEnviado == null) { return false; } else {varEnviado = true;}", :id=>'button_save') -%></p>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <%#= submit "Cargar Archivo" %>
+<% end %>
+
+<br/>
+<table class="lista" style="width: 70%">
+  <tr>
+    <th style="width: 10%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.imagen')%></label>
+    </th>
+    <th style="width: 40%">
+      <label><%=I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.nombre_archivo')%></label>
+    </th>
+    <th style="width: 40%">
+      <label><%=I18n.t('Sistema.Body.Vistas.General.referencia')%></label>
+    </th>
+    <th style="width: 10%"><%= I18n.t('Sistema.Body.Vistas.General.acciones')%></th>
+  </tr>
+  <%  unless @solicitud_avaluo_imagen.nil?
+    clase = "lista0"
+    @solicitud_avaluo_imagen.each { |imagen| %>
+      <tr id="sem_<%= imagen.id %>" class='<%= clase %>'>
+        <td align="center">
+          <%=image_tag("/assets/images_avaluo/#{imagen.nombre_imagen}.#{imagen.nombre_real.to_s}", :height => '23', :width => '30')%>
+        </td>
+        <td>
+          <%= imagen.nombre_real %>
+        </td>
+        <td>
+          <%= imagen.referencia %>
+        </td>
+        <td align="center">
+          <a href="/documentos/images_avaluo/<%= "#{imagen.nombre_imagen}.#{imagen.nombre_real}" %>" target="_blank" title="descargar"><%= image_tag(I18n.t('Sistema.Body.Imagenes.descargar'),:title=>I18n.t('Sistema.Body.Vistas.GestionarGarantia.Etiquetas.descargar')) %></a>&nbsp;
+          <%= link_to_remote(image_tag(I18n.t('Sistema.Body.Imagenes.eliminar'), :title=>I18n.t('Sistema.Body.Controladores.Accion.eliminar')),
+            :loading =>'image_load()', :loaded => 'image_unload()',
+            :confirm => I18n.t('Sistema.Body.Vistas.Helpers.Mensajes.esta_seguro'),
+            :id=>"button_enviar",
+            :onclick=>"if (varEnviado) { return false; } else {varEnviado = true;}",
+            :url => {:action => :delete_imagen, :id => imagen.id}) -%>
+        </td>
+      </tr>
+
+      <% if clase == 'lista0'
+        clase = 'lista1'
+      else
+        clase = 'lista0'
+      end
+    }
+  end %>
+
+</table>
+<br/><br/><br/><br/>
+
