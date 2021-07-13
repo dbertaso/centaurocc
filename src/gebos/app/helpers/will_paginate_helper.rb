@@ -9,7 +9,7 @@ module WillPaginateHelper
     protected
     def link(text, target, attributes = {})      
       
-      if target.is_a? Fixnum
+      if target.is_a? Integer
         attributes[:rel] = rel_value(target)      
         target = url(target)        
       end            

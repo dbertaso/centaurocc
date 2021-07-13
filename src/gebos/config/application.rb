@@ -31,6 +31,7 @@ module Gebos
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.enforce_available_locales = false
     config.i18n.default_locale = :es
 
     # Configure the default encoding used in templates for Ruby 1.9.
@@ -58,8 +59,7 @@ module Gebos
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    config.i18n.enforce_available_locales = true
-
+  
     JAVA_HOME = '/usr/lib/jvm/java-7-oracle'
     LD_LIBRARY_PATH = "#{JAVA_HOME}/jre/lib/amd64"
     ENV['JAVA_HOME'] = JAVA_HOME
